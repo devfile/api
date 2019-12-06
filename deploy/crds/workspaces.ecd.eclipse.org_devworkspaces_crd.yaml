@@ -1,0 +1,139 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: devworkspaces.workspaces.ecd.eclipse.org
+spec:
+  group: workspaces.ecd.eclipse.org
+  names:
+    kind: DevWorkspace
+    listKind: DevWorkspaceList
+    plural: devworkspaces
+    singular: devworkspace
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: DevWorkspace is the Schema for the devworkspaces API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: DevWorkspaceSpec defines the desired state of DevWorkspace
+          properties:
+            endpointsClass:
+              type: string
+            started:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "operator-sdk generate k8s" to regenerate code after
+                modifying this file Add custom validation using kubebuilder tags:
+                https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html'
+              type: boolean
+            template:
+              description: This schema describes the structure of the devfile object
+              properties:
+                commands:
+                  items:
+                    properties:
+                      actions:
+                        items:
+                          properties:
+                            command:
+                              type: string
+                            component:
+                              type: string
+                            reference:
+                              type: string
+                            referenceContent:
+                              type: string
+                            type:
+                              type: string
+                            workdir:
+                              type: string
+                          required:
+                          - type
+                          type: object
+                        type: array
+                      attributes:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+                components:
+                  items:
+                    description: Describes a workspace component
+                    properties:
+                      memoryLimit:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - memoryLimit
+                    - name
+                    type: object
+                  type: array
+                projects:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                      source:
+                        description: Describes the project's source - type and location
+                        properties:
+                          location:
+                            type: string
+                          type:
+                            type: string
+                        required:
+                        - location
+                        - type
+                        type: object
+                    required:
+                    - name
+                    - source
+                    type: object
+                  type: array
+              required:
+              - components
+              type: object
+          required:
+          - started
+          type: object
+        status:
+          description: DevWorkspaceStatus defines the observed state of DevWorkspace
+          properties:
+            additionalInfo:
+              additionalProperties:
+                type: string
+              description: AdditionalInfo
+              type: object
+            ideUrl:
+              description: URL at which the Editor can be joined
+              type: string
+            workspaceId:
+              description: Id of the workspace
+              type: string
+          required:
+          - workspaceId
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true

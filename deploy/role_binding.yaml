@@ -1,0 +1,11 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: devworkspace-api
+subjects:
+- kind: ServiceAccount
+  name: devworkspace-api
+roleRef:
+  kind: Role
+  name: devworkspace-api
+  apiGroup: rbac.authorization.k8s.io

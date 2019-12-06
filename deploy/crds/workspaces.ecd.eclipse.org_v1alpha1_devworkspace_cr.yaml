@@ -1,0 +1,7 @@
+apiVersion: workspaces.ecd.eclipse.org/v1alpha1
+kind: DevWorkspace
+metadata:
+  name: example-devworkspace
+spec:
+  # Add fields here
+  size: 3
