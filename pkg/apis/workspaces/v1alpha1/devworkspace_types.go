@@ -15,11 +15,22 @@ type DevWorkspaceSpec struct {
 	Template DevWorkspaceTemplateSpec `json:"template,omitempty"`
 }
 
-// This schema describes the structure of the devfile object
+// Structure of the workspace. This is also the specification of a workspace template.
 type DevWorkspaceTemplateSpec struct {
-	Commands          []Command   `json:"commands,omitempty"` // Description of the predefined commands to be available in workspace
-	Projects          []Project   `json:"projects,omitempty"` // Description of the projects, containing names and sources locations
-	Components        []Component `json:"components"`         // Description of the workspace components, such as editor and plugins
+	// Predefined, ready-to-use, workspace-related commands
+	Commands          []Command      `json:"commands,omitempty"`
+	
+	// Projects worked on in the workspace, containing names and sources locations
+	Projects          []Project      `json:"projects,omitempty"`
+	
+	// List of runtimes the developer wants to add into his workspace
+	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge,retainKeys
+	DeveloperRuntimes      []DeveloperRuntime  `json:"userRuntimes,omitempty" patchStrategy:"merge,retainKeys" patchMergeKey:"name"`
+
+	// Description of the workspace components, such as editor and plugins
+	Components        []Component `json:"components,omitempty"`
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
@@ -31,8 +42,8 @@ type DevWorkspaceStatus struct {
 
 	// Id of the workspace
 	WorkspaceId string `json:"workspaceId"`
-	// URL at which the Editor can be joined
-	IdeUrl string `json:"ideUrl,omitempty"`
+	// URL at which the Worksace Editor can be joined
+	MainIdeUrl string `json:"mainIdeUrl,omitempty"`
 	// AdditionalInfo
 	AdditionalInfo map[string]string `json:"additionalInfo,omitempty"`
 }

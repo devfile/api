@@ -26,8 +26,49 @@ type ProjectSource struct {
 	Type     string `json:"type"`     // Project's source type.
 }
 
-// Describes a workspace component
+// Workspace component: Anything that will bring additional features / tooling / behaviour / context
+// to the workspace, in order to make working in it easier.
 type Component struct {
-	Name           string `json:"name"`
-	MemoryLimit    string `json:"memoryLimit"`
+	Name string `json:"name"`
 }
+
+// Component that allows the developer to add a configured container into his workspace
+type DeveloperRuntime struct {
+	Component
+	MemoryLimit string `json:"memoryLimit,omitempty"`
+	Endpoints []Endpoint `json:"endpoints,omitempty"`
+	Container
+}
+
+type Endpoint struct {
+	Name          string                 `json:"name"`
+	TargetPort    int                    `json:"targetPort"`
+	Configuration *EndpointConfiguration `json:"configuration,omitEmpty"`
+	attributes    map[string]string      `json:"attributes,omitempty"`
+}
+
+type EndpointConfiguration struct {
+	Public             bool   `json:"public"`
+	Discoverable       bool   `json:"discoverable"`
+	Protocol           string `json:"protocol,omitmepty"`
+	Schema             string `json:"schema,omitmepty"`
+	Secure             bool   `json:"secure"`
+	CookiesAuthEnabled bool   `json:"public"`
+	Path               string `json:"path",omitempty`
+
+	// +kubebuilder:validation:Enum=ide,terminal
+	Type string `json:"type,omitmepty"`
+}
+
+
+type Container struct {
+	Name           string          `json:"name" yaml:"name"`
+	Image          string          `json:"image" yaml:"image"`
+//	Env            []EnvVar        `json:"env" yaml:"env"`
+//	EditorCommands []EditorCommand `json:"editorCommands" yaml:"editorCommands"`
+//	Volumes        []Volume        `json:"volumes" yaml:"volumes"`
+//	Ports          []ExposedPort   `json:"ports" yaml:"ports"`
+	MemoryLimit    string          `json:"memoryLimit" yaml:"memoryLimit"`
+	MountSources   bool            `json:"mountSources" yaml:"mountSources"`
+}
+
