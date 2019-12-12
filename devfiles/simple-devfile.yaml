@@ -1,0 +1,25 @@
+projects:
+  - name: "devworkspace-spec"
+    git:
+        location: "https://github.com/che-incubator/devworkspace-api"
+        branch: "master"
+commands:
+  - name: Create json schema from Go API
+    actions:
+      - type: exec
+        command: "./buildSchema.sh"
+        component: build-tools
+components:
+  - chePlugin:
+      registry:
+        id: redhat/vscode-yaml/latest
+  - chePlugin:
+      registry:
+        id: ms-vscode/go/latest
+  - cheEditor:
+      registry:
+        id: eclipse/che-theia/latest
+        registryUrl: "external-registry-url"
+  - container:
+      image: some container image with required build tools
+      name: "build-tools" 

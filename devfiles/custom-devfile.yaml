@@ -1,0 +1,15 @@
+projects:
+  - name: "my-project"
+    custom:
+      projectSourceClass: "custom-source"
+      embeddedResource:
+        custom-info: "connexion-information"
+components:
+  - kubernetes:
+      url: "https://somewhere/production-environment.yaml"
+  - custom:
+      componentClass: "NewComponentType"
+      embeddedResource:
+        field1: ""
+        field2: ""
+      name: "myNewComponent"

@@ -23,13 +23,11 @@ type DevWorkspaceTemplateSpec struct {
 	// Projects worked on in the workspace, containing names and sources locations
 	Projects          []Project      `json:"projects,omitempty"`
 	
-	// List of runtimes the developer wants to add into his workspace
+	// List of the workspace components, such as editor and plugins,
+	// user-provided containers, or other types of components
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge,retainKeys
-	DeveloperRuntimes      []DeveloperRuntime  `json:"userRuntimes,omitempty" patchStrategy:"merge,retainKeys" patchMergeKey:"name"`
-
-	// Description of the workspace components, such as editor and plugins
 	Components        []Component `json:"components,omitempty"`
 }
 

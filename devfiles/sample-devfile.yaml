@@ -1,0 +1,38 @@
+projects:
+  - name: "my-project"
+    custom:
+      projectSourceClass: "custom-source"
+      embeddedResource:
+        specific-field: ""
+components:
+  - cheEditor:
+      registry:
+        id: eclipse/che-theia/latest
+  - chePlugin:
+      alias: "ownPlugin"
+      registry:
+        id: acme/newPlugin/latest
+        registryUrl: "https://acme.com/registry/"
+  - chePlugin:
+      alias: "myPlugin"
+      url: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
+  - container:
+      image: "busybox"
+      name: "mycontainer"
+      memoryLimit: "128M"
+      mountSources: true
+      endpoints:
+        - name: term-websockets
+          configuration:
+            protocol: tcp
+            scheme: ws
+            type: terminal
+          targetPort: 4000
+  - custom:
+      componentClass: "NewComponentType"
+      embeddedResource:
+        field1: ""
+        field2: ""
+      name: "myNewComponent"
+  - kubernetes:
+      url: "https://somewhere/production-environment.yaml"

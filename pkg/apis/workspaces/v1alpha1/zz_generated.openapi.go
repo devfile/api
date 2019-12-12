@@ -11,9 +11,60 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspace":       schema_pkg_apis_workspaces_v1alpha1_DevWorkspace(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceSpec":   schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceSpec(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceStatus": schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginLocation":        schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspace":             schema_pkg_apis_workspaces_v1alpha1_DevWorkspace(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceSpec":         schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceSpec(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceStatus":       schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.K8sLikeComponentLocation": schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicComponent":     schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ProjectSource":            schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref),
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"locationType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of plugin location",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"registry": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Location in a plugin registry",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryLocation"),
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Location defined as an URL",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "locationType",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"registry": "Registry",
+								"url":      "Url",
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryLocation"},
 	}
 }
 
@@ -109,9 +160,9 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref common.Reference
 							Format:      "",
 						},
 					},
-					"ideUrl": {
+					"mainIdeUrl": {
 						SchemaProps: spec.SchemaProps{
-							Description: "URL at which the Editor can be joined",
+							Description: "URL at which the Worksace Editor can be joined",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -135,5 +186,185 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref common.Reference
 				Required: []string{"workspaceId"},
 			},
 		},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"locationType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of Kubernetes-like location",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Location in a plugin registry",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"inlined": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Reference to the plugin definition",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "locationType",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"inlined": "Inlined",
+								"url":     "Url",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of project source",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"container": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Container component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ContainerComponent"),
+						},
+					},
+					"cheEditor": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CheEditor component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CheEditorComponent"),
+						},
+					},
+					"chePlugin": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ChePlugin component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginComponent"),
+						},
+					},
+					"kubernetes": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kubernetes component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesComponent"),
+						},
+					},
+					"openshift": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Openshift component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.OpenshiftComponent"),
+						},
+					},
+					"custom": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Custom component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomComponent"),
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "type",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"cheEditor":  "CheEditor",
+								"chePlugin":  "ChePlugin",
+								"container":  "Container",
+								"custom":     "Custom",
+								"kubernetes": "Kubernetes",
+								"openshift":  "Openshift",
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CheEditorComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ContainerComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.OpenshiftComponent"},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"sourceType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of project source",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"git": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Project's Git source",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GitProjectSource"),
+						},
+					},
+					"github": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Project's GitHub source",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GithubProjectSource"),
+						},
+					},
+					"zip": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Project's Zip source",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ZipProjectSource"),
+						},
+					},
+					"custom": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Project's Custom source",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomProjectSource"),
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "sourceType",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"custom": "Custom",
+								"git":    "Git",
+								"github": "Github",
+								"zip":    "Zip",
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GitProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GithubProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ZipProjectSource"},
 	}
 }
