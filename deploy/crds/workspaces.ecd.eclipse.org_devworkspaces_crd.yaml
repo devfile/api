@@ -367,6 +367,88 @@ spec:
                         type: string
                     type: object
                   type: array
+                events:
+                  description: Bindings of commands to events
+                  properties:
+                    custom:
+                      items:
+                        properties:
+                          command:
+                            description: The alias of the command to trigger
+                            type: string
+                          commandClass:
+                            type: string
+                          embeddedResource:
+                            type: object
+                        required:
+                        - command
+                        - commandClass
+                        - embeddedResource
+                        type: object
+                      type: array
+                    editor:
+                      properties:
+                        postClone:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                        postFirstOpen:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                        postOpen:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                      type: object
+                    workspace:
+                      properties:
+                        postCreate:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                        postStop:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                        preStart:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                        preStop:
+                          properties:
+                            command:
+                              description: The alias of the command to trigger
+                              type: string
+                          required:
+                          - command
+                          type: object
+                      type: object
+                  type: object
                 projects:
                   description: Projects worked on in the workspace, containing names
                     and sources locations

@@ -23,6 +23,10 @@ commands:
       embeddedResource:
         myEmbeddedObject:
       label: My very own and special command
+events:
+  workspace:
+    postCreate:
+      command: ""
 components:
   - chePlugin:
       registry:

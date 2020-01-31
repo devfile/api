@@ -19,6 +19,10 @@ type DevWorkspaceSpec struct {
 type DevWorkspaceTemplateSpec struct {
 	// Predefined, ready-to-use, workspace-related commands
 	Commands          []Command      `json:"commands,omitempty"`
+	
+	// Bindings of commands to events
+	// +optional
+	Events            Events      `json:"events,omitempty"`
 
 	// Projects worked on in the workspace, containing names and sources locations
 	Projects          []Project      `json:"projects,omitempty"`
