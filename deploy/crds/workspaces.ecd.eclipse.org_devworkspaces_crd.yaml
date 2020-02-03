@@ -47,33 +47,118 @@ spec:
                   description: Predefined, ready-to-use, workspace-related commands
                   items:
                     properties:
-                      actions:
-                        items:
-                          properties:
-                            command:
+                      composite:
+                        description: Composite command
+                        properties:
+                          alias:
+                            type: string
+                          attributes:
+                            additionalProperties:
                               type: string
-                            component:
+                            type: object
+                          commands:
+                            description: The commands that comprise this composite
+                              command
+                            items:
                               type: string
-                            reference:
-                              type: string
-                            referenceContent:
-                              type: string
-                            type:
-                              type: string
-                            workdir:
-                              type: string
-                          required:
-                          - type
-                          type: object
-                        type: array
-                      attributes:
-                        additionalProperties:
-                          type: string
+                            type: array
+                          label:
+                            type: string
+                          parallel:
+                            type: boolean
                         type: object
-                      name:
+                      custom:
+                        description: Custom command
+                        properties:
+                          alias:
+                            type: string
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          commandClass:
+                            type: string
+                          embeddedResource:
+                            type: object
+                          label:
+                            type: string
+                        required:
+                        - commandClass
+                        - embeddedResource
+                        type: object
+                      exec:
+                        description: Exec command
+                        properties:
+                          alias:
+                            type: string
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          commandLine:
+                            description: The actual command-line string
+                            type: string
+                          component:
+                            description: Describes component to which given action
+                              relates
+                            type: string
+                          label:
+                            type: string
+                          workdir:
+                            description: Working directory where the command should
+                              be executed
+                            type: string
+                        required:
+                        - commandLine
+                        type: object
+                      type:
+                        description: Type of workspace command
+                        enum:
+                        - Exec
+                        - VscodeTask
+                        - VscodeLaunch
+                        - Custom
                         type: string
-                    required:
-                    - name
+                      vscodeLaunch:
+                        description: VscodeLaunch command
+                        properties:
+                          alias:
+                            type: string
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          inlined:
+                            description: Embedded content of the vscode configuration
+                              file
+                            type: string
+                          locationType:
+                            description: Type of Vscode configuration command location
+                            type: string
+                          url:
+                            description: Location as an absolute of relative URL
+                            type: string
+                        type: object
+                      vscodeTask:
+                        description: VscodeTask command
+                        properties:
+                          alias:
+                            type: string
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          inlined:
+                            description: Embedded content of the vscode configuration
+                              file
+                            type: string
+                          locationType:
+                            description: Type of Vscode configuration command location
+                            type: string
+                          url:
+                            description: Location as an absolute of relative URL
+                            type: string
+                        type: object
                     type: object
                   type: array
                 components:

@@ -11,13 +11,15 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginLocation":        schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspace":             schema_pkg_apis_workspaces_v1alpha1_DevWorkspace(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceSpec":         schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceSpec(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceStatus":       schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.K8sLikeComponentLocation": schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicComponent":     schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref),
-		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ProjectSource":            schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginLocation":                  schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspace":                       schema_pkg_apis_workspaces_v1alpha1_DevWorkspace(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceSpec":                   schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceSpec(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceStatus":                 schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.K8sLikeComponentLocation":           schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicCommand":                 schema_pkg_apis_workspaces_v1alpha1_PolymorphicCommand(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicComponent":               schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ProjectSource":                      schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VscodeConfigurationCommandLocation": schema_pkg_apis_workspaces_v1alpha1_VscodeConfigurationCommandLocation(ref),
 	}
 }
 
@@ -235,6 +237,73 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 	}
 }
 
+func schema_pkg_apis_workspaces_v1alpha1_PolymorphicCommand(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of workspace command",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"exec": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Exec command",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ExecCommand"),
+						},
+					},
+					"vscodeTask": {
+						SchemaProps: spec.SchemaProps{
+							Description: "VscodeTask command",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VscodeConfigurationCommand"),
+						},
+					},
+					"vscodeLaunch": {
+						SchemaProps: spec.SchemaProps{
+							Description: "VscodeLaunch command",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VscodeConfigurationCommand"),
+						},
+					},
+					"composite": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Composite command",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CompositeCommand"),
+						},
+					},
+					"custom": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Custom command",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomCommand"),
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "type",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"composite":    "Composite",
+								"custom":       "Custom",
+								"exec":         "Exec",
+								"vscodeLaunch": "VscodeLaunch",
+								"vscodeTask":   "VscodeTask",
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CompositeCommand", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomCommand", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ExecCommand", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VscodeConfigurationCommand"},
+	}
+}
+
 func schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -366,5 +435,51 @@ func schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref common.ReferenceCallb
 		},
 		Dependencies: []string{
 			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GitProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.GithubProjectSource", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ZipProjectSource"},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_VscodeConfigurationCommandLocation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"locationType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of Vscode configuration command location",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Location as an absolute of relative URL",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"inlined": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Embedded content of the vscode configuration file",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "locationType",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"inlined": "Inlined",
+								"url":     "Url",
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 }

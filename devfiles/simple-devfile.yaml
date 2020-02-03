@@ -4,11 +4,25 @@ projects:
         location: "https://github.com/che-incubator/devworkspace-api"
         branch: "master"
 commands:
-  - name: Create json schema from Go API
-    actions:
-      - type: exec
-        command: "./buildSchema.sh"
-        component: build-tools
+  - exec:
+      commandLine: "./buildSchema.sh"
+      component: build-tools
+      alias: buildSchema
+  - vscodeTask:
+      alias: openDevfile
+      inlined:
+        json        
+  - composite:
+      Label: Build schema and open devfile
+      commands:
+        - buildSchema
+        - openDevfile
+      parallel: false
+  - custom:
+      commandClass: myCommandType
+      embeddedResource:
+        myEmbeddedObject:
+      label: My very own and special command
 components:
   - chePlugin:
       registry:
