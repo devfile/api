@@ -1,0 +1,8 @@
+{
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": "--fast",
+  "yaml.schemas": {
+      "./schemas/devfile.json": "devfile-support/samples/*devfile.yaml",
+      "./schemas/devworkspace.json": "samples/*devworkspace.yaml"
+  }
+}
