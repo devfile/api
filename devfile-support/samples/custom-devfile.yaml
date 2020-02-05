@@ -1,3 +1,5 @@
+name: "my-devfile"
+schemaVersion: "2.0.0-beta"
 projects:
   - name: "my-project"
     custom:

@@ -1,3 +1,5 @@
+name: "myDevile"
+schemaVersion: "2.0.0"
 projects:
   - name: "devworkspace-spec"
     git:

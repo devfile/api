@@ -1,0 +1,45 @@
+kind: "DevWorkspace"
+apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+metadata:
+  "name": "myWorkspace"
+spec:
+  started: true
+  endpointsClass: 'openshift-auth'
+  template:
+    projects:
+      - name: "devworkspace-spec"
+        git:
+            location: "https://github.com/che-incubator/devworkspace-api"
+            branch: "master"
+    components:
+      - cheEditor:
+          registry:
+            id: eclipse/che-theia/latest
+      - chePlugin:
+          alias: "ownPlugin"
+          registry:
+            id: acme/newPlugin/latest
+            registryUrl: "https://acme.com/registry/"
+      - chePlugin:
+          alias: "myPlugin"
+          url: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
+      - container:
+          image: "busybox"
+          name: "mycontainer"
+          memoryLimit: "128M"
+          mountSources: true
+          endpoints:
+            - name: term-websockets
+              configuration:
+                protocol: tcp
+                scheme: ws
+                type: terminal
+              targetPort: 4000
+      - custom:
+          name: "myNewComponent"
+          componentClass: "NewComponentType"
+          embeddedResource:
+            field1: ""
+            field2: ""
+      - kubernetes:
+          url: "https://somewhere/production-environment.yaml"
