@@ -1,6 +1,4 @@
-# DevWorkspace API
-
-K8S-native Api for a cloud develoment workspace specification [Draft proposal]
+# Kube-native API for cloud development workspaces specification
 
 Sources for this API are defined in Go code, starting from the
 [devworkspace_types.go source file](pkg/apis/workspaces/v1alpha1/devworkspace_types.go)
@@ -28,3 +26,6 @@ In the root directory, just run the following command:
 ```
 ./docker-run.sh build.sh
 ``` 
+## Specification status
+
+This work is still in an early stage of specification, and the related API and schemas are still a draft proposal. 
