@@ -14,7 +14,7 @@ From these Go sources, several files are generated:
 
 Generated files are created by a build script (see section [How to build](#how-to-build)).
 
-### Devfile 2.0 support
+### Devfile 2.0.0 file format
 
 A Subset of this `DevWorkspace` API defines a structure (workspace template content), which is also at the core of the **Devfile 2.0** format specification.
 For more information about this, please look into
