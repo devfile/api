@@ -26,7 +26,7 @@ then
   echo "####"
   echo "#### Please install the 'jsonpatch' tool before being able to use this script"
   echo "#### For this use:"
-  echo "####    pip3 install jsonpatch"
+  echo "####    pip3 install --user jsonpatch"
   echo "####"
   echo "###############"
   exit 1
