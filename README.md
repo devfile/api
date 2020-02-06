@@ -28,4 +28,16 @@ In the root directory, just run the following command:
 ``` 
 ## Specification status
 
-This work is still in an early stage of specification, and the related API and schemas are still a draft proposal. 
+This work is still in an early stage of specification, and the related API and schemas are still a draft proposal.
+
+## Quickly open and test ?
+
+In order to test existing or new Devfile 2.0 or DevWorkspace sample files in a self-service Che workspace (hosted on che.openshift.io), just click on the button below:
+
+[![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://che.openshift.io/f/?url=https://github.com/che-incubator/devworkspace-api)
+
+As soon as the workspace is opened, you should be able to:
+- open the `yaml` files in the following folders:
+  - `samples/`
+  - `devfile-support/samples`
+- have `yaml` language support (completion and documentation) based on the current Json schemas.
