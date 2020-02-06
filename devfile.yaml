@@ -11,3 +11,16 @@ components:
     alias: go-plugin
   - id: redhat/vscode-yaml/latest
     type: chePlugin
+  - mountSources: true
+    command:
+      - /bin/sh
+    args:
+      - >-
+        sleep 10 ;  sed -e
+        's:/schemas/:/che-incubator-devworkspace-api/schemas/:g'
+        /projects/che-incubator-devworkspace-api/.theia/settings.json >
+        /projects/.theia/settings.json; sleep infinity
+      - '-c'
+    memoryLimit: 56Mi
+    type: dockerimage
+    image: busybox
