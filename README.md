@@ -7,7 +7,7 @@ Sources for this API are defined in Go code, starting from the
 
 From these Go sources, several files are generated:
 - A Kubernetes Custom Resource Definition with an embedded OpenApi schema,
-- json schemas (in the [schemas](schemas) folder) derived from the above custom resource definition, to specify the synax of:
+- json schemas (in the [schemas](schemas) folder) generated from the above Custom Resource Definition, to specify the syntax of:
   - the DevWorkspace CRD itself
   - the format for templates of a DevWorkspace (template content of a workspace, without runtime information),
   - the Devfile 2.0 format, which is expected to be derived from the `DevWorkspace` API.
