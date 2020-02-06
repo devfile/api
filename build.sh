@@ -45,7 +45,9 @@ mkdir -p ${BASE_DIR}/generated
 
 operator-sdk generate k8s
 operator-sdk generate openapi
-yq '.spec.validation.openAPIV3Schema' ${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspaces_crd.yaml > ${BASE_DIR}/schemas/devworkspace.json
+yq '.spec.validation.openAPIV3Schema' \
+  ${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspaces_crd.yaml \
+  > ${BASE_DIR}/schemas/devworkspace.json
 
 jq ".properties.spec.properties.template" ${BASE_DIR}/schemas/devworkspace.json > ${BASE_DIR}/schemas/devworkspace-template-spec.json
 
