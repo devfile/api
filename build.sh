@@ -29,7 +29,7 @@ then
   exit 1
 fi
 
-if ! which jsonpatch &> /dev/null
+if ! command -v jsonpatch &> /dev/null
 then
   echo
   echo "#### ERROR ####"
