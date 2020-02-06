@@ -22,7 +22,7 @@ the [Devfile support Readme](devfile-support/README.md)
 
 ## How to build
 
-In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`).
+In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
 In the root directory, just run the following command:
 
 ```
