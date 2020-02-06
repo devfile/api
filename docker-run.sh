@@ -17,7 +17,7 @@ GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //')
 WORKDIR="/home/user/go/src/${GO_MODULE}"
 # Container image
-IMAGE_NAME="che-incubator/devworkspace-build-prerequisistes"
+IMAGE_NAME="che-incubator/devworkspace-build-prerequisites"
 
 # Operator SDK
 OPERATOR_SDK_VERSION=v0.12.0
@@ -46,28 +46,28 @@ check() {
 build() {
   printf "%bBuilding image %b${IMAGE_NAME}${NC}..." "${BOLD}" "${BLUE}"
   if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} -t ${IMAGE_NAME} > docker-build-log 2>&1 -<<EOF
-  FROM python:3-alpine
-  ARG OPERATOR_SDK_VERSION
-  ENV GOROOT /usr/lib/go
- 
-  RUN apk add --no-cache --update curl bash jq go \
-  && pip3 install yq \
-  && pip3 install jsonpatch
+FROM python:3-alpine
+ARG OPERATOR_SDK_VERSION
+ENV GOROOT /usr/lib/go
 
-  RUN curl -JL https://github.com/operator-framework/operator-sdk/releases/download/${OPERATOR_SDK_VERSION}/operator-sdk-${OPERATOR_SDK_VERSION}-x86_64-linux-gnu -o /bin/operator-sdk && chmod a+x /bin/operator-sdk
-  RUN mkdir -p /home/user/go && chmod -R a+w /home/user
-  ENV HOME /home/user
-  ENV GOPATH /home/user/go
-  WORKDIR ${WORKDIR}
+RUN apk add --no-cache --update curl bash jq go \
+&& pip3 install yq \
+&& pip3 install jsonpatch
+
+RUN curl -JL https://github.com/operator-framework/operator-sdk/releases/download/${OPERATOR_SDK_VERSION}/operator-sdk-${OPERATOR_SDK_VERSION}-x86_64-linux-gnu -o /bin/operator-sdk && chmod a+x /bin/operator-sdk
+RUN mkdir -p /home/user/go && chmod -R a+w /home/user
+ENV HOME /home/user
+ENV GOPATH /home/user/go
+WORKDIR ${WORKDIR}
 EOF
-then
-  printf "%b[OK]%b\n" "${GREEN}" "${NC}"
-  rm docker-build-log
-else
-  printf "%bFailure%b\n" "${RED}" "${NC}"
-  cat docker-build-log
-  exit 1
-fi
+  then
+    printf "%b[OK]%b\n" "${GREEN}" "${NC}"
+    rm docker-build-log
+  else
+    printf "%bFailure%b\n" "${RED}" "${NC}"
+    cat docker-build-log
+    exit 1
+  fi
 }
 
 
