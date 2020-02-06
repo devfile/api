@@ -36,7 +36,7 @@ check() {
     exit 1
   fi
   echo "check $1"
-  if [ ! -f "$1" ] || [ ! -x "$1"]; then
+  if [ ! -f "$1" ] || [ ! -x "$1" ]; then
     printf "%bError: %bscript %b provided does not exist. Command is $ docker-run.sh <script-to-run> [optional-arguments-of-script-to-run]\n" "${RED}" "${NC}" "${1}"
     exit 1
   fi
