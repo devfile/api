@@ -1,0 +1,28 @@
+apiVersion: 1.0.0
+metadata:
+  name: devworkspace-api
+components:
+  - id: ms-vscode/go/latest
+    memoryLimit: 512Mi
+    preferences:
+      go.lintTool: golangci-lint
+      go.lintFlags: '--fast'
+    type: chePlugin
+    alias: go-plugin
+  - id: redhat/vscode-yaml/latest
+    type: chePlugin
+  - mountSources: true
+    command:
+      - /bin/sh
+    args:
+      - '-c'
+      - >-
+        while [ ! -f /projects/devworkspace-api/.theia/settings.json -o 
+        ! -f /projects/.theia/settings.json ]; do echo "Waiting for the clone end" ; sleep 2; done;
+        sleep 2 ; echo "Updating the yaml schema bindings" ; sed -e
+        's:/schemas/:/devworkspace-api/schemas/:g'
+        /projects/devworkspace-api/.theia/settings.json >
+        /projects/.theia/settings.json; sleep infinity
+    memoryLimit: 56Mi
+    type: dockerimage
+    image: busybox

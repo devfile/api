@@ -1,3 +1,5 @@
+name: "devfile example"
+schemaVersion: "2.0.0"
 projects:
   - name: "my-project"
     custom:

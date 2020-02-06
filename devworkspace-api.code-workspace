@@ -20,12 +20,12 @@
             "signatureHelp": true,
             "rename": true,
             "workspaceSymbols": true,
-            "diagnostics": true, // for diagnostics as you type
+            "diagnostics": true // for diagnostics as you type
         },
         "go.autocompleteUnimportedPackages": true,
         "yaml.schemas": {
-            "./generated/schema.json": "*/*devfile.yaml",
-        },
-    
+            "./schemas/devfile.json": "devfile-support/samples/*devfile.yaml",
+            "./schemas/devworkspace.json": "samples/*devworkspace.yaml"
+        }
     }
 }

@@ -1,0 +1,569 @@
+{
+  "description": "Structure of the workspace. This is also the specification of a workspace template.",
+  "properties": {
+    "commands": {
+      "description": "Predefined, ready-to-use, workspace-related commands",
+      "items": {
+        "properties": {
+          "composite": {
+            "description": "Composite command",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "attributes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "commands": {
+                "description": "The commands that comprise this composite command",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "label": {
+                "type": "string"
+              },
+              "parallel": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "custom": {
+            "description": "Custom command",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "attributes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "commandClass": {
+                "type": "string"
+              },
+              "embeddedResource": {
+                "type": "object"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "commandClass",
+              "embeddedResource"
+            ],
+            "type": "object"
+          },
+          "exec": {
+            "description": "Exec command",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "attributes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "commandLine": {
+                "description": "The actual command-line string",
+                "type": "string"
+              },
+              "component": {
+                "description": "Describes component to which given action relates",
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "workdir": {
+                "description": "Working directory where the command should be executed",
+                "type": "string"
+              }
+            },
+            "required": [
+              "commandLine"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "description": "Type of workspace command",
+            "enum": [
+              "Exec",
+              "VscodeTask",
+              "VscodeLaunch",
+              "Custom"
+            ],
+            "type": "string"
+          },
+          "vscodeLaunch": {
+            "description": "VscodeLaunch command",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "attributes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "inlined": {
+                "description": "Embedded content of the vscode configuration file",
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of Vscode configuration command location",
+                "type": "string"
+              },
+              "url": {
+                "description": "Location as an absolute of relative URL",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "vscodeTask": {
+            "description": "VscodeTask command",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "attributes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "inlined": {
+                "description": "Embedded content of the vscode configuration file",
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of Vscode configuration command location",
+                "type": "string"
+              },
+              "url": {
+                "description": "Location as an absolute of relative URL",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "components": {
+      "description": "List of the workspace components, such as editor and plugins, user-provided containers, or other types of components",
+      "items": {
+        "properties": {
+          "cheEditor": {
+            "description": "CheEditor component",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of plugin location",
+                "enum": [
+                  "Registry",
+                  "Url"
+                ],
+                "type": "string"
+              },
+              "memoryLimit": {
+                "type": "string"
+              },
+              "registry": {
+                "description": "Location in a plugin registry",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "registryUrl": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              },
+              "url": {
+                "description": "Location defined as an URL",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "chePlugin": {
+            "description": "ChePlugin component",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of plugin location",
+                "enum": [
+                  "Registry",
+                  "Url"
+                ],
+                "type": "string"
+              },
+              "memoryLimit": {
+                "type": "string"
+              },
+              "registry": {
+                "description": "Location in a plugin registry",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "registryUrl": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              },
+              "url": {
+                "description": "Location defined as an URL",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "container": {
+            "description": "Container component",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "endpoints": {
+                "items": {
+                  "properties": {
+                    "attributes": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object"
+                    },
+                    "configuration": {
+                      "properties": {
+                        "cookiesAuthEnabled": {
+                          "type": "boolean"
+                        },
+                        "discoverable": {
+                          "type": "boolean"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "default": "tcp",
+                          "type": "string"
+                        },
+                        "public": {
+                          "type": "boolean"
+                        },
+                        "scheme": {
+                          "default": "http",
+                          "type": "string"
+                        },
+                        "secure": {
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "enum": [
+                            "ide",
+                            "terminal",
+                            "ide-dev"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "targetPort": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "configuration",
+                    "name",
+                    "targetPort"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "env": {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "value"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "image": {
+                "type": "string"
+              },
+              "memoryLimit": {
+                "type": "string"
+              },
+              "mountSources": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "volumes": {
+                "items": {
+                  "description": "Volume that should be mounted to a component container",
+                  "properties": {
+                    "mountPath": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The volume name. If several components mount the same volume then they will reuse the volume and will be able to access to the same files",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "mountPath",
+                    "name"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "image",
+              "name"
+            ],
+            "type": "object"
+          },
+          "custom": {
+            "description": "Custom component",
+            "properties": {
+              "componentClass": {
+                "type": "string"
+              },
+              "embeddedResource": {
+                "type": "object"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "componentClass",
+              "embeddedResource",
+              "name"
+            ],
+            "type": "object"
+          },
+          "kubernetes": {
+            "description": "Kubernetes component",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "inlined": {
+                "description": "Reference to the plugin definition",
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of Kubernetes-like location",
+                "type": "string"
+              },
+              "url": {
+                "description": "Location in a plugin registry",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "openshift": {
+            "description": "Openshift component",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "inlined": {
+                "description": "Reference to the plugin definition",
+                "type": "string"
+              },
+              "locationType": {
+                "description": "Type of Kubernetes-like location",
+                "type": "string"
+              },
+              "url": {
+                "description": "Location in a plugin registry",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": {
+            "description": "Type of project source",
+            "enum": [
+              "Container",
+              "Kubernetes",
+              "Openshift",
+              "CheEditor",
+              "ChePlugin",
+              "Custom"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "projects": {
+      "description": "Projects worked on in the workspace, containing names and sources locations",
+      "items": {
+        "properties": {
+          "clonePath": {
+            "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
+            "type": "string"
+          },
+          "custom": {
+            "description": "Project's Custom source",
+            "properties": {
+              "embeddedResource": {
+                "type": "object"
+              },
+              "projectSourceClass": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "embeddedResource",
+              "projectSourceClass"
+            ],
+            "type": "object"
+          },
+          "git": {
+            "description": "Project's Git source",
+            "properties": {
+              "branch": {
+                "description": "The branch to check",
+                "type": "string"
+              },
+              "location": {
+                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                "type": "string"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string"
+              },
+              "startPoint": {
+                "description": "The tag or commit id to reset the checked out branch to",
+                "type": "string"
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "type": "object"
+          },
+          "github": {
+            "description": "Project's GitHub source",
+            "properties": {
+              "branch": {
+                "description": "The branch to check",
+                "type": "string"
+              },
+              "location": {
+                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                "type": "string"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string"
+              },
+              "startPoint": {
+                "description": "The tag or commit id to reset the checked out branch to",
+                "type": "string"
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "type": "object"
+          },
+          "name": {
+            "description": "Project name",
+            "type": "string"
+          },
+          "sourceType": {
+            "description": "Type of project source",
+            "enum": [
+              "Git",
+              "Github",
+              "Zip",
+              "Custom"
+            ],
+            "type": "string"
+          },
+          "zip": {
+            "description": "Project's Zip source",
+            "properties": {
+              "location": {
+                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                "type": "string"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}
