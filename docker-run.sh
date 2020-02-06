@@ -10,8 +10,6 @@
 # Contributors:
 #   Red Hat, Inc. - initial API and implementation
 
-set
-
 # git ROOT directory used to mount filesystem
 GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //')
