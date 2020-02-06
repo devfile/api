@@ -17,7 +17,9 @@ components:
     args:
       - '-c'
       - >-
-        sleep 10 && mkdir -p /projects/.theia/ ; sed -e
+        while [ ! -f /projects/devworkspace-api/.theia/settings.json -o 
+        ! -f /projects/.theia/settings.json ]; do sleep 2; done;
+        sleep 2 ; sed -e
         's:/schemas/:/devworkspace-api/schemas/:g'
         /projects/devworkspace-api/.theia/settings.json >
         /projects/.theia/settings.json; sleep infinity
