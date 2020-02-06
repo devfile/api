@@ -6,7 +6,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 BOLD='\033[1m'
 
-if ! which yq &> /dev/null
+if ! command -v yq &> /dev/null
 then
   echo
   echo "#### ERROR ####"
