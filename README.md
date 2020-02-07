@@ -1,5 +1,11 @@
 # Kube-native API for cloud development workspaces specification
 
+<div id="header" align="center">
+
+[![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://che.openshift.io/f/?url=https://github.com/che-incubator/devworkspace-api)
+
+</div>
+
 Sources for this API are defined in Go code, starting from the
 [devworkspace_types.go source file](pkg/apis/workspaces/v1alpha1/devworkspace_types.go)
 
