@@ -15,6 +15,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspace":                       schema_pkg_apis_workspaces_v1alpha1_DevWorkspace(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceSpec":                   schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceSpec(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceStatus":                 schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplate":               schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplate(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplateSpec":           schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.K8sLikeComponentLocation":           schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicCommand":                 schema_pkg_apis_workspaces_v1alpha1_PolymorphicCommand(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicComponent":               schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref),
@@ -188,6 +190,99 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceStatus(ref common.Reference
 				Required: []string{"workspaceId"},
 			},
 		},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplate(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "DevWorkspaceTemplate is the Schema for the devworkspacetemplates API",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplateSpec"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplateSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Structure of the workspace. This is also the specification of a workspace template.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"commands": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Predefined, ready-to-use, workspace-related commands",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command"),
+									},
+								},
+							},
+						},
+					},
+					"projects": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Projects worked on in the workspace, containing names and sources locations",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"),
+									},
+								},
+							},
+						},
+					},
+					"components": {
+						SchemaProps: spec.SchemaProps{
+							Description: "List of the workspace components, such as editor and plugins, user-provided containers, or other types of components",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"},
 	}
 }
 
