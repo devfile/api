@@ -1,0 +1,13 @@
+kind: "DevWorkspace"
+apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+metadata:
+  "name": "with-nodejs-parent"
+spec:
+  started: true
+  template:
+    parent:
+      uri: https://raw.githubusercontent.com/che-incubator/devworkspace-api/proposal-25-variant-1-define-stacks/devfile-support/samples/nodejs-stack.devfile.yaml
+    commands:
+      - exec:
+          label: project run
+          commandLine: echo "hello"

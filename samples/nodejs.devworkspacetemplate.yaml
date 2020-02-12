@@ -1,0 +1,65 @@
+kind: "DevWorkspaceTemplate"
+apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+metadata:
+  "name": "nodejs-stack"
+spec:
+  projects:
+    - name: nodejs-web-app    
+      git:
+        location: "https://github.com/che-samples/web-nodejs-sample.git"
+  components:
+    - chePlugin:
+        registryEntry:
+          id: che-incubator/typescript/latest
+        memoryLimit: 512Mi
+    - container:
+        name: nodejs
+        image: quay.io/eclipse/che-nodejs10-ubi:nightly
+        memoryLimit: 512Mi
+        endpoints:
+          - name: nodejs
+            configuration:
+                protocol: tcp
+                scheme: http
+            targetPort: 3000
+        mountSources: true
+  commands:
+    - exec:
+        label: download dependencies
+        component: nodejs
+        commandLine: npm install
+        workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
+    - exec:
+        label: run the web app
+        component: nodejs
+        commandLine: nodemon app.js
+        workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
+    - exec:
+        label: run the web app (debugging enabled)
+        component: nodejs
+        commandLine: nodemon --inspect app.js
+        workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
+    - exec:
+        label: stop the web app
+        component: nodejs
+        commandLine: >-
+            node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+            echo "Stopping node server with PIDs: ${node_server_pids}" && 
+            kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
+    - vscodeLaunch:
+        label: Attach remote debugger
+        inlined: |
+          {
+            "version": "0.2.0",
+            "configurations": [
+              {
+                "type": "node",
+                "request": "attach",
+                "name": "Attach to Remote",
+                "address": "localhost",
+                "port": 9229,
+                "localRoot": "${workspaceFolder}",
+                "remoteRoot": "${workspaceFolder}"
+              }
+            ]
+          }

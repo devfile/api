@@ -1,0 +1,14 @@
+kind: "DevWorkspace"
+apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+metadata:
+  "name": "with-nodejs-parent"
+spec:
+  started: true
+  template:
+    parent:
+      kubernetes:
+        name: nodejs-stack
+    commands:
+      - exec:
+          label: project run
+          commandLine: echo "hello"
