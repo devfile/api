@@ -1,4 +1,5 @@
 {
+  "additionalProperties": false,
   "description": "DevWorkspace is the Schema for the devworkspaces API",
   "properties": {
     "apiVersion": {
@@ -200,21 +201,21 @@
                       "locationType": {
                         "description": "Type of plugin location",
                         "enum": [
-                          "Registry",
-                          "Url"
+                          "RegistryEntry",
+                          "Uri"
                         ],
                         "type": "string"
                       },
                       "memoryLimit": {
                         "type": "string"
                       },
-                      "registry": {
-                        "description": "Location in a plugin registry",
+                      "registryEntry": {
+                        "description": "Location of an entry inside a plugin registry",
                         "properties": {
-                          "id": {
+                          "baseUrl": {
                             "type": "string"
                           },
-                          "registryUrl": {
+                          "id": {
                             "type": "string"
                           }
                         },
@@ -223,8 +224,8 @@
                         ],
                         "type": "object"
                       },
-                      "url": {
-                        "description": "Location defined as an URL",
+                      "uri": {
+                        "description": "Location defined as an URI",
                         "type": "string"
                       }
                     },
@@ -239,21 +240,21 @@
                       "locationType": {
                         "description": "Type of plugin location",
                         "enum": [
-                          "Registry",
-                          "Url"
+                          "RegistryEntry",
+                          "Uri"
                         ],
                         "type": "string"
                       },
                       "memoryLimit": {
                         "type": "string"
                       },
-                      "registry": {
-                        "description": "Location in a plugin registry",
+                      "registryEntry": {
+                        "description": "Location of an entry inside a plugin registry",
                         "properties": {
-                          "id": {
+                          "baseUrl": {
                             "type": "string"
                           },
-                          "registryUrl": {
+                          "id": {
                             "type": "string"
                           }
                         },
@@ -262,8 +263,8 @@
                         ],
                         "type": "object"
                       },
-                      "url": {
-                        "description": "Location defined as an URL",
+                      "uri": {
+                        "description": "Location defined as an URI",
                         "type": "string"
                       }
                     },
@@ -318,9 +319,6 @@
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "type"
-                              ],
                               "type": "object"
                             },
                             "name": {
@@ -474,6 +472,55 @@
                 "type": "object"
               },
               "type": "array"
+            },
+            "parent": {
+              "description": "Parent workspace template",
+              "properties": {
+                "kubernetes": {
+                  "description": "Reference to a Kubernetes CRD of type DevWorkspaceTemplate",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                },
+                "locationType": {
+                  "description": "Type of parent location",
+                  "enum": [
+                    "Uri",
+                    "RegistryEntry",
+                    "Kubernetes"
+                  ],
+                  "type": "string"
+                },
+                "registryEntry": {
+                  "description": "Entry in a registry (base URL + ID) that contains a Devfile yaml file",
+                  "properties": {
+                    "baseUrl": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                "uri": {
+                  "description": "Uri of a Devfile yaml file",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "projects": {
               "description": "Projects worked on in the workspace, containing names and sources locations",

@@ -18,6 +18,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplate":               schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplate(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.DevWorkspaceTemplateSpec":           schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.K8sLikeComponentLocation":           schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref),
+		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ParentLocation":                     schema_pkg_apis_workspaces_v1alpha1_ParentLocation(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicCommand":                 schema_pkg_apis_workspaces_v1alpha1_PolymorphicCommand(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.PolymorphicComponent":               schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref),
 		"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ProjectSource":                      schema_pkg_apis_workspaces_v1alpha1_ProjectSource(ref),
@@ -38,15 +39,15 @@ func schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref common.ReferenceC
 							Format:      "",
 						},
 					},
-					"registry": {
+					"registryEntry": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Location in a plugin registry",
-							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryLocation"),
+							Description: "Location of an entry inside a plugin registry",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryEntryPluginLocation"),
 						},
 					},
-					"url": {
+					"uri": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Location defined as an URL",
+							Description: "Location defined as an URI",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -59,8 +60,8 @@ func schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref common.ReferenceC
 						map[string]interface{}{
 							"discriminator": "locationType",
 							"fields-to-discriminateBy": map[string]interface{}{
-								"registry": "Registry",
-								"url":      "Url",
+								"registryEntry": "RegistryEntry",
+								"uri":           "Uri",
 							},
 						},
 					},
@@ -68,7 +69,7 @@ func schema_pkg_apis_workspaces_v1alpha1_ChePluginLocation(ref common.ReferenceC
 			},
 		},
 		Dependencies: []string{
-			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryLocation"},
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryEntryPluginLocation"},
 	}
 }
 
@@ -239,6 +240,12 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.Ref
 				Description: "Structure of the workspace. This is also the specification of a workspace template.",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
+					"parent": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Parent workspace template",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Parent"),
+						},
+					},
 					"commands": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Predefined, ready-to-use, workspace-related commands",
@@ -282,7 +289,7 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.Ref
 			},
 		},
 		Dependencies: []string{
-			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"},
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Parent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"},
 	}
 }
 
@@ -329,6 +336,61 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 				},
 			},
 		},
+	}
+}
+
+func schema_pkg_apis_workspaces_v1alpha1_ParentLocation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Location from where the parent workspace structure is retrieved",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"locationType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Type of parent location",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"uri": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Uri of a Devfile yaml file",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"registryEntry": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Entry in a registry (base URL + ID) that contains a Devfile yaml file",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryEntryParentLocation"),
+						},
+					},
+					"kubernetes": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Reference to a Kubernetes CRD of type DevWorkspaceTemplate",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesCustomResourceParentLocation"),
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-unions": []interface{}{
+						map[string]interface{}{
+							"discriminator": "locationType",
+							"fields-to-discriminateBy": map[string]interface{}{
+								"kubernetes":    "Kubernetes",
+								"registryEntry": "RegistryEntry",
+								"uri":           "Uri",
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesCustomResourceParentLocation", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.RegistryEntryParentLocation"},
 	}
 }
 

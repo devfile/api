@@ -1,20 +1,20 @@
 package v1alpha1
 
-type RegistryLocation struct {
+type RegistryEntryPluginLocation struct {
 	Id string  `json:"id"`
 
 	// +optional
-	RegistryUrl string `json:"registryUrl,omitempty"`
+	baseUrl string `json:"baseUrl,omitempty"`
 }
 
 // PluginLocationType describes the type of location where the plugin definition can be fetched from.
 // Only one of the following values may be specified.
-// +kubebuilder:validation:Enum= Registry;Url
+// +kubebuilder:validation:Enum= RegistryEntry;Uri
 type PluginLocationType string
 
 const (
-	RegistryPluginLocationType    PluginLocationType = "Registry"
-	UrlPluginLocationType    PluginLocationType = "Url"
+	RegistryEntryPluginLocationType    PluginLocationType = "RegistryEntry"
+	UriPluginLocationType    PluginLocationType = "Uri"
 )
 
 // +k8s:openapi-gen=true
@@ -26,13 +26,13 @@ type ChePluginLocation struct {
 	// +optional
 	LocationType PluginLocationType `json:"locationType"`
 
-	// Location in a plugin registry
+	// Location of an entry inside a plugin registry
 	// +optional
-	Registry *RegistryLocation `json:"registry,omitempty"`
+	RegistryEntry *RegistryEntryPluginLocation `json:"registryEntry,omitempty"`
 
-	// Location defined as an URL
+	// Location defined as an URI
 	// +optional
-	Url string `json:"url,omitempty"`
+	Uri string `json:"uri,omitempty"`
 }
 
 type PluginLikeComponent struct {

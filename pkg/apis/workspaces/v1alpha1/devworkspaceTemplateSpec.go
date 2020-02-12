@@ -3,6 +3,9 @@ package v1alpha1
 // Structure of the workspace. This is also the specification of a workspace template.
 // +k8s:openapi-gen=true
 type DevWorkspaceTemplateSpec struct {
+	// Parent workspace template
+	Parent            *Parent        `json:"parent,omitempty"`
+
 	// Predefined, ready-to-use, workspace-related commands
 	Commands          []Command      `json:"commands,omitempty"`
 

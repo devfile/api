@@ -34,6 +34,7 @@ type EndpointConfiguration struct {
 	Path string `json:"path,omitempty"`
 
 	// +kubebuilder:validation:Enum=ide;terminal;ide-dev
+	// +optional
 	Type string `json:"type,omitmepty"`
 }
 
