@@ -1,5 +1,4 @@
 {
-  "additionalProperties": false,
   "description": "DevWorkspace is the Schema for the devworkspaces API",
   "properties": {
     "apiVersion": {
@@ -16,11 +15,10 @@
     "spec": {
       "description": "DevWorkspaceSpec defines the desired state of DevWorkspace",
       "properties": {
-        "endpointsClass": {
+        "routingClass": {
           "type": "string"
         },
         "started": {
-          "description": "INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run \"operator-sdk generate k8s\" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html",
           "type": "boolean"
         },
         "template": {

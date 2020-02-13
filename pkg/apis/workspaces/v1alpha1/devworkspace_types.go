@@ -7,21 +7,14 @@ import (
 // DevWorkspaceSpec defines the desired state of DevWorkspace
 // +k8s:openapi-gen=true
 type DevWorkspaceSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
 	Started bool          `json:"started"`
-	EndpointsClass string  `json:"endpointsClass,omitempty"`
+	RoutingClass string   `json:"routingClass,omitempty"`
 	Template DevWorkspaceTemplateSpec `json:"template,omitempty"`
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
 // +k8s:openapi-gen=true
 type DevWorkspaceStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
-
 	// Id of the workspace
 	WorkspaceId string `json:"workspaceId"`
 	// URL at which the Worksace Editor can be joined
