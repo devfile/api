@@ -22,29 +22,29 @@ components:
       mountSources: true
 commands:
   - exec:
-      label: download dependencies
+      alias: download dependencies
       component: nodejs
       commandLine: npm install
       workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
   - exec:
-      label: run the web app
+      alias: run the web app
       component: nodejs
       commandLine: nodemon app.js
       workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
   - exec:
-      label: run the web app (debugging enabled)
+      alias: run the web app (debugging enabled)
       component: nodejs
       commandLine: nodemon --inspect app.js
       workdir: ${CHE_PROJECTS_ROOT}/nodejs-web-app/app
   - exec:
-      label: stop the web app
+      alias: stop the web app
       component: nodejs
       commandLine: >-
           node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
           echo "Stopping node server with PIDs: ${node_server_pids}" && 
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
   - vscodeLaunch:
-      label: Attach remote debugger
+      alias: Attach remote debugger
       inlined: |
         {
           "version": "0.2.0",
