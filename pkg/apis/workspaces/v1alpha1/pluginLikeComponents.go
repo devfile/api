@@ -4,7 +4,7 @@ type RegistryEntryPluginLocation struct {
 	Id string  `json:"id"`
 
 	// +optional
-	baseUrl string `json:"baseUrl,omitempty"`
+	BaseUrl string `json:"baseUrl,omitempty"`
 }
 
 // PluginLocationType describes the type of location where the plugin definition can be fetched from.

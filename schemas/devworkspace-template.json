@@ -286,14 +286,14 @@
                               "type": "string"
                             },
                             "protocol": {
-                              "default": "tcp",
+                              "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
                               "type": "string"
                             },
                             "public": {
                               "type": "boolean"
                             },
                             "scheme": {
-                              "default": "http",
+                              "description": "The is the URL scheme to use when accessing the endpoint. Default value is \"http\"",
                               "type": "string"
                             },
                             "secure": {
