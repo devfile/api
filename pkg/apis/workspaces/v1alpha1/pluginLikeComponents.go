@@ -38,7 +38,7 @@ type ChePluginLocation struct {
 type PluginLikeComponent struct {
 	BaseComponent `json:",inline"`
 	MemoryLimit  string `json:"memoryLimit,omitempty"`
-	Location ChePluginLocation `json:",inline"`
+	ChePluginLocation `json:",inline"`
 }
 
 type ChePluginComponent struct {
