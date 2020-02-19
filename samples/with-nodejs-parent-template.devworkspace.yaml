@@ -1,7 +1,7 @@
-kind: "DevWorkspace"
-apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+apiVersion: workspace.che.eclipse.org/v1alpha1
+kind: Workspace
 metadata:
-  "name": "with-nodejs-parent"
+  "name": "with-nodejs-template-parent"
 spec:
   started: true
   template:
@@ -10,5 +10,6 @@ spec:
         name: nodejs-stack
     commands:
       - exec:
-          label: project run
+          label: Say Hello
           commandLine: echo "hello"
+          component: nodejs
