@@ -52,4 +52,3 @@ type KubernetesCustomResourceParentLocation struct {
 	// +optional
 	Namespace string `json:"namespace,omitempty"`
 }
-
