@@ -3,5 +3,6 @@ kind: DevWorkspaceTemplate
 metadata:
   name: example-devworkspacetemplate
 spec:
-  # Add fields here
-  size: 3
+  projects: []
+  components: []
+  commands: []
