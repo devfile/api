@@ -272,7 +272,7 @@
                           "type": "string"
                         },
                         "protocol": {
-                          "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
+                          "description": "The is the transport-layer protocol of traffic coming through this endpoint. Default value is \"tcp\"",
                           "type": "string"
                         },
                         "public": {
