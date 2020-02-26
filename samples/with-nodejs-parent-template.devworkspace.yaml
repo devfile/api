@@ -1,0 +1,15 @@
+apiVersion: workspace.che.eclipse.org/v1alpha1
+kind: Workspace
+metadata:
+  name: "with-nodejs-template-parent"
+spec:
+  started: true
+  template:
+    parent:
+      kubernetes:
+        name: nodejs-stack
+    commands:
+      - exec:
+          label: Say Hello
+          commandLine: echo "hello"
+          component: nodejs

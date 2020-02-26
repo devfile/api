@@ -20,11 +20,13 @@ type EndpointConfiguration struct {
 	Public bool `json:"public"`
 	// +optional
 	Discoverable bool `json:"discoverable"`
+	// The is the low-level protocol of traffic coming through this endpoint.
+	// Default value is "tcp"
 	// +optional
-	// +kubebuilder:default="tcp"
 	Protocol string `json:"protocol,omitmepty"`
+	// The is the URL scheme to use when accessing the endpoint.
+	// Default value is "http"
 	// +optional
-	// +kubebuilder:default="http"
 	Scheme string `json:"scheme,omitmepty"`
 	// +optional
 	Secure bool `json:"secure"`
@@ -34,6 +36,7 @@ type EndpointConfiguration struct {
 	Path string `json:"path,omitempty"`
 
 	// +kubebuilder:validation:Enum=ide;terminal;ide-dev
+	// +optional
 	Type string `json:"type,omitmepty"`
 }
 

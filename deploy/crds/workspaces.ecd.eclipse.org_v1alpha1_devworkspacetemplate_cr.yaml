@@ -1,0 +1,8 @@
+apiVersion: workspaces.ecd.eclipse.org/v1alpha1
+kind: DevWorkspaceTemplate
+metadata:
+  name: example-devworkspacetemplate
+spec:
+  projects: []
+  components: []
+  commands: []

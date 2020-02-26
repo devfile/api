@@ -68,7 +68,7 @@ type ExecCommand struct {
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
-	Workdir *string `json:"workdir,omitempty"`
+	Workdir string `json:"workdir,omitempty"`
 }
 
 type CompositeCommand struct {
@@ -101,7 +101,7 @@ type VscodeConfigurationCommandLocation struct {
 
 type VscodeConfigurationCommand struct {
 	BaseCommand `json:",inline"`
-	Location    VscodeConfigurationCommandLocation `json:",inline"`
+	VscodeConfigurationCommandLocation `json:",inline"`
 }
 
 type CustomCommand struct {

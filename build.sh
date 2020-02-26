@@ -59,7 +59,11 @@ yq '.spec.validation.openAPIV3Schema' \
   "${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspaces_crd.yaml" \
   > "${BASE_DIR}/schemas/devworkspace.json"
 
-jq ".properties.spec.properties.template" "${BASE_DIR}/schemas/devworkspace.json" > "${BASE_DIR}/schemas/devworkspace-template-spec.json"
+yq '.spec.validation.openAPIV3Schema' \
+  "${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspacetemplates_crd.yaml" \
+  > "${BASE_DIR}/schemas/devworkspace-template.json"
+
+jq ".properties.spec" "${BASE_DIR}/schemas/devworkspace-template.json" > "${BASE_DIR}/schemas/devworkspace-template-spec.json"
 
 cp "${BASE_DIR}/schemas/devworkspace-template-spec.json" "${BASE_DIR}/schemas/devfile.json"
 
