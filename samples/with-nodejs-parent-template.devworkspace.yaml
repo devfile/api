@@ -1,7 +1,7 @@
 apiVersion: workspace.che.eclipse.org/v1alpha1
 kind: Workspace
 metadata:
-  "name": "with-nodejs-template-parent"
+  name: "with-nodejs-template-parent"
 spec:
   started: true
   template:
