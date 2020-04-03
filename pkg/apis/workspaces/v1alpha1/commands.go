@@ -75,7 +75,7 @@ type ExecCommand struct {
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
-	Workdir string `json:"workdir,omitempty"`
+	WorkingDir string `json:"workingDir,omitempty"`
 
 	// +optional
 	// Optional list of environment variables that have to be set

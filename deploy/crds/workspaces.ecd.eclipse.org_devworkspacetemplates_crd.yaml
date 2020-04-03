@@ -122,7 +122,7 @@ spec:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
                         type: string
-                      workdir:
+                      workingDir:
                         description: Working directory where the command should be
                           executed
                         type: string

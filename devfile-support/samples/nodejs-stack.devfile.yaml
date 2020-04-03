@@ -33,17 +33,17 @@ commands:
       id: download dependencies
       component: nodejs
       commandLine: npm install
-      workdir: ${CHE_PROJECTS_ROOT}/project/app
+      workingDir: ${CHE_PROJECTS_ROOT}/project/app
   - exec:
       id: run the app
       component: nodejs
       commandLine: nodemon app.js
-      workdir: ${CHE_PROJECTS_ROOT}/project/app
+      workingDir: ${CHE_PROJECTS_ROOT}/project/app
   - exec:
       id: run the app (debugging enabled)
       component: nodejs
       commandLine: nodemon --inspect app.js
-      workdir: ${CHE_PROJECTS_ROOT}/project/app
+      workingDir: ${CHE_PROJECTS_ROOT}/project/app
   - exec:
       id: stop the app
       component: nodejs
