@@ -41,4 +41,6 @@ components:
         registryUrl: "external-registry-url"
   - container:
       image: some container image with required build tools
+      mountSources: true
+      sourceMapping: /home/src
       name: "build-tools" 

@@ -49,8 +49,16 @@ type Container struct {
 	Volumes []Volume `json:"volumes,omitempty"`
 	//+optional
 	MemoryLimit  string `json:"memoryLimit,omitempty"`
+	
 	//+optional
 	MountSources bool   `json:"mountSources"`
+	
+	//+optional
+	//
+	// Optional specification of the path in the container where
+	// project sources should be transferred/mounted when `mountSources` is `true`.
+	// When omitted, the value of the `PROJECT_SOURCE` environment variable is used.
+	SourceMapping string   `json:"sourceMapping"`
 }
 
 type EnvVar struct {
