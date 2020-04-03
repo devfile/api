@@ -21,7 +21,6 @@ const (
 // Workspace component: Anything that will bring additional features / tooling / behaviour / context
 // to the workspace, in order to make working in it easier.
 type BaseComponent struct {
-	Alias string `json:"alias,omitempty"`
 }
 
 type Component struct {

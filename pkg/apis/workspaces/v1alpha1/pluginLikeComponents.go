@@ -1,7 +1,7 @@
 package v1alpha1
 
 type RegistryEntryPluginLocation struct {
-	Id string  `json:"id"`
+	Id string `json:"id"`
 
 	// +optional
 	BaseUrl string `json:"baseUrl,omitempty"`
@@ -13,8 +13,8 @@ type RegistryEntryPluginLocation struct {
 type PluginLocationType string
 
 const (
-	RegistryEntryPluginLocationType    PluginLocationType = "RegistryEntry"
-	UriPluginLocationType    PluginLocationType = "Uri"
+	RegistryEntryPluginLocationType PluginLocationType = "RegistryEntry"
+	UriPluginLocationType           PluginLocationType = "Uri"
 )
 
 // +k8s:openapi-gen=true
@@ -37,7 +37,14 @@ type ChePluginLocation struct {
 
 type PluginLikeComponent struct {
 	BaseComponent `json:",inline"`
-	MemoryLimit  string `json:"memoryLimit,omitempty"`
+
+	// +optional
+	// Optional name that allows referencing the component
+	// in commands, or inside a parent
+	// If omitted it will be infered from the location (uri or registryEntry)
+	Name string `json:"name,omitempty"`
+
+	MemoryLimit       string `json:"memoryLimit,omitempty"`
 	ChePluginLocation `json:",inline"`
 }
 

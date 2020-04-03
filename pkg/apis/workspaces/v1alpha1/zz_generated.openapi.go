@@ -298,6 +298,13 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Optional name that allows referencing the component in commands, or inside a parent",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 					"locationType": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Type of Kubernetes-like location",
@@ -320,6 +327,7 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 						},
 					},
 				},
+				Required: []string{"name"},
 			},
 			VendorExtensible: spec.VendorExtensible{
 				Extensions: spec.Extensions{
@@ -328,6 +336,7 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 							"discriminator": "locationType",
 							"fields-to-discriminateBy": map[string]interface{}{
 								"inlined": "Inlined",
+								"name":    "Name",
 								"url":     "Url",
 							},
 						},

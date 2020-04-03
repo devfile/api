@@ -37,4 +37,5 @@ components:
         field2: ""
       name: "myNewComponent"
   - kubernetes:
+      name: "production"
       url: "https://somewhere/production-environment.yaml"

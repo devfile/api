@@ -42,4 +42,5 @@ spec:
             field1: ""
             field2: ""
       - kubernetes:
+          name: "production"
           url: "https://somewhere/production-environment.yaml"

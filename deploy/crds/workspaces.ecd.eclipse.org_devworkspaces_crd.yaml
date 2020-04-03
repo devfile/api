@@ -308,8 +308,6 @@ spec:
                       cheEditor:
                         description: CheEditor component
                         properties:
-                          alias:
-                            type: string
                           locationType:
                             description: Type of plugin location
                             enum:
@@ -317,6 +315,11 @@ spec:
                             - Uri
                             type: string
                           memoryLimit:
+                            type: string
+                          name:
+                            description: Optional name that allows referencing the
+                              component in commands, or inside a parent If omitted
+                              it will be infered from the location (uri or registryEntry)
                             type: string
                           registryEntry:
                             description: Location of an entry inside a plugin registry
@@ -335,8 +338,6 @@ spec:
                       chePlugin:
                         description: ChePlugin component
                         properties:
-                          alias:
-                            type: string
                           locationType:
                             description: Type of plugin location
                             enum:
@@ -344,6 +345,11 @@ spec:
                             - Uri
                             type: string
                           memoryLimit:
+                            type: string
+                          name:
+                            description: Optional name that allows referencing the
+                              component in commands, or inside a parent If omitted
+                              it will be infered from the location (uri or registryEntry)
                             type: string
                           registryEntry:
                             description: Location of an entry inside a plugin registry
@@ -362,8 +368,6 @@ spec:
                       container:
                         description: Container component
                         properties:
-                          alias:
-                            type: string
                           endpoints:
                             items:
                               properties:
@@ -474,32 +478,40 @@ spec:
                       kubernetes:
                         description: Kubernetes component
                         properties:
-                          alias:
-                            type: string
                           inlined:
                             description: Reference to the plugin definition
                             type: string
                           locationType:
                             description: Type of Kubernetes-like location
                             type: string
+                          name:
+                            description: Optional name that allows referencing the
+                              component in commands, or inside a parent
+                            type: string
                           url:
                             description: Location in a plugin registry
                             type: string
+                        required:
+                        - name
                         type: object
                       openshift:
                         description: Openshift component
                         properties:
-                          alias:
-                            type: string
                           inlined:
                             description: Reference to the plugin definition
                             type: string
                           locationType:
                             description: Type of Kubernetes-like location
                             type: string
+                          name:
+                            description: Optional name that allows referencing the
+                              component in commands, or inside a parent
+                            type: string
                           url:
                             description: Location in a plugin registry
                             type: string
+                        required:
+                        - name
                         type: object
                       type:
                         description: Type of project source
