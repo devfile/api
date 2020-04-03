@@ -109,6 +109,25 @@
                         "description": "Describes component to which given action relates",
                         "type": "string"
                       },
+                      "env": {
+                        "description": "Optional list of environment variables that have to be set before running the command",
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "value"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
                         "type": "string"

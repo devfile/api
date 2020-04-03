@@ -29,7 +29,7 @@ type LabeledCommand struct {
 	// +optional
 	// Optional label that provides a label for this command
 	// to be used in Editor UI menus for example
-	Label       string `json:"label,omitempty"`
+	Label string `json:"label,omitempty"`
 }
 
 type Command struct {
@@ -76,6 +76,11 @@ type ExecCommand struct {
 
 	// Working directory where the command should be executed
 	Workdir string `json:"workdir,omitempty"`
+
+	// +optional
+	// Optional list of environment variables that have to be set
+	// before running the command
+	Env []EnvVar `json:"env,omitempty"`
 }
 
 type CompositeCommand struct {

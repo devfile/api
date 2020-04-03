@@ -22,6 +22,12 @@ commands:
         - buildSchema
         - openDevfile
       parallel: false
+  - exec:
+      id: helloWorld
+      env:
+        - name: "USER"
+          value: "John Doe"
+      commandLine: 'echo "Hello ${USER}"'
   - custom:
       id: myCustomCommand
       commandClass: myCommandType
@@ -43,4 +49,5 @@ components:
       image: some container image with required build tools
       mountSources: true
       sourceMapping: /home/src
-      name: "build-tools" 
+      name: "build-tools"
+      

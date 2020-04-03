@@ -545,6 +545,11 @@ func (in *EnvVar) DeepCopy() *EnvVar {
 func (in *ExecCommand) DeepCopyInto(out *ExecCommand) {
 	*out = *in
 	in.LabeledCommand.DeepCopyInto(&out.LabeledCommand)
+	if in.Env != nil {
+		in, out := &in.Env, &out.Env
+		*out = make([]EnvVar, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 
