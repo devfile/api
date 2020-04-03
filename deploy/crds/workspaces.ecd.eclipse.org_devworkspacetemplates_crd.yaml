@@ -41,12 +41,32 @@ spec:
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commands:
                         description: The commands that comprise this composite command
                         items:
                           type: string
                         type: array
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
                       id:
                         description: Mandatory identifier that allows referencing
                           this command in composite commands, or from a parent, or
@@ -67,10 +87,30 @@ spec:
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commandClass:
                         type: string
                       embeddedResource:
+                        type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
                         type: object
                       id:
                         description: Mandatory identifier that allows referencing
@@ -92,6 +132,8 @@ spec:
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commandLine:
                         description: The actual command-line string
@@ -113,6 +155,24 @@ spec:
                           - value
                           type: object
                         type: array
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
                       id:
                         description: Mandatory identifier that allows referencing
                           this command in composite commands, or from a parent, or
@@ -144,6 +204,26 @@ spec:
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
+                        type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
                         type: object
                       id:
                         description: Mandatory identifier that allows referencing
@@ -169,6 +249,26 @@ spec:
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
+                        type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
                         type: object
                       id:
                         description: Mandatory identifier that allows referencing

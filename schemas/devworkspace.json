@@ -35,6 +35,7 @@
                         "additionalProperties": {
                           "type": "string"
                         },
+                        "description": "Optional map of free-form additional command attributes",
                         "type": "object"
                       },
                       "commands": {
@@ -43,6 +44,29 @@
                           "type": "string"
                         },
                         "type": "array"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -68,12 +92,36 @@
                         "additionalProperties": {
                           "type": "string"
                         },
+                        "description": "Optional map of free-form additional command attributes",
                         "type": "object"
                       },
                       "commandClass": {
                         "type": "string"
                       },
                       "embeddedResource": {
+                        "type": "object"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
                         "type": "object"
                       },
                       "id": {
@@ -99,6 +147,7 @@
                         "additionalProperties": {
                           "type": "string"
                         },
+                        "description": "Optional map of free-form additional command attributes",
                         "type": "object"
                       },
                       "commandLine": {
@@ -127,6 +176,29 @@
                           "type": "object"
                         },
                         "type": "array"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -164,6 +236,30 @@
                         "additionalProperties": {
                           "type": "string"
                         },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
                         "type": "object"
                       },
                       "id": {
@@ -195,6 +291,30 @@
                         "additionalProperties": {
                           "type": "string"
                         },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
                         "type": "object"
                       },
                       "id": {

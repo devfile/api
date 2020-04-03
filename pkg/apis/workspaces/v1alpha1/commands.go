@@ -15,12 +15,38 @@ const (
 	CustomCommandType       CommandType = "Custom"
 )
 
+// CommandGroupType describes the kind of command group.
+// +kubebuilder:validation:Enum=build;run;test;debug
+type CommandGroupType string
+
+const (
+	BuildCommandGroupType CommandGroupType = "build"
+	RunCommandGroupType   CommandGroupType = "run"
+	TestCommandGroupType  CommandGroupType = "test"
+	DebugCommandGroupType CommandGroupType = "debug"
+)
+
+type CommandGroup struct {
+	// Kind of group the command is part of
+	Kind CommandGroupType `json:"kind"`
+
+	// +optional
+	// Identifies the default command for a given group kind
+	IsDefault bool `json:"isDefault,omitempty"`
+}
+
 type BaseCommand struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, or from
 	// a parent, or in events.
-	Id         string            `json:"id"`
-	Attributes map[string]string `json:"attributes,omitempty"` // Additional command attributes
+	Id string `json:"id"`
+
+	// +optional
+	// Defines the group this command is part of
+	Group *CommandGroup `json:"group,omitempty"`
+
+	// Optional map of free-form additional command attributes
+	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 type LabeledCommand struct {

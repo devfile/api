@@ -11,6 +11,9 @@ commands:
       label: Build the schema
       commandLine: "./buildSchema.sh"
       component: build-tools
+      group:
+        kind: build
+        isDefault: true
   - vscodeTask:
       id: openDevfile
       inlined:
