@@ -46,8 +46,6 @@ spec:
                       composite:
                         description: Composite command
                         properties:
-                          alias:
-                            type: string
                           attributes:
                             additionalProperties:
                               type: string
@@ -58,16 +56,23 @@ spec:
                             items:
                               type: string
                             type: array
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, or from a parent,
+                              or in events.
+                            type: string
                           label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
                             type: string
                           parallel:
                             type: boolean
+                        required:
+                        - id
                         type: object
                       custom:
                         description: Custom command
                         properties:
-                          alias:
-                            type: string
                           attributes:
                             additionalProperties:
                               type: string
@@ -76,17 +81,23 @@ spec:
                             type: string
                           embeddedResource:
                             type: object
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, or from a parent,
+                              or in events.
+                            type: string
                           label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
                             type: string
                         required:
                         - commandClass
                         - embeddedResource
+                        - id
                         type: object
                       exec:
                         description: Exec command
                         properties:
-                          alias:
-                            type: string
                           attributes:
                             additionalProperties:
                               type: string
@@ -98,7 +109,14 @@ spec:
                             description: Describes component to which given action
                               relates
                             type: string
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, or from a parent,
+                              or in events.
+                            type: string
                           label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
                             type: string
                           workdir:
                             description: Working directory where the command should
@@ -106,6 +124,7 @@ spec:
                             type: string
                         required:
                         - commandLine
+                        - id
                         type: object
                       type:
                         description: Type of workspace command
@@ -118,12 +137,15 @@ spec:
                       vscodeLaunch:
                         description: VscodeLaunch command
                         properties:
-                          alias:
-                            type: string
                           attributes:
                             additionalProperties:
                               type: string
                             type: object
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, or from a parent,
+                              or in events.
+                            type: string
                           inlined:
                             description: Embedded content of the vscode configuration
                               file
@@ -134,16 +156,21 @@ spec:
                           url:
                             description: Location as an absolute of relative URL
                             type: string
+                        required:
+                        - id
                         type: object
                       vscodeTask:
                         description: VscodeTask command
                         properties:
-                          alias:
-                            type: string
                           attributes:
                             additionalProperties:
                               type: string
                             type: object
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, or from a parent,
+                              or in events.
+                            type: string
                           inlined:
                             description: Embedded content of the vscode configuration
                               file
@@ -154,6 +181,8 @@ spec:
                           url:
                             description: Location as an absolute of relative URL
                             type: string
+                        required:
+                        - id
                         type: object
                     type: object
                   type: array

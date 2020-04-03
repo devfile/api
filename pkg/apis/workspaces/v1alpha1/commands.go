@@ -16,12 +16,19 @@ const (
 )
 
 type BaseCommand struct {
-	Alias      string            `json:"alias,omitempty"`
+	// Mandatory identifier that allows referencing
+	// this command in composite commands, or from
+	// a parent, or in events.
+	Id         string            `json:"id"`
 	Attributes map[string]string `json:"attributes,omitempty"` // Additional command attributes
 }
 
 type LabeledCommand struct {
 	BaseCommand `json:",inline"`
+
+	// +optional
+	// Optional label that provides a label for this command
+	// to be used in Editor UI menus for example
 	Label       string `json:"label,omitempty"`
 }
 
@@ -100,7 +107,7 @@ type VscodeConfigurationCommandLocation struct {
 }
 
 type VscodeConfigurationCommand struct {
-	BaseCommand `json:",inline"`
+	BaseCommand                        `json:",inline"`
 	VscodeConfigurationCommandLocation `json:",inline"`
 }
 

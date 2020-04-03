@@ -7,20 +7,23 @@ projects:
         branch: "master"
 commands:
   - exec:
+      id: buildSchema
+      label: Build the schema
       commandLine: "./buildSchema.sh"
       component: build-tools
-      alias: buildSchema
   - vscodeTask:
-      alias: openDevfile
+      id: openDevfile
       inlined:
         json        
   - composite:
+      id: buildSchemaAndOpenDevfile
       Label: Build schema and open devfile
       commands:
         - buildSchema
         - openDevfile
       parallel: false
   - custom:
+      id: myCustomCommand
       commandClass: myCommandType
       embeddedResource:
         myEmbeddedObject:

@@ -33,29 +33,29 @@ spec:
         mountSources: true
   commands:
     - exec:
-        alias: download dependencies
+        id: download dependencies
         component: nodejs
         commandLine: npm install
         workdir: ${CHE_PROJECTS_ROOT}/project/app
     - exec:
-        alias: run the app
+        id: run the app
         component: nodejs
         commandLine: nodemon app.js
         workdir: ${CHE_PROJECTS_ROOT}/project/app
     - exec:
-        alias: run the app (debugging enabled)
+        id: run the app (debugging enabled)
         component: nodejs
         commandLine: nodemon --inspect app.js
         workdir: ${CHE_PROJECTS_ROOT}/project/app
     - exec:
-        alias: stop the app
+        id: stop the app
         component: nodejs
         commandLine: >-
             node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
             echo "Stopping node server with PIDs: ${node_server_pids}" && 
             kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
     - vscodeLaunch:
-        alias: Attach remote debugger
+        id: Attach remote debugger
         inlined: |
           {
             "version": "0.2.0",

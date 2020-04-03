@@ -22,9 +22,6 @@
               "composite": {
                 "description": "Composite command",
                 "properties": {
-                  "alias": {
-                    "type": "string"
-                  },
                   "attributes": {
                     "additionalProperties": {
                       "type": "string"
@@ -38,21 +35,26 @@
                     },
                     "type": "array"
                   },
+                  "id": {
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "type": "string"
+                  },
                   "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                     "type": "string"
                   },
                   "parallel": {
                     "type": "boolean"
                   }
                 },
+                "required": [
+                  "id"
+                ],
                 "type": "object"
               },
               "custom": {
                 "description": "Custom command",
                 "properties": {
-                  "alias": {
-                    "type": "string"
-                  },
                   "attributes": {
                     "additionalProperties": {
                       "type": "string"
@@ -65,22 +67,25 @@
                   "embeddedResource": {
                     "type": "object"
                   },
+                  "id": {
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "type": "string"
+                  },
                   "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                     "type": "string"
                   }
                 },
                 "required": [
                   "commandClass",
-                  "embeddedResource"
+                  "embeddedResource",
+                  "id"
                 ],
                 "type": "object"
               },
               "exec": {
                 "description": "Exec command",
                 "properties": {
-                  "alias": {
-                    "type": "string"
-                  },
                   "attributes": {
                     "additionalProperties": {
                       "type": "string"
@@ -95,7 +100,12 @@
                     "description": "Describes component to which given action relates",
                     "type": "string"
                   },
+                  "id": {
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "type": "string"
+                  },
                   "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                     "type": "string"
                   },
                   "workdir": {
@@ -104,7 +114,8 @@
                   }
                 },
                 "required": [
-                  "commandLine"
+                  "commandLine",
+                  "id"
                 ],
                 "type": "object"
               },
@@ -121,14 +132,15 @@
               "vscodeLaunch": {
                 "description": "VscodeLaunch command",
                 "properties": {
-                  "alias": {
-                    "type": "string"
-                  },
                   "attributes": {
                     "additionalProperties": {
                       "type": "string"
                     },
                     "type": "object"
+                  },
+                  "id": {
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "type": "string"
                   },
                   "inlined": {
                     "description": "Embedded content of the vscode configuration file",
@@ -143,19 +155,23 @@
                     "type": "string"
                   }
                 },
+                "required": [
+                  "id"
+                ],
                 "type": "object"
               },
               "vscodeTask": {
                 "description": "VscodeTask command",
                 "properties": {
-                  "alias": {
-                    "type": "string"
-                  },
                   "attributes": {
                     "additionalProperties": {
                       "type": "string"
                     },
                     "type": "object"
+                  },
+                  "id": {
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "type": "string"
                   },
                   "inlined": {
                     "description": "Embedded content of the vscode configuration file",
@@ -170,6 +186,9 @@
                     "type": "string"
                   }
                 },
+                "required": [
+                  "id"
+                ],
                 "type": "object"
               }
             },
