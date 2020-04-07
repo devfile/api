@@ -1,0 +1,60 @@
+schemaVersion: 2.0.0
+metadata:
+  name: petclinic-dev-environment
+projects:
+  - name: petclinic
+    source:
+      type: git
+      location: 'git@github.com:spring-projects/spring-petclinic.git'
+components:
+  - alias: mvn-stack
+    type: dockerimage
+    image: maven:3.5.4-jdk-8
+    command: ['/bin/sh', '-c']
+    args: ['tail -f /dev/null']
+    volumes:
+      - name: maven-repo
+        containerPath: /root/.m2
+    endpoints:
+      - name: spring-boot
+        port: 8080
+        attributes:
+          path: /api
+          protocol: http
+          public: true
+    env:
+      - name: TERM
+        value: xterm
+    mountSources: true
+    memoryLimit: 500M
+  - alias: mysql
+    type: kubernetes
+    reference: petclinic.yaml
+    selector:
+      app.kubernetes.io/name: mysql
+      app.kubernetes.io/component: database
+      app.kubernetes.io/part-of: petclinic
+  - alias: theia-ide
+    type: cheEditor
+    id: eclipse/theia:0.0.3
+  - alias: jdt.ls
+    type: chePlugin
+    id: eclipse/theia-jdtls:0.0.3
+commands:
+  - name: build
+    actions:
+      - type: exec
+        component: mvn-stack
+        command: mvn package
+        workdir: /projects/spring-petclinic
+  - name: run
+    attributes:
+      runType: sequential
+    actions:
+      - type: start
+        component: mysql
+        timeout: 20s
+      - type: exec
+        component: mvn-stack
+        command: mvn spring-boot:run
+        workdir: /projects/spring-petclinic

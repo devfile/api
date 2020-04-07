@@ -1,5 +1,6 @@
 schemaVersion: 2.0.0
-name: nodejs-stack
+metadata:
+  name: nodejs-stack
 projects:
   - name: project   
     git:
