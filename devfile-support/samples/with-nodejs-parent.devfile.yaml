@@ -1,5 +1,6 @@
-name: with-parent
 schemaVersion: 2.0.0
+metadata:
+  name: with-parent
 parent:
   uri: https://raw.githubusercontent.com/che-incubator/devworkspace-api/proposal-25-variant-1-define-stacks/devfile-support/samples/nodejs-stack.devfile.yaml
 commands:

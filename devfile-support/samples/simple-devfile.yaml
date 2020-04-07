@@ -1,5 +1,6 @@
-name: "myDevile"
 schemaVersion: "2.0.0"
+metadata:
+  name: "myDevile"
 projects:
   - name: "devworkspace-spec"
     git:

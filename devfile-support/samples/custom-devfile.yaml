@@ -1,5 +1,6 @@
-name: "my-devfile"
 schemaVersion: "2.0.0-beta"
+metadata:
+  name: "my-devfile"
 projects:
   - name: "my-project"
     custom:
