@@ -488,6 +488,12 @@ func schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref common.Referen
 							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ContainerComponent"),
 						},
 					},
+					"volume": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Volume component",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VolumeComponent"),
+						},
+					},
 					"cheEditor": {
 						SchemaProps: spec.SchemaProps{
 							Description: "CheEditor component",
@@ -532,6 +538,7 @@ func schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref common.Referen
 								"custom":     "Custom",
 								"kubernetes": "Kubernetes",
 								"openshift":  "Openshift",
+								"volume":     "Volume",
 							},
 						},
 					},
@@ -539,7 +546,7 @@ func schema_pkg_apis_workspaces_v1alpha1_PolymorphicComponent(ref common.Referen
 			},
 		},
 		Dependencies: []string{
-			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CheEditorComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ContainerComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.OpenshiftComponent"},
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CheEditorComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ChePluginComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.ContainerComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.CustomComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.KubernetesComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.OpenshiftComponent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.VolumeComponent"},
 	}
 }
 

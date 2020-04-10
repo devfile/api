@@ -44,15 +44,19 @@ type Container struct {
 	Name  string   `json:"name"`
 	Image string   `json:"image"`
 	// +optional
+	// Environment variables used in this container
 	Env   []EnvVar `json:"env,omitempty"`
+
 	// +optional
-	Volumes []Volume `json:"volumes,omitempty"`
+	// List of volumes mounts that should be mounted is this container.
+	VolumeMounts []VolumeMount `json:"volumeMounts,omitempty"`
+
 	//+optional
 	MemoryLimit  string `json:"memoryLimit,omitempty"`
-	
+
 	//+optional
 	MountSources bool   `json:"mountSources"`
-	
+
 	//+optional
 	//
 	// Optional specification of the path in the container where
@@ -67,11 +71,13 @@ type EnvVar struct {
 }
 
 // Volume that should be mounted to a component container
-type Volume struct {
-	// The volume name.
-	// If several components mount the same volume then they will reuse the volume
-	// and will be able to access to the same files
+type VolumeMount struct {
+	// The volume mount name is the name of an existing `Volume` component.
+	// If no corresponding `Volume` component exist it is implicitly added.
+	// If several containers mount the same volume name
+	// then they will reuse the same volume and will be able to access to the same files.
 	Name string `json:"name"`
 
-	MountPath string `json:"mountPath"`
+	// The path in the component container where the volume should be mounted
+	Path string `json:"path"`
 }

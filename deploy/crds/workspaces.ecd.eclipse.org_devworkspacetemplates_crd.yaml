@@ -404,6 +404,7 @@ spec:
                           type: object
                         type: array
                       env:
+                        description: Environment variables used in this container
                         items:
                           properties:
                             name:
@@ -429,21 +430,28 @@ spec:
                           `mountSources` is `true`. When omitted, the value of the
                           `PROJECT_ROOT` environment variable is used.
                         type: string
-                      volumes:
+                      volumeMounts:
+                        description: List of volumes mounts that should be mounted
+                          is this container.
                         items:
                           description: Volume that should be mounted to a component
                             container
                           properties:
-                            mountPath:
-                              type: string
                             name:
-                              description: The volume name. If several components
-                                mount the same volume then they will reuse the volume
-                                and will be able to access to the same files
+                              description: The volume mount name is the name of an
+                                existing `Volume` component. If no corresponding `Volume`
+                                component exist it is implicitly added. If several
+                                containers mount the same volume name then they will
+                                reuse the same volume and will be able to access to
+                                the same files.
+                              type: string
+                            path:
+                              description: The path in the component container where
+                                the volume should be mounted
                               type: string
                           required:
-                          - mountPath
                           - name
+                          - path
                           type: object
                         type: array
                     required:
@@ -509,9 +517,23 @@ spec:
                     - Kubernetes
                     - Openshift
                     - CheEditor
+                    - Volume
                     - ChePlugin
                     - Custom
                     type: string
+                  volume:
+                    description: Volume component
+                    properties:
+                      name:
+                        description: Mandatory name that allows referencing the Volume
+                          component in Container volume mounts or inside a parent
+                        type: string
+                      size:
+                        description: Size of the volume
+                        type: string
+                    required:
+                    - name
+                    type: object
                 type: object
               type: array
             parent:
