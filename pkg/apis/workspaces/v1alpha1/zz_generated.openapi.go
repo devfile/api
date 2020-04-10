@@ -300,7 +300,7 @@ func schema_pkg_apis_workspaces_v1alpha1_K8sLikeComponentLocation(ref common.Ref
 				Properties: map[string]spec.Schema{
 					"name": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Optional name that allows referencing the component in commands, or inside a parent",
+							Description: "Mandatory name that allows referencing the component in commands, or inside a parent",
 							Type:        []string{"string"},
 							Format:      "",
 						},

@@ -585,7 +585,7 @@
                         "type": "string"
                       },
                       "name": {
-                        "description": "Optional name that allows referencing the component in commands, or inside a parent",
+                        "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                         "type": "string"
                       },
                       "url": {
@@ -610,7 +610,7 @@
                         "type": "string"
                       },
                       "name": {
-                        "description": "Optional name that allows referencing the component in commands, or inside a parent",
+                        "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                         "type": "string"
                       },
                       "url": {
