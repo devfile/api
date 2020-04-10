@@ -38,6 +38,9 @@ commands:
       embeddedResource:
         myEmbeddedObject:
       label: My very own and special command
+events:
+  postStart:
+    - "buildSchemaAndOpenDevfile"
 components:
   - chePlugin:
       registry:

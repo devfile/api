@@ -652,6 +652,36 @@
           },
           "type": "array"
         },
+        "events": {
+          "description": "Bindings of commands to events",
+          "properties": {
+            "postStart": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "postStop": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "preStart": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "preStop": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "parent": {
           "description": "Parent workspace template",
           "properties": {

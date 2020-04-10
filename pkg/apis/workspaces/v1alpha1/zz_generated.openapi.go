@@ -258,6 +258,12 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.Ref
 							},
 						},
 					},
+					"events": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Bindings of commands to events",
+							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Events"),
+						},
+					},
 					"projects": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Projects worked on in the workspace, containing names and sources locations",
@@ -288,7 +294,7 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.Ref
 			},
 		},
 		Dependencies: []string{
-			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Parent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"},
+			"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Command", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Component", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Events", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Parent", "github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Project"},
 	}
 }
 
