@@ -57,7 +57,7 @@ type Container struct {
 	//
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
-	// When omitted, the value of the `PROJECT_SOURCE` environment variable is used.
+	// When omitted, the value of the `PROJECT_ROOT` environment variable is used.
 	SourceMapping string   `json:"sourceMapping"`
 }
 
