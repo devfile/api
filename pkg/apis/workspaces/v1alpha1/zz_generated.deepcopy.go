@@ -657,7 +657,7 @@ func (in *GithubProjectSource) DeepCopy() *GithubProjectSource {
 func (in *K8sLikeComponent) DeepCopyInto(out *K8sLikeComponent) {
 	*out = *in
 	out.BaseComponent = in.BaseComponent
-	out.Location = in.Location
+	out.K8sLikeComponentLocation = in.K8sLikeComponentLocation
 	return
 }
 

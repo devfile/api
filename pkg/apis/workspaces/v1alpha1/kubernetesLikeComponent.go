@@ -3,10 +3,6 @@ package v1alpha1
 // +k8s:openapi-gen=true
 // +union
 type K8sLikeComponentLocation struct {
-	// Mandatory name that allows referencing the component
-	// in commands, or inside a parent
-	Name string `json:"name"`
-
 	// Type of Kubernetes-like location
 	// +
 	// +unionDiscriminator
@@ -24,7 +20,10 @@ type K8sLikeComponentLocation struct {
 
 type K8sLikeComponent struct {
 	BaseComponent                          `json:",inline"`
-	Location      K8sLikeComponentLocation `json:",inline"`
+	K8sLikeComponentLocation               `json:",inline"`
+	// Mandatory name that allows referencing the component
+	// in commands, or inside a parent
+	Name string `json:"name"`
 }
 
 // Component that allows partly importing Kubernetes resources into the workspace POD
