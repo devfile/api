@@ -57,4 +57,3 @@ components:
       mountSources: true
       sourceMapping: /home/src
       name: "build-tools"
-      
