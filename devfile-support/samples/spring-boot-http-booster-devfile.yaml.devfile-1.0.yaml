@@ -10,6 +10,7 @@ projects:
 components:
   - id: redhat/java8/latest
     type: chePlugin
+    memoryLimit: 2Gi
   - id: redhat/dependency-analytics/latest
     type: chePlugin
   - type: dockerimage

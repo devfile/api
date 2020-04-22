@@ -1,16 +1,24 @@
 schemaVersion: 2.0.0
 metadata:
   name: spring-boot-http-booster
+  type: workspace
 projects:
   - name: spring-boot-http-booster
     git:
       location: https://github.com/snowdrop/spring-boot-http-booster
       branch: master
 components:
-  - chePlugin:
+  - plugin:
       registryEntry:
         id: redhat/java8/latest
-  - chePlugin:
+      componentOverrides:
+        - container:
+            name: vscode-java
+            memoryLimit: "1500Mi"
+        - volume:
+            name: m2
+            size: 2G
+  - plugin:
       registryEntry:
         id: redhat/dependency-analytics/latest
   - container:
@@ -35,9 +43,6 @@ components:
       volumeMounts:
         - name: m2
           path: /home/jboss/.m2
-  - volume:
-      name: m2
-      size: 2G
 commands:
   - exec:
       id: build 
