@@ -14,7 +14,7 @@ components:
       componentOverrides:
         - container:
             name: vscode-java
-            memoryLimit: "1500Mi"
+            memoryLimit: 2Gi
         - volume:
             name: m2
             size: 2G
