@@ -38,49 +38,102 @@ spec:
                   composite:
                     description: Composite command
                     properties:
-                      alias:
-                        type: string
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commands:
                         description: The commands that comprise this composite command
                         items:
                           type: string
                         type: array
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, or from a parent, or
+                          in events.
+                        type: string
                       label:
+                        description: Optional label that provides a label for this
+                          command to be used in Editor UI menus for example
                         type: string
                       parallel:
                         type: boolean
+                    required:
+                    - id
                     type: object
                   custom:
                     description: Custom command
                     properties:
-                      alias:
-                        type: string
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commandClass:
                         type: string
                       embeddedResource:
                         type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, or from a parent, or
+                          in events.
+                        type: string
                       label:
+                        description: Optional label that provides a label for this
+                          command to be used in Editor UI menus for example
                         type: string
                     required:
                     - commandClass
                     - embeddedResource
+                    - id
                     type: object
                   exec:
                     description: Exec command
                     properties:
-                      alias:
-                        type: string
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commandLine:
                         description: The actual command-line string
@@ -88,14 +141,54 @@ spec:
                       component:
                         description: Describes component to which given action relates
                         type: string
-                      label:
+                      env:
+                        description: Optional list of environment variables that have
+                          to be set before running the command
+                        items:
+                          properties:
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          required:
+                          - name
+                          - value
+                          type: object
+                        type: array
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, or from a parent, or
+                          in events.
                         type: string
-                      workdir:
+                      label:
+                        description: Optional label that provides a label for this
+                          command to be used in Editor UI menus for example
+                        type: string
+                      workingDir:
                         description: Working directory where the command should be
                           executed
                         type: string
                     required:
                     - commandLine
+                    - id
                     type: object
                   type:
                     description: Type of workspace command
@@ -108,12 +201,35 @@ spec:
                   vscodeLaunch:
                     description: VscodeLaunch command
                     properties:
-                      alias:
-                        type: string
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, or from a parent, or
+                          in events.
+                        type: string
                       inlined:
                         description: Embedded content of the vscode configuration
                           file
@@ -124,16 +240,41 @@ spec:
                       url:
                         description: Location as an absolute of relative URL
                         type: string
+                    required:
+                    - id
                     type: object
                   vscodeTask:
                     description: VscodeTask command
                     properties:
-                      alias:
-                        type: string
                       attributes:
                         additionalProperties:
                           type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, or from a parent, or
+                          in events.
+                        type: string
                       inlined:
                         description: Embedded content of the vscode configuration
                           file
@@ -144,6 +285,8 @@ spec:
                       url:
                         description: Location as an absolute of relative URL
                         type: string
+                    required:
+                    - id
                     type: object
                 type: object
               type: array
@@ -155,8 +298,6 @@ spec:
                   cheEditor:
                     description: CheEditor component
                     properties:
-                      alias:
-                        type: string
                       locationType:
                         description: Type of plugin location
                         enum:
@@ -164,6 +305,11 @@ spec:
                         - Uri
                         type: string
                       memoryLimit:
+                        type: string
+                      name:
+                        description: Optional name that allows referencing the component
+                          in commands, or inside a parent If omitted it will be infered
+                          from the location (uri or registryEntry)
                         type: string
                       registryEntry:
                         description: Location of an entry inside a plugin registry
@@ -182,8 +328,6 @@ spec:
                   chePlugin:
                     description: ChePlugin component
                     properties:
-                      alias:
-                        type: string
                       locationType:
                         description: Type of plugin location
                         enum:
@@ -191,6 +335,11 @@ spec:
                         - Uri
                         type: string
                       memoryLimit:
+                        type: string
+                      name:
+                        description: Optional name that allows referencing the component
+                          in commands, or inside a parent If omitted it will be infered
+                          from the location (uri or registryEntry)
                         type: string
                       registryEntry:
                         description: Location of an entry inside a plugin registry
@@ -209,8 +358,6 @@ spec:
                   container:
                     description: Container component
                     properties:
-                      alias:
-                        type: string
                       endpoints:
                         items:
                           properties:
@@ -257,6 +404,7 @@ spec:
                           type: object
                         type: array
                       env:
+                        description: Environment variables used in this container
                         items:
                           properties:
                             name:
@@ -276,21 +424,34 @@ spec:
                         type: boolean
                       name:
                         type: string
-                      volumes:
+                      sourceMapping:
+                        description: Optional specification of the path in the container
+                          where project sources should be transferred/mounted when
+                          `mountSources` is `true`. When omitted, the value of the
+                          `PROJECTS_ROOT` environment variable is used.
+                        type: string
+                      volumeMounts:
+                        description: List of volumes mounts that should be mounted
+                          is this container.
                         items:
                           description: Volume that should be mounted to a component
                             container
                           properties:
-                            mountPath:
-                              type: string
                             name:
-                              description: The volume name. If several components
-                                mount the same volume then they will reuse the volume
-                                and will be able to access to the same files
+                              description: The volume mount name is the name of an
+                                existing `Volume` component. If no corresponding `Volume`
+                                component exist it is implicitly added. If several
+                                containers mount the same volume name then they will
+                                reuse the same volume and will be able to access to
+                                the same files.
+                              type: string
+                            path:
+                              description: The path in the component container where
+                                the volume should be mounted
                               type: string
                           required:
-                          - mountPath
                           - name
+                          - path
                           type: object
                         type: array
                     required:
@@ -314,32 +475,40 @@ spec:
                   kubernetes:
                     description: Kubernetes component
                     properties:
-                      alias:
-                        type: string
                       inlined:
                         description: Reference to the plugin definition
                         type: string
                       locationType:
                         description: Type of Kubernetes-like location
                         type: string
+                      name:
+                        description: Mandatory name that allows referencing the component
+                          in commands, or inside a parent
+                        type: string
                       url:
                         description: Location in a plugin registry
                         type: string
+                    required:
+                    - name
                     type: object
                   openshift:
                     description: Openshift component
                     properties:
-                      alias:
-                        type: string
                       inlined:
                         description: Reference to the plugin definition
                         type: string
                       locationType:
                         description: Type of Kubernetes-like location
                         type: string
+                      name:
+                        description: Mandatory name that allows referencing the component
+                          in commands, or inside a parent
+                        type: string
                       url:
                         description: Location in a plugin registry
                         type: string
+                    required:
+                    - name
                     type: object
                   type:
                     description: Type of project source
@@ -348,11 +517,58 @@ spec:
                     - Kubernetes
                     - Openshift
                     - CheEditor
+                    - Volume
                     - ChePlugin
                     - Custom
                     type: string
+                  volume:
+                    description: Volume component
+                    properties:
+                      name:
+                        description: Mandatory name that allows referencing the Volume
+                          component in Container volume mounts or inside a parent
+                        type: string
+                      size:
+                        description: Size of the volume
+                        type: string
+                    required:
+                    - name
+                    type: object
                 type: object
               type: array
+            events:
+              description: Bindings of commands to events. Each command is referred-to
+                by its name.
+              properties:
+                postStart:
+                  description: Names of commands that should be executed after the
+                    workspace is completely started. In the case of Che-Theia, these
+                    commands should be executed after all plugins and extensions have
+                    started, including project cloning. This means that those commands
+                    are not triggered until the user opens the IDE in his browser.
+                  items:
+                    type: string
+                  type: array
+                postStop:
+                  description: Names of commands that should be executed after stopping
+                    the workspace.
+                  items:
+                    type: string
+                  type: array
+                preStart:
+                  description: Names of commands that should be executed before the
+                    workspace start. Kubernetes-wise, these commands would typically
+                    be executed in init containers of the workspace POD.
+                  items:
+                    type: string
+                  type: array
+                preStop:
+                  description: Names of commands that should be executed before stopping
+                    the workspace.
+                  items:
+                    type: string
+                  type: array
+              type: object
             parent:
               description: Parent workspace template
               properties:

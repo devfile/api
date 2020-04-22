@@ -1,5 +1,6 @@
-name: "devfile example"
 schemaVersion: "2.0.0"
+metadata:
+  name: "devfile example"
 projects:
   - name: "my-project"
     custom:
@@ -37,4 +38,5 @@ components:
         field2: ""
       name: "myNewComponent"
   - kubernetes:
+      name: "production"
       url: "https://somewhere/production-environment.yaml"

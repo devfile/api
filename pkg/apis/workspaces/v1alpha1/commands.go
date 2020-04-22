@@ -15,14 +15,47 @@ const (
 	CustomCommandType       CommandType = "Custom"
 )
 
+// CommandGroupType describes the kind of command group.
+// +kubebuilder:validation:Enum=build;run;test;debug
+type CommandGroupType string
+
+const (
+	BuildCommandGroupType CommandGroupType = "build"
+	RunCommandGroupType   CommandGroupType = "run"
+	TestCommandGroupType  CommandGroupType = "test"
+	DebugCommandGroupType CommandGroupType = "debug"
+)
+
+type CommandGroup struct {
+	// Kind of group the command is part of
+	Kind CommandGroupType `json:"kind"`
+
+	// +optional
+	// Identifies the default command for a given group kind
+	IsDefault bool `json:"isDefault,omitempty"`
+}
+
 type BaseCommand struct {
-	Alias      string            `json:"alias,omitempty"`
-	Attributes map[string]string `json:"attributes,omitempty"` // Additional command attributes
+	// Mandatory identifier that allows referencing
+	// this command in composite commands, or from
+	// a parent, or in events.
+	Id string `json:"id"`
+
+	// +optional
+	// Defines the group this command is part of
+	Group *CommandGroup `json:"group,omitempty"`
+
+	// Optional map of free-form additional command attributes
+	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 type LabeledCommand struct {
 	BaseCommand `json:",inline"`
-	Label       string `json:"label,omitempty"`
+
+	// +optional
+	// Optional label that provides a label for this command
+	// to be used in Editor UI menus for example
+	Label string `json:"label,omitempty"`
 }
 
 type Command struct {
@@ -68,7 +101,12 @@ type ExecCommand struct {
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
-	Workdir string `json:"workdir,omitempty"`
+	WorkingDir string `json:"workingDir,omitempty"`
+
+	// +optional
+	// Optional list of environment variables that have to be set
+	// before running the command
+	Env []EnvVar `json:"env,omitempty"`
 }
 
 type CompositeCommand struct {
@@ -100,7 +138,7 @@ type VscodeConfigurationCommandLocation struct {
 }
 
 type VscodeConfigurationCommand struct {
-	BaseCommand `json:",inline"`
+	BaseCommand                        `json:",inline"`
 	VscodeConfigurationCommandLocation `json:",inline"`
 }
 

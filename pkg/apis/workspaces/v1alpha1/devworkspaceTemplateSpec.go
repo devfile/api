@@ -4,16 +4,24 @@ package v1alpha1
 // +k8s:openapi-gen=true
 type DevWorkspaceTemplateSpec struct {
 	// Parent workspace template
-	Parent            *Parent        `json:"parent,omitempty"`
+	// +optional
+	Parent *Parent `json:"parent,omitempty"`
 
 	// Predefined, ready-to-use, workspace-related commands
-	Commands          []Command      `json:"commands,omitempty"`
+	// +optional
+	Commands []Command `json:"commands,omitempty"`
+
+	// Bindings of commands to events.
+	// Each command is referred-to by its name.
+	// +optional
+	Events Events `json:"events,omitempty"`
 
 	// Projects worked on in the workspace, containing names and sources locations
-	Projects          []Project      `json:"projects,omitempty"`
-	
+	// +optional
+	Projects []Project `json:"projects,omitempty"`
+
 	// List of the workspace components, such as editor and plugins,
 	// user-provided containers, or other types of components
 	// +optional
-	Components        []Component `json:"components,omitempty"`
+	Components []Component `json:"components,omitempty"`
 }

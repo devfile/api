@@ -4,7 +4,7 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum= Container;Kubernetes;Openshift;CheEditor;ChePlugin;Custom
+// +kubebuilder:validation:Enum= Container;Kubernetes;Openshift;CheEditor;Volume;ChePlugin;Custom
 type ComponentType string
 
 const (
@@ -13,6 +13,7 @@ const (
 	OpenshiftComponentType    ComponentType = "Openshift"
 	CheEditorComponentType ComponentType = "CheEditor"
 	ChePluginComponentType ComponentType = "ChePlugin"
+	VolumeComponentType    ComponentType = "Volume"
 	CustomComponentType ComponentType = "Custom"
 )
 
@@ -21,7 +22,6 @@ const (
 // Workspace component: Anything that will bring additional features / tooling / behaviour / context
 // to the workspace, in order to make working in it easier.
 type BaseComponent struct {
-	Alias string `json:"alias,omitempty"`
 }
 
 type Component struct {
@@ -40,6 +40,10 @@ type PolymorphicComponent struct {
 	// Container component
 	// +optional
 	Container *ContainerComponent `json:"container,omitempty"`
+
+	// Volume component
+	// +optional
+	Volume *VolumeComponent `json:"volume,omitempty"`
 
 	// CheEditor component
 	// +optional

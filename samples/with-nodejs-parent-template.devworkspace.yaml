@@ -10,6 +10,7 @@ spec:
         name: nodejs-stack
     commands:
       - exec:
+          id: sayHello
           label: Say Hello
           commandLine: echo "hello"
           component: nodejs

@@ -1,5 +1,6 @@
-name: "my-devfile"
 schemaVersion: "2.0.0-beta"
+metadata:
+  name: "my-devfile"
 projects:
   - name: "my-project"
     custom:
@@ -8,6 +9,7 @@ projects:
         custom-info: "connexion-information"
 components:
   - kubernetes:
+      name: "production"
       url: "https://somewhere/production-environment.yaml"
   - custom:
       componentClass: "NewComponentType"
