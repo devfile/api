@@ -43,7 +43,7 @@ commands:
       id: build 
       component: maven
       commandLine: mvn -Duser.home=${HOME} -DskipTests clean install
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
@@ -65,7 +65,7 @@ commands:
       id: run
       component: maven
       commandLine: 'mvn -Duser.home=${HOME} spring-boot:run'
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
@@ -75,25 +75,25 @@ commands:
       commandLine: >-
         mvn  -Duser.home=${HOME} spring-boot:run -Drun.jvmArguments="-Xdebug
         -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
   - exec:
       id: test
       component: maven
       commandLine: 'mvn -Duser.home=${HOME} verify'
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
   - exec:
       id: dependency-analysis
       component: maven
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       commandLine: >-
         ${HOME}/stack-analysis.sh -f
-        ${CHE_PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
-        ${CHE_PROJECTS_ROOT}/spring-boot-http-booster
+        ${PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
+        ${PROJECTS_ROOT}/spring-boot-http-booster
   - exec:
       id: deploy to OpenShift 
       component: maven
       commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
-      workingDir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'

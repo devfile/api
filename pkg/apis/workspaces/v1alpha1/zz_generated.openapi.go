@@ -260,7 +260,7 @@ func schema_pkg_apis_workspaces_v1alpha1_DevWorkspaceTemplateSpec(ref common.Ref
 					},
 					"events": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Bindings of commands to events",
+							Description: "Bindings of commands to events. Each command is referred-to by its name.",
 							Ref:         ref("github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1.Events"),
 						},
 					},

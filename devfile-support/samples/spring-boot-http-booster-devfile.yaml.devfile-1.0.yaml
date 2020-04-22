@@ -35,7 +35,7 @@ components:
 commands:
   - name: build
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: >-
           MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean
@@ -58,13 +58,13 @@ commands:
         type: vscode-launch
   - name: run
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
         component: maven
   - name: debug
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: >-
           mvn  -Duser.home=${HOME} spring-boot:run -Drun.jvmArguments="-Xdebug
@@ -72,22 +72,22 @@ commands:
         component: maven
   - name: test
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} verify'
         component: maven
   - name: dependency-analysis
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: >-
           ${HOME}/stack-analysis.sh -f
-          ${CHE_PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
-          ${CHE_PROJECTS_ROOT}/spring-boot-http-booster
+          ${PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
+          ${PROJECTS_ROOT}/spring-boot-http-booster
         component: maven
   - name: deploy to OpenShift
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/spring-boot-http-booster'
+      - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec
         command: 'mvn fabric8:deploy -Popenshift -DskipTests'
         component: maven

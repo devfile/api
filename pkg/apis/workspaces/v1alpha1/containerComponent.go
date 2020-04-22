@@ -2,10 +2,10 @@ package v1alpha1
 
 // Component that allows the developer to add a configured container into his workspace
 type ContainerComponent struct {
-	BaseComponent  `json:",inline"`
-	Container  `json:",inline"`
-	MemoryLimit string     `json:"memoryLimit,omitempty"`
-	Endpoints   []Endpoint `json:"endpoints,omitempty"`
+	BaseComponent `json:",inline"`
+	Container     `json:",inline"`
+	MemoryLimit   string     `json:"memoryLimit,omitempty"`
+	Endpoints     []Endpoint `json:"endpoints,omitempty"`
 }
 
 type Endpoint struct {
@@ -41,28 +41,28 @@ type EndpointConfiguration struct {
 }
 
 type Container struct {
-	Name  string   `json:"name"`
-	Image string   `json:"image"`
+	Name  string `json:"name"`
+	Image string `json:"image"`
 	// +optional
 	// Environment variables used in this container
-	Env   []EnvVar `json:"env,omitempty"`
+	Env []EnvVar `json:"env,omitempty"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.
 	VolumeMounts []VolumeMount `json:"volumeMounts,omitempty"`
 
 	//+optional
-	MemoryLimit  string `json:"memoryLimit,omitempty"`
+	MemoryLimit string `json:"memoryLimit,omitempty"`
 
 	//+optional
-	MountSources bool   `json:"mountSources"`
+	MountSources bool `json:"mountSources"`
 
 	//+optional
 	//
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
-	// When omitted, the value of the `PROJECT_ROOT` environment variable is used.
-	SourceMapping string   `json:"sourceMapping"`
+	// When omitted, the value of the `PROJECTS_ROOT` environment variable is used.
+	SourceMapping string `json:"sourceMapping"`
 }
 
 type EnvVar struct {
