@@ -18,7 +18,7 @@ WORKDIR="/home/user/go/src/${GO_MODULE}"
 IMAGE_NAME="che-incubator/devworkspace-build-prerequisites"
 
 # Operator SDK
-OPERATOR_SDK_VERSION=v0.12.0
+OPERATOR_SDK_VERSION=v0.17.0
 
 init() {
   BLUE='\033[1;34m'
