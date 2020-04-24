@@ -4,7 +4,7 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // CommandType describes the type of command.
 // Only one of the following command type may be specified.
-// +kubebuilder:validation:Enum=Exec;VscodeTask;VscodeLaunch;Custom
+// +kubebuilder:validation:Enum=Exec;VscodeTask;VscodeLaunch;Composite;Custom
 type CommandType string
 
 const (

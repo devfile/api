@@ -49,6 +49,7 @@ spec:
                         - Exec
                         - VscodeTask
                         - VscodeLaunch
+                        - Composite
                         - Custom
                         type: string
                       composite:
@@ -331,9 +332,8 @@ spec:
                         - Container
                         - Kubernetes
                         - Openshift
-                        - CheEditor
                         - Volume
-                        - ChePlugin
+                        - Plugin
                         - Custom
                         type: string
                       container:
@@ -531,6 +531,7 @@ spec:
                                   - Exec
                                   - VscodeTask
                                   - VscodeLaunch
+                                  - Composite
                                   - Custom
                                   type: string
                                 composite:
@@ -1104,6 +1105,7 @@ spec:
                             - Exec
                             - VscodeTask
                             - VscodeLaunch
+                            - Composite
                             - Custom
                             type: string
                           composite:
@@ -1401,9 +1403,8 @@ spec:
                             - Container
                             - Kubernetes
                             - Openshift
-                            - CheEditor
                             - Volume
-                            - ChePlugin
+                            - Plugin
                             - Custom
                             type: string
                           container:
@@ -1605,6 +1606,7 @@ spec:
                                       - Exec
                                       - VscodeTask
                                       - VscodeLaunch
+                                      - Composite
                                       - Custom
                                       type: string
                                     composite:
