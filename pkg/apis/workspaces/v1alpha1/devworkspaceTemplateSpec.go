@@ -7,8 +7,13 @@ type DevWorkspaceTemplateSpec struct {
 	// +optional
 	Parent *Parent `json:"parent,omitempty"`
 
+	DevWorkspaceTemplateSpecContent `json:",inline"`
+}
+
+type DevWorkspaceTemplateSpecContent struct {
 	// Predefined, ready-to-use, workspace-related commands
 	// +optional
+	//
 	Commands []Command `json:"commands,omitempty"`
 
 	// Bindings of commands to events.

@@ -1,5 +1,16 @@
 package v1alpha1
 
+// K8sLikeComponentLocationType describes the type of
+// the location the configuration is fetched from.
+// Only one of the following component type may be specified.
+// +kubebuilder:validation:Enum=Uri;Inlined
+type K8sLikeComponentLocationType string
+
+const (
+	UriK8sLikeComponentLocationType     K8sLikeComponentLocationType = "Uri"
+	InlinedK8sLikeComponentLocationType K8sLikeComponentLocationType = "Inlined"
+)
+
 // +k8s:openapi-gen=true
 // +union
 type K8sLikeComponentLocation struct {
@@ -7,20 +18,21 @@ type K8sLikeComponentLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType string `json:"locationType"`
+	LocationType K8sLikeComponentLocationType `json:"locationType"`
 
-	// Location in a plugin registry
+	// Location in a file fetched from a uri.
 	// +optional
-	Url string `json:"url,omitempty"`
+	Uri string `json:"uri,omitempty"`
 
-	// Reference to the plugin definition
+	// Inlined manifest
 	// +optional
 	Inlined string `json:"inlined,omitempty"`
 }
 
 type K8sLikeComponent struct {
-	BaseComponent                          `json:",inline"`
-	K8sLikeComponentLocation               `json:",inline"`
+	BaseComponent            `json:",inline"`
+	K8sLikeComponentLocation `json:",inline"`
+	
 	// Mandatory name that allows referencing the component
 	// in commands, or inside a parent
 	Name string `json:"name"`

@@ -55,7 +55,8 @@ type ProjectSource struct {
 
 type CommonProjectSource struct {
 	// Project's source location address. Should be URL for git and github located projects, or; file:// for zip
-	Location string `json:"location"`
+	// +optional
+	Location string `json:"location,omitempty"`
 
 	// Part of project to populate in the working directory.
 	// +optional
