@@ -1,0 +1,32 @@
+kind: "DevWorkspace"
+apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+metadata:
+  "name": "myWorkspace"
+spec:
+  started: true
+  routingClass: 'openshift-auth'
+  template:
+    projects:
+      - name: "my-project"
+        custom:
+          projectSourceClass: "custom-source"
+          embeddedResource:
+            custom-info: "connexion-information"
+    components:
+      - kubernetes:
+          name: "production"
+          uri: "https://somewhere/production-environment.yaml"
+      - custom:
+          componentClass: "NewComponentType"
+          embeddedResource:
+            config1: ""
+            config2:
+              config2-1: "" 
+              config2-2: "" 
+          name: "myNewComponent"
+    commands:
+      - custom:
+          id: myCustomCommand
+          commandClass: myCommandType
+          embeddedResource:
+            anyCustomConfigValue: ""

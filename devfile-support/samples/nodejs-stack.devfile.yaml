@@ -2,23 +2,22 @@ schemaVersion: 2.0.0
 metadata:
   name: nodejs-stack
 projects:
-  - name: project   
+  - name: project    
     git:
       location: "https://github.com/che-samples/web-nodejs-sample.git"
 components:
-  - cheEditor:
-      registryEntry:
-        id: eclipse/che-theia/7.1.0
-  - chePlugin:
-      registryEntry:
-        id: eclipse/che-machine-exec-plugin/7.1.0
-  - chePlugin:
-      alias: "typescript-plugin"
-      registryEntry:
-        id: che-incubator/typescript/1.30.2
-      memoryLimit: 512Mi
+  - plugin:
+      id: eclipse/che-theia/7.1.0
+  - plugin:
+      id: eclipse/che-machine-exec-plugin/7.1.0
+  - plugin:
+      name: "typescript-plugin"
+      id: che-incubator/typescript/1.30.2
+      components:
+        - container:
+            name: "??"
+            memoryLimit: 512Mi
   - container:
-      alias: nodejs
       name: nodejs
       image: quay.io/eclipse/che-nodejs10-ubi:nightly
       memoryLimit: 512Mi

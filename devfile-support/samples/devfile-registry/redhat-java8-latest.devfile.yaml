@@ -1,16 +1,24 @@
 schemaVersion: 2.0.0
 metadata:
   publisher: redhat
-  name: java11
+  name: java8
   version: 0.57.0
-  displayName: Redhat Java Plugin
-#  …
-  type: ui-plugin
+  displayName: Language Support for Java 8
+  title: Language Support for Java(TM) by ...
+  description: Java Linting, Intellisense ...
+  icon: https://.../logo-eclipseche.svg
+  repository: https://github.../vscode-java
+  category: Language
+  firstPublicationDate: "2020-02-20"
+  pluginType: che-theia-vsx
 parent:
-  registryEntry:
-    id: redhat/theia-vsx-template/latest
-  parameters:
-    - VSX_LIST: java-dbg.vsix,java.vsix
+  id: redhat/theia-vsx-template/latest
+  components:
+    - container:
+         name: vsx-installer
+         env:
+            - name: VSX_LIST
+              value: java-dbg.vsix,java.vsix
 components:
  - container:
     image: ...che-sidecar-java

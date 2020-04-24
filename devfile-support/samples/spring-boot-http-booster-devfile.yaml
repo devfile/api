@@ -9,18 +9,16 @@ projects:
       branch: master
 components:
   - plugin:
-      registryEntry:
-        id: redhat/java8/latest
-      componentOverrides:
+      id: redhat/java8/latest
+      components:
         - container:
-            name: vscode-java
+            name: vscode-java            
             memoryLimit: 2Gi
         - volume:
             name: m2
             size: 2G
   - plugin:
-      registryEntry:
-        id: redhat/dependency-analytics/latest
+      id: redhat/dependency-analytics/latest
   - container:
       name: maven
       image: registry.redhat.io/codeready-workspaces/stacks-java-rhel8:2.1
