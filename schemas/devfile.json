@@ -198,7 +198,19 @@
               "id"
             ],
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "inlined"
+                ]
+              }
+            ]
           },
           "vscodeTask": {
             "description": "Command providing the definition of a VsCode Task",
@@ -251,11 +263,45 @@
               "id"
             ],
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "inlined"
+                ]
+              }
+            ]
           }
         },
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "exec"
+            ]
+          },
+          {
+            "required": [
+              "vscodeTask"
+            ]
+          },
+          {
+            "required": [
+              "vscodeLaunch"
+            ]
+          },
+          {
+            "required": [
+              "composite"
+            ]
+          }
+        ]
       },
       "type": "array"
     },
@@ -414,7 +460,19 @@
               "name"
             ],
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "inlined"
+                ]
+              }
+            ]
           },
           "openshift": {
             "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
@@ -436,7 +494,19 @@
               "name"
             ],
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "inlined"
+                ]
+              }
+            ]
           },
           "plugin": {
             "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
@@ -637,7 +707,19 @@
                         "id"
                       ],
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "uri"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "inlined"
+                          ]
+                        }
+                      ]
                     },
                     "vscodeTask": {
                       "description": "Command providing the definition of a VsCode Task",
@@ -690,11 +772,45 @@
                         "id"
                       ],
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "uri"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "inlined"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "type": "object",
-                  "additionalProperties": false
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "required": [
+                        "exec"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "vscodeTask"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "vscodeLaunch"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "composite"
+                      ]
+                    }
+                  ]
                 },
                 "type": "array"
               },
@@ -851,7 +967,19 @@
                         "name"
                       ],
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "uri"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "inlined"
+                          ]
+                        }
+                      ]
                     },
                     "openshift": {
                       "description": "Configuration overriding for an OpenShift component",
@@ -873,7 +1001,19 @@
                         "name"
                       ],
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "uri"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "inlined"
+                          ]
+                        }
+                      ]
                     },
                     "volume": {
                       "description": "Configuration overriding for a Volume component",
@@ -895,7 +1035,29 @@
                     }
                   },
                   "type": "object",
-                  "additionalProperties": false
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "required": [
+                        "container"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "kubernetes"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "openshift"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "volume"
+                      ]
+                    }
+                  ]
                 },
                 "type": "array"
               },
@@ -932,7 +1094,24 @@
               }
             },
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "id"
+                ]
+              },
+              {
+                "required": [
+                  "kubernetes"
+                ]
+              }
+            ]
           },
           "volume": {
             "description": "Allows specifying the definition of a volume shared by several other components",
@@ -954,7 +1133,34 @@
           }
         },
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "container"
+            ]
+          },
+          {
+            "required": [
+              "kubernetes"
+            ]
+          },
+          {
+            "required": [
+              "openshift"
+            ]
+          },
+          {
+            "required": [
+              "volume"
+            ]
+          },
+          {
+            "required": [
+              "plugin"
+            ]
+          }
+        ]
       },
       "type": "array"
     },
@@ -1192,7 +1398,19 @@
                   "id"
                 ],
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "inlined"
+                    ]
+                  }
+                ]
               },
               "vscodeTask": {
                 "description": "Command providing the definition of a VsCode Task",
@@ -1245,11 +1463,45 @@
                   "id"
                 ],
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "inlined"
+                    ]
+                  }
+                ]
               }
             },
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "exec"
+                ]
+              },
+              {
+                "required": [
+                  "vscodeTask"
+                ]
+              },
+              {
+                "required": [
+                  "vscodeLaunch"
+                ]
+              },
+              {
+                "required": [
+                  "composite"
+                ]
+              }
+            ]
           },
           "type": "array"
         },
@@ -1406,7 +1658,19 @@
                   "name"
                 ],
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "inlined"
+                    ]
+                  }
+                ]
               },
               "openshift": {
                 "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
@@ -1428,7 +1692,19 @@
                   "name"
                 ],
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "inlined"
+                    ]
+                  }
+                ]
               },
               "plugin": {
                 "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
@@ -1629,7 +1905,19 @@
                             "id"
                           ],
                           "type": "object",
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "oneOf": [
+                            {
+                              "required": [
+                                "uri"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "inlined"
+                              ]
+                            }
+                          ]
                         },
                         "vscodeTask": {
                           "description": "Command providing the definition of a VsCode Task",
@@ -1682,11 +1970,45 @@
                             "id"
                           ],
                           "type": "object",
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "oneOf": [
+                            {
+                              "required": [
+                                "uri"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "inlined"
+                              ]
+                            }
+                          ]
                         }
                       },
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "exec"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "vscodeTask"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "vscodeLaunch"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "composite"
+                          ]
+                        }
+                      ]
                     },
                     "type": "array"
                   },
@@ -1843,7 +2165,19 @@
                             "name"
                           ],
                           "type": "object",
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "oneOf": [
+                            {
+                              "required": [
+                                "uri"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "inlined"
+                              ]
+                            }
+                          ]
                         },
                         "openshift": {
                           "description": "Configuration overriding for an OpenShift component",
@@ -1865,7 +2199,19 @@
                             "name"
                           ],
                           "type": "object",
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "oneOf": [
+                            {
+                              "required": [
+                                "uri"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "inlined"
+                              ]
+                            }
+                          ]
                         },
                         "volume": {
                           "description": "Configuration overriding for a Volume component",
@@ -1887,7 +2233,29 @@
                         }
                       },
                       "type": "object",
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "container"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "kubernetes"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "openshift"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "volume"
+                          ]
+                        }
+                      ]
                     },
                     "type": "array"
                   },
@@ -1924,7 +2292,24 @@
                   }
                 },
                 "type": "object",
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "id"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "kubernetes"
+                    ]
+                  }
+                ]
               },
               "volume": {
                 "description": "Allows specifying the definition of a volume shared by several other components",
@@ -1946,7 +2331,34 @@
               }
             },
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "container"
+                ]
+              },
+              {
+                "required": [
+                  "kubernetes"
+                ]
+              },
+              {
+                "required": [
+                  "openshift"
+                ]
+              },
+              {
+                "required": [
+                  "volume"
+                ]
+              },
+              {
+                "required": [
+                  "plugin"
+                ]
+              }
+            ]
           },
           "type": "array"
         },
@@ -2083,7 +2495,24 @@
               "name"
             ],
             "type": "object",
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "git"
+                ]
+              },
+              {
+                "required": [
+                  "github"
+                ]
+              },
+              {
+                "required": [
+                  "zip"
+                ]
+              }
+            ]
           },
           "type": "array"
         },
@@ -2096,7 +2525,24 @@
         }
       },
       "type": "object",
-      "additionalProperties": false
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "uri"
+          ]
+        },
+        {
+          "required": [
+            "id"
+          ]
+        },
+        {
+          "required": [
+            "kubernetes"
+          ]
+        }
+      ]
     },
     "projects": {
       "description": "Projects worked on in the workspace, containing names and sources locations",
@@ -2176,7 +2622,24 @@
           "name"
         ],
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "git"
+            ]
+          },
+          {
+            "required": [
+              "github"
+            ]
+          },
+          {
+            "required": [
+              "zip"
+            ]
+          }
+        ]
       },
       "type": "array"
     },

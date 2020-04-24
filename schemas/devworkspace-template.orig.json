@@ -10,8 +10,7 @@
       "type": "string"
     },
     "metadata": {
-      "type": "object",
-      "additionalProperties": "string"
+      "type": "object"
     },
     "spec": {
       "description": "Structure of the workspace. This is also the specification of a workspace template.",
@@ -20,6 +19,17 @@
           "description": "Predefined, ready-to-use, workspace-related commands",
           "items": {
             "properties": {
+              "commandType": {
+                "description": "Type of workspace command",
+                "enum": [
+                  "Exec",
+                  "VscodeTask",
+                  "VscodeLaunch",
+                  "Composite",
+                  "Custom"
+                ],
+                "type": "string"
+              },
               "composite": {
                 "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                 "properties": {
@@ -58,8 +68,7 @@
                     "required": [
                       "kind"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -77,8 +86,7 @@
                 "required": [
                   "id"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "custom": {
                 "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -96,7 +104,9 @@
                   },
                   "embeddedResource": {
                     "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
-                    "type": "object"
+                    "type": "object",
+                    "x-kubernetes-embedded-resource": true,
+                    "x-kubernetes-preserve-unknown-fields": true
                   },
                   "group": {
                     "description": "Defines the group this command is part of",
@@ -119,8 +129,7 @@
                     "required": [
                       "kind"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -136,8 +145,7 @@
                   "embeddedResource",
                   "id"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "exec": {
                 "description": "CLI Command executed in a component container",
@@ -172,8 +180,7 @@
                         "name",
                         "value"
                       ],
-                      "type": "object",
-                      "additionalProperties": false
+                      "type": "object"
                     },
                     "type": "array"
                   },
@@ -198,8 +205,7 @@
                     "required": [
                       "kind"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -215,11 +221,9 @@
                   }
                 },
                 "required": [
-                  "id",
-                  "commandLine"
+                  "id"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "vscodeLaunch": {
                 "description": "Command providing the definition of a VsCode launch action",
@@ -252,8 +256,7 @@
                     "required": [
                       "kind"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -261,6 +264,14 @@
                   },
                   "inlined": {
                     "description": "Inlined content of the VsCode configuration",
+                    "type": "string"
+                  },
+                  "locationType": {
+                    "description": "Type of Vscode configuration command location",
+                    "enum": [
+                      "Uri",
+                      "Inlined"
+                    ],
                     "type": "string"
                   },
                   "uri": {
@@ -271,20 +282,7 @@
                 "required": [
                   "id"
                 ],
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "vscodeTask": {
                 "description": "Command providing the definition of a VsCode Task",
@@ -317,8 +315,7 @@
                     "required": [
                       "kind"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -326,6 +323,14 @@
                   },
                   "inlined": {
                     "description": "Inlined content of the VsCode configuration",
+                    "type": "string"
+                  },
+                  "locationType": {
+                    "description": "Type of Vscode configuration command location",
+                    "enum": [
+                      "Uri",
+                      "Inlined"
+                    ],
                     "type": "string"
                   },
                   "uri": {
@@ -336,51 +341,10 @@
                 "required": [
                   "id"
                 ],
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ]
+                "type": "object"
               }
             },
-            "type": "object",
-            "additionalProperties": false,
-            "oneOf": [
-              {
-                "required": [
-                  "exec"
-                ]
-              },
-              {
-                "required": [
-                  "vscodeTask"
-                ]
-              },
-              {
-                "required": [
-                  "vscodeLaunch"
-                ]
-              },
-              {
-                "required": [
-                  "composite"
-                ]
-              },
-              {
-                "required": [
-                  "custom"
-                ]
-              }
-            ]
+            "type": "object"
           },
           "type": "array"
         },
@@ -388,6 +352,18 @@
           "description": "List of the workspace components, such as editor and plugins, user-provided containers, or other types of components",
           "items": {
             "properties": {
+              "componentType": {
+                "description": "Type of component",
+                "enum": [
+                  "Container",
+                  "Kubernetes",
+                  "Openshift",
+                  "Volume",
+                  "Plugin",
+                  "Custom"
+                ],
+                "type": "string"
+              },
               "container": {
                 "description": "Allows adding and configuring workspace-related containers",
                 "properties": {
@@ -434,8 +410,7 @@
                               "type": "string"
                             }
                           },
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "name": {
                           "type": "string"
@@ -445,11 +420,9 @@
                         }
                       },
                       "required": [
-                        "name",
-                        "targetPort"
+                        "name"
                       ],
-                      "type": "object",
-                      "additionalProperties": false
+                      "type": "object"
                     },
                     "type": "array"
                   },
@@ -468,8 +441,7 @@
                         "name",
                         "value"
                       ],
-                      "type": "object",
-                      "additionalProperties": false
+                      "type": "object"
                     },
                     "type": "array"
                   },
@@ -506,18 +478,15 @@
                       "required": [
                         "name"
                       ],
-                      "type": "object",
-                      "additionalProperties": false
+                      "type": "object"
                     },
                     "type": "array"
                   }
                 },
                 "required": [
-                  "name",
-                  "image"
+                  "name"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "custom": {
                 "description": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller",
@@ -528,7 +497,9 @@
                   },
                   "embeddedResource": {
                     "description": "Additional free-form configuration for this custom component that the implementation controller will know how to use",
-                    "type": "object"
+                    "type": "object",
+                    "x-kubernetes-embedded-resource": true,
+                    "x-kubernetes-preserve-unknown-fields": true
                   },
                   "name": {
                     "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
@@ -540,8 +511,7 @@
                   "embeddedResource",
                   "name"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "kubernetes": {
                 "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -550,6 +520,14 @@
                     "description": "Inlined manifest",
                     "type": "string"
                   },
+                  "locationType": {
+                    "description": "Type of Kubernetes-like location",
+                    "enum": [
+                      "Uri",
+                      "Inlined"
+                    ],
+                    "type": "string"
+                  },
                   "name": {
                     "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                     "type": "string"
@@ -562,20 +540,7 @@
                 "required": [
                   "name"
                 ],
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "openshift": {
                 "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
@@ -584,6 +549,14 @@
                     "description": "Inlined manifest",
                     "type": "string"
                   },
+                  "locationType": {
+                    "description": "Type of Kubernetes-like location",
+                    "enum": [
+                      "Uri",
+                      "Inlined"
+                    ],
+                    "type": "string"
+                  },
                   "name": {
                     "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                     "type": "string"
@@ -596,20 +569,7 @@
                 "required": [
                   "name"
                 ],
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "plugin": {
                 "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
@@ -618,6 +578,17 @@
                     "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
                     "items": {
                       "properties": {
+                        "commandType": {
+                          "description": "Type of workspace command",
+                          "enum": [
+                            "Exec",
+                            "VscodeTask",
+                            "VscodeLaunch",
+                            "Composite",
+                            "Custom"
+                          ],
+                          "type": "string"
+                        },
                         "composite": {
                           "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                           "properties": {
@@ -656,8 +627,7 @@
                               "required": [
                                 "kind"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -675,8 +645,7 @@
                           "required": [
                             "id"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "custom": {
                           "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -694,7 +663,9 @@
                             },
                             "embeddedResource": {
                               "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
-                              "type": "object"
+                              "type": "object",
+                              "x-kubernetes-embedded-resource": true,
+                              "x-kubernetes-preserve-unknown-fields": true
                             },
                             "group": {
                               "description": "Defines the group this command is part of",
@@ -717,8 +688,7 @@
                               "required": [
                                 "kind"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -734,8 +704,7 @@
                             "embeddedResource",
                             "id"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "exec": {
                           "description": "CLI Command executed in a component container",
@@ -770,8 +739,7 @@
                                   "name",
                                   "value"
                                 ],
-                                "type": "object",
-                                "additionalProperties": false
+                                "type": "object"
                               },
                               "type": "array"
                             },
@@ -796,8 +764,7 @@
                               "required": [
                                 "kind"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -815,8 +782,7 @@
                           "required": [
                             "id"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "vscodeLaunch": {
                           "description": "Command providing the definition of a VsCode launch action",
@@ -849,8 +815,7 @@
                               "required": [
                                 "kind"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -858,6 +823,14 @@
                             },
                             "inlined": {
                               "description": "Inlined content of the VsCode configuration",
+                              "type": "string"
+                            },
+                            "locationType": {
+                              "description": "Type of Vscode configuration command location",
+                              "enum": [
+                                "Uri",
+                                "Inlined"
+                              ],
                               "type": "string"
                             },
                             "uri": {
@@ -868,20 +841,7 @@
                           "required": [
                             "id"
                           ],
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         },
                         "vscodeTask": {
                           "description": "Command providing the definition of a VsCode Task",
@@ -914,8 +874,7 @@
                               "required": [
                                 "kind"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -923,6 +882,14 @@
                             },
                             "inlined": {
                               "description": "Inlined content of the VsCode configuration",
+                              "type": "string"
+                            },
+                            "locationType": {
+                              "description": "Type of Vscode configuration command location",
+                              "enum": [
+                                "Uri",
+                                "Inlined"
+                              ],
                               "type": "string"
                             },
                             "uri": {
@@ -933,51 +900,10 @@
                           "required": [
                             "id"
                           ],
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         }
                       },
-                      "type": "object",
-                      "additionalProperties": false,
-                      "oneOf": [
-                        {
-                          "required": [
-                            "exec"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "vscodeTask"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "vscodeLaunch"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "composite"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "custom"
-                          ]
-                        }
-                      ]
+                      "type": "object"
                     },
                     "type": "array"
                   },
@@ -985,6 +911,16 @@
                     "description": "Overrides of components encapsulated in a plugin. Overriding is done using a strategic merge",
                     "items": {
                       "properties": {
+                        "componentType": {
+                          "description": "Type of component override",
+                          "enum": [
+                            "Container",
+                            "Kubernetes",
+                            "Openshift",
+                            "Volume"
+                          ],
+                          "type": "string"
+                        },
                         "container": {
                           "description": "Configuration overriding for a Container component",
                           "properties": {
@@ -1031,8 +967,7 @@
                                         "type": "string"
                                       }
                                     },
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                   },
                                   "name": {
                                     "type": "string"
@@ -1044,8 +979,7 @@
                                 "required": [
                                   "name"
                                 ],
-                                "type": "object",
-                                "additionalProperties": false
+                                "type": "object"
                               },
                               "type": "array"
                             },
@@ -1064,8 +998,7 @@
                                   "name",
                                   "value"
                                 ],
-                                "type": "object",
-                                "additionalProperties": false
+                                "type": "object"
                               },
                               "type": "array"
                             },
@@ -1102,8 +1035,7 @@
                                 "required": [
                                   "name"
                                 ],
-                                "type": "object",
-                                "additionalProperties": false
+                                "type": "object"
                               },
                               "type": "array"
                             }
@@ -1111,8 +1043,7 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "kubernetes": {
                           "description": "Configuration overriding for a Kubernetes component",
@@ -1121,6 +1052,14 @@
                               "description": "Inlined manifest",
                               "type": "string"
                             },
+                            "locationType": {
+                              "description": "Type of Kubernetes-like location",
+                              "enum": [
+                                "Uri",
+                                "Inlined"
+                              ],
+                              "type": "string"
+                            },
                             "name": {
                               "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                               "type": "string"
@@ -1133,20 +1072,7 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         },
                         "openshift": {
                           "description": "Configuration overriding for an OpenShift component",
@@ -1155,6 +1081,14 @@
                               "description": "Inlined manifest",
                               "type": "string"
                             },
+                            "locationType": {
+                              "description": "Type of Kubernetes-like location",
+                              "enum": [
+                                "Uri",
+                                "Inlined"
+                              ],
+                              "type": "string"
+                            },
                             "name": {
                               "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                               "type": "string"
@@ -1167,20 +1101,7 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         },
                         "volume": {
                           "description": "Configuration overriding for a Volume component",
@@ -1197,39 +1118,24 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         }
                       },
-                      "type": "object",
-                      "additionalProperties": false,
-                      "oneOf": [
-                        {
-                          "required": [
-                            "container"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "kubernetes"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "openshift"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "volume"
-                          ]
-                        }
-                      ]
+                      "type": "object"
                     },
                     "type": "array"
                   },
                   "id": {
                     "description": "Id in a registry that contains a Devfile yaml file",
+                    "type": "string"
+                  },
+                  "importReferenceType": {
+                    "description": "type of location from where the referenced template structure should be retrieved",
+                    "enum": [
+                      "Uri",
+                      "Id",
+                      "Kubernetes"
+                    ],
                     "type": "string"
                   },
                   "kubernetes": {
@@ -1245,8 +1151,7 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "name": {
                     "description": "Optional name that allows referencing the component in commands, or inside a parent If omitted it will be infered from the location (uri or registryEntry)",
@@ -1260,25 +1165,7 @@
                     "type": "string"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "id"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "kubernetes"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "volume": {
                 "description": "Allows specifying the definition of a volume shared by several other components",
@@ -1295,44 +1182,10 @@
                 "required": [
                   "name"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               }
             },
-            "type": "object",
-            "additionalProperties": false,
-            "oneOf": [
-              {
-                "required": [
-                  "container"
-                ]
-              },
-              {
-                "required": [
-                  "kubernetes"
-                ]
-              },
-              {
-                "required": [
-                  "openshift"
-                ]
-              },
-              {
-                "required": [
-                  "volume"
-                ]
-              },
-              {
-                "required": [
-                  "plugin"
-                ]
-              },
-              {
-                "required": [
-                  "custom"
-                ]
-              }
-            ]
+            "type": "object"
           },
           "type": "array"
         },
@@ -1368,8 +1221,7 @@
               "type": "array"
             }
           },
-          "type": "object",
-          "additionalProperties": false
+          "type": "object"
         },
         "parent": {
           "description": "Parent workspace template",
@@ -1378,6 +1230,17 @@
               "description": "Predefined, ready-to-use, workspace-related commands",
               "items": {
                 "properties": {
+                  "commandType": {
+                    "description": "Type of workspace command",
+                    "enum": [
+                      "Exec",
+                      "VscodeTask",
+                      "VscodeLaunch",
+                      "Composite",
+                      "Custom"
+                    ],
+                    "type": "string"
+                  },
                   "composite": {
                     "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                     "properties": {
@@ -1416,8 +1279,7 @@
                         "required": [
                           "kind"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -1435,8 +1297,7 @@
                     "required": [
                       "id"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "custom": {
                     "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -1454,7 +1315,9 @@
                       },
                       "embeddedResource": {
                         "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
-                        "type": "object"
+                        "type": "object",
+                        "x-kubernetes-embedded-resource": true,
+                        "x-kubernetes-preserve-unknown-fields": true
                       },
                       "group": {
                         "description": "Defines the group this command is part of",
@@ -1477,8 +1340,7 @@
                         "required": [
                           "kind"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -1494,8 +1356,7 @@
                       "embeddedResource",
                       "id"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "exec": {
                     "description": "CLI Command executed in a component container",
@@ -1530,8 +1391,7 @@
                             "name",
                             "value"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "type": "array"
                       },
@@ -1556,8 +1416,7 @@
                         "required": [
                           "kind"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -1575,8 +1434,7 @@
                     "required": [
                       "id"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "vscodeLaunch": {
                     "description": "Command providing the definition of a VsCode launch action",
@@ -1609,8 +1467,7 @@
                         "required": [
                           "kind"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -1618,6 +1475,14 @@
                       },
                       "inlined": {
                         "description": "Inlined content of the VsCode configuration",
+                        "type": "string"
+                      },
+                      "locationType": {
+                        "description": "Type of Vscode configuration command location",
+                        "enum": [
+                          "Uri",
+                          "Inlined"
+                        ],
                         "type": "string"
                       },
                       "uri": {
@@ -1628,20 +1493,7 @@
                     "required": [
                       "id"
                     ],
-                    "type": "object",
-                    "additionalProperties": false,
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ]
+                    "type": "object"
                   },
                   "vscodeTask": {
                     "description": "Command providing the definition of a VsCode Task",
@@ -1674,8 +1526,7 @@
                         "required": [
                           "kind"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -1683,6 +1534,14 @@
                       },
                       "inlined": {
                         "description": "Inlined content of the VsCode configuration",
+                        "type": "string"
+                      },
+                      "locationType": {
+                        "description": "Type of Vscode configuration command location",
+                        "enum": [
+                          "Uri",
+                          "Inlined"
+                        ],
                         "type": "string"
                       },
                       "uri": {
@@ -1693,51 +1552,10 @@
                     "required": [
                       "id"
                     ],
-                    "type": "object",
-                    "additionalProperties": false,
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ]
+                    "type": "object"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "exec"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "vscodeTask"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "vscodeLaunch"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "composite"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "custom"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "type": "array"
             },
@@ -1745,6 +1563,18 @@
               "description": "List of the workspace components, such as editor and plugins, user-provided containers, or other types of components",
               "items": {
                 "properties": {
+                  "componentType": {
+                    "description": "Type of component",
+                    "enum": [
+                      "Container",
+                      "Kubernetes",
+                      "Openshift",
+                      "Volume",
+                      "Plugin",
+                      "Custom"
+                    ],
+                    "type": "string"
+                  },
                   "container": {
                     "description": "Allows adding and configuring workspace-related containers",
                     "properties": {
@@ -1791,8 +1621,7 @@
                                   "type": "string"
                                 }
                               },
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "name": {
                               "type": "string"
@@ -1804,8 +1633,7 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "type": "array"
                       },
@@ -1824,8 +1652,7 @@
                             "name",
                             "value"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "type": "array"
                       },
@@ -1862,8 +1689,7 @@
                           "required": [
                             "name"
                           ],
-                          "type": "object",
-                          "additionalProperties": false
+                          "type": "object"
                         },
                         "type": "array"
                       }
@@ -1871,8 +1697,7 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "custom": {
                     "description": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller",
@@ -1883,7 +1708,9 @@
                       },
                       "embeddedResource": {
                         "description": "Additional free-form configuration for this custom component that the implementation controller will know how to use",
-                        "type": "object"
+                        "type": "object",
+                        "x-kubernetes-embedded-resource": true,
+                        "x-kubernetes-preserve-unknown-fields": true
                       },
                       "name": {
                         "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
@@ -1895,8 +1722,7 @@
                       "embeddedResource",
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "kubernetes": {
                     "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -1905,6 +1731,14 @@
                         "description": "Inlined manifest",
                         "type": "string"
                       },
+                      "locationType": {
+                        "description": "Type of Kubernetes-like location",
+                        "enum": [
+                          "Uri",
+                          "Inlined"
+                        ],
+                        "type": "string"
+                      },
                       "name": {
                         "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                         "type": "string"
@@ -1917,20 +1751,7 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false,
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ]
+                    "type": "object"
                   },
                   "openshift": {
                     "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
@@ -1939,6 +1760,14 @@
                         "description": "Inlined manifest",
                         "type": "string"
                       },
+                      "locationType": {
+                        "description": "Type of Kubernetes-like location",
+                        "enum": [
+                          "Uri",
+                          "Inlined"
+                        ],
+                        "type": "string"
+                      },
                       "name": {
                         "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                         "type": "string"
@@ -1951,20 +1780,7 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false,
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ]
+                    "type": "object"
                   },
                   "plugin": {
                     "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
@@ -1973,6 +1789,17 @@
                         "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
                         "items": {
                           "properties": {
+                            "commandType": {
+                              "description": "Type of workspace command",
+                              "enum": [
+                                "Exec",
+                                "VscodeTask",
+                                "VscodeLaunch",
+                                "Composite",
+                                "Custom"
+                              ],
+                              "type": "string"
+                            },
                             "composite": {
                               "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                               "properties": {
@@ -2011,8 +1838,7 @@
                                   "required": [
                                     "kind"
                                   ],
-                                  "type": "object",
-                                  "additionalProperties": false
+                                  "type": "object"
                                 },
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -2030,8 +1856,7 @@
                               "required": [
                                 "id"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "custom": {
                               "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -2049,7 +1874,9 @@
                                 },
                                 "embeddedResource": {
                                   "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
-                                  "type": "object"
+                                  "type": "object",
+                                  "x-kubernetes-embedded-resource": true,
+                                  "x-kubernetes-preserve-unknown-fields": true
                                 },
                                 "group": {
                                   "description": "Defines the group this command is part of",
@@ -2072,8 +1899,7 @@
                                   "required": [
                                     "kind"
                                   ],
-                                  "type": "object",
-                                  "additionalProperties": false
+                                  "type": "object"
                                 },
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -2089,8 +1915,7 @@
                                 "embeddedResource",
                                 "id"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "exec": {
                               "description": "CLI Command executed in a component container",
@@ -2125,8 +1950,7 @@
                                       "name",
                                       "value"
                                     ],
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                   },
                                   "type": "array"
                                 },
@@ -2151,8 +1975,7 @@
                                   "required": [
                                     "kind"
                                   ],
-                                  "type": "object",
-                                  "additionalProperties": false
+                                  "type": "object"
                                 },
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -2170,8 +1993,7 @@
                               "required": [
                                 "id"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "vscodeLaunch": {
                               "description": "Command providing the definition of a VsCode launch action",
@@ -2204,8 +2026,7 @@
                                   "required": [
                                     "kind"
                                   ],
-                                  "type": "object",
-                                  "additionalProperties": false
+                                  "type": "object"
                                 },
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -2213,6 +2034,14 @@
                                 },
                                 "inlined": {
                                   "description": "Inlined content of the VsCode configuration",
+                                  "type": "string"
+                                },
+                                "locationType": {
+                                  "description": "Type of Vscode configuration command location",
+                                  "enum": [
+                                    "Uri",
+                                    "Inlined"
+                                  ],
                                   "type": "string"
                                 },
                                 "uri": {
@@ -2223,20 +2052,7 @@
                               "required": [
                                 "id"
                               ],
-                              "type": "object",
-                              "additionalProperties": false,
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ]
+                              "type": "object"
                             },
                             "vscodeTask": {
                               "description": "Command providing the definition of a VsCode Task",
@@ -2269,8 +2085,7 @@
                                   "required": [
                                     "kind"
                                   ],
-                                  "type": "object",
-                                  "additionalProperties": false
+                                  "type": "object"
                                 },
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
@@ -2278,6 +2093,14 @@
                                 },
                                 "inlined": {
                                   "description": "Inlined content of the VsCode configuration",
+                                  "type": "string"
+                                },
+                                "locationType": {
+                                  "description": "Type of Vscode configuration command location",
+                                  "enum": [
+                                    "Uri",
+                                    "Inlined"
+                                  ],
                                   "type": "string"
                                 },
                                 "uri": {
@@ -2288,51 +2111,10 @@
                               "required": [
                                 "id"
                               ],
-                              "type": "object",
-                              "additionalProperties": false,
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ]
+                              "type": "object"
                             }
                           },
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "exec"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "vscodeTask"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "vscodeLaunch"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "composite"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "custom"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         },
                         "type": "array"
                       },
@@ -2340,6 +2122,16 @@
                         "description": "Overrides of components encapsulated in a plugin. Overriding is done using a strategic merge",
                         "items": {
                           "properties": {
+                            "componentType": {
+                              "description": "Type of component override",
+                              "enum": [
+                                "Container",
+                                "Kubernetes",
+                                "Openshift",
+                                "Volume"
+                              ],
+                              "type": "string"
+                            },
                             "container": {
                               "description": "Configuration overriding for a Container component",
                               "properties": {
@@ -2386,8 +2178,7 @@
                                             "type": "string"
                                           }
                                         },
-                                        "type": "object",
-                                        "additionalProperties": false
+                                        "type": "object"
                                       },
                                       "name": {
                                         "type": "string"
@@ -2399,8 +2190,7 @@
                                     "required": [
                                       "name"
                                     ],
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                   },
                                   "type": "array"
                                 },
@@ -2419,8 +2209,7 @@
                                       "name",
                                       "value"
                                     ],
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                   },
                                   "type": "array"
                                 },
@@ -2457,8 +2246,7 @@
                                     "required": [
                                       "name"
                                     ],
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                   },
                                   "type": "array"
                                 }
@@ -2466,8 +2254,7 @@
                               "required": [
                                 "name"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             },
                             "kubernetes": {
                               "description": "Configuration overriding for a Kubernetes component",
@@ -2476,6 +2263,14 @@
                                   "description": "Inlined manifest",
                                   "type": "string"
                                 },
+                                "locationType": {
+                                  "description": "Type of Kubernetes-like location",
+                                  "enum": [
+                                    "Uri",
+                                    "Inlined"
+                                  ],
+                                  "type": "string"
+                                },
                                 "name": {
                                   "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                                   "type": "string"
@@ -2488,20 +2283,7 @@
                               "required": [
                                 "name"
                               ],
-                              "type": "object",
-                              "additionalProperties": false,
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ]
+                              "type": "object"
                             },
                             "openshift": {
                               "description": "Configuration overriding for an OpenShift component",
@@ -2510,6 +2292,14 @@
                                   "description": "Inlined manifest",
                                   "type": "string"
                                 },
+                                "locationType": {
+                                  "description": "Type of Kubernetes-like location",
+                                  "enum": [
+                                    "Uri",
+                                    "Inlined"
+                                  ],
+                                  "type": "string"
+                                },
                                 "name": {
                                   "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
                                   "type": "string"
@@ -2522,20 +2312,7 @@
                               "required": [
                                 "name"
                               ],
-                              "type": "object",
-                              "additionalProperties": false,
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ]
+                              "type": "object"
                             },
                             "volume": {
                               "description": "Configuration overriding for a Volume component",
@@ -2552,39 +2329,24 @@
                               "required": [
                                 "name"
                               ],
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                             }
                           },
-                          "type": "object",
-                          "additionalProperties": false,
-                          "oneOf": [
-                            {
-                              "required": [
-                                "container"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "kubernetes"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "openshift"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "volume"
-                              ]
-                            }
-                          ]
+                          "type": "object"
                         },
                         "type": "array"
                       },
                       "id": {
                         "description": "Id in a registry that contains a Devfile yaml file",
+                        "type": "string"
+                      },
+                      "importReferenceType": {
+                        "description": "type of location from where the referenced template structure should be retrieved",
+                        "enum": [
+                          "Uri",
+                          "Id",
+                          "Kubernetes"
+                        ],
                         "type": "string"
                       },
                       "kubernetes": {
@@ -2600,8 +2362,7 @@
                         "required": [
                           "name"
                         ],
-                        "type": "object",
-                        "additionalProperties": false
+                        "type": "object"
                       },
                       "name": {
                         "description": "Optional name that allows referencing the component in commands, or inside a parent If omitted it will be infered from the location (uri or registryEntry)",
@@ -2615,25 +2376,7 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
-                    "additionalProperties": false,
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "id"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "kubernetes"
-                        ]
-                      }
-                    ]
+                    "type": "object"
                   },
                   "volume": {
                     "description": "Allows specifying the definition of a volume shared by several other components",
@@ -2650,44 +2393,10 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "container"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "kubernetes"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "openshift"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "volume"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "plugin"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "custom"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "type": "array"
             },
@@ -2723,11 +2432,19 @@
                   "type": "array"
                 }
               },
-              "type": "object",
-              "additionalProperties": false
+              "type": "object"
             },
             "id": {
               "description": "Id in a registry that contains a Devfile yaml file",
+              "type": "string"
+            },
+            "importReferenceType": {
+              "description": "type of location from where the referenced template structure should be retrieved",
+              "enum": [
+                "Uri",
+                "Id",
+                "Kubernetes"
+              ],
               "type": "string"
             },
             "kubernetes": {
@@ -2743,8 +2460,7 @@
               "required": [
                 "name"
               ],
-              "type": "object",
-              "additionalProperties": false
+              "type": "object"
             },
             "projects": {
               "description": "Projects worked on in the workspace, containing names and sources locations",
@@ -2758,7 +2474,9 @@
                     "description": "Project's Custom source",
                     "properties": {
                       "embeddedResource": {
-                        "type": "object"
+                        "type": "object",
+                        "x-kubernetes-embedded-resource": true,
+                        "x-kubernetes-preserve-unknown-fields": true
                       },
                       "projectSourceClass": {
                         "type": "string"
@@ -2768,8 +2486,7 @@
                       "embeddedResource",
                       "projectSourceClass"
                     ],
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "git": {
                     "description": "Project's Git source",
@@ -2791,8 +2508,7 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "github": {
                     "description": "Project's GitHub source",
@@ -2814,11 +2530,20 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   },
                   "name": {
                     "description": "Project name",
+                    "type": "string"
+                  },
+                  "sourceType": {
+                    "description": "Type of project source",
+                    "enum": [
+                      "Git",
+                      "Github",
+                      "Zip",
+                      "Custom"
+                    ],
                     "type": "string"
                   },
                   "zip": {
@@ -2833,37 +2558,13 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
-                    "additionalProperties": false
+                    "type": "object"
                   }
                 },
                 "required": [
                   "name"
                 ],
-                "type": "object",
-                "additionalProperties": false,
-                "oneOf": [
-                  {
-                    "required": [
-                      "git"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "github"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "zip"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "custom"
-                    ]
-                  }
-                ]
+                "type": "object"
               },
               "type": "array"
             },
@@ -2875,25 +2576,7 @@
               "type": "string"
             }
           },
-          "type": "object",
-          "additionalProperties": false,
-          "oneOf": [
-            {
-              "required": [
-                "uri"
-              ]
-            },
-            {
-              "required": [
-                "id"
-              ]
-            },
-            {
-              "required": [
-                "kubernetes"
-              ]
-            }
-          ]
+          "type": "object"
         },
         "projects": {
           "description": "Projects worked on in the workspace, containing names and sources locations",
@@ -2907,7 +2590,9 @@
                 "description": "Project's Custom source",
                 "properties": {
                   "embeddedResource": {
-                    "type": "object"
+                    "type": "object",
+                    "x-kubernetes-embedded-resource": true,
+                    "x-kubernetes-preserve-unknown-fields": true
                   },
                   "projectSourceClass": {
                     "type": "string"
@@ -2917,8 +2602,7 @@
                   "embeddedResource",
                   "projectSourceClass"
                 ],
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "git": {
                 "description": "Project's Git source",
@@ -2940,8 +2624,7 @@
                     "type": "string"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "github": {
                 "description": "Project's GitHub source",
@@ -2963,11 +2646,20 @@
                     "type": "string"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               },
               "name": {
                 "description": "Project name",
+                "type": "string"
+              },
+              "sourceType": {
+                "description": "Type of project source",
+                "enum": [
+                  "Git",
+                  "Github",
+                  "Zip",
+                  "Custom"
+                ],
                 "type": "string"
               },
               "zip": {
@@ -2982,45 +2674,19 @@
                     "type": "string"
                   }
                 },
-                "type": "object",
-                "additionalProperties": false
+                "type": "object"
               }
             },
             "required": [
               "name"
             ],
-            "type": "object",
-            "additionalProperties": false,
-            "oneOf": [
-              {
-                "required": [
-                  "git"
-                ]
-              },
-              {
-                "required": [
-                  "github"
-                ]
-              },
-              {
-                "required": [
-                  "zip"
-                ]
-              },
-              {
-                "required": [
-                  "custom"
-                ]
-              }
-            ]
+            "type": "object"
           },
           "type": "array"
         }
       },
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     }
   },
-  "type": "object",
-  "additionalProperties": false
+  "type": "object"
 }
