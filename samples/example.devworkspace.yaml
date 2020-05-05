@@ -12,17 +12,15 @@ spec:
             location: "https://github.com/che-incubator/devworkspace-api"
             branch: "master"
     components:
-      - cheEditor:
-          registry:
-            id: eclipse/che-theia/latest
-      - chePlugin:
-          alias: "ownPlugin"
-          registry:
-            id: acme/newPlugin/latest
-            registryUrl: "https://acme.com/registry/"
-      - chePlugin:
-          alias: "myPlugin"
-          url: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
+      - plugin:
+          id: eclipse/che-theia/latest
+      - plugin:
+          name: "ownPlugin"
+          id: acme/newPlugin/latest
+          registryUrl: "https://acme.com/registry/"
+      - plugin:
+          name: "myPlugin"
+          uri: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
       - container:
           image: "busybox"
           name: "mycontainer"
@@ -43,4 +41,4 @@ spec:
             field2: ""
       - kubernetes:
           name: "production"
-          url: "https://somewhere/production-environment.yaml"
+          uri: "https://somewhere/production-environment.yaml"

@@ -1,0 +1,31 @@
+schemaVersion: 2.0.0
+metadata:
+  publisher: redhat
+  name: java8
+  version: 0.57.0
+  displayName: Language Support for Java 8
+  title: Language Support for Java(TM) by ...
+  description: Java Linting, Intellisense ...
+  icon: https://.../logo-eclipseche.svg
+  repository: https://github.../vscode-java
+  category: Language
+  firstPublicationDate: "2020-02-20"
+  pluginType: che-theia-vsx
+parent:
+  id: redhat/theia-vsx-template/latest
+  components:
+    - container:
+         name: vsx-installer
+         env:
+            - name: VSX_LIST
+              value: java-dbg.vsix,java.vsix
+components:
+ - container:
+    image: ...che-sidecar-java
+    name: vscode-java
+    memoryLimit: "1500Mi"
+    volumeMounts:
+     - path: "/home/theia/.m2"
+       name: m2
+ - volume:
+    name: m2

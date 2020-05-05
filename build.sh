@@ -45,7 +45,7 @@ fi
 command -v operator-sdk >/dev/null 2>&1 || { echo -e "${RED}operator-sdk is not installed. Aborting.${NC}"; exit 1; }
 
 operatorVersion=$(operator-sdk version)
-[[ $operatorVersion =~ .*v0.12.0.* ]] || { echo -e "${RED}operator-sdk v0.12.0 is required${NC}"; exit 1; }
+[[ $operatorVersion =~ .*v0.17.0.* ]] || { echo -e "${RED}operator-sdk v0.17.0 is required${NC}"; exit 1; }
 
 set -e
 
@@ -54,7 +54,7 @@ BASE_DIR=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "${BASE_DIR}/generated"
 
 operator-sdk generate k8s
-operator-sdk generate openapi
+operator-sdk generate crds
 yq '.spec.validation.openAPIV3Schema' \
   "${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspaces_crd.yaml" \
   > "${BASE_DIR}/schemas/devworkspace.json"
@@ -63,18 +63,43 @@ yq '.spec.validation.openAPIV3Schema' \
   "${BASE_DIR}/deploy/crds/workspaces.ecd.eclipse.org_devworkspacetemplates_crd.yaml" \
   > "${BASE_DIR}/schemas/devworkspace-template.json"
 
+transform()
+{
+  local transformType="$1"
+  local file="$2"
+  local rewriteJsonPaths="$3"
+  for patch in "${BASE_DIR}"/schema-transformation-rules/"${transformType}"/*.jq
+  do
+    [ -e "${patch}" ] || continue
+    echo "Applying patch $(basename ${patch}) on schema $(basename ${file})"
+    while IFS= read -r line
+    do
+      [ -n "${line}" ] || continue
+      jq "${line}" "${file}" > "${file}.temp"
+      mv "${file}.temp" "${file}"
+    done < "${patch}"
+  done
+  for patch in "${BASE_DIR}"/schema-transformation-rules/"${transformType}"/*.json
+  do
+    [ -e "$patch" ] || continue
+    patchContent=$(cat "$patch" | sed -e "${rewriteJsonPaths}")
+    echo "Applying patch $(basename ${patch}) on schema $(basename ${file})"
+    echo "$patchContent" | jsonpatch -i --indent 2 "${file}"
+  done
+}
+
+onError() {
+  echo "Cleaning schemas"
+  rm -f "${BASE_DIR}/schemas/*"
+}
+trap 'onError' ERR
+
+
+transform "devworkspace" "${BASE_DIR}/schemas/devworkspace-template.json" ""
+transform "devworkspace" "${BASE_DIR}/schemas/devworkspace.json" 's#"path" *: *"/properties/spec/#"path": "/properties/spec/properties/template/#'
+
 jq ".properties.spec" "${BASE_DIR}/schemas/devworkspace-template.json" > "${BASE_DIR}/schemas/devworkspace-template-spec.json"
 
 cp "${BASE_DIR}/schemas/devworkspace-template-spec.json" "${BASE_DIR}/schemas/devfile.json"
 
-onError() {
-  echo "Cleaning schemas/devfile.json"
-  rm -f "${BASE_DIR}/schemas/devfile.json"
-}
-trap 'onError' ERR
-
-for jsonpatch in "${BASE_DIR}"/devfile-support/transformation-rules/*.json
-do
-  [ -e "$jsonpatch" ] || continue
-  jsonpatch -i --indent 2 "${BASE_DIR}/schemas/devfile.json" "${jsonpatch}"
-done
+transform "devfile" "${BASE_DIR}/schemas/devfile.json" ""

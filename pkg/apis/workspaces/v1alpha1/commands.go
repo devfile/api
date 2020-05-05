@@ -4,7 +4,7 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // CommandType describes the type of command.
 // Only one of the following command type may be specified.
-// +kubebuilder:validation:Enum=Exec;VscodeTask;VscodeLaunch;Custom
+// +kubebuilder:validation:Enum=Exec;VscodeTask;VscodeLaunch;Composite;Custom
 type CommandType string
 
 const (
@@ -68,25 +68,28 @@ type PolymorphicCommand struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
-	Type CommandType `json:"type"`
+	CommandType CommandType `json:"commandType"`
 
-	// Exec command
+	// CLI Command executed in a component container
 	// +optional
 	Exec *ExecCommand `json:"exec,omitempty"`
 
-	// VscodeTask command
+	// Command providing the definition of a VsCode Task
 	// +optional
 	VscodeTask *VscodeConfigurationCommand `json:"vscodeTask,omitempty"`
 
-	// VscodeLaunch command
+	// Command providing the definition of a VsCode launch action
 	// +optional
 	VscodeLaunch *VscodeConfigurationCommand `json:"vscodeLaunch,omitempty"`
 
-	// Composite command
+	// Composite command that allows executing several sub-commands
+	// either sequentially or concurrently
 	// +optional
 	Composite *CompositeCommand `json:"composite,omitempty"`
 
-	// Custom command
+	// Custom command whose logic is implementation-dependant
+	// and should be provided by the user
+	// possibly through some dedicated plugin
 	// +optional
 	Custom *CustomCommand `json:"custom,omitempty"`
 }
@@ -95,7 +98,7 @@ type ExecCommand struct {
 	LabeledCommand `json:",inline"`
 
 	// The actual command-line string
-	CommandLine string `json:"commandLine"`
+	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
 	Component string `json:"component,omitempty"`
@@ -115,9 +118,21 @@ type CompositeCommand struct {
 	// The commands that comprise this composite command
 	Commands []string `json:"commands,omitempty"`
 
+	// Indicates if the sub-commands should be executed concurrently
 	// +optional
 	Parallel bool `json:"parallel,omitempty"`
 }
+
+// VscodeConfigurationCommandLocationType describes the type of
+// the location the configuration is fetched from.
+// Only one of the following component type may be specified.
+// +kubebuilder:validation:Enum=Uri;Inlined
+type VscodeConfigurationCommandLocationType string
+
+const (
+	UriVscodeConfigurationCommandLocationType     VscodeConfigurationCommandLocationType = "Container"
+	InlinedVscodeConfigurationCommandLocationType VscodeConfigurationCommandLocationType = "Kubernetes"
+)
 
 // +k8s:openapi-gen=true
 // +union
@@ -126,13 +141,14 @@ type VscodeConfigurationCommandLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType string `json:"locationType"`
+	LocationType VscodeConfigurationCommandLocationType `json:"locationType"`
 
-	// Location as an absolute of relative URL
+	// Location as an absolute of relative URI
+	// the VsCode configuration will be fetched from
 	// +optional
-	Url string `json:"url,omitempty"`
+	Uri string `json:"uri,omitempty"`
 
-	// Embedded content of the vscode configuration file
+	// Inlined content of the VsCode configuration
 	// +optional
 	Inlined string `json:"inlined,omitempty"`
 }
@@ -144,8 +160,14 @@ type VscodeConfigurationCommand struct {
 
 type CustomCommand struct {
 	LabeledCommand `json:",inline"`
+
+	// Class of command that the associated implementation component
+	// should use to process this command with the appropriate logic
 	CommandClass   string `json:"commandClass"`
 
+	// Additional free-form configuration for this custom command
+	// that the implementation component will know how to use
+  // 	
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
 	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`

@@ -9,10 +9,16 @@ type ContainerComponent struct {
 }
 
 type Endpoint struct {
-	Name          string                 `json:"name"`
-	TargetPort    int                    `json:"targetPort"`
-	Configuration *EndpointConfiguration `json:"configuration,omitEmpty"`
-	Attributes    map[string]string      `json:"attributes,omitempty"`
+	Name string `json:"name"`
+
+	// +optional
+	TargetPort int `json:"targetPort,omitempty"`
+
+	// +optional
+	Configuration *EndpointConfiguration `json:"configuration,omitempty"`
+
+	// +optional
+	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 type EndpointConfiguration struct {
@@ -41,8 +47,10 @@ type EndpointConfiguration struct {
 }
 
 type Container struct {
-	Name  string `json:"name"`
-	Image string `json:"image"`
+	Name string `json:"name"`
+
+	Image string `json:"image,omitempty"`
+
 	// +optional
 	// Environment variables used in this container
 	Env []EnvVar `json:"env,omitempty"`
@@ -78,6 +86,8 @@ type VolumeMount struct {
 	// then they will reuse the same volume and will be able to access to the same files.
 	Name string `json:"name"`
 
-	// The path in the component container where the volume should be mounted
-	Path string `json:"path"`
+	// The path in the component container where the volume should be mounted.
+	// If not path is mentioned, default path is the is `/<name>`.
+	// +optional
+	Path string `json:"path,omitempty"`
 }

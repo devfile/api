@@ -1,0 +1,24 @@
+schemaVersion: 2.0.0
+metadata:
+  publisher: redhat
+  name: vsx-template
+  type: template
+  parameters:
+    VSX_LIST 
+components:
+ - container:
+    name: vsx-installer
+    image: vsx-installer
+    volumeMounts:
+      - name: vsx
+        path: "/vsx"
+ - volume:
+    name: vsx
+commands:
+ - exec:
+     id: copyVsx
+     component: vsx-installer
+     commandLine: install {{VSX_LIST}}
+events:
+  preStart:
+    - copyVsx

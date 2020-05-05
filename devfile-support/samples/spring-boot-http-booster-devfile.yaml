@@ -1,18 +1,24 @@
 schemaVersion: 2.0.0
 metadata:
   name: spring-boot-http-booster
+  type: workspace
 projects:
   - name: spring-boot-http-booster
     git:
       location: https://github.com/snowdrop/spring-boot-http-booster
       branch: master
 components:
-  - chePlugin:
-      registryEntry:
-        id: redhat/java8/latest
-  - chePlugin:
-      registryEntry:
-        id: redhat/dependency-analytics/latest
+  - plugin:
+      id: redhat/java8/latest
+      components:
+        - container:
+            name: vscode-java            
+            memoryLimit: 2Gi
+        - volume:
+            name: m2
+            size: 2G
+  - plugin:
+      id: redhat/dependency-analytics/latest
   - container:
       name: maven
       image: registry.redhat.io/codeready-workspaces/stacks-java-rhel8:2.1
@@ -35,9 +41,6 @@ components:
       volumeMounts:
         - name: m2
           path: /home/jboss/.m2
-  - volume:
-      name: m2
-      size: 2G
 commands:
   - exec:
       id: build 

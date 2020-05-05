@@ -22,7 +22,7 @@ commands:
         json        
   - composite:
       id: buildSchemaAndOpenDevfile
-      Label: Build schema and open devfile
+      label: Build schema and open devfile
       commands:
         - buildSchema
         - openDevfile
@@ -33,26 +33,17 @@ commands:
         - name: "USER"
           value: "John Doe"
       commandLine: 'echo "Hello ${USER}"'
-  - custom:
-      id: myCustomCommand
-      commandClass: myCommandType
-      embeddedResource:
-        myEmbeddedObject:
-      label: My very own and special command
 events:
   postStart:
     - "buildSchemaAndOpenDevfile"
 components:
-  - chePlugin:
-      registry:
-        id: redhat/vscode-yaml/latest
-  - chePlugin:
-      registry:
-        id: ms-vscode/go/latest
-  - cheEditor:
-      registry:
-        id: eclipse/che-theia/latest
-        registryUrl: "external-registry-url"
+  - plugin:
+      id: redhat/vscode-yaml/latest
+  - plugin:
+      id: ms-vscode/go/latest
+  - plugin:
+      id: eclipse/che-theia/latest
+      registryUrl: "external-registry-url"
   - container:
       image: some container image with required build tools
       mountSources: true

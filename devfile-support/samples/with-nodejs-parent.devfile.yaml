@@ -3,6 +3,10 @@ metadata:
   name: with-parent
 parent:
   uri: https://raw.githubusercontent.com/che-incubator/devworkspace-api/proposal-25-variant-1-define-stacks/devfile-support/samples/nodejs-stack.devfile.yaml
+  projects:
+    - name: example
+      git:
+          branch: 'mybranch'
 commands:
   - exec:
       id: sayHello
