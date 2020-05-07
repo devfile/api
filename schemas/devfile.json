@@ -194,20 +194,19 @@
                 "type": "string"
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "additionalProperties": false,
             "oneOf": [
               {
                 "required": [
-                  "uri"
+                  "uri",
+                  "id"
                 ]
               },
               {
                 "required": [
-                  "inlined"
+                  "inlined",
+                  "id"
                 ]
               }
             ]
