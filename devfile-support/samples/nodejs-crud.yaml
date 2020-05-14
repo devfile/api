@@ -28,16 +28,16 @@ components:
 
   - kubernetes:
       name: nodejs-database-binding
-      uri: '${CHE_PROJECTS_ROOT}/nodejs-rest-http-crud/manifests/binding-secret.yaml'
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/binding-secret.yaml'
 
   - openshift:
       name: nodejs-app-deployment
-      uri: '${CHE_PROJECTS_ROOT}/nodejs-rest-http-crud/manifests/deploymentconfig.yaml'
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/deploymentconfig.yaml'
     
   # Deployment of DB dependency
   - kubernetes:
       name: database
-      uri: '${CHE_PROJECTS_ROOT}/nodejs-rest-http-crud/manifests/postgres.yaml'
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/postgres.yaml'
 
 
   - container:
@@ -58,7 +58,7 @@ commands:
       id: build-image
       component: build-nodejs-image
       commandLine: >-
-        /kaniko/executor --skip-tls-verify=true --dockerfile=${PROJECTS_ROOT}/Dockerfile --destination=localregistry:500/namespace/nodeapp --context=${PROJECTS_ROOT}/project/app
+        /kaniko/executor --skip-tls-verify=true --dockerfile=${STACK_ROOT}/build/Dockerfile --destination=localregistry:500/namespace/nodeapp --context=${PROJECTS_ROOT}/project/app
       group: 
         kind: build
 
