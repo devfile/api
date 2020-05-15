@@ -25,6 +25,8 @@ A Subset of this `DevWorkspace` API defines a structure (workspace template cont
 For more information about this, please look into
 the [Devfile support Readme](devfile-support/README.md)
 
+The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: https://devfile.github.io/website/
+
 ## How to build
 
 In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
