@@ -58,7 +58,7 @@ commands:
       id: build-image
       component: build-nodejs-image
       commandLine: >-
-        /kaniko/executor --skip-tls-verify=true --dockerfile=${STACK_ROOT}/build/Dockerfile --destination=localregistry:500/namespace/nodeapp --context=${PROJECTS_ROOT}/project/app
+        /kaniko/executor --skip-tls-verify=true --dockerfile=${PROJECTS_ROOT}/project/app/Dockerfile --destination=image-registry.openshift-image-registry.svc:5000/default/nodejsapp --context=${PROJECTS_ROOT}/project/app
       group: 
         kind: build
 
