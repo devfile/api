@@ -2400,13 +2400,42 @@ spec:
         status:
           description: DevWorkspaceStatus defines the observed state of DevWorkspace
           properties:
-            additionalInfo:
-              additionalProperties:
-                type: string
-              description: AdditionalInfo
-              type: object
+            conditions:
+              description: Conditions represent the latest available observations
+                of an object's state
+              items:
+                description: WorkspaceCondition contains details for the current condition
+                  of this workspace.
+                properties:
+                  lastTransitionTime:
+                    description: Last time the condition transitioned from one status
+                      to another.
+                    format: date-time
+                    type: string
+                  message:
+                    description: Human-readable message indicating details about last
+                      transition.
+                    type: string
+                  reason:
+                    description: Unique, one-word, CamelCase reason for the condition's
+                      last transition.
+                    type: string
+                  status:
+                    description: Phase is the status of the condition. Can be True,
+                      False, Unknown.
+                    type: string
+                  type:
+                    description: Type is the type of the condition.
+                    type: string
+                required:
+                - status
+                - type
+                type: object
+              type: array
             mainIdeUrl:
               description: URL at which the Worksace Editor can be joined
+              type: string
+            phase:
               type: string
             workspaceId:
               description: Id of the workspace
