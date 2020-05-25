@@ -1,15 +1,16 @@
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // DevWorkspaceSpec defines the desired state of DevWorkspace
 // +k8s:openapi-gen=true
 type DevWorkspaceSpec struct {
-	Started bool          `json:"started"`
-	RoutingClass string   `json:"routingClass,omitempty"`
-	Template DevWorkspaceTemplateSpec `json:"template,omitempty"`
+	Started      bool                     `json:"started"`
+	RoutingClass string                   `json:"routingClass,omitempty"`
+	Template     DevWorkspaceTemplateSpec `json:"template,omitempty"`
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
@@ -18,10 +19,47 @@ type DevWorkspaceStatus struct {
 	// Id of the workspace
 	WorkspaceId string `json:"workspaceId"`
 	// URL at which the Worksace Editor can be joined
-	MainIdeUrl string `json:"mainIdeUrl,omitempty"`
-	// AdditionalInfo
-	AdditionalInfo map[string]string `json:"additionalInfo,omitempty"`
+	MainIdeUrl string         `json:"mainIdeUrl,omitempty"`
+	Phase      WorkspacePhase `json:"phase,omitempty"`
+	// Conditions represent the latest available observations of an object's state
+	Conditions []WorkspaceCondition `json:"conditions,omitempty"`
 }
+
+type WorkspacePhase string
+
+// Valid workspace Statuses
+const (
+	WorkspaceStatusStarting WorkspacePhase = "Starting"
+	WorkspaceStatusRunning  WorkspacePhase = "Running"
+	WorkspaceStatusStopped  WorkspacePhase = "Stopped"
+	WorkspaceStatusStopping WorkspacePhase = "Stopping"
+	WorkspaceStatusFailed   WorkspacePhase = "Failed"
+)
+
+// WorkspaceCondition contains details for the current condition of this workspace.
+type WorkspaceCondition struct {
+	// Type is the type of the condition.
+	Type WorkspaceConditionType `json:"type"`
+	// Phase is the status of the condition.
+	// Can be True, False, Unknown.
+	Status corev1.ConditionStatus `json:"status"`
+	// Last time the condition transitioned from one status to another.
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty"`
+	// Unique, one-word, CamelCase reason for the condition's last transition.
+	Reason string `json:"reason,omitempty"`
+	// Human-readable message indicating details about last transition.
+	Message string `json:"message,omitempty"`
+}
+
+// Types of conditions reported by workspace
+type WorkspaceConditionType string
+
+const (
+	WorkspaceComponentsReady     WorkspaceConditionType = "ComponentsReady"
+	WorkspaceRoutingReady        WorkspaceConditionType = "RoutingReady"
+	WorkspaceServiceAccountReady WorkspaceConditionType = "ServiceAccountReady"
+	WorkspaceReady               WorkspaceConditionType = "Ready"
+)
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
