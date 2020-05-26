@@ -312,6 +312,20 @@
           "container": {
             "description": "Allows adding and configuring workspace-related containers",
             "properties": {
+              "args": {
+                "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "command": {
+                "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
               "endpoints": {
                 "items": {
                   "properties": {
@@ -821,6 +835,20 @@
                     "container": {
                       "description": "Configuration overriding for a Container component",
                       "properties": {
+                        "args": {
+                          "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "command": {
+                          "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
                         "endpoints": {
                           "items": {
                             "properties": {
@@ -1512,6 +1540,20 @@
               "container": {
                 "description": "Allows adding and configuring workspace-related containers",
                 "properties": {
+                  "args": {
+                    "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "command": {
+                    "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
                   "endpoints": {
                     "items": {
                       "properties": {
@@ -2019,6 +2061,20 @@
                         "container": {
                           "description": "Configuration overriding for a Container component",
                           "properties": {
+                            "args": {
+                              "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "command": {
+                              "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
                             "endpoints": {
                               "items": {
                                 "properties": {

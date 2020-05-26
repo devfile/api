@@ -18,12 +18,12 @@ spec:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
             of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
           description: 'Kind is a string value representing the REST resource this
             object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           type: object
@@ -328,6 +328,23 @@ spec:
                   container:
                     description: Allows adding and configuring workspace-related containers
                     properties:
+                      args:
+                        description: The arguments to supply to the command running
+                          the dockerimage component. The arguments are supplied either
+                          to the default command provided in the image or to the overridden
+                          command. Defaults to an empty array, meaning use whatever
+                          is defined in the image.
+                        items:
+                          type: string
+                        type: array
+                      command:
+                        description: The command to run in the dockerimage component
+                          instead of the default one provided in the image. Defaults
+                          to an empty array, meaning use whatever is defined in the
+                          image.
+                        items:
+                          type: string
+                        type: array
                       endpoints:
                         items:
                           properties:
@@ -823,6 +840,24 @@ spec:
                               description: Configuration overriding for a Container
                                 component
                               properties:
+                                args:
+                                  description: The arguments to supply to the command
+                                    running the dockerimage component. The arguments
+                                    are supplied either to the default command provided
+                                    in the image or to the overridden command. Defaults
+                                    to an empty array, meaning use whatever is defined
+                                    in the image.
+                                  items:
+                                    type: string
+                                  type: array
+                                command:
+                                  description: The command to run in the dockerimage
+                                    component instead of the default one provided
+                                    in the image. Defaults to an empty array, meaning
+                                    use whatever is defined in the image.
+                                  items:
+                                    type: string
+                                  type: array
                                 endpoints:
                                   items:
                                     properties:
@@ -1373,6 +1408,23 @@ spec:
                         description: Allows adding and configuring workspace-related
                           containers
                         properties:
+                          args:
+                            description: The arguments to supply to the command running
+                              the dockerimage component. The arguments are supplied
+                              either to the default command provided in the image
+                              or to the overridden command. Defaults to an empty array,
+                              meaning use whatever is defined in the image.
+                            items:
+                              type: string
+                            type: array
+                          command:
+                            description: The command to run in the dockerimage component
+                              instead of the default one provided in the image. Defaults
+                              to an empty array, meaning use whatever is defined in
+                              the image.
+                            items:
+                              type: string
+                            type: array
                           endpoints:
                             items:
                               properties:
@@ -1871,6 +1923,24 @@ spec:
                                   description: Configuration overriding for a Container
                                     component
                                   properties:
+                                    args:
+                                      description: The arguments to supply to the
+                                        command running the dockerimage component.
+                                        The arguments are supplied either to the default
+                                        command provided in the image or to the overridden
+                                        command. Defaults to an empty array, meaning
+                                        use whatever is defined in the image.
+                                      items:
+                                        type: string
+                                      type: array
+                                    command:
+                                      description: The command to run in the dockerimage
+                                        component instead of the default one provided
+                                        in the image. Defaults to an empty array,
+                                        meaning use whatever is defined in the image.
+                                      items:
+                                        type: string
+                                      type: array
                                     endpoints:
                                       items:
                                         properties:
