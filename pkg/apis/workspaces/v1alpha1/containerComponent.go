@@ -62,6 +62,16 @@ type Container struct {
 	//+optional
 	MemoryLimit string `json:"memoryLimit,omitempty"`
 
+	// The command to run in the dockerimage component instead of the default one provided in the image.
+	// Defaults to an empty array, meaning use whatever is defined in the image.
+	//+optional
+	Command []string `json:"command,omitempty"`
+
+	// The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command.
+	// Defaults to an empty array, meaning use whatever is defined in the image.
+	//+optional
+	Args []string `json:"args,omitempty"`
+
 	//+optional
 	MountSources bool `json:"mountSources"`
 
