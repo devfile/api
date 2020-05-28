@@ -55,7 +55,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - workspaces.ecd.eclipse.org
+  - devfile.io
   resources:
   - '*'
   verbs:

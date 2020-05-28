@@ -1,5 +1,5 @@
 kind: "DevWorkspaceTemplate"
-apiVersion: "workspaces.ecd.eclipse.org/v1alpha1"
+apiVersion: "devfile.io/v1alpha1"
 metadata:
   name: "nodejs-stack"
 spec:
