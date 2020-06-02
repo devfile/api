@@ -43,7 +43,7 @@ type EndpointConfiguration struct {
 
 	// +kubebuilder:validation:Enum=ide;terminal;ide-dev
 	// +optional
-	Type string `json:"type,omitmepty"`
+	Type string `json:"type,omitempty"`
 }
 
 type Container struct {
