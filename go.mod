@@ -1,4 +1,4 @@
-module github.com/che-incubator/devworkspace-api
+module github.com/devfile/kubernetes-api
 
 go 1.13
 

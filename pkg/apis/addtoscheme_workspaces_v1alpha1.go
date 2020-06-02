@@ -1,7 +1,7 @@
 package apis
 
 import (
-	"github.com/che-incubator/devworkspace-api/pkg/apis/workspaces/v1alpha1"
+	"github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
 )
 
 func init() {
