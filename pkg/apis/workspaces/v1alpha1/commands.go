@@ -58,13 +58,9 @@ type LabeledCommand struct {
 	Label string `json:"label,omitempty"`
 }
 
-type Command struct {
-	PolymorphicCommand `json:",inline"`
-}
-
 // +k8s:openapi-gen=true
 // +union
-type PolymorphicCommand struct {
+type Command struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
