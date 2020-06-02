@@ -3131,7 +3131,7 @@
           },
           "type": "array"
         },
-        "mainIdeUrl": {
+        "ideUrl": {
           "description": "URL at which the Worksace Editor can be joined",
           "type": "string"
         },
