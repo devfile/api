@@ -4,7 +4,7 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum= Container;Kubernetes;Openshift;Volume;Plugin;Custom
+// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Plugin;Custom
 type ComponentType string
 
 const (
@@ -28,7 +28,7 @@ type Component struct {
 	//
 	// +unionDiscriminator
 	// +optional
-	ComponentType ComponentType `json:"componentType"`
+	ComponentType ComponentType `json:"componentType,omitempty"`
 
 	// Allows adding and configuring workspace-related containers
 	// +optional
@@ -87,7 +87,7 @@ type CustomComponent struct {
 
 // ComponentOverrideType describes the type of component that can be overriden.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum= Container;Kubernetes;Openshift;Volume
+// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume
 type ComponentOverrideType string
 
 const (
@@ -104,7 +104,7 @@ type ComponentOverride struct {
 	//
 	// +unionDiscriminator
 	// +optional
-	ComponentType ComponentOverrideType `json:"componentType"`
+	ComponentType ComponentOverrideType `json:"componentType,omitempty"`
 
 	// Configuration overriding for a Container component
 	// +optional

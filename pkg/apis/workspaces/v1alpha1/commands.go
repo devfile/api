@@ -64,7 +64,7 @@ type Command struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
-	CommandType CommandType `json:"commandType"`
+	CommandType CommandType `json:"commandType,omitempty"`
 
 	// CLI Command executed in a component container
 	// +optional
@@ -137,7 +137,7 @@ type VscodeConfigurationCommandLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType VscodeConfigurationCommandLocationType `json:"locationType"`
+	LocationType VscodeConfigurationCommandLocationType `json:"locationType,omitempty"`
 
 	// Location as an absolute of relative URI
 	// the VsCode configuration will be fetched from

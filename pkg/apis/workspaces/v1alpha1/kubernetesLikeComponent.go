@@ -18,7 +18,7 @@ type K8sLikeComponentLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType K8sLikeComponentLocationType `json:"locationType"`
+	LocationType K8sLikeComponentLocationType `json:"locationType,omitempty"`
 
 	// Location in a file fetched from a uri.
 	// +optional

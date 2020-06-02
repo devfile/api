@@ -20,7 +20,7 @@ type ImportReferenceUnion struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	ImportReferenceType ImportReferenceType `json:"importReferenceType"`
+	ImportReferenceType ImportReferenceType `json:"importReferenceType,omitempty"`
 
 	// Uri of a Devfile yaml file
 	// +optional

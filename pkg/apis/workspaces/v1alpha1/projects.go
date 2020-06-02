@@ -34,7 +34,7 @@ type ProjectSource struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	SourceType ProjectSourceType `json:"sourceType"`
+	SourceType ProjectSourceType `json:"sourceType,omitempty"`
 
 	// Project's Git source
 	// +optional
