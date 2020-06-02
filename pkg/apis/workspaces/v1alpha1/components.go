@@ -21,13 +21,9 @@ const (
 type BaseComponent struct {
 }
 
-type Component struct {
-	PolymorphicComponent `json:",inline"`
-}
-
 // +k8s:openapi-gen=true
 // +union
-type PolymorphicComponent struct {
+type Component struct {
 	// Type of component
 	//
 	// +unionDiscriminator
