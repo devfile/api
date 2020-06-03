@@ -159,11 +159,11 @@ type CustomCommand struct {
 
 	// Class of command that the associated implementation component
 	// should use to process this command with the appropriate logic
-	CommandClass   string `json:"commandClass"`
+	CommandClass string `json:"commandClass"`
 
 	// Additional free-form configuration for this custom command
 	// that the implementation component will know how to use
-  // 	
+	//
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
 	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`

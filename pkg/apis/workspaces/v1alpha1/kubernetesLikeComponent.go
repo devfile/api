@@ -32,7 +32,7 @@ type K8sLikeComponentLocation struct {
 type K8sLikeComponent struct {
 	BaseComponent            `json:",inline"`
 	K8sLikeComponentLocation `json:",inline"`
-	
+
 	// Mandatory name that allows referencing the component
 	// in commands, or inside a parent
 	Name string `json:"name"`

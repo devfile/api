@@ -4,11 +4,11 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 type Project struct {
 	// Project name
-	Name          string `json:"name"`
+	Name string `json:"name"`
 
 	// Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.
 	// +optional
-	ClonePath     string `json:"clonePath,omitempty"`
+	ClonePath string `json:"clonePath,omitempty"`
 
 	ProjectSource `json:",inline"`
 }
