@@ -20,7 +20,7 @@ type DevWorkspaceStatus struct {
 	WorkspaceId string `json:"workspaceId"`
 	// URL at which the Worksace Editor can be joined
 	IdeUrl string         `json:"ideUrl,omitempty"`
-	Phase      WorkspacePhase `json:"phase,omitempty"`
+	Phase  WorkspacePhase `json:"phase,omitempty"`
 	// Conditions represent the latest available observations of an object's state
 	Conditions []WorkspaceCondition `json:"conditions,omitempty"`
 }
