@@ -3,6 +3,19 @@ kind: CustomResourceDefinition
 metadata:
   name: devworkspaces.workspace.devfile.io
 spec:
+  additionalPrinterColumns:
+  - JSONPath: .status.workspaceId
+    description: The workspace's unique id
+    name: Workspace ID
+    type: string
+  - JSONPath: .status.phase
+    description: The current workspace startup phase
+    name: Phase
+    type: string
+  - JSONPath: .status.ideUrl
+    description: Url endpoint for accessing workspace
+    name: URL
+    type: string
   group: workspace.devfile.io
   names:
     kind: DevWorkspace
