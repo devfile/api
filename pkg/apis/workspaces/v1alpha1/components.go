@@ -16,6 +16,10 @@ const (
 	CustomComponentType     ComponentType = "Custom"
 )
 
+
+
+
+
 // Workspace component: Anything that will bring additional features / tooling / behaviour / context
 // to the workspace, in order to make working in it easier.
 type BaseComponent struct {
