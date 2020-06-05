@@ -13,7 +13,7 @@ spec:
   validation:
     openAPIV3Schema:
       description: DevWorkspaceTemplate is the Schema for the devworkspacetemplates
-        API
+        API TEST CHANGES
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
