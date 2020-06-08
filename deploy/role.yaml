@@ -55,7 +55,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - devfile.io
+  - workspace.devfile.io
   resources:
   - '*'
   verbs:
