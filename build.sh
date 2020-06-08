@@ -56,11 +56,11 @@ mkdir -p "${BASE_DIR}/generated"
 operator-sdk generate k8s
 operator-sdk generate crds
 yq '.spec.validation.openAPIV3Schema' \
-  "${BASE_DIR}/deploy/crds/devfile.io_devworkspaces_crd.yaml" \
+  "${BASE_DIR}/deploy/crds/workspace.devfile.io_devworkspaces_crd.yaml" \
   > "${BASE_DIR}/schemas/devworkspace.json"
 
 yq '.spec.validation.openAPIV3Schema' \
-  "${BASE_DIR}/deploy/crds/devfile.io_devworkspacetemplates_crd.yaml" \
+  "${BASE_DIR}/deploy/crds/workspace.devfile.io_devworkspacetemplates_crd.yaml" \
   > "${BASE_DIR}/schemas/devworkspace-template.json"
 
 transform()

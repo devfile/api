@@ -1,5 +1,5 @@
 kind: "DevWorkspaceTemplate"
-apiVersion: "devfile.io/v1alpha1"
+apiVersion: "workspace.devfile.io/v1alpha1"
 metadata:
   name: "nodejs-stack"
 spec:
