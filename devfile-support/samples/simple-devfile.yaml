@@ -1,11 +1,11 @@
 schemaVersion: "2.0.0"
 metadata:
-  name: "myDevile"
+  name: "myDevfile"
   version: "0.0.1"
 projects:
   - name: "devworkspace-spec"
     git:
-        location: "https://github.com/che-incubator/devworkspace-api"
+        location: "https://github.com/devfile/kubernetes-api"
         branch: "master"
 commands:
   - exec:
