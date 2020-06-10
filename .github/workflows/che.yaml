@@ -1,0 +1,17 @@
+ 
+# Add Che link on PRs
+name: che
+
+on:
+  pull_request: 
+    types: [opened, synchronize]
+
+jobs:
+  add-link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Eclipse Che Pull Request Check
+        id: che-pr-check-gh-action
+        uses: benoitf/che-pr-check-gh-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
