@@ -1,6 +1,5 @@
 FROM python:3-alpine
 ARG OPERATOR_SDK_VERSION=v0.17.0
-ARG WORKDIR=/projects
 ENV GOROOT /usr/lib/go
 
 RUN apk add --no-cache --update curl bash jq go \
@@ -19,6 +18,6 @@ RUN chgrp -R 0 /usr/lib/go && chmod -R g=u /usr/lib/go
 
 USER 10001
 ENV HOME=/home/user
-WORKDIR ${WORKDIR}
+WORKDIR /projects
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["tail", "-f", "/dev/null"]

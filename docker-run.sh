@@ -30,7 +30,7 @@ init() {
 
 check() {
   if [ $# -eq 0 ]; then
-    printf "%bError: %bNo script provided. Command is $ docker-run.sh <script-to-run> [optional-arguments-of-script-to-run]\n" "${RED}" "${NC}"
+    printf "%bError: %bNo script provided. Command is $ docker-run.sh push|<script-to-run> [optional-arguments-of-script-to-run]\n" "${RED}" "${NC}"
     exit 1
   fi
   echo "check $1"
@@ -43,7 +43,7 @@ check() {
 # Build image
 build() {
   printf "%bBuilding image %b${IMAGE_NAME}${NC}..." "${BOLD}" "${BLUE}"
-  if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} --build-arg WORKDIR=${WORKDIR} -t ${IMAGE_NAME} .devfile/ > docker-build-log 2>&1
+  if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} -t ${IMAGE_NAME} .devfile/ > docker-build-log 2>&1
   then
     printf "%b[OK]%b\n" "${GREEN}" "${NC}"
     rm docker-build-log
@@ -54,10 +54,9 @@ build() {
   fi
 }
 
-
 run() {
   printf "%bRunning%b $*\n" "${BOLD}" "${NC}"
-  if docker run --user $(id -u):$(id -g) --rm -it -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" --entrypoint=/bin/bash ${IMAGE_NAME} -- "$@"
+  if docker run --user $(id -u):$(id -g) --rm -it -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" ${IMAGE_NAME} -- bash -c "cd \"${WORKDIR}\" && $@"
   then
     printf "Script execution %b[OK]%b\n" "${GREEN}" "${NC}"
   else
