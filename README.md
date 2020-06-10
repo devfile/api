@@ -19,6 +19,31 @@ From these Go sources, several files are generated:
 
 Generated files are created by a build script (see section [How to build](#how-to-build)).
 
+### Compliance Table
+
+| v2 feature  | odo | devworkspace controller | eclipse che |
+| ------------- | ------------- | ------------- | ------------- |
+| [Starter Projects](https://github.com/che-incubator/devworkspace-api/issues/42)  |  |  |  |
+| [Component is a polymophic type](https://github.com/che-incubator/devworkspace-api/issues/4)  |  |  |  |
+| [Shared Volumes Across Components](https://github.com/che-incubator/devworkspace-api/issues/19)  |  |  |  |
+| [Out of Main Pod Compoenents](https://github.com/devfile/kubernetes-api/issues/48)  |  |  |  |
+| [Replace Alias with Name](https://github.com/che-incubator/devworkspace-api/issues/9)  |  |  |  |
+| [Renaming dockerimage component type](https://github.com/che-incubator/devworkspace-api/issues/8)  |  |  |  |
+| [Specify sources path for containers](https://github.com/che-incubator/devworkspace-api/issues/17)  |  |  |  |
+| [Specify size of volume for component](https://github.com/che-incubator/devworkspace-api/issues/14)  |  |  |  |
+| [Containers endpoints (routes/ingresses)](https://github.com/che-incubator/devworkspace-api/issues/33)  |  |  |  |
+| [New plugins spec](https://github.com/che-incubator/devworkspace-api/issues/31)  |  |  |  |
+| [Command Groups: build,run,test,debug](https://github.com/che-incubator/devworkspace-api/issues/27)  |  |  |  |
+| [Apply Command](https://github.com/devfile/kubernetes-api/issues/56)  |  |  |  |
+| [Environment Varibables for a Specific Command](https://github.com/che-incubator/devworkspace-api/issues/21)  |  |  |  |
+| [Renaming workdir into workingDir](https://github.com/che-incubator/devworkspace-api/issues/22)  |  |  |  |
+| [Id and label for Composite Commands](https://github.com/che-incubator/devworkspace-api/issues/18)  |  |  |  |
+| [Run exec Commands as Specific User](https://github.com/che-incubator/devworkspace-api/issues/34)  |  |  |  |
+| [Devfile metadata: add a link to an external website](https://github.com/che-incubator/devworkspace-api/issues/38)  |  |  |  |
+| [Stack/Devfile Matching Rules](https://github.com/che-incubator/devworkspace-api/issues/40)  |  |  |  |
+| [Devfile parents](https://github.com/che-incubator/devworkspace-api/issues/25) |  |  |  |
+| [Events](https://github.com/che-incubator/devworkspace-api/issues/32)  |  |  |  |
+
 ### Devfile 2.0.0 file format
 
 A Subset of this `DevWorkspace` API defines a structure (workspace template content), which is also at the core of the **Devfile 2.0** format specification.
