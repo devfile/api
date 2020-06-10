@@ -1,14 +1,23 @@
-apiVersion: 1.0.0
 metadata:
   name: kubernetes-api
+projects:
+  - name: kubernetes-api
+    source:
+      location: 'https://github.com/devfile/kubernetes-api.git'
+      type: git
+    clonePath: src/github.com/devfile/kubernetes-api
 components:
   - id: ms-vscode/go/latest
     memoryLimit: 512Mi
     preferences:
       go.lintTool: golangci-lint
       go.lintFlags: '--fast'
+      go.useLanguageServer: true
     type: chePlugin
     alias: go-plugin
+    env:
+      - value: 'off'
+        name: GO111MODULE
   - id: redhat/vscode-yaml/latest
     type: chePlugin
   - mountSources: true
@@ -17,12 +26,34 @@ components:
     args:
       - '-c'
       - >-
-        while [ ! -f /projects/kubernetes-api/.theia/settings.json -o 
-        ! -f /projects/.theia/settings.json ]; do echo "Waiting for the clone end" ; sleep 2; done;
-        sleep 2 ; echo "Updating the yaml schema bindings" ; sed -e
-        's:/schemas/:/kubernetes-api/schemas/:g'
-        /projects/kubernetes-api/.theia/settings.json >
-        /projects/.theia/settings.json; sleep infinity
+        while [ ! -f
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
+        -o  ! -f ${CHE_PROJECTS_ROOT}/.theia/settings.json ]; do echo "Waiting
+        for the clone end" ; sleep 2; done; sleep 2 ; echo "Updating the yaml
+        schema bindings" ; sed -e
+        's:/schemas/:/src/github.com/devfile/kubernetes-api/schemas/:g'
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
+        > ${CHE_PROJECTS_ROOT}/.theia/settings.json; sleep infinity
+      - '-c'
     memoryLimit: 56Mi
     type: dockerimage
     image: busybox
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    image: 'quay.io/dfestal/devworkspace-kubernetes-api-devfile:latest'
+    alias: tools
+apiVersion: 1.0.0
+commands:
+  - name: Build crds and schemas
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api'
+        type: exec
+        command: ./build.sh
+        component: tools
+  - name: Fetch dependencies for Go LS
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api'
+        type: exec
+        command: go mod vendor
+        component: tools

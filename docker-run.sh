@@ -15,7 +15,7 @@ GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //')
 WORKDIR="/home/user/go/src/${GO_MODULE}"
 # Container image
-IMAGE_NAME="che-incubator/devworkspace-build-prerequisites"
+IMAGE_NAME="devfile/kubernetes-api-build-prerequisites"
 
 # Operator SDK
 OPERATOR_SDK_VERSION=v0.17.0
