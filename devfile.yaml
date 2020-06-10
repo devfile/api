@@ -41,7 +41,7 @@ components:
   - mountSources: true
     memoryLimit: 512Mi
     type: dockerimage
-    image: 'quay.io/dfestal/devworkspace-kubernetes-api-devfile:latest'
+    image: 'quay.io/devfile/kubernetes-api-build-prerequisites:latest'
     alias: tools
 apiVersion: 1.0.0
 commands:
