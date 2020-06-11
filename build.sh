@@ -103,3 +103,5 @@ jq ".properties.spec" "${BASE_DIR}/schemas/devworkspace-template.json" > "${BASE
 cp "${BASE_DIR}/schemas/devworkspace-template-spec.json" "${BASE_DIR}/schemas/devfile.json"
 
 transform "devfile" "${BASE_DIR}/schemas/devfile.json" ""
+
+echo "Build of CRDs and schemas is finished"

@@ -13,9 +13,9 @@
 # git ROOT directory used to mount filesystem
 GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //')
-WORKDIR="/home/user/go/src/${GO_MODULE}"
+WORKDIR="/projects/src/${GO_MODULE}"
 # Container image
-IMAGE_NAME="che-incubator/devworkspace-build-prerequisites"
+IMAGE_NAME="quay.io/devfile/kubernetes-api-build-prerequisites:latest"
 
 # Operator SDK
 OPERATOR_SDK_VERSION=v0.17.0
@@ -30,7 +30,7 @@ init() {
 
 check() {
   if [ $# -eq 0 ]; then
-    printf "%bError: %bNo script provided. Command is $ docker-run.sh <script-to-run> [optional-arguments-of-script-to-run]\n" "${RED}" "${NC}"
+    printf "%bError: %bNo script provided. Command is $ docker-run.sh push|<script-to-run> [optional-arguments-of-script-to-run]\n" "${RED}" "${NC}"
     exit 1
   fi
   echo "check $1"
@@ -43,21 +43,7 @@ check() {
 # Build image
 build() {
   printf "%bBuilding image %b${IMAGE_NAME}${NC}..." "${BOLD}" "${BLUE}"
-  if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} -t ${IMAGE_NAME} > docker-build-log 2>&1 -<<EOF
-FROM python:3-alpine
-ARG OPERATOR_SDK_VERSION
-ENV GOROOT /usr/lib/go
-
-RUN apk add --no-cache --update curl bash jq go \
-&& pip3 install yq \
-&& pip3 install jsonpatch
-
-RUN curl -JL https://github.com/operator-framework/operator-sdk/releases/download/${OPERATOR_SDK_VERSION}/operator-sdk-${OPERATOR_SDK_VERSION}-x86_64-linux-gnu -o /bin/operator-sdk && chmod a+x /bin/operator-sdk
-RUN mkdir -p /home/user/go && chmod -R a+w /home/user
-ENV HOME /home/user
-ENV GOPATH /home/user/go
-WORKDIR ${WORKDIR}
-EOF
+  if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} -t ${IMAGE_NAME} .devfile/ > docker-build-log 2>&1
   then
     printf "%b[OK]%b\n" "${GREEN}" "${NC}"
     rm docker-build-log
@@ -68,10 +54,9 @@ EOF
   fi
 }
 
-
 run() {
   printf "%bRunning%b $*\n" "${BOLD}" "${NC}"
-  if docker run --user $(id -u):$(id -g) --rm -it -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" --entrypoint=/bin/bash ${IMAGE_NAME} -- "$@"
+  if docker run --user $(id -u):$(id -g) --rm -it -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" ${IMAGE_NAME} -- bash -c "cd \"${WORKDIR}\" && $@"
   then
     printf "Script execution %b[OK]%b\n" "${GREEN}" "${NC}"
   else
