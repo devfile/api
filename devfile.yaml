@@ -9,10 +9,6 @@ projects:
 components:
   - id: ms-vscode/go/latest
     memoryLimit: 512Mi
-    preferences:
-      go.lintTool: golangci-lint
-      go.lintFlags: '--fast'
-      go.useLanguageServer: true
     type: chePlugin
     alias: go-plugin
     env:
@@ -29,12 +25,13 @@ components:
         while [ ! -f
         ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
         -o  ! -f ${CHE_PROJECTS_ROOT}/.theia/settings.json ]; do echo "Waiting
-        for the clone end" ; sleep 2; done; sleep 2 ; echo "Updating the yaml
-        schema bindings" ; sed -e
+        for the clone end" ; sleep 2; done; sleep 2 ; grep -e
+        '/src/github.com/devfile/kubernetes-api/schemas/'
+        ${CHE_PROJECTS_ROOT}/.theia/settings.json > /dev/null ; if [ $? -ne 0 ];
+        then echo "Updating the yaml schema bindings" ; sed -e
         's:/schemas/:/src/github.com/devfile/kubernetes-api/schemas/:g'
         ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
-        > ${CHE_PROJECTS_ROOT}/.theia/settings.json; sleep infinity
-      - '-c'
+        > ${CHE_PROJECTS_ROOT}/.theia/settings.json; fi; sleep infinity
     memoryLimit: 56Mi
     type: dockerimage
     image: busybox
@@ -43,6 +40,10 @@ components:
     type: dockerimage
     image: 'quay.io/devfile/kubernetes-api-build-prerequisites:latest'
     alias: tools
+  - id: eamodio/vscode-gitlens/latest
+    type: chePlugin
+  - id: ms-vscode/vscode-github-pullrequest/latest
+    type: chePlugin
 apiVersion: 1.0.0
 commands:
   - name: Build crds and schemas
