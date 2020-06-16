@@ -23,18 +23,14 @@ components:
       - '-c'
       - >-
         while [ ! -f
-        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json ];
-        do echo "Waiting for the clone end" ; sleep 2; done; sleep 2 ; grep -e
-        '/src/github.com/devfile/kubernetes-api/schemas/'
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
+        ]; do echo "Waiting for the clone end" ; sleep 2; done; sleep 2 ; grep
+        -e '/src/github.com/devfile/kubernetes-api/schemas/'
         ${CHE_PROJECTS_ROOT}/.theia/settings.json > /dev/null ; if [ $? -ne 0 ];
         then echo "Updating the yaml schema bindings" ; sed -e
         's:/schemas/:/src/github.com/devfile/kubernetes-api/schemas/:g'
         ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
         > ${CHE_PROJECTS_ROOT}/.theia/settings.json; fi; sleep infinity
-    memoryLimit: 56Mi
-    type: dockerimage
-    image: busybox
-  - mountSources: true
     memoryLimit: 512Mi
     type: dockerimage
     image: 'quay.io/devfile/kubernetes-api-build-prerequisites:latest'
