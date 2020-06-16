@@ -23,9 +23,8 @@ components:
       - '-c'
       - >-
         while [ ! -f
-        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
-        -o  ! -f ${CHE_PROJECTS_ROOT}/.theia/settings.json ]; do echo "Waiting
-        for the clone end" ; sleep 2; done; sleep 2 ; grep -e
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json ];
+        do echo "Waiting for the clone end" ; sleep 2; done; sleep 2 ; grep -e
         '/src/github.com/devfile/kubernetes-api/schemas/'
         ${CHE_PROJECTS_ROOT}/.theia/settings.json > /dev/null ; if [ $? -ne 0 ];
         then echo "Updating the yaml schema bindings" ; sed -e
