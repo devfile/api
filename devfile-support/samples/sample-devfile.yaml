@@ -23,8 +23,9 @@ components:
       mountSources: true
       endpoints:
         - name: term-websockets
-          configuration:
-            protocol: tcp
+          exposure: public
+          protocol: tcp
+          attributes:
             scheme: ws
             type: terminal
           targetPort: 4000

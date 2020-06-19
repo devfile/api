@@ -8,42 +8,62 @@ type ContainerComponent struct {
 	Endpoints     []Endpoint `json:"endpoints,omitempty"`
 }
 
+// EndpointExposure describes the way an endpoint is exposed on the network.
+// Only one of the following exposures may be specified: public, internal, none.
+// +kubebuilder:validation:Enum=public;internal;none
+type EndpointExposure string
+
+const (
+	// Endpoint will be exposed on the public network, typically through
+	// a K8S ingress or an OpenShift route 
+	PublicEndpointExposure  EndpointExposure = "public"
+	// Endpoint will be exposed internally outside of the main workspace POD,
+	// typically by K8S services, to be consumed by other elements running
+	// on the same cloud internal network.
+	InternalEndpointExposure EndpointExposure = "internal"
+	// Endpoint will not be exposed and will only be accessible
+	// inside the main workspace POD, on a local address.
+	NoneEndpointExposure EndpointExposure = "none"
+)
+
 type Endpoint struct {
 	Name string `json:"name"`
 
 	// +optional
 	TargetPort int `json:"targetPort,omitempty"`
 
+	// Describes how the endpoint should be exposed on the network.
+	//
+	//
+	// - `public` means that the endpoint will be exposed on the public network, typically through
+	// a K8S ingress or an OpenShift route.
+	//
+	//
+	// - `internal` means that the endpoint will be exposed internally outside of the main workspace POD,
+	// typically by K8S services, to be consumed by other elements running
+	// on the same cloud internal network.
+	//
+	//
+	// - `none` means that the endpoint will not be exposed and will only be accessible
+	// inside the main workspace POD, on a local address.
 	// +optional
-	Configuration *EndpointConfiguration `json:"configuration,omitempty"`
+	Exposure EndpointExposure `json:"exposure,omitempty"`
 
-	// +optional
-	Attributes map[string]string `json:"attributes,omitempty"`
-}
-
-type EndpointConfiguration struct {
-	// +optional
-	Public bool `json:"public"`
-	// +optional
-	Discoverable bool `json:"discoverable"`
-	// The is the low-level protocol of traffic coming through this endpoint.
+	// Low-level protocol of traffic coming through this endpoint.
 	// Default value is "tcp"
 	// +optional
 	Protocol string `json:"protocol,omitmepty"`
-	// The is the URL scheme to use when accessing the endpoint.
-	// Default value is "http"
-	// +optional
-	Scheme string `json:"scheme,omitmepty"`
+
+	// Describes whether the endpoint should be secured and protected by some
+	// authentication process
 	// +optional
 	Secure bool `json:"secure"`
-	// +optional
-	CookiesAuthEnabled bool `json:"cookiesAuthEnabled"`
-	// +optional
-	Path string `json:"path,omitempty"`
 
-	// +kubebuilder:validation:Enum=ide;terminal;ide-dev
+	// Map of implementation-dependant string-based free-form attributes.
+	// Examples of Che-specific attributes:
+	// cookiesAuthEnabled ("true"/"false"), scheme ("http", "ws"), type ("terminal", "ide")
 	// +optional
-	Type string `json:"type,omitempty"`
+	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 type Container struct {
