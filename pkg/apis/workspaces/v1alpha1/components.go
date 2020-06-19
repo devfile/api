@@ -39,10 +39,11 @@ type Component struct {
 	// +optional
 	Volume *VolumeComponent `json:"volume,omitempty"`
 
-	// Allows importing a plugin. Plugins are mainly
-	// imported devfiles that contribute components, commands
-	// and events as a consistent single unit.
-	// They are defined in either YAML files following the devfile syntax,
+	// Allows importing a plugin.
+	//
+	// Plugins are mainly imported devfiles that contribute components, commands
+	// and events as a consistent single unit. They are defined in either YAML files
+	// following the devfile syntax,
 	// or as `DevWorkspaceTemplate` Kubernetes Custom Resources
 	// +optional
 	Plugin *PluginComponent `json:"plugin,omitempty"`

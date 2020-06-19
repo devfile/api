@@ -37,7 +37,7 @@ type CommandGroup struct {
 
 type BaseCommand struct {
 	// Mandatory identifier that allows referencing
-	// this command in composite commands, or from
+	// this command in composite commands, from
 	// a parent, or in events.
 	Id string `json:"id"`
 

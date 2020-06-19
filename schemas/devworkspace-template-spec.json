@@ -47,7 +47,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -108,7 +108,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -187,7 +187,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -241,7 +241,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "inlined": {
@@ -306,7 +306,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "inlined": {
@@ -377,14 +377,14 @@
             "description": "Allows adding and configuring workspace-related containers",
             "properties": {
               "args": {
-                "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                 "items": {
                   "type": "string"
                 },
                 "type": "array"
               },
               "command": {
-                "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                 "items": {
                   "type": "string"
                 },
@@ -397,11 +397,11 @@
                       "additionalProperties": {
                         "type": "string"
                       },
-                      "description": "Map of implementation-dependant string-based free-form attributes. Examples of Che-specific attributes: cookiesAuthEnabled (\"true\"/\"false\"), scheme (\"http\", \"ws\"), type (\"terminal\", \"ide\")",
+                      "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - scheme: \"http\" / \"ws\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object"
                     },
                     "exposure": {
-                      "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.",
+                      "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
                       "enum": [
                         "public",
                         "internal",
@@ -410,6 +410,10 @@
                       "type": "string"
                     },
                     "name": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "description": "Path of the endpoint URL",
                       "type": "string"
                     },
                     "protocol": {
@@ -592,7 +596,7 @@
             ]
           },
           "plugin": {
-            "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
+            "description": "Allows importing a plugin. \n Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
             "properties": {
               "commands": {
                 "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
@@ -640,7 +644,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -701,7 +705,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -780,7 +784,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -833,7 +837,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "inlined": {
@@ -898,7 +902,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "inlined": {
@@ -969,14 +973,14 @@
                       "description": "Configuration overriding for a Container component",
                       "properties": {
                         "args": {
-                          "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                           "items": {
                             "type": "string"
                           },
                           "type": "array"
                         },
                         "command": {
-                          "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                           "items": {
                             "type": "string"
                           },
@@ -989,11 +993,11 @@
                                 "additionalProperties": {
                                   "type": "string"
                                 },
-                                "description": "Map of implementation-dependant string-based free-form attributes. Examples of Che-specific attributes: cookiesAuthEnabled (\"true\"/\"false\"), scheme (\"http\", \"ws\"), type (\"terminal\", \"ide\")",
+                                "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - scheme: \"http\" / \"ws\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object"
                               },
                               "exposure": {
-                                "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.",
+                                "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
                                 "enum": [
                                   "public",
                                   "internal",
@@ -1002,6 +1006,10 @@
                                 "type": "string"
                               },
                               "name": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "description": "Path of the endpoint URL",
                                 "type": "string"
                               },
                               "protocol": {
@@ -1395,7 +1403,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -1456,7 +1464,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -1535,7 +1543,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -1588,7 +1596,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "inlined": {
@@ -1653,7 +1661,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "inlined": {
@@ -1724,14 +1732,14 @@
                 "description": "Allows adding and configuring workspace-related containers",
                 "properties": {
                   "args": {
-                    "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                     "items": {
                       "type": "string"
                     },
                     "type": "array"
                   },
                   "command": {
-                    "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                     "items": {
                       "type": "string"
                     },
@@ -1744,11 +1752,11 @@
                           "additionalProperties": {
                             "type": "string"
                           },
-                          "description": "Map of implementation-dependant string-based free-form attributes. Examples of Che-specific attributes: cookiesAuthEnabled (\"true\"/\"false\"), scheme (\"http\", \"ws\"), type (\"terminal\", \"ide\")",
+                          "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - scheme: \"http\" / \"ws\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object"
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.",
+                          "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
                           "enum": [
                             "public",
                             "internal",
@@ -1757,6 +1765,10 @@
                           "type": "string"
                         },
                         "name": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "description": "Path of the endpoint URL",
                           "type": "string"
                         },
                         "protocol": {
@@ -1937,7 +1949,7 @@
                 ]
               },
               "plugin": {
-                "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
+                "description": "Allows importing a plugin. \n Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
                 "properties": {
                   "commands": {
                     "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
@@ -1985,7 +1997,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
@@ -2046,7 +2058,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
@@ -2125,7 +2137,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
@@ -2178,7 +2190,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "inlined": {
@@ -2243,7 +2255,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "inlined": {
@@ -2314,14 +2326,14 @@
                           "description": "Configuration overriding for a Container component",
                           "properties": {
                             "args": {
-                              "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                               "items": {
                                 "type": "string"
                               },
                               "type": "array"
                             },
                             "command": {
-                              "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                               "items": {
                                 "type": "string"
                               },
@@ -2334,11 +2346,11 @@
                                     "additionalProperties": {
                                       "type": "string"
                                     },
-                                    "description": "Map of implementation-dependant string-based free-form attributes. Examples of Che-specific attributes: cookiesAuthEnabled (\"true\"/\"false\"), scheme (\"http\", \"ws\"), type (\"terminal\", \"ide\")",
+                                    "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - scheme: \"http\" / \"ws\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object"
                                   },
                                   "exposure": {
-                                    "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.",
+                                    "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
                                     "enum": [
                                       "public",
                                       "internal",
@@ -2347,6 +2359,10 @@
                                     "type": "string"
                                   },
                                   "name": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "description": "Path of the endpoint URL",
                                     "type": "string"
                                   },
                                   "protocol": {

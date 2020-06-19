@@ -101,8 +101,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           label:
                             description: Optional label that provides a label for
@@ -158,8 +158,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           label:
                             description: Optional label that provides a label for
@@ -220,8 +220,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           label:
                             description: Optional label that provides a label for
@@ -264,8 +264,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
@@ -313,8 +313,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
@@ -354,19 +354,19 @@ spec:
                           containers
                         properties:
                           args:
-                            description: The arguments to supply to the command running
+                            description: "The arguments to supply to the command running
                               the dockerimage component. The arguments are supplied
                               either to the default command provided in the image
-                              or to the overridden command. Defaults to an empty array,
-                              meaning use whatever is defined in the image.
+                              or to the overridden command. \n Defaults to an empty
+                              array, meaning use whatever is defined in the image."
                             items:
                               type: string
                             type: array
                           command:
-                            description: The command to run in the dockerimage component
-                              instead of the default one provided in the image. Defaults
-                              to an empty array, meaning use whatever is defined in
-                              the image.
+                            description: "The command to run in the dockerimage component
+                              instead of the default one provided in the image. \n
+                              Defaults to an empty array, meaning use whatever is
+                              defined in the image."
                             items:
                               type: string
                             type: array
@@ -376,10 +376,11 @@ spec:
                                 attributes:
                                   additionalProperties:
                                     type: string
-                                  description: 'Map of implementation-dependant string-based
-                                    free-form attributes. Examples of Che-specific
-                                    attributes: cookiesAuthEnabled ("true"/"false"),
-                                    scheme ("http", "ws"), type ("terminal", "ide")'
+                                  description: "Map of implementation-dependant string-based
+                                    free-form attributes. \n Examples of Che-specific
+                                    attributes: \n - cookiesAuthEnabled: \"true\"
+                                    / \"false\", \n - scheme: \"http\" / \"ws\", \n
+                                    - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                   type: object
                                 exposure:
                                   description: "Describes how the endpoint should
@@ -393,13 +394,16 @@ spec:
                                     same cloud internal network. \n - `none` means
                                     that the endpoint will not be exposed and will
                                     only be accessible inside the main workspace POD,
-                                    on a local address."
+                                    on a local address. \n Default value is `public`"
                                   enum:
                                   - public
                                   - internal
                                   - none
                                   type: string
                                 name:
+                                  type: string
+                                path:
+                                  description: Path of the endpoint URL
                                   type: string
                                 protocol:
                                   description: Low-level protocol of traffic coming
@@ -547,11 +551,11 @@ spec:
                         - name
                         type: object
                       plugin:
-                        description: Allows importing a plugin. Plugins are mainly
+                        description: "Allows importing a plugin. \n Plugins are mainly
                           imported devfiles that contribute components, commands and
                           events as a consistent single unit. They are defined in
                           either YAML files following the devfile syntax, or as `DevWorkspaceTemplate`
-                          Kubernetes Custom Resources
+                          Kubernetes Custom Resources"
                         properties:
                           commands:
                             description: Overrides of commands encapsulated in a plugin.
@@ -606,7 +610,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     label:
                                       description: Optional label that provides a
@@ -666,7 +670,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     label:
                                       description: Optional label that provides a
@@ -732,7 +736,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     label:
                                       description: Optional label that provides a
@@ -779,7 +783,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
@@ -832,7 +836,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
@@ -872,20 +876,20 @@ spec:
                                     component
                                   properties:
                                     args:
-                                      description: The arguments to supply to the
+                                      description: "The arguments to supply to the
                                         command running the dockerimage component.
                                         The arguments are supplied either to the default
                                         command provided in the image or to the overridden
-                                        command. Defaults to an empty array, meaning
-                                        use whatever is defined in the image.
+                                        command. \n Defaults to an empty array, meaning
+                                        use whatever is defined in the image."
                                       items:
                                         type: string
                                       type: array
                                     command:
-                                      description: The command to run in the dockerimage
+                                      description: "The command to run in the dockerimage
                                         component instead of the default one provided
-                                        in the image. Defaults to an empty array,
-                                        meaning use whatever is defined in the image.
+                                        in the image. \n Defaults to an empty array,
+                                        meaning use whatever is defined in the image."
                                       items:
                                         type: string
                                       type: array
@@ -895,11 +899,13 @@ spec:
                                           attributes:
                                             additionalProperties:
                                               type: string
-                                            description: 'Map of implementation-dependant
-                                              string-based free-form attributes. Examples
-                                              of Che-specific attributes: cookiesAuthEnabled
-                                              ("true"/"false"), scheme ("http", "ws"),
-                                              type ("terminal", "ide")'
+                                            description: "Map of implementation-dependant
+                                              string-based free-form attributes. \n
+                                              Examples of Che-specific attributes:
+                                              \n - cookiesAuthEnabled: \"true\" /
+                                              \"false\", \n - scheme: \"http\" / \"ws\",
+                                              \n - type: \"terminal\" / \"ide\" /
+                                              \"ide-dev\","
                                             type: object
                                           exposure:
                                             description: "Describes how the endpoint
@@ -915,13 +921,17 @@ spec:
                                               network. \n - `none` means that the
                                               endpoint will not be exposed and will
                                               only be accessible inside the main workspace
-                                              POD, on a local address."
+                                              POD, on a local address. \n Default
+                                              value is `public`"
                                             enum:
                                             - public
                                             - internal
                                             - none
                                             type: string
                                           name:
+                                            type: string
+                                          path:
+                                            description: Path of the endpoint URL
                                             type: string
                                           protocol:
                                             description: Low-level protocol of traffic
@@ -1202,7 +1212,7 @@ spec:
                                 type: object
                               id:
                                 description: Mandatory identifier that allows referencing
-                                  this command in composite commands, or from a parent,
+                                  this command in composite commands, from a parent,
                                   or in events.
                                 type: string
                               label:
@@ -1262,7 +1272,7 @@ spec:
                                 type: object
                               id:
                                 description: Mandatory identifier that allows referencing
-                                  this command in composite commands, or from a parent,
+                                  this command in composite commands, from a parent,
                                   or in events.
                                 type: string
                               label:
@@ -1327,7 +1337,7 @@ spec:
                                 type: object
                               id:
                                 description: Mandatory identifier that allows referencing
-                                  this command in composite commands, or from a parent,
+                                  this command in composite commands, from a parent,
                                   or in events.
                                 type: string
                               label:
@@ -1374,7 +1384,7 @@ spec:
                                 type: object
                               id:
                                 description: Mandatory identifier that allows referencing
-                                  this command in composite commands, or from a parent,
+                                  this command in composite commands, from a parent,
                                   or in events.
                                 type: string
                               inlined:
@@ -1426,7 +1436,7 @@ spec:
                                 type: object
                               id:
                                 description: Mandatory identifier that allows referencing
-                                  this command in composite commands, or from a parent,
+                                  this command in composite commands, from a parent,
                                   or in events.
                                 type: string
                               inlined:
@@ -1468,20 +1478,20 @@ spec:
                               containers
                             properties:
                               args:
-                                description: The arguments to supply to the command
+                                description: "The arguments to supply to the command
                                   running the dockerimage component. The arguments
                                   are supplied either to the default command provided
-                                  in the image or to the overridden command. Defaults
+                                  in the image or to the overridden command. \n Defaults
                                   to an empty array, meaning use whatever is defined
-                                  in the image.
+                                  in the image."
                                 items:
                                   type: string
                                 type: array
                               command:
-                                description: The command to run in the dockerimage
+                                description: "The command to run in the dockerimage
                                   component instead of the default one provided in
-                                  the image. Defaults to an empty array, meaning use
-                                  whatever is defined in the image.
+                                  the image. \n Defaults to an empty array, meaning
+                                  use whatever is defined in the image."
                                 items:
                                   type: string
                                 type: array
@@ -1491,11 +1501,12 @@ spec:
                                     attributes:
                                       additionalProperties:
                                         type: string
-                                      description: 'Map of implementation-dependant
-                                        string-based free-form attributes. Examples
-                                        of Che-specific attributes: cookiesAuthEnabled
-                                        ("true"/"false"), scheme ("http", "ws"), type
-                                        ("terminal", "ide")'
+                                      description: "Map of implementation-dependant
+                                        string-based free-form attributes. \n Examples
+                                        of Che-specific attributes: \n - cookiesAuthEnabled:
+                                        \"true\" / \"false\", \n - scheme: \"http\"
+                                        / \"ws\", \n - type: \"terminal\" / \"ide\"
+                                        / \"ide-dev\","
                                       type: object
                                     exposure:
                                       description: "Describes how the endpoint should
@@ -1509,13 +1520,17 @@ spec:
                                         running on the same cloud internal network.
                                         \n - `none` means that the endpoint will not
                                         be exposed and will only be accessible inside
-                                        the main workspace POD, on a local address."
+                                        the main workspace POD, on a local address.
+                                        \n Default value is `public`"
                                       enum:
                                       - public
                                       - internal
                                       - none
                                       type: string
                                     name:
+                                      type: string
+                                    path:
+                                      description: Path of the endpoint URL
                                       type: string
                                     protocol:
                                       description: Low-level protocol of traffic coming
@@ -1666,11 +1681,12 @@ spec:
                             - name
                             type: object
                           plugin:
-                            description: Allows importing a plugin. Plugins are mainly
-                              imported devfiles that contribute components, commands
-                              and events as a consistent single unit. They are defined
-                              in either YAML files following the devfile syntax, or
-                              as `DevWorkspaceTemplate` Kubernetes Custom Resources
+                            description: "Allows importing a plugin. \n Plugins are
+                              mainly imported devfiles that contribute components,
+                              commands and events as a consistent single unit. They
+                              are defined in either YAML files following the devfile
+                              syntax, or as `DevWorkspaceTemplate` Kubernetes Custom
+                              Resources"
                             properties:
                               commands:
                                 description: Overrides of commands encapsulated in
@@ -1726,7 +1742,7 @@ spec:
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite
-                                            commands, or from a parent, or in events.
+                                            commands, from a parent, or in events.
                                           type: string
                                         label:
                                           description: Optional label that provides
@@ -1787,7 +1803,7 @@ spec:
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite
-                                            commands, or from a parent, or in events.
+                                            commands, from a parent, or in events.
                                           type: string
                                         label:
                                           description: Optional label that provides
@@ -1854,7 +1870,7 @@ spec:
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite
-                                            commands, or from a parent, or in events.
+                                            commands, from a parent, or in events.
                                           type: string
                                         label:
                                           description: Optional label that provides
@@ -1901,7 +1917,7 @@ spec:
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite
-                                            commands, or from a parent, or in events.
+                                            commands, from a parent, or in events.
                                           type: string
                                         inlined:
                                           description: Inlined content of the VsCode
@@ -1955,7 +1971,7 @@ spec:
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite
-                                            commands, or from a parent, or in events.
+                                            commands, from a parent, or in events.
                                           type: string
                                         inlined:
                                           description: Inlined content of the VsCode
@@ -1997,22 +2013,22 @@ spec:
                                         Container component
                                       properties:
                                         args:
-                                          description: The arguments to supply to
+                                          description: "The arguments to supply to
                                             the command running the dockerimage component.
                                             The arguments are supplied either to the
                                             default command provided in the image
-                                            or to the overridden command. Defaults
+                                            or to the overridden command. \n Defaults
                                             to an empty array, meaning use whatever
-                                            is defined in the image.
+                                            is defined in the image."
                                           items:
                                             type: string
                                           type: array
                                         command:
-                                          description: The command to run in the dockerimage
-                                            component instead of the default one provided
-                                            in the image. Defaults to an empty array,
-                                            meaning use whatever is defined in the
-                                            image.
+                                          description: "The command to run in the
+                                            dockerimage component instead of the default
+                                            one provided in the image. \n Defaults
+                                            to an empty array, meaning use whatever
+                                            is defined in the image."
                                           items:
                                             type: string
                                           type: array
@@ -2022,12 +2038,13 @@ spec:
                                               attributes:
                                                 additionalProperties:
                                                   type: string
-                                                description: 'Map of implementation-dependant
+                                                description: "Map of implementation-dependant
                                                   string-based free-form attributes.
-                                                  Examples of Che-specific attributes:
-                                                  cookiesAuthEnabled ("true"/"false"),
-                                                  scheme ("http", "ws"), type ("terminal",
-                                                  "ide")'
+                                                  \n Examples of Che-specific attributes:
+                                                  \n - cookiesAuthEnabled: \"true\"
+                                                  / \"false\", \n - scheme: \"http\"
+                                                  / \"ws\", \n - type: \"terminal\"
+                                                  / \"ide\" / \"ide-dev\","
                                                 type: object
                                               exposure:
                                                 description: "Describes how the endpoint
@@ -2045,13 +2062,18 @@ spec:
                                                   means that the endpoint will not
                                                   be exposed and will only be accessible
                                                   inside the main workspace POD, on
-                                                  a local address."
+                                                  a local address. \n Default value
+                                                  is `public`"
                                                 enum:
                                                 - public
                                                 - internal
                                                 - none
                                                 type: string
                                               name:
+                                                type: string
+                                              path:
+                                                description: Path of the endpoint
+                                                  URL
                                                 type: string
                                               protocol:
                                                 description: Low-level protocol of

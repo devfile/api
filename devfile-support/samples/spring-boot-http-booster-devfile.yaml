@@ -36,8 +36,7 @@ components:
       endpoints:
         - name: 8080-tcp
           targetPort: 8080
-          configuration:
-              public: true
+          exposure: public
       volumeMounts:
         - name: m2
           path: /home/jboss/.m2

@@ -25,9 +25,9 @@ spec:
         memoryLimit: 512Mi
         endpoints:
           - name: nodejs
-            configuration:
-                protocol: tcp
-                scheme: http
+            protocol: tcp
+            attributes:
+              scheme: http
             targetPort: 3000
         mountSources: true
   commands:
