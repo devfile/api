@@ -6,12 +6,16 @@ package v1alpha1
 type EndpointProtocol string
 
 const (
-	// Endpoint will have either `http` or `https` traffic (according to the `Secure` field),
-	// typically on a TCP connection
+	// Endpoint will have `http` traffic, typically on a TCP connection.
+	// It will be automaticaly promoted to `https` when the `secure` field is set to `true`
 	HTTPEndpointProtocol  EndpointProtocol = "http"
-	// Endpoint will have either `ws` or `wss` traffic (according to the `Secure` field),
-	// typically on a TCP connection
+	// Endpoint will have `https` traffic, typically on a TCP connection
+	HTTPSEndpointProtocol  EndpointProtocol = "https"
+	// Endpoint will have `ws` traffic, typically on a TCP connection
+	// It will be automaticaly promoted to `wss` when the `secure` field is set to `true`
 	WSEndpointProtocol  EndpointProtocol = "ws"
+	// Endpoint will have `wss` traffic, typically on a TCP connection
+	WSSEndpointProtocol  EndpointProtocol = "wss"
 	// Endpoint will have traffic on a TCP connection,
 	// without specifying an application protocol
 	TCPEndpointProtocol  EndpointProtocol = "tcp"
@@ -62,11 +66,15 @@ type Endpoint struct {
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
 	//
-	// - `http`: Endpoint will have either `http` or `https` traffic (according to the `Secure` field),
-	// typically on a TCP connection.
+	// - `http`: Endpoint will have `http` traffic, typically on a TCP connection.
+	// It will be automaticaly promoted to `https` when the `secure` field is set to `true`.
 	//
-	// - `ws`: Endpoint will have either `ws` or `wss` traffic (according to the `Secure` field),
-	// typically on a TCP connection.
+	// - `https`: Endpoint will have `https` traffic, typically on a TCP connection.
+	//
+	// - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.
+	// It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.
+	//
+	// - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.
 	//
 	// - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.
 	//
