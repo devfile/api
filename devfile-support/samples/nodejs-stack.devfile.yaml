@@ -23,10 +23,8 @@ components:
       memoryLimit: 512Mi
       endpoints:
         - name: nodejs
-          protocol: tcp
+          protocol: http
           targetPort: 3000
-          attributes:
-            scheme: http
       mountSources: true
 commands:
   - exec:

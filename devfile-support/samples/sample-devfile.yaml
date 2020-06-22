@@ -24,9 +24,8 @@ components:
       endpoints:
         - name: term-websockets
           exposure: public
-          protocol: tcp
+          protocol: ws
           attributes:
-            scheme: ws
             type: terminal
           targetPort: 4000
   - kubernetes:
