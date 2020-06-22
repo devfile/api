@@ -37,8 +37,9 @@ components:
     alias: tools
   - id: eamodio/vscode-gitlens/latest
     type: chePlugin
-  - id: ms-vscode/vscode-github-pullrequest/latest
-    type: chePlugin
+  - id: eclipse/che-theia/latest
+    memoryLimit: 1024Mi
+    type: cheEditor
 apiVersion: 1.0.0
 commands:
   - name: Build crds and schemas
