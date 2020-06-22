@@ -35,7 +35,9 @@ type K8sLikeComponent struct {
 
 	// Mandatory name that allows referencing the component
 	// in commands, or inside a parent
-	Name string `json:"name"`
+	Name      string `json:"name"`
+
+	Endpoints []Endpoint `json:"endpoints,omitempty"`
 }
 
 // Component that allows partly importing Kubernetes resources into the workspace POD
