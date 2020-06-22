@@ -28,9 +28,8 @@ spec:
           mountSources: true
           endpoints:
             - name: term-websockets
-              configuration:
-                protocol: tcp
-                scheme: ws
+              protocol: ws
+              attributes:
                 type: terminal
               targetPort: 4000
       - custom:

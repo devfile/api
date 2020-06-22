@@ -23,9 +23,9 @@ components:
       mountSources: true
       endpoints:
         - name: term-websockets
-          configuration:
-            protocol: tcp
-            scheme: ws
+          exposure: public
+          protocol: ws
+          attributes:
             type: terminal
           targetPort: 4000
   - kubernetes:

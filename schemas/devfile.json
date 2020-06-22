@@ -47,7 +47,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -128,7 +128,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -182,7 +182,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "inlined": {
@@ -247,7 +247,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "inlined": {
@@ -313,14 +313,14 @@
             "description": "Allows adding and configuring workspace-related containers",
             "properties": {
               "args": {
-                "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                 "items": {
                   "type": "string"
                 },
                 "type": "array"
               },
               "command": {
-                "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                 "items": {
                   "type": "string"
                 },
@@ -333,47 +333,32 @@
                       "additionalProperties": {
                         "type": "string"
                       },
+                      "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object"
                     },
-                    "configuration": {
-                      "properties": {
-                        "cookiesAuthEnabled": {
-                          "type": "boolean"
-                        },
-                        "discoverable": {
-                          "type": "boolean"
-                        },
-                        "path": {
-                          "type": "string"
-                        },
-                        "protocol": {
-                          "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
-                          "type": "string"
-                        },
-                        "public": {
-                          "type": "boolean"
-                        },
-                        "scheme": {
-                          "description": "The is the URL scheme to use when accessing the endpoint. Default value is \"http\"",
-                          "type": "string"
-                        },
-                        "secure": {
-                          "type": "boolean"
-                        },
-                        "type": {
-                          "enum": [
-                            "ide",
-                            "terminal",
-                            "ide-dev"
-                          ],
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
+                    "exposure": {
+                      "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                      "enum": [
+                        "public",
+                        "internal",
+                        "none"
+                      ],
+                      "type": "string"
                     },
                     "name": {
                       "type": "string"
+                    },
+                    "path": {
+                      "description": "Path of the endpoint URL",
+                      "type": "string"
+                    },
+                    "protocol": {
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                      "type": "string"
+                    },
+                    "secure": {
+                      "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                      "type": "boolean"
                     },
                     "targetPort": {
                       "type": "integer"
@@ -457,6 +442,52 @@
           "kubernetes": {
             "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
             "properties": {
+              "endpoints": {
+                "items": {
+                  "properties": {
+                    "attributes": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                      "type": "object"
+                    },
+                    "exposure": {
+                      "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                      "enum": [
+                        "public",
+                        "internal",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "description": "Path of the endpoint URL",
+                      "type": "string"
+                    },
+                    "protocol": {
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                      "type": "string"
+                    },
+                    "secure": {
+                      "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                      "type": "boolean"
+                    },
+                    "targetPort": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array"
+              },
               "inlined": {
                 "description": "Inlined manifest",
                 "type": "string"
@@ -491,6 +522,52 @@
           "openshift": {
             "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
             "properties": {
+              "endpoints": {
+                "items": {
+                  "properties": {
+                    "attributes": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                      "type": "object"
+                    },
+                    "exposure": {
+                      "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                      "enum": [
+                        "public",
+                        "internal",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "description": "Path of the endpoint URL",
+                      "type": "string"
+                    },
+                    "protocol": {
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                      "type": "string"
+                    },
+                    "secure": {
+                      "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                      "type": "boolean"
+                    },
+                    "targetPort": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array"
+              },
               "inlined": {
                 "description": "Inlined manifest",
                 "type": "string"
@@ -523,7 +600,7 @@
             ]
           },
           "plugin": {
-            "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
+            "description": "Allows importing a plugin. \n Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
             "properties": {
               "commands": {
                 "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
@@ -571,7 +648,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -652,7 +729,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -705,7 +782,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "inlined": {
@@ -770,7 +847,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "inlined": {
@@ -836,14 +913,14 @@
                       "description": "Configuration overriding for a Container component",
                       "properties": {
                         "args": {
-                          "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                           "items": {
                             "type": "string"
                           },
                           "type": "array"
                         },
                         "command": {
-                          "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                          "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                           "items": {
                             "type": "string"
                           },
@@ -856,47 +933,32 @@
                                 "additionalProperties": {
                                   "type": "string"
                                 },
+                                "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object"
                               },
-                              "configuration": {
-                                "properties": {
-                                  "cookiesAuthEnabled": {
-                                    "type": "boolean"
-                                  },
-                                  "discoverable": {
-                                    "type": "boolean"
-                                  },
-                                  "path": {
-                                    "type": "string"
-                                  },
-                                  "protocol": {
-                                    "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
-                                    "type": "string"
-                                  },
-                                  "public": {
-                                    "type": "boolean"
-                                  },
-                                  "scheme": {
-                                    "description": "The is the URL scheme to use when accessing the endpoint. Default value is \"http\"",
-                                    "type": "string"
-                                  },
-                                  "secure": {
-                                    "type": "boolean"
-                                  },
-                                  "type": {
-                                    "enum": [
-                                      "ide",
-                                      "terminal",
-                                      "ide-dev"
-                                    ],
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
+                              "exposure": {
+                                "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                "enum": [
+                                  "public",
+                                  "internal",
+                                  "none"
+                                ],
+                                "type": "string"
                               },
                               "name": {
                                 "type": "string"
+                              },
+                              "path": {
+                                "description": "Path of the endpoint URL",
+                                "type": "string"
+                              },
+                              "protocol": {
+                                "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                "type": "string"
+                              },
+                              "secure": {
+                                "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                "type": "boolean"
                               },
                               "targetPort": {
                                 "type": "integer"
@@ -978,6 +1040,52 @@
                     "kubernetes": {
                       "description": "Configuration overriding for a Kubernetes component",
                       "properties": {
+                        "endpoints": {
+                          "items": {
+                            "properties": {
+                              "attributes": {
+                                "additionalProperties": {
+                                  "type": "string"
+                                },
+                                "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                                "type": "object"
+                              },
+                              "exposure": {
+                                "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                "enum": [
+                                  "public",
+                                  "internal",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "description": "Path of the endpoint URL",
+                                "type": "string"
+                              },
+                              "protocol": {
+                                "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                "type": "string"
+                              },
+                              "secure": {
+                                "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                "type": "boolean"
+                              },
+                              "targetPort": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
                         "inlined": {
                           "description": "Inlined manifest",
                           "type": "string"
@@ -1012,6 +1120,52 @@
                     "openshift": {
                       "description": "Configuration overriding for an OpenShift component",
                       "properties": {
+                        "endpoints": {
+                          "items": {
+                            "properties": {
+                              "attributes": {
+                                "additionalProperties": {
+                                  "type": "string"
+                                },
+                                "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                                "type": "object"
+                              },
+                              "exposure": {
+                                "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                "enum": [
+                                  "public",
+                                  "internal",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "description": "Path of the endpoint URL",
+                                "type": "string"
+                              },
+                              "protocol": {
+                                "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                "type": "string"
+                              },
+                              "secure": {
+                                "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                "type": "boolean"
+                              },
+                              "targetPort": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
                         "inlined": {
                           "description": "Inlined manifest",
                           "type": "string"
@@ -1276,7 +1430,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -1357,7 +1511,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -1410,7 +1564,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "inlined": {
@@ -1475,7 +1629,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "inlined": {
@@ -1541,14 +1695,14 @@
                 "description": "Allows adding and configuring workspace-related containers",
                 "properties": {
                   "args": {
-                    "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                     "items": {
                       "type": "string"
                     },
                     "type": "array"
                   },
                   "command": {
-                    "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                    "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                     "items": {
                       "type": "string"
                     },
@@ -1561,47 +1715,32 @@
                           "additionalProperties": {
                             "type": "string"
                           },
+                          "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object"
                         },
-                        "configuration": {
-                          "properties": {
-                            "cookiesAuthEnabled": {
-                              "type": "boolean"
-                            },
-                            "discoverable": {
-                              "type": "boolean"
-                            },
-                            "path": {
-                              "type": "string"
-                            },
-                            "protocol": {
-                              "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
-                              "type": "string"
-                            },
-                            "public": {
-                              "type": "boolean"
-                            },
-                            "scheme": {
-                              "description": "The is the URL scheme to use when accessing the endpoint. Default value is \"http\"",
-                              "type": "string"
-                            },
-                            "secure": {
-                              "type": "boolean"
-                            },
-                            "type": {
-                              "enum": [
-                                "ide",
-                                "terminal",
-                                "ide-dev"
-                              ],
-                              "type": "string"
-                            }
-                          },
-                          "type": "object",
-                          "additionalProperties": false
+                        "exposure": {
+                          "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                          "enum": [
+                            "public",
+                            "internal",
+                            "none"
+                          ],
+                          "type": "string"
                         },
                         "name": {
                           "type": "string"
+                        },
+                        "path": {
+                          "description": "Path of the endpoint URL",
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                          "type": "string"
+                        },
+                        "secure": {
+                          "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                          "type": "boolean"
                         },
                         "targetPort": {
                           "type": "integer"
@@ -1683,6 +1822,52 @@
               "kubernetes": {
                 "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
                 "properties": {
+                  "endpoints": {
+                    "items": {
+                      "properties": {
+                        "attributes": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                          "type": "object"
+                        },
+                        "exposure": {
+                          "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                          "enum": [
+                            "public",
+                            "internal",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "description": "Path of the endpoint URL",
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                          "type": "string"
+                        },
+                        "secure": {
+                          "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                          "type": "boolean"
+                        },
+                        "targetPort": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
+                  },
                   "inlined": {
                     "description": "Inlined manifest",
                     "type": "string"
@@ -1717,6 +1902,52 @@
               "openshift": {
                 "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
                 "properties": {
+                  "endpoints": {
+                    "items": {
+                      "properties": {
+                        "attributes": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                          "type": "object"
+                        },
+                        "exposure": {
+                          "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                          "enum": [
+                            "public",
+                            "internal",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "description": "Path of the endpoint URL",
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                          "type": "string"
+                        },
+                        "secure": {
+                          "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                          "type": "boolean"
+                        },
+                        "targetPort": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
+                  },
                   "inlined": {
                     "description": "Inlined manifest",
                     "type": "string"
@@ -1749,7 +1980,7 @@
                 ]
               },
               "plugin": {
-                "description": "Allows importing a plugin. Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
+                "description": "Allows importing a plugin. \n Plugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
                 "properties": {
                   "commands": {
                     "description": "Overrides of commands encapsulated in a plugin. Overriding is done using a strategic merge",
@@ -1797,7 +2028,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
@@ -1878,7 +2109,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
@@ -1931,7 +2162,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "inlined": {
@@ -1996,7 +2227,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "inlined": {
@@ -2062,14 +2293,14 @@
                           "description": "Configuration overriding for a Container component",
                           "properties": {
                             "args": {
-                              "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "description": "The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                               "items": {
                                 "type": "string"
                               },
                               "type": "array"
                             },
                             "command": {
-                              "description": "The command to run in the dockerimage component instead of the default one provided in the image. Defaults to an empty array, meaning use whatever is defined in the image.",
+                              "description": "The command to run in the dockerimage component instead of the default one provided in the image. \n Defaults to an empty array, meaning use whatever is defined in the image.",
                               "items": {
                                 "type": "string"
                               },
@@ -2082,47 +2313,32 @@
                                     "additionalProperties": {
                                       "type": "string"
                                     },
+                                    "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object"
                                   },
-                                  "configuration": {
-                                    "properties": {
-                                      "cookiesAuthEnabled": {
-                                        "type": "boolean"
-                                      },
-                                      "discoverable": {
-                                        "type": "boolean"
-                                      },
-                                      "path": {
-                                        "type": "string"
-                                      },
-                                      "protocol": {
-                                        "description": "The is the low-level protocol of traffic coming through this endpoint. Default value is \"tcp\"",
-                                        "type": "string"
-                                      },
-                                      "public": {
-                                        "type": "boolean"
-                                      },
-                                      "scheme": {
-                                        "description": "The is the URL scheme to use when accessing the endpoint. Default value is \"http\"",
-                                        "type": "string"
-                                      },
-                                      "secure": {
-                                        "type": "boolean"
-                                      },
-                                      "type": {
-                                        "enum": [
-                                          "ide",
-                                          "terminal",
-                                          "ide-dev"
-                                        ],
-                                        "type": "string"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
+                                  "exposure": {
+                                    "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                    "enum": [
+                                      "public",
+                                      "internal",
+                                      "none"
+                                    ],
+                                    "type": "string"
                                   },
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "path": {
+                                    "description": "Path of the endpoint URL",
+                                    "type": "string"
+                                  },
+                                  "protocol": {
+                                    "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                    "type": "string"
+                                  },
+                                  "secure": {
+                                    "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                    "type": "boolean"
                                   },
                                   "targetPort": {
                                     "type": "integer"
@@ -2204,6 +2420,52 @@
                         "kubernetes": {
                           "description": "Configuration overriding for a Kubernetes component",
                           "properties": {
+                            "endpoints": {
+                              "items": {
+                                "properties": {
+                                  "attributes": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                                    "type": "object"
+                                  },
+                                  "exposure": {
+                                    "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                    "enum": [
+                                      "public",
+                                      "internal",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "description": "Path of the endpoint URL",
+                                    "type": "string"
+                                  },
+                                  "protocol": {
+                                    "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                    "type": "string"
+                                  },
+                                  "secure": {
+                                    "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                    "type": "boolean"
+                                  },
+                                  "targetPort": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ],
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            },
                             "inlined": {
                               "description": "Inlined manifest",
                               "type": "string"
@@ -2238,6 +2500,52 @@
                         "openshift": {
                           "description": "Configuration overriding for an OpenShift component",
                           "properties": {
+                            "endpoints": {
+                              "items": {
+                                "properties": {
+                                  "attributes": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "description": "Map of implementation-dependant string-based free-form attributes. \n Examples of Che-specific attributes: \n - cookiesAuthEnabled: \"true\" / \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                                    "type": "object"
+                                  },
+                                  "exposure": {
+                                    "description": "Describes how the endpoint should be exposed on the network. \n - `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route. \n - `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network. \n - `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address. \n Default value is `public`",
+                                    "enum": [
+                                      "public",
+                                      "internal",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "description": "Path of the endpoint URL",
+                                    "type": "string"
+                                  },
+                                  "protocol": {
+                                    "description": "Describes the application and transport protocols of the traffic that will go through this endpoint. \n - `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`. \n - `https`: Endpoint will have `https` traffic, typically on a TCP connection. \n - `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`. \n - `wss`: Endpoint will have `wss` traffic, typically on a TCP connection. \n - `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol. \n - `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol. \n Default value is `http`",
+                                    "type": "string"
+                                  },
+                                  "secure": {
+                                    "description": "Describes whether the endpoint should be secured and protected by some authentication process",
+                                    "type": "boolean"
+                                  },
+                                  "targetPort": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ],
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            },
                             "inlined": {
                               "description": "Inlined manifest",
                               "type": "string"
