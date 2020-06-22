@@ -32,7 +32,7 @@ type EndpointExposure string
 const (
 	// Endpoint will be exposed on the public network, typically through
 	// a K8S ingress or an OpenShift route 
-	PublicEndpointExposure  EndpointExposure = "public"
+	PublicEndpointExposure EndpointExposure = "public"
 	// Endpoint will be exposed internally outside of the main workspace POD,
 	// typically by K8S services, to be consumed by other elements running
 	// on the same cloud internal network.
