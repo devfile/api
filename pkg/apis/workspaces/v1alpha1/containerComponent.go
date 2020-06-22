@@ -59,28 +59,34 @@ type Container struct {
 	// List of volumes mounts that should be mounted is this container.
 	VolumeMounts []VolumeMount `json:"volumeMounts,omitempty"`
 
-	//+optional
+	// +optional
 	MemoryLimit string `json:"memoryLimit,omitempty"`
 
 	// The command to run in the dockerimage component instead of the default one provided in the image.
 	// Defaults to an empty array, meaning use whatever is defined in the image.
-	//+optional
+	// +optional
 	Command []string `json:"command,omitempty"`
 
 	// The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command.
 	// Defaults to an empty array, meaning use whatever is defined in the image.
-	//+optional
+	// +optional
 	Args []string `json:"args,omitempty"`
 
-	//+optional
+	// +optional
 	MountSources bool `json:"mountSources"`
 
-	//+optional
-	//
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the value of the `PROJECTS_ROOT` environment variable is used.
+	// +optional
 	SourceMapping string `json:"sourceMapping"`
+
+	// Specify if a container should run in its own separated pod,
+	// instead of running as part of the main development environment pod.
+	//
+	// Default value is `false`
+	// +optional
+	DedicatedPod bool `json:"dedicatedPod"`
 }
 
 type EnvVar struct {

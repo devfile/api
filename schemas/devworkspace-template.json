@@ -405,6 +405,10 @@
                     },
                     "type": "array"
                   },
+                  "dedicatedPod": {
+                    "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod. \n Default value is `false`",
+                    "type": "boolean"
+                  },
                   "endpoints": {
                     "items": {
                       "properties": {
@@ -1015,6 +1019,10 @@
                                 "type": "string"
                               },
                               "type": "array"
+                            },
+                            "dedicatedPod": {
+                              "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod. \n Default value is `false`",
+                              "type": "boolean"
                             },
                             "endpoints": {
                               "items": {
@@ -1790,6 +1798,10 @@
                         },
                         "type": "array"
                       },
+                      "dedicatedPod": {
+                        "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod. \n Default value is `false`",
+                        "type": "boolean"
+                      },
                       "endpoints": {
                         "items": {
                           "properties": {
@@ -2398,6 +2410,10 @@
                                     "type": "string"
                                   },
                                   "type": "array"
+                                },
+                                "dedicatedPod": {
+                                  "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod. \n Default value is `false`",
+                                  "type": "boolean"
                                 },
                                 "endpoints": {
                                   "items": {
