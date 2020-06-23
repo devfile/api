@@ -74,8 +74,8 @@ spec:
                         type: object
                       id:
                         description: Mandatory identifier that allows referencing
-                          this command in composite commands, or from a parent, or
-                          in events.
+                          this command in composite commands, from a parent, or in
+                          events.
                         type: string
                       label:
                         description: Optional label that provides a label for this
@@ -768,8 +768,8 @@ spec:
                                   type: object
                                 id:
                                   description: Mandatory identifier that allows referencing
-                                    this command in composite commands, or from a
-                                    parent, or in events.
+                                    this command in composite commands, from a parent,
+                                    or in events.
                                   type: string
                                 label:
                                   description: Optional label that provides a label
@@ -1574,8 +1574,8 @@ spec:
                             type: object
                           id:
                             description: Mandatory identifier that allows referencing
-                              this command in composite commands, or from a parent,
-                              or in events.
+                              this command in composite commands, from a parent, or
+                              in events.
                             type: string
                           label:
                             description: Optional label that provides a label for
@@ -2292,7 +2292,7 @@ spec:
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
-                                        or from a parent, or in events.
+                                        from a parent, or in events.
                                       type: string
                                     label:
                                       description: Optional label that provides a

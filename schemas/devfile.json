@@ -44,7 +44,7 @@
                 "additionalProperties": false
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string"
               },
               "label": {
@@ -707,7 +707,7 @@
                           "additionalProperties": false
                         },
                         "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string"
                         },
                         "label": {
@@ -1551,7 +1551,7 @@
                     "additionalProperties": false
                   },
                   "id": {
-                    "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                    "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string"
                   },
                   "label": {
@@ -2211,7 +2211,7 @@
                               "additionalProperties": false
                             },
                             "id": {
-                              "description": "Mandatory identifier that allows referencing this command in composite commands, or from a parent, or in events.",
+                              "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string"
                             },
                             "label": {
