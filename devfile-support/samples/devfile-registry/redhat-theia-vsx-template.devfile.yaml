@@ -12,13 +12,15 @@ components:
     volumeMounts:
       - name: vsx
         path: "/vsx"
+    env:
+      - name: VSX_LIST
+        value: ""
  - volume:
     name: vsx
 commands:
- - exec:
+ - apply:
      id: copyVsx
      component: vsx-installer
-     commandLine: install {{VSX_LIST}}
 events:
   preStart:
     - copyVsx

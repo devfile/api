@@ -4,11 +4,12 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // CommandType describes the type of command.
 // Only one of the following command type may be specified.
-// +kubebuilder:validation:Enum=Exec;VscodeTask;VscodeLaunch;Composite;Custom
+// +kubebuilder:validation:Enum=Exec;Apply;VscodeTask;VscodeLaunch;Composite;Custom
 type CommandType string
 
 const (
 	ExecCommandType         CommandType = "Exec"
+	ApplyCommandType        CommandType = "Apply"
 	VscodeTaskCommandType   CommandType = "VscodeTask"
 	VscodeLaunchCommandType CommandType = "VscodeLaunch"
 	CompositeCommandType    CommandType = "Composite"
@@ -66,9 +67,23 @@ type Command struct {
 	// +optional
 	CommandType CommandType `json:"commandType,omitempty"`
 
-	// CLI Command executed in a component container
+	// CLI Command executed in an existing component container
 	// +optional
 	Exec *ExecCommand `json:"exec,omitempty"`
+
+	// Command that consists in applying a given component definition,
+	// typically bound to a workspace event.
+	//
+	// For example, when an `apply` command is bound to a `preStart` event,
+	// and references a `container` component, it will start the container as a
+	// K8S initContainer in the workspace POD, unless the component has its
+	// `dedicatedPod` field set to `true`.
+	//
+	// When no `apply` command exist for a given component,
+	// it is assumed the component will be applied at workspace start
+	// by default.
+	// +optional
+	Apply *ApplyCommand `json:"apply,omitempty"`
 
 	// Command providing the definition of a VsCode Task
 	// +optional
@@ -106,6 +121,13 @@ type ExecCommand struct {
 	// Optional list of environment variables that have to be set
 	// before running the command
 	Env []EnvVar `json:"env,omitempty"`
+}
+
+type ApplyCommand struct {
+	LabeledCommand `json:",inline"`
+
+	// Describes component that will be applied
+	Component string `json:"component,omitempty"`
 }
 
 type CompositeCommand struct {

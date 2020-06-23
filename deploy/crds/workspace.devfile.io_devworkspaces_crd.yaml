@@ -56,10 +56,61 @@ spec:
                   description: Predefined, ready-to-use, workspace-related commands
                   items:
                     properties:
+                      apply:
+                        description: "Command that consists in applying a given component
+                          definition, typically bound to a workspace event. \n For
+                          example, when an `apply` command is bound to a `preStart`
+                          event, and references a `container` component, it will start
+                          the container as a K8S initContainer in the workspace POD,
+                          unless the component has its `dedicatedPod` field set to
+                          `true`. \n When no `apply` command exist for a given component,
+                          it is assumed the component will be applied at workspace
+                          start by default."
+                        properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
+                          component:
+                            description: Describes component that will be applied
+                            type: string
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, from a parent, or
+                              in events.
+                            type: string
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
+                        required:
+                        - id
+                        type: object
                       commandType:
                         description: Type of workspace command
                         enum:
                         - Exec
+                        - Apply
                         - VscodeTask
                         - VscodeLaunch
                         - Composite
@@ -171,7 +222,8 @@ spec:
                         - id
                         type: object
                       exec:
-                        description: CLI Command executed in a component container
+                        description: CLI Command executed in an existing component
+                          container
                         properties:
                           attributes:
                             additionalProperties:
@@ -716,10 +768,67 @@ spec:
                               Overriding is done using a strategic merge
                             items:
                               properties:
+                                apply:
+                                  description: "Command that consists in applying
+                                    a given component definition, typically bound
+                                    to a workspace event. \n For example, when an
+                                    `apply` command is bound to a `preStart` event,
+                                    and references a `container` component, it will
+                                    start the container as a K8S initContainer in
+                                    the workspace POD, unless the component has its
+                                    `dedicatedPod` field set to `true`. \n When no
+                                    `apply` command exist for a given component, it
+                                    is assumed the component will be applied at workspace
+                                    start by default."
+                                  properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
+                                    component:
+                                      description: Describes component that will be
+                                        applied
+                                      type: string
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
+                                    id:
+                                      description: Mandatory identifier that allows
+                                        referencing this command in composite commands,
+                                        from a parent, or in events.
+                                      type: string
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
+                                  required:
+                                  - id
+                                  type: object
                                 commandType:
                                   description: Type of workspace command
                                   enum:
                                   - Exec
+                                  - Apply
                                   - VscodeTask
                                   - VscodeLaunch
                                   - Composite
@@ -837,8 +946,8 @@ spec:
                                   - id
                                   type: object
                                 exec:
-                                  description: CLI Command executed in a component
-                                    container
+                                  description: CLI Command executed in an existing
+                                    component container
                                   properties:
                                     attributes:
                                       additionalProperties:
@@ -1491,10 +1600,64 @@ spec:
                       description: Predefined, ready-to-use, workspace-related commands
                       items:
                         properties:
+                          apply:
+                            description: "Command that consists in applying a given
+                              component definition, typically bound to a workspace
+                              event. \n For example, when an `apply` command is bound
+                              to a `preStart` event, and references a `container`
+                              component, it will start the container as a K8S initContainer
+                              in the workspace POD, unless the component has its `dedicatedPod`
+                              field set to `true`. \n When no `apply` command exist
+                              for a given component, it is assumed the component will
+                              be applied at workspace start by default."
+                            properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
+                              component:
+                                description: Describes component that will be applied
+                                type: string
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
+                              id:
+                                description: Mandatory identifier that allows referencing
+                                  this command in composite commands, from a parent,
+                                  or in events.
+                                type: string
+                              label:
+                                description: Optional label that provides a label
+                                  for this command to be used in Editor UI menus for
+                                  example
+                                type: string
+                            required:
+                            - id
+                            type: object
                           commandType:
                             description: Type of workspace command
                             enum:
                             - Exec
+                            - Apply
                             - VscodeTask
                             - VscodeLaunch
                             - Composite
@@ -1612,7 +1775,8 @@ spec:
                             - id
                             type: object
                           exec:
-                            description: CLI Command executed in a component container
+                            description: CLI Command executed in an existing component
+                              container
                             properties:
                               attributes:
                                 additionalProperties:
@@ -2177,10 +2341,67 @@ spec:
                                   a plugin. Overriding is done using a strategic merge
                                 items:
                                   properties:
+                                    apply:
+                                      description: "Command that consists in applying
+                                        a given component definition, typically bound
+                                        to a workspace event. \n For example, when
+                                        an `apply` command is bound to a `preStart`
+                                        event, and references a `container` component,
+                                        it will start the container as a K8S initContainer
+                                        in the workspace POD, unless the component
+                                        has its `dedicatedPod` field set to `true`.
+                                        \n When no `apply` command exist for a given
+                                        component, it is assumed the component will
+                                        be applied at workspace start by default."
+                                      properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
+                                        component:
+                                          description: Describes component that will
+                                            be applied
+                                          type: string
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
+                                        id:
+                                          description: Mandatory identifier that allows
+                                            referencing this command in composite
+                                            commands, from a parent, or in events.
+                                          type: string
+                                        label:
+                                          description: Optional label that provides
+                                            a label for this command to be used in
+                                            Editor UI menus for example
+                                          type: string
+                                      required:
+                                      - id
+                                      type: object
                                     commandType:
                                       description: Type of workspace command
                                       enum:
                                       - Exec
+                                      - Apply
                                       - VscodeTask
                                       - VscodeLaunch
                                       - Composite
@@ -2300,8 +2521,8 @@ spec:
                                       - id
                                       type: object
                                     exec:
-                                      description: CLI Command executed in a component
-                                        container
+                                      description: CLI Command executed in an existing
+                                        component container
                                       properties:
                                         attributes:
                                           additionalProperties:

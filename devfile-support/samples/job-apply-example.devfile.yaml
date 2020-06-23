@@ -1,0 +1,32 @@
+schemaVersion: "2.0.0"
+metadata:
+  name: "myDevfile"
+  version: "0.0.1"
+components:
+  - kubernetes:
+      name: cleanup-job
+      inlined: |
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          name: pi
+        spec:
+          template:
+            spec:
+              containers:
+              - name: job
+                image: someimage
+                command: ["some",  "command", "with", "parameters"]
+              restartPolicy: Never
+          backoffLimit: 4
+  - plugin:
+      id: ms-vscode/go/latest
+  - plugin:
+      id: eclipse/che-theia/latest
+commands:
+  - apply:
+      id: cleanup-job
+      component: cleanup-job      
+events:
+  postStop:
+    - cleanup-job
