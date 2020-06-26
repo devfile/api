@@ -24,7 +24,7 @@ Generated files are created by a build script (see section [How to build](#how-t
 A Subset of this `DevWorkspace` API defines a structure (workspace template content), which is also at the core of the **Devfile 2.0** format specification.
 For more information about this, please look into the [Devfile support Readme](devfile-support/README.md)
 
-The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: https://devfile.github.io/website/
+The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: https://devfile.github.io
 
 ## How to build
 
