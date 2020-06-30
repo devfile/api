@@ -32,7 +32,7 @@ In order to build the CRD and the various schemas, you don't need to install any
 In the root directory, just run the following command:
 
 ```
-./docker-run.sh build.sh
+./docker-run.sh ./build.sh
 ``` 
 
 ## Specification status
