@@ -94,6 +94,7 @@ onError() {
 }
 trap 'onError' ERR
 
+sed -i -e '/"description":/s/ \\n - /\\n- /g' -e '/"description":/s/ \\n \([^-]\)/\\n\\n\1/g' "${BASE_DIR}/schemas/devworkspace-template.json" "${BASE_DIR}/schemas/devworkspace.json"
 
 transform "devworkspace" "${BASE_DIR}/schemas/devworkspace-template.json" ""
 transform "devworkspace" "${BASE_DIR}/schemas/devworkspace.json" 's#"path" *: *"/properties/spec/#"path": "/properties/spec/properties/template/#'
