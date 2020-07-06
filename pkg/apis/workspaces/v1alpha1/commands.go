@@ -121,6 +121,10 @@ type ExecCommand struct {
 	// Optional list of environment variables that have to be set
 	// before running the command
 	Env []EnvVar `json:"env,omitempty"`
+
+	// Optional name or ID of the user the container should be started with
+	// +optional
+	RunAsUser  string `json:"runAsUser,omitempty"`
 }
 
 type ApplyCommand struct {

@@ -279,6 +279,10 @@ spec:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
                             type: string
+                          runAsUser:
+                            description: Optional name or ID of the user the container
+                              should be started with
+                            type: string
                           workingDir:
                             description: Working directory where the command should
                               be executed
@@ -1005,6 +1009,10 @@ spec:
                                       description: Optional label that provides a
                                         label for this command to be used in Editor
                                         UI menus for example
+                                      type: string
+                                    runAsUser:
+                                      description: Optional name or ID of the user
+                                        the container should be started with
                                       type: string
                                     workingDir:
                                       description: Working directory where the command
@@ -1835,6 +1843,10 @@ spec:
                                   for this command to be used in Editor UI menus for
                                   example
                                 type: string
+                              runAsUser:
+                                description: Optional name or ID of the user the container
+                                  should be started with
+                                type: string
                               workingDir:
                                 description: Working directory where the command should
                                   be executed
@@ -2581,6 +2593,10 @@ spec:
                                           description: Optional label that provides
                                             a label for this command to be used in
                                             Editor UI menus for example
+                                          type: string
+                                        runAsUser:
+                                          description: Optional name or ID of the
+                                            user the container should be started with
                                           type: string
                                         workingDir:
                                           description: Working directory where the

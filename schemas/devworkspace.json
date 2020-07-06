@@ -308,6 +308,11 @@
                         "type": "string",
                         "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                       },
+                      "runAsUser": {
+                        "description": "Optional name or ID of the user the container should be started with",
+                        "type": "string",
+                        "markdownDescription": "Optional name or ID of the user the container should be started with"
+                      },
                       "workingDir": {
                         "description": "Working directory where the command should be executed",
                         "type": "string",
@@ -1149,6 +1154,11 @@
                                   "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                                   "type": "string",
                                   "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                                },
+                                "runAsUser": {
+                                  "description": "Optional name or ID of the user the container should be started with",
+                                  "type": "string",
+                                  "markdownDescription": "Optional name or ID of the user the container should be started with"
                                 },
                                 "workingDir": {
                                   "description": "Working directory where the command should be executed",
@@ -2168,6 +2178,11 @@
                             "type": "string",
                             "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                           },
+                          "runAsUser": {
+                            "description": "Optional name or ID of the user the container should be started with",
+                            "type": "string",
+                            "markdownDescription": "Optional name or ID of the user the container should be started with"
+                          },
                           "workingDir": {
                             "description": "Working directory where the command should be executed",
                             "type": "string",
@@ -3006,6 +3021,11 @@
                                       "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                                       "type": "string",
                                       "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                                    },
+                                    "runAsUser": {
+                                      "description": "Optional name or ID of the user the container should be started with",
+                                      "type": "string",
+                                      "markdownDescription": "Optional name or ID of the user the container should be started with"
                                     },
                                     "workingDir": {
                                       "description": "Working directory where the command should be executed",
