@@ -12,6 +12,13 @@ type Project struct {
 
 	ProjectSource `json:",inline"`
 }
+type StarterProject struct {
+	Project `json:",inline"`
+
+	// Description of a starter project
+	// +optional
+	Description string `json:"description,omitempty"`
+}
 
 // ProjectSourceType describes the type of Project sources.
 // Only one of the following project sources may be specified.
