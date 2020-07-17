@@ -1,0 +1,9 @@
+components:
+  - plugin:
+      id: "UnchangedPluginId"
+  - kubernetes:
+      name: componentToUpdate
+      inlined: "componentToUpdateInline"
+      endpoints:
+        - name: endpointName
+          targetPort: 8080
