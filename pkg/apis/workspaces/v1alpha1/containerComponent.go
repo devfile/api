@@ -5,7 +5,7 @@ type ContainerComponent struct {
 	BaseComponent `json:",inline"`
 	Container     `json:",inline"`
 	MemoryLimit   string     `json:"memoryLimit,omitempty"`
-	Endpoints     []Endpoint `json:"endpoints,omitempty"`
+	Endpoints     []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 type Container struct {
@@ -15,11 +15,11 @@ type Container struct {
 
 	// +optional
 	// Environment variables used in this container
-	Env []EnvVar `json:"env,omitempty"`
+	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.
-	VolumeMounts []VolumeMount `json:"volumeMounts,omitempty"`
+	VolumeMounts []VolumeMount `json:"volumeMounts,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	MemoryLimit string `json:"memoryLimit,omitempty"`
@@ -28,13 +28,13 @@ type Container struct {
 	//
 	// Defaults to an empty array, meaning use whatever is defined in the image.
 	// +optional
-	Command []string `json:"command,omitempty"`
+	Command []string `json:"command,omitempty" patchStrategy:"replace"`
 
 	// The arguments to supply to the command running the dockerimage component. The arguments are supplied either to the default command provided in the image or to the overridden command.
 	//
 	// Defaults to an empty array, meaning use whatever is defined in the image.
 	// +optional
-	Args []string `json:"args,omitempty"`
+	Args []string `json:"args,omitempty" patchStrategy:"replace"`
 
 	// +optional
 	MountSources bool `json:"mountSources"`
