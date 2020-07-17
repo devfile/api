@@ -123,16 +123,7 @@ type ExecCommand struct {
 	Env []EnvVar `json:"env,omitempty"`
 
 	// +optional
-	// Whatever the command needs should be executed on background.
-	// If "false" the controller should wait for command to finish and report its status.
-	// If "true" the controller won't wait for it to finish (command can run indefinitely or until it is manually stopped).
-	// Default value is "true" for group.kind: run, debug.
-	// Default value is "false" for group.kind: build, test.
-	// Default value is "false" for all commands without group.kind
-	Background bool `json:"background,omitempty"`
-
-	// +optional
-	// Whatever the command needs should be restarted when files changed.
+	// Whatever the command needs to be restarted when files changed.
 	// It should be set to "false" if command is capable to do automatic hotreload.
 	// Default value is "true" for group.kind: build, test.
 	// Default value is "false" for group.kind: run, debug.
