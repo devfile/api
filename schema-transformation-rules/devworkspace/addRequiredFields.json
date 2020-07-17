@@ -1,17 +1,27 @@
 [
-  { 
+  {
     "op": "add",
     "path": "/properties/spec/properties/commands/items/properties/exec/required/-",
     "value": "commandLine"
   },
-  { 
+  {
     "op": "add",
     "path": "/properties/spec/properties/components/items/properties/container/required/-",
     "value": "image"
   },
-  { 
+  {
     "op": "add",
     "path": "/properties/spec/properties/components/items/properties/container/properties/endpoints/items/required/-",
+    "value": "targetPort"
+  },
+  {
+    "op": "add",
+    "path": "/properties/spec/properties/components/items/properties/kubernetes/properties/endpoints/items/required/-",
+    "value": "targetPort"
+  },
+  {
+    "op": "add",
+    "path": "/properties/spec/properties/components/items/properties/openshift/properties/endpoints/items/required/-",
     "value": "targetPort"
   }
 ]
