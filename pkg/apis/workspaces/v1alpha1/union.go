@@ -5,8 +5,10 @@ import (
 	"reflect"
 )
 
-type Identified interface {
-	Id() (string, error)
+type Union interface {
+	Normalize() error
+	discriminator() *string
+	Simplify()
 }
 
 func visitUnion(union interface{}, visitor interface{}) (err error) {
@@ -17,7 +19,7 @@ func visitUnion(union interface{}, visitor interface{}) (err error) {
 	for i := 0; i < visitorValue.NumField(); i++ {
 		unionMemberToRead := typeOfVisitor.Field(i).Name
 		unionMember := unionValue.FieldByName(unionMemberToRead)
-		if !unionMember.IsNil() {
+		if !unionMember.IsZero() {
 			if oneMemberPresent {
 				err = errors.New("Only one element should be set in union: " + unionValue.Type().Name())
 				return
@@ -37,152 +39,70 @@ func visitUnion(union interface{}, visitor interface{}) (err error) {
 	return
 }
 
-// +k8s:deepcopy-gen=false
-type ComponentVisitor struct {
-	Container  func(*ContainerComponent) error
-	Plugin     func(*PluginComponent) error
-	Volume     func(*VolumeComponent) error
-	Kubernetes func(*KubernetesComponent) error
-	Openshift  func(*OpenshiftComponent) error
-	Custom     func(*CustomComponent) error
+func simplifyUnion (union Union) {
+	*union.discriminator() = ""
 }
 
-func (union Component) Visit(visitor ComponentVisitor) error {
-	return visitUnion(union, visitor)
+func normalizeUnion(union Union, visitorType reflect.Type) error {
+	err := updateDiscriminator(union, visitorType)
+	if err != nil {
+		return err
+	}
+	
+	err = cleanupValues(union, visitorType)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func (union Component) Id() (string, error) {
-	id := ""
-	err := union.Visit(ComponentVisitor{
-		Container: func(container *ContainerComponent) error {
-			id = container.Name
-			return nil
-		},
-		Plugin: func(plugin *PluginComponent) error {
-			if plugin.Name != "" {
-				id = plugin.Name
-				return nil
+func updateDiscriminator(union Union, visitorType reflect.Type) error {
+	unionValue := reflect.ValueOf(union)
+
+	if union.discriminator() == nil {
+		return errors.New("Discriminator should not be 'nil' in union: " + unionValue.Type().Name())
+	}
+
+	if *union.discriminator() != "" {
+		// Nothing to do
+		return nil
+	}
+
+	oneMemberPresent := false
+	for i := 0; i < visitorType.NumField(); i++ {
+		unionMemberToRead := visitorType.Field(i).Name
+		unionMember := unionValue.Elem().FieldByName(unionMemberToRead)
+		if !unionMember.IsZero() {
+			if oneMemberPresent {
+				return errors.New("Discriminator cannot be deduced from 2 values in union: " + unionValue.Type().Name())
 			}
-			return plugin.ImportReference.ImportReferenceUnion.Visit(ImportReferenceUnionVisitor{
-				Uri: func(uri string) error {
-					id = uri
-					return nil
-				},
-				Id: func(id string) error {
-					id = plugin.Id
-					if plugin.RegistryUrl != "" {
-						id = plugin.RegistryUrl + "/" + id
-					}
-					return nil
-				},
-				Kubernetes: func(cr *KubernetesCustomResourceImportReference) error {
-					id = cr.Name
-					if cr.Namespace != "" {
-						id = cr.Namespace + "/" + id
-					}
-					return nil
-				},
-			})
-		},
-		Kubernetes: func(k8s *KubernetesComponent) error {
-			id = k8s.Name
-			return nil
-		},
-		Openshift: func(os *OpenshiftComponent) error {
-			id = os.Name
-			return nil
-		},
-		Volume: func(vol *VolumeComponent) error {
-			id = vol.Name
-			return nil
-		},
-	})
-	if err != nil {
-		return id, err
+			oneMemberPresent = true
+			*(union.discriminator()) = unionMemberToRead
+		}
 	}
-	return id, nil
+	return nil
 }
 
-// +k8s:deepcopy-gen=false
-type ComponentOverrideVisitor struct {
-	Container  func(*ContainerComponent) error
-	Volume     func(*VolumeComponent) error
-	Kubernetes func(*KubernetesComponent) error
-	Openshift  func(*OpenshiftComponent) error
-}
+func cleanupValues(union Union, visitorType reflect.Type) error {
+	unionValue := reflect.ValueOf(union)
 
-func (union ComponentOverride) Visit(visitor ComponentOverrideVisitor) error {
-	return visitUnion(union, visitor)
-}
-
-func (union ComponentOverride) Id() (string, error) {
-	id := ""
-	err := union.Visit(ComponentOverrideVisitor{
-		Container: func(container *ContainerComponent) error {
-			id = container.Name
-			return nil
-		},
-		Kubernetes: func(k8s *KubernetesComponent) error {
-			id = k8s.Name
-			return nil
-		},
-		Openshift: func(os *OpenshiftComponent) error {
-			id = os.Name
-			return nil
-		},
-		Volume: func(vol *VolumeComponent) error {
-			id = vol.Name
-			return nil
-		},
-	})
-	if err != nil {
-		return id, err
+	if union.discriminator() == nil {
+		return errors.New("Discriminator should not be 'nil' in union: " + unionValue.Type().Name())
 	}
-	return id, nil
-}
 
-// +k8s:deepcopy-gen=false
-type CommandVisitor struct {
-	Exec         func(*ExecCommand) error
-	VscodeTask   func(*VscodeConfigurationCommand) error
-	VscodeLaunch func(*VscodeConfigurationCommand) error
-	Composite    func(*CompositeCommand) error
-	Custom       func(*CustomCommand) error
-}
+	if *union.discriminator() == "" {
+		// Nothing to do
+		return errors.New("Values cannot be cleaned up without a discriminator in union: " + unionValue.Type().Name())
+	}
 
-func (union Command) Visit(visitor CommandVisitor) error {
-	return visitUnion(union, visitor)
-}
-
-// +k8s:deepcopy-gen=false
-type ImportReferenceUnionVisitor struct {
-	Uri        func(string) error
-	Id         func(string) error
-	Kubernetes func(*KubernetesCustomResourceImportReference) error
-}
-
-func (union ImportReferenceUnion) Visit(visitor ImportReferenceUnionVisitor) error {
-	return visitUnion(union, visitor)
-}
-
-// +k8s:deepcopy-gen=false
-type K8sLikeComponentLocationVisitor struct {
-	Uri     func(string) error
-	Inlined func(string) error
-}
-
-func (union K8sLikeComponentLocation) Visit(visitor K8sLikeComponentLocationVisitor) error {
-	return visitUnion(union, visitor)
-}
-
-// +k8s:deepcopy-gen=false
-type ProjectSourceVisitor struct {
-	Git    func(*GitProjectSource) error
-	Github func(*GithubProjectSource) error
-	Zip    func(*ZipProjectSource) error
-	Custom func(*CustomProjectSource) error
-}
-
-func (union ProjectSource) Visit(visitor ProjectSourceVisitor) error {
-	return visitUnion(union, visitor)
+	for i := 0; i < visitorType.NumField(); i++ {
+		unionMemberToRead := visitorType.Field(i).Name
+		unionMember := unionValue.Elem().FieldByName(unionMemberToRead)
+		if !unionMember.IsZero() {
+			if unionMemberToRead != *union.discriminator() {
+				unionMember.Set(reflect.Zero(unionMember.Type()))
+			}
+		}
+	}
+	return nil
 }
