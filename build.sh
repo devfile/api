@@ -94,12 +94,15 @@ onError() {
 }
 trap 'onError' ERR
 
-sed -i -e '/"description":/s/ \\n - /\\n- /g' -e '/"description":/s/ \\n \([^-]\)/\\n\\n\1/g' "${BASE_DIR}/schemas/devworkspace-template.json" "${BASE_DIR}/schemas/devworkspace.json"
+sed -i -e '/"description":/s/ \\t/\\n/g' -e '/"description":/s/ \\n - /\\n- /g' -e '/"description":/s/ \\n \([^-]\)/\\n\\n\1/g' "${BASE_DIR}/schemas/devworkspace-template.json" "${BASE_DIR}/schemas/devworkspace.json"
 
 transform "devworkspace" "${BASE_DIR}/schemas/devworkspace-template.json" ""
 transform "devworkspace" "${BASE_DIR}/schemas/devworkspace.json" 's#"path" *: *"/properties/spec/#"path": "/properties/spec/properties/template/#'
 
 jq ".properties.spec" "${BASE_DIR}/schemas/devworkspace-template.json" > "${BASE_DIR}/schemas/devworkspace-template-spec.json"
+
+jq ".properties.parent" "${BASE_DIR}/schemas/devworkspace-template-spec.json" > "${BASE_DIR}/schemas/override-spec.json"
+transform "override" "${BASE_DIR}/schemas/override-spec.json" ''
 
 cp "${BASE_DIR}/schemas/devworkspace-template-spec.json" "${BASE_DIR}/schemas/devfile.json"
 
