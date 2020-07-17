@@ -726,8 +726,9 @@ spec:
                       Kubernetes Custom Resources"
                     properties:
                       commands:
-                        description: Overrides of commands encapsulated in a plugin.
-                          Overriding is done using a strategic merge
+                        description: Overrides of commands encapsulated in a parent
+                          devfile or a plugin. Overriding is done using a strategic
+                          merge patch
                         items:
                           properties:
                             apply:
@@ -1088,11 +1089,12 @@ spec:
                         type: array
                       components:
                         description: Overrides of components encapsulated in a plugin.
-                          Overriding is done using a strategic merge
+                          Overriding is done using a strategic merge patch. A plugin
+                          cannot override embedded plugin components.
                         items:
                           properties:
                             componentType:
-                              description: Type of component override
+                              description: Type of component override for a plugin
                               enum:
                               - Container
                               - Kubernetes
@@ -1101,7 +1103,7 @@ spec:
                               type: string
                             container:
                               description: Configuration overriding for a Container
-                                component
+                                component in a plugin
                               properties:
                                 args:
                                   description: "The arguments to supply to the command
@@ -1255,7 +1257,7 @@ spec:
                               type: object
                             kubernetes:
                               description: Configuration overriding for a Kubernetes
-                                component
+                                component in a plugin
                               properties:
                                 endpoints:
                                   items:
@@ -1348,7 +1350,7 @@ spec:
                               type: object
                             openshift:
                               description: Configuration overriding for an OpenShift
-                                component
+                                component in a plugin
                               properties:
                                 endpoints:
                                   items:
@@ -1441,6 +1443,7 @@ spec:
                               type: object
                             volume:
                               description: Configuration overriding for a Volume component
+                                in a plugin
                               properties:
                                 name:
                                   description: Mandatory name that allows referencing
@@ -1455,6 +1458,43 @@ spec:
                               type: object
                           type: object
                         type: array
+                      events:
+                        description: Overrides of the commands-to-events bindings
+                          encapsulated in a parent devfile or a plugin. Each command
+                          is referred-to by its name. Overriding is done using a strategic
+                          merge patch
+                        properties:
+                          postStart:
+                            description: Names of commands that should be executed
+                              after the workspace is completely started. In the case
+                              of Che-Theia, these commands should be executed after
+                              all plugins and extensions have started, including project
+                              cloning. This means that those commands are not triggered
+                              until the user opens the IDE in his browser.
+                            items:
+                              type: string
+                            type: array
+                          postStop:
+                            description: Names of commands that should be executed
+                              after stopping the workspace.
+                            items:
+                              type: string
+                            type: array
+                          preStart:
+                            description: Names of commands that should be executed
+                              before the workspace start. Kubernetes-wise, these commands
+                              would typically be executed in init containers of the
+                              workspace POD.
+                            items:
+                              type: string
+                            type: array
+                          preStop:
+                            description: Names of commands that should be executed
+                              before stopping the workspace.
+                            items:
+                              type: string
+                            type: array
+                        type: object
                       id:
                         description: Id in a registry that contains a Devfile yaml
                           file
@@ -1541,7 +1581,8 @@ spec:
               description: Parent workspace template
               properties:
                 commands:
-                  description: Predefined, ready-to-use, workspace-related commands
+                  description: Overrides of commands encapsulated in a parent devfile
+                    or a plugin. Overriding is done using a strategic merge patch
                   items:
                     properties:
                       apply:
@@ -1881,8 +1922,8 @@ spec:
                     type: object
                   type: array
                 components:
-                  description: List of the workspace components, such as editor and
-                    plugins, user-provided containers, or other types of components
+                  description: Overrides of components encapsulated in a parent devfile.
+                    Overriding is done using a strategic merge patch
                   items:
                     properties:
                       componentType:
@@ -2257,8 +2298,9 @@ spec:
                           Kubernetes Custom Resources"
                         properties:
                           commands:
-                            description: Overrides of commands encapsulated in a plugin.
-                              Overriding is done using a strategic merge
+                            description: Overrides of commands encapsulated in a parent
+                              devfile or a plugin. Overriding is done using a strategic
+                              merge patch
                             items:
                               properties:
                                 apply:
@@ -2623,11 +2665,12 @@ spec:
                             type: array
                           components:
                             description: Overrides of components encapsulated in a
-                              plugin. Overriding is done using a strategic merge
+                              plugin. Overriding is done using a strategic merge patch.
+                              A plugin cannot override embedded plugin components.
                             items:
                               properties:
                                 componentType:
-                                  description: Type of component override
+                                  description: Type of component override for a plugin
                                   enum:
                                   - Container
                                   - Kubernetes
@@ -2636,7 +2679,7 @@ spec:
                                   type: string
                                 container:
                                   description: Configuration overriding for a Container
-                                    component
+                                    component in a plugin
                                   properties:
                                     args:
                                       description: "The arguments to supply to the
@@ -2795,7 +2838,7 @@ spec:
                                   type: object
                                 kubernetes:
                                   description: Configuration overriding for a Kubernetes
-                                    component
+                                    component in a plugin
                                   properties:
                                     endpoints:
                                       items:
@@ -2893,7 +2936,7 @@ spec:
                                   type: object
                                 openshift:
                                   description: Configuration overriding for an OpenShift
-                                    component
+                                    component in a plugin
                                   properties:
                                     endpoints:
                                       items:
@@ -2991,7 +3034,7 @@ spec:
                                   type: object
                                 volume:
                                   description: Configuration overriding for a Volume
-                                    component
+                                    component in a plugin
                                   properties:
                                     name:
                                       description: Mandatory name that allows referencing
@@ -3006,6 +3049,44 @@ spec:
                                   type: object
                               type: object
                             type: array
+                          events:
+                            description: Overrides of the commands-to-events bindings
+                              encapsulated in a parent devfile or a plugin. Each command
+                              is referred-to by its name. Overriding is done using
+                              a strategic merge patch
+                            properties:
+                              postStart:
+                                description: Names of commands that should be executed
+                                  after the workspace is completely started. In the
+                                  case of Che-Theia, these commands should be executed
+                                  after all plugins and extensions have started, including
+                                  project cloning. This means that those commands
+                                  are not triggered until the user opens the IDE in
+                                  his browser.
+                                items:
+                                  type: string
+                                type: array
+                              postStop:
+                                description: Names of commands that should be executed
+                                  after stopping the workspace.
+                                items:
+                                  type: string
+                                type: array
+                              preStart:
+                                description: Names of commands that should be executed
+                                  before the workspace start. Kubernetes-wise, these
+                                  commands would typically be executed in init containers
+                                  of the workspace POD.
+                                items:
+                                  type: string
+                                type: array
+                              preStop:
+                                description: Names of commands that should be executed
+                                  before stopping the workspace.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
                           id:
                             description: Id in a registry that contains a Devfile
                               yaml file
@@ -3057,8 +3138,9 @@ spec:
                     type: object
                   type: array
                 events:
-                  description: Bindings of commands to events. Each command is referred-to
-                    by its name.
+                  description: Overrides of the commands-to-events bindings encapsulated
+                    in a parent devfile or a plugin. Each command is referred-to by
+                    its name. Overriding is done using a strategic merge patch
                   properties:
                     postStart:
                       description: Names of commands that should be executed after
@@ -3113,8 +3195,8 @@ spec:
                   - name
                   type: object
                 projects:
-                  description: Projects worked on in the workspace, containing names
-                    and sources locations
+                  description: Overrides of projects encapsulated in a parent devfile.
+                    Overriding is done using a strategic merge patch.
                   items:
                     properties:
                       clonePath:
