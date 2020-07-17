@@ -1,0 +1,15 @@
+commands:
+  - exec:
+      id: "commandWithTypeChanged"
+      commandLine: "commandWithTypeChangedCommandLine"
+  - exec:
+      id: "commandToReplace"
+      commandLine: "commandToReplaceCommandLineToReplace"
+      env:
+        - name:  "commandToReplaceEnvVarToReplace"
+          value: "commandToReplaceEnvVarToReplaceOriginalValue"
+        - name:  "commandToReplaceEnvVarNotChanged"
+          value: "commandToReplaceEnvVarNotChangedOriginalValue"
+  - exec:
+      id: "commandNotChanged"
+      commandLine: "commandNotChangedCommandLine"
