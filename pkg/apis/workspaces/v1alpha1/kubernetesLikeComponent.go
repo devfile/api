@@ -37,7 +37,7 @@ type K8sLikeComponent struct {
 	// in commands, or inside a parent
 	Name      string `json:"name"`
 
-	Endpoints []Endpoint `json:"endpoints,omitempty"`
+	Endpoints []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Component that allows partly importing Kubernetes resources into the workspace POD
