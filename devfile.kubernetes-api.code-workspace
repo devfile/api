@@ -25,8 +25,10 @@
         "go.autocompleteUnimportedPackages": true,
         "yaml.schemas": {
             "./schemas/devfile.json": "devfile-support/samples/*devfile.yaml",
-            "./schemas/devworkspace.json": [ "samples/*devworkspace.yaml", "deploy/crds/*_devworkspace_cr.yaml"],
-            "./schemas/devworkspace-template.json": [ "samples/*devworkspacetemplate.yaml", "deploy/crds/*_devworkspacetemplate_cr.yaml" ]
+            "./schemas/devworkspace.json": "samples/*devworkspace.yaml",
+            "./schemas/devworkspace-template.json": "samples/*devworkspacetemplate.yaml",
+            "./schemas/devworkspace-template-spec.json": [ "pkg/overriding/test-fixtures/**/original.yaml", "pkg/overriding/test-fixtures/**/result.yaml" ],
+            "./schemas/override-spec.json": "pkg/overriding/test-fixtures/**/patch.yaml"
         }
     }
 }
