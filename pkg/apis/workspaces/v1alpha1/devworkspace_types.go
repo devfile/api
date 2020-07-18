@@ -59,6 +59,7 @@ const (
 	WorkspaceRoutingReady        WorkspaceConditionType = "RoutingReady"
 	WorkspaceServiceAccountReady WorkspaceConditionType = "ServiceAccountReady"
 	WorkspaceReady               WorkspaceConditionType = "Ready"
+	WorkspaceFailedStart         WorkspaceConditionType = "FailedStart"
 )
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
