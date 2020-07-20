@@ -3188,6 +3188,103 @@ spec:
                   type: array
                 registryUrl:
                   type: string
+                starterProjects:
+                  description: StarterProjects is a project that can be used as a
+                    starting point when bootstrapping new projects
+                  items:
+                    properties:
+                      clonePath:
+                        description: Path relative to the root of the projects to
+                          which this project should be cloned into. This is a unix-style
+                          relative path (i.e. uses forward slashes). The path is invalid
+                          if it is absolute or tries to escape the project root through
+                          the usage of '..'. If not specified, defaults to the project
+                          name.
+                        type: string
+                      custom:
+                        description: Project's Custom source
+                        properties:
+                          embeddedResource:
+                            type: object
+                            x-kubernetes-embedded-resource: true
+                            x-kubernetes-preserve-unknown-fields: true
+                          projectSourceClass:
+                            type: string
+                        required:
+                        - embeddedResource
+                        - projectSourceClass
+                        type: object
+                      description:
+                        description: Description of a starter project
+                        type: string
+                      git:
+                        description: Project's Git source
+                        properties:
+                          branch:
+                            description: The branch to check
+                            type: string
+                          location:
+                            description: Project's source location address. Should
+                              be URL for git and github located projects, or; file://
+                              for zip
+                            type: string
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                          startPoint:
+                            description: The tag or commit id to reset the checked
+                              out branch to
+                            type: string
+                        type: object
+                      github:
+                        description: Project's GitHub source
+                        properties:
+                          branch:
+                            description: The branch to check
+                            type: string
+                          location:
+                            description: Project's source location address. Should
+                              be URL for git and github located projects, or; file://
+                              for zip
+                            type: string
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                          startPoint:
+                            description: The tag or commit id to reset the checked
+                              out branch to
+                            type: string
+                        type: object
+                      name:
+                        description: Project name
+                        type: string
+                      sourceType:
+                        description: Type of project source
+                        enum:
+                        - Git
+                        - Github
+                        - Zip
+                        - Custom
+                        type: string
+                      zip:
+                        description: Project's Zip source
+                        properties:
+                          location:
+                            description: Project's source location address. Should
+                              be URL for git and github located projects, or; file://
+                              for zip
+                            type: string
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  type: array
                 uri:
                   description: Uri of a Devfile yaml file
                   type: string
@@ -3217,6 +3314,99 @@ spec:
                     - embeddedResource
                     - projectSourceClass
                     type: object
+                  git:
+                    description: Project's Git source
+                    properties:
+                      branch:
+                        description: The branch to check
+                        type: string
+                      location:
+                        description: Project's source location address. Should be
+                          URL for git and github located projects, or; file:// for
+                          zip
+                        type: string
+                      sparseCheckoutDir:
+                        description: Part of project to populate in the working directory.
+                        type: string
+                      startPoint:
+                        description: The tag or commit id to reset the checked out
+                          branch to
+                        type: string
+                    type: object
+                  github:
+                    description: Project's GitHub source
+                    properties:
+                      branch:
+                        description: The branch to check
+                        type: string
+                      location:
+                        description: Project's source location address. Should be
+                          URL for git and github located projects, or; file:// for
+                          zip
+                        type: string
+                      sparseCheckoutDir:
+                        description: Part of project to populate in the working directory.
+                        type: string
+                      startPoint:
+                        description: The tag or commit id to reset the checked out
+                          branch to
+                        type: string
+                    type: object
+                  name:
+                    description: Project name
+                    type: string
+                  sourceType:
+                    description: Type of project source
+                    enum:
+                    - Git
+                    - Github
+                    - Zip
+                    - Custom
+                    type: string
+                  zip:
+                    description: Project's Zip source
+                    properties:
+                      location:
+                        description: Project's source location address. Should be
+                          URL for git and github located projects, or; file:// for
+                          zip
+                        type: string
+                      sparseCheckoutDir:
+                        description: Part of project to populate in the working directory.
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              type: array
+            starterProjects:
+              description: StarterProjects is a project that can be used as a starting
+                point when bootstrapping new projects
+              items:
+                properties:
+                  clonePath:
+                    description: Path relative to the root of the projects to which
+                      this project should be cloned into. This is a unix-style relative
+                      path (i.e. uses forward slashes). The path is invalid if it
+                      is absolute or tries to escape the project root through the
+                      usage of '..'. If not specified, defaults to the project name.
+                    type: string
+                  custom:
+                    description: Project's Custom source
+                    properties:
+                      embeddedResource:
+                        type: object
+                        x-kubernetes-embedded-resource: true
+                        x-kubernetes-preserve-unknown-fields: true
+                      projectSourceClass:
+                        type: string
+                    required:
+                    - embeddedResource
+                    - projectSourceClass
+                    type: object
+                  description:
+                    description: Description of a starter project
+                    type: string
                   git:
                     description: Project's Git source
                     properties:
