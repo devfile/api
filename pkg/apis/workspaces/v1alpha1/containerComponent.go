@@ -61,7 +61,6 @@ type EnvVar struct {
 // Volume that should be mounted to a component container
 type VolumeMount struct {
 	// The volume mount name is the name of an existing `Volume` component.
-	// If no corresponding `Volume` component exist it is implicitly added.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
 	Name string `json:"name"`
