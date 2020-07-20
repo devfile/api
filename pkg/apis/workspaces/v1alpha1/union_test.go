@@ -2,7 +2,6 @@ package v1alpha1
 
 import (
 	"testing"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -43,6 +42,22 @@ func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 	ProjectSource {
 		Git: &GitProjectSource{},
 		SourceType: "Git",
+	},
+	original,
+	"The two values should be the same.")
+}
+
+func TestSimplifyingUnion(t *testing.T) {
+	original := ProjectSource {
+		Git: &GitProjectSource{},
+		SourceType: "Git",
+	}
+
+	original.Simplify()
+
+	assert.Equal(t,
+	ProjectSource {
+		Git: &GitProjectSource{},
 	},
 	original,
 	"The two values should be the same.")

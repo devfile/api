@@ -1,108 +1,19 @@
 package v1alpha1
 
-import (
-	"errors"
-	"reflect"
-)
-
+// Union is an interface that allows managing structs defined as
+// Kubernetes unions with discriminators, according to the following KEP:
+// https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md
 type Union interface {
-	Normalize() error
 	discriminator() *string
+
+	// Normalize allows normalizing the union, according to the following rules:
+	// - When only one field of the union is set and no discriminator is set, set the discriminator according to the union value.
+	// - When several fields are set and a discrimnator is set, remove (== reset to zero value) all the values that do not match the discriminator.
+	// - When only one union value is set and it matches discriminator, just do nothing.
+	// - In other case, something is inconsistent or ambiguous: an error is thrown.
+	Normalize() error
+
+	// Simplify allows removing the union discriminator,
+	// but only after normalizing it if necessary.
 	Simplify()
-}
-
-func visitUnion(union interface{}, visitor interface{}) (err error) {
-	visitorValue := reflect.ValueOf(visitor)
-	unionValue := reflect.ValueOf(union)
-	oneMemberPresent := false
-	typeOfVisitor := visitorValue.Type()
-	for i := 0; i < visitorValue.NumField(); i++ {
-		unionMemberToRead := typeOfVisitor.Field(i).Name
-		unionMember := unionValue.FieldByName(unionMemberToRead)
-		if !unionMember.IsZero() {
-			if oneMemberPresent {
-				err = errors.New("Only one element should be set in union: " + unionValue.Type().Name())
-				return
-			}
-			oneMemberPresent = true
-			visitorFunction := visitorValue.Field(i)
-			if visitorFunction.IsNil() {
-				return
-			}
-			results := visitorFunction.Call([]reflect.Value{unionMember})
-			if !results[0].IsNil() {
-				err = results[0].Interface().(error)
-			}
-			return
-		}
-	}
-	return
-}
-
-func simplifyUnion (union Union) {
-	*union.discriminator() = ""
-}
-
-func normalizeUnion(union Union, visitorType reflect.Type) error {
-	err := updateDiscriminator(union, visitorType)
-	if err != nil {
-		return err
-	}
-	
-	err = cleanupValues(union, visitorType)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func updateDiscriminator(union Union, visitorType reflect.Type) error {
-	unionValue := reflect.ValueOf(union)
-
-	if union.discriminator() == nil {
-		return errors.New("Discriminator should not be 'nil' in union: " + unionValue.Type().Name())
-	}
-
-	if *union.discriminator() != "" {
-		// Nothing to do
-		return nil
-	}
-
-	oneMemberPresent := false
-	for i := 0; i < visitorType.NumField(); i++ {
-		unionMemberToRead := visitorType.Field(i).Name
-		unionMember := unionValue.Elem().FieldByName(unionMemberToRead)
-		if !unionMember.IsZero() {
-			if oneMemberPresent {
-				return errors.New("Discriminator cannot be deduced from 2 values in union: " + unionValue.Type().Name())
-			}
-			oneMemberPresent = true
-			*(union.discriminator()) = unionMemberToRead
-		}
-	}
-	return nil
-}
-
-func cleanupValues(union Union, visitorType reflect.Type) error {
-	unionValue := reflect.ValueOf(union)
-
-	if union.discriminator() == nil {
-		return errors.New("Discriminator should not be 'nil' in union: " + unionValue.Type().Name())
-	}
-
-	if *union.discriminator() == "" {
-		// Nothing to do
-		return errors.New("Values cannot be cleaned up without a discriminator in union: " + unionValue.Type().Name())
-	}
-
-	for i := 0; i < visitorType.NumField(); i++ {
-		unionMemberToRead := visitorType.Field(i).Name
-		unionMember := unionValue.Elem().FieldByName(unionMemberToRead)
-		if !unionMember.IsZero() {
-			if unionMemberToRead != *union.discriminator() {
-				unionMember.Set(reflect.Zero(unionMember.Type()))
-			}
-		}
-	}
-	return nil
 }
