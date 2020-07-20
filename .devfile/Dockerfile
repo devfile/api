@@ -2,7 +2,7 @@ FROM python:3-alpine
 ARG OPERATOR_SDK_VERSION=v0.17.0
 ENV GOROOT /usr/lib/go
 
-RUN apk add --no-cache --update curl bash jq go \
+RUN apk add --no-cache --update curl bash jq go git openssh \
 && pip3 install yq \
 && pip3 install jsonpatch
 
