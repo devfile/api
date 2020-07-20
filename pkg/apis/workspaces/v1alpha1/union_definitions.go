@@ -4,6 +4,18 @@ import (
 	"reflect"
 )
 
+/*
+
+This file implements the `Union` methods on all the struct types
+that are defined as Kubernetes unions.
+
+The implementations here mainly delegate to generic implementation functions.
+so, in the future, we should probably produce this file
+by some code generation mechanism based on API source code parsing, especially
+based on the `+union` comments in the API GO source code.
+
+*/
+
 // +k8s:deepcopy-gen=false
 type ComponentVisitor struct {
 	Container  func(*ContainerComponent) error
@@ -24,7 +36,7 @@ func (union *Component) Normalize() error {
 	return normalizeUnion(union, componentVisitorType)
 }
 func (union *Component) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, componentVisitorType)
 }
 
 
@@ -46,7 +58,7 @@ func (union *PluginComponentsOverride) Normalize() error {
 	return normalizeUnion(union, pluginComponentsOverrideVisitorType)
 }
 func (union *PluginComponentsOverride) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, pluginComponentsOverrideVisitorType)
 }
 
 
@@ -70,7 +82,7 @@ func (union *Command) Normalize() error {
 	return normalizeUnion(union, commandVisitorType)
 }
 func (union *Command) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, commandVisitorType)
 }
 
 
@@ -91,7 +103,7 @@ func (union *ImportReferenceUnion) Normalize() error {
 	return normalizeUnion(union, importReferenceUnionVisitorType)
 }
 func (union *ImportReferenceUnion) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, importReferenceUnionVisitorType)
 }
 
 
@@ -112,7 +124,7 @@ func (union *K8sLikeComponentLocation) Normalize() error {
 	return normalizeUnion(union, k8sLikeComponentLocationVisitorType)
 }
 func (union *K8sLikeComponentLocation) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, k8sLikeComponentLocationVisitorType)
 }
 
 // +k8s:deepcopy-gen=false
@@ -131,7 +143,7 @@ func (union *VscodeConfigurationCommandLocation) Normalize() error {
 	return normalizeUnion(union, vscodeConfigurationCommandLocationVisitorType)
 }
 func (union *VscodeConfigurationCommandLocation) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, vscodeConfigurationCommandLocationVisitorType)
 }
 
 // +k8s:deepcopy-gen=false
@@ -152,5 +164,5 @@ func (union *ProjectSource) Normalize() error {
 	return normalizeUnion(union, projectSourceVisitorType)
 }
 func (union *ProjectSource) Simplify() {
-	simplifyUnion(union)
+	simplifyUnion(union, projectSourceVisitorType)
 }

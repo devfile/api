@@ -2,12 +2,11 @@ package overriding
 
 import (
 	//	"errors"
-	"reflect"
 	workspaces "github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
+	unions "github.com/devfile/kubernetes-api/pkg/utils/unions"
 	"k8s.io/apimachinery/pkg/util/json"
 	strategicpatch "k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/apimachinery/pkg/util/yaml"
-	"github.com/mitchellh/reflectwalk"
 )
 
 func handleUnmarshal(j []byte) (map[string]interface{}, error) {
@@ -74,9 +73,9 @@ func addKeys(keyedSpec *keyedDevWorkspaceTemplateSpecContent) error {
 }
 
 func removeKeys(keyedSpec *keyedDevWorkspaceTemplateSpecContent) *workspaces.DevWorkspaceTemplateSpecContent {
-	result := workspaces.DevWorkspaceTemplateSpecContent {
+	result := workspaces.DevWorkspaceTemplateSpecContent{
 		Projects: keyedSpec.Projects,
-		Events: keyedSpec.Events,
+		Events:   keyedSpec.Events,
 	}
 
 	if keyedSpec.Commands != nil && len(keyedSpec.Commands) > 0 {
@@ -96,64 +95,27 @@ func removeKeys(keyedSpec *keyedDevWorkspaceTemplateSpecContent) *workspaces.Dev
 	return &result
 }
 
-type normalizer struct {
-}
-func (n *normalizer) Struct(s reflect.Value) error {
-	if s.CanAddr() {
-		addr := s.Addr()
-		if addr.CanInterface() {
-			i := addr.Interface()
-			if u, ok := i.(workspaces.Union); ok {
-				u.Normalize()
-			}
-		}
-	}
-	return nil
-}
-func (n *normalizer) StructField(reflect.StructField, reflect.Value) error {
-	return nil
-}
-
-type simplifier struct {
-}
-func (n *simplifier) Struct(s reflect.Value) error {
-	if s.CanAddr() {
-		addr := s.Addr()
-		if addr.CanInterface() {
-			i := addr.Interface()
-			if u, ok := i.(workspaces.Union); ok {
-				u.Normalize()
-				u.Simplify()
-			}
-		}
-	}
-	return nil
-}
-func (n *simplifier) StructField(reflect.StructField, reflect.Value) error {
-	return nil
-}
-
-func Normalize(keyedSpec *keyedDevWorkspaceTemplateSpecContent) error {
-	return reflectwalk.Walk(keyedSpec, &normalizer{})
-}
-
-func Simplify(keyedSpec *keyedDevWorkspaceTemplateSpecContent) error {
-	return reflectwalk.Walk(keyedSpec, &simplifier{})
-}
-
+// OverrideDevWorkspaceTemplateSpecBytes implements the overriding logic for parent devfiles or plugins.
+// On an Json or Yaml document that contains the core content of the devfile (without the `apiVersion` and `metadata`),
+// it allows applying a `patch` which is a document fragment of the same schema.
+//
+// The Overriding logic is implemented according to strategic merge patch rules, as defined here:
+// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#background
+//
+// The result is a transformed `DevfileWorkspaceTemplateSpec` object that can be serialized back to Yaml or Json.
 func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []byte) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
 	originalJson, err := yaml.ToJSON(originalBytes)
 	if err != nil {
 		return nil, err
 	}
 
-	keyedOriginal := keyedDevWorkspaceTemplateSpecContent {}
+	keyedOriginal := keyedDevWorkspaceTemplateSpecContent{}
 	err = json.Unmarshal(originalJson, &keyedOriginal)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = Normalize(&keyedOriginal); err != nil {
+	if err = unions.Normalize(&keyedOriginal); err != nil {
 		return nil, err
 	}
 
@@ -165,7 +127,7 @@ func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []by
 	if err != nil {
 		return nil, err
 	}
-	
+
 	originalMap, err := handleUnmarshal(keyedOriginalBytes)
 	if err != nil {
 		return nil, err
@@ -175,14 +137,14 @@ func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []by
 	if err != nil {
 		return nil, err
 	}
-	
-	keyedPatch := keyedDevWorkspaceTemplateSpecContent {}
+
+	keyedPatch := keyedDevWorkspaceTemplateSpecContent{}
 	err = json.Unmarshal(patchJson, &keyedPatch)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = Normalize(&keyedPatch); err != nil {
+	if err = unions.Normalize(&keyedPatch); err != nil {
 		return nil, err
 	}
 
@@ -199,7 +161,6 @@ func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []by
 		return nil, err
 	}
 
-
 	schema, err := strategicpatch.NewPatchMetaFromStruct(keyedOriginal)
 	if err != nil {
 		return nil, err
@@ -215,29 +176,37 @@ func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []by
 		return nil, err
 	}
 
-	patched := keyedDevWorkspaceTemplateSpecContent {}
+	patched := keyedDevWorkspaceTemplateSpecContent{}
 	err = json.Unmarshal(patchedBytes, &patched)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = Simplify(&patched); err != nil {
+	if err = unions.Simplify(&patched); err != nil {
 		return nil, err
 	}
 
 	return removeKeys(&patched), nil
 }
 
+// OverrideDevWorkspaceTemplateSpec implements the overriding logic for parent devfiles or plugins.
+// On an `original` `DevfileWorkspaceTemplateSpec` (which is the core part of a devfile, without the `apiVersion` and `metadata`),
+// it allows applying a `patch` which is an `Overrides` or `PluginOverrides` object.
+//
+// The Overriding logic is implemented according to strategic merge patch rules, as defined here:
+// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#background
+//
+// The result is a transformed `DevfileWorkspaceTemplateSpec` object.
 func OverrideDevWorkspaceTemplateSpec(original *workspaces.DevWorkspaceTemplateSpecContent, patch interface{}) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
 	originalBytes, err := json.Marshal(original)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	patchBytes, err := json.Marshal(patch)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return OverrideDevWorkspaceTemplateSpecBytes(originalBytes, patchBytes)
 }

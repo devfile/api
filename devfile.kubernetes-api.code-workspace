@@ -27,8 +27,8 @@
             "./schemas/devfile.json": "devfile-support/samples/*devfile.yaml",
             "./schemas/devworkspace.json": "samples/*devworkspace.yaml",
             "./schemas/devworkspace-template.json": "samples/*devworkspacetemplate.yaml",
-            "./schemas/devworkspace-template-spec.json": [ "pkg/overriding/test-fixtures/**/original.yaml", "pkg/overriding/test-fixtures/**/result.yaml" ],
-            "./schemas/override-spec.json": "pkg/overriding/test-fixtures/**/patch.yaml"
+            "./schemas/devworkspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/**/original.yaml", "pkg/overriding/test-fixtures/**/result.yaml" ],
+            "./schemas/override-spec.json": "pkg/utils/overriding/test-fixtures/**/patch.yaml"
         }
     }
 }
