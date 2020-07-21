@@ -117,7 +117,6 @@ type ExecCommand struct {
 	// Working directory where the command should be executed
 	WorkingDir string `json:"workingDir,omitempty"`
 
-	// +optional
 	// Optional list of environment variables that have to be set
 	// before running the command
 	Env []EnvVar `json:"env,omitempty"`
@@ -125,9 +124,14 @@ type ExecCommand struct {
 	// +optional
 	// Whatever the command needs to be restarted when files changed.
 	// It should be set to "false" if command is capable to do automatic hotreload.
-	// Default value is "true" for group.kind: build, test.
-	// Default value is "false" for group.kind: run, debug.
-	// Default value is "false" for all commands without group.kind
+	//
+	// Default value:
+	//
+	//   - "true" for group.kind: build, test.
+	//
+	//   - "false" for group.kind: run, debug.
+	//
+	//   - "false" for all commands without group.kind
 	RestartOnChange bool `json:"restartOnChange,omitempty"`
 }
 
