@@ -255,12 +255,12 @@ spec:
                           command to be used in Editor UI menus for example
                         type: string
                       restartOnChange:
-                        description: 'Whatever the command needs to be restarted when
-                          files changed. It should be set to "false" if command is
-                          capable to do automatic hotreload. Default value is "true"
-                          for group.kind: build, test. Default value is "false" for
-                          group.kind: run, debug. Default value is "false" for all
-                          commands without group.kind'
+                        description: "Whatever the command needs to be restarted when
+                          files changed. It should be set to \"false\" if command
+                          is capable to do automatic hotreload. \n Default value:
+                          \n   - \"true\" for group.kind: build, test. \n   - \"false\"
+                          for group.kind: run, debug. \n   - \"false\" for all commands
+                          without group.kind"
                         type: boolean
                       workingDir:
                         description: Working directory where the command should be
@@ -969,13 +969,13 @@ spec:
                                     for example
                                   type: string
                                 restartOnChange:
-                                  description: 'Whatever the command needs to be restarted
-                                    when files changed. It should be set to "false"
+                                  description: "Whatever the command needs to be restarted
+                                    when files changed. It should be set to \"false\"
                                     if command is capable to do automatic hotreload.
-                                    Default value is "true" for group.kind: build,
-                                    test. Default value is "false" for group.kind:
-                                    run, debug. Default value is "false" for all commands
-                                    without group.kind'
+                                    \n Default value: \n   - \"true\" for group.kind:
+                                    build, test. \n   - \"false\" for group.kind:
+                                    run, debug. \n   - \"false\" for all commands
+                                    without group.kind"
                                   type: boolean
                                 workingDir:
                                   description: Working directory where the command
@@ -1772,12 +1772,12 @@ spec:
                               this command to be used in Editor UI menus for example
                             type: string
                           restartOnChange:
-                            description: 'Whatever the command needs to be restarted
-                              when files changed. It should be set to "false" if command
-                              is capable to do automatic hotreload. Default value
-                              is "true" for group.kind: build, test. Default value
-                              is "false" for group.kind: run, debug. Default value
-                              is "false" for all commands without group.kind'
+                            description: "Whatever the command needs to be restarted
+                              when files changed. It should be set to \"false\" if
+                              command is capable to do automatic hotreload. \n Default
+                              value: \n   - \"true\" for group.kind: build, test.
+                              \n   - \"false\" for group.kind: run, debug. \n   -
+                              \"false\" for all commands without group.kind"
                             type: boolean
                           workingDir:
                             description: Working directory where the command should
@@ -2506,14 +2506,14 @@ spec:
                                         UI menus for example
                                       type: string
                                     restartOnChange:
-                                      description: 'Whatever the command needs to
+                                      description: "Whatever the command needs to
                                         be restarted when files changed. It should
-                                        be set to "false" if command is capable to
-                                        do automatic hotreload. Default value is "true"
-                                        for group.kind: build, test. Default value
-                                        is "false" for group.kind: run, debug. Default
-                                        value is "false" for all commands without
-                                        group.kind'
+                                        be set to \"false\" if command is capable
+                                        to do automatic hotreload. \n Default value:
+                                        \n   - \"true\" for group.kind: build, test.
+                                        \n   - \"false\" for group.kind: run, debug.
+                                        \n   - \"false\" for all commands without
+                                        group.kind"
                                       type: boolean
                                     workingDir:
                                       description: Working directory where the command
