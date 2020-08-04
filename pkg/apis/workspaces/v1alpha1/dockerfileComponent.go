@@ -13,6 +13,9 @@ type Dockerfile struct {
 
 	// Mandatory destination to registry to push built image
 	Destination string `json:"destination,omitempty"`
+	
+	// Mandatory whether rootless/unprivileged builder container is required
+	Rootless bool `json:"rootless,omitempty"`
 }
 
 
