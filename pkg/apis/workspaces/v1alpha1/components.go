@@ -14,6 +14,7 @@ const (
 	PluginComponentType     ComponentType = "Plugin"
 	VolumeComponentType     ComponentType = "Volume"
 	CustomComponentType     ComponentType = "Custom"
+	DockerfileComponentType ComponentType = "Dockerfile"
 )
 
 // Workspace component: Anything that will bring additional features / tooling / behaviour / context
@@ -67,6 +68,9 @@ type Component struct {
 	// possibly through some dedicated controller
 	// +optional
 	Custom *CustomComponent `json:"custom,omitempty"`
+
+	// Allows specifying a dockerfile to initiate build
+	Dockerfile *Dockerfile `json:"dockerfile,omitempty"`
 }
 
 type CustomComponent struct {
