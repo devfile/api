@@ -5,7 +5,7 @@ metadata:
 projects:
   - name: "devworkspace-spec"
     git:
-        location: "https://github.com/devfile/kubernetes-api"
+        location: "https://github.com/devfile/api"
         branch: "master"
 commands:
   - exec:

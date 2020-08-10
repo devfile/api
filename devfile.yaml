@@ -3,9 +3,9 @@ metadata:
 projects:
   - name: kubernetes-api
     source:
-      location: 'https://github.com/devfile/kubernetes-api.git'
+      location: 'https://github.com/devfile/api.git'
       type: git
-    clonePath: src/github.com/devfile/kubernetes-api
+    clonePath: src/github.com/devfile/api
 components:
   - id: ms-vscode/go/latest
     memoryLimit: 512Mi
@@ -23,13 +23,13 @@ components:
       - '-c'
       - >-
         while [ ! -f
-        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/api/.theia/settings.json
         ]; do echo "Waiting for the clone end" ; sleep 2; done; sleep 2 ; grep
-        -e '/src/github.com/devfile/kubernetes-api/schemas/'
+        -e '/src/github.com/devfile/api/schemas/'
         ${CHE_PROJECTS_ROOT}/.theia/settings.json > /dev/null ; if [ $? -ne 0 ];
         then echo "Updating the yaml schema bindings" ; sed -e
-        's:/schemas/:/src/github.com/devfile/kubernetes-api/schemas/:g'
-        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api/.theia/settings.json
+        's:/schemas/:/src/github.com/devfile/api/schemas/:g'
+        ${CHE_PROJECTS_ROOT}/src/github.com/devfile/api/.theia/settings.json
         > ${CHE_PROJECTS_ROOT}/.theia/settings.json; fi; sleep infinity
     memoryLimit: 512Mi
     type: dockerimage
@@ -44,13 +44,13 @@ apiVersion: 1.0.0
 commands:
   - name: Build crds and schemas
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api'
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/api'
         type: exec
         command: ./build.sh
         component: tools
   - name: Fetch dependencies for Go LS
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api'
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/api'
         type: exec
         command: go mod vendor
         component: tools
