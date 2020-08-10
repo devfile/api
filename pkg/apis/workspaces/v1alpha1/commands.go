@@ -125,13 +125,7 @@ type ExecCommand struct {
 	// Whatever the command needs to be restarted when files changed.
 	// It should be set to "false" if command is capable to do automatic hotreload.
 	//
-	// Default value:
-	//
-	//   - "true" for group.kind: build, test.
-	//
-	//   - "false" for group.kind: run, debug.
-	//
-	//   - "false" for all commands without group.kind
+	// Default value is `true`
 	RestartOnChange bool `json:"restartOnChange,omitempty"`
 }
 
