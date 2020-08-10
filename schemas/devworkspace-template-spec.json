@@ -283,9 +283,9 @@
                 "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
               },
               "restartOnChange": {
-                "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind",
+                "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`",
                 "type": "boolean",
-                "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind"
+                "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`"
               },
               "workingDir": {
                 "description": "Working directory where the command should be executed",
@@ -1130,9 +1130,9 @@
                           "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                         },
                         "restartOnChange": {
-                          "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind",
+                          "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`",
                           "type": "boolean",
-                          "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind"
+                          "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`"
                         },
                         "workingDir": {
                           "description": "Working directory where the command should be executed",
@@ -2153,9 +2153,9 @@
                     "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   },
                   "restartOnChange": {
-                    "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind",
+                    "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`",
                     "type": "boolean",
-                    "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind"
+                    "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`"
                   },
                   "workingDir": {
                     "description": "Working directory where the command should be executed",
@@ -2997,9 +2997,9 @@
                               "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             },
                             "restartOnChange": {
-                              "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind",
+                              "description": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`",
                               "type": "boolean",
-                              "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value:\n\n  - \"true\" for group.kind: build, test.\n\n  - \"false\" for group.kind: run, debug.\n\n  - \"false\" for all commands without group.kind"
+                              "markdownDescription": "Whatever the command needs to be restarted when files changed. It should be set to \"false\" if command is capable to do automatic hotreload.\n\nDefault value is `true`"
                             },
                             "workingDir": {
                               "description": "Working directory where the command should be executed",

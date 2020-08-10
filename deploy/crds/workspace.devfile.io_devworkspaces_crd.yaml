@@ -283,9 +283,7 @@ spec:
                             description: "Whatever the command needs to be restarted
                               when files changed. It should be set to \"false\" if
                               command is capable to do automatic hotreload. \n Default
-                              value: \n   - \"true\" for group.kind: build, test.
-                              \n   - \"false\" for group.kind: run, debug. \n   -
-                              \"false\" for all commands without group.kind"
+                              value is `true`"
                             type: boolean
                           workingDir:
                             description: Working directory where the command should
@@ -1017,11 +1015,8 @@ spec:
                                       description: "Whatever the command needs to
                                         be restarted when files changed. It should
                                         be set to \"false\" if command is capable
-                                        to do automatic hotreload. \n Default value:
-                                        \n   - \"true\" for group.kind: build, test.
-                                        \n   - \"false\" for group.kind: run, debug.
-                                        \n   - \"false\" for all commands without
-                                        group.kind"
+                                        to do automatic hotreload. \n Default value
+                                        is `true`"
                                       type: boolean
                                     workingDir:
                                       description: Working directory where the command
@@ -1854,10 +1849,7 @@ spec:
                                 description: "Whatever the command needs to be restarted
                                   when files changed. It should be set to \"false\"
                                   if command is capable to do automatic hotreload.
-                                  \n Default value: \n   - \"true\" for group.kind:
-                                  build, test. \n   - \"false\" for group.kind: run,
-                                  debug. \n   - \"false\" for all commands without
-                                  group.kind"
+                                  \n Default value is `true`"
                                 type: boolean
                               workingDir:
                                 description: Working directory where the command should
@@ -2609,10 +2601,7 @@ spec:
                                             to be restarted when files changed. It
                                             should be set to \"false\" if command
                                             is capable to do automatic hotreload.
-                                            \n Default value: \n   - \"true\" for
-                                            group.kind: build, test. \n   - \"false\"
-                                            for group.kind: run, debug. \n   - \"false\"
-                                            for all commands without group.kind"
+                                            \n Default value is `true`"
                                           type: boolean
                                         workingDir:
                                           description: Working directory where the
