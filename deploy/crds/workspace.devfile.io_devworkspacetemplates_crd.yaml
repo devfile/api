@@ -245,6 +245,12 @@ spec:
                         required:
                         - kind
                         type: object
+                      hotReloadCapable:
+                        description: "Whatever the command it capable to reload itself
+                          when source code changes. If set to \"true\" the command
+                          won't be restarted and it is expected to handle file changes
+                          on its own. \n Default value is `false`"
+                        type: boolean
                       id:
                         description: Mandatory identifier that allows referencing
                           this command in composite commands, from a parent, or in
@@ -254,12 +260,6 @@ spec:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
                         type: string
-                      restartOnChange:
-                        description: "Whatever the command needs to be restarted when
-                          files changed. It should be set to \"false\" if command
-                          is capable to do automatic hotreload. \n Default value is
-                          `true`"
-                        type: boolean
                       workingDir:
                         description: Working directory where the command should be
                           executed
@@ -956,6 +956,13 @@ spec:
                                   required:
                                   - kind
                                   type: object
+                                hotReloadCapable:
+                                  description: "Whatever the command it capable to
+                                    reload itself when source code changes. If set
+                                    to \"true\" the command won't be restarted and
+                                    it is expected to handle file changes on its own.
+                                    \n Default value is `false`"
+                                  type: boolean
                                 id:
                                   description: Mandatory identifier that allows referencing
                                     this command in composite commands, from a parent,
@@ -966,12 +973,6 @@ spec:
                                     for this command to be used in Editor UI menus
                                     for example
                                   type: string
-                                restartOnChange:
-                                  description: "Whatever the command needs to be restarted
-                                    when files changed. It should be set to \"false\"
-                                    if command is capable to do automatic hotreload.
-                                    \n Default value is `true`"
-                                  type: boolean
                                 workingDir:
                                   description: Working directory where the command
                                     should be executed
@@ -1757,6 +1758,13 @@ spec:
                             required:
                             - kind
                             type: object
+                          hotReloadCapable:
+                            description: "Whatever the command it capable to reload
+                              itself when source code changes. If set to \"true\"
+                              the command won't be restarted and it is expected to
+                              handle file changes on its own. \n Default value is
+                              `false`"
+                            type: boolean
                           id:
                             description: Mandatory identifier that allows referencing
                               this command in composite commands, from a parent, or
@@ -1766,12 +1774,6 @@ spec:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
                             type: string
-                          restartOnChange:
-                            description: "Whatever the command needs to be restarted
-                              when files changed. It should be set to \"false\" if
-                              command is capable to do automatic hotreload. \n Default
-                              value is `true`"
-                            type: boolean
                           workingDir:
                             description: Working directory where the command should
                               be executed
@@ -2488,6 +2490,13 @@ spec:
                                       required:
                                       - kind
                                       type: object
+                                    hotReloadCapable:
+                                      description: "Whatever the command it capable
+                                        to reload itself when source code changes.
+                                        If set to \"true\" the command won't be restarted
+                                        and it is expected to handle file changes
+                                        on its own. \n Default value is `false`"
+                                      type: boolean
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
@@ -2498,13 +2507,6 @@ spec:
                                         label for this command to be used in Editor
                                         UI menus for example
                                       type: string
-                                    restartOnChange:
-                                      description: "Whatever the command needs to
-                                        be restarted when files changed. It should
-                                        be set to \"false\" if command is capable
-                                        to do automatic hotreload. \n Default value
-                                        is `true`"
-                                      type: boolean
                                     workingDir:
                                       description: Working directory where the command
                                         should be executed
