@@ -122,11 +122,11 @@ type ExecCommand struct {
 	Env []EnvVar `json:"env,omitempty"`
 
 	// +optional
-	// Whatever the command needs to be restarted when files changed.
-	// It should be set to "false" if command is capable to do automatic hotreload.
+	// Whatever the command it capable to reload itself when source code changes.
+	// If set to "true" the command won't be restarted and it is expected to handle file changes on its own.
 	//
-	// Default value is `true`
-	RestartOnChange bool `json:"restartOnChange,omitempty"`
+	// Default value is `false`
+	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommand struct {
