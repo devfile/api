@@ -5,25 +5,24 @@ type Dockerfile struct {
 	// Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent
 	Name string `json:"name"`
 
-	// Mandatory path to source code
-	Source *Source `json:"source"`
+	// path to source code, if empty - source is assumed as the directory having devfile
+	Source *Source `json:"source,omitempty"`
 
 	// Mandatory path to dockerfile
 	DockerfileLocation string `json:"dockerfileLocation"`
 
-	// Mandatory destination to registry to push built image
+	// destination to registry to push built image
 	Destination string `json:"destination,omitempty"`
-	
-	// Mandatory whether rootless/unprivileged builder container is required
+
+	// field indicating whether rootless/unprivileged builder container is required
 	Rootless bool `json:"rootless,omitempty"`
 }
 
-
 //Source within dockerfile component
 type Source struct {
-	// Mandatory path to local source directory folder
-	SourceDir string `json:"sourceDir"`
+	// path to local source directory folder
+	SourceDir string `json:"sourceDir,omitempty"`
 
-	// Mandatory path to source repository hosted locally or on cloud
-	Location string `json:"location"`
+	// path to source repository hosted locally or on cloud
+	Location string `json:"location,omitempty"`
 }
