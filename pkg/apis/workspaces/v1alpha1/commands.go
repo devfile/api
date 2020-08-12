@@ -123,7 +123,7 @@ type ExecCommand struct {
 
 	// +optional
 	// Whatever the command it capable to reload itself when source code changes.
-	// If set to "true" the command won't be restarted and it is expected to handle file changes on its own.
+	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
 	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
