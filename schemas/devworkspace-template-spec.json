@@ -273,9 +273,9 @@
                 "additionalProperties": false
               },
               "hotReloadCapable": {
-                "description": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
               },
               "id": {
                 "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
@@ -1120,9 +1120,9 @@
                           "additionalProperties": false
                         },
                         "hotReloadCapable": {
-                          "description": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                          "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                           "type": "boolean",
-                          "markdownDescription": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                          "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                         },
                         "id": {
                           "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
@@ -2143,9 +2143,9 @@
                     "additionalProperties": false
                   },
                   "hotReloadCapable": {
-                    "description": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                    "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                    "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                   },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
@@ -2987,9 +2987,9 @@
                               "additionalProperties": false
                             },
                             "hotReloadCapable": {
-                              "description": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                              "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                               "type": "boolean",
-                              "markdownDescription": "Whether the command it capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                              "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",

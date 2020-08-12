@@ -271,7 +271,7 @@ spec:
                             - kind
                             type: object
                           hotReloadCapable:
-                            description: "Whether the command it capable to reload
+                            description: "Whether the command is capable to reload
                               itself when source code changes. If set to `true` the
                               command won't be restarted and it is expected to handle
                               file changes on its own. \n Default value is `false`"
@@ -1002,7 +1002,7 @@ spec:
                                       - kind
                                       type: object
                                     hotReloadCapable:
-                                      description: "Whether the command it capable
+                                      description: "Whether the command is capable
                                         to reload itself when source code changes.
                                         If set to `true` the command won't be restarted
                                         and it is expected to handle file changes
@@ -1836,7 +1836,7 @@ spec:
                                 - kind
                                 type: object
                               hotReloadCapable:
-                                description: "Whether the command it capable to reload
+                                description: "Whether the command is capable to reload
                                   itself when source code changes. If set to `true`
                                   the command won't be restarted and it is expected
                                   to handle file changes on its own. \n Default value
@@ -2588,7 +2588,7 @@ spec:
                                           - kind
                                           type: object
                                         hotReloadCapable:
-                                          description: "Whether the command it capable
+                                          description: "Whether the command is capable
                                             to reload itself when source code changes.
                                             If set to `true` the command won't be
                                             restarted and it is expected to handle
