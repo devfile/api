@@ -123,7 +123,7 @@ type ExecCommand struct {
 	Env []EnvVar `json:"env,omitempty"`
 
 	// +optional
-	// Whether the command it capable to reload itself when source code changes.
+	// Whether the command is capable to reload itself when source code changes.
 	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
