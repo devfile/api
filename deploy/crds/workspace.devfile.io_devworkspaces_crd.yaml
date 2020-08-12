@@ -271,11 +271,10 @@ spec:
                             - kind
                             type: object
                           hotReloadCapable:
-                            description: "Whatever the command it capable to reload
-                              itself when source code changes. If set to \"true\"
-                              the command won't be restarted and it is expected to
-                              handle file changes on its own. \n Default value is
-                              `false`"
+                            description: "Whether the command it capable to reload
+                              itself when source code changes. If set to `true` the
+                              command won't be restarted and it is expected to handle
+                              file changes on its own. \n Default value is `false`"
                             type: boolean
                           id:
                             description: Mandatory identifier that allows referencing
@@ -1003,9 +1002,9 @@ spec:
                                       - kind
                                       type: object
                                     hotReloadCapable:
-                                      description: "Whatever the command it capable
+                                      description: "Whether the command it capable
                                         to reload itself when source code changes.
-                                        If set to \"true\" the command won't be restarted
+                                        If set to `true` the command won't be restarted
                                         and it is expected to handle file changes
                                         on its own. \n Default value is `false`"
                                       type: boolean
@@ -1837,8 +1836,8 @@ spec:
                                 - kind
                                 type: object
                               hotReloadCapable:
-                                description: "Whatever the command it capable to reload
-                                  itself when source code changes. If set to \"true\"
+                                description: "Whether the command it capable to reload
+                                  itself when source code changes. If set to `true`
                                   the command won't be restarted and it is expected
                                   to handle file changes on its own. \n Default value
                                   is `false`"
@@ -2589,9 +2588,9 @@ spec:
                                           - kind
                                           type: object
                                         hotReloadCapable:
-                                          description: "Whatever the command it capable
+                                          description: "Whether the command it capable
                                             to reload itself when source code changes.
-                                            If set to \"true\" the command won't be
+                                            If set to `true` the command won't be
                                             restarted and it is expected to handle
                                             file changes on its own. \n Default value
                                             is `false`"
