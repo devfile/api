@@ -5,5 +5,5 @@ components:
       name: "theOnlyPlugin"
       uri: "aCustomLocation"
   - container:
-      name: "newComponent"
       image: "anyValue"
+      name: "newComponent"

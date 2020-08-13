@@ -1,0 +1,15 @@
+parent:
+  uri: "anyParent"
+components:
+  - plugin:
+      name: "theOnlyPlugin"
+      uri: "aCustomLocation"
+events:
+  preStart:
+    - "preStartFromMainContent"
+  preStop:
+    - "preStopFromMainContent"
+  postStart:
+    - "postStartFromMainContent"
+  postStop:
+    - "postStopFromMainContent"

@@ -1,4 +1,4 @@
 components:
   - container:
-      name: "existingInParent"
       image: "aValue"
+      name: "existingInParent"

@@ -1,0 +1,9 @@
+events:
+  preStart:
+    - "preStartFromPlugin"
+  preStop:
+    - "preStopFromPlugin"
+  postStart:
+    - "postStartFromPlugin"
+  postStop:
+    - "postStopFromPlugin"
