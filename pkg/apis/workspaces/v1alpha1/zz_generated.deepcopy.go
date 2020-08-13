@@ -903,11 +903,6 @@ func (in *OverridesBase) DeepCopyInto(out *OverridesBase) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.Events != nil {
-		in, out := &in.Events, &out.Events
-		*out = new(Events)
-		(*in).DeepCopyInto(*out)
-	}
 	return
 }
 

@@ -602,9 +602,9 @@
                   "description": "Volume that should be mounted to a component container",
                   "properties": {
                     "name": {
-                      "description": "The volume mount name is the name of an existing `Volume` component. If no corresponding `Volume` component exist it is implicitly added. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
+                      "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                       "type": "string",
-                      "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If no corresponding `Volume` component exist it is implicitly added. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
+                      "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                     },
                     "path": {
                       "description": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/<name>`.",
@@ -1441,9 +1441,9 @@
                             "description": "Volume that should be mounted to a component container",
                             "properties": {
                               "name": {
-                                "description": "The volume mount name is the name of an existing `Volume` component. If no corresponding `Volume` component exist it is implicitly added. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
+                                "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                                 "type": "string",
-                                "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If no corresponding `Volume` component exist it is implicitly added. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
+                                "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                               },
                               "path": {
                                 "description": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/<name>`.",
@@ -1697,46 +1697,6 @@
                 "type": "array",
                 "markdownDescription": "Overrides of components encapsulated in a plugin. Overriding is done using a strategic merge patch. A plugin cannot override embedded plugin components."
               },
-              "events": {
-                "description": "Overrides of the commands-to-events bindings encapsulated in a parent devfile or a plugin. Each command is referred-to by its name. Overriding is done using a strategic merge patch",
-                "properties": {
-                  "postStart": {
-                    "description": "Names of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "markdownDescription": "Names of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser."
-                  },
-                  "postStop": {
-                    "description": "Names of commands that should be executed after stopping the workspace.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "markdownDescription": "Names of commands that should be executed after stopping the workspace."
-                  },
-                  "preStart": {
-                    "description": "Names of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "markdownDescription": "Names of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD."
-                  },
-                  "preStop": {
-                    "description": "Names of commands that should be executed before stopping the workspace.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "markdownDescription": "Names of commands that should be executed before stopping the workspace."
-                  }
-                },
-                "type": "object",
-                "markdownDescription": "Overrides of the commands-to-events bindings encapsulated in a parent devfile or a plugin. Each command is referred-to by its name. Overriding is done using a strategic merge patch",
-                "additionalProperties": false
-              },
               "id": {
                 "description": "Id in a registry that contains a Devfile yaml file",
                 "type": "string",
@@ -1853,46 +1813,6 @@
       },
       "type": "array",
       "markdownDescription": "Overrides of components encapsulated in a parent devfile. Overriding is done using a strategic merge patch"
-    },
-    "events": {
-      "description": "Overrides of the commands-to-events bindings encapsulated in a parent devfile or a plugin. Each command is referred-to by its name. Overriding is done using a strategic merge patch",
-      "properties": {
-        "postStart": {
-          "description": "Names of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "markdownDescription": "Names of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser."
-        },
-        "postStop": {
-          "description": "Names of commands that should be executed after stopping the workspace.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "markdownDescription": "Names of commands that should be executed after stopping the workspace."
-        },
-        "preStart": {
-          "description": "Names of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "markdownDescription": "Names of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD."
-        },
-        "preStop": {
-          "description": "Names of commands that should be executed before stopping the workspace.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "markdownDescription": "Names of commands that should be executed before stopping the workspace."
-        }
-      },
-      "type": "object",
-      "markdownDescription": "Overrides of the commands-to-events bindings encapsulated in a parent devfile or a plugin. Each command is referred-to by its name. Overriding is done using a strategic merge patch",
-      "additionalProperties": false
     },
     "projects": {
       "description": "Overrides of projects encapsulated in a parent devfile. Overriding is done using a strategic merge patch.",
