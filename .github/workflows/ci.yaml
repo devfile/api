@@ -22,9 +22,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: setup-docker
-      uses: docker-practice/actions-setup-docker@0.0.1
-
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.2
       with:
