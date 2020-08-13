@@ -25,9 +25,6 @@ jobs:
     - name: setup-docker
       uses: docker-practice/actions-setup-docker@0.0.1
 
-    - name: setup git
-      uses: srt32/git-actions@v0.0.3
-  
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.2
       with:
@@ -35,14 +32,10 @@ jobs:
         go-version: 1.13
     
     - name: Check CRD and schema generation
-      run: |
-        ./docker-run.sh ./build.sh
-        if !git diff --exit-code
-        then
-          echo "./docker-run.sh ./build.sh did introduce changes, which should not be  the case."
-          echo "Please run it locally and checkout the results."
-          exit 1
-        fi
+      uses: pkg-src/github-action-git-bash@v1.1
+      with:
+        args: bash -c "./docker-run.sh ./build.sh && if !git diff --exit-code ; then echo './docker-run.sh ./build.sh did introduce changes, which should not be  the case.\nPlease run it locally and checkout the results.'; exit 1; fi"
+
     - name: Run GO tests
       run: go test -v ./...
       
