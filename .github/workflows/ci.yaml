@@ -22,11 +22,17 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - name: setup-docker
+      uses: docker-practice/actions-setup-docker@0.0.1
+
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.2
       with:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.13
+    
+    - name: Generate CRDs and schemas
+      run: docker-run.sh ./build.sh
     
     - name: Run GO tests
       run: go test -v ./...
