@@ -34,7 +34,7 @@ jobs:
     - name: Check CRD and schema generation
       uses: pkg-src/github-action-git-bash@v1.1
       with:
-        args: bash -c "git diff --exit-code || { echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and checkin the results as part of your PR.'; exit 1; }"
+        args: bash -c "git diff --exit-code || { echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'; exit 1; }"
 
     - name: Run GO tests
       run: go test -v ./...
