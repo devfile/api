@@ -3,7 +3,7 @@ package unions
 import (
 	//	"errors"
 	"reflect"
-	workspaces "github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
 	"github.com/mitchellh/reflectwalk"
 )
 

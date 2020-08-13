@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strings"
 
-	workspaces "github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
-	unions "github.com/devfile/kubernetes-api/pkg/utils/unions"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
+	unions "github.com/devfile/api/pkg/utils/unions"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/apimachinery/pkg/util/sets"
 	strategicpatch "k8s.io/apimachinery/pkg/util/strategicpatch"

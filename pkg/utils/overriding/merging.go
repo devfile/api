@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strings"
 
-	workspaces "github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/apimachinery/pkg/util/yaml"

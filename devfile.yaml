@@ -56,7 +56,7 @@ commands:
         component: tools
   - name: Run tests
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/kubernetes-api'
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/api'
         type: exec
         command: go test -v ./...
         component: tools

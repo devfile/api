@@ -1,7 +1,7 @@
 package overriding
 
 import (
-	workspaces "github.com/devfile/kubernetes-api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
 	"github.com/hashicorp/go-multierror"
 	"k8s.io/apimachinery/pkg/util/sets"
 )
