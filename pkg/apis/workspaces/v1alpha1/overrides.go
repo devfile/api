@@ -6,12 +6,6 @@ type OverridesBase struct {
 	// +optional
 	Commands []Command `json:"commands,omitempty" patchStrategy:"merge" patchMergeKey:"id"`
 
-	// Overrides of the commands-to-events bindings encapsulated in a parent devfile or a plugin.
-	// Each command is referred-to by its name.
-	// Overriding is done using a strategic merge patch
-	// +optional
-	Events *Events `json:"events,omitempty"`
-
 	// Not implemented for now
 	// additional directives to drive the strategic merge patch
 	// OverrideDirectives []OverrideDirective `json:"overrideDirectives,omitempty"`
