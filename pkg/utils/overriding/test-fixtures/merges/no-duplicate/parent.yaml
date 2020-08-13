@@ -1,0 +1,4 @@
+components:
+  - container:
+      name: "parentComponent"
+      image: "aValue"

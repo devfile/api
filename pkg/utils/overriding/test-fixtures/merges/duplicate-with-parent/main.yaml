@@ -1,0 +1,6 @@
+parent:
+  uri: "anyParent"
+components:
+  - container:
+      name: "existingInParent"
+      image: "aDifferentValue"
