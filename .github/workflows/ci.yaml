@@ -25,6 +25,9 @@ jobs:
     - name: setup-docker
       uses: docker-practice/actions-setup-docker@0.0.1
 
+    - name: setup git
+      uses: srt32/git-actions@v0.0.3
+  
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.2
       with:
