@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Setup Go environment
+      uses: actions/setup-go@v2.1.2
+      with:
+        # The Go version to download (if necessary) and use. Supports semver spec and ranges.
+        go-version: 1.13
+    
+    - name: Generate CRD and schema
+      run: ./docker-run.sh ./build.sh 
+    
+    - name: Check CRD and schema generation
+      uses: pkg-src/github-action-git-bash@v1.1
+      with:
+        args: bash -c "git diff --exit-code || { echo './docker-run.sh ./build.sh did introduce changes, which should not be  the case.\nPlease run it locally and checkout the results.'; exit 1; }"
+
+    - name: Run GO tests
+      run: go test -v ./...
+      

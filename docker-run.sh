@@ -56,7 +56,7 @@ build() {
 
 run() {
   printf "%bRunning%b $*\n" "${BOLD}" "${NC}"
-  if docker run --user $(id -u):$(id -g) --rm -it -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" ${IMAGE_NAME} -- bash -c "cd \"${WORKDIR}\" && $@"
+  if docker run --user $(id -u):$(id -g) --rm -v "${GIT_ROOT_DIRECTORY}":"${WORKDIR}" ${IMAGE_NAME} -- bash -c "cd \"${WORKDIR}\" && $@"
   then
     printf "Script execution %b[OK]%b\n" "${GREEN}" "${NC}"
   else
