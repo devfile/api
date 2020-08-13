@@ -66,7 +66,9 @@ func ensureNoConflicsWithPlugins(mainContent *keyedDevWorkspaceTemplateSpecConte
 }
 
 func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSpecContent, parentFlattenedContent *keyedDevWorkspaceTemplateSpecContent, pluginFlattenedContents ...*keyedDevWorkspaceTemplateSpecContent) (*keyedDevWorkspaceTemplateSpecContent, error) {
-	allContents := append(pluginFlattenedContents, parentFlattenedContent, mainContent)
+	allContents := []*keyedDevWorkspaceTemplateSpecContent { parentFlattenedContent }
+	allContents = append(allContents, pluginFlattenedContents...)
+	allContents = append(allContents, mainContent)
 	for _, content := range allContents {
 		addKeys(content)
 	}
@@ -80,25 +82,61 @@ func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSp
 	}
 
 	result := keyedDevWorkspaceTemplateSpecContent{
-		Commands:   []keyedCommand{},
-		Projects:   []workspaces.Project{},
-		Components: []keyedComponent{},
 	}
 
-	for _, content := range append(pluginFlattenedContents, parentFlattenedContent, mainContent) {
-		for _, command := range content.Commands {
-			result.Commands = append(result.Commands, command)
-		}
-		for _, component := range content.Components {
-			// We skip the plugins of the main content, since they have been provided by flattened plugin content.
-			if content == mainContent && component.Plugin != nil {
-				continue
+	preStartCommands := sets.String{}
+	postStartCommands := sets.String{}
+	preStopCommands := sets.String{}
+	postStopCommands := sets.String{}
+
+	for _, content := range allContents {
+		if content.Commands != nil && len(content.Commands) > 0 {
+			if result.Commands == nil {
+				result.Commands = []keyedCommand{}
 			}
-			result.Components = append(result.Components, component)
+			for _, command := range content.Commands {
+				result.Commands = append(result.Commands, command)
+			}
 		}
-		for _, project := range content.Projects {
-			result.Projects = append(result.Projects, project)
+	
+		if content.Components != nil && len(content.Components) > 0 {
+			for _, component := range content.Components {
+				// We skip the plugins of the main content, since they have been provided by flattened plugin content.
+				if content == mainContent && component.Plugin != nil {
+					continue
+				}
+				if result.Components == nil {
+					result.Components = []keyedComponent{}
+				}
+				result.Components = append(result.Components, component)
+			}
 		}
+		
+		if content.Projects != nil && len(content.Projects) > 0 {
+			if result.Projects == nil {
+				result.Projects = []workspaces.Project{}
+			}
+			for _, project := range content.Projects {
+				result.Projects = append(result.Projects, project)
+			}
+		}
+
+		if content.Events != nil {
+			if result.Events == nil {
+				result.Events = &workspaces.Events{}
+			}
+			preStartCommands = preStartCommands.Union(sets.NewString(content.Events.PreStart...))
+			postStartCommands = postStartCommands.Union(sets.NewString(content.Events.PostStart...))
+			preStopCommands = preStopCommands.Union(sets.NewString(content.Events.PreStop...))
+			postStopCommands = postStopCommands.Union(sets.NewString(content.Events.PostStop...))
+		}
+	}
+
+	if result.Events != nil {
+		result.Events.PreStart = preStartCommands.List()
+		result.Events.PostStart = postStartCommands.List()
+		result.Events.PreStop = preStopCommands.List()
+		result.Events.PostStop = postStopCommands.List()
 	}
 
 	return &result, nil
