@@ -31,9 +31,15 @@ jobs:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.13
     
-    - name: Generate CRDs and schemas
-      run: ./docker-run.sh ./build.sh
-    
+    - name: Check CRD and schema generation
+      run: |
+        ./docker-run.sh ./build.sh
+        if !git diff --exit-code
+        then
+          echo "./docker-run.sh ./build.sh did introduce changes, which should not be  the case."
+          echo "Please run it locally and checkout the results."
+          exit 1
+        fi
     - name: Run GO tests
       run: go test -v ./...
       
