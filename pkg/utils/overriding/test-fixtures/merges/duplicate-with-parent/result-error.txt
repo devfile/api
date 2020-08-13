@@ -1,0 +1,2 @@
+1 error occurred:
+	* Some Component elements are already defined in parent: existingInParent. If you want to override them, you should do it in the parent scope.

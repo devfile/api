@@ -10,3 +10,12 @@ commands:
           value: "commandToReplaceEnvVarToReplaceNewValue"
         - name:  "commandToReplaceEndVarToAdd"
           value: "commandToReplaceEndVarToAddValue"
+
+
+  - exec:
+      id: "commandToAdd"
+      commandLine: "commandToAddCommandLine"
+components:
+  - volume:
+      name: newVolume
+      

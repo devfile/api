@@ -1,0 +1,4 @@
+components:
+  - container:
+      name: "existingInPlugin"
+      image: "aValue"
