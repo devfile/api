@@ -112,9 +112,9 @@ type ExecCommand struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path path where projects sources are mounted
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).  If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
@@ -124,9 +124,9 @@ type ExecCommand struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path path where projects sources are mounted
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).  If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// +optional
