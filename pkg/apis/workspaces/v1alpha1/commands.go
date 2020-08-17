@@ -121,6 +121,13 @@ type ExecCommand struct {
 	// Optional list of environment variables that have to be set
 	// before running the command
 	Env []EnvVar `json:"env,omitempty"`
+
+	// +optional
+	// Whether the command is capable to reload itself when source code changes.
+	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
+	//
+	// Default value is `false`
+	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommand struct {

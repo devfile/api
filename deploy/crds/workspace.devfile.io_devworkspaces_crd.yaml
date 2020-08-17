@@ -270,6 +270,12 @@ spec:
                             required:
                             - kind
                             type: object
+                          hotReloadCapable:
+                            description: "Whether the command is capable to reload
+                              itself when source code changes. If set to `true` the
+                              command won't be restarted and it is expected to handle
+                              file changes on its own. \n Default value is `false`"
+                            type: boolean
                           id:
                             description: Mandatory identifier that allows referencing
                               this command in composite commands, from a parent, or
@@ -995,6 +1001,13 @@ spec:
                                       required:
                                       - kind
                                       type: object
+                                    hotReloadCapable:
+                                      description: "Whether the command is capable
+                                        to reload itself when source code changes.
+                                        If set to `true` the command won't be restarted
+                                        and it is expected to handle file changes
+                                        on its own. \n Default value is `false`"
+                                      type: boolean
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
@@ -1822,6 +1835,13 @@ spec:
                                 required:
                                 - kind
                                 type: object
+                              hotReloadCapable:
+                                description: "Whether the command is capable to reload
+                                  itself when source code changes. If set to `true`
+                                  the command won't be restarted and it is expected
+                                  to handle file changes on its own. \n Default value
+                                  is `false`"
+                                type: boolean
                               id:
                                 description: Mandatory identifier that allows referencing
                                   this command in composite commands, from a parent,
@@ -2567,6 +2587,14 @@ spec:
                                           required:
                                           - kind
                                           type: object
+                                        hotReloadCapable:
+                                          description: "Whether the command is capable
+                                            to reload itself when source code changes.
+                                            If set to `true` the command won't be
+                                            restarted and it is expected to handle
+                                            file changes on its own. \n Default value
+                                            is `false`"
+                                          type: boolean
                                         id:
                                           description: Mandatory identifier that allows
                                             referencing this command in composite

@@ -204,6 +204,11 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
+              "hotReloadCapable": {
+                "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                "type": "boolean",
+                "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+              },
               "id": {
                 "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string",
@@ -944,6 +949,11 @@
                           "type": "object",
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
+                        },
+                        "hotReloadCapable": {
+                          "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                          "type": "boolean",
+                          "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                         },
                         "id": {
                           "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
@@ -1885,6 +1895,11 @@
                     "markdownDescription": "Defines the group this command is part of",
                     "additionalProperties": false
                   },
+                  "hotReloadCapable": {
+                    "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                    "type": "boolean",
+                    "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                  },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string",
@@ -2622,6 +2637,11 @@
                               "type": "object",
                               "markdownDescription": "Defines the group this command is part of",
                               "additionalProperties": false
+                            },
+                            "hotReloadCapable": {
+                              "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                              "type": "boolean",
+                              "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                             },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
