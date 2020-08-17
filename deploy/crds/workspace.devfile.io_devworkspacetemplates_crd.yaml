@@ -208,7 +208,12 @@ spec:
                           attributes
                         type: object
                       commandLine:
-                        description: The actual command-line string
+                        description: "The actual command-line string \n Special variables
+                          that can be used: \n  - `$PROJECTS_ROOT`: A path path where
+                          projects sources are mounted \n  - `$PROJECT_SOURCE`: A
+                          path to a project source ($PROJECTS_ROOT/<project-name>).
+                          \ If there are multiple projects, this will point to the
+                          directory of the first one."
                         type: string
                       component:
                         description: Describes component to which given action relates
@@ -255,8 +260,12 @@ spec:
                           command to be used in Editor UI menus for example
                         type: string
                       workingDir:
-                        description: Working directory where the command should be
-                          executed
+                        description: "Working directory where the command should be
+                          executed \n Special variables that can be used: \n  - `$PROJECTS_ROOT`:
+                          A path path where projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                          A path to a project source ($PROJECTS_ROOT/<project-name>).
+                          \ If there are multiple projects, this will point to the
+                          directory of the first one."
                         type: string
                     required:
                     - id
@@ -910,7 +919,13 @@ spec:
                                     command attributes
                                   type: object
                                 commandLine:
-                                  description: The actual command-line string
+                                  description: "The actual command-line string \n
+                                    Special variables that can be used: \n  - `$PROJECTS_ROOT`:
+                                    A path path where projects sources are mounted
+                                    \n  - `$PROJECT_SOURCE`: A path to a project source
+                                    ($PROJECTS_ROOT/<project-name>).  If there are
+                                    multiple projects, this will point to the directory
+                                    of the first one."
                                   type: string
                                 component:
                                   description: Describes component to which given
@@ -961,8 +976,13 @@ spec:
                                     for example
                                   type: string
                                 workingDir:
-                                  description: Working directory where the command
-                                    should be executed
+                                  description: "Working directory where the command
+                                    should be executed \n Special variables that can
+                                    be used: \n  - `$PROJECTS_ROOT`: A path path where
+                                    projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                                    A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                    \ If there are multiple projects, this will point
+                                    to the directory of the first one."
                                   type: string
                               required:
                               - id
@@ -1707,7 +1727,12 @@ spec:
                               attributes
                             type: object
                           commandLine:
-                            description: The actual command-line string
+                            description: "The actual command-line string \n Special
+                              variables that can be used: \n  - `$PROJECTS_ROOT`:
+                              A path path where projects sources are mounted \n  -
+                              `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).
+                              \ If there are multiple projects, this will point to
+                              the directory of the first one."
                             type: string
                           component:
                             description: Describes component to which given action
@@ -1755,8 +1780,13 @@ spec:
                               this command to be used in Editor UI menus for example
                             type: string
                           workingDir:
-                            description: Working directory where the command should
-                              be executed
+                            description: "Working directory where the command should
+                              be executed \n Special variables that can be used: \n
+                              \ - `$PROJECTS_ROOT`: A path path where projects sources
+                              are mounted \n  - `$PROJECT_SOURCE`: A path to a project
+                              source ($PROJECTS_ROOT/<project-name>).  If there are
+                              multiple projects, this will point to the directory
+                              of the first one."
                             type: string
                         required:
                         - id
@@ -2430,7 +2460,13 @@ spec:
                                         command attributes
                                       type: object
                                     commandLine:
-                                      description: The actual command-line string
+                                      description: "The actual command-line string
+                                        \n Special variables that can be used: \n
+                                        \ - `$PROJECTS_ROOT`: A path path where projects
+                                        sources are mounted \n  - `$PROJECT_SOURCE`:
+                                        A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                        \ If there are multiple projects, this will
+                                        point to the directory of the first one."
                                       type: string
                                     component:
                                       description: Describes component to which given
@@ -2481,8 +2517,14 @@ spec:
                                         UI menus for example
                                       type: string
                                     workingDir:
-                                      description: Working directory where the command
-                                        should be executed
+                                      description: "Working directory where the command
+                                        should be executed \n Special variables that
+                                        can be used: \n  - `$PROJECTS_ROOT`: A path
+                                        path where projects sources are mounted \n
+                                        \ - `$PROJECT_SOURCE`: A path to a project
+                                        source ($PROJECTS_ROOT/<project-name>).  If
+                                        there are multiple projects, this will point
+                                        to the directory of the first one."
                                       type: string
                                   required:
                                   - id
