@@ -234,10 +234,10 @@ spec:
                           commandLine:
                             description: "The actual command-line string \n Special
                               variables that can be used: \n  - `$PROJECTS_ROOT`:
-                              A path path where projects sources are mounted \n  -
-                              `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).
-                              \ If there are multiple projects, this will point to
-                              the directory of the first one."
+                              A path where projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                              A path to a project source ($PROJECTS_ROOT/<project-name>).
+                              If there are multiple projects, this will point to the
+                              directory of the first one."
                             type: string
                           component:
                             description: Describes component to which given action
@@ -287,9 +287,9 @@ spec:
                           workingDir:
                             description: "Working directory where the command should
                               be executed \n Special variables that can be used: \n
-                              \ - `$PROJECTS_ROOT`: A path path where projects sources
+                              \ - `$PROJECTS_ROOT`: A path where projects sources
                               are mounted \n  - `$PROJECT_SOURCE`: A path to a project
-                              source ($PROJECTS_ROOT/<project-name>).  If there are
+                              source ($PROJECTS_ROOT/<project-name>). If there are
                               multiple projects, this will point to the directory
                               of the first one."
                             type: string
@@ -967,10 +967,10 @@ spec:
                                     commandLine:
                                       description: "The actual command-line string
                                         \n Special variables that can be used: \n
-                                        \ - `$PROJECTS_ROOT`: A path path where projects
+                                        \ - `$PROJECTS_ROOT`: A path where projects
                                         sources are mounted \n  - `$PROJECT_SOURCE`:
                                         A path to a project source ($PROJECTS_ROOT/<project-name>).
-                                        \ If there are multiple projects, this will
+                                        If there are multiple projects, this will
                                         point to the directory of the first one."
                                       type: string
                                     component:
@@ -1025,11 +1025,10 @@ spec:
                                       description: "Working directory where the command
                                         should be executed \n Special variables that
                                         can be used: \n  - `$PROJECTS_ROOT`: A path
-                                        path where projects sources are mounted \n
-                                        \ - `$PROJECT_SOURCE`: A path to a project
-                                        source ($PROJECTS_ROOT/<project-name>).  If
-                                        there are multiple projects, this will point
-                                        to the directory of the first one."
+                                        where projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                                        A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                        If there are multiple projects, this will
+                                        point to the directory of the first one."
                                       type: string
                                   required:
                                   - id
@@ -1806,11 +1805,10 @@ spec:
                               commandLine:
                                 description: "The actual command-line string \n Special
                                   variables that can be used: \n  - `$PROJECTS_ROOT`:
-                                  A path path where projects sources are mounted \n
-                                  \ - `$PROJECT_SOURCE`: A path to a project source
-                                  ($PROJECTS_ROOT/<project-name>).  If there are multiple
-                                  projects, this will point to the directory of the
-                                  first one."
+                                  A path where projects sources are mounted \n  -
+                                  `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                  If there are multiple projects, this will point
+                                  to the directory of the first one."
                                 type: string
                               component:
                                 description: Describes component to which given action
@@ -1863,10 +1861,10 @@ spec:
                               workingDir:
                                 description: "Working directory where the command
                                   should be executed \n Special variables that can
-                                  be used: \n  - `$PROJECTS_ROOT`: A path path where
-                                  projects sources are mounted \n  - `$PROJECT_SOURCE`:
-                                  A path to a project source ($PROJECTS_ROOT/<project-name>).
-                                  \ If there are multiple projects, this will point
+                                  be used: \n  - `$PROJECTS_ROOT`: A path where projects
+                                  sources are mounted \n  - `$PROJECT_SOURCE`: A path
+                                  to a project source ($PROJECTS_ROOT/<project-name>).
+                                  If there are multiple projects, this will point
                                   to the directory of the first one."
                                 type: string
                             required:
@@ -2561,12 +2559,11 @@ spec:
                                         commandLine:
                                           description: "The actual command-line string
                                             \n Special variables that can be used:
-                                            \n  - `$PROJECTS_ROOT`: A path path where
-                                            projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                                            \n  - `$PROJECTS_ROOT`: A path where projects
+                                            sources are mounted \n  - `$PROJECT_SOURCE`:
                                             A path to a project source ($PROJECTS_ROOT/<project-name>).
-                                            \ If there are multiple projects, this
-                                            will point to the directory of the first
-                                            one."
+                                            If there are multiple projects, this will
+                                            point to the directory of the first one."
                                           type: string
                                         component:
                                           description: Describes component to which
@@ -2621,12 +2618,11 @@ spec:
                                           description: "Working directory where the
                                             command should be executed \n Special
                                             variables that can be used: \n  - `$PROJECTS_ROOT`:
-                                            A path path where projects sources are
-                                            mounted \n  - `$PROJECT_SOURCE`: A path
-                                            to a project source ($PROJECTS_ROOT/<project-name>).
-                                            \ If there are multiple projects, this
-                                            will point to the directory of the first
-                                            one."
+                                            A path where projects sources are mounted
+                                            \n  - `$PROJECT_SOURCE`: A path to a project
+                                            source ($PROJECTS_ROOT/<project-name>).
+                                            If there are multiple projects, this will
+                                            point to the directory of the first one."
                                           type: string
                                       required:
                                       - id
