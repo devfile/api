@@ -8,20 +8,20 @@ type EndpointProtocol string
 const (
 	// Endpoint will have `http` traffic, typically on a TCP connection.
 	// It will be automaticaly promoted to `https` when the `secure` field is set to `true`
-	HTTPEndpointProtocol  EndpointProtocol = "http"
+	HTTPEndpointProtocol EndpointProtocol = "http"
 	// Endpoint will have `https` traffic, typically on a TCP connection
-	HTTPSEndpointProtocol  EndpointProtocol = "https"
+	HTTPSEndpointProtocol EndpointProtocol = "https"
 	// Endpoint will have `ws` traffic, typically on a TCP connection
 	// It will be automaticaly promoted to `wss` when the `secure` field is set to `true`
-	WSEndpointProtocol  EndpointProtocol = "ws"
+	WSEndpointProtocol EndpointProtocol = "ws"
 	// Endpoint will have `wss` traffic, typically on a TCP connection
-	WSSEndpointProtocol  EndpointProtocol = "wss"
+	WSSEndpointProtocol EndpointProtocol = "wss"
 	// Endpoint will have traffic on a TCP connection,
 	// without specifying an application protocol
-	TCPEndpointProtocol  EndpointProtocol = "tcp"
+	TCPEndpointProtocol EndpointProtocol = "tcp"
 	// Endpoint will have traffic on an UDP connection,
 	// without specifying an application protocol
-	UDPEndpointProtocol  EndpointProtocol = "udp"
+	UDPEndpointProtocol EndpointProtocol = "udp"
 )
 
 // EndpointExposure describes the way an endpoint is exposed on the network.
@@ -31,7 +31,7 @@ type EndpointExposure string
 
 const (
 	// Endpoint will be exposed on the public network, typically through
-	// a K8S ingress or an OpenShift route 
+	// a K8S ingress or an OpenShift route
 	PublicEndpointExposure EndpointExposure = "public"
 	// Endpoint will be exposed internally outside of the main workspace POD,
 	// typically by K8S services, to be consumed by other elements running
@@ -82,14 +82,14 @@ type Endpoint struct {
 	//
 	// Default value is `http`
 	// +optional
-	Protocol string `json:"protocol,omitmepty"`
+	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
 	// +optional
 	Secure bool `json:"secure"`
 
-	// Path of the endpoint URL  
+	// Path of the endpoint URL
 	// +optional
 	Path string `json:"path,omitempty"`
 
@@ -103,4 +103,3 @@ type Endpoint struct {
 	// +optional
 	Attributes map[string]string `json:"attributes,omitempty"`
 }
-
