@@ -215,9 +215,9 @@
                 "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
               },
               "workingDir": {
-                "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
+                "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                 "type": "string",
-                "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one."
+                "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
               }
             },
             "required": [
@@ -956,9 +956,9 @@
                           "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                         },
                         "workingDir": {
-                          "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
+                          "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                           "type": "string",
-                          "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one."
+                          "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
                         }
                       },
                       "required": [
@@ -1896,9 +1896,9 @@
                     "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   },
                   "workingDir": {
-                    "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
+                    "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                     "type": "string",
-                    "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one."
+                    "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
                   }
                 },
                 "required": [
@@ -2634,9 +2634,9 @@
                               "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             },
                             "workingDir": {
-                              "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
+                              "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                               "type": "string",
-                              "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one."
+                              "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
                             }
                           },
                           "required": [

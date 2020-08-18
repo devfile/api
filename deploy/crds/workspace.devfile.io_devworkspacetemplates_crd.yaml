@@ -261,9 +261,9 @@ spec:
                         type: string
                       workingDir:
                         description: "Working directory where the command should be
-                          executed \n Special variables that can be used: \n  - `$PROJECTS_ROOT`:
-                          A path where projects sources are mounted \n  - `$PROJECT_SOURCE`:
-                          A path to a project source ($PROJECTS_ROOT/<project-name>).
+                          executed \n Special variables that can be used: \n  - `${PROJECTS_ROOT}`:
+                          A path where projects sources are mounted \n  - `${PROJECT_SOURCE}`:
+                          A path to a project source (${PROJECTS_ROOT}/<project-name>).
                           If there are multiple projects, this will point to the directory
                           of the first one."
                         type: string
@@ -978,9 +978,9 @@ spec:
                                 workingDir:
                                   description: "Working directory where the command
                                     should be executed \n Special variables that can
-                                    be used: \n  - `$PROJECTS_ROOT`: A path where
-                                    projects sources are mounted \n  - `$PROJECT_SOURCE`:
-                                    A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                    be used: \n  - `${PROJECTS_ROOT}`: A path where
+                                    projects sources are mounted \n  - `${PROJECT_SOURCE}`:
+                                    A path to a project source (${PROJECTS_ROOT}/<project-name>).
                                     If there are multiple projects, this will point
                                     to the directory of the first one."
                                   type: string
@@ -1782,9 +1782,9 @@ spec:
                           workingDir:
                             description: "Working directory where the command should
                               be executed \n Special variables that can be used: \n
-                              \ - `$PROJECTS_ROOT`: A path where projects sources
-                              are mounted \n  - `$PROJECT_SOURCE`: A path to a project
-                              source ($PROJECTS_ROOT/<project-name>). If there are
+                              \ - `${PROJECTS_ROOT}`: A path where projects sources
+                              are mounted \n  - `${PROJECT_SOURCE}`: A path to a project
+                              source (${PROJECTS_ROOT}/<project-name>). If there are
                               multiple projects, this will point to the directory
                               of the first one."
                             type: string
@@ -2519,9 +2519,9 @@ spec:
                                     workingDir:
                                       description: "Working directory where the command
                                         should be executed \n Special variables that
-                                        can be used: \n  - `$PROJECTS_ROOT`: A path
-                                        where projects sources are mounted \n  - `$PROJECT_SOURCE`:
-                                        A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                        can be used: \n  - `${PROJECTS_ROOT}`: A path
+                                        where projects sources are mounted \n  - `${PROJECT_SOURCE}`:
+                                        A path to a project source (${PROJECTS_ROOT}/<project-name>).
                                         If there are multiple projects, this will
                                         point to the directory of the first one."
                                       type: string
