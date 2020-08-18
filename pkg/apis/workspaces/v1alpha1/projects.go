@@ -67,7 +67,7 @@ type CommonProjectSource struct {
 
 	// Part of project to populate in the working directory.
 	// +optional
-	SparseCheckoutDir string `json:"sparseCheckoutDir,omitmepty"`
+	SparseCheckoutDir string `json:"sparseCheckoutDir,omitempty"`
 }
 
 type CustomProjectSource struct {
