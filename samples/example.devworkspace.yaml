@@ -9,8 +9,10 @@ spec:
     projects:
       - name: "devworkspace-spec"
         git:
-            location: "https://github.com/che-incubator/devworkspace-api"
-            branch: "master"
+          remotes:
+            origin: "https://github.com/che-incubator/devworkspace-api"
+          checkoutFrom:
+            revision: "master"
     components:
       - plugin:
           id: eclipse/che-theia/latest

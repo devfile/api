@@ -4,7 +4,8 @@ metadata:
 projects:
   - name: project    
     git:
-      location: "https://github.com/che-samples/web-nodejs-sample.git"
+      remotes:
+        origin: "https://github.com/che-samples/web-nodejs-sample.git"
 components:
   - plugin:
       id: eclipse/che-theia/7.1.0

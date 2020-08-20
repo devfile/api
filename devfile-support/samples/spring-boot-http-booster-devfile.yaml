@@ -5,8 +5,10 @@ metadata:
 projects:
   - name: spring-boot-http-booster
     git:
-      location: https://github.com/snowdrop/spring-boot-http-booster
-      branch: master
+      remotes:
+        origin: https://github.com/snowdrop/spring-boot-http-booster
+      checkoutFrom:
+        revision: master
 components:
   - plugin:
       id: redhat/java8/latest

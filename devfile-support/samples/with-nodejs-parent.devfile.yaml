@@ -6,7 +6,8 @@ parent:
   projects:
     - name: example
       git:
-          branch: 'mybranch'
+        checkoutFrom:
+          revision: 'mybranch'
 commands:
   - exec:
       id: sayHello

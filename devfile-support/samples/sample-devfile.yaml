@@ -4,8 +4,11 @@ metadata:
 projects:
   - name: "my-project"
     git:
-      location: "https://github.com/che-incubator/devworkspace-api"
-      branch: "master"
+      remotes:
+        origin: "https://github.com/devfile/api"
+      checkoutFrom:
+        revision: "master"
+        remote: origin
 components:
   - plugin:
       id: eclipse/che-theia/latest
