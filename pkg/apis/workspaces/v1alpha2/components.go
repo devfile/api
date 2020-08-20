@@ -21,9 +21,15 @@ const (
 type BaseComponent struct {
 }
 
-// +k8s:openapi-gen=true
-// +union
 type Component struct {
+	// Mandatory name that allows referencing the Volume component
+	// in Container volume mounts or inside a parent
+	Name           string `json:"name"`
+	ComponentUnion `json:",inline"`
+}
+
+// +union
+type ComponentUnion struct {
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -70,10 +76,6 @@ type Component struct {
 }
 
 type CustomComponent struct {
-	// Mandatory name that allows referencing the component
-	// in commands, or inside a parent
-	Name string `json:"name"`
-
 	// Class of component that the associated implementation controller
 	// should use to process this command with the appropriate logic
 	ComponentClass string `json:"componentClass"`

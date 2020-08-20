@@ -60,8 +60,13 @@ type LabeledCommand struct {
 }
 
 // +k8s:openapi-gen=true
-// +union
 type Command struct {
+	LabeledCommand `json:",inline"`
+	CommandsUnion  `json:",inline"`
+}
+
+// +union
+type CommandsUnion struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
@@ -106,8 +111,6 @@ type Command struct {
 }
 
 type ExecCommand struct {
-	LabeledCommand `json:",inline"`
-
 	// The actual command-line string
 	//
 	// Special variables that can be used:
@@ -143,15 +146,11 @@ type ExecCommand struct {
 }
 
 type ApplyCommand struct {
-	LabeledCommand `json:",inline"`
-
 	// Describes component that will be applied
 	Component string `json:"component,omitempty"`
 }
 
 type CompositeCommand struct {
-	LabeledCommand `json:",inline"`
-
 	// The commands that comprise this composite command
 	Commands []string `json:"commands,omitempty" patchStrategy:"replace"`
 
@@ -191,12 +190,10 @@ type VscodeConfigurationCommandLocation struct {
 }
 
 type VscodeConfigurationCommand struct {
-	BaseCommand                        `json:",inline"`
 	VscodeConfigurationCommandLocation `json:",inline"`
 }
 
 type CustomCommand struct {
-	LabeledCommand `json:",inline"`
 
 	// Class of command that the associated implementation component
 	// should use to process this command with the appropriate logic
