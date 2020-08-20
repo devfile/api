@@ -5,8 +5,8 @@ metadata:
 projects:
   - name: "devworkspace-spec"
     git:
-        location: "https://github.com/devfile/api"
-        branch: "master"
+      remotes:
+        origin: "https://github.com/devfile/api"
 commands:
   - exec:
       id: buildSchema
