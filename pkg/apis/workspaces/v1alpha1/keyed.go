@@ -50,10 +50,7 @@ func (union Component) Key() (string, error) {
 			return nil
 		},
 	})
-	if err != nil {
-		return key, err
-	}
-	return key, nil
+	return key, err
 }
 
 func (union PluginComponentsOverride) Key() (string, error) {
@@ -76,10 +73,7 @@ func (union PluginComponentsOverride) Key() (string, error) {
 			return nil
 		},
 	})
-	if err != nil {
-		return key, err
-	}
-	return key, nil
+	return key, err
 }
 
 func (keyed Command) Key() (string, error) {
@@ -110,8 +104,5 @@ func (keyed Command) Key() (string, error) {
 			return nil
 		},
 	})
-	if err != nil {
-		return key, err
-	}
-	return key, nil
+	return key, err
 }

@@ -1,26 +1,25 @@
 package v1alpha1
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
 	original := ProjectSource{
 		Git: &GitProjectSource{},
 	}
+	expected := ProjectSource{
+		Git:        &GitProjectSource{},
+		SourceType: "Git",
+	}
 
 	err := original.Normalize()
-	assert.Equal(t,
-		nil,
-		err,
-		"The two values should be the same.")
+	assert.NoError(t, err)
 
 	assert.Equal(t,
-		ProjectSource{
-			Git:        &GitProjectSource{},
-			SourceType: "Git",
-		},
+		expected,
 		original,
 		"The two values should be the same.")
 }
@@ -31,18 +30,16 @@ func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 		Zip:        &ZipProjectSource{},
 		SourceType: "Git",
 	}
+	expected := ProjectSource{
+		Git:        &GitProjectSource{},
+		SourceType: "Git",
+	}
 
 	err := original.Normalize()
-	assert.Equal(t,
-		nil,
-		err,
-		"The two values should be the same.")
+	assert.NoError(t, err)
 
 	assert.Equal(t,
-		ProjectSource{
-			Git:        &GitProjectSource{},
-			SourceType: "Git",
-		},
+		expected,
 		original,
 		"The two values should be the same.")
 }
@@ -52,13 +49,14 @@ func TestSimplifyingUnion(t *testing.T) {
 		Git:        &GitProjectSource{},
 		SourceType: "Git",
 	}
+	expected := ProjectSource{
+		Git: &GitProjectSource{},
+	}
 
 	original.Simplify()
 
 	assert.Equal(t,
-		ProjectSource{
-			Git: &GitProjectSource{},
-		},
+		expected,
 		original,
 		"The two values should be the same.")
 }

@@ -18,25 +18,23 @@ func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
 			},
 		},
 	}
-
-	err := Normalize(original)
-	assert.Equal(t,
-		nil,
-		err,
-		"The two values should be the same.")
-
-	assert.Equal(t,
-		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project{
-				{
-					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource{
-						Git:        &workspaces.GitProjectSource{},
-						SourceType: "Git",
-					},
+	expected := workspaces.DevWorkspaceTemplateSpecContent{
+		Projects: []workspaces.Project{
+			{
+				Name: "MyProject",
+				ProjectSource: workspaces.ProjectSource{
+					Git:        &workspaces.GitProjectSource{},
+					SourceType: "Git",
 				},
 			},
 		},
+	}
+
+	err := Normalize(original)
+	assert.NoError(t, err)
+
+	assert.Equal(t,
+		expected,
 		original,
 		"The two values should be the same.")
 }
@@ -54,25 +52,23 @@ func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 			},
 		},
 	}
-
-	err := Normalize(original)
-	assert.Equal(t,
-		nil,
-		err,
-		"The two values should be the same.")
-
-	assert.Equal(t,
-		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project{
-				{
-					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource{
-						Git:        &workspaces.GitProjectSource{},
-						SourceType: "Git",
-					},
+	expected := workspaces.DevWorkspaceTemplateSpecContent{
+		Projects: []workspaces.Project{
+			{
+				Name: "MyProject",
+				ProjectSource: workspaces.ProjectSource{
+					Git:        &workspaces.GitProjectSource{},
+					SourceType: "Git",
 				},
 			},
 		},
+	}
+
+	err := Normalize(original)
+	assert.NoError(t, err)
+
+	assert.Equal(t,
+		expected,
 		original,
 		"The two values should be the same.")
 }
@@ -89,20 +85,21 @@ func TestSimplifyingUnion(t *testing.T) {
 			},
 		},
 	}
+	expected := workspaces.DevWorkspaceTemplateSpecContent{
+		Projects: []workspaces.Project{
+			{
+				Name: "MyProject",
+				ProjectSource: workspaces.ProjectSource{
+					Git: &workspaces.GitProjectSource{},
+				},
+			},
+		},
+	}
 
 	Simplify(original)
 
 	assert.Equal(t,
-		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project{
-				{
-					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource{
-						Git: &workspaces.GitProjectSource{},
-					},
-				},
-			},
-		},
+		expected,
 		original,
 		"The two values should be the same.")
 }

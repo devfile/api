@@ -115,7 +115,9 @@ func getProjectKeySets(keyedSpecs ...*keyedDevWorkspaceTemplateSpecContent) []se
 	return keySets
 }
 
-func checkKeys(doCheck func(elementType string, keysSets []sets.String) []error, keyedSpecs ...*keyedDevWorkspaceTemplateSpecContent) error {
+type checkFn func(elementType string, keysSets []sets.String) []error
+
+func checkKeys(doCheck checkFn, keyedSpecs ...*keyedDevWorkspaceTemplateSpecContent) error {
 	var errors *multierror.Error = nil
 
 	for _, test := range []struct {

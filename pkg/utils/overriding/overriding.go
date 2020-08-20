@@ -1,8 +1,7 @@
 package overriding
 
 import (
-	//	"errors"
-	"errors"
+	"fmt"
 	"strings"
 
 	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
@@ -13,17 +12,16 @@ import (
 	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
-func ensureOnlyExistingElementsAreOverriden(keyedSpec *keyedDevWorkspaceTemplateSpecContent, keyedOverlay *keyedDevWorkspaceTemplateSpecContent) error {
+func ensureOnlyExistingElementsAreOverridden(keyedSpec *keyedDevWorkspaceTemplateSpecContent, keyedOverlay *keyedDevWorkspaceTemplateSpecContent) error {
 	return checkKeys(func(elementType string, keysSets []sets.String) []error {
 		specKeys := keysSets[0]
 		overlayKeys := keysSets[1]
 		newElementsInOverlay := overlayKeys.Difference(specKeys)
 		if newElementsInOverlay.Len() > 0 {
-			return []error{errors.New("Some " +
-				elementType +
-				" elements do not override any existing element: " +
-				strings.Join(newElementsInOverlay.List(), ", ") +
-				". They should be defined in the main body, as new elements, not in the overriding section")}
+			return []error{fmt.Errorf("Some %s elements do not override any existing element: %s. "+
+				"They should be defined in the main body, as new elements, not in the overriding section",
+				elementType,
+				strings.Join(newElementsInOverlay.List(), ", "))}
 		}
 		return []error{}
 	},
@@ -64,7 +62,7 @@ func overrideKeyedDevWorkspaceTemplateSpec(keyedOriginal *keyedDevWorkspaceTempl
 		return nil, err
 	}
 
-	if err := ensureOnlyExistingElementsAreOverriden(keyedOriginal, keyedPatch); err != nil {
+	if err := ensureOnlyExistingElementsAreOverridden(keyedOriginal, keyedPatch); err != nil {
 		return nil, err
 	}
 
@@ -96,13 +94,13 @@ func overrideKeyedDevWorkspaceTemplateSpec(keyedOriginal *keyedDevWorkspaceTempl
 }
 
 // OverrideDevWorkspaceTemplateSpecBytes implements the overriding logic for parent devfiles or plugins.
-// On an Json or Yaml document that contains the core content of the devfile (without the `apiVersion` and `metadata`),
+// On a json or yaml document that contains the core content of the devfile (without the `apiVersion` and `metadata`),
 // it allows applying a `patch` which is a document fragment of the same schema.
 //
 // The Overriding logic is implemented according to strategic merge patch rules, as defined here:
 // https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#background
 //
-// The result is a transformed `DevfileWorkspaceTemplateSpec` object that can be serialized back to Yaml or Json.
+// The result is a transformed `DevfileWorkspaceTemplateSpec` object that can be serialized back to yaml or json.
 func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []byte) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
 	originalJson, err := yaml.ToJSON(originalBytes)
 	if err != nil {
