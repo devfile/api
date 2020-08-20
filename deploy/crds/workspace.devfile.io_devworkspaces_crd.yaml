@@ -3281,41 +3281,65 @@ spec:
                           git:
                             description: Project's Git source
                             properties:
-                              branch:
-                                description: The branch to check
-                                type: string
-                              location:
-                                description: Project's source location address. Should
-                                  be URL for git and github located projects, or;
-                                  file:// for zip
-                                type: string
+                              checkoutFrom:
+                                description: Defines from what the project should
+                                  be checked out. Required if there are more than
+                                  one remote configured
+                                properties:
+                                  remote:
+                                    description: The remote name should be used as
+                                      init. Required if there are more than one remote
+                                      configured
+                                    type: string
+                                  revision:
+                                    description: The revision to checkout from. Should
+                                      be branch name, tag or commit id. Default branch
+                                      is used if missing or specified revision is
+                                      not found.
+                                    type: string
+                                type: object
+                              remotes:
+                                additionalProperties:
+                                  type: string
+                                description: The remotes map which should be initialized
+                                  in the git project. Must have at least one remote
+                                  configured
+                                type: object
                               sparseCheckoutDir:
                                 description: Part of project to populate in the working
                                   directory.
-                                type: string
-                              startPoint:
-                                description: The tag or commit id to reset the checked
-                                  out branch to
                                 type: string
                             type: object
                           github:
                             description: Project's GitHub source
                             properties:
-                              branch:
-                                description: The branch to check
-                                type: string
-                              location:
-                                description: Project's source location address. Should
-                                  be URL for git and github located projects, or;
-                                  file:// for zip
-                                type: string
+                              checkoutFrom:
+                                description: Defines from what the project should
+                                  be checked out. Required if there are more than
+                                  one remote configured
+                                properties:
+                                  remote:
+                                    description: The remote name should be used as
+                                      init. Required if there are more than one remote
+                                      configured
+                                    type: string
+                                  revision:
+                                    description: The revision to checkout from. Should
+                                      be branch name, tag or commit id. Default branch
+                                      is used if missing or specified revision is
+                                      not found.
+                                    type: string
+                                type: object
+                              remotes:
+                                additionalProperties:
+                                  type: string
+                                description: The remotes map which should be initialized
+                                  in the git project. Must have at least one remote
+                                  configured
+                                type: object
                               sparseCheckoutDir:
                                 description: Part of project to populate in the working
                                   directory.
-                                type: string
-                              startPoint:
-                                description: The tag or commit id to reset the checked
-                                  out branch to
                                 type: string
                             type: object
                           name:
@@ -3333,9 +3357,8 @@ spec:
                             description: Project's Zip source
                             properties:
                               location:
-                                description: Project's source location address. Should
-                                  be URL for git and github located projects, or;
-                                  file:// for zip
+                                description: Zip project's source location address.
+                                  Should be file path of the archive, e.g. file://$FILE_PATH
                                 type: string
                               sparseCheckoutDir:
                                 description: Part of project to populate in the working
@@ -3381,41 +3404,59 @@ spec:
                       git:
                         description: Project's Git source
                         properties:
-                          branch:
-                            description: The branch to check
-                            type: string
-                          location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
-                            type: string
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
                               directory.
-                            type: string
-                          startPoint:
-                            description: The tag or commit id to reset the checked
-                              out branch to
                             type: string
                         type: object
                       github:
                         description: Project's GitHub source
                         properties:
-                          branch:
-                            description: The branch to check
-                            type: string
-                          location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
-                            type: string
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
                               directory.
-                            type: string
-                          startPoint:
-                            description: The tag or commit id to reset the checked
-                              out branch to
                             type: string
                         type: object
                       name:
@@ -3433,9 +3474,8 @@ spec:
                         description: Project's Zip source
                         properties:
                           location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
+                            description: Zip project's source location address. Should
+                              be file path of the archive, e.g. file://$FILE_PATH
                             type: string
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
@@ -3478,41 +3518,59 @@ spec:
                       git:
                         description: Project's Git source
                         properties:
-                          branch:
-                            description: The branch to check
-                            type: string
-                          location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
-                            type: string
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
                               directory.
-                            type: string
-                          startPoint:
-                            description: The tag or commit id to reset the checked
-                              out branch to
                             type: string
                         type: object
                       github:
                         description: Project's GitHub source
                         properties:
-                          branch:
-                            description: The branch to check
-                            type: string
-                          location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
-                            type: string
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
                               directory.
-                            type: string
-                          startPoint:
-                            description: The tag or commit id to reset the checked
-                              out branch to
                             type: string
                         type: object
                       name:
@@ -3530,9 +3588,8 @@ spec:
                         description: Project's Zip source
                         properties:
                           location:
-                            description: Project's source location address. Should
-                              be URL for git and github located projects, or; file://
-                              for zip
+                            description: Zip project's source location address. Should
+                              be file path of the archive, e.g. file://$FILE_PATH
                             type: string
                           sparseCheckoutDir:
                             description: Part of project to populate in the working
