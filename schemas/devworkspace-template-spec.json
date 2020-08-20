@@ -3749,25 +3749,36 @@
               "git": {
                 "description": "Project's Git source",
                 "properties": {
-                  "branch": {
-                    "description": "The branch to check",
-                    "type": "string",
-                    "markdownDescription": "The branch to check"
+                  "checkoutFrom": {
+                    "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                    "properties": {
+                      "remote": {
+                        "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                        "type": "string",
+                        "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                      },
+                      "revision": {
+                        "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                        "type": "string",
+                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                      }
+                    },
+                    "type": "object",
+                    "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                    "additionalProperties": false
                   },
-                  "location": {
-                    "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                    "type": "string",
-                    "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+                  "remotes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                    "type": "object",
+                    "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
                   },
                   "sparseCheckoutDir": {
                     "description": "Part of project to populate in the working directory.",
                     "type": "string",
                     "markdownDescription": "Part of project to populate in the working directory."
-                  },
-                  "startPoint": {
-                    "description": "The tag or commit id to reset the checked out branch to",
-                    "type": "string",
-                    "markdownDescription": "The tag or commit id to reset the checked out branch to"
                   }
                 },
                 "type": "object",
@@ -3777,25 +3788,36 @@
               "github": {
                 "description": "Project's GitHub source",
                 "properties": {
-                  "branch": {
-                    "description": "The branch to check",
-                    "type": "string",
-                    "markdownDescription": "The branch to check"
+                  "checkoutFrom": {
+                    "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                    "properties": {
+                      "remote": {
+                        "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                        "type": "string",
+                        "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                      },
+                      "revision": {
+                        "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                        "type": "string",
+                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                      }
+                    },
+                    "type": "object",
+                    "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                    "additionalProperties": false
                   },
-                  "location": {
-                    "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                    "type": "string",
-                    "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+                  "remotes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                    "type": "object",
+                    "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
                   },
                   "sparseCheckoutDir": {
                     "description": "Part of project to populate in the working directory.",
                     "type": "string",
                     "markdownDescription": "Part of project to populate in the working directory."
-                  },
-                  "startPoint": {
-                    "description": "The tag or commit id to reset the checked out branch to",
-                    "type": "string",
-                    "markdownDescription": "The tag or commit id to reset the checked out branch to"
                   }
                 },
                 "type": "object",
@@ -3811,9 +3833,9 @@
                 "description": "Project's Zip source",
                 "properties": {
                   "location": {
-                    "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                    "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                     "type": "string",
-                    "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+                    "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
                   },
                   "sparseCheckoutDir": {
                     "description": "Part of project to populate in the working directory.",
@@ -3917,25 +3939,36 @@
           "git": {
             "description": "Project's Git source",
             "properties": {
-              "branch": {
-                "description": "The branch to check",
-                "type": "string",
-                "markdownDescription": "The branch to check"
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
               },
-              "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
                 "type": "string",
                 "markdownDescription": "Part of project to populate in the working directory."
-              },
-              "startPoint": {
-                "description": "The tag or commit id to reset the checked out branch to",
-                "type": "string",
-                "markdownDescription": "The tag or commit id to reset the checked out branch to"
               }
             },
             "type": "object",
@@ -3945,25 +3978,36 @@
           "github": {
             "description": "Project's GitHub source",
             "properties": {
-              "branch": {
-                "description": "The branch to check",
-                "type": "string",
-                "markdownDescription": "The branch to check"
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
               },
-              "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
                 "type": "string",
                 "markdownDescription": "Part of project to populate in the working directory."
-              },
-              "startPoint": {
-                "description": "The tag or commit id to reset the checked out branch to",
-                "type": "string",
-                "markdownDescription": "The tag or commit id to reset the checked out branch to"
               }
             },
             "type": "object",
@@ -3979,9 +4023,9 @@
             "description": "Project's Zip source",
             "properties": {
               "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                 "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+                "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
@@ -4060,25 +4104,36 @@
           "git": {
             "description": "Project's Git source",
             "properties": {
-              "branch": {
-                "description": "The branch to check",
-                "type": "string",
-                "markdownDescription": "The branch to check"
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
               },
-              "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
                 "type": "string",
                 "markdownDescription": "Part of project to populate in the working directory."
-              },
-              "startPoint": {
-                "description": "The tag or commit id to reset the checked out branch to",
-                "type": "string",
-                "markdownDescription": "The tag or commit id to reset the checked out branch to"
               }
             },
             "type": "object",
@@ -4088,25 +4143,36 @@
           "github": {
             "description": "Project's GitHub source",
             "properties": {
-              "branch": {
-                "description": "The branch to check",
-                "type": "string",
-                "markdownDescription": "The branch to check"
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
               },
-              "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
-                "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
                 "type": "string",
                 "markdownDescription": "Part of project to populate in the working directory."
-              },
-              "startPoint": {
-                "description": "The tag or commit id to reset the checked out branch to",
-                "type": "string",
-                "markdownDescription": "The tag or commit id to reset the checked out branch to"
               }
             },
             "type": "object",
@@ -4122,9 +4188,9 @@
             "description": "Project's Zip source",
             "properties": {
               "location": {
-                "description": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip",
+                "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                 "type": "string",
-                "markdownDescription": "Project's source location address. Should be URL for git and github located projects, or; file:// for zip"
+                "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
               },
               "sparseCheckoutDir": {
                 "description": "Part of project to populate in the working directory.",
