@@ -115,4 +115,3 @@ func (keyed Command) Key() (string, error) {
 	}
 	return key, nil
 }
-

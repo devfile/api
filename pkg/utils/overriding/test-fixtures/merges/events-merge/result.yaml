@@ -23,7 +23,7 @@ events:
 # in parent, plugins and devfile main content. 
 #
 # The command Ids in each event type are unordered sets.
-# Only event types are ordered, by no guaranty if provided that
+# Only event types are ordered; no guarantee is provided that
 # Commands inside an event type will be executed in the order
 # they appear in the list.
 #

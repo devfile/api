@@ -38,7 +38,7 @@ func overrideKeyedDevWorkspaceTemplateSpec(keyedOriginal *keyedDevWorkspaceTempl
 		return nil, err
 	}
 
-	if err:= unions.Normalize(&keyedOriginal); err != nil {
+	if err := unions.Normalize(&keyedOriginal); err != nil {
 		return nil, err
 	}
 	if err := unions.Normalize(&keyedPatch); err != nil {

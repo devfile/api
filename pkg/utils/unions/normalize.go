@@ -2,13 +2,14 @@ package unions
 
 import (
 	//	"errors"
-	"reflect"
 	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
 	"github.com/mitchellh/reflectwalk"
+	"reflect"
 )
 
 type normalizer struct {
 }
+
 func (n *normalizer) Struct(s reflect.Value) error {
 	if s.CanAddr() {
 		addr := s.Addr()
@@ -27,6 +28,7 @@ func (n *normalizer) StructField(reflect.StructField, reflect.Value) error {
 
 type simplifier struct {
 }
+
 func (n *simplifier) Struct(s reflect.Value) error {
 	if s.CanAddr() {
 		addr := s.Addr()
@@ -60,4 +62,3 @@ func Normalize(tree interface{}) error {
 func Simplify(tree interface{}) error {
 	return reflectwalk.Walk(tree, &simplifier{})
 }
-

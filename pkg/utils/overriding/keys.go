@@ -6,7 +6,6 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-
 type keyedCommand struct {
 	Id string `json:"id,omitempty"`
 

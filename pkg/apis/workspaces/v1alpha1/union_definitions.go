@@ -25,7 +25,9 @@ type ComponentVisitor struct {
 	Openshift  func(*OpenshiftComponent) error
 	Custom     func(*CustomComponent) error
 }
+
 var componentVisitorType reflect.Type = reflect.TypeOf(ComponentVisitor{})
+
 func (union Component) Visit(visitor ComponentVisitor) error {
 	return visitUnion(union, visitor)
 }
@@ -39,7 +41,6 @@ func (union *Component) Simplify() {
 	simplifyUnion(union, componentVisitorType)
 }
 
-
 // +k8s:deepcopy-gen=false
 type PluginComponentsOverrideVisitor struct {
 	Container  func(*ContainerComponent) error
@@ -47,7 +48,9 @@ type PluginComponentsOverrideVisitor struct {
 	Kubernetes func(*KubernetesComponent) error
 	Openshift  func(*OpenshiftComponent) error
 }
+
 var pluginComponentsOverrideVisitorType reflect.Type = reflect.TypeOf(PluginComponentsOverrideVisitor{})
+
 func (union PluginComponentsOverride) Visit(visitor PluginComponentsOverrideVisitor) error {
 	return visitUnion(union, visitor)
 }
@@ -61,7 +64,6 @@ func (union *PluginComponentsOverride) Simplify() {
 	simplifyUnion(union, pluginComponentsOverrideVisitorType)
 }
 
-
 // +k8s:deepcopy-gen=false
 type CommandVisitor struct {
 	Apply        func(*ApplyCommand) error
@@ -71,7 +73,9 @@ type CommandVisitor struct {
 	Composite    func(*CompositeCommand) error
 	Custom       func(*CustomCommand) error
 }
+
 var commandVisitorType reflect.Type = reflect.TypeOf(CommandVisitor{})
+
 func (union Command) Visit(visitor CommandVisitor) error {
 	return visitUnion(union, visitor)
 }
@@ -85,14 +89,15 @@ func (union *Command) Simplify() {
 	simplifyUnion(union, commandVisitorType)
 }
 
-
 // +k8s:deepcopy-gen=false
 type ImportReferenceUnionVisitor struct {
 	Uri        func(string) error
 	Id         func(string) error
 	Kubernetes func(*KubernetesCustomResourceImportReference) error
 }
+
 var importReferenceUnionVisitorType reflect.Type = reflect.TypeOf(ImportReferenceUnionVisitor{})
+
 func (union ImportReferenceUnion) Visit(visitor ImportReferenceUnionVisitor) error {
 	return visitUnion(union, visitor)
 }
@@ -106,14 +111,14 @@ func (union *ImportReferenceUnion) Simplify() {
 	simplifyUnion(union, importReferenceUnionVisitorType)
 }
 
-
-
 // +k8s:deepcopy-gen=false
 type K8sLikeComponentLocationVisitor struct {
 	Uri     func(string) error
 	Inlined func(string) error
 }
+
 var k8sLikeComponentLocationVisitorType reflect.Type = reflect.TypeOf(K8sLikeComponentLocationVisitor{})
+
 func (union K8sLikeComponentLocation) Visit(visitor K8sLikeComponentLocationVisitor) error {
 	return visitUnion(union, visitor)
 }
@@ -132,7 +137,9 @@ type VscodeConfigurationCommandLocationVisitor struct {
 	Uri     func(string) error
 	Inlined func(string) error
 }
+
 var vscodeConfigurationCommandLocationVisitorType reflect.Type = reflect.TypeOf(VscodeConfigurationCommandLocationVisitor{})
+
 func (union VscodeConfigurationCommandLocation) Visit(visitor VscodeConfigurationCommandLocation) error {
 	return visitUnion(union, visitor)
 }
@@ -153,7 +160,9 @@ type ProjectSourceVisitor struct {
 	Zip    func(*ZipProjectSource) error
 	Custom func(*CustomProjectSource) error
 }
+
 var projectSourceVisitorType reflect.Type = reflect.TypeOf(ProjectSourceVisitor{})
+
 func (union ProjectSource) Visit(visitor ProjectSourceVisitor) error {
 	return visitUnion(union, visitor)
 }

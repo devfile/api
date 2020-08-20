@@ -9,10 +9,10 @@ import (
 
 func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project {
+		Projects: []workspaces.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource {
+				ProjectSource: workspaces.ProjectSource{
 					Git: &workspaces.GitProjectSource{},
 				},
 			},
@@ -24,31 +24,31 @@ func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
 		nil,
 		err,
 		"The two values should be the same.")
-	
+
 	assert.Equal(t,
 		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project {
+			Projects: []workspaces.Project{
 				{
 					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource {
-						Git: &workspaces.GitProjectSource{},
+					ProjectSource: workspaces.ProjectSource{
+						Git:        &workspaces.GitProjectSource{},
 						SourceType: "Git",
 					},
 				},
 			},
 		},
-	original,
-	"The two values should be the same.")
+		original,
+		"The two values should be the same.")
 }
 
 func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project {
+		Projects: []workspaces.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource {
-					Git: &workspaces.GitProjectSource{},
-					Zip: &workspaces.ZipProjectSource{},
+				ProjectSource: workspaces.ProjectSource{
+					Git:        &workspaces.GitProjectSource{},
+					Zip:        &workspaces.ZipProjectSource{},
 					SourceType: "Git",
 				},
 			},
@@ -60,30 +60,30 @@ func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 		nil,
 		err,
 		"The two values should be the same.")
-	
+
 	assert.Equal(t,
 		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project {
+			Projects: []workspaces.Project{
 				{
 					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource {
-						Git: &workspaces.GitProjectSource{},
+					ProjectSource: workspaces.ProjectSource{
+						Git:        &workspaces.GitProjectSource{},
 						SourceType: "Git",
 					},
 				},
 			},
 		},
-	original,
-	"The two values should be the same.")
+		original,
+		"The two values should be the same.")
 }
 
 func TestSimplifyingUnion(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project {
+		Projects: []workspaces.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource {
-					Git: &workspaces.GitProjectSource{},
+				ProjectSource: workspaces.ProjectSource{
+					Git:        &workspaces.GitProjectSource{},
 					SourceType: "Git",
 				},
 			},
@@ -94,15 +94,15 @@ func TestSimplifyingUnion(t *testing.T) {
 
 	assert.Equal(t,
 		workspaces.DevWorkspaceTemplateSpecContent{
-			Projects: []workspaces.Project {
+			Projects: []workspaces.Project{
 				{
 					Name: "MyProject",
-					ProjectSource: workspaces.ProjectSource {
-					Git: &workspaces.GitProjectSource{},
+					ProjectSource: workspaces.ProjectSource{
+						Git: &workspaces.GitProjectSource{},
+					},
 				},
 			},
 		},
-	},
-	original,
-	"The two values should be the same.")
+		original,
+		"The two values should be the same.")
 }

@@ -14,7 +14,7 @@ const (
 
 type OverrideDirective struct {
 	// Path of the element the directive should be applied on
-	// 
+	//
 	// For the following path tree:
 	//
 	// 	```json
@@ -22,7 +22,7 @@ type OverrideDirective struct {
 	// 	  - exec
 	// 	      id: commandId
 	// 	```
-	// 
+	//
 	// the path would be: `commands["commandId"]`.
 	Path string `json:"path"`
 

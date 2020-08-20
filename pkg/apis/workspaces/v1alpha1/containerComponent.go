@@ -8,7 +8,7 @@ type ContainerComponent struct {
 	Endpoints     []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
-type Container struct { 
+type Container struct {
 	Name string `json:"name"`
 
 	Image string `json:"image,omitempty"`

@@ -33,7 +33,7 @@ func visitUnion(union interface{}, visitor interface{}) (err error) {
 	return
 }
 
-func simplifyUnion (union Union, visitorType reflect.Type) {
+func simplifyUnion(union Union, visitorType reflect.Type) {
 	normalizeUnion(union, visitorType)
 	*union.discriminator() = ""
 }
@@ -43,7 +43,7 @@ func normalizeUnion(union Union, visitorType reflect.Type) error {
 	if err != nil {
 		return err
 	}
-	
+
 	err = cleanupValues(union, visitorType)
 	if err != nil {
 		return err

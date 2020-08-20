@@ -66,13 +66,13 @@ func ensureNoConflicsWithPlugins(mainContent *keyedDevWorkspaceTemplateSpecConte
 }
 
 func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSpecContent, parentFlattenedContent *keyedDevWorkspaceTemplateSpecContent, pluginFlattenedContents ...*keyedDevWorkspaceTemplateSpecContent) (*keyedDevWorkspaceTemplateSpecContent, error) {
-	allContents := []*keyedDevWorkspaceTemplateSpecContent { parentFlattenedContent }
+	allContents := []*keyedDevWorkspaceTemplateSpecContent{parentFlattenedContent}
 	allContents = append(allContents, pluginFlattenedContents...)
 	allContents = append(allContents, mainContent)
 	for _, content := range allContents {
 		addKeys(content)
 	}
-	
+
 	if err := ensureNoConflicWithParent(mainContent, parentFlattenedContent); err != nil {
 		return nil, err
 	}
@@ -81,8 +81,7 @@ func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSp
 		return nil, err
 	}
 
-	result := keyedDevWorkspaceTemplateSpecContent{
-	}
+	result := keyedDevWorkspaceTemplateSpecContent{}
 
 	preStartCommands := sets.String{}
 	postStartCommands := sets.String{}
@@ -98,7 +97,7 @@ func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSp
 				result.Commands = append(result.Commands, command)
 			}
 		}
-	
+
 		if content.Components != nil && len(content.Components) > 0 {
 			for _, component := range content.Components {
 				// We skip the plugins of the main content, since they have been provided by flattened plugin content.
@@ -111,7 +110,7 @@ func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSp
 				result.Components = append(result.Components, component)
 			}
 		}
-		
+
 		if content.Projects != nil && len(content.Projects) > 0 {
 			if result.Projects == nil {
 				result.Projects = []workspaces.Project{}
@@ -147,8 +146,8 @@ func mergeKeyedDevWorkspaceTemplateSpec(mainContent *keyedDevWorkspaceTemplateSp
 // it allows adding all the new overriden elements provided by flattened parent and plugins (also provided as Json or Yaml documents)
 //
 // It is not allowed for to have duplicate (== with same key) commands, components or projects between the main content and the parent or plugins.
-// An error would be thrown  
-// 
+// An error would be thrown
+//
 // The result is a transformed `DevfileWorkspaceTemplateSpec` object, that does not contain any `plugin` component
 // (since they are expected to be provided as flattened overriden devfiles in teh arguments)
 func MergeDevWorkspaceTemplateSpecBytes(originalBytes []byte, flattenedParentBytes []byte, flattenPluginsBytes ...[]byte) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
@@ -201,8 +200,8 @@ func MergeDevWorkspaceTemplateSpecBytes(originalBytes []byte, flattenedParentByt
 // it allows adding all the new overriden elements provided by flattened parent and plugins
 //
 // It is not allowed for to have duplicate (== with same key) commands, components or projects between the main content and the parent or plugins.
-// An error would be thrown  
-// 
+// An error would be thrown
+//
 // The result is a transformed `DevfileWorkspaceTemplateSpec` object, that does not contain any `plugin` component
 // (since they are expected to be provided as flattened overriden devfiles in teh arguments)
 func MergeDevWorkspaceTemplateSpec(main *workspaces.DevWorkspaceTemplateSpecContent, flattenedParent *workspaces.DevWorkspaceTemplateSpecContent, flattenedPlugins ...*workspaces.DevWorkspaceTemplateSpecContent) (*workspaces.DevWorkspaceTemplateSpecContent, error) {

@@ -26,7 +26,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 					},
 				},
 			},
-		  {
+			{
 				Exec: &workspaces.ExecCommand{
 					LabeledCommand: workspaces.LabeledCommand{
 						BaseCommand: workspaces.BaseCommand{
@@ -155,7 +155,7 @@ func overridingPatchTest(original, patch, expected []byte, expectedError string)
 			assert.Equal(t, strings.TrimSpace(expectedError), strings.TrimSpace(err.Error()), "Wrong error")
 			return
 		}
-	
+
 		resultJson, err := json.Marshal(result)
 		if err != nil {
 			t.Error(err)
@@ -164,7 +164,7 @@ func overridingPatchTest(original, patch, expected []byte, expectedError string)
 		if err != nil {
 			t.Error(err)
 		}
-	
+
 		expectedJson, err := yamlMachinery.ToJSON(expected)
 		if err != nil {
 			t.Error(err)
@@ -173,14 +173,14 @@ func overridingPatchTest(original, patch, expected []byte, expectedError string)
 		if err != nil {
 			t.Error(err)
 		}
-	
+
 		assert.Equal(t, string(expectedYaml), string(resultYaml), "The two values should be the same.")
 	}
 }
 
 func TestOverridingPatches(t *testing.T) {
 	filepath.Walk("test-fixtures/patches", func(path string, info os.FileInfo, err error) error {
-		if ! info.IsDir() && info.Name() == "original.yaml" {
+		if !info.IsDir() && info.Name() == "original.yaml" {
 			if err != nil {
 				t.Error(err)
 				return nil
@@ -228,7 +228,7 @@ func mergingPatchTest(main, parent, expected []byte, expectedError string, plugi
 			assert.Equal(t, strings.TrimSpace(expectedError), strings.TrimSpace(err.Error()), "Wrong error")
 			return
 		}
-	
+
 		resultJson, err := json.Marshal(result)
 		if err != nil {
 			t.Error(err)
@@ -237,7 +237,7 @@ func mergingPatchTest(main, parent, expected []byte, expectedError string, plugi
 		if err != nil {
 			t.Error(err)
 		}
-	
+
 		expectedJson, err := yamlMachinery.ToJSON(expected)
 		if err != nil {
 			t.Error(err)
@@ -246,14 +246,14 @@ func mergingPatchTest(main, parent, expected []byte, expectedError string, plugi
 		if err != nil {
 			t.Error(err)
 		}
-	
+
 		assert.Equal(t, string(expectedYaml), string(resultYaml), "The two values should be the same.")
 	}
 }
 
 func TestMerging(t *testing.T) {
 	filepath.Walk("test-fixtures/merges", func(path string, info os.FileInfo, err error) error {
-		if ! info.IsDir() && info.Name() == "main.yaml" {
+		if !info.IsDir() && info.Name() == "main.yaml" {
 			if err != nil {
 				t.Error(err)
 				return nil
@@ -308,4 +308,3 @@ func TestMerging(t *testing.T) {
 		return nil
 	})
 }
-
