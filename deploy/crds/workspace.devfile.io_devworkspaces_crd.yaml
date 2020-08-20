@@ -67,44 +67,15 @@ spec:
                           it is assumed the component will be applied at workspace
                           start by default."
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           component:
                             description: Describes component that will be applied
                             type: string
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
-                          label:
-                            description: Optional label that provides a label for
-                              this command to be used in Editor UI menus for example
-                            type: string
-                        required:
-                        - id
+                        type: object
+                      attributes:
+                        additionalProperties:
+                          type: string
+                        description: Optional map of free-form additional command
+                          attributes
                         type: object
                       commandType:
                         description: Type of workspace command
@@ -120,63 +91,22 @@ spec:
                         description: Composite command that allows executing several
                           sub-commands either sequentially or concurrently
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           commands:
                             description: The commands that comprise this composite
                               command
                             items:
                               type: string
                             type: array
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
-                          label:
-                            description: Optional label that provides a label for
-                              this command to be used in Editor UI menus for example
-                            type: string
                           parallel:
                             description: Indicates if the sub-commands should be executed
                               concurrently
                             type: boolean
-                        required:
-                        - id
                         type: object
                       custom:
                         description: Custom command whose logic is implementation-dependant
                           and should be provided by the user possibly through some
                           dedicated plugin
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           commandClass:
                             description: Class of command that the associated implementation
                               component should use to process this command with the
@@ -189,48 +119,14 @@ spec:
                             type: object
                             x-kubernetes-embedded-resource: true
                             x-kubernetes-preserve-unknown-fields: true
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
-                          label:
-                            description: Optional label that provides a label for
-                              this command to be used in Editor UI menus for example
-                            type: string
                         required:
                         - commandClass
                         - embeddedResource
-                        - id
                         type: object
                       exec:
                         description: CLI Command executed in an existing component
                           container
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           commandLine:
                             description: "The actual command-line string \n Special
                               variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -257,39 +153,12 @@ spec:
                               - value
                               type: object
                             type: array
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
                           hotReloadCapable:
                             description: "Whether the command is capable to reload
                               itself when source code changes. If set to `true` the
                               command won't be restarted and it is expected to handle
                               file changes on its own. \n Default value is `false`"
                             type: boolean
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
-                          label:
-                            description: Optional label that provides a label for
-                              this command to be used in Editor UI menus for example
-                            type: string
                           workingDir:
                             description: "Working directory where the command should
                               be executed \n Special variables that can be used: \n
@@ -299,42 +168,38 @@ spec:
                               multiple projects, this will point to the directory
                               of the first one."
                             type: string
-                        required:
-                        - id
                         type: object
+                      group:
+                        description: Defines the group this command is part of
+                        properties:
+                          isDefault:
+                            description: Identifies the default command for a given
+                              group kind
+                            type: boolean
+                          kind:
+                            description: Kind of group the command is part of
+                            enum:
+                            - build
+                            - run
+                            - test
+                            - debug
+                            type: string
+                        required:
+                        - kind
+                        type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, from a parent, or in
+                          events.
+                        type: string
+                      label:
+                        description: Optional label that provides a label for this
+                          command to be used in Editor UI menus for example
+                        type: string
                       vscodeLaunch:
                         description: Command providing the definition of a VsCode
                           launch action
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -348,42 +213,11 @@ spec:
                             description: Location as an absolute of relative URI the
                               VsCode configuration will be fetched from
                             type: string
-                        required:
-                        - id
                         type: object
                       vscodeTask:
                         description: Command providing the definition of a VsCode
                           Task
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -397,9 +231,9 @@ spec:
                             description: Location as an absolute of relative URI the
                               VsCode configuration will be fetched from
                             type: string
-                        required:
-                        - id
                         type: object
+                    required:
+                    - id
                     type: object
                   type: array
                 components:
@@ -529,8 +363,6 @@ spec:
                             type: string
                           mountSources:
                             type: boolean
-                          name:
-                            type: string
                           sourceMapping:
                             description: Optional specification of the path in the
                               container where project sources should be transferred/mounted
@@ -560,8 +392,6 @@ spec:
                               - name
                               type: object
                             type: array
-                        required:
-                        - name
                         type: object
                       custom:
                         description: Custom component whose logic is implementation-dependant
@@ -580,14 +410,9 @@ spec:
                             type: object
                             x-kubernetes-embedded-resource: true
                             x-kubernetes-preserve-unknown-fields: true
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                         required:
                         - componentClass
                         - embeddedResource
-                        - name
                         type: object
                       kubernetes:
                         description: Allows importing into the workspace the Kubernetes
@@ -670,16 +495,14 @@ spec:
                             - Uri
                             - Inlined
                             type: string
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                           uri:
                             description: Location in a file fetched from a uri.
                             type: string
-                        required:
-                        - name
                         type: object
+                      name:
+                        description: Mandatory name that allows referencing the Volume
+                          component in Container volume mounts or inside a parent
+                        type: string
                       openshift:
                         description: Allows importing into the workspace the OpenShift
                           resources defined in a given manifest. For example this
@@ -761,15 +584,9 @@ spec:
                             - Uri
                             - Inlined
                             type: string
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                           uri:
                             description: Location in a file fetched from a uri.
                             type: string
-                        required:
-                        - name
                         type: object
                       plugin:
                         description: "Allows importing a plugin. \n Plugins are mainly
@@ -797,48 +614,16 @@ spec:
                                     is assumed the component will be applied at workspace
                                     start by default."
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     component:
                                       description: Describes component that will be
                                         applied
                                       type: string
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
-                                  required:
-                                  - id
+                                  type: object
+                                attributes:
+                                  additionalProperties:
+                                    type: string
+                                  description: Optional map of free-form additional
+                                    command attributes
                                   type: object
                                 commandType:
                                   description: Type of workspace command
@@ -854,66 +639,22 @@ spec:
                                   description: Composite command that allows executing
                                     several sub-commands either sequentially or concurrently
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     commands:
                                       description: The commands that comprise this
                                         composite command
                                       items:
                                         type: string
                                       type: array
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
                                     parallel:
                                       description: Indicates if the sub-commands should
                                         be executed concurrently
                                       type: boolean
-                                  required:
-                                  - id
                                   type: object
                                 custom:
                                   description: Custom command whose logic is implementation-dependant
                                     and should be provided by the user possibly through
                                     some dedicated plugin
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     commandClass:
                                       description: Class of command that the associated
                                         implementation component should use to process
@@ -926,51 +667,14 @@ spec:
                                       type: object
                                       x-kubernetes-embedded-resource: true
                                       x-kubernetes-preserve-unknown-fields: true
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
                                   required:
                                   - commandClass
                                   - embeddedResource
-                                  - id
                                   type: object
                                 exec:
                                   description: CLI Command executed in an existing
                                     component container
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     commandLine:
                                       description: "The actual command-line string
                                         \n Special variables that can be used: \n
@@ -998,26 +702,6 @@ spec:
                                         - value
                                         type: object
                                       type: array
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
                                     hotReloadCapable:
                                       description: "Whether the command is capable
                                         to reload itself when source code changes.
@@ -1025,16 +709,6 @@ spec:
                                         and it is expected to handle file changes
                                         on its own. \n Default value is `false`"
                                       type: boolean
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
                                     workingDir:
                                       description: "Working directory where the command
                                         should be executed \n Special variables that
@@ -1044,44 +718,41 @@ spec:
                                         If there are multiple projects, this will
                                         point to the directory of the first one."
                                       type: string
-                                  required:
-                                  - id
                                   type: object
+                                group:
+                                  description: Defines the group this command is part
+                                    of
+                                  properties:
+                                    isDefault:
+                                      description: Identifies the default command
+                                        for a given group kind
+                                      type: boolean
+                                    kind:
+                                      description: Kind of group the command is part
+                                        of
+                                      enum:
+                                      - build
+                                      - run
+                                      - test
+                                      - debug
+                                      type: string
+                                  required:
+                                  - kind
+                                  type: object
+                                id:
+                                  description: Mandatory identifier that allows referencing
+                                    this command in composite commands, from a parent,
+                                    or in events.
+                                  type: string
+                                label:
+                                  description: Optional label that provides a label
+                                    for this command to be used in Editor UI menus
+                                    for example
+                                  type: string
                                 vscodeLaunch:
                                   description: Command providing the definition of
                                     a VsCode launch action
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -1097,44 +768,11 @@ spec:
                                         URI the VsCode configuration will be fetched
                                         from
                                       type: string
-                                  required:
-                                  - id
                                   type: object
                                 vscodeTask:
                                   description: Command providing the definition of
                                     a VsCode Task
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -1150,9 +788,9 @@ spec:
                                         URI the VsCode configuration will be fetched
                                         from
                                       type: string
-                                  required:
-                                  - id
                                   type: object
+                              required:
+                              - id
                               type: object
                             type: array
                           components:
@@ -1291,8 +929,6 @@ spec:
                                       type: string
                                     mountSources:
                                       type: boolean
-                                    name:
-                                      type: string
                                     sourceMapping:
                                       description: Optional specification of the path
                                         in the container where project sources should
@@ -1325,8 +961,6 @@ spec:
                                         - name
                                         type: object
                                       type: array
-                                  required:
-                                  - name
                                   type: object
                                 kubernetes:
                                   description: Configuration overriding for a Kubernetes
@@ -1415,16 +1049,10 @@ spec:
                                       - Uri
                                       - Inlined
                                       type: string
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the component in commands, or inside a parent
-                                      type: string
                                     uri:
                                       description: Location in a file fetched from
                                         a uri.
                                       type: string
-                                  required:
-                                  - name
                                   type: object
                                 openshift:
                                   description: Configuration overriding for an OpenShift
@@ -1513,31 +1141,18 @@ spec:
                                       - Uri
                                       - Inlined
                                       type: string
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the component in commands, or inside a parent
-                                      type: string
                                     uri:
                                       description: Location in a file fetched from
                                         a uri.
                                       type: string
-                                  required:
-                                  - name
                                   type: object
                                 volume:
                                   description: Configuration overriding for a Volume
                                     component in a plugin
                                   properties:
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the Volume component in Container volume mounts
-                                        or inside a parent
-                                      type: string
                                     size:
                                       description: Size of the volume
                                       type: string
-                                  required:
-                                  - name
                                   type: object
                               type: object
                             type: array
@@ -1563,11 +1178,6 @@ spec:
                             required:
                             - name
                             type: object
-                          name:
-                            description: Optional name that allows referencing the
-                              component in commands, or inside a parent If omitted
-                              it will be infered from the location (uri or registryEntry)
-                            type: string
                           registryUrl:
                             type: string
                           uri:
@@ -1578,17 +1188,12 @@ spec:
                         description: Allows specifying the definition of a volume
                           shared by several other components
                         properties:
-                          name:
-                            description: Mandatory name that allows referencing the
-                              Volume component in Container volume mounts or inside
-                              a parent
-                            type: string
                           size:
                             description: Size of the volume
                             type: string
-                        required:
-                        - name
                         type: object
+                    required:
+                    - name
                     type: object
                   type: array
                 events:
@@ -1646,47 +1251,15 @@ spec:
                               for a given component, it is assumed the component will
                               be applied at workspace start by default."
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
                               component:
                                 description: Describes component that will be applied
                                 type: string
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
-                              label:
-                                description: Optional label that provides a label
-                                  for this command to be used in Editor UI menus for
-                                  example
-                                type: string
-                            required:
-                            - id
+                            type: object
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
                             type: object
                           commandType:
                             description: Type of workspace command
@@ -1702,66 +1275,22 @@ spec:
                             description: Composite command that allows executing several
                               sub-commands either sequentially or concurrently
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
                               commands:
                                 description: The commands that comprise this composite
                                   command
                                 items:
                                   type: string
                                 type: array
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
-                              label:
-                                description: Optional label that provides a label
-                                  for this command to be used in Editor UI menus for
-                                  example
-                                type: string
                               parallel:
                                 description: Indicates if the sub-commands should
                                   be executed concurrently
                                 type: boolean
-                            required:
-                            - id
                             type: object
                           custom:
                             description: Custom command whose logic is implementation-dependant
                               and should be provided by the user possibly through
                               some dedicated plugin
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
                               commandClass:
                                 description: Class of command that the associated
                                   implementation component should use to process this
@@ -1774,51 +1303,14 @@ spec:
                                 type: object
                                 x-kubernetes-embedded-resource: true
                                 x-kubernetes-preserve-unknown-fields: true
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
-                              label:
-                                description: Optional label that provides a label
-                                  for this command to be used in Editor UI menus for
-                                  example
-                                type: string
                             required:
                             - commandClass
                             - embeddedResource
-                            - id
                             type: object
                           exec:
                             description: CLI Command executed in an existing component
                               container
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
                               commandLine:
                                 description: "The actual command-line string \n Special
                                   variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -1845,26 +1337,6 @@ spec:
                                   - value
                                   type: object
                                 type: array
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
                               hotReloadCapable:
                                 description: "Whether the command is capable to reload
                                   itself when source code changes. If set to `true`
@@ -1872,16 +1344,6 @@ spec:
                                   to handle file changes on its own. \n Default value
                                   is `false`"
                                 type: boolean
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
-                              label:
-                                description: Optional label that provides a label
-                                  for this command to be used in Editor UI menus for
-                                  example
-                                type: string
                               workingDir:
                                 description: "Working directory where the command
                                   should be executed \n Special variables that can
@@ -1891,44 +1353,38 @@ spec:
                                   If there are multiple projects, this will point
                                   to the directory of the first one."
                                 type: string
-                            required:
-                            - id
                             type: object
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
+                          id:
+                            description: Mandatory identifier that allows referencing
+                              this command in composite commands, from a parent, or
+                              in events.
+                            type: string
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
                           vscodeLaunch:
                             description: Command providing the definition of a VsCode
                               launch action
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
                               inlined:
                                 description: Inlined content of the VsCode configuration
                                 type: string
@@ -1943,44 +1399,11 @@ spec:
                                 description: Location as an absolute of relative URI
                                   the VsCode configuration will be fetched from
                                 type: string
-                            required:
-                            - id
                             type: object
                           vscodeTask:
                             description: Command providing the definition of a VsCode
                               Task
                             properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              id:
-                                description: Mandatory identifier that allows referencing
-                                  this command in composite commands, from a parent,
-                                  or in events.
-                                type: string
                               inlined:
                                 description: Inlined content of the VsCode configuration
                                 type: string
@@ -1995,9 +1418,9 @@ spec:
                                 description: Location as an absolute of relative URI
                                   the VsCode configuration will be fetched from
                                 type: string
-                            required:
-                            - id
                             type: object
+                        required:
+                        - id
                         type: object
                       type: array
                     components:
@@ -2130,8 +1553,6 @@ spec:
                                 type: string
                               mountSources:
                                 type: boolean
-                              name:
-                                type: string
                               sourceMapping:
                                 description: Optional specification of the path in
                                   the container where project sources should be transferred/mounted
@@ -2163,8 +1584,6 @@ spec:
                                   - name
                                   type: object
                                 type: array
-                            required:
-                            - name
                             type: object
                           custom:
                             description: Custom component whose logic is implementation-dependant
@@ -2183,14 +1602,9 @@ spec:
                                 type: object
                                 x-kubernetes-embedded-resource: true
                                 x-kubernetes-preserve-unknown-fields: true
-                              name:
-                                description: Mandatory name that allows referencing
-                                  the component in commands, or inside a parent
-                                type: string
                             required:
                             - componentClass
                             - embeddedResource
-                            - name
                             type: object
                           kubernetes:
                             description: Allows importing into the workspace the Kubernetes
@@ -2275,16 +1689,15 @@ spec:
                                 - Uri
                                 - Inlined
                                 type: string
-                              name:
-                                description: Mandatory name that allows referencing
-                                  the component in commands, or inside a parent
-                                type: string
                               uri:
                                 description: Location in a file fetched from a uri.
                                 type: string
-                            required:
-                            - name
                             type: object
+                          name:
+                            description: Mandatory name that allows referencing the
+                              Volume component in Container volume mounts or inside
+                              a parent
+                            type: string
                           openshift:
                             description: Allows importing into the workspace the OpenShift
                               resources defined in a given manifest. For example this
@@ -2368,15 +1781,9 @@ spec:
                                 - Uri
                                 - Inlined
                                 type: string
-                              name:
-                                description: Mandatory name that allows referencing
-                                  the component in commands, or inside a parent
-                                type: string
                               uri:
                                 description: Location in a file fetched from a uri.
                                 type: string
-                            required:
-                            - name
                             type: object
                           plugin:
                             description: "Allows importing a plugin. \n Plugins are
@@ -2405,48 +1812,16 @@ spec:
                                         component, it is assumed the component will
                                         be applied at workspace start by default."
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
                                         component:
                                           description: Describes component that will
                                             be applied
                                           type: string
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
-                                        label:
-                                          description: Optional label that provides
-                                            a label for this command to be used in
-                                            Editor UI menus for example
-                                          type: string
-                                      required:
-                                      - id
+                                      type: object
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
                                       type: object
                                     commandType:
                                       description: Type of workspace command
@@ -2463,66 +1838,22 @@ spec:
                                         several sub-commands either sequentially or
                                         concurrently
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
                                         commands:
                                           description: The commands that comprise
                                             this composite command
                                           items:
                                             type: string
                                           type: array
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
-                                        label:
-                                          description: Optional label that provides
-                                            a label for this command to be used in
-                                            Editor UI menus for example
-                                          type: string
                                         parallel:
                                           description: Indicates if the sub-commands
                                             should be executed concurrently
                                           type: boolean
-                                      required:
-                                      - id
                                       type: object
                                     custom:
                                       description: Custom command whose logic is implementation-dependant
                                         and should be provided by the user possibly
                                         through some dedicated plugin
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
                                         commandClass:
                                           description: Class of command that the associated
                                             implementation component should use to
@@ -2536,51 +1867,14 @@ spec:
                                           type: object
                                           x-kubernetes-embedded-resource: true
                                           x-kubernetes-preserve-unknown-fields: true
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
-                                        label:
-                                          description: Optional label that provides
-                                            a label for this command to be used in
-                                            Editor UI menus for example
-                                          type: string
                                       required:
                                       - commandClass
                                       - embeddedResource
-                                      - id
                                       type: object
                                     exec:
                                       description: CLI Command executed in an existing
                                         component container
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
                                         commandLine:
                                           description: "The actual command-line string
                                             \n Special variables that can be used:
@@ -2609,26 +1903,6 @@ spec:
                                             - value
                                             type: object
                                           type: array
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
                                         hotReloadCapable:
                                           description: "Whether the command is capable
                                             to reload itself when source code changes.
@@ -2637,16 +1911,6 @@ spec:
                                             file changes on its own. \n Default value
                                             is `false`"
                                           type: boolean
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
-                                        label:
-                                          description: Optional label that provides
-                                            a label for this command to be used in
-                                            Editor UI menus for example
-                                          type: string
                                         workingDir:
                                           description: "Working directory where the
                                             command should be executed \n Special
@@ -2657,44 +1921,41 @@ spec:
                                             If there are multiple projects, this will
                                             point to the directory of the first one."
                                           type: string
-                                      required:
-                                      - id
                                       type: object
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
+                                    id:
+                                      description: Mandatory identifier that allows
+                                        referencing this command in composite commands,
+                                        from a parent, or in events.
+                                      type: string
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
                                     vscodeLaunch:
                                       description: Command providing the definition
                                         of a VsCode launch action
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
                                         inlined:
                                           description: Inlined content of the VsCode
                                             configuration
@@ -2711,44 +1972,11 @@ spec:
                                             relative URI the VsCode configuration
                                             will be fetched from
                                           type: string
-                                      required:
-                                      - id
                                       type: object
                                     vscodeTask:
                                       description: Command providing the definition
                                         of a VsCode Task
                                       properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        id:
-                                          description: Mandatory identifier that allows
-                                            referencing this command in composite
-                                            commands, from a parent, or in events.
-                                          type: string
                                         inlined:
                                           description: Inlined content of the VsCode
                                             configuration
@@ -2765,9 +1993,9 @@ spec:
                                             relative URI the VsCode configuration
                                             will be fetched from
                                           type: string
-                                      required:
-                                      - id
                                       type: object
+                                  required:
+                                  - id
                                   type: object
                                 type: array
                               components:
@@ -2915,8 +2143,6 @@ spec:
                                           type: string
                                         mountSources:
                                           type: boolean
-                                        name:
-                                          type: string
                                         sourceMapping:
                                           description: Optional specification of the
                                             path in the container where project sources
@@ -2951,8 +2177,6 @@ spec:
                                             - name
                                             type: object
                                           type: array
-                                      required:
-                                      - name
                                       type: object
                                     kubernetes:
                                       description: Configuration overriding for a
@@ -3046,17 +2270,10 @@ spec:
                                           - Uri
                                           - Inlined
                                           type: string
-                                        name:
-                                          description: Mandatory name that allows
-                                            referencing the component in commands,
-                                            or inside a parent
-                                          type: string
                                         uri:
                                           description: Location in a file fetched
                                             from a uri.
                                           type: string
-                                      required:
-                                      - name
                                       type: object
                                     openshift:
                                       description: Configuration overriding for an
@@ -3150,32 +2367,18 @@ spec:
                                           - Uri
                                           - Inlined
                                           type: string
-                                        name:
-                                          description: Mandatory name that allows
-                                            referencing the component in commands,
-                                            or inside a parent
-                                          type: string
                                         uri:
                                           description: Location in a file fetched
                                             from a uri.
                                           type: string
-                                      required:
-                                      - name
                                       type: object
                                     volume:
                                       description: Configuration overriding for a
                                         Volume component in a plugin
                                       properties:
-                                        name:
-                                          description: Mandatory name that allows
-                                            referencing the Volume component in Container
-                                            volume mounts or inside a parent
-                                          type: string
                                         size:
                                           description: Size of the volume
                                           type: string
-                                      required:
-                                      - name
                                       type: object
                                   type: object
                                 type: array
@@ -3202,12 +2405,6 @@ spec:
                                 required:
                                 - name
                                 type: object
-                              name:
-                                description: Optional name that allows referencing
-                                  the component in commands, or inside a parent If
-                                  omitted it will be infered from the location (uri
-                                  or registryEntry)
-                                type: string
                               registryUrl:
                                 type: string
                               uri:
@@ -3218,17 +2415,12 @@ spec:
                             description: Allows specifying the definition of a volume
                               shared by several other components
                             properties:
-                              name:
-                                description: Mandatory name that allows referencing
-                                  the Volume component in Container volume mounts
-                                  or inside a parent
-                                type: string
                               size:
                                 description: Size of the volume
                                 type: string
-                            required:
-                            - name
                             type: object
+                        required:
+                        - name
                         type: object
                       type: array
                     id:

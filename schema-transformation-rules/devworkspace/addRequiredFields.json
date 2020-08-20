@@ -1,13 +1,13 @@
 [
   {
     "op": "add",
-    "path": "/properties/spec/properties/commands/items/properties/exec/required/-",
-    "value": "commandLine"
+    "path": "/properties/spec/properties/commands/items/properties/exec/required",
+    "value": ["commandLine"]
   },
   {
     "op": "add",
-    "path": "/properties/spec/properties/components/items/properties/container/required/-",
-    "value": "image"
+    "path": "/properties/spec/properties/components/items/properties/container/required",
+    "value": ["image"]
   },
   {
     "op": "add",
