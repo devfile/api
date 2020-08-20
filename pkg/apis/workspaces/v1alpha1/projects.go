@@ -61,10 +61,6 @@ type ProjectSource struct {
 }
 
 type CommonProjectSource struct {
-	// Project's source location address. Should be URL for git and github located projects, or; file:// for zip
-	// +optional
-	Location string `json:"location,omitempty"`
-
 	// Part of project to populate in the working directory.
 	// +optional
 	SparseCheckoutDir string `json:"sparseCheckoutDir,omitempty"`
@@ -79,18 +75,32 @@ type CustomProjectSource struct {
 
 type ZipProjectSource struct {
 	CommonProjectSource `json:",inline"`
+
+	// Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH
+	// +required
+	Location string `json:"location,omitempty"`
 }
 
 type GitLikeProjectSource struct {
 	CommonProjectSource `json:",inline"`
 
-	// The tag or commit id to reset the checked out branch to
+	// Defines from what the project should be checked out. Required if there are more than one remote configured
 	// +optional
-	StartPoint string `json:"startPoint,omitempty"`
+	CheckoutFrom *CheckoutFrom `json:"checkoutFrom,omitempty"`
 
-	// The branch to check
+	// The remotes map which should be initialized in the git project. Must have at least one remote configured
 	// +optional
-	Branch string `json:"branch,omitempty"`
+	Remotes map[string]string `json:"remotes,omitempty"`
+}
+
+type CheckoutFrom struct {
+	// The revision to checkout from. Should be branch name, tag or commit id.
+	// Default branch is used if missing or specified revision is not found.
+	// +optional
+	Revision string `json:"revision,omitempty"`
+	// The remote name should be used as init. Required if there are more than one remote configured
+	// +optional
+	Remote string `json:"remote,omitempty"`
 }
 
 type GitProjectSource struct {
