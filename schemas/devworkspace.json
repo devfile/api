@@ -1497,6 +1497,30 @@
                             "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
                           }
                         },
+                        "type": "object",
+                        "markdownDescription": "CLI Command executed in an existing component container",
+                        "additionalProperties": false
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
                         "required": [
                           "kind"
                         ],
