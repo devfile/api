@@ -21,6 +21,7 @@ const (
 type BaseComponent struct {
 }
 
+//+k8s:openapi-gen=true
 type Component struct {
 	// Mandatory name that allows referencing the Volume component
 	// in Container volume mounts or inside a parent
