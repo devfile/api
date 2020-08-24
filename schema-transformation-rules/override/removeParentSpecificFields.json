@@ -1,0 +1,26 @@
+[
+  {
+    "op": "remove",
+    "path": "/description"
+  },
+  {
+    "op": "remove",
+    "path": "/oneOf"
+  },
+  { 
+    "op": "remove",
+    "path": "/properties/id"
+  },
+  { 
+    "op": "remove",
+    "path": "/properties/kubernetes"
+  },
+  { 
+    "op": "remove",
+    "path": "/properties/registryUrl"
+  },
+  { 
+    "op": "remove",
+    "path": "/properties/uri"
+  }
+]

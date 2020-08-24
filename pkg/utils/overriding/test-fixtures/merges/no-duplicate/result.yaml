@@ -1,0 +1,10 @@
+components:
+  - container:
+      image: "aValue"
+      name: "parentComponent"
+  - container:
+      image: "aValue"
+      name: "pluginComponent"
+  - container:
+      image: "anyValue"
+      name: "newComponent"

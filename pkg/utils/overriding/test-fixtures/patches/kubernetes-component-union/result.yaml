@@ -1,0 +1,16 @@
+components:
+  - plugin:
+      id: "UnchangedPluginId"
+  - kubernetes:
+      name: componentToUpdate
+      uri: "componentToUpdateUri"
+      endpoints:
+        - name: endpointName
+          targetPort: 8080
+
+# Note:
+#
+# When changing the union value
+# it automatically removes the old mutually-exclusive union value (`inline`)
+# But it keeps other fields untouched by the patch,
+# such as the `endpoints` list here

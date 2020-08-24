@@ -87,7 +87,7 @@ type Endpoint struct {
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
 	// +optional
-	Secure bool `json:"secure"`
+	Secure bool `json:"secure,omitempty"`
 
 	// Path of the endpoint URL
 	// +optional

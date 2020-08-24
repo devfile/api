@@ -132,7 +132,7 @@ type ExecCommand struct {
 	// +optional
 	// Optional list of environment variables that have to be set
 	// before running the command
-	Env []EnvVar `json:"env,omitempty"`
+	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// Whether the command is capable to reload itself when source code changes.
@@ -153,7 +153,7 @@ type CompositeCommand struct {
 	LabeledCommand `json:",inline"`
 
 	// The commands that comprise this composite command
-	Commands []string `json:"commands,omitempty"`
+	Commands []string `json:"commands,omitempty" patchStrategy:"replace"`
 
 	// Indicates if the sub-commands should be executed concurrently
 	// +optional
@@ -167,8 +167,8 @@ type CompositeCommand struct {
 type VscodeConfigurationCommandLocationType string
 
 const (
-	UriVscodeConfigurationCommandLocationType     VscodeConfigurationCommandLocationType = "Container"
-	InlinedVscodeConfigurationCommandLocationType VscodeConfigurationCommandLocationType = "Kubernetes"
+	UriVscodeConfigurationCommandLocationType     VscodeConfigurationCommandLocationType = "Uri"
+	InlinedVscodeConfigurationCommandLocationType VscodeConfigurationCommandLocationType = "Inlined"
 )
 
 // +k8s:openapi-gen=true

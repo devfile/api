@@ -86,40 +86,41 @@ type CustomComponent struct {
 	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`
 }
 
-// ComponentOverrideType describes the type of component that can be overriden.
+// PluginComponentsOverrideType describes the type of components
+// that can be overriden for a plugin.
 // Only one of the following component type may be specified.
 // +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume
-type ComponentOverrideType string
+type PluginComponentsOverrideType string
 
 const (
-	ContainerComponentOverrideType  ComponentOverrideType = "Container"
-	KubernetesComponentOverrideType ComponentOverrideType = "Kubernetes"
-	OpenshiftComponentOverrideType  ComponentOverrideType = "Openshift"
-	VolumeComponentOverrideType     ComponentOverrideType = "Volume"
+	ContainerPluginComponentsOverrideType  PluginComponentsOverrideType = "Container"
+	KubernetesPluginComponentsOverrideType PluginComponentsOverrideType = "Kubernetes"
+	OpenshiftPluginComponentsOverrideType  PluginComponentsOverrideType = "Openshift"
+	VolumePluginComponentsOverrideType     PluginComponentsOverrideType = "Volume"
 )
 
 // +k8s:openapi-gen=true
 // +union
-type ComponentOverride struct {
-	// Type of component override
+type PluginComponentsOverride struct {
+	// Type of component override for a plugin
 	//
 	// +unionDiscriminator
 	// +optional
-	ComponentType ComponentOverrideType `json:"componentType,omitempty"`
+	ComponentType PluginComponentsOverrideType `json:"componentType,omitempty"`
 
-	// Configuration overriding for a Container component
+	// Configuration overriding for a Container component in a plugin
 	// +optional
 	Container *ContainerComponent `json:"container,omitempty"`
 
-	// Configuration overriding for a Volume component
+	// Configuration overriding for a Volume component in a plugin
 	// +optional
 	Volume *VolumeComponent `json:"volume,omitempty"`
 
-	// Configuration overriding for a Kubernetes component
+	// Configuration overriding for a Kubernetes component in a plugin
 	// +optional
 	Kubernetes *KubernetesComponent `json:"kubernetes,omitempty"`
 
-	// Configuration overriding for an OpenShift component
+	// Configuration overriding for an OpenShift component in a plugin
 	// +optional
 	Openshift *OpenshiftComponent `json:"openshift,omitempty"`
 }

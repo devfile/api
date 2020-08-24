@@ -27,7 +27,7 @@ components:
         ]; do echo "Waiting for the clone end" ; sleep 2; done; sleep 2 ; grep
         -e '/src/github.com/devfile/api/schemas/'
         ${CHE_PROJECTS_ROOT}/.theia/settings.json > /dev/null ; if [ $? -ne 0 ];
-        then echo "Updating the yaml schema bindings" ; sed -e
+        then echo "Updating the yaml schema bindings" ; mkdir -p ${CHE_PROJECTS_ROOT}/.theia ; sed -e
         's:/schemas/:/src/github.com/devfile/api/schemas/:g'
         ${CHE_PROJECTS_ROOT}/src/github.com/devfile/api/.theia/settings.json
         > ${CHE_PROJECTS_ROOT}/.theia/settings.json; fi; sleep infinity
@@ -53,4 +53,10 @@ commands:
       - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/api'
         type: exec
         command: go mod vendor
+        component: tools
+  - name: Run tests
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/src/github.com/devfile/api'
+        type: exec
+        command: go test -v ./...
         component: tools

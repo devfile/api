@@ -1,0 +1,32 @@
+events:
+  preStart:
+    - "preStartFromMainContent"
+    - "preStartFromParent"
+    - "preStartFromPlugin"
+  preStop:
+    - "preStopFromMainContent"
+    - "preStopFromParent"
+    - "preStopFromPlugin"
+  postStart:
+    - "postStartFromMainContent"
+    - "postStartFromParent"
+    - "postStartFromPlugin"
+  postStop:
+    - "postStopFromMainContent"
+    - "postStopFromParent"
+    - "postStopFromPlugin"
+
+# Note:
+#
+# The command Id are merged *per-event type*
+# from the commands of the corresponding event type
+# in parent, plugins and devfile main content. 
+#
+# The command Ids in each event type are unordered sets.
+# Only event types are ordered; no guarantee is provided that
+# Commands inside an event type will be executed in the order
+# they appear in the list.
+#
+# However in the test results, as it will happen usually,
+# command ids of a given event type will simply be ordered
+# in alphabetical order. 

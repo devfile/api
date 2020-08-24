@@ -1,0 +1,9 @@
+events:
+  preStart:
+    - "preStartFromParent"
+  preStop:
+    - "preStopFromParent"
+  postStart:
+    - "postStartFromParent"
+  postStop:
+    - "postStopFromParent"
