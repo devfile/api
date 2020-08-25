@@ -3999,7 +3999,10 @@
                     },
                     "type": "object",
                     "markdownDescription": "Project's Git source",
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "required": [
+                      "remotes"
+                    ]
                   },
                   "github": {
                     "description": "Project's GitHub source",
@@ -4038,7 +4041,10 @@
                     },
                     "type": "object",
                     "markdownDescription": "Project's GitHub source",
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "required": [
+                      "remotes"
+                    ]
                   },
                   "name": {
                     "description": "Project name",
