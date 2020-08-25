@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // Union is an interface that allows managing structs defined as
 // Kubernetes unions with discriminators, according to the following KEP:

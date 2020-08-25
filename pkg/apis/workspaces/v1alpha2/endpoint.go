@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // EndpointProtocol defines the application and transport protocols of the traffic that will go through this endpoint.
 // Only one of the following protocols may be specified: http, ws, tcp, udp.

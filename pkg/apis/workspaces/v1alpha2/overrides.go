@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 type OverridesBase struct {
 	// Overrides of commands encapsulated in a parent devfile or a plugin.

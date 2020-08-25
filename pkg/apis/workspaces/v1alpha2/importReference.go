@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // ImportReferenceType describes the type of location
 // from where the referenced template structure should be retrieved.
