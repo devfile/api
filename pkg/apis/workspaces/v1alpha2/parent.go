@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 type Parent struct {
 	ImportReference `json:",inline"`

@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // K8sLikeComponentLocationType describes the type of
 // the location the configuration is fetched from.

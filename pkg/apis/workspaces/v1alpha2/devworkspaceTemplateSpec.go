@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // Structure of the workspace. This is also the specification of a workspace template.
 // +k8s:openapi-gen=true

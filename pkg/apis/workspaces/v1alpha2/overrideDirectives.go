@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // +kubebuilder:validation:Enum=replace;delete
 type OverridingPatchDirective string

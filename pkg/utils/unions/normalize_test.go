@@ -3,7 +3,7 @@ package unions
 import (
 	"testing"
 
-	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
 	"github.com/stretchr/testify/assert"
 )
 

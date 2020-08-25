@@ -8,7 +8,7 @@
 </div>
 
 Sources for this API are defined in Go code, starting from the
-[devworkspace_types.go source file](pkg/apis/workspaces/v1alpha1/devworkspace_types.go)
+[devworkspace_types.go source file](pkg/apis/workspaces/v1alpha2/devworkspace_types.go)
 
 From these Go sources, several files are generated:
 - A Kubernetes Custom Resource Definition(CRD) with an embedded OpenApi schema,

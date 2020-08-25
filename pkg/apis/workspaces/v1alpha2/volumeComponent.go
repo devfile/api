@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // Component that allows the developer to declare and configure a volume into his workspace
 type VolumeComponent struct {

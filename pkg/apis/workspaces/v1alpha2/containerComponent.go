@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha2
 
 // Component that allows the developer to add a configured container into his workspace
 type ContainerComponent struct {

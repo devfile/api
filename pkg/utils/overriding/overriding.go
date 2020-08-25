@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
 	unions "github.com/devfile/api/pkg/utils/unions"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/apimachinery/pkg/util/sets"

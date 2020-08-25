@@ -3,7 +3,7 @@ package unions
 import (
 	"reflect"
 
-	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha1"
+	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
 	"github.com/mitchellh/reflectwalk"
 )
 

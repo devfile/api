@@ -1,4 +1,4 @@
-apiVersion: workspace.che.eclipse.org/v1alpha1
+apiVersion: workspace.che.eclipse.org/v1alpha2
 kind: Workspace
 metadata:
   name: "with-nodejs-devfile-parent"
