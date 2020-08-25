@@ -42,7 +42,7 @@ fi
 
 BASE_DIR=$(cd "$(dirname "$0")" && pwd)
 
-rm -r validate-output.txt &> /dev/null
+rm -f validate-output.txt &> /dev/null
 
 for schema in "devfile" "devworkspace" "devworkspace-template"
 do
