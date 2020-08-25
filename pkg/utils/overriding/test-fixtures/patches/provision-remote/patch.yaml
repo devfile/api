@@ -1,0 +1,7 @@
+projects:
+  - name: nodejs-sample
+    git:
+      remotes:
+        gh-collaborator: "https://github.com/gh-collaborator/web-nodejs-sample.git"
+      checkoutFrom:
+        remote: gh-collaborator
