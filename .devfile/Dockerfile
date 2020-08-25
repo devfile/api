@@ -4,7 +4,8 @@ ENV GOROOT /usr/lib/go
 
 RUN apk add --no-cache --update curl bash jq go git openssh \
 && pip3 install yq \
-&& pip3 install jsonpatch
+&& pip3 install jsonpatch \
+&& pip3 install jsonschema-cli
 
 RUN curl -JL https://github.com/operator-framework/operator-sdk/releases/download/${OPERATOR_SDK_VERSION}/operator-sdk-${OPERATOR_SDK_VERSION}-x86_64-linux-gnu -o /bin/operator-sdk && chmod a+x /bin/operator-sdk
 RUN mkdir -p /home/user/go && chmod -R a+w /home/user
