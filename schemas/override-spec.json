@@ -47,20 +47,12 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "label": {
                 "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                 "type": "string",
                 "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
             "additionalProperties": false
@@ -111,11 +103,6 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "label": {
                 "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                 "type": "string",
@@ -127,9 +114,6 @@
                 "markdownDescription": "Indicates if the sub-commands should be executed concurrently"
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "markdownDescription": "Composite command that allows executing several sub-commands either sequentially or concurrently",
             "additionalProperties": false
@@ -182,11 +166,6 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "label": {
                 "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                 "type": "string",
@@ -195,8 +174,7 @@
             },
             "required": [
               "commandClass",
-              "embeddedResource",
-              "id"
+              "embeddedResource"
             ],
             "type": "object",
             "markdownDescription": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -276,11 +254,6 @@
                 "type": "boolean",
                 "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "label": {
                 "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                 "type": "string",
@@ -292,12 +265,14 @@
                 "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "markdownDescription": "CLI Command executed in an existing component container",
             "additionalProperties": false
+          },
+          "id": {
+            "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
+            "type": "string",
+            "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
           },
           "vscodeLaunch": {
             "description": "Command providing the definition of a VsCode launch action",
@@ -337,11 +312,6 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "inlined": {
                 "description": "Inlined content of the VsCode configuration",
                 "type": "string",
@@ -353,9 +323,6 @@
                 "markdownDescription": "Location as an absolute of relative URI the VsCode configuration will be fetched from"
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "markdownDescription": "Command providing the definition of a VsCode launch action",
             "additionalProperties": false,
@@ -410,11 +377,6 @@
                 "markdownDescription": "Defines the group this command is part of",
                 "additionalProperties": false
               },
-              "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                "type": "string",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-              },
               "inlined": {
                 "description": "Inlined content of the VsCode configuration",
                 "type": "string",
@@ -426,9 +388,6 @@
                 "markdownDescription": "Location as an absolute of relative URI the VsCode configuration will be fetched from"
               }
             },
-            "required": [
-              "id"
-            ],
             "type": "object",
             "markdownDescription": "Command providing the definition of a VsCode Task",
             "additionalProperties": false,
@@ -446,6 +405,9 @@
             ]
           }
         },
+        "required": [
+          "id"
+        ],
         "type": "object",
         "additionalProperties": false,
         "oneOf": [
@@ -593,9 +555,6 @@
               "mountSources": {
                 "type": "boolean"
               },
-              "name": {
-                "type": "string"
-              },
               "sourceMapping": {
                 "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
                 "type": "string",
@@ -628,9 +587,6 @@
                 "markdownDescription": "List of volumes mounts that should be mounted is this container."
               }
             },
-            "required": [
-              "name"
-            ],
             "type": "object",
             "markdownDescription": "Allows adding and configuring workspace-related containers",
             "additionalProperties": false
@@ -647,17 +603,11 @@
                 "description": "Additional free-form configuration for this custom component that the implementation controller will know how to use",
                 "type": "object",
                 "markdownDescription": "Additional free-form configuration for this custom component that the implementation controller will know how to use"
-              },
-              "name": {
-                "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
-                "type": "string",
-                "markdownDescription": "Mandatory name that allows referencing the component in commands, or inside a parent"
               }
             },
             "required": [
               "componentClass",
-              "embeddedResource",
-              "name"
+              "embeddedResource"
             ],
             "type": "object",
             "markdownDescription": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller",
@@ -722,20 +672,12 @@
                 "type": "string",
                 "markdownDescription": "Inlined manifest"
               },
-              "name": {
-                "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
-                "type": "string",
-                "markdownDescription": "Mandatory name that allows referencing the component in commands, or inside a parent"
-              },
               "uri": {
                 "description": "Location in a file fetched from a uri.",
                 "type": "string",
                 "markdownDescription": "Location in a file fetched from a uri."
               }
             },
-            "required": [
-              "name"
-            ],
             "type": "object",
             "markdownDescription": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
             "additionalProperties": false,
@@ -751,6 +693,11 @@
                 ]
               }
             ]
+          },
+          "name": {
+            "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
+            "type": "string",
+            "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
           },
           "openshift": {
             "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
@@ -811,20 +758,12 @@
                 "type": "string",
                 "markdownDescription": "Inlined manifest"
               },
-              "name": {
-                "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
-                "type": "string",
-                "markdownDescription": "Mandatory name that allows referencing the component in commands, or inside a parent"
-              },
               "uri": {
                 "description": "Location in a file fetched from a uri.",
                 "type": "string",
                 "markdownDescription": "Location in a file fetched from a uri."
               }
             },
-            "required": [
-              "name"
-            ],
             "type": "object",
             "markdownDescription": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
             "additionalProperties": false,
@@ -891,20 +830,12 @@
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "label": {
                           "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                           "type": "string",
                           "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                         }
                       },
-                      "required": [
-                        "id"
-                      ],
                       "type": "object",
                       "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                       "additionalProperties": false
@@ -955,11 +886,6 @@
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "label": {
                           "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                           "type": "string",
@@ -971,9 +897,6 @@
                           "markdownDescription": "Indicates if the sub-commands should be executed concurrently"
                         }
                       },
-                      "required": [
-                        "id"
-                      ],
                       "type": "object",
                       "markdownDescription": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                       "additionalProperties": false
@@ -1026,11 +949,6 @@
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "label": {
                           "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                           "type": "string",
@@ -1039,8 +957,7 @@
                       },
                       "required": [
                         "commandClass",
-                        "embeddedResource",
-                        "id"
+                        "embeddedResource"
                       ],
                       "type": "object",
                       "markdownDescription": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
@@ -1120,11 +1037,6 @@
                           "type": "boolean",
                           "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "label": {
                           "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
                           "type": "string",
@@ -1136,12 +1048,14 @@
                           "markdownDescription": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one."
                         }
                       },
-                      "required": [
-                        "id"
-                      ],
                       "type": "object",
                       "markdownDescription": "CLI Command executed in an existing component container",
                       "additionalProperties": false
+                    },
+                    "id": {
+                      "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
+                      "type": "string",
+                      "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                     },
                     "vscodeLaunch": {
                       "description": "Command providing the definition of a VsCode launch action",
@@ -1181,11 +1095,6 @@
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "inlined": {
                           "description": "Inlined content of the VsCode configuration",
                           "type": "string",
@@ -1197,9 +1106,6 @@
                           "markdownDescription": "Location as an absolute of relative URI the VsCode configuration will be fetched from"
                         }
                       },
-                      "required": [
-                        "id"
-                      ],
                       "type": "object",
                       "markdownDescription": "Command providing the definition of a VsCode launch action",
                       "additionalProperties": false,
@@ -1254,11 +1160,6 @@
                           "markdownDescription": "Defines the group this command is part of",
                           "additionalProperties": false
                         },
-                        "id": {
-                          "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
-                          "type": "string",
-                          "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
-                        },
                         "inlined": {
                           "description": "Inlined content of the VsCode configuration",
                           "type": "string",
@@ -1270,9 +1171,6 @@
                           "markdownDescription": "Location as an absolute of relative URI the VsCode configuration will be fetched from"
                         }
                       },
-                      "required": [
-                        "id"
-                      ],
                       "type": "object",
                       "markdownDescription": "Command providing the definition of a VsCode Task",
                       "additionalProperties": false,
@@ -1290,6 +1188,9 @@
                       ]
                     }
                   },
+                  "required": [
+                    "id"
+                  ],
                   "type": "object",
                   "additionalProperties": false,
                   "oneOf": [
@@ -1437,9 +1338,6 @@
                         "mountSources": {
                           "type": "boolean"
                         },
-                        "name": {
-                          "type": "string"
-                        },
                         "sourceMapping": {
                           "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
                           "type": "string",
@@ -1472,9 +1370,6 @@
                           "markdownDescription": "List of volumes mounts that should be mounted is this container."
                         }
                       },
-                      "required": [
-                        "name"
-                      ],
                       "type": "object",
                       "markdownDescription": "Configuration overriding for a Container component in a plugin",
                       "additionalProperties": false
@@ -1538,20 +1433,12 @@
                           "type": "string",
                           "markdownDescription": "Inlined manifest"
                         },
-                        "name": {
-                          "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
-                          "type": "string",
-                          "markdownDescription": "Mandatory name that allows referencing the component in commands, or inside a parent"
-                        },
                         "uri": {
                           "description": "Location in a file fetched from a uri.",
                           "type": "string",
                           "markdownDescription": "Location in a file fetched from a uri."
                         }
                       },
-                      "required": [
-                        "name"
-                      ],
                       "type": "object",
                       "markdownDescription": "Configuration overriding for a Kubernetes component in a plugin",
                       "additionalProperties": false,
@@ -1567,6 +1454,11 @@
                           ]
                         }
                       ]
+                    },
+                    "name": {
+                      "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
+                      "type": "string",
+                      "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
                     },
                     "openshift": {
                       "description": "Configuration overriding for an OpenShift component in a plugin",
@@ -1627,20 +1519,12 @@
                           "type": "string",
                           "markdownDescription": "Inlined manifest"
                         },
-                        "name": {
-                          "description": "Mandatory name that allows referencing the component in commands, or inside a parent",
-                          "type": "string",
-                          "markdownDescription": "Mandatory name that allows referencing the component in commands, or inside a parent"
-                        },
                         "uri": {
                           "description": "Location in a file fetched from a uri.",
                           "type": "string",
                           "markdownDescription": "Location in a file fetched from a uri."
                         }
                       },
-                      "required": [
-                        "name"
-                      ],
                       "type": "object",
                       "markdownDescription": "Configuration overriding for an OpenShift component in a plugin",
                       "additionalProperties": false,
@@ -1660,25 +1544,20 @@
                     "volume": {
                       "description": "Configuration overriding for a Volume component in a plugin",
                       "properties": {
-                        "name": {
-                          "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
-                          "type": "string",
-                          "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
-                        },
                         "size": {
                           "description": "Size of the volume",
                           "type": "string",
                           "markdownDescription": "Size of the volume"
                         }
                       },
-                      "required": [
-                        "name"
-                      ],
                       "type": "object",
                       "markdownDescription": "Configuration overriding for a Volume component in a plugin",
                       "additionalProperties": false
                     }
                   },
+                  "required": [
+                    "name"
+                  ],
                   "type": "object",
                   "additionalProperties": false,
                   "oneOf": [
@@ -1729,11 +1608,6 @@
                 "markdownDescription": "Reference to a Kubernetes CRD of type DevWorkspaceTemplate",
                 "additionalProperties": false
               },
-              "name": {
-                "description": "Optional name that allows referencing the component in commands, or inside a parent If omitted it will be infered from the location (uri or registryEntry)",
-                "type": "string",
-                "markdownDescription": "Optional name that allows referencing the component in commands, or inside a parent If omitted it will be infered from the location (uri or registryEntry)"
-              },
               "registryUrl": {
                 "type": "string"
               },
@@ -1767,25 +1641,20 @@
           "volume": {
             "description": "Allows specifying the definition of a volume shared by several other components",
             "properties": {
-              "name": {
-                "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
-                "type": "string",
-                "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
-              },
               "size": {
                 "description": "Size of the volume",
                 "type": "string",
                 "markdownDescription": "Size of the volume"
               }
             },
-            "required": [
-              "name"
-            ],
             "type": "object",
             "markdownDescription": "Allows specifying the definition of a volume shared by several other components",
             "additionalProperties": false
           }
         },
+        "required": [
+          "name"
+        ],
         "type": "object",
         "additionalProperties": false,
         "oneOf": [

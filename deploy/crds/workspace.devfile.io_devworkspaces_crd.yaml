@@ -67,15 +67,37 @@ spec:
                           it is assumed the component will be applied at workspace
                           start by default."
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
                           component:
                             description: Describes component that will be applied
                             type: string
-                        type: object
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
                         type: object
                       commandType:
                         description: Type of workspace command
@@ -91,12 +113,40 @@ spec:
                         description: Composite command that allows executing several
                           sub-commands either sequentially or concurrently
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
                           commands:
                             description: The commands that comprise this composite
                               command
                             items:
                               type: string
                             type: array
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
                           parallel:
                             description: Indicates if the sub-commands should be executed
                               concurrently
@@ -107,6 +157,12 @@ spec:
                           and should be provided by the user possibly through some
                           dedicated plugin
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
                           commandClass:
                             description: Class of command that the associated implementation
                               component should use to process this command with the
@@ -119,6 +175,28 @@ spec:
                             type: object
                             x-kubernetes-embedded-resource: true
                             x-kubernetes-preserve-unknown-fields: true
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
                         required:
                         - commandClass
                         - embeddedResource
@@ -127,6 +205,12 @@ spec:
                         description: CLI Command executed in an existing component
                           container
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
                           commandLine:
                             description: "The actual command-line string \n Special
                               variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -153,12 +237,34 @@ spec:
                               - value
                               type: object
                             type: array
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
                           hotReloadCapable:
                             description: "Whether the command is capable to reload
                               itself when source code changes. If set to `true` the
                               command won't be restarted and it is expected to handle
                               file changes on its own. \n Default value is `false`"
                             type: boolean
+                          label:
+                            description: Optional label that provides a label for
+                              this command to be used in Editor UI menus for example
+                            type: string
                           workingDir:
                             description: "Working directory where the command should
                               be executed \n Special variables that can be used: \n
@@ -169,37 +275,39 @@ spec:
                               of the first one."
                             type: string
                         type: object
-                      group:
-                        description: Defines the group this command is part of
-                        properties:
-                          isDefault:
-                            description: Identifies the default command for a given
-                              group kind
-                            type: boolean
-                          kind:
-                            description: Kind of group the command is part of
-                            enum:
-                            - build
-                            - run
-                            - test
-                            - debug
-                            type: string
-                        required:
-                        - kind
-                        type: object
                       id:
                         description: Mandatory identifier that allows referencing
                           this command in composite commands, from a parent, or in
                           events.
                         type: string
-                      label:
-                        description: Optional label that provides a label for this
-                          command to be used in Editor UI menus for example
-                        type: string
                       vscodeLaunch:
                         description: Command providing the definition of a VsCode
                           launch action
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -218,6 +326,30 @@ spec:
                         description: Command providing the definition of a VsCode
                           Task
                         properties:
+                          attributes:
+                            additionalProperties:
+                              type: string
+                            description: Optional map of free-form additional command
+                              attributes
+                            type: object
+                          group:
+                            description: Defines the group this command is part of
+                            properties:
+                              isDefault:
+                                description: Identifies the default command for a
+                                  given group kind
+                                type: boolean
+                              kind:
+                                description: Kind of group the command is part of
+                                enum:
+                                - build
+                                - run
+                                - test
+                                - debug
+                                type: string
+                            required:
+                            - kind
+                            type: object
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -614,16 +746,41 @@ spec:
                                     is assumed the component will be applied at workspace
                                     start by default."
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
                                     component:
                                       description: Describes component that will be
                                         applied
                                       type: string
-                                  type: object
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
                                   type: object
                                 commandType:
                                   description: Type of workspace command
@@ -639,12 +796,43 @@ spec:
                                   description: Composite command that allows executing
                                     several sub-commands either sequentially or concurrently
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
                                     commands:
                                       description: The commands that comprise this
                                         composite command
                                       items:
                                         type: string
                                       type: array
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
                                     parallel:
                                       description: Indicates if the sub-commands should
                                         be executed concurrently
@@ -655,6 +843,12 @@ spec:
                                     and should be provided by the user possibly through
                                     some dedicated plugin
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
                                     commandClass:
                                       description: Class of command that the associated
                                         implementation component should use to process
@@ -667,6 +861,31 @@ spec:
                                       type: object
                                       x-kubernetes-embedded-resource: true
                                       x-kubernetes-preserve-unknown-fields: true
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
                                   required:
                                   - commandClass
                                   - embeddedResource
@@ -675,6 +894,12 @@ spec:
                                   description: CLI Command executed in an existing
                                     component container
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
                                     commandLine:
                                       description: "The actual command-line string
                                         \n Special variables that can be used: \n
@@ -702,6 +927,26 @@ spec:
                                         - value
                                         type: object
                                       type: array
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
                                     hotReloadCapable:
                                       description: "Whether the command is capable
                                         to reload itself when source code changes.
@@ -709,6 +954,11 @@ spec:
                                         and it is expected to handle file changes
                                         on its own. \n Default value is `false`"
                                       type: boolean
+                                    label:
+                                      description: Optional label that provides a
+                                        label for this command to be used in Editor
+                                        UI menus for example
+                                      type: string
                                     workingDir:
                                       description: "Working directory where the command
                                         should be executed \n Special variables that
@@ -719,40 +969,41 @@ spec:
                                         point to the directory of the first one."
                                       type: string
                                   type: object
-                                group:
-                                  description: Defines the group this command is part
-                                    of
-                                  properties:
-                                    isDefault:
-                                      description: Identifies the default command
-                                        for a given group kind
-                                      type: boolean
-                                    kind:
-                                      description: Kind of group the command is part
-                                        of
-                                      enum:
-                                      - build
-                                      - run
-                                      - test
-                                      - debug
-                                      type: string
-                                  required:
-                                  - kind
-                                  type: object
                                 id:
                                   description: Mandatory identifier that allows referencing
                                     this command in composite commands, from a parent,
                                     or in events.
                                   type: string
-                                label:
-                                  description: Optional label that provides a label
-                                    for this command to be used in Editor UI menus
-                                    for example
-                                  type: string
                                 vscodeLaunch:
                                   description: Command providing the definition of
                                     a VsCode launch action
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -773,6 +1024,32 @@ spec:
                                   description: Command providing the definition of
                                     a VsCode Task
                                   properties:
+                                    attributes:
+                                      additionalProperties:
+                                        type: string
+                                      description: Optional map of free-form additional
+                                        command attributes
+                                      type: object
+                                    group:
+                                      description: Defines the group this command
+                                        is part of
+                                      properties:
+                                        isDefault:
+                                          description: Identifies the default command
+                                            for a given group kind
+                                          type: boolean
+                                        kind:
+                                          description: Kind of group the command is
+                                            part of
+                                          enum:
+                                          - build
+                                          - run
+                                          - test
+                                          - debug
+                                          type: string
+                                      required:
+                                      - kind
+                                      type: object
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -1054,6 +1331,11 @@ spec:
                                         a uri.
                                       type: string
                                   type: object
+                                name:
+                                  description: Mandatory name that allows referencing
+                                    the Volume component in Container volume mounts
+                                    or inside a parent
+                                  type: string
                                 openshift:
                                   description: Configuration overriding for an OpenShift
                                     component in a plugin
@@ -1154,6 +1436,8 @@ spec:
                                       description: Size of the volume
                                       type: string
                                   type: object
+                              required:
+                              - name
                               type: object
                             type: array
                           id:
@@ -1251,15 +1535,40 @@ spec:
                               for a given component, it is assumed the component will
                               be applied at workspace start by default."
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
                               component:
                                 description: Describes component that will be applied
                                 type: string
-                            type: object
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
+                              label:
+                                description: Optional label that provides a label
+                                  for this command to be used in Editor UI menus for
+                                  example
+                                type: string
                             type: object
                           commandType:
                             description: Type of workspace command
@@ -1275,12 +1584,43 @@ spec:
                             description: Composite command that allows executing several
                               sub-commands either sequentially or concurrently
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
                               commands:
                                 description: The commands that comprise this composite
                                   command
                                 items:
                                   type: string
                                 type: array
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
+                              label:
+                                description: Optional label that provides a label
+                                  for this command to be used in Editor UI menus for
+                                  example
+                                type: string
                               parallel:
                                 description: Indicates if the sub-commands should
                                   be executed concurrently
@@ -1291,6 +1631,12 @@ spec:
                               and should be provided by the user possibly through
                               some dedicated plugin
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
                               commandClass:
                                 description: Class of command that the associated
                                   implementation component should use to process this
@@ -1303,6 +1649,31 @@ spec:
                                 type: object
                                 x-kubernetes-embedded-resource: true
                                 x-kubernetes-preserve-unknown-fields: true
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
+                              label:
+                                description: Optional label that provides a label
+                                  for this command to be used in Editor UI menus for
+                                  example
+                                type: string
                             required:
                             - commandClass
                             - embeddedResource
@@ -1311,6 +1682,12 @@ spec:
                             description: CLI Command executed in an existing component
                               container
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
                               commandLine:
                                 description: "The actual command-line string \n Special
                                   variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -1337,6 +1714,26 @@ spec:
                                   - value
                                   type: object
                                 type: array
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
                               hotReloadCapable:
                                 description: "Whether the command is capable to reload
                                   itself when source code changes. If set to `true`
@@ -1344,6 +1741,11 @@ spec:
                                   to handle file changes on its own. \n Default value
                                   is `false`"
                                 type: boolean
+                              label:
+                                description: Optional label that provides a label
+                                  for this command to be used in Editor UI menus for
+                                  example
+                                type: string
                               workingDir:
                                 description: "Working directory where the command
                                   should be executed \n Special variables that can
@@ -1354,37 +1756,41 @@ spec:
                                   to the directory of the first one."
                                 type: string
                             type: object
-                          group:
-                            description: Defines the group this command is part of
-                            properties:
-                              isDefault:
-                                description: Identifies the default command for a
-                                  given group kind
-                                type: boolean
-                              kind:
-                                description: Kind of group the command is part of
-                                enum:
-                                - build
-                                - run
-                                - test
-                                - debug
-                                type: string
-                            required:
-                            - kind
-                            type: object
                           id:
                             description: Mandatory identifier that allows referencing
                               this command in composite commands, from a parent, or
                               in events.
                             type: string
-                          label:
-                            description: Optional label that provides a label for
-                              this command to be used in Editor UI menus for example
-                            type: string
                           vscodeLaunch:
                             description: Command providing the definition of a VsCode
                               launch action
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
                               inlined:
                                 description: Inlined content of the VsCode configuration
                                 type: string
@@ -1404,6 +1810,32 @@ spec:
                             description: Command providing the definition of a VsCode
                               Task
                             properties:
+                              attributes:
+                                additionalProperties:
+                                  type: string
+                                description: Optional map of free-form additional
+                                  command attributes
+                                type: object
+                              group:
+                                description: Defines the group this command is part
+                                  of
+                                properties:
+                                  isDefault:
+                                    description: Identifies the default command for
+                                      a given group kind
+                                    type: boolean
+                                  kind:
+                                    description: Kind of group the command is part
+                                      of
+                                    enum:
+                                    - build
+                                    - run
+                                    - test
+                                    - debug
+                                    type: string
+                                required:
+                                - kind
+                                type: object
                               inlined:
                                 description: Inlined content of the VsCode configuration
                                 type: string
@@ -1812,16 +2244,41 @@ spec:
                                         component, it is assumed the component will
                                         be applied at workspace start by default."
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
                                         component:
                                           description: Describes component that will
                                             be applied
                                           type: string
-                                      type: object
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
+                                        label:
+                                          description: Optional label that provides
+                                            a label for this command to be used in
+                                            Editor UI menus for example
+                                          type: string
                                       type: object
                                     commandType:
                                       description: Type of workspace command
@@ -1838,12 +2295,43 @@ spec:
                                         several sub-commands either sequentially or
                                         concurrently
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
                                         commands:
                                           description: The commands that comprise
                                             this composite command
                                           items:
                                             type: string
                                           type: array
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
+                                        label:
+                                          description: Optional label that provides
+                                            a label for this command to be used in
+                                            Editor UI menus for example
+                                          type: string
                                         parallel:
                                           description: Indicates if the sub-commands
                                             should be executed concurrently
@@ -1854,6 +2342,12 @@ spec:
                                         and should be provided by the user possibly
                                         through some dedicated plugin
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
                                         commandClass:
                                           description: Class of command that the associated
                                             implementation component should use to
@@ -1867,6 +2361,31 @@ spec:
                                           type: object
                                           x-kubernetes-embedded-resource: true
                                           x-kubernetes-preserve-unknown-fields: true
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
+                                        label:
+                                          description: Optional label that provides
+                                            a label for this command to be used in
+                                            Editor UI menus for example
+                                          type: string
                                       required:
                                       - commandClass
                                       - embeddedResource
@@ -1875,6 +2394,12 @@ spec:
                                       description: CLI Command executed in an existing
                                         component container
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
                                         commandLine:
                                           description: "The actual command-line string
                                             \n Special variables that can be used:
@@ -1903,6 +2428,26 @@ spec:
                                             - value
                                             type: object
                                           type: array
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
                                         hotReloadCapable:
                                           description: "Whether the command is capable
                                             to reload itself when source code changes.
@@ -1911,6 +2456,11 @@ spec:
                                             file changes on its own. \n Default value
                                             is `false`"
                                           type: boolean
+                                        label:
+                                          description: Optional label that provides
+                                            a label for this command to be used in
+                                            Editor UI menus for example
+                                          type: string
                                         workingDir:
                                           description: "Working directory where the
                                             command should be executed \n Special
@@ -1922,40 +2472,41 @@ spec:
                                             point to the directory of the first one."
                                           type: string
                                       type: object
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
                                     id:
                                       description: Mandatory identifier that allows
                                         referencing this command in composite commands,
                                         from a parent, or in events.
                                       type: string
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
                                     vscodeLaunch:
                                       description: Command providing the definition
                                         of a VsCode launch action
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
                                         inlined:
                                           description: Inlined content of the VsCode
                                             configuration
@@ -1977,6 +2528,32 @@ spec:
                                       description: Command providing the definition
                                         of a VsCode Task
                                       properties:
+                                        attributes:
+                                          additionalProperties:
+                                            type: string
+                                          description: Optional map of free-form additional
+                                            command attributes
+                                          type: object
+                                        group:
+                                          description: Defines the group this command
+                                            is part of
+                                          properties:
+                                            isDefault:
+                                              description: Identifies the default
+                                                command for a given group kind
+                                              type: boolean
+                                            kind:
+                                              description: Kind of group the command
+                                                is part of
+                                              enum:
+                                              - build
+                                              - run
+                                              - test
+                                              - debug
+                                              type: string
+                                          required:
+                                          - kind
+                                          type: object
                                         inlined:
                                           description: Inlined content of the VsCode
                                             configuration
@@ -2275,6 +2852,11 @@ spec:
                                             from a uri.
                                           type: string
                                       type: object
+                                    name:
+                                      description: Mandatory name that allows referencing
+                                        the Volume component in Container volume mounts
+                                        or inside a parent
+                                      type: string
                                     openshift:
                                       description: Configuration overriding for an
                                         OpenShift component in a plugin
@@ -2380,6 +2962,8 @@ spec:
                                           description: Size of the volume
                                           type: string
                                       type: object
+                                  required:
+                                  - name
                                   type: object
                                 type: array
                               id:

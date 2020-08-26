@@ -25,27 +25,67 @@
               "apply": {
                 "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
                   "component": {
                     "description": "Describes component that will be applied",
                     "type": "string",
                     "markdownDescription": "Describes component that will be applied"
+                  },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
+                  "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "type": "string",
+                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   }
                 },
                 "type": "object",
                 "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                 "additionalProperties": false
               },
-              "attributes": {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "composite": {
                 "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
                   "commands": {
                     "description": "The commands that comprise this composite command",
                     "items": {
@@ -53,6 +93,38 @@
                     },
                     "type": "array",
                     "markdownDescription": "The commands that comprise this composite command"
+                  },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
+                  "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "type": "string",
+                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   },
                   "parallel": {
                     "description": "Indicates if the sub-commands should be executed concurrently",
@@ -67,6 +139,14 @@
               "custom": {
                 "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
                   "commandClass": {
                     "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
                     "type": "string",
@@ -76,6 +156,38 @@
                     "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
                     "type": "object",
                     "markdownDescription": "Additional free-form configuration for this custom command that the implementation component will know how to use"
+                  },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
+                  "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "type": "string",
+                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   }
                 },
                 "required": [
@@ -89,6 +201,14 @@
               "exec": {
                 "description": "CLI Command executed in an existing component container",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
                   "commandLine": {
                     "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                     "type": "string",
@@ -120,10 +240,42 @@
                     "type": "array",
                     "markdownDescription": "Optional list of environment variables that have to be set before running the command"
                   },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
                   "hotReloadCapable": {
                     "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                     "type": "boolean",
                     "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                  },
+                  "label": {
+                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "type": "string",
+                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                   },
                   "workingDir": {
                     "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
@@ -138,46 +290,49 @@
                   "commandLine"
                 ]
               },
-              "group": {
-                "description": "Defines the group this command is part of",
-                "properties": {
-                  "isDefault": {
-                    "description": "Identifies the default command for a given group kind",
-                    "type": "boolean",
-                    "markdownDescription": "Identifies the default command for a given group kind"
-                  },
-                  "kind": {
-                    "description": "Kind of group the command is part of",
-                    "enum": [
-                      "build",
-                      "run",
-                      "test",
-                      "debug"
-                    ],
-                    "type": "string",
-                    "markdownDescription": "Kind of group the command is part of"
-                  }
-                },
-                "required": [
-                  "kind"
-                ],
-                "type": "object",
-                "markdownDescription": "Defines the group this command is part of",
-                "additionalProperties": false
-              },
               "id": {
                 "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                 "type": "string",
                 "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
               },
-              "label": {
-                "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
-                "type": "string",
-                "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
-              },
               "vscodeLaunch": {
                 "description": "Command providing the definition of a VsCode launch action",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
                   "inlined": {
                     "description": "Inlined content of the VsCode configuration",
                     "type": "string",
@@ -208,6 +363,41 @@
               "vscodeTask": {
                 "description": "Command providing the definition of a VsCode Task",
                 "properties": {
+                  "attributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Optional map of free-form additional command attributes",
+                    "type": "object",
+                    "markdownDescription": "Optional map of free-form additional command attributes"
+                  },
+                  "group": {
+                    "description": "Defines the group this command is part of",
+                    "properties": {
+                      "isDefault": {
+                        "description": "Identifies the default command for a given group kind",
+                        "type": "boolean",
+                        "markdownDescription": "Identifies the default command for a given group kind"
+                      },
+                      "kind": {
+                        "description": "Kind of group the command is part of",
+                        "enum": [
+                          "build",
+                          "run",
+                          "test",
+                          "debug"
+                        ],
+                        "type": "string",
+                        "markdownDescription": "Kind of group the command is part of"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object",
+                    "markdownDescription": "Defines the group this command is part of",
+                    "additionalProperties": false
+                  },
                   "inlined": {
                     "description": "Inlined content of the VsCode configuration",
                     "type": "string",
@@ -627,27 +817,67 @@
                         "apply": {
                           "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
                             "component": {
                               "description": "Describes component that will be applied",
                               "type": "string",
                               "markdownDescription": "Describes component that will be applied"
+                            },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
+                            "label": {
+                              "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                              "type": "string",
+                              "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             }
                           },
                           "type": "object",
                           "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                           "additionalProperties": false
                         },
-                        "attributes": {
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "composite": {
                           "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
                             "commands": {
                               "description": "The commands that comprise this composite command",
                               "items": {
@@ -655,6 +885,38 @@
                               },
                               "type": "array",
                               "markdownDescription": "The commands that comprise this composite command"
+                            },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
+                            "label": {
+                              "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                              "type": "string",
+                              "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             },
                             "parallel": {
                               "description": "Indicates if the sub-commands should be executed concurrently",
@@ -669,6 +931,14 @@
                         "custom": {
                           "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
                             "commandClass": {
                               "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
                               "type": "string",
@@ -678,6 +948,38 @@
                               "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
                               "type": "object",
                               "markdownDescription": "Additional free-form configuration for this custom command that the implementation component will know how to use"
+                            },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
+                            "label": {
+                              "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                              "type": "string",
+                              "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             }
                           },
                           "required": [
@@ -691,6 +993,14 @@
                         "exec": {
                           "description": "CLI Command executed in an existing component container",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
                             "commandLine": {
                               "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                               "type": "string",
@@ -722,10 +1032,42 @@
                               "type": "array",
                               "markdownDescription": "Optional list of environment variables that have to be set before running the command"
                             },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
                             "hotReloadCapable": {
                               "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                               "type": "boolean",
                               "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                            },
+                            "label": {
+                              "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                              "type": "string",
+                              "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                             },
                             "workingDir": {
                               "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
@@ -737,46 +1079,49 @@
                           "markdownDescription": "CLI Command executed in an existing component container",
                           "additionalProperties": false
                         },
-                        "group": {
-                          "description": "Defines the group this command is part of",
-                          "properties": {
-                            "isDefault": {
-                              "description": "Identifies the default command for a given group kind",
-                              "type": "boolean",
-                              "markdownDescription": "Identifies the default command for a given group kind"
-                            },
-                            "kind": {
-                              "description": "Kind of group the command is part of",
-                              "enum": [
-                                "build",
-                                "run",
-                                "test",
-                                "debug"
-                              ],
-                              "type": "string",
-                              "markdownDescription": "Kind of group the command is part of"
-                            }
-                          },
-                          "required": [
-                            "kind"
-                          ],
-                          "type": "object",
-                          "markdownDescription": "Defines the group this command is part of",
-                          "additionalProperties": false
-                        },
                         "id": {
                           "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                           "type": "string",
                           "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                         },
-                        "label": {
-                          "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
-                          "type": "string",
-                          "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
-                        },
                         "vscodeLaunch": {
                           "description": "Command providing the definition of a VsCode launch action",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
                             "inlined": {
                               "description": "Inlined content of the VsCode configuration",
                               "type": "string",
@@ -807,6 +1152,41 @@
                         "vscodeTask": {
                           "description": "Command providing the definition of a VsCode Task",
                           "properties": {
+                            "attributes": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional map of free-form additional command attributes",
+                              "type": "object",
+                              "markdownDescription": "Optional map of free-form additional command attributes"
+                            },
+                            "group": {
+                              "description": "Defines the group this command is part of",
+                              "properties": {
+                                "isDefault": {
+                                  "description": "Identifies the default command for a given group kind",
+                                  "type": "boolean",
+                                  "markdownDescription": "Identifies the default command for a given group kind"
+                                },
+                                "kind": {
+                                  "description": "Kind of group the command is part of",
+                                  "enum": [
+                                    "build",
+                                    "run",
+                                    "test",
+                                    "debug"
+                                  ],
+                                  "type": "string",
+                                  "markdownDescription": "Kind of group the command is part of"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object",
+                              "markdownDescription": "Defines the group this command is part of",
+                              "additionalProperties": false
+                            },
                             "inlined": {
                               "description": "Inlined content of the VsCode configuration",
                               "type": "string",
@@ -1102,6 +1482,11 @@
                             }
                           ]
                         },
+                        "name": {
+                          "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
+                          "type": "string",
+                          "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
+                        },
                         "openshift": {
                           "description": "Configuration overriding for an OpenShift component in a plugin",
                           "properties": {
@@ -1197,6 +1582,9 @@
                           "additionalProperties": false
                         }
                       },
+                      "required": [
+                        "name"
+                      ],
                       "type": "object",
                       "additionalProperties": false,
                       "oneOf": [
@@ -1382,27 +1770,67 @@
                   "apply": {
                     "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
                       "component": {
                         "description": "Describes component that will be applied",
                         "type": "string",
                         "markdownDescription": "Describes component that will be applied"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
+                      "label": {
+                        "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                        "type": "string",
+                        "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                       }
                     },
                     "type": "object",
                     "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                     "additionalProperties": false
                   },
-                  "attributes": {
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "composite": {
                     "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
                       "commands": {
                         "description": "The commands that comprise this composite command",
                         "items": {
@@ -1410,6 +1838,38 @@
                         },
                         "type": "array",
                         "markdownDescription": "The commands that comprise this composite command"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
+                      "label": {
+                        "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                        "type": "string",
+                        "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                       },
                       "parallel": {
                         "description": "Indicates if the sub-commands should be executed concurrently",
@@ -1424,6 +1884,14 @@
                   "custom": {
                     "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
                       "commandClass": {
                         "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
                         "type": "string",
@@ -1433,6 +1901,38 @@
                         "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
                         "type": "object",
                         "markdownDescription": "Additional free-form configuration for this custom command that the implementation component will know how to use"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
+                      "label": {
+                        "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                        "type": "string",
+                        "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                       }
                     },
                     "required": [
@@ -1446,6 +1946,14 @@
                   "exec": {
                     "description": "CLI Command executed in an existing component container",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
                       "commandLine": {
                         "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                         "type": "string",
@@ -1477,10 +1985,42 @@
                         "type": "array",
                         "markdownDescription": "Optional list of environment variables that have to be set before running the command"
                       },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
                       "hotReloadCapable": {
                         "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                         "type": "boolean",
                         "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                      },
+                      "label": {
+                        "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                        "type": "string",
+                        "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                       },
                       "workingDir": {
                         "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
@@ -1492,46 +2032,49 @@
                     "markdownDescription": "CLI Command executed in an existing component container",
                     "additionalProperties": false
                   },
-                  "group": {
-                    "description": "Defines the group this command is part of",
-                    "properties": {
-                      "isDefault": {
-                        "description": "Identifies the default command for a given group kind",
-                        "type": "boolean",
-                        "markdownDescription": "Identifies the default command for a given group kind"
-                      },
-                      "kind": {
-                        "description": "Kind of group the command is part of",
-                        "enum": [
-                          "build",
-                          "run",
-                          "test",
-                          "debug"
-                        ],
-                        "type": "string",
-                        "markdownDescription": "Kind of group the command is part of"
-                      }
-                    },
-                    "required": [
-                      "kind"
-                    ],
-                    "type": "object",
-                    "markdownDescription": "Defines the group this command is part of",
-                    "additionalProperties": false
-                  },
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string",
                     "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                   },
-                  "label": {
-                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
-                    "type": "string",
-                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
-                  },
                   "vscodeLaunch": {
                     "description": "Command providing the definition of a VsCode launch action",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
                       "inlined": {
                         "description": "Inlined content of the VsCode configuration",
                         "type": "string",
@@ -1562,6 +2105,41 @@
                   "vscodeTask": {
                     "description": "Command providing the definition of a VsCode Task",
                     "properties": {
+                      "attributes": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Optional map of free-form additional command attributes",
+                        "type": "object",
+                        "markdownDescription": "Optional map of free-form additional command attributes"
+                      },
+                      "group": {
+                        "description": "Defines the group this command is part of",
+                        "properties": {
+                          "isDefault": {
+                            "description": "Identifies the default command for a given group kind",
+                            "type": "boolean",
+                            "markdownDescription": "Identifies the default command for a given group kind"
+                          },
+                          "kind": {
+                            "description": "Kind of group the command is part of",
+                            "enum": [
+                              "build",
+                              "run",
+                              "test",
+                              "debug"
+                            ],
+                            "type": "string",
+                            "markdownDescription": "Kind of group the command is part of"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object",
+                        "markdownDescription": "Defines the group this command is part of",
+                        "additionalProperties": false
+                      },
                       "inlined": {
                         "description": "Inlined content of the VsCode configuration",
                         "type": "string",
@@ -1975,27 +2553,67 @@
                             "apply": {
                               "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
                                 "component": {
                                   "description": "Describes component that will be applied",
                                   "type": "string",
                                   "markdownDescription": "Describes component that will be applied"
+                                },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
+                                "label": {
+                                  "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                                  "type": "string",
+                                  "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                                 }
                               },
                               "type": "object",
                               "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                               "additionalProperties": false
                             },
-                            "attributes": {
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "composite": {
                               "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
                                 "commands": {
                                   "description": "The commands that comprise this composite command",
                                   "items": {
@@ -2003,6 +2621,38 @@
                                   },
                                   "type": "array",
                                   "markdownDescription": "The commands that comprise this composite command"
+                                },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
+                                "label": {
+                                  "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                                  "type": "string",
+                                  "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                                 },
                                 "parallel": {
                                   "description": "Indicates if the sub-commands should be executed concurrently",
@@ -2017,6 +2667,14 @@
                             "custom": {
                               "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
                                 "commandClass": {
                                   "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
                                   "type": "string",
@@ -2026,6 +2684,38 @@
                                   "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
                                   "type": "object",
                                   "markdownDescription": "Additional free-form configuration for this custom command that the implementation component will know how to use"
+                                },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
+                                "label": {
+                                  "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                                  "type": "string",
+                                  "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                                 }
                               },
                               "required": [
@@ -2039,6 +2729,14 @@
                             "exec": {
                               "description": "CLI Command executed in an existing component container",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
                                 "commandLine": {
                                   "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
                                   "type": "string",
@@ -2070,10 +2768,42 @@
                                   "type": "array",
                                   "markdownDescription": "Optional list of environment variables that have to be set before running the command"
                                 },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
                                 "hotReloadCapable": {
                                   "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
                                   "type": "boolean",
                                   "markdownDescription": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`"
+                                },
+                                "label": {
+                                  "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                                  "type": "string",
+                                  "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
                                 },
                                 "workingDir": {
                                   "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `${PROJECTS_ROOT}`: A path where projects sources are mounted\n\n - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.",
@@ -2085,46 +2815,49 @@
                               "markdownDescription": "CLI Command executed in an existing component container",
                               "additionalProperties": false
                             },
-                            "group": {
-                              "description": "Defines the group this command is part of",
-                              "properties": {
-                                "isDefault": {
-                                  "description": "Identifies the default command for a given group kind",
-                                  "type": "boolean",
-                                  "markdownDescription": "Identifies the default command for a given group kind"
-                                },
-                                "kind": {
-                                  "description": "Kind of group the command is part of",
-                                  "enum": [
-                                    "build",
-                                    "run",
-                                    "test",
-                                    "debug"
-                                  ],
-                                  "type": "string",
-                                  "markdownDescription": "Kind of group the command is part of"
-                                }
-                              },
-                              "required": [
-                                "kind"
-                              ],
-                              "type": "object",
-                              "markdownDescription": "Defines the group this command is part of",
-                              "additionalProperties": false
-                            },
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string",
                               "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                             },
-                            "label": {
-                              "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
-                              "type": "string",
-                              "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
-                            },
                             "vscodeLaunch": {
                               "description": "Command providing the definition of a VsCode launch action",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
                                 "inlined": {
                                   "description": "Inlined content of the VsCode configuration",
                                   "type": "string",
@@ -2155,6 +2888,41 @@
                             "vscodeTask": {
                               "description": "Command providing the definition of a VsCode Task",
                               "properties": {
+                                "attributes": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Optional map of free-form additional command attributes",
+                                  "type": "object",
+                                  "markdownDescription": "Optional map of free-form additional command attributes"
+                                },
+                                "group": {
+                                  "description": "Defines the group this command is part of",
+                                  "properties": {
+                                    "isDefault": {
+                                      "description": "Identifies the default command for a given group kind",
+                                      "type": "boolean",
+                                      "markdownDescription": "Identifies the default command for a given group kind"
+                                    },
+                                    "kind": {
+                                      "description": "Kind of group the command is part of",
+                                      "enum": [
+                                        "build",
+                                        "run",
+                                        "test",
+                                        "debug"
+                                      ],
+                                      "type": "string",
+                                      "markdownDescription": "Kind of group the command is part of"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ],
+                                  "type": "object",
+                                  "markdownDescription": "Defines the group this command is part of",
+                                  "additionalProperties": false
+                                },
                                 "inlined": {
                                   "description": "Inlined content of the VsCode configuration",
                                   "type": "string",
@@ -2450,6 +3218,11 @@
                                 }
                               ]
                             },
+                            "name": {
+                              "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
+                              "type": "string",
+                              "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
+                            },
                             "openshift": {
                               "description": "Configuration overriding for an OpenShift component in a plugin",
                               "properties": {
@@ -2545,6 +3318,9 @@
                               "additionalProperties": false
                             }
                           },
+                          "required": [
+                            "name"
+                          ],
                           "type": "object",
                           "additionalProperties": false,
                           "oneOf": [
