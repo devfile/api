@@ -13,20 +13,20 @@ spec:
           embeddedResource:
             custom-info: "connexion-information"
     components:
-      - kubernetes:
-          name: "production"
+      - name: "production"
+        kubernetes:
           uri: "https://somewhere/production-environment.yaml"
-      - custom:
+      - name: "myNewComponent"
+        custom:
           componentClass: "NewComponentType"
           embeddedResource:
             config1: ""
             config2:
               config2-1: "" 
               config2-2: "" 
-          name: "myNewComponent"
     commands:
-      - custom:
-          id: myCustomCommand
+      - id: myCustomCommand
+        custom:
           commandClass: myCommandType
           embeddedResource:
             anyCustomConfigValue: ""

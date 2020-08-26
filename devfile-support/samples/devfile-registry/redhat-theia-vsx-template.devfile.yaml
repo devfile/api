@@ -6,20 +6,20 @@ metadata:
   parameters:
     VSX_LIST 
 components:
- - container:
-    name: vsx-installer
-    image: vsx-installer
-    volumeMounts:
-      - name: vsx
-        path: "/vsx"
-    env:
-      - name: VSX_LIST
-        value: ""
- - volume:
-    name: vsx
+  - name: vsx-installer
+    container:
+      image: vsx-installer
+      volumeMounts:
+        - name: vsx
+          path: "/vsx"
+      env:
+        - name: VSX_LIST
+          value: ""
+  - name: vsx
+    volume: {}
 commands:
- - apply:
-     id: copyVsx
+ - id: copyVsx
+   apply:
      component: vsx-installer
 events:
   preStart:

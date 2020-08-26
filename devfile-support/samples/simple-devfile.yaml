@@ -8,27 +8,27 @@ projects:
       remotes:
         origin: "https://github.com/devfile/api"
 commands:
-  - exec:
-      id: buildSchema
+  - id: buildSchema
+    exec:
       label: Build the schema
       commandLine: "./buildSchema.sh"
       component: build-tools
       group:
         kind: build
         isDefault: true
-  - vscodeTask:
-      id: openDevfile
+  - id: openDevfile
+    vscodeTask:
       inlined:
         json        
-  - composite:
-      id: buildSchemaAndOpenDevfile
+  - id: buildSchemaAndOpenDevfile
+    composite:
       label: Build schema and open devfile
       commands:
         - buildSchema
         - openDevfile
       parallel: false
-  - exec:
-      id: helloWorld
+  - id: helloWorld
+    exec:
       env:
         - name: "USER"
           value: "John Doe"
@@ -37,15 +37,18 @@ events:
   postStart:
     - "buildSchemaAndOpenDevfile"
 components:
-  - plugin:
+  - name: yaml-support
+    plugin:
       id: redhat/vscode-yaml/latest
-  - plugin:
+  - name: go-support
+    plugin:
       id: ms-vscode/go/latest
-  - plugin:
+  - name: editor
+    plugin:
       id: eclipse/che-theia/latest
       registryUrl: "external-registry-url"
-  - container:
+  - name: "build-tools"
+    container:
       image: some container image with required build tools
       mountSources: true
       sourceMapping: /home/src
-      name: "build-tools"

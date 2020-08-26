@@ -3,8 +3,8 @@ metadata:
   name: "myDevfile"
   version: "0.0.1"
 components:
-  - kubernetes:
-      name: cleanup-job
+  - name: cleanup-job
+    kubernetes:
       inlined: |
         apiVersion: batch/v1
         kind: Job
@@ -19,13 +19,15 @@ components:
                 command: ["some",  "command", "with", "parameters"]
               restartPolicy: Never
           backoffLimit: 4
-  - plugin:
+  - name: go-support
+    plugin:
       id: ms-vscode/go/latest
-  - plugin:
+  - name: editor
+    plugin:
       id: eclipse/che-theia/latest
 commands:
-  - apply:
-      id: cleanup-job
+  - id: cleanup-job
+    apply:
       component: cleanup-job      
 events:
   postStop:

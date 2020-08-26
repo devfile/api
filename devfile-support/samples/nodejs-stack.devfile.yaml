@@ -7,19 +7,21 @@ projects:
       remotes:
         origin: "https://github.com/che-samples/web-nodejs-sample.git"
 components:
-  - plugin:
+  - name: editor
+    plugin:
       id: eclipse/che-theia/7.1.0
-  - plugin:
+  - name: terminal
+    plugin:
       id: eclipse/che-machine-exec-plugin/7.1.0
-  - plugin:
-      name: "typescript-plugin"
+  - name: typescript-plugin
+    plugin:
       id: che-incubator/typescript/1.30.2
       components:
-        - container:
-            name: "??"
+        - name: "??"
+          container:
             memoryLimit: 512Mi
-  - container:
-      name: nodejs
+  - name: nodejs
+    container:
       image: quay.io/eclipse/che-nodejs10-ubi:nightly
       memoryLimit: 512Mi
       endpoints:
@@ -28,37 +30,37 @@ components:
           targetPort: 3000
       mountSources: true
 commands:
-  - exec:
-      id: download dependencies
+  - id: download dependencies
+    exec:
       component: nodejs
       commandLine: npm install
       workingDir: ${PROJECTS_ROOT}/project/app
       group:
         kind: build
-  - exec:
-      id: run the app
+  - id: run the app
+    exec:
       component: nodejs
       commandLine: nodemon app.js
       workingDir: ${PROJECTS_ROOT}/project/app
       group:
         kind: run
         isDefault: true
-  - exec:
-      id: run the app (debugging enabled)
+  - id: run the app (debugging enabled)
+    exec:
       component: nodejs
       commandLine: nodemon --inspect app.js
       workingDir: ${PROJECTS_ROOT}/project/app
       group:
         kind: run
-  - exec:
-      id: stop the app
+  - id: stop the app
+    exec:
       component: nodejs
       commandLine: >-
           node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
           echo "Stopping node server with PIDs: ${node_server_pids}" && 
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
-  - vscodeLaunch:
-      id: Attach remote debugger
+  - id: Attach remote debugger
+    vscodeLaunch:
       inlined: |
         {
           "version": "0.2.0",
