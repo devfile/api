@@ -1,8 +1,9 @@
 components:
-  - plugin:
+  - name: "UnchangedPluginName"
+    plugin:
       id: "UnchangedPluginId"
-  - kubernetes:
-      name: componentToUpdate
+  - name: componentToUpdate
+    kubernetes:
       uri: "componentToUpdateUri"
       endpoints:
         - name: endpointName

@@ -1,7 +1,7 @@
 components:
   - plugin:
-      name: "theOnlyPlugin"
       uri: "aCustomLocation"
+    name: "theOnlyPlugin"
   - container:
       image: "aDifferentValue"
-      name: "existingInPlugin"
+    name: "existingInPlugin"

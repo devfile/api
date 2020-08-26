@@ -1,3 +1,3 @@
 2 errors occurred:
-	* Some Command elements do not override any existing element: commandToAdd. They should be defined in the main body, as new elements, not in the overriding section
-	* Some Component elements do not override any existing element: newVolume. They should be defined in the main body, as new elements, not in the overriding section
+	* Some Commands do not override any existing element: commandToAdd. They should be defined in the main body, as new elements, not in the overriding section
+	* Some Components do not override any existing element: newVolume. They should be defined in the main body, as new elements, not in the overriding section

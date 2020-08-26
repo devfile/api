@@ -2,8 +2,8 @@ parent:
   uri: "anyParent"
 components:
   - plugin:
-      name: "theOnlyPlugin"
       uri: "aCustomLocation"
+    name: "theOnlyPlugin"
   - container:
       image: "anyValue"
-      name: "newComponent"
+    name: "newComponent"
