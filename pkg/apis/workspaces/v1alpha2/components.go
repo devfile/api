@@ -23,8 +23,9 @@ type BaseComponent struct {
 
 //+k8s:openapi-gen=true
 type Component struct {
-	// Mandatory name that allows referencing the Volume component
-	// in Container volume mounts or inside a parent
+	// Mandatory name that allows referencing the component
+	// from other elements (such as commands) or from an external
+	// devfile that may reference this component through a parent or a plugin.
 	Name           string `json:"name"`
 	ComponentUnion        `json:",inline"`
 }
