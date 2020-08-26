@@ -19,6 +19,11 @@ type ParentOverrides struct {
 	// +optional
 	Projects []Project `json:"projects,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
+	// Overrides of startedProjects encapsulated in a parent devfile.
+	// Overriding is done using a strategic merge patch.
+	// +optional
+	StarterProjects []StarterProject `json:"starterProjects,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
 	// Overrides of components encapsulated in a parent devfile.
 	// Overriding is done using a strategic merge patch
 	// +optional

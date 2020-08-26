@@ -1852,6 +1852,176 @@
       },
       "type": "array",
       "markdownDescription": "Overrides of projects encapsulated in a parent devfile. Overriding is done using a strategic merge patch."
+    },
+    "starterProjects": {
+      "description": "Overrides of startedProjects encapsulated in a parent devfile. Overriding is done using a strategic merge patch.",
+      "items": {
+        "properties": {
+          "clonePath": {
+            "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
+            "type": "string",
+            "markdownDescription": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name."
+          },
+          "custom": {
+            "description": "Project's Custom source",
+            "properties": {
+              "embeddedResource": {
+                "type": "object"
+              },
+              "projectSourceClass": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "embeddedResource",
+              "projectSourceClass"
+            ],
+            "type": "object",
+            "markdownDescription": "Project's Custom source",
+            "additionalProperties": false
+          },
+          "description": {
+            "description": "Description of a starter project",
+            "type": "string",
+            "markdownDescription": "Description of a starter project"
+          },
+          "git": {
+            "description": "Project's Git source",
+            "properties": {
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
+              },
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string",
+                "markdownDescription": "Part of project to populate in the working directory."
+              }
+            },
+            "type": "object",
+            "markdownDescription": "Project's Git source",
+            "additionalProperties": false
+          },
+          "github": {
+            "description": "Project's GitHub source",
+            "properties": {
+              "checkoutFrom": {
+                "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "properties": {
+                  "remote": {
+                    "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                    "type": "string",
+                    "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                  },
+                  "revision": {
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "type": "string",
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                  }
+                },
+                "type": "object",
+                "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                "additionalProperties": false
+              },
+              "remotes": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                "type": "object",
+                "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string",
+                "markdownDescription": "Part of project to populate in the working directory."
+              }
+            },
+            "type": "object",
+            "markdownDescription": "Project's GitHub source",
+            "additionalProperties": false
+          },
+          "name": {
+            "description": "Project name",
+            "type": "string",
+            "markdownDescription": "Project name"
+          },
+          "zip": {
+            "description": "Project's Zip source",
+            "properties": {
+              "location": {
+                "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
+                "type": "string",
+                "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
+              },
+              "sparseCheckoutDir": {
+                "description": "Part of project to populate in the working directory.",
+                "type": "string",
+                "markdownDescription": "Part of project to populate in the working directory."
+              }
+            },
+            "type": "object",
+            "markdownDescription": "Project's Zip source",
+            "additionalProperties": false
+          },
+          "markdownDescription": {
+            "description": "Description of a starter project",
+            "type": "string",
+            "markdownDescription": "Description of a starter project"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "git"
+            ]
+          },
+          {
+            "required": [
+              "github"
+            ]
+          },
+          {
+            "required": [
+              "zip"
+            ]
+          },
+          {
+            "required": [
+              "custom"
+            ]
+          }
+        ]
+      },
+      "type": "array",
+      "markdownDescription": "Overrides of startedProjects encapsulated in a parent devfile. Overriding is done using a strategic merge patch."
     }
   },
   "type": "object",

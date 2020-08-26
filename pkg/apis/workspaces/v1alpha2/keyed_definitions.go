@@ -16,11 +16,16 @@ func (keyed Project) Key() string {
 	return keyed.Name
 }
 
+func (keyed StarterProject) Key() string {
+	return keyed.Name
+}
+
 func (container DevWorkspaceTemplateSpecContent) GetToplevelLists() TopLevelLists {
 	return TopLevelLists{
-		"Projects":   extractKeys(container.Projects),
-		"Components": extractKeys(container.Components),
-		"Commands":   extractKeys(container.Commands),
+		"Projects":        extractKeys(container.Projects),
+		"StarterProjects": extractKeys(container.StarterProjects),
+		"Components":      extractKeys(container.Components),
+		"Commands":        extractKeys(container.Commands),
 	}
 }
 
@@ -33,8 +38,9 @@ func (container PluginOverrides) GetToplevelLists() TopLevelLists {
 
 func (container ParentOverrides) GetToplevelLists() TopLevelLists {
 	return TopLevelLists{
-		"Projects":   extractKeys(container.Projects),
-		"Components": extractKeys(container.Components),
-		"Commands":   extractKeys(container.Commands),
+		"Projects":        extractKeys(container.Projects),
+		"StarterProjects": extractKeys(container.StarterProjects),
+		"Components":      extractKeys(container.Components),
+		"Commands":        extractKeys(container.Commands),
 	}
 }

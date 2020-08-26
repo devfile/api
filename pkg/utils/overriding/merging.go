@@ -98,6 +98,10 @@ func MergeDevWorkspaceTemplateSpec(
 	postStopCommands := sets.String{}
 
 	for _, content := range allContents {
+
+		// TODO: Generate a function to implement this merging logic directly from
+		// the DevWorkpaceTemplateStecContent object.
+
 		if content.Commands != nil && len(content.Commands) > 0 {
 			if result.Commands == nil {
 				result.Commands = []workspaces.Command{}
@@ -128,6 +132,17 @@ func MergeDevWorkspaceTemplateSpec(
 				result.Projects = append(result.Projects, project)
 			}
 		}
+
+		if content.StarterProjects != nil && len(content.StarterProjects) > 0 {
+			if result.StarterProjects == nil {
+				result.StarterProjects = []workspaces.StarterProject{}
+			}
+			for _, starterProject := range content.StarterProjects {
+				result.StarterProjects = append(result.StarterProjects, starterProject)
+			}
+		}
+
+		// TODO END
 
 		if content.Events != nil {
 			if result.Events == nil {

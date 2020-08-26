@@ -976,6 +976,13 @@ func (in *ParentOverrides) DeepCopyInto(out *ParentOverrides) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.StarterProjects != nil {
+		in, out := &in.StarterProjects, &out.StarterProjects
+		*out = make([]StarterProject, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.Components != nil {
 		in, out := &in.Components, &out.Components
 		*out = make([]Component, len(*in))
