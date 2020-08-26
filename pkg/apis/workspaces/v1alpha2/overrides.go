@@ -11,7 +11,7 @@ type OverridesBase struct {
 	// OverrideDirectives []OverrideDirective `json:"overrideDirectives,omitempty"`
 }
 
-type Overrides struct {
+type ParentOverrides struct {
 	OverridesBase `json:",inline"`
 
 	// Overrides of projects encapsulated in a parent devfile.
@@ -34,3 +34,13 @@ type PluginOverrides struct {
 	// +optional
 	Components []PluginComponentsOverride `json:"components,omitempty"`
 }
+
+
+type Overrides interface {
+	TopLevelListContainer
+	isOverride()
+}
+
+
+func (overrides ParentOverrides) isOverride() {}
+func (overrides PluginOverrides) isOverride() {}

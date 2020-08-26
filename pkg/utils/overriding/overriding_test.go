@@ -18,38 +18,34 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
 		Commands: []workspaces.Command{
 			{
-				Exec: &workspaces.ExecCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandWithTypeChanged",
+				Id: "commandWithTypeChanged",
+				CommandUnion: workspaces.CommandUnion{
+					Exec: &workspaces.ExecCommand{},
+				},
+			},
+			{
+				Id: "commandToReplace",
+				CommandUnion: workspaces.CommandUnion{
+					Exec: &workspaces.ExecCommand{
+						Env: []workspaces.EnvVar{
+							{
+								Name:  "envVarToReplace",
+								Value: "envVarToReplaceOriginalValue",
+							},
+							{
+								Name:  "envVarNotChanged",
+								Value: "envVarNotChangedOriginalValue",
+							},
 						},
 					},
 				},
 			},
 			{
-				Exec: &workspaces.ExecCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandToReplace",
-						},
-					},
-					Env: []workspaces.EnvVar{
-						{
-							Name:  "envVarToReplace",
-							Value: "envVarToReplaceOriginalValue",
-						},
-						{
-							Name:  "envVarNotChanged",
-							Value: "envVarNotChangedOriginalValue",
-						},
-					},
-				},
-			},
-			{
-				Exec: &workspaces.ExecCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandNotChanged",
+				Id: "commandNotChanged",
+				CommandUnion: workspaces.CommandUnion{
+					Exec: &workspaces.ExecCommand{
+						LabeledCommand: workspaces.LabeledCommand{
+							Label: "commandNotChangedLabel",
 						},
 					},
 				},
@@ -57,34 +53,30 @@ func TestBasicToplevelOverriding(t *testing.T) {
 		},
 	}
 
-	patch := workspaces.Overrides{
+	patch := workspaces.ParentOverrides{
 		OverridesBase: workspaces.OverridesBase{
 			Commands: []workspaces.Command{
 				{
-					Apply: &workspaces.ApplyCommand{
-						LabeledCommand: workspaces.LabeledCommand{
-							BaseCommand: workspaces.BaseCommand{
-								Id: "commandWithTypeChanged",
-							},
+					Id: "commandWithTypeChanged",
+					CommandUnion: workspaces.CommandUnion{
+						Apply: &workspaces.ApplyCommand{
+							Component: "mycomponent",
 						},
-						Component: "mycomponent",
 					},
 				},
 				{
-					Exec: &workspaces.ExecCommand{
-						LabeledCommand: workspaces.LabeledCommand{
-							BaseCommand: workspaces.BaseCommand{
-								Id: "commandToReplace",
-							},
-						},
-						Env: []workspaces.EnvVar{
-							{
-								Name:  "envVarToReplace",
-								Value: "envVarToReplaceNewValue",
-							},
-							{
-								Name:  "endVarToAdd",
-								Value: "endVarToAddValue",
+					Id: "commandToReplace",
+					CommandUnion: workspaces.CommandUnion{
+						Exec: &workspaces.ExecCommand{
+							Env: []workspaces.EnvVar{
+								{
+									Name:  "envVarToReplace",
+									Value: "envVarToReplaceNewValue",
+								},
+								{
+									Name:  "endVarToAdd",
+									Value: "endVarToAddValue",
+								},
 							},
 						},
 					},
@@ -96,43 +88,40 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	expected := &workspaces.DevWorkspaceTemplateSpecContent{
 		Commands: []workspaces.Command{
 			{
-				Apply: &workspaces.ApplyCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandWithTypeChanged",
-						},
+				Id: "commandWithTypeChanged",
+				CommandUnion: workspaces.CommandUnion{
+					Apply: &workspaces.ApplyCommand{
+						Component: "mycomponent",
 					},
-					Component: "mycomponent",
 				},
 			},
 			{
-				Exec: &workspaces.ExecCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandToReplace",
-						},
-					},
-					Env: []workspaces.EnvVar{
-						{
-							Name:  "envVarToReplace",
-							Value: "envVarToReplaceNewValue",
-						},
-						{
-							Name:  "endVarToAdd",
-							Value: "endVarToAddValue",
-						},
-						{
-							Name:  "envVarNotChanged",
-							Value: "envVarNotChangedOriginalValue",
+				Id: "commandToReplace",
+				CommandUnion: workspaces.CommandUnion{
+					Exec: &workspaces.ExecCommand{
+						Env: []workspaces.EnvVar{
+							{
+								Name:  "envVarToReplace",
+								Value: "envVarToReplaceNewValue",
+							},
+							{
+								Name:  "endVarToAdd",
+								Value: "endVarToAddValue",
+							},
+							{
+								Name:  "envVarNotChanged",
+								Value: "envVarNotChangedOriginalValue",
+							},
 						},
 					},
 				},
 			},
 			{
-				Exec: &workspaces.ExecCommand{
-					LabeledCommand: workspaces.LabeledCommand{
-						BaseCommand: workspaces.BaseCommand{
-							Id: "commandNotChanged",
+				Id: "commandNotChanged",
+				CommandUnion: workspaces.CommandUnion{
+					Exec: &workspaces.ExecCommand{
+						LabeledCommand: workspaces.LabeledCommand{
+							Label: "commandNotChangedLabel",
 						},
 					},
 				},
@@ -140,7 +129,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 		},
 	}
 
-	result, err := OverrideDevWorkspaceTemplateSpec(&original, patch)
+	result, err := OverrideDevWorkspaceTemplateSpec(&original, &patch)
 	if err != nil {
 		t.Error(err)
 	}
