@@ -37,11 +37,6 @@ type CommandGroup struct {
 }
 
 type BaseCommand struct {
-	// Mandatory identifier that allows referencing
-	// this command in composite commands, from
-	// a parent, or in events.
-	Id string `json:"id"`
-
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroup `json:"group,omitempty"`
@@ -61,12 +56,15 @@ type LabeledCommand struct {
 
 // +k8s:openapi-gen=true
 type Command struct {
-	LabeledCommand `json:",inline"`
-	CommandsUnion  `json:",inline"`
+	// Mandatory identifier that allows referencing
+	// this command in composite commands, from
+	// a parent, or in events.
+	Id string `json:"id"`
+	CommandUnion  `json:",inline"`
 }
 
 // +union
-type CommandsUnion struct {
+type CommandUnion struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
@@ -111,6 +109,8 @@ type CommandsUnion struct {
 }
 
 type ExecCommand struct {
+	LabeledCommand `json:",inline"`
+
 	// The actual command-line string
 	//
 	// Special variables that can be used:
@@ -146,11 +146,15 @@ type ExecCommand struct {
 }
 
 type ApplyCommand struct {
+	LabeledCommand `json:",inline"`
+
 	// Describes component that will be applied
 	Component string `json:"component,omitempty"`
 }
 
 type CompositeCommand struct {
+	LabeledCommand `json:",inline"`
+
 	// The commands that comprise this composite command
 	Commands []string `json:"commands,omitempty" patchStrategy:"replace"`
 
@@ -190,10 +194,12 @@ type VscodeConfigurationCommandLocation struct {
 }
 
 type VscodeConfigurationCommand struct {
+	BaseCommand                        `json:",inline"`
 	VscodeConfigurationCommandLocation `json:",inline"`
 }
 
 type CustomCommand struct {
+	LabeledCommand `json:",inline"`
 
 	// Class of command that the associated implementation component
 	// should use to process this command with the appropriate logic
