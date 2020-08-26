@@ -17,24 +17,24 @@ func (keyed Project) Key() string {
 }
 
 func (container DevWorkspaceTemplateSpecContent) GetToplevelLists() TopLevelLists {
-	return TopLevelLists {
-		"Projects": extractKeys(container.Projects),		
-		"Components": extractKeys(container.Components),		
-		"Commands": extractKeys(container.Commands),		
+	return TopLevelLists{
+		"Projects":   extractKeys(container.Projects),
+		"Components": extractKeys(container.Components),
+		"Commands":   extractKeys(container.Commands),
 	}
 }
 
 func (container PluginOverrides) GetToplevelLists() TopLevelLists {
-	return TopLevelLists {
-		"Components": extractKeys(container.Components),		
-		"Commands": extractKeys(container.Commands),		
+	return TopLevelLists{
+		"Components": extractKeys(container.Components),
+		"Commands":   extractKeys(container.Commands),
 	}
 }
 
 func (container ParentOverrides) GetToplevelLists() TopLevelLists {
-	return TopLevelLists {
-		"Projects": extractKeys(container.Projects),		
-		"Components": extractKeys(container.Components),		
-		"Commands": extractKeys(container.Commands),		
+	return TopLevelLists{
+		"Projects":   extractKeys(container.Projects),
+		"Components": extractKeys(container.Components),
+		"Commands":   extractKeys(container.Commands),
 	}
 }

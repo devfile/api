@@ -27,7 +27,7 @@ type Component struct {
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
 	Name           string `json:"name"`
-	ComponentUnion        `json:",inline"`
+	ComponentUnion `json:",inline"`
 }
 
 // +union
@@ -108,7 +108,7 @@ type PluginComponentsOverride struct {
 	// Mandatory name that allows referencing the Volume component
 	// in Container volume mounts or inside a parent
 	Name                          string `json:"name"`
-	PluginComponentsOverrideUnion        `json:",inline"`
+	PluginComponentsOverrideUnion `json:",inline"`
 }
 
 // +k8s:openapi-gen=true

@@ -15,7 +15,7 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelLis
 	for _, toplevelListContainer := range toplevelListContainers {
 		listOfTopLevelLists = append(listOfTopLevelLists, toplevelListContainer.GetToplevelLists())
 	}
-	
+
 	elementTypes := sets.String{}
 	for _, toplevelLists := range listOfTopLevelLists {
 		for elementType := range toplevelLists {

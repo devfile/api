@@ -59,8 +59,8 @@ type Command struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id string `json:"id"`
-	CommandUnion  `json:",inline"`
+	Id           string `json:"id"`
+	CommandUnion `json:",inline"`
 }
 
 // +union

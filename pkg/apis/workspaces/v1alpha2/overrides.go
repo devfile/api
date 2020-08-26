@@ -35,12 +35,10 @@ type PluginOverrides struct {
 	Components []PluginComponentsOverride `json:"components,omitempty"`
 }
 
-
 type Overrides interface {
 	TopLevelListContainer
 	isOverride()
 }
-
 
 func (overrides ParentOverrides) isOverride() {}
 func (overrides PluginOverrides) isOverride() {}

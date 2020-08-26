@@ -32,7 +32,7 @@ type K8sLikeComponentLocation struct {
 type K8sLikeComponent struct {
 	BaseComponent            `json:",inline"`
 	K8sLikeComponentLocation `json:",inline"`
-	Endpoints     []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Endpoints                []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Component that allows partly importing Kubernetes resources into the workspace POD
