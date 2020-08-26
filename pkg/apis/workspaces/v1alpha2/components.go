@@ -26,7 +26,7 @@ type Component struct {
 	// Mandatory name that allows referencing the Volume component
 	// in Container volume mounts or inside a parent
 	Name           string `json:"name"`
-	ComponentUnion `json:",inline"`
+	ComponentUnion        `json:",inline"`
 }
 
 // +union
@@ -102,9 +102,17 @@ const (
 	VolumePluginComponentsOverrideType     PluginComponentsOverrideType = "Volume"
 )
 
+//+k8s:openapi-gen=true
+type PluginComponentsOverride struct {
+	// Mandatory name that allows referencing the Volume component
+	// in Container volume mounts or inside a parent
+	Name                          string `json:"name"`
+	PluginComponentsOverrideUnion        `json:",inline"`
+}
+
 // +k8s:openapi-gen=true
 // +union
-type PluginComponentsOverride struct {
+type PluginComponentsOverrideUnion struct {
 	// Type of component override for a plugin
 	//
 	// +unionDiscriminator
