@@ -695,9 +695,9 @@
             ]
           },
           "name": {
-            "description": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent",
+            "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
             "type": "string",
-            "markdownDescription": "Mandatory name that allows referencing the Volume component in Container volume mounts or inside a parent"
+            "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
           },
           "openshift": {
             "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
