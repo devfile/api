@@ -114,10 +114,9 @@ func MergeDevWorkspaceTemplateSpec(
 		for _, content := range allContents {
 			contentValue := reflect.ValueOf(content).Elem()
 			contentToplevelListValue := contentValue.FieldByName(toplevelListName)
-			if ! contentToplevelListValue.IsNil() {
-				for i:=0; i<contentToplevelListValue.Len(); i++ {
+			if !contentToplevelListValue.IsNil() {
+				for i := 0; i < contentToplevelListValue.Len(); i++ {
 					elementValue := contentToplevelListValue.Index(i)
-										
 					// We skip the plugins of the main content, since they have been provided by flattened plugin content.
 					if content == mainContent && listElementType.ConvertibleTo(componentType) {
 						component := elementValue.Interface().(workspaces.Component)
