@@ -2,6 +2,7 @@ package overriding
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
@@ -97,53 +98,43 @@ func MergeDevWorkspaceTemplateSpec(
 	preStopCommands := sets.String{}
 	postStopCommands := sets.String{}
 
+	topLevelListsNames := result.GetToplevelLists()
+	resultValue := reflect.ValueOf(&result).Elem()
+	componentType := reflect.TypeOf(workspaces.Component{})
+	for toplevelListName := range topLevelListsNames {
+		listType, fieldExists := resultValue.Type().FieldByName(toplevelListName)
+		if !fieldExists {
+			return nil, fmt.Errorf("field '%v' is unknown in %v struct (this should never happen)", toplevelListName, reflect.TypeOf(resultValue).Name())
+		}
+		if listType.Type.Kind() != reflect.Slice {
+			return nil, fmt.Errorf("field '%v' in %v struct is not a slice (this should never happen)", toplevelListName, reflect.TypeOf(resultValue).Name())
+		}
+		listElementType := listType.Type.Elem()
+		resultToplevelListValue := resultValue.FieldByName(toplevelListName)
+		for _, content := range allContents {
+			contentValue := reflect.ValueOf(content).Elem()
+			contentToplevelListValue := contentValue.FieldByName(toplevelListName)
+			if ! contentToplevelListValue.IsNil() {
+				for i:=0; i<contentToplevelListValue.Len(); i++ {
+					elementValue := contentToplevelListValue.Index(i)
+										
+					// We skip the plugins of the main content, since they have been provided by flattened plugin content.
+					if content == mainContent && listElementType.ConvertibleTo(componentType) {
+						component := elementValue.Interface().(workspaces.Component)
+						if component.Plugin != nil {
+							continue
+						}
+					}
+					if resultToplevelListValue.IsNil() {
+						resultToplevelListValue.Set(reflect.MakeSlice(reflect.SliceOf(listElementType), 0, contentToplevelListValue.Len()))
+					}
+					resultToplevelListValue.Set(reflect.Append(resultToplevelListValue, elementValue))
+				}
+			}
+		}
+	}
+
 	for _, content := range allContents {
-
-		// TODO: Generate a function to implement this merging logic directly from
-		// the DevWorkpaceTemplateStecContent object.
-
-		if content.Commands != nil && len(content.Commands) > 0 {
-			if result.Commands == nil {
-				result.Commands = []workspaces.Command{}
-			}
-			for _, command := range content.Commands {
-				result.Commands = append(result.Commands, command)
-			}
-		}
-
-		if content.Components != nil && len(content.Components) > 0 {
-			for _, component := range content.Components {
-				// We skip the plugins of the main content, since they have been provided by flattened plugin content.
-				if content == mainContent && component.Plugin != nil {
-					continue
-				}
-				if result.Components == nil {
-					result.Components = []workspaces.Component{}
-				}
-				result.Components = append(result.Components, component)
-			}
-		}
-
-		if content.Projects != nil && len(content.Projects) > 0 {
-			if result.Projects == nil {
-				result.Projects = []workspaces.Project{}
-			}
-			for _, project := range content.Projects {
-				result.Projects = append(result.Projects, project)
-			}
-		}
-
-		if content.StarterProjects != nil && len(content.StarterProjects) > 0 {
-			if result.StarterProjects == nil {
-				result.StarterProjects = []workspaces.StarterProject{}
-			}
-			for _, starterProject := range content.StarterProjects {
-				result.StarterProjects = append(result.StarterProjects, starterProject)
-			}
-		}
-
-		// TODO END
-
 		if content.Events != nil {
 			if result.Events == nil {
 				result.Events = &workspaces.Events{}
