@@ -72,6 +72,10 @@ func OverrideDevWorkspaceTemplateSpecBytes(originalBytes []byte, patchBytes []by
 //
 // The result is a transformed `DevfileWorkspaceTemplateSpec` object.
 func OverrideDevWorkspaceTemplateSpec(original *workspaces.DevWorkspaceTemplateSpecContent, patch workspaces.Overrides) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
+	if err := ensureOnlyExistingElementsAreOverridden(original, patch); err != nil {
+		return nil, err
+	}
+
 	if err := unions.Normalize(&original); err != nil {
 		return nil, err
 	}
@@ -95,10 +99,6 @@ func OverrideDevWorkspaceTemplateSpec(original *workspaces.DevWorkspaceTemplateS
 	}
 	patchMap, err := handleUnmarshal(normalizedPatchBytes)
 	if err != nil {
-		return nil, err
-	}
-
-	if err := ensureOnlyExistingElementsAreOverridden(original, patch); err != nil {
 		return nil, err
 	}
 
