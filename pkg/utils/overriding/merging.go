@@ -11,60 +11,6 @@ import (
 	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
-func ensureNoConflictWithParent(mainContent *workspaces.DevWorkspaceTemplateSpecContent, parentflattenedContent *workspaces.DevWorkspaceTemplateSpecContent) error {
-	return checkKeys(func(elementType string, keysSets []sets.String) []error {
-		mainKeys := keysSets[0]
-		parentOrPluginKeys := keysSets[1]
-		overriddenElementsInMainContent := mainKeys.Intersection(parentOrPluginKeys)
-		if overriddenElementsInMainContent.Len() > 0 {
-			return []error{fmt.Errorf("Some %s are already defined in parent: %s. "+
-				"If you want to override them, you should do it in the parent scope.",
-				elementType,
-				strings.Join(overriddenElementsInMainContent.List(), ", "))}
-		}
-		return []error{}
-	},
-		mainContent, parentflattenedContent)
-}
-
-func ensureNoConflictsWithPlugins(mainContent *workspaces.DevWorkspaceTemplateSpecContent, pluginFlattenedContents ...*workspaces.DevWorkspaceTemplateSpecContent) error {
-	getPluginKey := func(pluginIndex int) string {
-		index := 0
-		for _, comp := range mainContent.Components {
-			if comp.Plugin != nil {
-				if pluginIndex == index {
-					return comp.Name
-				}
-				index++
-			}
-		}
-		return "unknown"
-	}
-
-	allSpecs := []workspaces.TopLevelListContainer{mainContent}
-	for _, pluginFlattenedContent := range pluginFlattenedContents {
-		allSpecs = append(allSpecs, pluginFlattenedContent)
-	}
-	return checkKeys(func(elementType string, keysSets []sets.String) []error {
-		mainKeys := keysSets[0]
-		pluginKeysSets := keysSets[1:]
-		errs := []error{}
-		for pluginNumber, pluginKeys := range pluginKeysSets {
-			overriddenElementsInMainContent := mainKeys.Intersection(pluginKeys)
-
-			if overriddenElementsInMainContent.Len() > 0 {
-				errs = append(errs, fmt.Errorf("Some %s are already defined in plugin '%s': %s. "+
-					"If you want to override them, you should do it in the plugin scope.",
-					elementType,
-					getPluginKey(pluginNumber),
-					strings.Join(overriddenElementsInMainContent.List(), ", ")))
-			}
-		}
-		return errs
-	},
-		allSpecs...)
-}
-
 // MergeDevWorkspaceTemplateSpec implements the merging logic of a main devfile content with flattened, already-overridden parent devfiles or plugins.
 // On a `main` `DevWorkspaceTemplateSpec` (which is the core part of a devfile, without the `apiVersion` and `metadata`),
 // it allows adding all the new overridden elements provided by flattened parent and plugins
@@ -203,4 +149,58 @@ func MergeDevWorkspaceTemplateSpecBytes(originalBytes []byte, flattenedParentByt
 	}
 
 	return MergeDevWorkspaceTemplateSpec(&original, &flattenedParent, flattenedPlugins...)
+}
+
+func ensureNoConflictWithParent(mainContent *workspaces.DevWorkspaceTemplateSpecContent, parentflattenedContent *workspaces.DevWorkspaceTemplateSpecContent) error {
+	return checkKeys(func(elementType string, keysSets []sets.String) []error {
+		mainKeys := keysSets[0]
+		parentOrPluginKeys := keysSets[1]
+		overriddenElementsInMainContent := mainKeys.Intersection(parentOrPluginKeys)
+		if overriddenElementsInMainContent.Len() > 0 {
+			return []error{fmt.Errorf("Some %s are already defined in parent: %s. "+
+				"If you want to override them, you should do it in the parent scope.",
+				elementType,
+				strings.Join(overriddenElementsInMainContent.List(), ", "))}
+		}
+		return []error{}
+	},
+		mainContent, parentflattenedContent)
+}
+
+func ensureNoConflictsWithPlugins(mainContent *workspaces.DevWorkspaceTemplateSpecContent, pluginFlattenedContents ...*workspaces.DevWorkspaceTemplateSpecContent) error {
+	getPluginKey := func(pluginIndex int) string {
+		index := 0
+		for _, comp := range mainContent.Components {
+			if comp.Plugin != nil {
+				if pluginIndex == index {
+					return comp.Name
+				}
+				index++
+			}
+		}
+		return "unknown"
+	}
+
+	allSpecs := []workspaces.TopLevelListContainer{mainContent}
+	for _, pluginFlattenedContent := range pluginFlattenedContents {
+		allSpecs = append(allSpecs, pluginFlattenedContent)
+	}
+	return checkKeys(func(elementType string, keysSets []sets.String) []error {
+		mainKeys := keysSets[0]
+		pluginKeysSets := keysSets[1:]
+		errs := []error{}
+		for pluginNumber, pluginKeys := range pluginKeysSets {
+			overriddenElementsInMainContent := mainKeys.Intersection(pluginKeys)
+
+			if overriddenElementsInMainContent.Len() > 0 {
+				errs = append(errs, fmt.Errorf("Some %s are already defined in plugin '%s': %s. "+
+					"If you want to override them, you should do it in the plugin scope.",
+					elementType,
+					getPluginKey(pluginNumber),
+					strings.Join(overriddenElementsInMainContent.List(), ", ")))
+			}
+		}
+		return errs
+	},
+		allSpecs...)
 }

@@ -12,22 +12,6 @@ import (
 	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
-func ensureOnlyExistingElementsAreOverridden(spec *workspaces.DevWorkspaceTemplateSpecContent, overrides workspaces.Overrides) error {
-	return checkKeys(func(elementType string, keysSets []sets.String) []error {
-		specKeys := keysSets[0]
-		overlayKeys := keysSets[1]
-		newElementsInOverlay := overlayKeys.Difference(specKeys)
-		if newElementsInOverlay.Len() > 0 {
-			return []error{fmt.Errorf("Some %s do not override any existing element: %s. "+
-				"They should be defined in the main body, as new elements, not in the overriding section",
-				elementType,
-				strings.Join(newElementsInOverlay.List(), ", "))}
-		}
-		return []error{}
-	},
-		spec, overrides)
-}
-
 // OverrideDevWorkspaceTemplateSpecBytes implements the overriding logic for parent devfiles or plugins.
 // On a json or yaml document that contains the core content of the devfile (without the `apiVersion` and `metadata`),
 // it allows applying a `patch` which is a document fragment of the same schema.
@@ -127,4 +111,20 @@ func OverrideDevWorkspaceTemplateSpec(original *workspaces.DevWorkspaceTemplateS
 		return nil, err
 	}
 	return &patched, nil
+}
+
+func ensureOnlyExistingElementsAreOverridden(spec *workspaces.DevWorkspaceTemplateSpecContent, overrides workspaces.Overrides) error {
+	return checkKeys(func(elementType string, keysSets []sets.String) []error {
+		specKeys := keysSets[0]
+		overlayKeys := keysSets[1]
+		newElementsInOverlay := overlayKeys.Difference(specKeys)
+		if newElementsInOverlay.Len() > 0 {
+			return []error{fmt.Errorf("Some %s do not override any existing element: %s. "+
+				"They should be defined in the main body, as new elements, not in the overriding section",
+				elementType,
+				strings.Join(newElementsInOverlay.List(), ", "))}
+		}
+		return []error{}
+	},
+		spec, overrides)
 }
