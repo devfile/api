@@ -10,12 +10,9 @@ commands:
         - name:  "commandToReplaceEndVarToAdd"
           value: "commandToReplaceEndVarToAddValue"
     id: "commandToReplace"
-
-
   - exec:
       commandLine: "commandToAddCommandLine"
     id: "commandToAdd"
 components:
   - volume: {}
     name: newVolume
-      
