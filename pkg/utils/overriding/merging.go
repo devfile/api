@@ -65,15 +65,15 @@ func ensureNoConflictsWithPlugins(mainContent *workspaces.DevWorkspaceTemplateSp
 		allSpecs...)
 }
 
-// MergeDevWorkspaceTemplateSpec implements the merging logic of a main devfile content with flattened, already-overriden parent devfiles or plugins.
-// On an `main` `DevfileWorkspaceTemplateSpec` (which is the core part of a devfile, without the `apiVersion` and `metadata`),
-// it allows adding all the new overriden elements provided by flattened parent and plugins
+// MergeDevWorkspaceTemplateSpec implements the merging logic of a main devfile content with flattened, already-overridden parent devfiles or plugins.
+// On a `main` `DevWorkspaceTemplateSpec` (which is the core part of a devfile, without the `apiVersion` and `metadata`),
+// it allows adding all the new overridden elements provided by flattened parent and plugins
 //
-// It is not allowed for to have duplicate (== with same key) commands, components or projects between the main content and the parent or plugins.
-// An error would be thrown
+// Returns non-nil error if there are duplicate (== with same key) commands, components or projects between the 
+// main content and the parent or plugins. 
 //
-// The result is a transformed `DevfileWorkspaceTemplateSpec` object, that does not contain any `plugin` component
-// (since they are expected to be provided as flattened overriden devfiles in teh arguments)
+// The result is a transformed `DevWorkspaceTemplateSpec` object, that does not contain any `plugin` component
+// (since they are expected to be provided as flattened overridden devfiles in the arguments)
 func MergeDevWorkspaceTemplateSpec(
 	mainContent *workspaces.DevWorkspaceTemplateSpecContent,
 	parentFlattenedContent *workspaces.DevWorkspaceTemplateSpecContent,
