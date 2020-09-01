@@ -12,7 +12,7 @@ type checkFn func(elementType string, keysSets []sets.String) []error
 // contained in the `toplevelListContainers` passed in argument.
 //
 // For each type of top-level list, the `keysSets` argument that will be passed to the `doCheck` function
-// contains the the key sets that correspond to the `toplevelListContainers` passwed to this method,
+// contains the the key sets that correspond to the `toplevelListContainers` passed to this method,
 // in the same order.
 func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelListContainer) error {
 	var errors *multierror.Error
