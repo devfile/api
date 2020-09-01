@@ -17,36 +17,19 @@ type checkFn func(elementType string, keysSets []sets.String) []error
 func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelListContainer) error {
 	var errors *multierror.Error
 
-	// Retrieve the top-level lists (Commands, Projects, Components) for each TopLevelListContainer
-	// (DevWorkspaceTemplateSpec, PluginOverrides, ...)
-	topLevelListsByContainer := []workspaces.TopLevelLists{}
-	for _, toplevelListContainer := range toplevelListContainers {
-		topLevelListsByContainer = append(topLevelListsByContainer, toplevelListContainer.GetToplevelLists())
-	}
+	// intermediate storage for the conversion []map[string]KeyedList -> map[string][]sets.String
+	listTypeToKeys := map[string][]sets.String{}
 
-	// Gather all types of top-level lists: Commands, Projects, etc ...
-	listTypes := sets.String{}
-	for _, toplevelLists := range topLevelListsByContainer {
-		for listType := range toplevelLists {
-			listTypes.Insert(listType)
+	// Flatten []map[string]KeyedList -> map[string][]KeyedList based on map keys and convert each KeyedList
+	// into a sets.String
+	for _, topLevelListContainer := range toplevelListContainers {
+		topLevelList := topLevelListContainer.GetToplevelLists()
+		for listType, listElem := range topLevelList {
+			listTypeToKeys[listType] = append(listTypeToKeys[listType], sets.NewString(listElem.GetKeys()...))
 		}
 	}
-
-	// For each type of top-level list (Commands, Projects), etc ...
-	for _, listType := range listTypes.List() {
-		// For each toplevel-list container, extract the set of keys of the given type of top-level list
-		keySets := []sets.String{}
-		for _, toplevelLists := range topLevelListsByContainer {
-			keys := sets.String{}
-			for _, keyed := range toplevelLists[listType] {
-				keys.Insert(keyed.Key())
-			}
-			keySets = append(keySets, keys)
-		}
-		// Perform the check on the sets of keys for the given type of top-level list
-		checkErrors := doCheck(listType, keySets)
-		errors = multierror.Append(errors, checkErrors...)
+	for listType, keySets := range listTypeToKeys {
+		errors = multierror.Append(errors, doCheck(listType, keySets)...)
 	}
-
 	return errors.ErrorOrNil()
 }

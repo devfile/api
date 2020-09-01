@@ -18,6 +18,16 @@ type Keyed interface {
 // +k8s:deepcopy-gen=false
 type KeyedList []Keyed
 
+// GetKeys converts a KeyedList into a slice of string by calling Key() on each
+// element in the list.
+func (l KeyedList) GetKeys() []string {
+	var res []string
+	for _, keyed := range l {
+		res = append(res, keyed.Key())
+	}
+	return res
+}
+
 // TopLevelLists is a map that contains several Devfile top-level lists
 // (such as `Commands`, `Components`, `Projects`, ...), available as `KeyedList`s.
 //
