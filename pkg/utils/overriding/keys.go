@@ -32,9 +32,8 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelLis
 			}
 			keySets = append(keySets, keys)
 		}
-		for _, err := range doCheck(elementType, keySets) {
-			errors = multierror.Append(errors, err)
-		}
+		checkErrors := doCheck(elementType, keySets)
+		errors = multierror.Append(errors, checkErrors...)
 	}
 
 	return errors.ErrorOrNil()
