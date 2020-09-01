@@ -3,7 +3,7 @@
 <div id="header" align="center">
 
 [![Eclipse License](https://img.shields.io/badge/license-Eclipse-brightgreen.svg)](LICENSE)
-[![Contribute](https://www.eclipse.org/che/factory-contribute.svg)](https://che.openshift.io/f/?url=https://github.com/devfile/api)
+[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://che.openshift.io/f/?url=https://github.com/devfile/api)
 
 </div>
 
