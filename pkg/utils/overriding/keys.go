@@ -34,7 +34,7 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelLis
 
 	// For each type of top-level list (Commands, Projects), etc ...
 	for _, listType := range listTypes.List() {
-	    // For each toplevel-list container, extract the set of keys of the given type of top-level list 
+		// For each toplevel-list container, extract the set of keys of the given type of top-level list
 		keySets := []sets.String{}
 		for _, toplevelLists := range topLevelListsByContainer {
 			keys := sets.String{}

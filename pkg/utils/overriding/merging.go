@@ -39,14 +39,15 @@ func MergeDevWorkspaceTemplateSpec(
 
 	result := workspaces.DevWorkspaceTemplateSpecContent{}
 
-	preStartCommands := sets.String{}
-	postStartCommands := sets.String{}
-	preStopCommands := sets.String{}
-	postStopCommands := sets.String{}
+	// Merge top-level lists (Commands, Projects, Components, etc ...)
 
 	topLevelListsNames := result.GetToplevelLists()
+	topLevelListsByContent := []workspaces.TopLevelLists{}
+	for _, content := range allContents {
+		topLevelListsByContent = append(topLevelListsByContent, content.GetToplevelLists())
+	}
+
 	resultValue := reflect.ValueOf(&result).Elem()
-	componentType := reflect.TypeOf(workspaces.Component{})
 	for toplevelListName := range topLevelListsNames {
 		listType, fieldExists := resultValue.Type().FieldByName(toplevelListName)
 		if !fieldExists {
@@ -57,28 +58,28 @@ func MergeDevWorkspaceTemplateSpec(
 		}
 		listElementType := listType.Type.Elem()
 		resultToplevelListValue := resultValue.FieldByName(toplevelListName)
-		for _, content := range allContents {
-			contentValue := reflect.ValueOf(content).Elem()
-			contentToplevelListValue := contentValue.FieldByName(toplevelListName)
-			if !contentToplevelListValue.IsNil() {
-				for i := 0; i < contentToplevelListValue.Len(); i++ {
-					elementValue := contentToplevelListValue.Index(i)
-					// We skip the plugins of the main content, since they have been provided by flattened plugin content.
-					if content == mainContent && listElementType.ConvertibleTo(componentType) {
-						component := elementValue.Interface().(workspaces.Component)
-						if component.Plugin != nil {
-							continue
-						}
+		for contentIndex, content := range allContents {
+			toplevelLists := topLevelListsByContent[contentIndex]
+			keyedList := toplevelLists[toplevelListName]
+			for _, keyed := range keyedList {
+				if content == mainContent {
+					if component, isComponent := keyed.(workspaces.Component); isComponent &&
+						component.Plugin != nil {
+						continue
 					}
-					if resultToplevelListValue.IsNil() {
-						resultToplevelListValue.Set(reflect.MakeSlice(reflect.SliceOf(listElementType), 0, contentToplevelListValue.Len()))
-					}
-					resultToplevelListValue.Set(reflect.Append(resultToplevelListValue, elementValue))
 				}
+				if resultToplevelListValue.IsNil() {
+					resultToplevelListValue.Set(reflect.MakeSlice(reflect.SliceOf(listElementType), 0, len(keyedList)))
+				}
+				resultToplevelListValue.Set(reflect.Append(resultToplevelListValue, reflect.ValueOf(keyed)))
 			}
 		}
 	}
 
+	preStartCommands := sets.String{}
+	postStartCommands := sets.String{}
+	preStopCommands := sets.String{}
+	postStopCommands := sets.String{}
 	for _, content := range allContents {
 		if content.Events != nil {
 			if result.Events == nil {
