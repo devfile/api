@@ -43,7 +43,7 @@ func ensureNoConflictsWithPlugins(mainContent *workspaces.DevWorkspaceTemplateSp
 
 	allSpecs := []workspaces.TopLevelListContainer{mainContent}
 	for _, pluginFlattenedContent := range pluginFlattenedContents {
-		allSpecs = append(allSpecs, plugipluginFlattenedContent)
+		allSpecs = append(allSpecs, pluginFlattenedContent)
 	}
 	return checkKeys(func(elementType string, keysSets []sets.String) []error {
 		mainKeys := keysSets[0]
