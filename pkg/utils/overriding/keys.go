@@ -9,7 +9,7 @@ import (
 type checkFn func(elementType string, keysSets []sets.String) []error
 
 func checkKeys(doCheck checkFn, toplevelListContainers ...workspaces.TopLevelListContainer) error {
-	var errors *multierror.Error = nil
+	var errors *multierror.Error
 
 	listOfTopLevelLists := []workspaces.TopLevelLists{}
 	for _, toplevelListContainer := range toplevelListContainers {
