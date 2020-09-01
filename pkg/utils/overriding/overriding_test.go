@@ -141,7 +141,11 @@ func overridingPatchTest(original, patch, expected []byte, expectedError string)
 	return func(t *testing.T) {
 		result, err := OverrideDevWorkspaceTemplateSpecBytes(original, patch)
 		if err != nil {
-			assert.Equal(t, strings.TrimSpace(expectedError), strings.TrimSpace(err.Error()), "Wrong error")
+			compareErrorMessages(t, expectedError, err.Error(), "wrong error")
+			return
+		}
+		if expectedError != "" {
+			t.Error("Expected error but did not get one")
 			return
 		}
 
@@ -214,7 +218,11 @@ func mergingPatchTest(main, parent, expected []byte, expectedError string, plugi
 	return func(t *testing.T) {
 		result, err := MergeDevWorkspaceTemplateSpecBytes(main, parent, plugins...)
 		if err != nil {
-			assert.Equal(t, strings.TrimSpace(expectedError), strings.TrimSpace(err.Error()), "Wrong error")
+			compareErrorMessages(t, expectedError, err.Error(), "wrong error")
+			return
+		}
+		if expectedError != "" {
+			t.Error("Expected error but did not get one")
 			return
 		}
 
@@ -296,4 +304,16 @@ func TestMerging(t *testing.T) {
 		}
 		return nil
 	})
+}
+
+// Since order of error message lines is not deterministic, it's necessary to compare
+// in a weaker way than asserting string equality.
+func compareErrorMessages(t *testing.T, expected, actual string, failReason string) {
+	if expected == "" {
+		t.Error("Received error but did not expect one")
+		return
+	}
+	expectedLines := strings.Split(strings.TrimSpace(expected), "\n")
+	actualLines := strings.Split(strings.TrimSpace(actual), "\n")
+	assert.ElementsMatch(t, expectedLines, actualLines, failReason)
 }
