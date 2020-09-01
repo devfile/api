@@ -4,15 +4,15 @@ import (
 	"reflect"
 )
 
-func extractKeys(keyedList interface{}) []string {
+func extractKeys(keyedList interface{}) []Keyed {
 	value := reflect.ValueOf(keyedList)
-	keys := make([]string, 0, value.Len())
+	keys := make([]Keyed, 0, value.Len())
 	for i := 0; i < value.Len(); i++ {
 		elem := value.Index(i)
 		if elem.CanInterface() {
 			i := elem.Interface()
 			if keyed, ok := i.(Keyed); ok {
-				keys = append(keys, keyed.Key())
+				keys = append(keys, keyed)
 			}
 		}
 	}
