@@ -69,8 +69,8 @@ func ensureNoConflictsWithPlugins(mainContent *workspaces.DevWorkspaceTemplateSp
 // On a `main` `DevWorkspaceTemplateSpec` (which is the core part of a devfile, without the `apiVersion` and `metadata`),
 // it allows adding all the new overridden elements provided by flattened parent and plugins
 //
-// Returns non-nil error if there are duplicate (== with same key) commands, components or projects between the 
-// main content and the parent or plugins. 
+// Returns non-nil error if there are duplicate (== with same key) commands, components or projects between the
+// main content and the parent or plugins.
 //
 // The result is a transformed `DevWorkspaceTemplateSpec` object, that does not contain any `plugin` component
 // (since they are expected to be provided as flattened overridden devfiles in the arguments)
