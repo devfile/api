@@ -9,8 +9,6 @@ type ContainerComponent struct {
 }
 
 type Container struct {
-	Name string `json:"name"`
-
 	Image string `json:"image,omitempty"`
 
 	// +optional

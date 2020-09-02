@@ -10,19 +10,21 @@ projects:
       checkoutFrom:
         revision: master
 components:
-  - plugin:
+  - name: java-support
+    plugin:
       id: redhat/java8/latest
       components:
-        - container:
-            name: vscode-java            
+        - name: vscode-java            
+          container:
             memoryLimit: 2Gi
-        - volume:
-            name: m2
+        - name: m2
+          volume:
             size: 2G
-  - plugin:
+  - name: dependency-analytics
+    plugin:
       id: redhat/dependency-analytics/latest
-  - container:
-      name: maven
+  - name: maven-tooling
+    container:
       image: registry.redhat.io/codeready-workspaces/stacks-java-rhel8:2.1
       mountSources: true
       memoryLimit: 768Mi
@@ -43,16 +45,16 @@ components:
         - name: m2
           path: /home/jboss/.m2
 commands:
-  - exec:
-      id: build 
+  - id: build 
+    exec:
       component: maven
       commandLine: mvn -Duser.home=${HOME} -DskipTests clean install
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
-  - vscodeLaunch:
-      id: debug remote java application
+  - id: debug remote java application
+    vscodeLaunch:
       inlined: |
         {
           "version": "0.2.0",
@@ -65,39 +67,39 @@ commands:
               "port": 8000
             }]
           }
-  - exec:
-      id: run
+  - id: run
+    exec:
       component: maven
       commandLine: 'mvn -Duser.home=${HOME} spring-boot:run'
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
-  - exec:
-      id: debug
+  - id: debug
+    exec:
       component: maven
       commandLine: >-
         mvn  -Duser.home=${HOME} spring-boot:run -Drun.jvmArguments="-Xdebug
         -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
-  - exec:
-      id: test
+  - id: test
+    exec:
       component: maven
       commandLine: 'mvn -Duser.home=${HOME} verify'
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
-  - exec:
-      id: dependency-analysis
+  - id: dependency-analysis
+    exec:
       component: maven
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'
       commandLine: >-
         ${HOME}/stack-analysis.sh -f
         ${PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
         ${PROJECTS_ROOT}/spring-boot-http-booster
-  - exec:
-      id: deploy to OpenShift 
+  - id: deploy to OpenShift 
+    exec:
       component: maven
       commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
       workingDir: '${PROJECTS_ROOT}/spring-boot-http-booster'

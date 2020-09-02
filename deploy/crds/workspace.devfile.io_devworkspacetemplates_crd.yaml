@@ -72,17 +72,10 @@ spec:
                         required:
                         - kind
                         type: object
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       label:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
                         type: string
-                    required:
-                    - id
                     type: object
                   commandType:
                     description: Type of workspace command
@@ -127,11 +120,6 @@ spec:
                         required:
                         - kind
                         type: object
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       label:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
@@ -140,8 +128,6 @@ spec:
                         description: Indicates if the sub-commands should be executed
                           concurrently
                         type: boolean
-                    required:
-                    - id
                     type: object
                   custom:
                     description: Custom command whose logic is implementation-dependant
@@ -184,11 +170,6 @@ spec:
                         required:
                         - kind
                         type: object
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       label:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
@@ -196,7 +177,6 @@ spec:
                     required:
                     - commandClass
                     - embeddedResource
-                    - id
                     type: object
                   exec:
                     description: CLI Command executed in an existing component container
@@ -256,11 +236,6 @@ spec:
                           be restarted and it is expected to handle file changes on
                           its own. \n Default value is `false`"
                         type: boolean
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       label:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
@@ -273,9 +248,11 @@ spec:
                           If there are multiple projects, this will point to the directory
                           of the first one."
                         type: string
-                    required:
-                    - id
                     type: object
+                  id:
+                    description: Mandatory identifier that allows referencing this
+                      command in composite commands, from a parent, or in events.
+                    type: string
                   vscodeLaunch:
                     description: Command providing the definition of a VsCode launch
                       action
@@ -304,11 +281,6 @@ spec:
                         required:
                         - kind
                         type: object
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       inlined:
                         description: Inlined content of the VsCode configuration
                         type: string
@@ -322,8 +294,6 @@ spec:
                         description: Location as an absolute of relative URI the VsCode
                           configuration will be fetched from
                         type: string
-                    required:
-                    - id
                     type: object
                   vscodeTask:
                     description: Command providing the definition of a VsCode Task
@@ -352,11 +322,6 @@ spec:
                         required:
                         - kind
                         type: object
-                      id:
-                        description: Mandatory identifier that allows referencing
-                          this command in composite commands, from a parent, or in
-                          events.
-                        type: string
                       inlined:
                         description: Inlined content of the VsCode configuration
                         type: string
@@ -370,9 +335,9 @@ spec:
                         description: Location as an absolute of relative URI the VsCode
                           configuration will be fetched from
                         type: string
-                    required:
-                    - id
                     type: object
+                required:
+                - id
                 type: object
               type: array
             components:
@@ -495,8 +460,6 @@ spec:
                         type: string
                       mountSources:
                         type: boolean
-                      name:
-                        type: string
                       sourceMapping:
                         description: Optional specification of the path in the container
                           where project sources should be transferred/mounted when
@@ -526,8 +489,6 @@ spec:
                           - name
                           type: object
                         type: array
-                    required:
-                    - name
                     type: object
                   custom:
                     description: Custom component whose logic is implementation-dependant
@@ -546,14 +507,9 @@ spec:
                         type: object
                         x-kubernetes-embedded-resource: true
                         x-kubernetes-preserve-unknown-fields: true
-                      name:
-                        description: Mandatory name that allows referencing the component
-                          in commands, or inside a parent
-                        type: string
                     required:
                     - componentClass
                     - embeddedResource
-                    - name
                     type: object
                   kubernetes:
                     description: Allows importing into the workspace the Kubernetes
@@ -631,16 +587,15 @@ spec:
                         - Uri
                         - Inlined
                         type: string
-                      name:
-                        description: Mandatory name that allows referencing the component
-                          in commands, or inside a parent
-                        type: string
                       uri:
                         description: Location in a file fetched from a uri.
                         type: string
-                    required:
-                    - name
                     type: object
+                  name:
+                    description: Mandatory name that allows referencing the component
+                      from other elements (such as commands) or from an external devfile
+                      that may reference this component through a parent or a plugin.
+                    type: string
                   openshift:
                     description: Allows importing into the workspace the OpenShift
                       resources defined in a given manifest. For example this allows
@@ -717,15 +672,9 @@ spec:
                         - Uri
                         - Inlined
                         type: string
-                      name:
-                        description: Mandatory name that allows referencing the component
-                          in commands, or inside a parent
-                        type: string
                       uri:
                         description: Location in a file fetched from a uri.
                         type: string
-                    required:
-                    - name
                     type: object
                   plugin:
                     description: "Allows importing a plugin. \n Plugins are mainly
@@ -781,18 +730,11 @@ spec:
                                   required:
                                   - kind
                                   type: object
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 label:
                                   description: Optional label that provides a label
                                     for this command to be used in Editor UI menus
                                     for example
                                   type: string
-                              required:
-                              - id
                               type: object
                             commandType:
                               description: Type of workspace command
@@ -840,11 +782,6 @@ spec:
                                   required:
                                   - kind
                                   type: object
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 label:
                                   description: Optional label that provides a label
                                     for this command to be used in Editor UI menus
@@ -854,8 +791,6 @@ spec:
                                   description: Indicates if the sub-commands should
                                     be executed concurrently
                                   type: boolean
-                              required:
-                              - id
                               type: object
                             custom:
                               description: Custom command whose logic is implementation-dependant
@@ -900,11 +835,6 @@ spec:
                                   required:
                                   - kind
                                   type: object
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 label:
                                   description: Optional label that provides a label
                                     for this command to be used in Editor UI menus
@@ -913,7 +843,6 @@ spec:
                               required:
                               - commandClass
                               - embeddedResource
-                              - id
                               type: object
                             exec:
                               description: CLI Command executed in an existing component
@@ -979,11 +908,6 @@ spec:
                                     is expected to handle file changes on its own.
                                     \n Default value is `false`"
                                   type: boolean
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 label:
                                   description: Optional label that provides a label
                                     for this command to be used in Editor UI menus
@@ -998,9 +922,12 @@ spec:
                                     If there are multiple projects, this will point
                                     to the directory of the first one."
                                   type: string
-                              required:
-                              - id
                               type: object
+                            id:
+                              description: Mandatory identifier that allows referencing
+                                this command in composite commands, from a parent,
+                                or in events.
+                              type: string
                             vscodeLaunch:
                               description: Command providing the definition of a VsCode
                                 launch action
@@ -1031,11 +958,6 @@ spec:
                                   required:
                                   - kind
                                   type: object
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 inlined:
                                   description: Inlined content of the VsCode configuration
                                   type: string
@@ -1050,8 +972,6 @@ spec:
                                   description: Location as an absolute of relative
                                     URI the VsCode configuration will be fetched from
                                   type: string
-                              required:
-                              - id
                               type: object
                             vscodeTask:
                               description: Command providing the definition of a VsCode
@@ -1083,11 +1003,6 @@ spec:
                                   required:
                                   - kind
                                   type: object
-                                id:
-                                  description: Mandatory identifier that allows referencing
-                                    this command in composite commands, from a parent,
-                                    or in events.
-                                  type: string
                                 inlined:
                                   description: Inlined content of the VsCode configuration
                                   type: string
@@ -1102,9 +1017,9 @@ spec:
                                   description: Location as an absolute of relative
                                     URI the VsCode configuration will be fetched from
                                   type: string
-                              required:
-                              - id
                               type: object
+                          required:
+                          - id
                           type: object
                         type: array
                       components:
@@ -1239,8 +1154,6 @@ spec:
                                   type: string
                                 mountSources:
                                   type: boolean
-                                name:
-                                  type: string
                                 sourceMapping:
                                   description: Optional specification of the path
                                     in the container where project sources should
@@ -1272,8 +1185,6 @@ spec:
                                     - name
                                     type: object
                                   type: array
-                              required:
-                              - name
                               type: object
                             kubernetes:
                               description: Configuration overriding for a Kubernetes
@@ -1358,16 +1269,15 @@ spec:
                                   - Uri
                                   - Inlined
                                   type: string
-                                name:
-                                  description: Mandatory name that allows referencing
-                                    the component in commands, or inside a parent
-                                  type: string
                                 uri:
                                   description: Location in a file fetched from a uri.
                                   type: string
-                              required:
-                              - name
                               type: object
+                            name:
+                              description: Mandatory name that allows referencing
+                                the Volume component in Container volume mounts or
+                                inside a parent
+                              type: string
                             openshift:
                               description: Configuration overriding for an OpenShift
                                 component in a plugin
@@ -1451,31 +1361,20 @@ spec:
                                   - Uri
                                   - Inlined
                                   type: string
-                                name:
-                                  description: Mandatory name that allows referencing
-                                    the component in commands, or inside a parent
-                                  type: string
                                 uri:
                                   description: Location in a file fetched from a uri.
                                   type: string
-                              required:
-                              - name
                               type: object
                             volume:
                               description: Configuration overriding for a Volume component
                                 in a plugin
                               properties:
-                                name:
-                                  description: Mandatory name that allows referencing
-                                    the Volume component in Container volume mounts
-                                    or inside a parent
-                                  type: string
                                 size:
                                   description: Size of the volume
                                   type: string
-                              required:
-                              - name
                               type: object
+                          required:
+                          - name
                           type: object
                         type: array
                       id:
@@ -1500,11 +1399,6 @@ spec:
                         required:
                         - name
                         type: object
-                      name:
-                        description: Optional name that allows referencing the component
-                          in commands, or inside a parent If omitted it will be infered
-                          from the location (uri or registryEntry)
-                        type: string
                       registryUrl:
                         type: string
                       uri:
@@ -1515,16 +1409,12 @@ spec:
                     description: Allows specifying the definition of a volume shared
                       by several other components
                     properties:
-                      name:
-                        description: Mandatory name that allows referencing the Volume
-                          component in Container volume mounts or inside a parent
-                        type: string
                       size:
                         description: Size of the volume
                         type: string
-                    required:
-                    - name
                     type: object
+                required:
+                - name
                 type: object
               type: array
             events:
@@ -1606,17 +1496,10 @@ spec:
                             required:
                             - kind
                             type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           label:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
                             type: string
-                        required:
-                        - id
                         type: object
                       commandType:
                         description: Type of workspace command
@@ -1662,11 +1545,6 @@ spec:
                             required:
                             - kind
                             type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           label:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
@@ -1675,8 +1553,6 @@ spec:
                             description: Indicates if the sub-commands should be executed
                               concurrently
                             type: boolean
-                        required:
-                        - id
                         type: object
                       custom:
                         description: Custom command whose logic is implementation-dependant
@@ -1719,11 +1595,6 @@ spec:
                             required:
                             - kind
                             type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           label:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
@@ -1731,7 +1602,6 @@ spec:
                         required:
                         - commandClass
                         - embeddedResource
-                        - id
                         type: object
                       exec:
                         description: CLI Command executed in an existing component
@@ -1793,11 +1663,6 @@ spec:
                               command won't be restarted and it is expected to handle
                               file changes on its own. \n Default value is `false`"
                             type: boolean
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           label:
                             description: Optional label that provides a label for
                               this command to be used in Editor UI menus for example
@@ -1811,9 +1676,12 @@ spec:
                               multiple projects, this will point to the directory
                               of the first one."
                             type: string
-                        required:
-                        - id
                         type: object
+                      id:
+                        description: Mandatory identifier that allows referencing
+                          this command in composite commands, from a parent, or in
+                          events.
+                        type: string
                       vscodeLaunch:
                         description: Command providing the definition of a VsCode
                           launch action
@@ -1842,11 +1710,6 @@ spec:
                             required:
                             - kind
                             type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -1860,8 +1723,6 @@ spec:
                             description: Location as an absolute of relative URI the
                               VsCode configuration will be fetched from
                             type: string
-                        required:
-                        - id
                         type: object
                       vscodeTask:
                         description: Command providing the definition of a VsCode
@@ -1891,11 +1752,6 @@ spec:
                             required:
                             - kind
                             type: object
-                          id:
-                            description: Mandatory identifier that allows referencing
-                              this command in composite commands, from a parent, or
-                              in events.
-                            type: string
                           inlined:
                             description: Inlined content of the VsCode configuration
                             type: string
@@ -1909,9 +1765,9 @@ spec:
                             description: Location as an absolute of relative URI the
                               VsCode configuration will be fetched from
                             type: string
-                        required:
-                        - id
                         type: object
+                    required:
+                    - id
                     type: object
                   type: array
                 components:
@@ -2041,8 +1897,6 @@ spec:
                             type: string
                           mountSources:
                             type: boolean
-                          name:
-                            type: string
                           sourceMapping:
                             description: Optional specification of the path in the
                               container where project sources should be transferred/mounted
@@ -2072,8 +1926,6 @@ spec:
                               - name
                               type: object
                             type: array
-                        required:
-                        - name
                         type: object
                       custom:
                         description: Custom component whose logic is implementation-dependant
@@ -2092,14 +1944,9 @@ spec:
                             type: object
                             x-kubernetes-embedded-resource: true
                             x-kubernetes-preserve-unknown-fields: true
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                         required:
                         - componentClass
                         - embeddedResource
-                        - name
                         type: object
                       kubernetes:
                         description: Allows importing into the workspace the Kubernetes
@@ -2182,16 +2029,16 @@ spec:
                             - Uri
                             - Inlined
                             type: string
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                           uri:
                             description: Location in a file fetched from a uri.
                             type: string
-                        required:
-                        - name
                         type: object
+                      name:
+                        description: Mandatory name that allows referencing the component
+                          from other elements (such as commands) or from an external
+                          devfile that may reference this component through a parent
+                          or a plugin.
+                        type: string
                       openshift:
                         description: Allows importing into the workspace the OpenShift
                           resources defined in a given manifest. For example this
@@ -2273,15 +2120,9 @@ spec:
                             - Uri
                             - Inlined
                             type: string
-                          name:
-                            description: Mandatory name that allows referencing the
-                              component in commands, or inside a parent
-                            type: string
                           uri:
                             description: Location in a file fetched from a uri.
                             type: string
-                        required:
-                        - name
                         type: object
                       plugin:
                         description: "Allows importing a plugin. \n Plugins are mainly
@@ -2339,18 +2180,11 @@ spec:
                                       required:
                                       - kind
                                       type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     label:
                                       description: Optional label that provides a
                                         label for this command to be used in Editor
                                         UI menus for example
                                       type: string
-                                  required:
-                                  - id
                                   type: object
                                 commandType:
                                   description: Type of workspace command
@@ -2398,11 +2232,6 @@ spec:
                                       required:
                                       - kind
                                       type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     label:
                                       description: Optional label that provides a
                                         label for this command to be used in Editor
@@ -2412,8 +2241,6 @@ spec:
                                       description: Indicates if the sub-commands should
                                         be executed concurrently
                                       type: boolean
-                                  required:
-                                  - id
                                   type: object
                                 custom:
                                   description: Custom command whose logic is implementation-dependant
@@ -2458,11 +2285,6 @@ spec:
                                       required:
                                       - kind
                                       type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     label:
                                       description: Optional label that provides a
                                         label for this command to be used in Editor
@@ -2471,7 +2293,6 @@ spec:
                                   required:
                                   - commandClass
                                   - embeddedResource
-                                  - id
                                   type: object
                                 exec:
                                   description: CLI Command executed in an existing
@@ -2537,11 +2358,6 @@ spec:
                                         and it is expected to handle file changes
                                         on its own. \n Default value is `false`"
                                       type: boolean
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     label:
                                       description: Optional label that provides a
                                         label for this command to be used in Editor
@@ -2556,9 +2372,12 @@ spec:
                                         If there are multiple projects, this will
                                         point to the directory of the first one."
                                       type: string
-                                  required:
-                                  - id
                                   type: object
+                                id:
+                                  description: Mandatory identifier that allows referencing
+                                    this command in composite commands, from a parent,
+                                    or in events.
+                                  type: string
                                 vscodeLaunch:
                                   description: Command providing the definition of
                                     a VsCode launch action
@@ -2589,11 +2408,6 @@ spec:
                                       required:
                                       - kind
                                       type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -2609,8 +2423,6 @@ spec:
                                         URI the VsCode configuration will be fetched
                                         from
                                       type: string
-                                  required:
-                                  - id
                                   type: object
                                 vscodeTask:
                                   description: Command providing the definition of
@@ -2642,11 +2454,6 @@ spec:
                                       required:
                                       - kind
                                       type: object
-                                    id:
-                                      description: Mandatory identifier that allows
-                                        referencing this command in composite commands,
-                                        from a parent, or in events.
-                                      type: string
                                     inlined:
                                       description: Inlined content of the VsCode configuration
                                       type: string
@@ -2662,9 +2469,9 @@ spec:
                                         URI the VsCode configuration will be fetched
                                         from
                                       type: string
-                                  required:
-                                  - id
                                   type: object
+                              required:
+                              - id
                               type: object
                             type: array
                           components:
@@ -2803,8 +2610,6 @@ spec:
                                       type: string
                                     mountSources:
                                       type: boolean
-                                    name:
-                                      type: string
                                     sourceMapping:
                                       description: Optional specification of the path
                                         in the container where project sources should
@@ -2837,8 +2642,6 @@ spec:
                                         - name
                                         type: object
                                       type: array
-                                  required:
-                                  - name
                                   type: object
                                 kubernetes:
                                   description: Configuration overriding for a Kubernetes
@@ -2927,17 +2730,16 @@ spec:
                                       - Uri
                                       - Inlined
                                       type: string
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the component in commands, or inside a parent
-                                      type: string
                                     uri:
                                       description: Location in a file fetched from
                                         a uri.
                                       type: string
-                                  required:
-                                  - name
                                   type: object
+                                name:
+                                  description: Mandatory name that allows referencing
+                                    the Volume component in Container volume mounts
+                                    or inside a parent
+                                  type: string
                                 openshift:
                                   description: Configuration overriding for an OpenShift
                                     component in a plugin
@@ -3025,32 +2827,21 @@ spec:
                                       - Uri
                                       - Inlined
                                       type: string
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the component in commands, or inside a parent
-                                      type: string
                                     uri:
                                       description: Location in a file fetched from
                                         a uri.
                                       type: string
-                                  required:
-                                  - name
                                   type: object
                                 volume:
                                   description: Configuration overriding for a Volume
                                     component in a plugin
                                   properties:
-                                    name:
-                                      description: Mandatory name that allows referencing
-                                        the Volume component in Container volume mounts
-                                        or inside a parent
-                                      type: string
                                     size:
                                       description: Size of the volume
                                       type: string
-                                  required:
-                                  - name
                                   type: object
+                              required:
+                              - name
                               type: object
                             type: array
                           id:
@@ -3075,11 +2866,6 @@ spec:
                             required:
                             - name
                             type: object
-                          name:
-                            description: Optional name that allows referencing the
-                              component in commands, or inside a parent If omitted
-                              it will be infered from the location (uri or registryEntry)
-                            type: string
                           registryUrl:
                             type: string
                           uri:
@@ -3090,17 +2876,12 @@ spec:
                         description: Allows specifying the definition of a volume
                           shared by several other components
                         properties:
-                          name:
-                            description: Mandatory name that allows referencing the
-                              Volume component in Container volume mounts or inside
-                              a parent
-                            type: string
                           size:
                             description: Size of the volume
                             type: string
-                        required:
-                        - name
                         type: object
+                    required:
+                    - name
                     type: object
                   type: array
                 id:
@@ -3237,6 +3018,120 @@ spec:
                   type: array
                 registryUrl:
                   type: string
+                starterProjects:
+                  description: Overrides of startedProjects encapsulated in a parent
+                    devfile. Overriding is done using a strategic merge patch.
+                  items:
+                    properties:
+                      clonePath:
+                        description: Path relative to the root of the projects to
+                          which this project should be cloned into. This is a unix-style
+                          relative path (i.e. uses forward slashes). The path is invalid
+                          if it is absolute or tries to escape the project root through
+                          the usage of '..'. If not specified, defaults to the project
+                          name.
+                        type: string
+                      custom:
+                        description: Project's Custom source
+                        properties:
+                          embeddedResource:
+                            type: object
+                            x-kubernetes-embedded-resource: true
+                            x-kubernetes-preserve-unknown-fields: true
+                          projectSourceClass:
+                            type: string
+                        required:
+                        - embeddedResource
+                        - projectSourceClass
+                        type: object
+                      description:
+                        description: Description of a starter project
+                        type: string
+                      git:
+                        description: Project's Git source
+                        properties:
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                        type: object
+                      github:
+                        description: Project's GitHub source
+                        properties:
+                          checkoutFrom:
+                            description: Defines from what the project should be checked
+                              out. Required if there are more than one remote configured
+                            properties:
+                              remote:
+                                description: The remote name should be used as init.
+                                  Required if there are more than one remote configured
+                                type: string
+                              revision:
+                                description: The revision to checkout from. Should
+                                  be branch name, tag or commit id. Default branch
+                                  is used if missing or specified revision is not
+                                  found.
+                                type: string
+                            type: object
+                          remotes:
+                            additionalProperties:
+                              type: string
+                            description: The remotes map which should be initialized
+                              in the git project. Must have at least one remote configured
+                            type: object
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                        type: object
+                      name:
+                        description: Project name
+                        type: string
+                      sourceType:
+                        description: Type of project source
+                        enum:
+                        - Git
+                        - Github
+                        - Zip
+                        - Custom
+                        type: string
+                      zip:
+                        description: Project's Zip source
+                        properties:
+                          location:
+                            description: Zip project's source location address. Should
+                              be file path of the archive, e.g. file://$FILE_PATH
+                            type: string
+                          sparseCheckoutDir:
+                            description: Part of project to populate in the working
+                              directory.
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  type: array
                 uri:
                   description: Uri of a Devfile yaml file
                   type: string

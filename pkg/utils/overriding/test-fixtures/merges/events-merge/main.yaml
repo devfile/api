@@ -2,8 +2,8 @@ parent:
   uri: "anyParent"
 components:
   - plugin:
-      name: "theOnlyPlugin"
       uri: "aCustomLocation"
+    name: "theOnlyPlugin"
 events:
   preStart:
     - "preStartFromMainContent"

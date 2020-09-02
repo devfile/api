@@ -9,8 +9,8 @@ spec:
       kubernetes:
         name: nodejs-stack
     commands:
-      - exec:
-          id: sayHello
+      - id: sayHello
+        exec:
           label: Say Hello
           commandLine: echo "hello"
           component: nodejs

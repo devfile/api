@@ -14,18 +14,19 @@ metadata:
 parent:
   id: redhat/theia-vsx-template/latest
   components:
-    - container:
-         name: vsx-installer
-         env:
-            - name: VSX_LIST
-              value: java-dbg.vsix,java.vsix
+    - name: vsx-installer
+      container:
+        env:
+          - name: VSX_LIST
+            value: java-dbg.vsix,java.vsix
 components:
- - container:
-    image: ...che-sidecar-java
-    name: vscode-java
-    memoryLimit: "1500Mi"
-    volumeMounts:
-     - path: "/home/theia/.m2"
-       name: m2
- - volume:
-    name: m2
+  - name: vscode-java
+    container:
+      image: ...che-sidecar-java
+      memoryLimit: "1500Mi"
+      volumeMounts:
+        - path: "/home/theia/.m2"
+          name: m2
+  - name: m2
+    volume: {}
+    

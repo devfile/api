@@ -11,13 +11,18 @@ type OverridesBase struct {
 	// OverrideDirectives []OverrideDirective `json:"overrideDirectives,omitempty"`
 }
 
-type Overrides struct {
+type ParentOverrides struct {
 	OverridesBase `json:",inline"`
 
 	// Overrides of projects encapsulated in a parent devfile.
 	// Overriding is done using a strategic merge patch.
 	// +optional
 	Projects []Project `json:"projects,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// Overrides of startedProjects encapsulated in a parent devfile.
+	// Overriding is done using a strategic merge patch.
+	// +optional
+	StarterProjects []StarterProject `json:"starterProjects,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// Overrides of components encapsulated in a parent devfile.
 	// Overriding is done using a strategic merge patch
@@ -34,3 +39,11 @@ type PluginOverrides struct {
 	// +optional
 	Components []PluginComponentsOverride `json:"components,omitempty"`
 }
+
+type Overrides interface {
+	TopLevelListContainer
+	isOverride()
+}
+
+func (overrides ParentOverrides) isOverride() {}
+func (overrides PluginOverrides) isOverride() {}

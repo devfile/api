@@ -37,11 +37,6 @@ type CommandGroup struct {
 }
 
 type BaseCommand struct {
-	// Mandatory identifier that allows referencing
-	// this command in composite commands, from
-	// a parent, or in events.
-	Id string `json:"id"`
-
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroup `json:"group,omitempty"`
@@ -60,8 +55,16 @@ type LabeledCommand struct {
 }
 
 // +k8s:openapi-gen=true
-// +union
 type Command struct {
+	// Mandatory identifier that allows referencing
+	// this command in composite commands, from
+	// a parent, or in events.
+	Id           string `json:"id"`
+	CommandUnion `json:",inline"`
+}
+
+// +union
+type CommandUnion struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional

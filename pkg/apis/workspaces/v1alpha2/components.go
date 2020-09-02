@@ -21,9 +21,17 @@ const (
 type BaseComponent struct {
 }
 
-// +k8s:openapi-gen=true
-// +union
+//+k8s:openapi-gen=true
 type Component struct {
+	// Mandatory name that allows referencing the component
+	// from other elements (such as commands) or from an external
+	// devfile that may reference this component through a parent or a plugin.
+	Name           string `json:"name"`
+	ComponentUnion `json:",inline"`
+}
+
+// +union
+type ComponentUnion struct {
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -70,10 +78,6 @@ type Component struct {
 }
 
 type CustomComponent struct {
-	// Mandatory name that allows referencing the component
-	// in commands, or inside a parent
-	Name string `json:"name"`
-
 	// Class of component that the associated implementation controller
 	// should use to process this command with the appropriate logic
 	ComponentClass string `json:"componentClass"`
@@ -99,9 +103,17 @@ const (
 	VolumePluginComponentsOverrideType     PluginComponentsOverrideType = "Volume"
 )
 
+//+k8s:openapi-gen=true
+type PluginComponentsOverride struct {
+	// Mandatory name that allows referencing the Volume component
+	// in Container volume mounts or inside a parent
+	Name                          string `json:"name"`
+	PluginComponentsOverrideUnion `json:",inline"`
+}
+
 // +k8s:openapi-gen=true
 // +union
-type PluginComponentsOverride struct {
+type PluginComponentsOverrideUnion struct {
 	// Type of component override for a plugin
 	//
 	// +unionDiscriminator

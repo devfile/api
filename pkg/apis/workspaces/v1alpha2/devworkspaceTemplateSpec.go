@@ -27,7 +27,7 @@ type DevWorkspaceTemplateSpecContent struct {
 
 	// StarterProjects is a project that can be used as a starting point when bootstrapping new projects
 	// +optional
-	StarterProjects []StarterProject `json:"starterProjects,omitempty"`
+	StarterProjects []StarterProject `json:"starterProjects,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// List of the workspace components, such as editor and plugins,
 	// user-provided containers, or other types of components
