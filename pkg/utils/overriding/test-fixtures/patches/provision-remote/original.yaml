@@ -5,3 +5,8 @@ projects:
         origin: "https://github.com/che-samples/web-nodejs-sample.git"
       checkoutFrom:
         revision: master
+    buildGuidance:
+      dockerfile:
+        name: guidance1
+        dockerfileLocation: "foo/Dockerfile"
+        buildContext: "/"

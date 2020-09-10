@@ -5,3 +5,8 @@ projects:
         gh-collaborator: "https://github.com/gh-collaborator/web-nodejs-sample.git"
       checkoutFrom:
         remote: gh-collaborator
+    buildGuidance:
+      dockerfile:
+        name: guidance2
+        dockerfileLocation: "bar/Dockerfile"       
+        buildContext: "/" 

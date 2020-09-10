@@ -12,9 +12,9 @@ type Project struct {
 
 	ProjectSource `json:",inline"`
 
-	// Build guidances to build this project
+	// Build guidance to build this project
 	// +optional
-	BuildGuidances `json:"buildGuidances,omitempty"`
+	*BuildGuidance `json:"buildGuidance,omitempty"`
 }
 type StarterProject struct {
 	Project `json:",inline"`

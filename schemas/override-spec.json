@@ -1697,8 +1697,8 @@
       "description": "Overrides of projects encapsulated in a parent devfile. Overriding is done using a strategic merge patch.",
       "items": {
         "properties": {
-          "buildGuidances": {
-            "description": "Build guidances to build this project",
+          "buildGuidance": {
+            "description": "Build guidance to build this project",
             "properties": {
               "dockerfile": {
                 "description": "Allows specifying a dockerfile to initiate build",
@@ -1772,7 +1772,7 @@
               }
             },
             "type": "object",
-            "markdownDescription": "Build guidances to build this project",
+            "markdownDescription": "Build guidance to build this project",
             "additionalProperties": false
           },
           "clonePath": {
@@ -1935,8 +1935,8 @@
       "description": "Overrides of startedProjects encapsulated in a parent devfile. Overriding is done using a strategic merge patch.",
       "items": {
         "properties": {
-          "buildGuidances": {
-            "description": "Build guidances to build this project",
+          "buildGuidance": {
+            "description": "Build guidance to build this project",
             "properties": {
               "dockerfile": {
                 "description": "Allows specifying a dockerfile to initiate build",
@@ -2010,7 +2010,7 @@
               }
             },
             "type": "object",
-            "markdownDescription": "Build guidances to build this project",
+            "markdownDescription": "Build guidance to build this project",
             "additionalProperties": false
           },
           "clonePath": {

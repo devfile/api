@@ -2,7 +2,7 @@ package v1alpha2
 
 // +k8s:openapi-gen=true
 // +union
-type BuildGuidances struct {
+type BuildGuidance struct {
 
 	// +optional
 	// Allows specifying a dockerfile to initiate build
