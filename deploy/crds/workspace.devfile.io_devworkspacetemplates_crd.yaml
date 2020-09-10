@@ -2910,6 +2910,62 @@ spec:
                     Overriding is done using a strategic merge patch.
                   items:
                     properties:
+                      buildGuidances:
+                        description: Build guidances to build this project
+                        properties:
+                          dockerfile:
+                            description: Allows specifying a dockerfile to initiate
+                              build
+                            properties:
+                              buildContext:
+                                description: Path of source directory to establish
+                                  build context.  Default to the top level directory.
+                                type: string
+                              dockerfileLocation:
+                                description: Dockerfile location which can be an URL
+                                  or a path relative to buildContext
+                                type: string
+                              name:
+                                description: Name that allows referencing a build
+                                  guidance
+                                type: string
+                              rootless:
+                                description: Optional flag that specifies whether
+                                  unprivileged builder pod is required.  Default is
+                                  false.
+                                type: boolean
+                            required:
+                            - dockerfileLocation
+                            - name
+                            type: object
+                          s2i:
+                            description: Allows specifying a builder image to initiate
+                              s2i (SourceToImage) build
+                            properties:
+                              builderImageNamespace:
+                                description: Namespace where builder image is present
+                                type: string
+                              builderImageStreamTag:
+                                description: Builder image name with tag
+                                type: string
+                              incrementalBuild:
+                                description: Flag that indicates whether to perform
+                                  incremental builds or no
+                                type: boolean
+                              name:
+                                description: Name that allows referencing a build
+                                  guidance
+                                type: string
+                              scriptLocation:
+                                description: Script URL to override default scripts
+                                  provided by builder image
+                                type: string
+                            required:
+                            - builderImageNamespace
+                            - builderImageStreamTag
+                            - name
+                            type: object
+                        type: object
                       clonePath:
                         description: Path relative to the root of the projects to
                           which this project should be cloned into. This is a unix-style
@@ -3023,6 +3079,62 @@ spec:
                     devfile. Overriding is done using a strategic merge patch.
                   items:
                     properties:
+                      buildGuidances:
+                        description: Build guidances to build this project
+                        properties:
+                          dockerfile:
+                            description: Allows specifying a dockerfile to initiate
+                              build
+                            properties:
+                              buildContext:
+                                description: Path of source directory to establish
+                                  build context.  Default to the top level directory.
+                                type: string
+                              dockerfileLocation:
+                                description: Dockerfile location which can be an URL
+                                  or a path relative to buildContext
+                                type: string
+                              name:
+                                description: Name that allows referencing a build
+                                  guidance
+                                type: string
+                              rootless:
+                                description: Optional flag that specifies whether
+                                  unprivileged builder pod is required.  Default is
+                                  false.
+                                type: boolean
+                            required:
+                            - dockerfileLocation
+                            - name
+                            type: object
+                          s2i:
+                            description: Allows specifying a builder image to initiate
+                              s2i (SourceToImage) build
+                            properties:
+                              builderImageNamespace:
+                                description: Namespace where builder image is present
+                                type: string
+                              builderImageStreamTag:
+                                description: Builder image name with tag
+                                type: string
+                              incrementalBuild:
+                                description: Flag that indicates whether to perform
+                                  incremental builds or no
+                                type: boolean
+                              name:
+                                description: Name that allows referencing a build
+                                  guidance
+                                type: string
+                              scriptLocation:
+                                description: Script URL to override default scripts
+                                  provided by builder image
+                                type: string
+                            required:
+                            - builderImageNamespace
+                            - builderImageStreamTag
+                            - name
+                            type: object
+                        type: object
                       clonePath:
                         description: Path relative to the root of the projects to
                           which this project should be cloned into. This is a unix-style
@@ -3141,6 +3253,58 @@ spec:
                 sources locations
               items:
                 properties:
+                  buildGuidances:
+                    description: Build guidances to build this project
+                    properties:
+                      dockerfile:
+                        description: Allows specifying a dockerfile to initiate build
+                        properties:
+                          buildContext:
+                            description: Path of source directory to establish build
+                              context.  Default to the top level directory.
+                            type: string
+                          dockerfileLocation:
+                            description: Dockerfile location which can be an URL or
+                              a path relative to buildContext
+                            type: string
+                          name:
+                            description: Name that allows referencing a build guidance
+                            type: string
+                          rootless:
+                            description: Optional flag that specifies whether unprivileged
+                              builder pod is required.  Default is false.
+                            type: boolean
+                        required:
+                        - dockerfileLocation
+                        - name
+                        type: object
+                      s2i:
+                        description: Allows specifying a builder image to initiate
+                          s2i (SourceToImage) build
+                        properties:
+                          builderImageNamespace:
+                            description: Namespace where builder image is present
+                            type: string
+                          builderImageStreamTag:
+                            description: Builder image name with tag
+                            type: string
+                          incrementalBuild:
+                            description: Flag that indicates whether to perform incremental
+                              builds or no
+                            type: boolean
+                          name:
+                            description: Name that allows referencing a build guidance
+                            type: string
+                          scriptLocation:
+                            description: Script URL to override default scripts provided
+                              by builder image
+                            type: string
+                        required:
+                        - builderImageNamespace
+                        - builderImageStreamTag
+                        - name
+                        type: object
+                    type: object
                   clonePath:
                     description: Path relative to the root of the projects to which
                       this project should be cloned into. This is a unix-style relative
@@ -3246,6 +3410,58 @@ spec:
                 point when bootstrapping new projects
               items:
                 properties:
+                  buildGuidances:
+                    description: Build guidances to build this project
+                    properties:
+                      dockerfile:
+                        description: Allows specifying a dockerfile to initiate build
+                        properties:
+                          buildContext:
+                            description: Path of source directory to establish build
+                              context.  Default to the top level directory.
+                            type: string
+                          dockerfileLocation:
+                            description: Dockerfile location which can be an URL or
+                              a path relative to buildContext
+                            type: string
+                          name:
+                            description: Name that allows referencing a build guidance
+                            type: string
+                          rootless:
+                            description: Optional flag that specifies whether unprivileged
+                              builder pod is required.  Default is false.
+                            type: boolean
+                        required:
+                        - dockerfileLocation
+                        - name
+                        type: object
+                      s2i:
+                        description: Allows specifying a builder image to initiate
+                          s2i (SourceToImage) build
+                        properties:
+                          builderImageNamespace:
+                            description: Namespace where builder image is present
+                            type: string
+                          builderImageStreamTag:
+                            description: Builder image name with tag
+                            type: string
+                          incrementalBuild:
+                            description: Flag that indicates whether to perform incremental
+                              builds or no
+                            type: boolean
+                          name:
+                            description: Name that allows referencing a build guidance
+                            type: string
+                          scriptLocation:
+                            description: Script URL to override default scripts provided
+                              by builder image
+                            type: string
+                        required:
+                        - builderImageNamespace
+                        - builderImageStreamTag
+                        - name
+                        type: object
+                    type: object
                   clonePath:
                     description: Path relative to the root of the projects to which
                       this project should be cloned into. This is a unix-style relative
