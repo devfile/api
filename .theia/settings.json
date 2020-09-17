@@ -3,9 +3,9 @@
   "go.lintFlags": ["--fast"],
   "go.useLanguageServer": true,
   "yaml.schemas": {
-    "./schemas/devfile.json": [ "devfile-support/samples/*devfile.yaml", "devfile-support/samples/devfile-registry/*devfile.yaml" ],
-    "./schemas/devworkspace.json": [ "samples/*devworkspace.yaml" ],
-    "./schemas/devworkspace-template.json": [ "samples/*devworkspacetemplate.yaml" ],
+    "./schemas/devfile.json": [ "samples/devfiles/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
+    "./schemas/devworkspace.json": [ "samples/devworkspaces/*.yaml" ],
+    "./schemas/devworkspace-template.json": [ "samples/devworkspace-templates/*.yaml" ],
     "./schemas/devworkspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/patches/**/original.yaml", "pkg/utils/overriding/test-fixtures/patches/**/result.yaml", "pkg/utils/overriding/test-fixtures/merges/*.yaml" ],
     "./schemas/override-spec.json": [ "pkg/utils/overriding/test-fixtures/**/patch.yaml" ]
   }
