@@ -1,8 +1,30 @@
 package v1alpha2
 
-// +k8s:openapi-gen=true
-// +union
+// BuildGuidanceType describes the type of build guidance.
+// Only one of the following build guidance type may be specified.
+// +kubebuilder:validation:Enum=Dockerfile;SourceToImage
+type BuildGuidanceType string
+
+const (
+	DockerfileBuildGuidanceType    BuildGuidanceType = "Dockerfile"
+	SourceToImageBuildGuidanceType BuildGuidanceType = "SourceToImage"
+)
+
+//+k8s:openapi-gen=true
 type BuildGuidance struct {
+	// Mandatory name that allows referencing the buid guidance from other elements or from
+	// an external devfile that may reference this build guidance through a parent or a plugin.
+	Name               string `json:"name"`
+	BuildGuidanceUnion `json:",inline"`
+}
+
+// +union
+type BuildGuidanceUnion struct {
+	// Type of build guidance
+	//
+	// +unionDiscriminator
+	// +optional
+	BuildGuidanceType `json:"buildGuidanceType,omitempty"`
 
 	// +optional
 	// Allows specifying a dockerfile to initiate build
@@ -14,16 +36,12 @@ type BuildGuidance struct {
 }
 
 type Dockerfile struct {
-
-	// Name that allows referencing a build guidance
-	Name string `json:"name"`
-
 	// Dockerfile location which can be an URL or a path relative to buildContext
 	DockerfileLocation string `json:"dockerfileLocation"`
 
 	// +optional
 	// Path of source directory to establish build context.  Default to the top level directory.
-	BuildContext string `json:"buildContext"`
+	BuildContext string `json:"buildContext,omitempty"`
 
 	// +optional
 	// Optional flag that specifies whether unprivileged builder pod is required.  Default is false.
@@ -31,10 +49,6 @@ type Dockerfile struct {
 }
 
 type SourceToImage struct {
-
-	// Name that allows referencing a build guidance
-	Name string `json:"name"`
-
 	// Namespace where builder image is present
 	BuilderImageNamespace string `json:"builderImageNamespace"`
 

@@ -1,0 +1,9 @@
+buildGuidances:
+  - name: bg
+    s2i:
+      builderImageNamespace: "ns1"
+      builderImageStreamTag: "image1"
+  - name: dk
+    dockerfile:
+      dockerfileLocation: "/foo"      
+      

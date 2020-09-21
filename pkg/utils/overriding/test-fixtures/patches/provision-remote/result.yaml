@@ -7,8 +7,3 @@ projects:
       checkoutFrom:
         remote: gh-collaborator
         revision: master
-    buildGuidance:
-      dockerfile:
-        name: guidance2
-        dockerfileLocation: "bar/Dockerfile"
-        buildContext: "/"

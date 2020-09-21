@@ -1,0 +1,12 @@
+buildGuidances:
+  - dockerfile:
+      dockerfileLocation: "/parent"
+    name: "parent"  
+  - dockerfile:
+      dockerfileLocation: "/plugin"
+    name: "plugin"   
+  - s2i:
+      builderImageNamespace: "ns"
+      builderImageStreamTag: "image"
+    name: "main"
+ 

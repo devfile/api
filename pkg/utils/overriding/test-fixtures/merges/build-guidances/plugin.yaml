@@ -1,0 +1,4 @@
+buildGuidances:
+  - dockerfile:
+      dockerfileLocation: "/plugin"
+    name: "plugin"

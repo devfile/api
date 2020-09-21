@@ -33,4 +33,8 @@ type DevWorkspaceTemplateSpecContent struct {
 	// user-provided containers, or other types of components
 	// +optional
 	Components []Component `json:"components,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// List of the build guidances which provide guidance on how images should be built.
+	// +optional
+	BuildGuidances []BuildGuidance `json:"buildGuidances,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }

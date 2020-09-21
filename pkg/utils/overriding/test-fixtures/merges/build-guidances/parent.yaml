@@ -1,0 +1,4 @@
+buildGuidances:
+  - dockerfile:
+      dockerfileLocation: "/parent"
+    name: "parent"

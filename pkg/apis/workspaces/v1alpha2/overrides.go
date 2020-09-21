@@ -28,6 +28,10 @@ type ParentOverrides struct {
 	// Overriding is done using a strategic merge patch
 	// +optional
 	Components []Component `json:"components,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// List of the build guidances which provide guidance on how images should be built.
+	// +optional
+	BuildGuidances []BuildGuidance `json:"buildGuidances,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 type PluginOverrides struct {
@@ -38,6 +42,10 @@ type PluginOverrides struct {
 	// A plugin cannot override embedded plugin components.
 	// +optional
 	Components []PluginComponentsOverride `json:"components,omitempty"`
+
+	// List of the build guidances which provide guidance on how images should be built.
+	// +optional
+	BuildGuidances []BuildGuidance `json:"buildGuidances,omitempty"`
 }
 
 type Overrides interface {

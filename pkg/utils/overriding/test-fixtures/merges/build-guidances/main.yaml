@@ -1,0 +1,7 @@
+parent:
+  uri: "anyParent"
+buildGuidances:
+  - s2i:
+      builderImageNamespace: "ns"
+      builderImageStreamTag: "image"
+    name: "main"

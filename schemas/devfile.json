@@ -1,6 +1,92 @@
 {
   "description": "Devfile schema.",
   "properties": {
+    "buildGuidances": {
+      "description": "List of the build guidances which provide guidance on how images should be built.",
+      "items": {
+        "properties": {
+          "buildGuidanceType": {
+            "description": "Type of build guidance",
+            "enum": [
+              "Dockerfile",
+              "SourceToImage"
+            ],
+            "type": "string",
+            "markdownDescription": "Type of build guidance"
+          },
+          "dockerfile": {
+            "description": "Allows specifying a dockerfile to initiate build",
+            "properties": {
+              "buildContext": {
+                "description": "Path of source directory to establish build context.  Default to the top level directory.",
+                "type": "string",
+                "markdownDescription": "Path of source directory to establish build context.  Default to the top level directory."
+              },
+              "dockerfileLocation": {
+                "description": "Dockerfile location which can be an URL or a path relative to buildContext",
+                "type": "string",
+                "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
+              },
+              "rootless": {
+                "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
+                "type": "boolean",
+                "markdownDescription": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false."
+              }
+            },
+            "required": [
+              "dockerfileLocation"
+            ],
+            "type": "object",
+            "markdownDescription": "Allows specifying a dockerfile to initiate build",
+            "additionalProperties": false
+          },
+          "name": {
+            "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+            "type": "string",
+            "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
+          },
+          "s2i": {
+            "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+            "properties": {
+              "builderImageNamespace": {
+                "description": "Namespace where builder image is present",
+                "type": "string",
+                "markdownDescription": "Namespace where builder image is present"
+              },
+              "builderImageStreamTag": {
+                "description": "Builder image name with tag",
+                "type": "string",
+                "markdownDescription": "Builder image name with tag"
+              },
+              "incrementalBuild": {
+                "description": "Flag that indicates whether to perform incremental builds or no",
+                "type": "boolean",
+                "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
+              },
+              "scriptLocation": {
+                "description": "Script URL to override default scripts provided by builder image",
+                "type": "string",
+                "markdownDescription": "Script URL to override default scripts provided by builder image"
+              }
+            },
+            "required": [
+              "builderImageNamespace",
+              "builderImageStreamTag"
+            ],
+            "type": "object",
+            "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array",
+      "markdownDescription": "List of the build guidances which provide guidance on how images should be built."
+    },
     "commands": {
       "description": "Predefined, ready-to-use, workspace-related commands",
       "items": {
@@ -704,6 +790,92 @@
           "plugin": {
             "description": "Allows importing a plugin.\n\nPlugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
             "properties": {
+              "buildGuidances": {
+                "description": "List of the build guidances which provide guidance on how images should be built.",
+                "items": {
+                  "properties": {
+                    "buildGuidanceType": {
+                      "description": "Type of build guidance",
+                      "enum": [
+                        "Dockerfile",
+                        "SourceToImage"
+                      ],
+                      "type": "string",
+                      "markdownDescription": "Type of build guidance"
+                    },
+                    "dockerfile": {
+                      "description": "Allows specifying a dockerfile to initiate build",
+                      "properties": {
+                        "buildContext": {
+                          "description": "Path of source directory to establish build context.  Default to the top level directory.",
+                          "type": "string",
+                          "markdownDescription": "Path of source directory to establish build context.  Default to the top level directory."
+                        },
+                        "dockerfileLocation": {
+                          "description": "Dockerfile location which can be an URL or a path relative to buildContext",
+                          "type": "string",
+                          "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
+                        },
+                        "rootless": {
+                          "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
+                          "type": "boolean",
+                          "markdownDescription": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false."
+                        }
+                      },
+                      "required": [
+                        "dockerfileLocation"
+                      ],
+                      "type": "object",
+                      "markdownDescription": "Allows specifying a dockerfile to initiate build",
+                      "additionalProperties": false
+                    },
+                    "name": {
+                      "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                      "type": "string",
+                      "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
+                    },
+                    "s2i": {
+                      "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                      "properties": {
+                        "builderImageNamespace": {
+                          "description": "Namespace where builder image is present",
+                          "type": "string",
+                          "markdownDescription": "Namespace where builder image is present"
+                        },
+                        "builderImageStreamTag": {
+                          "description": "Builder image name with tag",
+                          "type": "string",
+                          "markdownDescription": "Builder image name with tag"
+                        },
+                        "incrementalBuild": {
+                          "description": "Flag that indicates whether to perform incremental builds or no",
+                          "type": "boolean",
+                          "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
+                        },
+                        "scriptLocation": {
+                          "description": "Script URL to override default scripts provided by builder image",
+                          "type": "string",
+                          "markdownDescription": "Script URL to override default scripts provided by builder image"
+                        }
+                      },
+                      "required": [
+                        "builderImageNamespace",
+                        "builderImageStreamTag"
+                      ],
+                      "type": "object",
+                      "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array",
+                "markdownDescription": "List of the build guidances which provide guidance on how images should be built."
+              },
               "commands": {
                 "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done using a strategic merge patch",
                 "items": {
@@ -1585,6 +1757,92 @@
     "parent": {
       "description": "Parent workspace template",
       "properties": {
+        "buildGuidances": {
+          "description": "List of the build guidances which provide guidance on how images should be built.",
+          "items": {
+            "properties": {
+              "buildGuidanceType": {
+                "description": "Type of build guidance",
+                "enum": [
+                  "Dockerfile",
+                  "SourceToImage"
+                ],
+                "type": "string",
+                "markdownDescription": "Type of build guidance"
+              },
+              "dockerfile": {
+                "description": "Allows specifying a dockerfile to initiate build",
+                "properties": {
+                  "buildContext": {
+                    "description": "Path of source directory to establish build context.  Default to the top level directory.",
+                    "type": "string",
+                    "markdownDescription": "Path of source directory to establish build context.  Default to the top level directory."
+                  },
+                  "dockerfileLocation": {
+                    "description": "Dockerfile location which can be an URL or a path relative to buildContext",
+                    "type": "string",
+                    "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
+                  },
+                  "rootless": {
+                    "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
+                    "type": "boolean",
+                    "markdownDescription": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false."
+                  }
+                },
+                "required": [
+                  "dockerfileLocation"
+                ],
+                "type": "object",
+                "markdownDescription": "Allows specifying a dockerfile to initiate build",
+                "additionalProperties": false
+              },
+              "name": {
+                "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                "type": "string",
+                "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
+              },
+              "s2i": {
+                "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                "properties": {
+                  "builderImageNamespace": {
+                    "description": "Namespace where builder image is present",
+                    "type": "string",
+                    "markdownDescription": "Namespace where builder image is present"
+                  },
+                  "builderImageStreamTag": {
+                    "description": "Builder image name with tag",
+                    "type": "string",
+                    "markdownDescription": "Builder image name with tag"
+                  },
+                  "incrementalBuild": {
+                    "description": "Flag that indicates whether to perform incremental builds or no",
+                    "type": "boolean",
+                    "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
+                  },
+                  "scriptLocation": {
+                    "description": "Script URL to override default scripts provided by builder image",
+                    "type": "string",
+                    "markdownDescription": "Script URL to override default scripts provided by builder image"
+                  }
+                },
+                "required": [
+                  "builderImageNamespace",
+                  "builderImageStreamTag"
+                ],
+                "type": "object",
+                "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "markdownDescription": "List of the build guidances which provide guidance on how images should be built."
+        },
         "commands": {
           "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done using a strategic merge patch",
           "items": {
@@ -2279,6 +2537,92 @@
               "plugin": {
                 "description": "Allows importing a plugin.\n\nPlugins are mainly imported devfiles that contribute components, commands and events as a consistent single unit. They are defined in either YAML files following the devfile syntax, or as `DevWorkspaceTemplate` Kubernetes Custom Resources",
                 "properties": {
+                  "buildGuidances": {
+                    "description": "List of the build guidances which provide guidance on how images should be built.",
+                    "items": {
+                      "properties": {
+                        "buildGuidanceType": {
+                          "description": "Type of build guidance",
+                          "enum": [
+                            "Dockerfile",
+                            "SourceToImage"
+                          ],
+                          "type": "string",
+                          "markdownDescription": "Type of build guidance"
+                        },
+                        "dockerfile": {
+                          "description": "Allows specifying a dockerfile to initiate build",
+                          "properties": {
+                            "buildContext": {
+                              "description": "Path of source directory to establish build context.  Default to the top level directory.",
+                              "type": "string",
+                              "markdownDescription": "Path of source directory to establish build context.  Default to the top level directory."
+                            },
+                            "dockerfileLocation": {
+                              "description": "Dockerfile location which can be an URL or a path relative to buildContext",
+                              "type": "string",
+                              "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
+                            },
+                            "rootless": {
+                              "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
+                              "type": "boolean",
+                              "markdownDescription": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false."
+                            }
+                          },
+                          "required": [
+                            "dockerfileLocation"
+                          ],
+                          "type": "object",
+                          "markdownDescription": "Allows specifying a dockerfile to initiate build",
+                          "additionalProperties": false
+                        },
+                        "name": {
+                          "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                          "type": "string",
+                          "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
+                        },
+                        "s2i": {
+                          "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                          "properties": {
+                            "builderImageNamespace": {
+                              "description": "Namespace where builder image is present",
+                              "type": "string",
+                              "markdownDescription": "Namespace where builder image is present"
+                            },
+                            "builderImageStreamTag": {
+                              "description": "Builder image name with tag",
+                              "type": "string",
+                              "markdownDescription": "Builder image name with tag"
+                            },
+                            "incrementalBuild": {
+                              "description": "Flag that indicates whether to perform incremental builds or no",
+                              "type": "boolean",
+                              "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
+                            },
+                            "scriptLocation": {
+                              "description": "Script URL to override default scripts provided by builder image",
+                              "type": "string",
+                              "markdownDescription": "Script URL to override default scripts provided by builder image"
+                            }
+                          },
+                          "required": [
+                            "builderImageNamespace",
+                            "builderImageStreamTag"
+                          ],
+                          "type": "object",
+                          "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array",
+                    "markdownDescription": "List of the build guidances which provide guidance on how images should be built."
+                  },
                   "commands": {
                     "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done using a strategic merge patch",
                     "items": {
@@ -3146,6 +3490,15 @@
               "buildGuidance": {
                 "description": "Build guidance to build this project",
                 "properties": {
+                  "buildGuidanceType": {
+                    "description": "Type of build guidance",
+                    "enum": [
+                      "Dockerfile",
+                      "SourceToImage"
+                    ],
+                    "type": "string",
+                    "markdownDescription": "Type of build guidance"
+                  },
                   "dockerfile": {
                     "description": "Allows specifying a dockerfile to initiate build",
                     "properties": {
@@ -3159,11 +3512,6 @@
                         "type": "string",
                         "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
                       },
-                      "name": {
-                        "description": "Name that allows referencing a build guidance",
-                        "type": "string",
-                        "markdownDescription": "Name that allows referencing a build guidance"
-                      },
                       "rootless": {
                         "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
                         "type": "boolean",
@@ -3171,12 +3519,16 @@
                       }
                     },
                     "required": [
-                      "dockerfileLocation",
-                      "name"
+                      "dockerfileLocation"
                     ],
                     "type": "object",
                     "markdownDescription": "Allows specifying a dockerfile to initiate build",
                     "additionalProperties": false
+                  },
+                  "name": {
+                    "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                    "type": "string",
+                    "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
                   },
                   "s2i": {
                     "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
@@ -3196,11 +3548,6 @@
                         "type": "boolean",
                         "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
                       },
-                      "name": {
-                        "description": "Name that allows referencing a build guidance",
-                        "type": "string",
-                        "markdownDescription": "Name that allows referencing a build guidance"
-                      },
                       "scriptLocation": {
                         "description": "Script URL to override default scripts provided by builder image",
                         "type": "string",
@@ -3209,14 +3556,16 @@
                     },
                     "required": [
                       "builderImageNamespace",
-                      "builderImageStreamTag",
-                      "name"
+                      "builderImageStreamTag"
                     ],
                     "type": "object",
                     "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
                     "additionalProperties": false
                   }
                 },
+                "required": [
+                  "name"
+                ],
                 "type": "object",
                 "markdownDescription": "Build guidance to build this project",
                 "additionalProperties": false
@@ -3364,6 +3713,15 @@
               "buildGuidance": {
                 "description": "Build guidance to build this project",
                 "properties": {
+                  "buildGuidanceType": {
+                    "description": "Type of build guidance",
+                    "enum": [
+                      "Dockerfile",
+                      "SourceToImage"
+                    ],
+                    "type": "string",
+                    "markdownDescription": "Type of build guidance"
+                  },
                   "dockerfile": {
                     "description": "Allows specifying a dockerfile to initiate build",
                     "properties": {
@@ -3377,11 +3735,6 @@
                         "type": "string",
                         "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
                       },
-                      "name": {
-                        "description": "Name that allows referencing a build guidance",
-                        "type": "string",
-                        "markdownDescription": "Name that allows referencing a build guidance"
-                      },
                       "rootless": {
                         "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
                         "type": "boolean",
@@ -3389,12 +3742,16 @@
                       }
                     },
                     "required": [
-                      "dockerfileLocation",
-                      "name"
+                      "dockerfileLocation"
                     ],
                     "type": "object",
                     "markdownDescription": "Allows specifying a dockerfile to initiate build",
                     "additionalProperties": false
+                  },
+                  "name": {
+                    "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                    "type": "string",
+                    "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
                   },
                   "s2i": {
                     "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
@@ -3414,11 +3771,6 @@
                         "type": "boolean",
                         "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
                       },
-                      "name": {
-                        "description": "Name that allows referencing a build guidance",
-                        "type": "string",
-                        "markdownDescription": "Name that allows referencing a build guidance"
-                      },
                       "scriptLocation": {
                         "description": "Script URL to override default scripts provided by builder image",
                         "type": "string",
@@ -3427,14 +3779,16 @@
                     },
                     "required": [
                       "builderImageNamespace",
-                      "builderImageStreamTag",
-                      "name"
+                      "builderImageStreamTag"
                     ],
                     "type": "object",
                     "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
                     "additionalProperties": false
                   }
                 },
+                "required": [
+                  "name"
+                ],
                 "type": "object",
                 "markdownDescription": "Build guidance to build this project",
                 "additionalProperties": false
@@ -3616,6 +3970,15 @@
           "buildGuidance": {
             "description": "Build guidance to build this project",
             "properties": {
+              "buildGuidanceType": {
+                "description": "Type of build guidance",
+                "enum": [
+                  "Dockerfile",
+                  "SourceToImage"
+                ],
+                "type": "string",
+                "markdownDescription": "Type of build guidance"
+              },
               "dockerfile": {
                 "description": "Allows specifying a dockerfile to initiate build",
                 "properties": {
@@ -3629,11 +3992,6 @@
                     "type": "string",
                     "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
                   },
-                  "name": {
-                    "description": "Name that allows referencing a build guidance",
-                    "type": "string",
-                    "markdownDescription": "Name that allows referencing a build guidance"
-                  },
                   "rootless": {
                     "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
                     "type": "boolean",
@@ -3641,12 +3999,16 @@
                   }
                 },
                 "required": [
-                  "dockerfileLocation",
-                  "name"
+                  "dockerfileLocation"
                 ],
                 "type": "object",
                 "markdownDescription": "Allows specifying a dockerfile to initiate build",
                 "additionalProperties": false
+              },
+              "name": {
+                "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                "type": "string",
+                "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
               },
               "s2i": {
                 "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
@@ -3666,11 +4028,6 @@
                     "type": "boolean",
                     "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
                   },
-                  "name": {
-                    "description": "Name that allows referencing a build guidance",
-                    "type": "string",
-                    "markdownDescription": "Name that allows referencing a build guidance"
-                  },
                   "scriptLocation": {
                     "description": "Script URL to override default scripts provided by builder image",
                     "type": "string",
@@ -3679,14 +4036,16 @@
                 },
                 "required": [
                   "builderImageNamespace",
-                  "builderImageStreamTag",
-                  "name"
+                  "builderImageStreamTag"
                 ],
                 "type": "object",
                 "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
                 "additionalProperties": false
               }
             },
+            "required": [
+              "name"
+            ],
             "type": "object",
             "markdownDescription": "Build guidance to build this project",
             "additionalProperties": false
@@ -3837,6 +4196,15 @@
           "buildGuidance": {
             "description": "Build guidance to build this project",
             "properties": {
+              "buildGuidanceType": {
+                "description": "Type of build guidance",
+                "enum": [
+                  "Dockerfile",
+                  "SourceToImage"
+                ],
+                "type": "string",
+                "markdownDescription": "Type of build guidance"
+              },
               "dockerfile": {
                 "description": "Allows specifying a dockerfile to initiate build",
                 "properties": {
@@ -3850,11 +4218,6 @@
                     "type": "string",
                     "markdownDescription": "Dockerfile location which can be an URL or a path relative to buildContext"
                   },
-                  "name": {
-                    "description": "Name that allows referencing a build guidance",
-                    "type": "string",
-                    "markdownDescription": "Name that allows referencing a build guidance"
-                  },
                   "rootless": {
                     "description": "Optional flag that specifies whether unprivileged builder pod is required.  Default is false.",
                     "type": "boolean",
@@ -3862,12 +4225,16 @@
                   }
                 },
                 "required": [
-                  "dockerfileLocation",
-                  "name"
+                  "dockerfileLocation"
                 ],
                 "type": "object",
                 "markdownDescription": "Allows specifying a dockerfile to initiate build",
                 "additionalProperties": false
+              },
+              "name": {
+                "description": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin.",
+                "type": "string",
+                "markdownDescription": "Mandatory name that allows referencing the buid guidance from other elements or from an external devfile that may reference this build guidance through a parent or a plugin."
               },
               "s2i": {
                 "description": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
@@ -3887,11 +4254,6 @@
                     "type": "boolean",
                     "markdownDescription": "Flag that indicates whether to perform incremental builds or no"
                   },
-                  "name": {
-                    "description": "Name that allows referencing a build guidance",
-                    "type": "string",
-                    "markdownDescription": "Name that allows referencing a build guidance"
-                  },
                   "scriptLocation": {
                     "description": "Script URL to override default scripts provided by builder image",
                     "type": "string",
@@ -3900,14 +4262,16 @@
                 },
                 "required": [
                   "builderImageNamespace",
-                  "builderImageStreamTag",
-                  "name"
+                  "builderImageStreamTag"
                 ],
                 "type": "object",
                 "markdownDescription": "Allows specifying a builder image to initiate s2i (SourceToImage) build",
                 "additionalProperties": false
               }
             },
+            "required": [
+              "name"
+            ],
             "type": "object",
             "markdownDescription": "Build guidance to build this project",
             "additionalProperties": false

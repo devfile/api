@@ -16,6 +16,27 @@ import (
 
 func TestBasicToplevelOverriding(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
+		BuildGuidances: []workspaces.BuildGuidance{
+			{
+				Name: "dockerBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.DockerfileBuildGuidanceType,
+					Dockerfile: &workspaces.Dockerfile{
+						DockerfileLocation: "/",
+					},
+				},
+			},
+			{
+				Name: "s2iBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.SourceToImageBuildGuidanceType,
+					SourceToImage: &workspaces.SourceToImage{
+						BuilderImageNamespace: "ns1",
+						BuilderImageStreamTag: "image1",
+					},
+				},
+			},
+		},
 		Commands: []workspaces.Command{
 			{
 				Id: "commandWithTypeChanged",
@@ -83,6 +104,27 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 		},
+		BuildGuidances: []workspaces.BuildGuidance{
+			{
+				Name: "dockerBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.DockerfileBuildGuidanceType,
+					Dockerfile: &workspaces.Dockerfile{
+						DockerfileLocation: "/foo",
+					},
+				},
+			},
+			{
+				Name: "s2iBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.SourceToImageBuildGuidanceType,
+					SourceToImage: &workspaces.SourceToImage{
+						BuilderImageNamespace: "ns1",
+						BuilderImageStreamTag: "image2",
+					},
+				},
+			},
+		},
 	}
 
 	expected := &workspaces.DevWorkspaceTemplateSpecContent{
@@ -123,6 +165,27 @@ func TestBasicToplevelOverriding(t *testing.T) {
 						LabeledCommand: workspaces.LabeledCommand{
 							Label: "commandNotChangedLabel",
 						},
+					},
+				},
+			},
+		},
+		BuildGuidances: []workspaces.BuildGuidance{
+			{
+				Name: "dockerBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.DockerfileBuildGuidanceType,
+					Dockerfile: &workspaces.Dockerfile{
+						DockerfileLocation: "/foo",
+					},
+				},
+			},
+			{
+				Name: "s2iBuildGuidanceChanged",
+				BuildGuidanceUnion: workspaces.BuildGuidanceUnion{
+					BuildGuidanceType: workspaces.SourceToImageBuildGuidanceType,
+					SourceToImage: &workspaces.SourceToImage{
+						BuilderImageNamespace: "ns1",
+						BuilderImageStreamTag: "image2",
 					},
 				},
 			},
