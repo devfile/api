@@ -231,10 +231,13 @@ spec:
                           commandLine:
                             description: "The actual command-line string \n Special
                               variables that can be used: \n  - `$PROJECTS_ROOT`:
-                              A path where projects sources are mounted \n  - `$PROJECT_SOURCE`:
-                              A path to a project source ($PROJECTS_ROOT/<project-name>).
-                              If there are multiple projects, this will point to the
-                              directory of the first one."
+                              A path where projects sources are mounted. This variable
+                              is reserved and cannot be overridden via component container's
+                              env. \n  - `$PROJECT_SOURCE`: A path to a project source
+                              ($PROJECTS_ROOT/<project-name>). If there are multiple
+                              projects, this will point to the directory of the first
+                              one. This variable is reserved and cannot be overridden
+                              via component container's env."
                             type: string
                           component:
                             description: Describes component to which given action
@@ -286,10 +289,12 @@ spec:
                             description: "Working directory where the command should
                               be executed \n Special variables that can be used: \n
                               \ - `${PROJECTS_ROOT}`: A path where projects sources
-                              are mounted \n  - `${PROJECT_SOURCE}`: A path to a project
-                              source (${PROJECTS_ROOT}/<project-name>). If there are
-                              multiple projects, this will point to the directory
-                              of the first one."
+                              are mounted. This variable is reserved and cannot be
+                              overridden via component container's env. \n  - `${PROJECT_SOURCE}`:
+                              A path to a project source (${PROJECTS_ROOT}/<project-name>).
+                              If there are multiple projects, this will point to the
+                              directory of the first one. This variable is reserved
+                              and cannot be overridden via component container's env."
                             type: string
                         required:
                         - commandLine
@@ -924,10 +929,14 @@ spec:
                                       description: "The actual command-line string
                                         \n Special variables that can be used: \n
                                         \ - `$PROJECTS_ROOT`: A path where projects
-                                        sources are mounted \n  - `$PROJECT_SOURCE`:
-                                        A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                        sources are mounted. This variable is reserved
+                                        and cannot be overridden via component container's
+                                        env. \n  - `$PROJECT_SOURCE`: A path to a
+                                        project source ($PROJECTS_ROOT/<project-name>).
                                         If there are multiple projects, this will
-                                        point to the directory of the first one."
+                                        point to the directory of the first one. This
+                                        variable is reserved and cannot be overridden
+                                        via component container's env."
                                       type: string
                                     component:
                                       description: Describes component to which given
@@ -980,10 +989,14 @@ spec:
                                       description: "Working directory where the command
                                         should be executed \n Special variables that
                                         can be used: \n  - `${PROJECTS_ROOT}`: A path
-                                        where projects sources are mounted \n  - `${PROJECT_SOURCE}`:
+                                        where projects sources are mounted. This variable
+                                        is reserved and cannot be overridden via component
+                                        container's env. \n  - `${PROJECT_SOURCE}`:
                                         A path to a project source (${PROJECTS_ROOT}/<project-name>).
                                         If there are multiple projects, this will
-                                        point to the directory of the first one."
+                                        point to the directory of the first one. This
+                                        variable is reserved and cannot be overridden
+                                        via component container's env."
                                       type: string
                                   type: object
                                 id:
@@ -1700,10 +1713,14 @@ spec:
                               commandLine:
                                 description: "The actual command-line string \n Special
                                   variables that can be used: \n  - `$PROJECTS_ROOT`:
-                                  A path where projects sources are mounted \n  -
-                                  `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>).
+                                  A path where projects sources are mounted. This
+                                  variable is reserved and cannot be overridden via
+                                  component container's env. \n  - `$PROJECT_SOURCE`:
+                                  A path to a project source ($PROJECTS_ROOT/<project-name>).
                                   If there are multiple projects, this will point
-                                  to the directory of the first one."
+                                  to the directory of the first one. This variable
+                                  is reserved and cannot be overridden via component
+                                  container's env."
                                 type: string
                               component:
                                 description: Describes component to which given action
@@ -1756,10 +1773,13 @@ spec:
                                 description: "Working directory where the command
                                   should be executed \n Special variables that can
                                   be used: \n  - `${PROJECTS_ROOT}`: A path where
-                                  projects sources are mounted \n  - `${PROJECT_SOURCE}`:
-                                  A path to a project source (${PROJECTS_ROOT}/<project-name>).
-                                  If there are multiple projects, this will point
-                                  to the directory of the first one."
+                                  projects sources are mounted. This variable is reserved
+                                  and cannot be overridden via component container's
+                                  env. \n  - `${PROJECT_SOURCE}`: A path to a project
+                                  source (${PROJECTS_ROOT}/<project-name>). If there
+                                  are multiple projects, this will point to the directory
+                                  of the first one. This variable is reserved and
+                                  cannot be overridden via component container's env."
                                 type: string
                             type: object
                           id:
@@ -2377,10 +2397,14 @@ spec:
                                           description: "The actual command-line string
                                             \n Special variables that can be used:
                                             \n  - `$PROJECTS_ROOT`: A path where projects
-                                            sources are mounted \n  - `$PROJECT_SOURCE`:
+                                            sources are mounted. This variable is
+                                            reserved and cannot be overridden via
+                                            component container's env. \n  - `$PROJECT_SOURCE`:
                                             A path to a project source ($PROJECTS_ROOT/<project-name>).
                                             If there are multiple projects, this will
-                                            point to the directory of the first one."
+                                            point to the directory of the first one.
+                                            This variable is reserved and cannot be
+                                            overridden via component container's env."
                                           type: string
                                         component:
                                           description: Describes component to which
@@ -2435,11 +2459,15 @@ spec:
                                           description: "Working directory where the
                                             command should be executed \n Special
                                             variables that can be used: \n  - `${PROJECTS_ROOT}`:
-                                            A path where projects sources are mounted
+                                            A path where projects sources are mounted.
+                                            This variable is reserved and cannot be
+                                            overridden via component container's env.
                                             \n  - `${PROJECT_SOURCE}`: A path to a
                                             project source (${PROJECTS_ROOT}/<project-name>).
                                             If there are multiple projects, this will
-                                            point to the directory of the first one."
+                                            point to the directory of the first one.
+                                            This variable is reserved and cannot be
+                                            overridden via component container's env."
                                           type: string
                                       type: object
                                     id:
