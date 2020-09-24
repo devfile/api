@@ -15,6 +15,12 @@ type Container struct {
 	// +patchMergeKey=name
 	// +patchStrategy=merge
 	// Environment variables used in this container
+	//
+	// The following variables are reserved and cannot be overridden via env:
+	//
+	//  - `$PROJECTS_ROOT`
+	//
+	//  - `$PROJECT_SOURCE`
 	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
