@@ -3,10 +3,10 @@
   "go.lintFlags": ["--fast"],
   "go.useLanguageServer": true,
   "yaml.schemas": {
-    "./schemas/devfile.json": [ "samples/devfiles/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
-    "./schemas/devworkspace.json": [ "samples/devworkspaces/*.yaml" ],
-    "./schemas/devworkspace-template.json": [ "samples/devworkspace-templates/*.yaml" ],
-    "./schemas/devworkspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/patches/**/original.yaml", "pkg/utils/overriding/test-fixtures/patches/**/result.yaml", "pkg/utils/overriding/test-fixtures/merges/*.yaml" ],
-    "./schemas/override-spec.json": [ "pkg/utils/overriding/test-fixtures/**/patch.yaml" ]
+    "./schemas/latest/with-markdown-descriptions/devfile.json": [ "samples/devfiles/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
+    "./schemas/latest/with-markdown-descriptions/dev-workspace.json": [ "samples/devworkspaces/*.yaml" ],
+    "./schemas/latest/with-markdown-descriptions/dev-workspace-template.json": [ "samples/devworkspace-templates/*.yaml" ],
+    "./schemas/latest/with-markdown-descriptions/dev-workspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/patches/**/original.yaml", "pkg/utils/overriding/test-fixtures/patches/**/result.yaml", "pkg/utils/overriding/test-fixtures/merges/*.yaml" ],
+    "./schemas/latest/with-markdown-descriptions/parent-overrides.json": [ "pkg/utils/overriding/test-fixtures/**/patch.yaml" ]
   }
 }

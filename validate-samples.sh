@@ -44,9 +44,9 @@ BASE_DIR=$(cd "$(dirname "$0")" && pwd)
 
 rm -f validate-output.txt &> /dev/null
 
-for schema in "devfile" "devworkspace" "devworkspace-template"
+for schema in "devfile" "dev-workspace" "dev-workspace-template"
 do
-  schemaPath="./schemas/${schema}.json"
+  schemaPath="./schemas/latest/with-markdown-descriptions/${schema}.json"
   devfiles=$(jq -r '."yaml.schemas"."'${schemaPath}'"[]' .theia/settings.json)
   echo "Validating $schema files against ${schemaPath}"
   for devfile in $devfiles
