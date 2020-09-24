@@ -1,6 +1,9 @@
+
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
+  creationTimestamp: null
   name: devworkspaces.workspace.devfile.io
 spec:
   additionalPrinterColumns:
@@ -22,6 +25,7 @@ spec:
     listKind: DevWorkspaceList
     plural: devworkspaces
     singular: devworkspace
+  preserveUnknownFields: false
   scope: Namespaced
   subresources:
     status: {}
@@ -55,6 +59,19 @@ spec:
                 commands:
                   description: Predefined, ready-to-use, workspace-related commands
                   items:
+                    oneOf:
+                    - required:
+                      - exec
+                    - required:
+                      - apply
+                    - required:
+                      - vscodeTask
+                    - required:
+                      - vscodeLaunch
+                    - required:
+                      - composite
+                    - required:
+                      - custom
                     properties:
                       apply:
                         description: "Command that consists in applying a given component
@@ -274,6 +291,8 @@ spec:
                               multiple projects, this will point to the directory
                               of the first one."
                             type: string
+                        required:
+                        - commandLine
                         type: object
                       id:
                         description: Mandatory identifier that allows referencing
@@ -283,6 +302,11 @@ spec:
                       vscodeLaunch:
                         description: Command providing the definition of a VsCode
                           launch action
+                        oneOf:
+                        - required:
+                          - uri
+                        - required:
+                          - inlined
                         properties:
                           attributes:
                             additionalProperties:
@@ -325,6 +349,11 @@ spec:
                       vscodeTask:
                         description: Command providing the definition of a VsCode
                           Task
+                        oneOf:
+                        - required:
+                          - uri
+                        - required:
+                          - inlined
                         properties:
                           attributes:
                             additionalProperties:
@@ -372,6 +401,19 @@ spec:
                   description: List of the workspace components, such as editor and
                     plugins, user-provided containers, or other types of components
                   items:
+                    oneOf:
+                    - required:
+                      - container
+                    - required:
+                      - kubernetes
+                    - required:
+                      - openshift
+                    - required:
+                      - volume
+                    - required:
+                      - plugin
+                    - required:
+                      - custom
                     properties:
                       componentType:
                         description: Type of component
@@ -474,6 +516,7 @@ spec:
                                   type: integer
                               required:
                               - name
+                              - targetPort
                               type: object
                             type: array
                           env:
@@ -524,6 +567,8 @@ spec:
                               - name
                               type: object
                             type: array
+                        required:
+                        - image
                         type: object
                       custom:
                         description: Custom component whose logic is implementation-dependant
@@ -551,6 +596,11 @@ spec:
                           resources defined in a given manifest. For example this
                           allows reusing the Kubernetes definitions used to deploy
                           some runtime components in production.
+                        oneOf:
+                        - required:
+                          - uri
+                        - required:
+                          - inlined
                         properties:
                           endpoints:
                             items:
@@ -616,6 +666,7 @@ spec:
                                   type: integer
                               required:
                               - name
+                              - targetPort
                               type: object
                             type: array
                           inlined:
@@ -642,6 +693,11 @@ spec:
                           resources defined in a given manifest. For example this
                           allows reusing the OpenShift definitions used to deploy
                           some runtime components in production.
+                        oneOf:
+                        - required:
+                          - uri
+                        - required:
+                          - inlined
                         properties:
                           endpoints:
                             items:
@@ -707,6 +763,7 @@ spec:
                                   type: integer
                               required:
                               - name
+                              - targetPort
                               type: object
                             type: array
                           inlined:
@@ -728,12 +785,30 @@ spec:
                           events as a consistent single unit. They are defined in
                           either YAML files following the devfile syntax, or as `DevWorkspaceTemplate`
                           Kubernetes Custom Resources"
+                        oneOf:
+                        - required:
+                          - uri
+                        - required:
+                          - id
+                        - required:
+                          - kubernetes
                         properties:
                           commands:
                             description: Overrides of commands encapsulated in a parent
-                              devfile or a plugin. Overriding is done using a strategic
-                              merge patch
+                              devfile or a plugin. Overriding is done according to
+                              K8S strategic merge patch standard rules.
                             items:
+                              oneOf:
+                              - required:
+                                - exec
+                              - required:
+                                - apply
+                              - required:
+                                - vscodeTask
+                              - required:
+                                - vscodeLaunch
+                              - required:
+                                - composite
                               properties:
                                 apply:
                                   description: "Command that consists in applying
@@ -775,8 +850,6 @@ spec:
                                           - test
                                           - debug
                                           type: string
-                                      required:
-                                      - kind
                                       type: object
                                     label:
                                       description: Optional label that provides a
@@ -792,7 +865,6 @@ spec:
                                   - VscodeTask
                                   - VscodeLaunch
                                   - Composite
-                                  - Custom
                                   type: string
                                 composite:
                                   description: Composite command that allows executing
@@ -827,8 +899,6 @@ spec:
                                           - test
                                           - debug
                                           type: string
-                                      required:
-                                      - kind
                                       type: object
                                     label:
                                       description: Optional label that provides a
@@ -839,58 +909,6 @@ spec:
                                       description: Indicates if the sub-commands should
                                         be executed concurrently
                                       type: boolean
-                                  type: object
-                                custom:
-                                  description: Custom command whose logic is implementation-dependant
-                                    and should be provided by the user possibly through
-                                    some dedicated plugin
-                                  properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
-                                    commandClass:
-                                      description: Class of command that the associated
-                                        implementation component should use to process
-                                        this command with the appropriate logic
-                                      type: string
-                                    embeddedResource:
-                                      description: Additional free-form configuration
-                                        for this custom command that the implementation
-                                        component will know how to use
-                                      type: object
-                                      x-kubernetes-embedded-resource: true
-                                      x-kubernetes-preserve-unknown-fields: true
-                                    group:
-                                      description: Defines the group this command
-                                        is part of
-                                      properties:
-                                        isDefault:
-                                          description: Identifies the default command
-                                            for a given group kind
-                                          type: boolean
-                                        kind:
-                                          description: Kind of group the command is
-                                            part of
-                                          enum:
-                                          - build
-                                          - run
-                                          - test
-                                          - debug
-                                          type: string
-                                      required:
-                                      - kind
-                                      type: object
-                                    label:
-                                      description: Optional label that provides a
-                                        label for this command to be used in Editor
-                                        UI menus for example
-                                      type: string
-                                  required:
-                                  - commandClass
-                                  - embeddedResource
                                   type: object
                                 exec:
                                   description: CLI Command executed in an existing
@@ -926,7 +944,6 @@ spec:
                                             type: string
                                         required:
                                         - name
-                                        - value
                                         type: object
                                       type: array
                                     group:
@@ -946,8 +963,6 @@ spec:
                                           - test
                                           - debug
                                           type: string
-                                      required:
-                                      - kind
                                       type: object
                                     hotReloadCapable:
                                       description: "Whether the command is capable
@@ -979,6 +994,11 @@ spec:
                                 vscodeLaunch:
                                   description: Command providing the definition of
                                     a VsCode launch action
+                                  oneOf:
+                                  - required:
+                                    - uri
+                                  - required:
+                                    - inlined
                                   properties:
                                     attributes:
                                       additionalProperties:
@@ -1003,8 +1023,6 @@ spec:
                                           - test
                                           - debug
                                           type: string
-                                      required:
-                                      - kind
                                       type: object
                                     inlined:
                                       description: Inlined content of the VsCode configuration
@@ -1025,6 +1043,11 @@ spec:
                                 vscodeTask:
                                   description: Command providing the definition of
                                     a VsCode Task
+                                  oneOf:
+                                  - required:
+                                    - uri
+                                  - required:
+                                    - inlined
                                   properties:
                                     attributes:
                                       additionalProperties:
@@ -1049,8 +1072,6 @@ spec:
                                           - test
                                           - debug
                                           type: string
-                                      required:
-                                      - kind
                                       type: object
                                     inlined:
                                       description: Inlined content of the VsCode configuration
@@ -1074,12 +1095,21 @@ spec:
                             type: array
                           components:
                             description: Overrides of components encapsulated in a
-                              plugin. Overriding is done using a strategic merge patch.
-                              A plugin cannot override embedded plugin components.
+                              parent devfile or a plugin. Overriding is done according
+                              to K8S strategic merge patch standard rules.
                             items:
+                              oneOf:
+                              - required:
+                                - container
+                              - required:
+                                - kubernetes
+                              - required:
+                                - openshift
+                              - required:
+                                - volume
                               properties:
                                 componentType:
-                                  description: Type of component override for a plugin
+                                  description: Type of component
                                   enum:
                                   - Container
                                   - Kubernetes
@@ -1087,8 +1117,8 @@ spec:
                                   - Volume
                                   type: string
                                 container:
-                                  description: Configuration overriding for a Container
-                                    component in a plugin
+                                  description: Allows adding and configuring workspace-related
+                                    containers
                                   properties:
                                     args:
                                       description: "The arguments to supply to the
@@ -1199,7 +1229,6 @@ spec:
                                             type: string
                                         required:
                                         - name
-                                        - value
                                         type: object
                                       type: array
                                     image:
@@ -1242,8 +1271,16 @@ spec:
                                       type: array
                                   type: object
                                 kubernetes:
-                                  description: Configuration overriding for a Kubernetes
-                                    component in a plugin
+                                  description: Allows importing into the workspace
+                                    the Kubernetes resources defined in a given manifest.
+                                    For example this allows reusing the Kubernetes
+                                    definitions used to deploy some runtime components
+                                    in production.
+                                  oneOf:
+                                  - required:
+                                    - uri
+                                  - required:
+                                    - inlined
                                   properties:
                                     endpoints:
                                       items:
@@ -1335,12 +1372,21 @@ spec:
                                   type: object
                                 name:
                                   description: Mandatory name that allows referencing
-                                    the Volume component in Container volume mounts
-                                    or inside a parent
+                                    the component from other elements (such as commands)
+                                    or from an external devfile that may reference
+                                    this component through a parent or a plugin.
                                   type: string
                                 openshift:
-                                  description: Configuration overriding for an OpenShift
-                                    component in a plugin
+                                  description: Allows importing into the workspace
+                                    the OpenShift resources defined in a given manifest.
+                                    For example this allows reusing the OpenShift
+                                    definitions used to deploy some runtime components
+                                    in production.
+                                  oneOf:
+                                  - required:
+                                    - uri
+                                  - required:
+                                    - inlined
                                   properties:
                                     endpoints:
                                       items:
@@ -1431,8 +1477,8 @@ spec:
                                       type: string
                                   type: object
                                 volume:
-                                  description: Configuration overriding for a Volume
-                                    component in a plugin
+                                  description: Allows specifying the definition of
+                                    a volume shared by several other components
                                   properties:
                                     size:
                                       description: Size of the volume
@@ -1519,12 +1565,30 @@ spec:
                   type: object
                 parent:
                   description: Parent workspace template
+                  oneOf:
+                  - required:
+                    - uri
+                  - required:
+                    - id
+                  - required:
+                    - kubernetes
                   properties:
                     commands:
                       description: Overrides of commands encapsulated in a parent
-                        devfile or a plugin. Overriding is done using a strategic
-                        merge patch
+                        devfile or a plugin. Overriding is done according to K8S strategic
+                        merge patch standard rules.
                       items:
+                        oneOf:
+                        - required:
+                          - exec
+                        - required:
+                          - apply
+                        - required:
+                          - vscodeTask
+                        - required:
+                          - vscodeLaunch
+                        - required:
+                          - composite
                         properties:
                           apply:
                             description: "Command that consists in applying a given
@@ -1563,8 +1627,6 @@ spec:
                                     - test
                                     - debug
                                     type: string
-                                required:
-                                - kind
                                 type: object
                               label:
                                 description: Optional label that provides a label
@@ -1580,7 +1642,6 @@ spec:
                             - VscodeTask
                             - VscodeLaunch
                             - Composite
-                            - Custom
                             type: string
                           composite:
                             description: Composite command that allows executing several
@@ -1615,8 +1676,6 @@ spec:
                                     - test
                                     - debug
                                     type: string
-                                required:
-                                - kind
                                 type: object
                               label:
                                 description: Optional label that provides a label
@@ -1627,58 +1686,6 @@ spec:
                                 description: Indicates if the sub-commands should
                                   be executed concurrently
                                 type: boolean
-                            type: object
-                          custom:
-                            description: Custom command whose logic is implementation-dependant
-                              and should be provided by the user possibly through
-                              some dedicated plugin
-                            properties:
-                              attributes:
-                                additionalProperties:
-                                  type: string
-                                description: Optional map of free-form additional
-                                  command attributes
-                                type: object
-                              commandClass:
-                                description: Class of command that the associated
-                                  implementation component should use to process this
-                                  command with the appropriate logic
-                                type: string
-                              embeddedResource:
-                                description: Additional free-form configuration for
-                                  this custom command that the implementation component
-                                  will know how to use
-                                type: object
-                                x-kubernetes-embedded-resource: true
-                                x-kubernetes-preserve-unknown-fields: true
-                              group:
-                                description: Defines the group this command is part
-                                  of
-                                properties:
-                                  isDefault:
-                                    description: Identifies the default command for
-                                      a given group kind
-                                    type: boolean
-                                  kind:
-                                    description: Kind of group the command is part
-                                      of
-                                    enum:
-                                    - build
-                                    - run
-                                    - test
-                                    - debug
-                                    type: string
-                                required:
-                                - kind
-                                type: object
-                              label:
-                                description: Optional label that provides a label
-                                  for this command to be used in Editor UI menus for
-                                  example
-                                type: string
-                            required:
-                            - commandClass
-                            - embeddedResource
                             type: object
                           exec:
                             description: CLI Command executed in an existing component
@@ -1713,7 +1720,6 @@ spec:
                                       type: string
                                   required:
                                   - name
-                                  - value
                                   type: object
                                 type: array
                               group:
@@ -1733,8 +1739,6 @@ spec:
                                     - test
                                     - debug
                                     type: string
-                                required:
-                                - kind
                                 type: object
                               hotReloadCapable:
                                 description: "Whether the command is capable to reload
@@ -1766,6 +1770,11 @@ spec:
                           vscodeLaunch:
                             description: Command providing the definition of a VsCode
                               launch action
+                            oneOf:
+                            - required:
+                              - uri
+                            - required:
+                              - inlined
                             properties:
                               attributes:
                                 additionalProperties:
@@ -1790,8 +1799,6 @@ spec:
                                     - test
                                     - debug
                                     type: string
-                                required:
-                                - kind
                                 type: object
                               inlined:
                                 description: Inlined content of the VsCode configuration
@@ -1811,6 +1818,11 @@ spec:
                           vscodeTask:
                             description: Command providing the definition of a VsCode
                               Task
+                            oneOf:
+                            - required:
+                              - uri
+                            - required:
+                              - inlined
                             properties:
                               attributes:
                                 additionalProperties:
@@ -1835,8 +1847,6 @@ spec:
                                     - test
                                     - debug
                                     type: string
-                                required:
-                                - kind
                                 type: object
                               inlined:
                                 description: Inlined content of the VsCode configuration
@@ -1859,8 +1869,20 @@ spec:
                       type: array
                     components:
                       description: Overrides of components encapsulated in a parent
-                        devfile. Overriding is done using a strategic merge patch
+                        devfile or a plugin. Overriding is done according to K8S strategic
+                        merge patch standard rules.
                       items:
+                        oneOf:
+                        - required:
+                          - container
+                        - required:
+                          - kubernetes
+                        - required:
+                          - openshift
+                        - required:
+                          - plugin
+                        - required:
+                          - volume
                         properties:
                           componentType:
                             description: Type of component
@@ -1868,9 +1890,8 @@ spec:
                             - Container
                             - Kubernetes
                             - Openshift
-                            - Volume
                             - Plugin
-                            - Custom
+                            - Volume
                             type: string
                           container:
                             description: Allows adding and configuring workspace-related
@@ -1978,7 +1999,6 @@ spec:
                                       type: string
                                   required:
                                   - name
-                                  - value
                                   type: object
                                 type: array
                               image:
@@ -2019,32 +2039,16 @@ spec:
                                   type: object
                                 type: array
                             type: object
-                          custom:
-                            description: Custom component whose logic is implementation-dependant
-                              and should be provided by the user possibly through
-                              some dedicated controller
-                            properties:
-                              componentClass:
-                                description: Class of component that the associated
-                                  implementation controller should use to process
-                                  this command with the appropriate logic
-                                type: string
-                              embeddedResource:
-                                description: Additional free-form configuration for
-                                  this custom component that the implementation controller
-                                  will know how to use
-                                type: object
-                                x-kubernetes-embedded-resource: true
-                                x-kubernetes-preserve-unknown-fields: true
-                            required:
-                            - componentClass
-                            - embeddedResource
-                            type: object
                           kubernetes:
                             description: Allows importing into the workspace the Kubernetes
                               resources defined in a given manifest. For example this
                               allows reusing the Kubernetes definitions used to deploy
                               some runtime components in production.
+                            oneOf:
+                            - required:
+                              - uri
+                            - required:
+                              - inlined
                             properties:
                               endpoints:
                                 items:
@@ -2138,6 +2142,11 @@ spec:
                               resources defined in a given manifest. For example this
                               allows reusing the OpenShift definitions used to deploy
                               some runtime components in production.
+                            oneOf:
+                            - required:
+                              - uri
+                            - required:
+                              - inlined
                             properties:
                               endpoints:
                                 items:
@@ -2227,12 +2236,31 @@ spec:
                               are defined in either YAML files following the devfile
                               syntax, or as `DevWorkspaceTemplate` Kubernetes Custom
                               Resources"
+                            oneOf:
+                            - required:
+                              - uri
+                            - required:
+                              - id
+                            - required:
+                              - kubernetes
                             properties:
                               commands:
                                 description: Overrides of commands encapsulated in
                                   a parent devfile or a plugin. Overriding is done
-                                  using a strategic merge patch
+                                  according to K8S strategic merge patch standard
+                                  rules.
                                 items:
+                                  oneOf:
+                                  - required:
+                                    - exec
+                                  - required:
+                                    - apply
+                                  - required:
+                                    - vscodeTask
+                                  - required:
+                                    - vscodeLaunch
+                                  - required:
+                                    - composite
                                   properties:
                                     apply:
                                       description: "Command that consists in applying
@@ -2274,8 +2302,6 @@ spec:
                                               - test
                                               - debug
                                               type: string
-                                          required:
-                                          - kind
                                           type: object
                                         label:
                                           description: Optional label that provides
@@ -2291,7 +2317,6 @@ spec:
                                       - VscodeTask
                                       - VscodeLaunch
                                       - Composite
-                                      - Custom
                                       type: string
                                     composite:
                                       description: Composite command that allows executing
@@ -2327,8 +2352,6 @@ spec:
                                               - test
                                               - debug
                                               type: string
-                                          required:
-                                          - kind
                                           type: object
                                         label:
                                           description: Optional label that provides
@@ -2339,59 +2362,6 @@ spec:
                                           description: Indicates if the sub-commands
                                             should be executed concurrently
                                           type: boolean
-                                      type: object
-                                    custom:
-                                      description: Custom command whose logic is implementation-dependant
-                                        and should be provided by the user possibly
-                                        through some dedicated plugin
-                                      properties:
-                                        attributes:
-                                          additionalProperties:
-                                            type: string
-                                          description: Optional map of free-form additional
-                                            command attributes
-                                          type: object
-                                        commandClass:
-                                          description: Class of command that the associated
-                                            implementation component should use to
-                                            process this command with the appropriate
-                                            logic
-                                          type: string
-                                        embeddedResource:
-                                          description: Additional free-form configuration
-                                            for this custom command that the implementation
-                                            component will know how to use
-                                          type: object
-                                          x-kubernetes-embedded-resource: true
-                                          x-kubernetes-preserve-unknown-fields: true
-                                        group:
-                                          description: Defines the group this command
-                                            is part of
-                                          properties:
-                                            isDefault:
-                                              description: Identifies the default
-                                                command for a given group kind
-                                              type: boolean
-                                            kind:
-                                              description: Kind of group the command
-                                                is part of
-                                              enum:
-                                              - build
-                                              - run
-                                              - test
-                                              - debug
-                                              type: string
-                                          required:
-                                          - kind
-                                          type: object
-                                        label:
-                                          description: Optional label that provides
-                                            a label for this command to be used in
-                                            Editor UI menus for example
-                                          type: string
-                                      required:
-                                      - commandClass
-                                      - embeddedResource
                                       type: object
                                     exec:
                                       description: CLI Command executed in an existing
@@ -2428,7 +2398,6 @@ spec:
                                                 type: string
                                             required:
                                             - name
-                                            - value
                                             type: object
                                           type: array
                                         group:
@@ -2448,8 +2417,6 @@ spec:
                                               - test
                                               - debug
                                               type: string
-                                          required:
-                                          - kind
                                           type: object
                                         hotReloadCapable:
                                           description: "Whether the command is capable
@@ -2483,6 +2450,11 @@ spec:
                                     vscodeLaunch:
                                       description: Command providing the definition
                                         of a VsCode launch action
+                                      oneOf:
+                                      - required:
+                                        - uri
+                                      - required:
+                                        - inlined
                                       properties:
                                         attributes:
                                           additionalProperties:
@@ -2507,8 +2479,6 @@ spec:
                                               - test
                                               - debug
                                               type: string
-                                          required:
-                                          - kind
                                           type: object
                                         inlined:
                                           description: Inlined content of the VsCode
@@ -2530,6 +2500,11 @@ spec:
                                     vscodeTask:
                                       description: Command providing the definition
                                         of a VsCode Task
+                                      oneOf:
+                                      - required:
+                                        - uri
+                                      - required:
+                                        - inlined
                                       properties:
                                         attributes:
                                           additionalProperties:
@@ -2554,8 +2529,6 @@ spec:
                                               - test
                                               - debug
                                               type: string
-                                          required:
-                                          - kind
                                           type: object
                                         inlined:
                                           description: Inlined content of the VsCode
@@ -2580,14 +2553,22 @@ spec:
                                 type: array
                               components:
                                 description: Overrides of components encapsulated
-                                  in a plugin. Overriding is done using a strategic
-                                  merge patch. A plugin cannot override embedded plugin
-                                  components.
+                                  in a parent devfile or a plugin. Overriding is done
+                                  according to K8S strategic merge patch standard
+                                  rules.
                                 items:
+                                  oneOf:
+                                  - required:
+                                    - container
+                                  - required:
+                                    - kubernetes
+                                  - required:
+                                    - openshift
+                                  - required:
+                                    - volume
                                   properties:
                                     componentType:
-                                      description: Type of component override for
-                                        a plugin
+                                      description: Type of component
                                       enum:
                                       - Container
                                       - Kubernetes
@@ -2595,8 +2576,8 @@ spec:
                                       - Volume
                                       type: string
                                     container:
-                                      description: Configuration overriding for a
-                                        Container component in a plugin
+                                      description: Allows adding and configuring workspace-related
+                                        containers
                                       properties:
                                         args:
                                           description: "The arguments to supply to
@@ -2714,7 +2695,6 @@ spec:
                                                 type: string
                                             required:
                                             - name
-                                            - value
                                             type: object
                                           type: array
                                         image:
@@ -2759,8 +2739,16 @@ spec:
                                           type: array
                                       type: object
                                     kubernetes:
-                                      description: Configuration overriding for a
-                                        Kubernetes component in a plugin
+                                      description: Allows importing into the workspace
+                                        the Kubernetes resources defined in a given
+                                        manifest. For example this allows reusing
+                                        the Kubernetes definitions used to deploy
+                                        some runtime components in production.
+                                      oneOf:
+                                      - required:
+                                        - uri
+                                      - required:
+                                        - inlined
                                       properties:
                                         endpoints:
                                           items:
@@ -2857,12 +2845,22 @@ spec:
                                       type: object
                                     name:
                                       description: Mandatory name that allows referencing
-                                        the Volume component in Container volume mounts
-                                        or inside a parent
+                                        the component from other elements (such as
+                                        commands) or from an external devfile that
+                                        may reference this component through a parent
+                                        or a plugin.
                                       type: string
                                     openshift:
-                                      description: Configuration overriding for an
-                                        OpenShift component in a plugin
+                                      description: Allows importing into the workspace
+                                        the OpenShift resources defined in a given
+                                        manifest. For example this allows reusing
+                                        the OpenShift definitions used to deploy some
+                                        runtime components in production.
+                                      oneOf:
+                                      - required:
+                                        - uri
+                                      - required:
+                                        - inlined
                                       properties:
                                         endpoints:
                                           items:
@@ -2958,8 +2956,8 @@ spec:
                                           type: string
                                       type: object
                                     volume:
-                                      description: Configuration overriding for a
-                                        Volume component in a plugin
+                                      description: Allows specifying the definition
+                                        of a volume shared by several other components
                                       properties:
                                         size:
                                           description: Size of the volume
@@ -2989,8 +2987,6 @@ spec:
                                     type: string
                                   namespace:
                                     type: string
-                                required:
-                                - name
                                 type: object
                               registryUrl:
                                 type: string
@@ -3033,8 +3029,16 @@ spec:
                       type: object
                     projects:
                       description: Overrides of projects encapsulated in a parent
-                        devfile. Overriding is done using a strategic merge patch.
+                        devfile. Overriding is done according to K8S strategic merge
+                        patch standard rules.
                       items:
+                        oneOf:
+                        - required:
+                          - git
+                        - required:
+                          - github
+                        - required:
+                          - zip
                         properties:
                           clonePath:
                             description: Path relative to the root of the projects
@@ -3044,19 +3048,6 @@ spec:
                               the project root through the usage of '..'. If not specified,
                               defaults to the project name.
                             type: string
-                          custom:
-                            description: Project's Custom source
-                            properties:
-                              embeddedResource:
-                                type: object
-                                x-kubernetes-embedded-resource: true
-                                x-kubernetes-preserve-unknown-fields: true
-                              projectSourceClass:
-                                type: string
-                            required:
-                            - embeddedResource
-                            - projectSourceClass
-                            type: object
                           git:
                             description: Project's Git source
                             properties:
@@ -3130,7 +3121,6 @@ spec:
                             - Git
                             - Github
                             - Zip
-                            - Custom
                             type: string
                           zip:
                             description: Project's Zip source
@@ -3151,10 +3141,17 @@ spec:
                     registryUrl:
                       type: string
                     starterProjects:
-                      description: Overrides of startedProjects encapsulated in a
-                        parent devfile. Overriding is done using a strategic merge
-                        patch.
+                      description: Overrides of starterProjects encapsulated in a
+                        parent devfile. Overriding is done according to K8S strategic
+                        merge patch standard rules.
                       items:
+                        oneOf:
+                        - required:
+                          - git
+                        - required:
+                          - github
+                        - required:
+                          - zip
                         properties:
                           clonePath:
                             description: Path relative to the root of the projects
@@ -3164,19 +3161,6 @@ spec:
                               the project root through the usage of '..'. If not specified,
                               defaults to the project name.
                             type: string
-                          custom:
-                            description: Project's Custom source
-                            properties:
-                              embeddedResource:
-                                type: object
-                                x-kubernetes-embedded-resource: true
-                                x-kubernetes-preserve-unknown-fields: true
-                              projectSourceClass:
-                                type: string
-                            required:
-                            - embeddedResource
-                            - projectSourceClass
-                            type: object
                           description:
                             description: Description of a starter project
                             type: string
@@ -3253,7 +3237,6 @@ spec:
                             - Git
                             - Github
                             - Zip
-                            - Custom
                             type: string
                           zip:
                             description: Project's Zip source
@@ -3279,6 +3262,15 @@ spec:
                   description: Projects worked on in the workspace, containing names
                     and sources locations
                   items:
+                    oneOf:
+                    - required:
+                      - git
+                    - required:
+                      - github
+                    - required:
+                      - zip
+                    - required:
+                      - custom
                     properties:
                       clonePath:
                         description: Path relative to the root of the projects to
@@ -3329,6 +3321,8 @@ spec:
                             description: Part of project to populate in the working
                               directory.
                             type: string
+                        required:
+                        - remotes
                         type: object
                       github:
                         description: Project's GitHub source
@@ -3358,6 +3352,8 @@ spec:
                             description: Part of project to populate in the working
                               directory.
                             type: string
+                        required:
+                        - remotes
                         type: object
                       name:
                         description: Project name
@@ -3390,6 +3386,15 @@ spec:
                   description: StarterProjects is a project that can be used as a
                     starting point when bootstrapping new projects
                   items:
+                    oneOf:
+                    - required:
+                      - git
+                    - required:
+                      - github
+                    - required:
+                      - zip
+                    - required:
+                      - custom
                     properties:
                       clonePath:
                         description: Path relative to the root of the projects to
@@ -3443,6 +3448,8 @@ spec:
                             description: Part of project to populate in the working
                               directory.
                             type: string
+                        required:
+                        - remotes
                         type: object
                       github:
                         description: Project's GitHub source
@@ -3472,6 +3479,8 @@ spec:
                             description: Part of project to populate in the working
                               directory.
                             type: string
+                        required:
+                        - remotes
                         type: object
                       name:
                         description: Project name
@@ -3556,3 +3565,9 @@ spec:
   - name: v1alpha2
     served: true
     storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
