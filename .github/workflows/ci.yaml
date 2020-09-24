@@ -49,7 +49,8 @@ jobs:
       working-directory: generator
       run: |
         go mod tidy
-        git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy" locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+        go mod vendor
+        git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
 
     - name: Check Generator GO format
       working-directory: generator
