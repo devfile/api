@@ -803,9 +803,9 @@
                     "type": "boolean"
                   },
                   "sourceMapping": {
-                    "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
+                    "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                     "type": "string",
-                    "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used."
+                    "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                   },
                   "volumeMounts": {
                     "description": "List of volumes mounts that should be mounted is this container.",
@@ -1550,9 +1550,9 @@
                               "type": "boolean"
                             },
                             "sourceMapping": {
-                              "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
+                              "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                               "type": "string",
-                              "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used."
+                              "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                             },
                             "volumeMounts": {
                               "description": "List of volumes mounts that should be mounted is this container.",
@@ -2387,9 +2387,9 @@
                         "type": "boolean"
                       },
                       "sourceMapping": {
-                        "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
+                        "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                         "type": "string",
-                        "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used."
+                        "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                       },
                       "volumeMounts": {
                         "description": "List of volumes mounts that should be mounted is this container.",
@@ -3109,9 +3109,9 @@
                                   "type": "boolean"
                                 },
                                 "sourceMapping": {
-                                  "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used.",
+                                  "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                                   "type": "string",
-                                  "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the value of the `PROJECTS_ROOT` environment variable is used."
+                                  "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                                 },
                                 "volumeMounts": {
                                   "description": "List of volumes mounts that should be mounted is this container.",

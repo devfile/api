@@ -18,9 +18,9 @@ type Container struct {
 	//
 	// The following variables are reserved and cannot be overridden via env:
 	//
-	//  - `$PROJECTS_ROOT`
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by sourceMapping
 	//
-	//  - `$PROJECT_SOURCE`
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
 	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
@@ -47,7 +47,7 @@ type Container struct {
 
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
-	// When omitted, the value of the `PROJECTS_ROOT` environment variable is used.
+	// When omitted, the default value of /projects is used.
 	// +optional
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
