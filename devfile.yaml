@@ -1,7 +1,7 @@
 metadata:
-  name: kubernetes-api
+  name: devfile-api
 projects:
-  - name: kubernetes-api
+  - name: api
     source:
       location: 'https://github.com/devfile/api.git'
       type: git
