@@ -34,7 +34,6 @@ const (
 	CustomProjectSourceType ProjectSourceType = "Custom"
 )
 
-// +k8s:openapi-gen=true
 // +union
 type ProjectSource struct {
 	// Type of project source

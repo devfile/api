@@ -54,7 +54,6 @@ type LabeledCommand struct {
 	Label string `json:"label,omitempty"`
 }
 
-// +k8s:openapi-gen=true
 type Command struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
@@ -121,6 +120,7 @@ type ExecCommand struct {
 	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
+	// +optional
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
@@ -130,9 +130,12 @@ type ExecCommand struct {
 	//  - `${PROJECTS_ROOT}`: A path where projects sources are mounted
 	//
 	//  - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.
+	// +optional
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
 	// Optional list of environment variables that have to be set
 	// before running the command
 	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
@@ -149,6 +152,7 @@ type ApplyCommand struct {
 	LabeledCommand `json:",inline"`
 
 	// Describes component that will be applied
+	// +optional
 	Component string `json:"component,omitempty"`
 }
 
@@ -174,7 +178,6 @@ const (
 	InlinedVscodeConfigurationCommandLocationType VscodeConfigurationCommandLocationType = "Inlined"
 )
 
-// +k8s:openapi-gen=true
 // +union
 type VscodeConfigurationCommandLocation struct {
 	// Type of Vscode configuration command location

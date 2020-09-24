@@ -7,7 +7,6 @@ import (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // DevWorkspaceTemplate is the Schema for the devworkspacetemplates API
-// +k8s:openapi-gen=true
 // +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced
 type DevWorkspaceTemplate struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -12,6 +12,8 @@ type Container struct {
 	Image string `json:"image,omitempty"`
 
 	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
 	// Environment variables used in this container
 	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 

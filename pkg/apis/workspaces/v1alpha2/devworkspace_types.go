@@ -6,7 +6,6 @@ import (
 )
 
 // DevWorkspaceSpec defines the desired state of DevWorkspace
-// +k8s:openapi-gen=true
 type DevWorkspaceSpec struct {
 	Started      bool                     `json:"started"`
 	RoutingClass string                   `json:"routingClass,omitempty"`
@@ -14,7 +13,6 @@ type DevWorkspaceSpec struct {
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
-// +k8s:openapi-gen=true
 type DevWorkspaceStatus struct {
 	// Id of the workspace
 	WorkspaceId string `json:"workspaceId"`
@@ -65,7 +63,6 @@ const (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // DevWorkspace is the Schema for the devworkspaces API
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:path=devworkspaces,scope=Namespaced
 // +kubebuilder:printcolumn:name="Workspace ID",type="string",JSONPath=".status.workspaceId",description="The workspace's unique id"
