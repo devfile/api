@@ -63,6 +63,7 @@ type ComponentUnion struct {
 	// following the devfile syntax,
 	// or as `DevWorkspaceTemplate` Kubernetes Custom Resources
 	// +optional
+	// +devfile:overrides:include:omitInPlugin=true
 	Plugin *PluginComponent `json:"plugin,omitempty"`
 
 	// Allows specifying the definition of a volume
@@ -74,6 +75,7 @@ type ComponentUnion struct {
 	// and should be provided by the user
 	// possibly through some dedicated controller
 	// +optional
+	// +devfile:overrides:include:omit=true
 	Custom *CustomComponent `json:"custom,omitempty"`
 }
 

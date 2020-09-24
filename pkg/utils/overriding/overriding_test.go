@@ -54,29 +54,27 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	}
 
 	patch := workspaces.ParentOverrides{
-		OverridesBase: workspaces.OverridesBase{
-			Commands: []workspaces.Command{
-				{
-					Id: "commandWithTypeChanged",
-					CommandUnion: workspaces.CommandUnion{
-						Apply: &workspaces.ApplyCommand{
-							Component: "mycomponent",
-						},
+		Commands: []workspaces.CommandParentOverride{
+			{
+				Id: "commandWithTypeChanged",
+				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
+					Apply: &workspaces.ApplyCommandParentOverride{
+						Component: "mycomponent",
 					},
 				},
-				{
-					Id: "commandToReplace",
-					CommandUnion: workspaces.CommandUnion{
-						Exec: &workspaces.ExecCommand{
-							Env: []workspaces.EnvVar{
-								{
-									Name:  "envVarToReplace",
-									Value: "envVarToReplaceNewValue",
-								},
-								{
-									Name:  "endVarToAdd",
-									Value: "endVarToAddValue",
-								},
+			},
+			{
+				Id: "commandToReplace",
+				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
+					Exec: &workspaces.ExecCommandParentOverride{
+						Env: []workspaces.EnvVarParentOverride{
+							{
+								Name:  "envVarToReplace",
+								Value: "envVarToReplaceNewValue",
+							},
+							{
+								Name:  "endVarToAdd",
+								Value: "endVarToAddValue",
 							},
 						},
 					},

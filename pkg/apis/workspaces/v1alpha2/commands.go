@@ -104,6 +104,7 @@ type CommandUnion struct {
 	// and should be provided by the user
 	// possibly through some dedicated plugin
 	// +optional
+	// +devfile:overrides:include:omit=true
 	Custom *CustomCommand `json:"custom,omitempty"`
 }
 
@@ -117,7 +118,7 @@ type ExecCommand struct {
 	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted
 	//
 	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
-	CommandLine string `json:"commandLine,omitempty"`
+	CommandLine string `json:"commandLine"`
 
 	// Describes component to which given action relates
 	// +optional

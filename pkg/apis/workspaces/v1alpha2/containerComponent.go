@@ -9,7 +9,7 @@ type ContainerComponent struct {
 }
 
 type Container struct {
-	Image string `json:"image,omitempty"`
+	Image string `json:"image"`
 
 	// +optional
 	// +patchMergeKey=name
