@@ -1,0 +1,112 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "generator"
+        }
+    ],
+    "settings": {
+        "go.toolsEnvVars" : {
+            "GO111MODULE": "on"
+        },
+        "go.useLanguageServer": true,
+        "go.languageServerExperimentalFeatures": {
+            "autoComplete": true,
+            "documentSymbols": true,
+            "findReferences": true,
+            "format": false,
+            "goToDefinition": true,
+            "goToTypeDefinition": true,
+            "hover": true,
+            "signatureHelp": true,
+            "rename": true,
+            "workspaceSymbols": true,
+            "diagnostics": true // for diagnostics as you type
+        },
+        "go.autocompleteUnimportedPackages": true,
+        "yaml.schemas": {
+            "./schemas/latest/with-markdown-descriptions/devfile.json": [ "samples/devfiles/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
+            "./schemas/latest/with-markdown-descriptions/dev-workspace.json": [ "samples/devworkspaces/*.yaml" ],
+            "./schemas/latest/with-markdown-descriptions/dev-workspace-template.json": [ "samples/devworkspace-templates/*.yaml" ],
+            "./schemas/latest/with-markdown-descriptions/dev-workspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/patches/**/original.yaml", "pkg/utils/overriding/test-fixtures/patches/**/result.yaml", "pkg/utils/overriding/test-fixtures/merges/*.yaml" ],
+            "./schemas/latest/with-markdown-descriptions/parent-overrides.json": [ "pkg/utils/overriding/test-fixtures/**/patch.yaml" ]
+        }
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Launch Plugin Overrides Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "overrides:isForPluginOverrides=true", "paths=./pkg/apis/workspaces/v1alpha2"],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch Parent Overrides Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "overrides", "paths=./pkg/apis/workspaces/v1alpha2" ],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch Interfaces Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "interfaces", "paths=./pkg/apis/workspaces/v1alpha2" ],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch CRD Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "crds", "paths=./pkg/apis/workspaces/v1alpha2", "output:crds:artifacts:config=crds" ],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch DeepCopy Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "deepcopy", "paths=./pkg/apis/workspaces/v1alpha2" ],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch Schemas Generator",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "schemas", "paths=./pkg/apis/workspaces/v1alpha2", "output:schemas:artifacts:config=schemas" ],
+                "cwd": "${workspaceFolder:api}"
+            },
+            {
+                "name": "Launch All Generators",
+                "type": "go",
+                "request": "launch",
+                "mode": "auto",
+                "program": "${workspaceFolder:generator}",
+                "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
+                "args": [ "overrides:isForPluginOverrides=true", "overrides:isForPluginOverrides=false", "interfaces", "crds", "deepcopy", "schemas", "paths=./pkg/apis/workspaces/v1alpha2", "output:crds:artifacts:config=crds", "output:schemas:artifacts:config=schemas" ],
+                "cwd": "${workspaceFolder:api}"
+            }
+        ]
+    }
+}
