@@ -1,6 +1,7 @@
 package v1alpha2
 
 // Structure of the workspace. This is also the specification of a workspace template.
+// +devfile:jsonschema:generate
 type DevWorkspaceTemplateSpec struct {
 	// Parent workspace template
 	// +optional

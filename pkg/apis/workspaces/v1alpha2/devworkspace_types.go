@@ -68,6 +68,7 @@ const (
 // +kubebuilder:printcolumn:name="Workspace ID",type="string",JSONPath=".status.workspaceId",description="The workspace's unique id"
 // +kubebuilder:printcolumn:name="Phase",type="string",JSONPath=".status.phase",description="The current workspace startup phase"
 // +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".status.ideUrl",description="Url endpoint for accessing workspace"
+// +devfile:jsonschema:generate
 type DevWorkspace struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
