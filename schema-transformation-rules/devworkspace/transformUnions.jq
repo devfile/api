@@ -1,2 +1,0 @@
-reduce ["locationType","componentType","importReferenceType","commandType","sourceType"][] as $name (.; walk (if type == "object" and .properties[$name] then ((reduce .properties[$name].enum[] as $value ([]; . + [ { required: [ $value|(split("")[0]|ascii_downcase)+(split("")[1:]|join("")) ]}])) as $oneofs | . += { oneOf: $oneofs }) else . end))
-del(.. |.locationType?,.componentType?,.importReferenceType?,.commandType?,.sourceType?)
