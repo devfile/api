@@ -43,7 +43,7 @@ This work is still in an early stage of specification, and the related API and s
 
 In order to test existing or new Devfile 2.0 or DevWorkspace sample files in a self-service Che workspace (hosted on che.openshift.io), just click on the button below:
 
-[![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://che.openshift.io/f/?url=https://github.com/devfile/api)
+[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://che.openshift.io/f/?url=https://github.com/devfile/api)
 
 As soon as the workspace is opened, you should be able to:
 - open the `yaml` files in the following folders:
