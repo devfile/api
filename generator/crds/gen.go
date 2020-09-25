@@ -1,10 +1,7 @@
 package crds
 
 import (
-	"bytes"
 	"fmt"
-	"go/format"
-	"io"
 
 	"github.com/devfile/api/generator/genutils"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -13,7 +10,6 @@ import (
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	crdmarkers "sigs.k8s.io/controller-tools/pkg/crd/markers"
 	"sigs.k8s.io/controller-tools/pkg/genall"
-	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
@@ -80,10 +76,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			return nil
 		}
 
-		unionDiscriminators, found := unionDiscriminatorsByGV[groupVersion]
-		if !found {
-			unionDiscriminators = []markers.FieldInfo{}
-		}
+		unionDiscriminators := unionDiscriminatorsByGV[groupVersion]
 
 		if err := markers.EachType(ctx.Collector, root, func(info *markers.TypeInfo) {
 			if info.Markers.Get(genutils.UnionMarker.Name) != nil {
@@ -111,16 +104,12 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			genutils.AddUnionOneOfConstraints(apiVersion.Schema.OpenAPIV3Schema, unionDiscriminators, false)
 		}
 
-		versionedCRDs := make([]interface{}, len(crdVersions))
 		for i, ver := range crdVersions {
-			conv, err := crd.AsVersion(crdRaw, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
+			crd, err := crd.AsVersion(crdRaw, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
 			if err != nil {
 				return err
 			}
-			versionedCRDs[i] = conv
-		}
 
-		for i, crd := range versionedCRDs {
 			var fileName string
 			if i == 0 {
 				fileName = fmt.Sprintf("%s_%s.yaml", crdRaw.Spec.Group, crdRaw.Spec.Names.Plural)
@@ -133,38 +122,5 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		}
 	}
 
-	return nil
-}
-
-func (g Generator) writeFoFile(filename string, ctx *genall.GenerationContext, root *loader.Package, writeContents func(*bytes.Buffer)) error {
-	buf := new(bytes.Buffer)
-	buf.WriteString(`
-package ` + root.Name + `
-`)
-
-	writeContents(buf)
-
-	outContents, err := format.Source(buf.Bytes())
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-
-	fullname := "zz_generated." + filename + ".go"
-	outputFile, err := ctx.Open(root, fullname)
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-	defer outputFile.Close()
-	n, err := outputFile.Write(outContents)
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-	if n < len(outContents) {
-		root.AddError(io.ErrShortWrite)
-		return err
-	}
 	return nil
 }
