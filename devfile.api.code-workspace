@@ -13,16 +13,7 @@
         },
         "go.useLanguageServer": true,
         "go.languageServerExperimentalFeatures": {
-            "autoComplete": true,
-            "documentSymbols": true,
-            "findReferences": true,
-            "format": false,
-            "goToDefinition": true,
-            "goToTypeDefinition": true,
-            "hover": true,
-            "signatureHelp": true,
-            "rename": true,
-            "workspaceSymbols": true,
+            "documentLink": true,
             "diagnostics": true // for diagnostics as you type
         },
         "go.autocompleteUnimportedPackages": true,
