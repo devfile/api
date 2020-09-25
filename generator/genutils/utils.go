@@ -1,11 +1,16 @@
 package genutils
 
 import (
+	"bytes"
+	"go/format"
+	"io"
 	"strings"
 
 	"github.com/iancoleman/strcase"
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"sigs.k8s.io/controller-tools/pkg/crd"
+	"sigs.k8s.io/controller-tools/pkg/genall"
+	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
@@ -140,5 +145,41 @@ func RegisterUnionMarkers(into *markers.Registry) error {
 		markers.SimpleHelp("Devfile", "indicates that a given Struct type is a K8S union, and its fields (apart from the discriminator) are mutually exclusive. K8S unions are described here: https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md#proposal"))
 	into.AddHelp(UnionDiscriminatorMarker,
 		markers.SimpleHelp("Devfile", "indicates that a given field of an union Struct type is the union discriminator. K8S unions are described here: https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md#proposal"))
+	return nil
+}
+
+// WriteFormattedSourceFile creates a Go source file in a given package, dumps to it the content provided by the `writeContents` function
+// and formats the result through go/fmt.
+// If formatting cannot be applied (due to some syntax error probably), it returns an error.
+func WriteFormattedSourceFile(filename string, ctx *genall.GenerationContext, root *loader.Package, writeContents func(*bytes.Buffer)) error {
+	buf := new(bytes.Buffer)
+	buf.WriteString(`
+package ` + root.Name + `
+`)
+
+	writeContents(buf)
+
+	outContents, err := format.Source(buf.Bytes())
+	if err != nil {
+		root.AddError(err)
+		return err
+	}
+
+	fullname := "zz_generated." + filename + ".go"
+	outputFile, err := ctx.Open(root, fullname)
+	if err != nil {
+		root.AddError(err)
+		return err
+	}
+	defer outputFile.Close()
+	n, err := outputFile.Write(outContents)
+	if err != nil {
+		root.AddError(err)
+		return err
+	}
+	if n < len(outContents) {
+		root.AddError(io.ErrShortWrite)
+		return err
+	}
 	return nil
 }

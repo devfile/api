@@ -4,9 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"go/ast"
-	"go/format"
 
-	//	"go/format"
 	"go/printer"
 	"go/token"
 	"io"
@@ -30,9 +28,9 @@ import (
 
 // FieldOverridesInclude drives whether a field should be overriden in devfile parent or plugins
 type FieldOverridesInclude struct {
-	// Omit indicates that this field cannot be overriden in a devfile plugin.
+	// Omit indicates that this field cannot be overridden at all.
 	Omit bool `marker:",optional"`
-	// OmmitInPlugin indicates that this field cannot be overriden in a devfile plugin.
+	// OmmitInPlugin indicates that this field cannot be overridden in a devfile plugin.
 	OmitInPlugin bool `marker:",optional"`
 	// Description indicates the description that should be added as Go documentation on the generated structs.
 	Description string `marker:",optional"`
@@ -110,10 +108,6 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			Mode:     printer.UseSpaces,
 		}
 
-		buf := new(bytes.Buffer)
-		buf.WriteString("package " + root.Name)
-		buf.WriteString("\n\n")
-
 		g.suffix = "ParentOverride"
 		if g.IsForPluginOverrides {
 			g.suffix = "PluginOverride"
@@ -126,33 +120,30 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 		overrides := g.process(root)
 
-		config.Fprint(buf, root.Fset, overrides)
-		buf.WriteString("\n\n")
-		buf.WriteString("func (overrides " + g.rootTypeToProcess.OverrideTypeName + ") isOverride() {}")
-		buf.WriteString("\n\n")
-
-		outContents, err := format.Source(buf.Bytes())
-		if err != nil {
-			root.AddError(err)
-			return err
+		fileNamePart := "parent_overrides"
+		if g.IsForPluginOverrides {
+			fileNamePart = "plugin_overrides"
 		}
-		g.writeOut(ctx, root, outContents)
+
+		genutils.WriteFormattedSourceFile(fileNamePart, ctx, root, func(buf *bytes.Buffer) {
+			config.Fprint(buf, root.Fset, overrides)
+			buf.WriteString(`
+func (overrides ` + g.rootTypeToProcess.OverrideTypeName + `) isOverride() {}
+`)
+		})
 	}
 
 	return nil
 }
 
+// typeToProcess contains all required information about the how to process a given type.
+// A list of `typeToProcess` instances can be returned the `createOverride` function
+// since it is when processing a type that we possibly encounter new types to process.
 type typeToProcess struct {
 	OverrideTypeName   string
 	TypeInfo           *markers.TypeInfo
 	MandatoryKey       string
 	DropEnumAnnotation bool
-}
-
-type processedType struct {
-	toProcess *typeToProcess
-	override  ast.Decl
-	order     int
 }
 
 func (g Generator) process(root *loader.Package) []ast.Decl {
@@ -167,10 +158,7 @@ func (g Generator) process(root *loader.Package) []ast.Decl {
 		}
 
 		newOverride, newTypesToOverride, errors := g.createOverride(nextOne)
-		processed.Set(nextOne.TypeInfo.Name, processedType{
-			toProcess: &nextOne,
-			override:  newOverride,
-		})
+		processed.Set(nextOne.TypeInfo.Name, newOverride)
 		for _, err := range errors {
 			root.AddError(loader.ErrFromNode(err, nextOne.TypeInfo.RawSpec))
 		}
@@ -179,15 +167,15 @@ func (g Generator) process(root *loader.Package) []ast.Decl {
 
 	overrides := []ast.Decl{}
 	for elt := processed.Front(); elt != nil; elt = elt.Next() {
-		processedType := elt.Value.(processedType)
-		overrides = append(overrides, processedType.override)
+		overrides = append(overrides, elt.Value.(ast.Decl))
 	}
 	return overrides
 }
 
+// fieldChange provides the required information about how overrides generation should handle a given field
 type fieldChange struct {
-	FieldInfo      markers.FieldInfo
-	OverrideMarker FieldOverridesInclude
+	fieldInfo      markers.FieldInfo
+	overrideMarker FieldOverridesInclude
 }
 
 func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []typeToProcess, []error) {
@@ -212,8 +200,8 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 				overridesMarker = markerEntry.(FieldOverridesInclude)
 			}
 			fieldChanges[fieldPos] = fieldChange{
-				FieldInfo:      field,
-				OverrideMarker: overridesMarker,
+				fieldInfo:      field,
+				overrideMarker: overridesMarker,
 			}
 		}
 	}
@@ -269,9 +257,9 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 				}
 
 				fieldChange := fieldChanges[cursor.Node().Pos()]
-				field := fieldChange.FieldInfo
+				field := fieldChange.fieldInfo
 
-				overridesMarker := fieldChange.OverrideMarker
+				overridesMarker := fieldChange.overrideMarker
 
 				shouldSkip := func(overridesMarker FieldOverridesInclude) bool {
 					if overridesMarker.Omit ||
@@ -289,7 +277,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 				if overridesMarker.Description != "" {
 					astField.Doc = updateComments(
 						astField, astField.Doc,
-						` *\+[^ ][^ ]*.*`,
+						` *\+[^ ]+.*`,
 						` *\+`+overridesFieldMarker.Name+`.*`,
 						overridesMarker.Description,
 						"Overriding is done according to K8S strategic merge patch standard rules.",
@@ -346,8 +334,8 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 							pos := f.RawField.Pos()
 							fieldChange := fieldChanges[f.RawField.Pos()]
 							if pos != cursor.Node().Pos() &&
-								!shouldSkip(fieldChange.OverrideMarker) {
-								enumValues = append(enumValues, fieldChange.FieldInfo.Name)
+								!shouldSkip(fieldChange.overrideMarker) {
+								enumValues = append(enumValues, fieldChange.fieldInfo.Name)
 							}
 						}
 						kubebuilderAnnotation := "+kubebuilder:validation:Enum=" + strings.Join(enumValues, ";")
@@ -380,10 +368,6 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 		func(*astutil.Cursor) bool { return true },
 	).(*ast.GenDecl)
 
-	if len(errors) > 0 {
-		return nil, moreTypesToAdd, errors // Check there is only 1 typespec in it or trigger an error
-	}
-
 	return overrideGenDecl, moreTypesToAdd, errors
 }
 
@@ -410,14 +394,17 @@ func (g Generator) writeOut(ctx *genall.GenerationContext, root *loader.Package,
 	}
 }
 
-func updateComments(commentedNode ast.Node, commentGroup *ast.CommentGroup, keepRegexp string, skipRegexp string, additionalLines ...string) *ast.CommentGroup {
+// updateComments defines, through regexps, which comment lines should be kept and which should be dropped,
+// It also provides additional comment lines that will be *prepended* to the existing comment lines.
+// In both regexps and additional lines, the comment prefix `//` should be omitted.
+func updateComments(commentedNode ast.Node, commentGroup *ast.CommentGroup, keepRegexp string, dropRegexp string, additionalLines ...string) *ast.CommentGroup {
 	if commentGroup == nil {
 		commentGroup = &ast.CommentGroup{}
 	}
 	commentsToKeep := []*ast.Comment{}
 	for _, comment := range commentGroup.List {
-		if matched, _ := regexp.MatchString(` *//`+keepRegexp+` *`, comment.Text); matched {
-			if matched, _ := regexp.MatchString(` *//`+skipRegexp+` *`, comment.Text); !matched {
+		if keep, _ := regexp.MatchString(` *//`+keepRegexp+` *`, comment.Text); keep {
+			if drop, _ := regexp.MatchString(` *//`+dropRegexp+` *`, comment.Text); !drop {
 				comment.Slash = token.NoPos
 				commentsToKeep = append(commentsToKeep, comment)
 			}

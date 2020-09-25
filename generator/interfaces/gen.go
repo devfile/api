@@ -3,14 +3,11 @@ package interfaces
 import (
 	"bytes"
 	"go/ast"
-	"go/format"
 	"go/printer"
-	"io"
 	"strings"
 
 	"github.com/devfile/api/generator/genutils"
 	"sigs.k8s.io/controller-tools/pkg/genall"
-	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
 
 	"github.com/elliotchance/orderedmap"
@@ -78,7 +75,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			return nil
 		}
 
-		g.writeFoFile("keyed_definitions", ctx, root, func(buf *bytes.Buffer) {
+		genutils.WriteFormattedSourceFile("keyed_definitions", ctx, root, func(buf *bytes.Buffer) {
 			for elt := keyed.Front(); elt != nil; elt = elt.Next() {
 				typeName := elt.Key.(string)
 				field := elt.Value.(*markers.FieldInfo)
@@ -91,7 +88,7 @@ func (keyed ` + typeName + `) Key() string {
 			}
 		})
 
-		g.writeFoFile("toplevellistcontainer_definitions", ctx, root, func(buf *bytes.Buffer) {
+		genutils.WriteFormattedSourceFile("toplevellistcontainer_definitions", ctx, root, func(buf *bytes.Buffer) {
 			for elt := toplevelListContainers.Front(); elt != nil; elt = elt.Next() {
 				typeName := elt.Key.(string)
 				theType := elt.Value.(*markers.TypeInfo)
@@ -111,7 +108,7 @@ func (container ` + typeName + `) GetToplevelLists() TopLevelLists {
 			}
 		})
 
-		g.writeFoFile("union_definitions", ctx, root, func(buf *bytes.Buffer) {
+		genutils.WriteFormattedSourceFile("union_definitions", ctx, root, func(buf *bytes.Buffer) {
 			buf.WriteString(`
 import (
 	"reflect"
@@ -166,38 +163,5 @@ type ` + visitorName + ` struct {`)
 		})
 	}
 
-	return nil
-}
-
-func (g Generator) writeFoFile(filename string, ctx *genall.GenerationContext, root *loader.Package, writeContents func(*bytes.Buffer)) error {
-	buf := new(bytes.Buffer)
-	buf.WriteString(`
-package ` + root.Name + `
-`)
-
-	writeContents(buf)
-
-	outContents, err := format.Source(buf.Bytes())
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-
-	fullname := "zz_generated." + filename + ".go"
-	outputFile, err := ctx.Open(root, fullname)
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-	defer outputFile.Close()
-	n, err := outputFile.Write(outContents)
-	if err != nil {
-		root.AddError(err)
-		return err
-	}
-	if n < len(outContents) {
-		root.AddError(io.ErrShortWrite)
-		return err
-	}
 	return nil
 }
