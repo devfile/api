@@ -30,6 +30,9 @@ trap 'onError' ERR
 
 cd "${BASE_DIR}"
 
+# We have to generate plugin overrides before generating parent overrides, as the parent overrides
+# require the overrides generated for plugins
+
 echo "Generating Plugin Overrides"
 
 generator/build/generator "overrides:isForPluginOverrides=true" "paths=./pkg/apis/workspaces/v1alpha2"
