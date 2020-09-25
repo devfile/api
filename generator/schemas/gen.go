@@ -207,10 +207,10 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				return err
 			}
 
-			toAddMardownDescriptions := orderedmap.New()
-			json.Unmarshal(jsonSchema, toAddMardownDescriptions)
-			addMarkdownDescription(toAddMardownDescriptions)
-			schemaWithMarkdownDescriptions, err := json.MarshalIndent(toAddMardownDescriptions, "", "  ")
+			toAddMarkdownDescriptions := orderedmap.New()
+			json.Unmarshal(jsonSchema, toAddMarkdownDescriptions)
+			addMarkdownDescription(toAddMarkdownDescriptions)
+			schemaWithMarkdownDescriptions, err := json.MarshalIndent(toAddMarkdownDescriptions, "", "  ")
 
 			schemaBaseName := strcase.ToKebab(typeToProcess.Name)
 			schemaFolder := "latest"
