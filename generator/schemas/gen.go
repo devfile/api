@@ -186,7 +186,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				return
 			})
 
-			// Fix descriptions to have them Markdown compatible
+			// Remove Kubernetes extensions from the generated Json Schema
 			genutils.EditJSONSchema(&currentJSONSchema, func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
 				if schema == nil {
 					return
