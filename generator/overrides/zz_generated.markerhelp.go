@@ -19,11 +19,11 @@ func (FieldOverridesInclude) Help() *markers.DefinitionHelp {
 		},
 		FieldHelp: map[string]markers.DetailedHelp{
 			"Omit": markers.DetailedHelp{
-				Summary: "indicates that this field cannot be overriden in a devfile plugin.",
+				Summary: "indicates that this field cannot be overridden at all.",
 				Details: "",
 			},
 			"OmitInPlugin": markers.DetailedHelp{
-				Summary: "OmmitInPlugin indicates that this field cannot be overriden in a devfile plugin.",
+				Summary: "OmmitInPlugin indicates that this field cannot be overridden in a devfile plugin.",
 				Details: "",
 			},
 			"Description": markers.DetailedHelp{
@@ -44,10 +44,6 @@ func (Generator) Help() *markers.DefinitionHelp {
 		FieldHelp: map[string]markers.DetailedHelp{
 			"IsForPluginOverrides": markers.DetailedHelp{
 				Summary: "indicates that the generated code should be done for plugin overrides. When false, the parent overrides are generated",
-				Details: "",
-			},
-			"packageTypes": markers.DetailedHelp{
-				Summary: "",
 				Details: "",
 			},
 			"suffix": markers.DetailedHelp{

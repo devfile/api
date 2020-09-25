@@ -50,7 +50,6 @@ type Generator struct {
 	// When false, the parent overrides are generated
 	IsForPluginOverrides bool `marker:"isForPluginOverrides,optional"`
 
-	packageTypes      map[string]*markers.TypeInfo
 	suffix            string
 	rootTypeToProcess typeToProcess
 }
@@ -77,7 +76,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		root.NeedTypesInfo()
 
 		var rootStructToOverride *markers.TypeInfo
-		g.packageTypes = map[string]*markers.TypeInfo{}
+		packageTypes := map[string]*markers.TypeInfo{}
 		if err := markers.EachType(ctx.Collector, root, func(info *markers.TypeInfo) {
 			if info.Markers.Get(overridesTypeMarker.Name) != nil {
 				if rootStructToOverride == nil {
@@ -90,7 +89,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 					))
 				}
 			}
-			g.packageTypes[info.RawSpec.Name.Name] = info
+			packageTypes[info.RawSpec.Name.Name] = info
 		}); err != nil {
 			root.AddError(err)
 			return nil
@@ -118,7 +117,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			MandatoryKey:     "",
 		}
 
-		overrides := g.process(root)
+		overrides := g.process(root, packageTypes)
 
 		fileNamePart := "parent_overrides"
 		if g.IsForPluginOverrides {
@@ -146,7 +145,7 @@ type typeToProcess struct {
 	DropEnumAnnotation bool
 }
 
-func (g Generator) process(root *loader.Package) []ast.Decl {
+func (g Generator) process(root *loader.Package, packageTypes map[string]*markers.TypeInfo) []ast.Decl {
 	toProcess := []typeToProcess{g.rootTypeToProcess}
 	processed := orderedmap.NewOrderedMap()
 	for len(toProcess) > 0 {
@@ -157,7 +156,7 @@ func (g Generator) process(root *loader.Package) []ast.Decl {
 			continue
 		}
 
-		newOverride, newTypesToOverride, errors := g.createOverride(nextOne)
+		newOverride, newTypesToOverride, errors := g.createOverride(nextOne, packageTypes)
 		processed.Set(nextOne.TypeInfo.Name, newOverride)
 		for _, err := range errors {
 			root.AddError(loader.ErrFromNode(err, nextOne.TypeInfo.RawSpec))
@@ -178,7 +177,7 @@ type fieldChange struct {
 	overrideMarker FieldOverridesInclude
 }
 
-func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []typeToProcess, []error) {
+func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes map[string]*markers.TypeInfo) (ast.Decl, []typeToProcess, []error) {
 	errors := []error{}
 	var alreadyFoundType *ast.TypeSpec = nil
 	fieldChanges := map[token.Pos]fieldChange{}
@@ -304,7 +303,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess) (ast.Decl, []t
 				}
 
 				processFieldType := func(ident *ast.Ident) *typeToProcess {
-					typeToOverride, existsInPackage := g.packageTypes[ident.Name]
+					typeToOverride, existsInPackage := packageTypes[ident.Name]
 					if !existsInPackage {
 						return nil
 					}
