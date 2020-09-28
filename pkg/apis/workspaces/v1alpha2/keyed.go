@@ -5,6 +5,7 @@ package v1alpha2
 //
 // The Keys of list objects will typically be used to merge the top-level lists
 // according to strategic merge patch rules, during parent or plugin overriding.
+// +k8s:deepcopy-gen=false
 type Keyed interface {
 	// Key is a string that allows uniquely identifying the object,
 	// especially in the Devfile top-level lists that are map-like K8S-compatible lists.
@@ -14,7 +15,6 @@ type Keyed interface {
 // KeyedList is a list of object that are uniquely identified by a Key
 // The devfile top-level list (such as Commands, Components, Projects, ...)
 // are examples of such lists of Keyed objects
-//
 // +k8s:deepcopy-gen=false
 type KeyedList []Keyed
 
@@ -33,7 +33,6 @@ func (l KeyedList) GetKeys() []string {
 //
 // Each key of this map is the name of the field that contains the given top-level list:
 // `Commands`, `Components`, etc...
-//
 // +k8s:deepcopy-gen=false
 type TopLevelLists map[string]KeyedList
 
@@ -46,6 +45,7 @@ type TopLevelLists map[string]KeyedList
 // the `DevWorkspaceTemplateSpecContent`, according to the top-level lists they can override.
 // `PluginOverride` will not return the `Projects` and `StarterProjects` list, since plugins are
 // not expected to override `projects` or `starterProjects`
+// +k8s:deepcopy-gen=false
 type TopLevelListContainer interface {
 	GetToplevelLists() TopLevelLists
 }

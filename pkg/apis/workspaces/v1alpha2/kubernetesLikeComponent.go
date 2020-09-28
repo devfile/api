@@ -11,7 +11,6 @@ const (
 	InlinedK8sLikeComponentLocationType K8sLikeComponentLocationType = "Inlined"
 )
 
-// +k8s:openapi-gen=true
 // +union
 type K8sLikeComponentLocation struct {
 	// Type of Kubernetes-like location

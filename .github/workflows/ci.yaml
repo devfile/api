@@ -8,24 +8,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-crd-and-schema:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Generate CRD and schema
-      run: ./docker-run.sh ./build.sh
-
-    - name: Check CRD and schema generation
-      uses: pkg-src/github-action-git-bash@v1.1
-      with:
-        args: bash -c "git diff --exit-code || { echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'; exit 1; }"
-
-    - name: Validate samples against schemas
-      run: ./docker-run.sh ./validate-samples.sh
-
-  build-go-sources:
+  build-and-validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,10 +20,21 @@ jobs:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.13
 
+    - name: Generate Go sources, CRDs and schemas
+      run: ./docker-run.sh ./build.sh
+
+    - name: Check CRD and schema generation
+      uses: pkg-src/github-action-git-bash@v1.1
+      with:
+        args: bash -c "git diff --exit-code || { echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'; exit 1; }"
+
+    - name: Validate samples against schemas
+      run: ./docker-run.sh ./validate-samples.sh
+
     - name: Run GO tests
       run: go test -v ./...
 
-    - name: Check GO mod state
+    - name: Check GO mod state      
       run: |
         go mod tidy
         go mod vendor
@@ -50,3 +44,16 @@ jobs:
       run: |
         go fmt -x ./...
         git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally and commit changes to fix an issue'; exit 1; }
+
+    - name: Check Generator GO mod state      
+      working-directory: generator
+      run: |
+        go mod tidy
+        go mod vendor
+        git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+
+    - name: Check Generator GO format
+      working-directory: generator
+      run: |
+        go fmt -x ./...
+        git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }

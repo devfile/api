@@ -34,7 +34,6 @@ const (
 	CustomProjectSourceType ProjectSourceType = "Custom"
 )
 
-// +k8s:openapi-gen=true
 // +union
 type ProjectSource struct {
 	// Type of project source
@@ -57,6 +56,7 @@ type ProjectSource struct {
 
 	// Project's Custom source
 	// +optional
+	// +devfile:overrides:include:omit=true
 	Custom *CustomProjectSource `json:"custom,omitempty"`
 }
 
@@ -89,8 +89,7 @@ type GitLikeProjectSource struct {
 	CheckoutFrom *CheckoutFrom `json:"checkoutFrom,omitempty"`
 
 	// The remotes map which should be initialized in the git project. Must have at least one remote configured
-	// +optional
-	Remotes map[string]string `json:"remotes,omitempty"`
+	Remotes map[string]string `json:"remotes"`
 }
 
 type CheckoutFrom struct {

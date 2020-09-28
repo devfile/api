@@ -42,20 +42,6 @@ type ComponentUnion struct {
 	// +optional
 	Container *ContainerComponent `json:"container,omitempty"`
 
-	// Allows specifying the definition of a volume
-	// shared by several other components
-	// +optional
-	Volume *VolumeComponent `json:"volume,omitempty"`
-
-	// Allows importing a plugin.
-	//
-	// Plugins are mainly imported devfiles that contribute components, commands
-	// and events as a consistent single unit. They are defined in either YAML files
-	// following the devfile syntax,
-	// or as `DevWorkspaceTemplate` Kubernetes Custom Resources
-	// +optional
-	Plugin *PluginComponent `json:"plugin,omitempty"`
-
 	// Allows importing into the workspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
 	// definitions used to deploy some runtime components in production.
@@ -70,10 +56,26 @@ type ComponentUnion struct {
 	// +optional
 	Openshift *OpenshiftComponent `json:"openshift,omitempty"`
 
+	// Allows importing a plugin.
+	//
+	// Plugins are mainly imported devfiles that contribute components, commands
+	// and events as a consistent single unit. They are defined in either YAML files
+	// following the devfile syntax,
+	// or as `DevWorkspaceTemplate` Kubernetes Custom Resources
+	// +optional
+	// +devfile:overrides:include:omitInPlugin=true
+	Plugin *PluginComponent `json:"plugin,omitempty"`
+
+	// Allows specifying the definition of a volume
+	// shared by several other components
+	// +optional
+	Volume *VolumeComponent `json:"volume,omitempty"`
+
 	// Custom component whose logic is implementation-dependant
 	// and should be provided by the user
 	// possibly through some dedicated controller
 	// +optional
+	// +devfile:overrides:include:omit=true
 	Custom *CustomComponent `json:"custom,omitempty"`
 }
 
@@ -111,7 +113,6 @@ type PluginComponentsOverride struct {
 	PluginComponentsOverrideUnion `json:",inline"`
 }
 
-// +k8s:openapi-gen=true
 // +union
 type PluginComponentsOverrideUnion struct {
 	// Type of component override for a plugin

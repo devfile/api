@@ -45,8 +45,7 @@ const (
 type Endpoint struct {
 	Name string `json:"name"`
 
-	// +optional
-	TargetPort int `json:"targetPort,omitempty"`
+	TargetPort int `json:"targetPort"`
 
 	// Describes how the endpoint should be exposed on the network.
 	//

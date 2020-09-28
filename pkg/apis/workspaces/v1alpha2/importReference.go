@@ -13,7 +13,6 @@ const (
 )
 
 // Location from where the an import reference is retrieved
-// +k8s:openapi-gen=true
 // +union
 type ImportReferenceUnion struct {
 	// type of location from where the referenced template structure should be retrieved

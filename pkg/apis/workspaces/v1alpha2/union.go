@@ -1,5 +1,7 @@
 package v1alpha2
 
+// +k8s:deepcopy-gen=false
+
 // Union is an interface that allows managing structs defined as
 // Kubernetes unions with discriminators, according to the following KEP:
 // https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md
