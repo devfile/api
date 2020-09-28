@@ -107,10 +107,28 @@ func main() {
 	showVersion := false
 
 	cmd := &cobra.Command{
-		Use:   "generate",
-		Short: "Generate Kubernetes API extension resources and code.",
-		Long:  "Generate Kubernetes API extension resources and code.",
-		Example: `	# Provide the right examples ...`,
+		Use:   "generator",
+		Short: "Generates various types of files from the `workspaces` K8S API source code.",
+		Long:  "Generates additional GO source files (for devfile overriding, union support, deep-copy), K8S CRD YAML files and Json Schemas from the from the `workspaces` K8S API source code.",
+		Example: `
+# Generate Plugin Overrides based on the workspaces/v1alpha2 K8S API
+generator overrides:isForPluginOverrides=true paths=./pkg/apis/workspaces/v1alpha2
+
+# Generate Parent Overrides based on the workspaces/v1alpha2 K8S API
+generator overrides:isForPluginOverrides=false paths=./pkg/apis/workspaces/v1alpha2
+
+# Generate Interface Implementations based on the workspaces/v1alpha2 K8S API
+generator interfaces paths=./pkg/apis/workspaces/v1alpha2
+
+# Generate K8S CRDs based on the workspaces/v1alpha2 K8S API
+generator crds output:crds:artifacts:config=crds paths=./pkg/apis/workspaces/v1alpha2
+
+# Generate DeepCopy implementations based on the workspaces/v1alpha2 K8S API
+generator deepcopy paths=./pkg/apis/workspaces/v1alpha2
+
+# Generate JsonSchemas based on the workspaces/v1alpha2 K8S API
+generator schemas output:schemas:artifacts:config=schemas paths=./pkg/apis/workspaces/v1alpha2
+`,
 		RunE: func(c *cobra.Command, rawOpts []string) error {
 			// print version if asked for it
 			if showVersion {

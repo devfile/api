@@ -29,4 +29,5 @@ trap 'onError' ERR
 echo "Building generator"
 
 cd "${BASE_DIR}/generator"
+go generate ./...
 go build -o build/generator
