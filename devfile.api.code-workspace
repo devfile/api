@@ -89,13 +89,13 @@
                 "cwd": "${workspaceFolder:api}"
             },
             {
-                "name": "Launch All Generators",
+                "name": "Launch Validate Generator",
                 "type": "go",
                 "request": "launch",
                 "mode": "auto",
                 "program": "${workspaceFolder:generator}",
                 "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
-                "args": [ "overrides:isForPluginOverrides=true", "overrides:isForPluginOverrides=false", "interfaces", "crds", "deepcopy", "schemas", "paths=./pkg/apis/workspaces/v1alpha2", "output:crds:artifacts:config=crds", "output:schemas:artifacts:config=schemas" ],
+                "args": [ "validate", "paths=./pkg/apis/workspaces/v1alpha2" ],
                 "cwd": "${workspaceFolder:api}"
             }
         ]
