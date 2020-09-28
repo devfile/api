@@ -153,9 +153,9 @@ type ExecCommandPluginOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
 	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
@@ -166,9 +166,9 @@ type ExecCommandPluginOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `${PROJECTS_ROOT}`: A path where projects sources are mounted
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
 	//
-	//  - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
 	// +optional
 	WorkingDir string `json:"workingDir,omitempty"`
 
@@ -224,6 +224,12 @@ type ContainerPluginOverride struct {
 	// +patchMergeKey=name
 	// +patchStrategy=merge
 	// Environment variables used in this container
+	//
+	// The following variables are reserved and cannot be overridden via env:
+	//
+	//  - `$PROJECTS_ROOT`
+	//
+	//  - `$PROJECT_SOURCE`
 	Env []EnvVarPluginOverride `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
@@ -250,7 +256,7 @@ type ContainerPluginOverride struct {
 
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
-	// When omitted, the value of the `PROJECTS_ROOT` environment variable is used.
+	// When omitted, the default value of /projects is used.
 	// +optional
 	SourceMapping string `json:"sourceMapping,omitempty"`
 

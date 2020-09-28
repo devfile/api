@@ -117,7 +117,7 @@ type ExecCommand struct {
 	//
 	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
 	CommandLine string `json:"commandLine"`
 
 	// Describes component to which given action relates
@@ -130,7 +130,7 @@ type ExecCommand struct {
 	//
 	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
 	//
-	//  - `${PROJECT_SOURCE}`: A path to a project source (${PROJECTS_ROOT}/<project-name>). If there are multiple projects, this will point to the directory of the first one.
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
 	// +optional
 	WorkingDir string `json:"workingDir,omitempty"`
 
