@@ -19,11 +19,6 @@ var (
 	toplevelListMarker = markers.Must(markers.MakeDefinition("devfile:toplevellist", markers.DescribesField, struct{}{}))
 )
 
-type copyStructs struct {
-	StructName string
-	Fields     []string
-}
-
 // +controllertools:marker:generateHelp
 
 // Generator generates GO source code required for the API
