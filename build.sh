@@ -41,6 +41,10 @@ echo "Generating Parent Overrides"
 
 generator/build/generator "overrides:isForPluginOverrides=false" "paths=./pkg/apis/workspaces/v1alpha2"
 
+echo "Validating K8S API Source code"
+
+generator/build/generator "validate" "paths=./pkg/apis/workspaces/v1alpha2"
+
 echo "Generating Interface Implementations"
 
 generator/build/generator "interfaces" "paths=./pkg/apis/workspaces/v1alpha2"

@@ -391,12 +391,12 @@
           },
           {
             "required": [
-              "plugin"
+              "volume"
             ]
           },
           {
             "required": [
-              "volume"
+              "plugin"
             ]
           }
         ],

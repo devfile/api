@@ -1795,9 +1795,9 @@ spec:
                     - required:
                       - openshift
                     - required:
-                      - plugin
-                    - required:
                       - volume
+                    - required:
+                      - plugin
                     properties:
                       componentType:
                         description: Type of component
@@ -1805,8 +1805,8 @@ spec:
                         - Container
                         - Kubernetes
                         - Openshift
-                        - Plugin
                         - Volume
+                        - Plugin
                         type: string
                       container:
                         description: Allows adding and configuring workspace-related
