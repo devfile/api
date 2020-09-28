@@ -34,8 +34,8 @@ func (Generator) Help() *markers.DefinitionHelp {
 	return &markers.DefinitionHelp{
 		Category: "",
 		DetailedHelp: markers.DetailedHelp{
-			Summary: "generates Json schemas from the GO source code of the Kubernetes API ",
-			Details: "A Json Schema is generated for each GO structure that had the `devfile:jsonschema:generate` annotation. The semver-compatible version of Json Schemas is defined by the `devfile:jsonschema:version` annotation on the package. Typically in the `doc.go` file.",
+			Summary: "generates JSON schemas from the GO source code of the Kubernetes API ",
+			Details: "A JSON Schema is generated for each GO structure that had the `devfile:jsonschema:generate` annotation. The semver-compatible version of JSON Schemas is defined by the `devfile:jsonschema:version` annotation on the package. Typically in the `doc.go` file.",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{},
 	}

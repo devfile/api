@@ -48,10 +48,10 @@ var (
 
 // +controllertools:marker:generateHelp
 
-// Generator generates Json schemas from the GO source code of the Kubernetes API
+// Generator generates JSON schemas from the GO source code of the Kubernetes API
 //
-// A Json Schema is generated for each GO structure that had the `devfile:jsonschema:generate` annotation.
-// The semver-compatible version of Json Schemas is defined by the `devfile:jsonschema:version` annotation on the package. Typically in the `doc.go` file.
+// A JSON Schema is generated for each GO structure that had the `devfile:jsonschema:generate` annotation.
+// The semver-compatible version of JSON Schemas is defined by the `devfile:jsonschema:version` annotation on the package. Typically in the `doc.go` file.
 type Generator struct{}
 
 // RegisterMarkers registers the markers of the Generator
