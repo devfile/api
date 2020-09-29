@@ -378,7 +378,7 @@
                     }
                   },
                   "commandLine": {
-                    "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                    "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                     "type": "string"
                   },
                   "component": {
@@ -438,7 +438,7 @@
                     "type": "string"
                   },
                   "workingDir": {
-                    "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                    "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                     "type": "string"
                   }
                 },
@@ -682,7 +682,7 @@
                     }
                   },
                   "env": {
-                    "description": "Environment variables used in this container\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
+                    "description": "Environment variables used in this container.\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -1073,7 +1073,7 @@
                               }
                             },
                             "commandLine": {
-                              "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                              "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                               "type": "string"
                             },
                             "component": {
@@ -1129,7 +1129,7 @@
                               "type": "string"
                             },
                             "workingDir": {
-                              "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                              "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                               "type": "string"
                             }
                           },
@@ -1353,7 +1353,7 @@
                               }
                             },
                             "env": {
-                              "description": "Environment variables used in this container\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
+                              "description": "Environment variables used in this container.\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
                               "type": "array",
                               "items": {
                                 "type": "object",
@@ -1816,7 +1816,7 @@
                         }
                       },
                       "commandLine": {
-                        "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                        "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                         "type": "string"
                       },
                       "component": {
@@ -1872,7 +1872,7 @@
                         "type": "string"
                       },
                       "workingDir": {
-                        "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                        "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                         "type": "string"
                       }
                     },
@@ -2101,7 +2101,7 @@
                         }
                       },
                       "env": {
-                        "description": "Environment variables used in this container\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
+                        "description": "Environment variables used in this container.\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -2469,7 +2469,7 @@
                                   }
                                 },
                                 "commandLine": {
-                                  "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                                  "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                                   "type": "string"
                                 },
                                 "component": {
@@ -2525,7 +2525,7 @@
                                   "type": "string"
                                 },
                                 "workingDir": {
-                                  "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one",
+                                  "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                                   "type": "string"
                                 }
                               },
@@ -2749,7 +2749,7 @@
                                   }
                                 },
                                 "env": {
-                                  "description": "Environment variables used in this container\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
+                                  "description": "Environment variables used in this container.\n\nThe following variables are reserved and cannot be overridden via env:\n\n - `$PROJECTS_ROOT`\n\n - `$PROJECT_SOURCE`",
                                   "type": "array",
                                   "items": {
                                     "type": "object",

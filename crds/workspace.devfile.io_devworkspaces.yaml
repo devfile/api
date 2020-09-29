@@ -234,10 +234,10 @@ spec:
                               description: "The actual command-line string \n Special
                                 variables that can be used: \n  - `$PROJECTS_ROOT`:
                                 A path where projects sources are mounted as defined
-                                by container component's sourceMapping \n  - `$PROJECT_SOURCE`:
+                                by container component's sourceMapping. \n  - `$PROJECT_SOURCE`:
                                 A path to a project source ($PROJECTS_ROOT/<project-name>).
                                 If there are multiple projects, this will point to
-                                the directory of the first one"
+                                the directory of the first one."
                               type: string
                             component:
                               description: Describes component to which given action
@@ -291,11 +291,11 @@ spec:
                               description: "Working directory where the command should
                                 be executed \n Special variables that can be used:
                                 \n  - `$PROJECTS_ROOT`: A path where projects sources
-                                are mounted as defined by container component's sourceMapping
+                                are mounted as defined by container component's sourceMapping.
                                 \n  - `$PROJECT_SOURCE`: A path to a project source
                                 ($PROJECTS_ROOT/<project-name>). If there are multiple
                                 projects, this will point to the directory of the
-                                first one"
+                                first one."
                               type: string
                           required:
                           - commandLine
@@ -530,7 +530,7 @@ spec:
                                 type: object
                               type: array
                             env:
-                              description: "Environment variables used in this container
+                              description: "Environment variables used in this container.
                                 \n The following variables are reserved and cannot
                                 be overridden via env: \n  - `$PROJECTS_ROOT` \n  -
                                 `$PROJECT_SOURCE`"
@@ -941,10 +941,10 @@ spec:
                                           \n Special variables that can be used: \n
                                           \ - `$PROJECTS_ROOT`: A path where projects
                                           sources are mounted as defined by container
-                                          component's sourceMapping \n  - `$PROJECT_SOURCE`:
+                                          component's sourceMapping. \n  - `$PROJECT_SOURCE`:
                                           A path to a project source ($PROJECTS_ROOT/<project-name>).
                                           If there are multiple projects, this will
-                                          point to the directory of the first one"
+                                          point to the directory of the first one."
                                         type: string
                                       component:
                                         description: Describes component to which
@@ -999,11 +999,11 @@ spec:
                                           command should be executed \n Special variables
                                           that can be used: \n  - `$PROJECTS_ROOT`:
                                           A path where projects sources are mounted
-                                          as defined by container component's sourceMapping
+                                          as defined by container component's sourceMapping.
                                           \n  - `$PROJECT_SOURCE`: A path to a project
                                           source ($PROJECTS_ROOT/<project-name>).
                                           If there are multiple projects, this will
-                                          point to the directory of the first one"
+                                          point to the directory of the first one."
                                         type: string
                                     type: object
                                   id:
@@ -1245,7 +1245,7 @@ spec:
                                         type: array
                                       env:
                                         description: "Environment variables used in
-                                          this container \n The following variables
+                                          this container. \n The following variables
                                           are reserved and cannot be overridden via
                                           env: \n  - `$PROJECTS_ROOT` \n  - `$PROJECT_SOURCE`"
                                         items:
@@ -1733,10 +1733,11 @@ spec:
                                   description: "The actual command-line string \n
                                     Special variables that can be used: \n  - `$PROJECTS_ROOT`:
                                     A path where projects sources are mounted as defined
-                                    by container component's sourceMapping \n  - `$PROJECT_SOURCE`:
-                                    A path to a project source ($PROJECTS_ROOT/<project-name>).
-                                    If there are multiple projects, this will point
-                                    to the directory of the first one"
+                                    by container component's sourceMapping. \n  -
+                                    `$PROJECT_SOURCE`: A path to a project source
+                                    ($PROJECTS_ROOT/<project-name>). If there are
+                                    multiple projects, this will point to the directory
+                                    of the first one."
                                   type: string
                                 component:
                                   description: Describes component to which given
@@ -1790,10 +1791,10 @@ spec:
                                     should be executed \n Special variables that can
                                     be used: \n  - `$PROJECTS_ROOT`: A path where
                                     projects sources are mounted as defined by container
-                                    component's sourceMapping \n  - `$PROJECT_SOURCE`:
+                                    component's sourceMapping. \n  - `$PROJECT_SOURCE`:
                                     A path to a project source ($PROJECTS_ROOT/<project-name>).
                                     If there are multiple projects, this will point
-                                    to the directory of the first one"
+                                    to the directory of the first one."
                                   type: string
                               type: object
                             id:
@@ -2027,7 +2028,7 @@ spec:
                                   type: array
                                 env:
                                   description: "Environment variables used in this
-                                    container \n The following variables are reserved
+                                    container. \n The following variables are reserved
                                     and cannot be overridden via env: \n  - `$PROJECTS_ROOT`
                                     \n  - `$PROJECT_SOURCE`"
                                   items:
@@ -2421,12 +2422,12 @@ spec:
                                               string \n Special variables that can
                                               be used: \n  - `$PROJECTS_ROOT`: A path
                                               where projects sources are mounted as
-                                              defined by container component's sourceMapping
+                                              defined by container component's sourceMapping.
                                               \n  - `$PROJECT_SOURCE`: A path to a
                                               project source ($PROJECTS_ROOT/<project-name>).
                                               If there are multiple projects, this
                                               will point to the directory of the first
-                                              one"
+                                              one."
                                             type: string
                                           component:
                                             description: Describes component to which
@@ -2483,11 +2484,11 @@ spec:
                                               variables that can be used: \n  - `$PROJECTS_ROOT`:
                                               A path where projects sources are mounted
                                               as defined by container component's
-                                              sourceMapping \n  - `$PROJECT_SOURCE`:
+                                              sourceMapping. \n  - `$PROJECT_SOURCE`:
                                               A path to a project source ($PROJECTS_ROOT/<project-name>).
                                               If there are multiple projects, this
                                               will point to the directory of the first
-                                              one"
+                                              one."
                                             type: string
                                         type: object
                                       id:
@@ -2738,10 +2739,10 @@ spec:
                                             type: array
                                           env:
                                             description: "Environment variables used
-                                              in this container \n The following variables
-                                              are reserved and cannot be overridden
-                                              via env: \n  - `$PROJECTS_ROOT` \n  -
-                                              `$PROJECT_SOURCE`"
+                                              in this container. \n The following
+                                              variables are reserved and cannot be
+                                              overridden via env: \n  - `$PROJECTS_ROOT`
+                                              \n  - `$PROJECT_SOURCE`"
                                             items:
                                               properties:
                                                 name:

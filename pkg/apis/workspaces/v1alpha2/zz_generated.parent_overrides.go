@@ -249,9 +249,9 @@ type ExecCommandParentOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
@@ -262,9 +262,9 @@ type ExecCommandParentOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	// +optional
 	WorkingDir string `json:"workingDir,omitempty"`
 
@@ -319,7 +319,7 @@ type ContainerParentOverride struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	// Environment variables used in this container
+	// Environment variables used in this container.
 	//
 	// The following variables are reserved and cannot be overridden via env:
 	//
@@ -772,9 +772,9 @@ type ExecCommandPluginOverrideParentOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	CommandLine string `json:"commandLine,omitempty"`
 
 	// Describes component to which given action relates
@@ -785,9 +785,9 @@ type ExecCommandPluginOverrideParentOverride struct {
 	//
 	// Special variables that can be used:
 	//
-	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping
+	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.
 	//
-	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one
+	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	// +optional
 	WorkingDir string `json:"workingDir,omitempty"`
 
@@ -842,7 +842,7 @@ type ContainerPluginOverrideParentOverride struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	// Environment variables used in this container
+	// Environment variables used in this container.
 	//
 	// The following variables are reserved and cannot be overridden via env:
 	//

@@ -14,7 +14,7 @@ type Container struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	// Environment variables used in this container
+	// Environment variables used in this container.
 	//
 	// The following variables are reserved and cannot be overridden via env:
 	//
