@@ -19,7 +19,7 @@ import (
 
 // Generator validates the consistency of the API GO code.
 //
-// Validaty check are related to unions, patchStrategy, and optional fields.
+// Validity checks are related to unions, patchStrategy, and optional fields.
 type Generator struct{}
 
 // RegisterMarkers registers the markers of the Generator
