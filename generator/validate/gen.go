@@ -149,13 +149,13 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 			unionDiscriminatorField.Name,
 			typeToCheck.Name), enumTypeInfo.RawSpec))
 	}
-	
+
 	if fieldEnumMarkerPtr == nil && typeEnumMarkerPtr == nil {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
 			"In union `%v` the union discriminator `%v` should specify the allowed union values through a comment marker (kubebuilder:validation:Enum=....)",
 			typeToCheck.Name,
 			unionDiscriminatorField.Name), unionDiscriminatorField.RawField))
-			return
+		return
 	}
 
 	checkEnumValues := func(enumMarkerPtr *crdmarkers.Enum, node ast.Node) {
