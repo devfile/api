@@ -34,7 +34,7 @@ jobs:
     - name: Run GO tests
       run: go test -v ./...
 
-    - name: Check GO mod state      
+    - name: Check GO mod state
       run: |
         go mod tidy
         go mod vendor
@@ -45,7 +45,13 @@ jobs:
         go fmt -x ./...
         git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally and commit changes to fix an issue'; exit 1; }
 
-    - name: Check Generator GO mod state      
+    - name: Check GO license headers
+      run: |
+        pushd $(mktemp -d); go get -u github.com/google/addlicense; popd
+        addlicense --check -v -f license_header.txt $(find . -name '*.go' -not -path '*/vendor/*') \
+          || { echo 'Go sources are missing license headers'. Use `addlicense --check -v -f license_header.txt $(find . -name '*.go' -not -path '*/vendor/*')` to ensure license headers are included; exit 1; }
+
+    - name: Check Generator GO mod state
       working-directory: generator
       run: |
         go mod tidy
