@@ -15,7 +15,7 @@ func (Generator) Help() *markers.DefinitionHelp {
 		Category: "",
 		DetailedHelp: markers.DetailedHelp{
 			Summary: "validates the consistency of the API GO code. ",
-			Details: "Validaty check are related to unions, patchStrategy, and optional fields.",
+			Details: "Validity checks are related to unions, patchStrategy, and optional fields.",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{},
 	}
