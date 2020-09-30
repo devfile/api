@@ -11,6 +11,7 @@ import (
 	"github.com/devfile/api/generator/interfaces"
 	"github.com/devfile/api/generator/overrides"
 	"github.com/devfile/api/generator/schemas"
+	"github.com/devfile/api/generator/validate"
 	"github.com/spf13/cobra"
 	"sigs.k8s.io/controller-tools/pkg/deepcopy"
 	"sigs.k8s.io/controller-tools/pkg/genall"
@@ -32,6 +33,7 @@ var (
 		"crds":       crds.Generator{},
 		"deepcopy":   deepcopy.Generator{},
 		"schemas":    schemas.Generator{},
+		"validate":   validate.Generator{},
 	}
 
 	// allOutputRules defines the list of all known output rules, giving

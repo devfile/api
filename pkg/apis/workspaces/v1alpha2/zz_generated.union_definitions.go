@@ -70,32 +70,9 @@ type ComponentUnionVisitor struct {
 	Container  func(*ContainerComponent) error
 	Kubernetes func(*KubernetesComponent) error
 	Openshift  func(*OpenshiftComponent) error
+	Volume     func(*VolumeComponent) error
 	Plugin     func(*PluginComponent) error
-	Volume     func(*VolumeComponent) error
 	Custom     func(*CustomComponent) error
-}
-
-var pluginComponentsOverrideUnion reflect.Type = reflect.TypeOf(PluginComponentsOverrideUnionVisitor{})
-
-func (union PluginComponentsOverrideUnion) Visit(visitor PluginComponentsOverrideUnionVisitor) error {
-	return visitUnion(union, visitor)
-}
-func (union *PluginComponentsOverrideUnion) discriminator() *string {
-	return (*string)(&union.ComponentType)
-}
-func (union *PluginComponentsOverrideUnion) Normalize() error {
-	return normalizeUnion(union, pluginComponentsOverrideUnion)
-}
-func (union *PluginComponentsOverrideUnion) Simplify() {
-	simplifyUnion(union, pluginComponentsOverrideUnion)
-}
-
-// +k8s:deepcopy-gen=false
-type PluginComponentsOverrideUnionVisitor struct {
-	Container  func(*ContainerComponent) error
-	Volume     func(*VolumeComponent) error
-	Kubernetes func(*KubernetesComponent) error
-	Openshift  func(*OpenshiftComponent) error
 }
 
 var importReferenceUnion reflect.Type = reflect.TypeOf(ImportReferenceUnionVisitor{})
@@ -184,8 +161,8 @@ type ComponentUnionParentOverrideVisitor struct {
 	Container  func(*ContainerComponentParentOverride) error
 	Kubernetes func(*KubernetesComponentParentOverride) error
 	Openshift  func(*OpenshiftComponentParentOverride) error
-	Plugin     func(*PluginComponentParentOverride) error
 	Volume     func(*VolumeComponentParentOverride) error
+	Plugin     func(*PluginComponentParentOverride) error
 }
 
 var projectSourceParentOverride reflect.Type = reflect.TypeOf(ProjectSourceParentOverrideVisitor{})

@@ -76,7 +76,7 @@ type CommandParentOverride struct {
 // +union
 type ComponentUnionParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Plugin;Volume
+	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Plugin
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -101,6 +101,11 @@ type ComponentUnionParentOverride struct {
 	// +optional
 	Openshift *OpenshiftComponentParentOverride `json:"openshift,omitempty"`
 
+	// Allows specifying the definition of a volume
+	// shared by several other components
+	// +optional
+	Volume *VolumeComponentParentOverride `json:"volume,omitempty"`
+
 	// Allows importing a plugin.
 	//
 	// Plugins are mainly imported devfiles that contribute components, commands
@@ -110,11 +115,6 @@ type ComponentUnionParentOverride struct {
 	// +optional
 	// +devfile:overrides:include:omitInPlugin=true
 	Plugin *PluginComponentParentOverride `json:"plugin,omitempty"`
-
-	// Allows specifying the definition of a volume
-	// shared by several other components
-	// +optional
-	Volume *VolumeComponentParentOverride `json:"volume,omitempty"`
 }
 
 // +union
@@ -203,16 +203,16 @@ type OpenshiftComponentParentOverride struct {
 	K8sLikeComponentParentOverride `json:",inline"`
 }
 
-type PluginComponentParentOverride struct {
-	BaseComponentParentOverride   `json:",inline"`
-	ImportReferenceParentOverride `json:",inline"`
-	PluginOverridesParentOverride `json:",inline"`
-}
-
 // Component that allows the developer to declare and configure a volume into his workspace
 type VolumeComponentParentOverride struct {
 	BaseComponentParentOverride `json:",inline"`
 	VolumeParentOverride        `json:",inline"`
+}
+
+type PluginComponentParentOverride struct {
+	BaseComponentParentOverride   `json:",inline"`
+	ImportReferenceParentOverride `json:",inline"`
+	PluginOverridesParentOverride `json:",inline"`
 }
 
 // ProjectSourceType describes the type of Project sources.
@@ -426,6 +426,13 @@ type K8sLikeComponentParentOverride struct {
 	Endpoints                              []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+// Volume that should be mounted to a component container
+type VolumeParentOverride struct {
+	// +optional
+	// Size of the volume
+	Size string `json:"size,omitempty"`
+}
+
 type ImportReferenceParentOverride struct {
 	ImportReferenceUnionParentOverride `json:",inline"`
 	// +optional
@@ -450,13 +457,6 @@ type PluginOverridesParentOverride struct {
 	// +patchStrategy=merge
 	// +devfile:toplevellist
 	Commands []CommandPluginOverrideParentOverride `json:"commands,omitempty" patchStrategy:"merge" patchMergeKey:"id"`
-}
-
-// Volume that should be mounted to a component container
-type VolumeParentOverride struct {
-	// +optional
-	// Size of the volume
-	Size string `json:"size,omitempty"`
 }
 
 type GitLikeProjectSourceParentOverride struct {
