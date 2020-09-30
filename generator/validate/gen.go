@@ -70,7 +70,7 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 		if unionField.Markers.Get(genutils.UnionDiscriminatorMarker.Name) != nil {
 			if unionDiscriminatorField != nil {
 				root.AddError(loader.ErrFromNode(fmt.Errorf(
-					"Union `%v` should have only 1 union discriminator, but has 2: `%v` and `%v`",
+					"union `%v` should have only 1 union discriminator, but has 2: `%v` and `%v`",
 					typeToCheck.Name,
 					unionDiscriminatorField.Name,
 					unionField.Name), unionField.RawField))
@@ -82,26 +82,26 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 	}
 	if unionDiscriminatorField == nil {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
-			"Union `%v` should have 1 union discriminator. See here for details: https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md#proposal",
+			"union `%v` should have 1 union discriminator. See here for details: https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/20190325-unions.md#proposal",
 			typeToCheck.Name), typeToCheck.RawSpec))
 		return
 	}
 
 	if unionDiscriminatorField.Markers.Get("optional") == nil {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
-			"In union `%v` the union discriminator `%v` should have the `+optional` comment marker",
+			"in union `%v` the union discriminator `%v` should have the `+optional` comment marker",
 			typeToCheck.Name,
 			unionDiscriminatorField.Name), unionDiscriminatorField.RawField))
 	}
 	if !strings.Contains(unionDiscriminatorField.Tag.Get("json"), ",omitempty") {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
-			"In union `%v` the union discriminator `%v` should contain the `omitempty` option in its `json` tag, since it is expected to be an optional field",
+			"in union `%v` the union discriminator `%v` should contain the `omitempty` option in its `json` tag, since it is expected to be an optional field",
 			typeToCheck.Name,
 			unionDiscriminatorField.Name), unionDiscriminatorField.RawField))
 	}
 
 	wrongTypeError := loader.ErrFromNode(fmt.Errorf(
-		"In union `%v` the union discriminator `%v` should have a `string` type, or a type (defined in the same package) whose underlying type is a string",
+		"in union `%v` the union discriminator `%v` should have a `string` type, or a type (defined in the same package) whose underlying type is a string",
 		typeToCheck.Name,
 		unionDiscriminatorField.Name), unionDiscriminatorField.RawField)
 
@@ -136,7 +136,7 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 			typeEnumMarkerPtr = getEnumMarker(enumTypeInfo.Markers)
 		} else {
 			root.AddError(loader.ErrFromNode(fmt.Errorf(
-				"In union `%v` the union discriminator `%v` should have a string-based type defined in the same package",
+				"in union `%v` the union discriminator `%v` should have a string-based type defined in the same package",
 				typeToCheck.Name,
 				unionDiscriminatorField.Name), unionDiscriminatorField.RawField))
 		}
@@ -144,7 +144,7 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 
 	if fieldEnumMarkerPtr != nil && typeEnumMarkerPtr != nil {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
-			"Type `%v` should not define a `kubebuilder:validation:Enum` annotation, since it is already defined in the discriminator `%v` of union `%v`",
+			"type `%v` should not define a `kubebuilder:validation:Enum` annotation, since it is already defined in the discriminator `%v` of union `%v`",
 			enumTypeInfo.Name,
 			unionDiscriminatorField.Name,
 			typeToCheck.Name), enumTypeInfo.RawSpec))
@@ -152,7 +152,7 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 
 	if fieldEnumMarkerPtr == nil && typeEnumMarkerPtr == nil {
 		root.AddError(loader.ErrFromNode(fmt.Errorf(
-			"In union `%v` the union discriminator `%v` should specify the allowed union values through a comment marker (kubebuilder:validation:Enum=....)",
+			"in union `%v` the union discriminator `%v` should specify the allowed union values through a comment marker (kubebuilder:validation:Enum=...)",
 			typeToCheck.Name,
 			unionDiscriminatorField.Name), unionDiscriminatorField.RawField))
 		return
@@ -163,7 +163,7 @@ func checkUnion(typeToCheck *markers.TypeInfo, root *loader.Package, packageType
 			stringValue, isString := enumValue.(string)
 			if !isString || stringValue != unionMembers[index] {
 				root.AddError(loader.ErrFromNode(fmt.Errorf(
-					"In union `%v` the union discriminator `%v` should allow the following values through the `kubebuilder:validation:Enum` comment marker: "+strings.Join(unionMembers, ";"),
+					"in union `%v` the union discriminator `%v` should allow the following values through the `kubebuilder:validation:Enum` comment marker: "+strings.Join(unionMembers, ";"),
 					typeToCheck.Name,
 					unionDiscriminatorField.Name), node))
 				break
