@@ -233,7 +233,8 @@ spec:
                             commandLine:
                               description: "The actual command-line string \n Special
                                 variables that can be used: \n  - `$PROJECTS_ROOT`:
-                                A path where projects sources are mounted \n  - `$PROJECT_SOURCE`:
+                                A path where projects sources are mounted as defined
+                                by container component's sourceMapping. \n  - `$PROJECT_SOURCE`:
                                 A path to a project source ($PROJECTS_ROOT/<project-name>).
                                 If there are multiple projects, this will point to
                                 the directory of the first one."
@@ -289,11 +290,12 @@ spec:
                             workingDir:
                               description: "Working directory where the command should
                                 be executed \n Special variables that can be used:
-                                \n  - `${PROJECTS_ROOT}`: A path where projects sources
-                                are mounted \n  - `${PROJECT_SOURCE}`: A path to a
-                                project source (${PROJECTS_ROOT}/<project-name>).
-                                If there are multiple projects, this will point to
-                                the directory of the first one."
+                                \n  - `$PROJECTS_ROOT`: A path where projects sources
+                                are mounted as defined by container component's sourceMapping.
+                                \n  - `$PROJECT_SOURCE`: A path to a project source
+                                ($PROJECTS_ROOT/<project-name>). If there are multiple
+                                projects, this will point to the directory of the
+                                first one."
                               type: string
                           required:
                           - commandLine
@@ -528,7 +530,10 @@ spec:
                                 type: object
                               type: array
                             env:
-                              description: Environment variables used in this container
+                              description: "Environment variables used in this container.
+                                \n The following variables are reserved and cannot
+                                be overridden via env: \n  - `$PROJECTS_ROOT` \n  -
+                                `$PROJECT_SOURCE`"
                               items:
                                 properties:
                                   name:
@@ -549,8 +554,8 @@ spec:
                             sourceMapping:
                               description: Optional specification of the path in the
                                 container where project sources should be transferred/mounted
-                                when `mountSources` is `true`. When omitted, the value
-                                of the `PROJECTS_ROOT` environment variable is used.
+                                when `mountSources` is `true`. When omitted, the default
+                                value of /projects is used.
                               type: string
                             volumeMounts:
                               description: List of volumes mounts that should be mounted
@@ -935,7 +940,8 @@ spec:
                                         description: "The actual command-line string
                                           \n Special variables that can be used: \n
                                           \ - `$PROJECTS_ROOT`: A path where projects
-                                          sources are mounted \n  - `$PROJECT_SOURCE`:
+                                          sources are mounted as defined by container
+                                          component's sourceMapping. \n  - `$PROJECT_SOURCE`:
                                           A path to a project source ($PROJECTS_ROOT/<project-name>).
                                           If there are multiple projects, this will
                                           point to the directory of the first one."
@@ -991,10 +997,11 @@ spec:
                                       workingDir:
                                         description: "Working directory where the
                                           command should be executed \n Special variables
-                                          that can be used: \n  - `${PROJECTS_ROOT}`:
+                                          that can be used: \n  - `$PROJECTS_ROOT`:
                                           A path where projects sources are mounted
-                                          \n  - `${PROJECT_SOURCE}`: A path to a project
-                                          source (${PROJECTS_ROOT}/<project-name>).
+                                          as defined by container component's sourceMapping.
+                                          \n  - `$PROJECT_SOURCE`: A path to a project
+                                          source ($PROJECTS_ROOT/<project-name>).
                                           If there are multiple projects, this will
                                           point to the directory of the first one."
                                         type: string
@@ -1237,8 +1244,10 @@ spec:
                                           type: object
                                         type: array
                                       env:
-                                        description: Environment variables used in
-                                          this container
+                                        description: "Environment variables used in
+                                          this container. \n The following variables
+                                          are reserved and cannot be overridden via
+                                          env: \n  - `$PROJECTS_ROOT` \n  - `$PROJECT_SOURCE`"
                                         items:
                                           properties:
                                             name:
@@ -1259,9 +1268,8 @@ spec:
                                         description: Optional specification of the
                                           path in the container where project sources
                                           should be transferred/mounted when `mountSources`
-                                          is `true`. When omitted, the value of the
-                                          `PROJECTS_ROOT` environment variable is
-                                          used.
+                                          is `true`. When omitted, the default value
+                                          of /projects is used.
                                         type: string
                                       volumeMounts:
                                         description: List of volumes mounts that should
@@ -1724,7 +1732,8 @@ spec:
                                 commandLine:
                                   description: "The actual command-line string \n
                                     Special variables that can be used: \n  - `$PROJECTS_ROOT`:
-                                    A path where projects sources are mounted \n  -
+                                    A path where projects sources are mounted as defined
+                                    by container component's sourceMapping. \n  -
                                     `$PROJECT_SOURCE`: A path to a project source
                                     ($PROJECTS_ROOT/<project-name>). If there are
                                     multiple projects, this will point to the directory
@@ -1780,9 +1789,10 @@ spec:
                                 workingDir:
                                   description: "Working directory where the command
                                     should be executed \n Special variables that can
-                                    be used: \n  - `${PROJECTS_ROOT}`: A path where
-                                    projects sources are mounted \n  - `${PROJECT_SOURCE}`:
-                                    A path to a project source (${PROJECTS_ROOT}/<project-name>).
+                                    be used: \n  - `$PROJECTS_ROOT`: A path where
+                                    projects sources are mounted as defined by container
+                                    component's sourceMapping. \n  - `$PROJECT_SOURCE`:
+                                    A path to a project source ($PROJECTS_ROOT/<project-name>).
                                     If there are multiple projects, this will point
                                     to the directory of the first one."
                                   type: string
@@ -2017,8 +2027,10 @@ spec:
                                     type: object
                                   type: array
                                 env:
-                                  description: Environment variables used in this
-                                    container
+                                  description: "Environment variables used in this
+                                    container. \n The following variables are reserved
+                                    and cannot be overridden via env: \n  - `$PROJECTS_ROOT`
+                                    \n  - `$PROJECT_SOURCE`"
                                   items:
                                     properties:
                                       name:
@@ -2039,8 +2051,8 @@ spec:
                                   description: Optional specification of the path
                                     in the container where project sources should
                                     be transferred/mounted when `mountSources` is
-                                    `true`. When omitted, the value of the `PROJECTS_ROOT`
-                                    environment variable is used.
+                                    `true`. When omitted, the default value of /projects
+                                    is used.
                                   type: string
                                 volumeMounts:
                                   description: List of volumes mounts that should
@@ -2409,9 +2421,10 @@ spec:
                                             description: "The actual command-line
                                               string \n Special variables that can
                                               be used: \n  - `$PROJECTS_ROOT`: A path
-                                              where projects sources are mounted \n
-                                              \ - `$PROJECT_SOURCE`: A path to a project
-                                              source ($PROJECTS_ROOT/<project-name>).
+                                              where projects sources are mounted as
+                                              defined by container component's sourceMapping.
+                                              \n  - `$PROJECT_SOURCE`: A path to a
+                                              project source ($PROJECTS_ROOT/<project-name>).
                                               If there are multiple projects, this
                                               will point to the directory of the first
                                               one."
@@ -2468,10 +2481,11 @@ spec:
                                           workingDir:
                                             description: "Working directory where
                                               the command should be executed \n Special
-                                              variables that can be used: \n  - `${PROJECTS_ROOT}`:
+                                              variables that can be used: \n  - `$PROJECTS_ROOT`:
                                               A path where projects sources are mounted
-                                              \n  - `${PROJECT_SOURCE}`: A path to
-                                              a project source (${PROJECTS_ROOT}/<project-name>).
+                                              as defined by container component's
+                                              sourceMapping. \n  - `$PROJECT_SOURCE`:
+                                              A path to a project source ($PROJECTS_ROOT/<project-name>).
                                               If there are multiple projects, this
                                               will point to the directory of the first
                                               one."
@@ -2724,8 +2738,11 @@ spec:
                                               type: object
                                             type: array
                                           env:
-                                            description: Environment variables used
-                                              in this container
+                                            description: "Environment variables used
+                                              in this container. \n The following
+                                              variables are reserved and cannot be
+                                              overridden via env: \n  - `$PROJECTS_ROOT`
+                                              \n  - `$PROJECT_SOURCE`"
                                             items:
                                               properties:
                                                 name:
@@ -2747,8 +2764,8 @@ spec:
                                               the path in the container where project
                                               sources should be transferred/mounted
                                               when `mountSources` is `true`. When
-                                              omitted, the value of the `PROJECTS_ROOT`
-                                              environment variable is used.
+                                              omitted, the default value of /projects
+                                              is used.
                                             type: string
                                           volumeMounts:
                                             description: List of volumes mounts that
