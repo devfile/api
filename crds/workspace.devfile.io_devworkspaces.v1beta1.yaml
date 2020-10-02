@@ -541,6 +541,10 @@ spec:
                           memoryLimit:
                             type: string
                           mountSources:
+                            description: "Toggles whether or not the project source
+                              code should be mounted in the component. \n Defaults
+                              to true for all component types except plugins and components
+                              that set `dedicatedPod` to true."
                             type: boolean
                           sourceMapping:
                             description: Optional specification of the path in the
@@ -1245,6 +1249,11 @@ spec:
                                     memoryLimit:
                                       type: string
                                     mountSources:
+                                      description: "Toggles whether or not the project
+                                        source code should be mounted in the component.
+                                        \n Defaults to true for all component types
+                                        except plugins and components that set `dedicatedPod`
+                                        to true."
                                       type: boolean
                                     sourceMapping:
                                       description: Optional specification of the path
@@ -2020,6 +2029,10 @@ spec:
                               memoryLimit:
                                 type: string
                               mountSources:
+                                description: "Toggles whether or not the project source
+                                  code should be mounted in the component. \n Defaults
+                                  to true for all component types except plugins and
+                                  components that set `dedicatedPod` to true."
                                 type: boolean
                               sourceMapping:
                                 description: Optional specification of the path in
@@ -2720,6 +2733,12 @@ spec:
                                         memoryLimit:
                                           type: string
                                         mountSources:
+                                          description: "Toggles whether or not the
+                                            project source code should be mounted
+                                            in the component. \n Defaults to true
+                                            for all component types except plugins
+                                            and components that set `dedicatedPod`
+                                            to true."
                                           type: boolean
                                         sourceMapping:
                                           description: Optional specification of the

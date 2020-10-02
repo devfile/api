@@ -602,7 +602,9 @@
                 "type": "string"
               },
               "mountSources": {
-                "type": "boolean"
+                "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                "type": "boolean",
+                "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
               },
               "sourceMapping": {
                 "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
@@ -1349,7 +1351,9 @@
                           "type": "string"
                         },
                         "mountSources": {
-                          "type": "boolean"
+                          "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                          "type": "boolean",
+                          "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
                         },
                         "sourceMapping": {
                           "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
@@ -2186,7 +2190,9 @@
                     "type": "string"
                   },
                   "mountSources": {
-                    "type": "boolean"
+                    "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                    "type": "boolean",
+                    "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
                   },
                   "sourceMapping": {
                     "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
@@ -2908,7 +2914,9 @@
                               "type": "string"
                             },
                             "mountSources": {
-                              "type": "boolean"
+                              "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                              "type": "boolean",
+                              "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
                             },
                             "sourceMapping": {
                               "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",

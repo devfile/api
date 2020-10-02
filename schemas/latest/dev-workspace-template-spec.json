@@ -543,6 +543,7 @@
                 "type": "string"
               },
               "mountSources": {
+                "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                 "type": "boolean"
               },
               "sourceMapping": {
@@ -1213,6 +1214,7 @@
                           "type": "string"
                         },
                         "mountSources": {
+                          "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                           "type": "boolean"
                         },
                         "sourceMapping": {
@@ -1961,6 +1963,7 @@
                     "type": "string"
                   },
                   "mountSources": {
+                    "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                     "type": "boolean"
                   },
                   "sourceMapping": {
@@ -2609,6 +2612,7 @@
                               "type": "string"
                             },
                             "mountSources": {
+                              "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                               "type": "boolean"
                             },
                             "sourceMapping": {
