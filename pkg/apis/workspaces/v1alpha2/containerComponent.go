@@ -47,7 +47,7 @@ type Container struct {
 	//
 	// Defaults to true for all component types except plugins and components that set `dedicatedPod` to true.
 	// +optional
-	MountSources bool `json:"mountSources,omitempty"`
+	MountSources *bool `json:"mountSources,omitempty"`
 
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
