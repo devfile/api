@@ -61,6 +61,7 @@ type Endpoint struct {
 	//
 	// Default value is `public`
 	// +optional
+	// +kubebuilder:default=public
 	Exposure EndpointExposure `json:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
@@ -81,6 +82,7 @@ type Endpoint struct {
 	//
 	// Default value is `http`
 	// +optional
+	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some

@@ -105,7 +105,20 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		}
 
 		for i, ver := range crdVersions {
-			crd, err := crd.AsVersion(crdRaw, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
+			copiedCrd := crdRaw.DeepCopy()
+			if crdVersions[i] == "v1beta1" {
+				for _, apiVersion := range copiedCrd.Spec.Versions {
+					genutils.EditJSONSchema(
+						apiVersion.Schema.OpenAPIV3Schema,
+						func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
+							if schema != nil {
+								schema.Default = nil
+							}
+							return
+						})
+				}
+			}
+			crd, err := crd.AsVersion(*copiedCrd, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
 			if err != nil {
 				return err
 			}

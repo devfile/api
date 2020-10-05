@@ -438,6 +438,7 @@ spec:
                                   \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                 type: object
                               exposure:
+                                default: public
                                 description: "Describes how the endpoint should be
                                   exposed on the network. \n - `public` means that
                                   the endpoint will be exposed on the public network,
@@ -461,6 +462,7 @@ spec:
                                 description: Path of the endpoint URL
                                 type: string
                               protocol:
+                                default: http
                                 description: "Describes the application and transport
                                   protocols of the traffic that will go through this
                                   endpoint. \n - `http`: Endpoint will have `http`
@@ -516,6 +518,7 @@ spec:
                             that set `dedicatedPod` to true."
                           type: boolean
                         sourceMapping:
+                          default: /projects
                           description: Optional specification of the path in the container
                             where project sources should be transferred/mounted when
                             `mountSources` is `true`. When omitted, the default value
@@ -591,6 +594,7 @@ spec:
                                   \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                 type: object
                               exposure:
+                                default: public
                                 description: "Describes how the endpoint should be
                                   exposed on the network. \n - `public` means that
                                   the endpoint will be exposed on the public network,
@@ -614,6 +618,7 @@ spec:
                                 description: Path of the endpoint URL
                                 type: string
                               protocol:
+                                default: http
                                 description: "Describes the application and transport
                                   protocols of the traffic that will go through this
                                   endpoint. \n - `http`: Endpoint will have `http`
@@ -685,6 +690,7 @@ spec:
                                   \"false\", \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                 type: object
                               exposure:
+                                default: public
                                 description: "Describes how the endpoint should be
                                   exposed on the network. \n - `public` means that
                                   the endpoint will be exposed on the public network,
@@ -708,6 +714,7 @@ spec:
                                 description: Path of the endpoint URL
                                 type: string
                               protocol:
+                                default: http
                                 description: "Describes the application and transport
                                   protocols of the traffic that will go through this
                                   endpoint. \n - `http`: Endpoint will have `http`
@@ -1130,6 +1137,7 @@ spec:
                                             \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                           type: object
                                         exposure:
+                                          default: public
                                           description: "Describes how the endpoint
                                             should be exposed on the network. \n -
                                             `public` means that the endpoint will
@@ -1155,6 +1163,7 @@ spec:
                                           description: Path of the endpoint URL
                                           type: string
                                         protocol:
+                                          default: http
                                           description: "Describes the application
                                             and transport protocols of the traffic
                                             that will go through this endpoint. \n
@@ -1215,6 +1224,7 @@ spec:
                                       to true."
                                     type: boolean
                                   sourceMapping:
+                                    default: /projects
                                     description: Optional specification of the path
                                       in the container where project sources should
                                       be transferred/mounted when `mountSources` is
@@ -1271,6 +1281,7 @@ spec:
                                             \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                           type: object
                                         exposure:
+                                          default: public
                                           description: "Describes how the endpoint
                                             should be exposed on the network. \n -
                                             `public` means that the endpoint will
@@ -1296,6 +1307,7 @@ spec:
                                           description: Path of the endpoint URL
                                           type: string
                                         protocol:
+                                          default: http
                                           description: "Describes the application
                                             and transport protocols of the traffic
                                             that will go through this endpoint. \n
@@ -1373,6 +1385,7 @@ spec:
                                             \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                                           type: object
                                         exposure:
+                                          default: public
                                           description: "Describes how the endpoint
                                             should be exposed on the network. \n -
                                             `public` means that the endpoint will
@@ -1398,6 +1411,7 @@ spec:
                                           description: Path of the endpoint URL
                                           type: string
                                         protocol:
+                                          default: http
                                           description: "Describes the application
                                             and transport protocols of the traffic
                                             that will go through this endpoint. \n
@@ -1894,6 +1908,7 @@ spec:
                                       / \"ide\" / \"ide-dev\","
                                     type: object
                                   exposure:
+                                    default: public
                                     description: "Describes how the endpoint should
                                       be exposed on the network. \n - `public` means
                                       that the endpoint will be exposed on the public
@@ -1918,6 +1933,7 @@ spec:
                                     description: Path of the endpoint URL
                                     type: string
                                   protocol:
+                                    default: http
                                     description: "Describes the application and transport
                                       protocols of the traffic that will go through
                                       this endpoint. \n - `http`: Endpoint will have
@@ -1974,6 +1990,7 @@ spec:
                                 components that set `dedicatedPod` to true."
                               type: boolean
                             sourceMapping:
+                              default: /projects
                               description: Optional specification of the path in the
                                 container where project sources should be transferred/mounted
                                 when `mountSources` is `true`. When omitted, the default
@@ -2027,6 +2044,7 @@ spec:
                                       / \"ide\" / \"ide-dev\","
                                     type: object
                                   exposure:
+                                    default: public
                                     description: "Describes how the endpoint should
                                       be exposed on the network. \n - `public` means
                                       that the endpoint will be exposed on the public
@@ -2051,6 +2069,7 @@ spec:
                                     description: Path of the endpoint URL
                                     type: string
                                   protocol:
+                                    default: http
                                     description: "Describes the application and transport
                                       protocols of the traffic that will go through
                                       this endpoint. \n - `http`: Endpoint will have
@@ -2124,6 +2143,7 @@ spec:
                                       / \"ide\" / \"ide-dev\","
                                     type: object
                                   exposure:
+                                    default: public
                                     description: "Describes how the endpoint should
                                       be exposed on the network. \n - `public` means
                                       that the endpoint will be exposed on the public
@@ -2148,6 +2168,7 @@ spec:
                                     description: Path of the endpoint URL
                                     type: string
                                   protocol:
+                                    default: http
                                     description: "Describes the application and transport
                                       protocols of the traffic that will go through
                                       this endpoint. \n - `http`: Endpoint will have
@@ -2578,6 +2599,7 @@ spec:
                                                 / \"ide\" / \"ide-dev\","
                                               type: object
                                             exposure:
+                                              default: public
                                               description: "Describes how the endpoint
                                                 should be exposed on the network.
                                                 \n - `public` means that the endpoint
@@ -2605,6 +2627,7 @@ spec:
                                               description: Path of the endpoint URL
                                               type: string
                                             protocol:
+                                              default: http
                                               description: "Describes the application
                                                 and transport protocols of the traffic
                                                 that will go through this endpoint.
@@ -2667,6 +2690,7 @@ spec:
                                           to true."
                                         type: boolean
                                       sourceMapping:
+                                        default: /projects
                                         description: Optional specification of the
                                           path in the container where project sources
                                           should be transferred/mounted when `mountSources`
@@ -2725,6 +2749,7 @@ spec:
                                                 / \"ide\" / \"ide-dev\","
                                               type: object
                                             exposure:
+                                              default: public
                                               description: "Describes how the endpoint
                                                 should be exposed on the network.
                                                 \n - `public` means that the endpoint
@@ -2752,6 +2777,7 @@ spec:
                                               description: Path of the endpoint URL
                                               type: string
                                             protocol:
+                                              default: http
                                               description: "Describes the application
                                                 and transport protocols of the traffic
                                                 that will go through this endpoint.
@@ -2833,6 +2859,7 @@ spec:
                                                 / \"ide\" / \"ide-dev\","
                                               type: object
                                             exposure:
+                                              default: public
                                               description: "Describes how the endpoint
                                                 should be exposed on the network.
                                                 \n - `public` means that the endpoint
@@ -2860,6 +2887,7 @@ spec:
                                               description: Path of the endpoint URL
                                               type: string
                                             protocol:
+                                              default: http
                                               description: "Describes the application
                                                 and transport protocols of the traffic
                                                 that will go through this endpoint.
