@@ -4,7 +4,7 @@ package v1alpha2
 // +devfile:jsonschema:generate:omitCustomUnionMembers=true
 type Devfile struct {
 	// Devfile schema version
-	// +kubebuilder:validation:Pattern=^([2-9][0-9]*)\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
+	// +kubebuilder:validation:Pattern=^2\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
 	SchemaVersion string `json:"schemaVersion"`
 
 	// +kubebuilder:pruning:PreserveUnknownFields
