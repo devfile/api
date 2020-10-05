@@ -262,6 +262,7 @@ type ContainerPluginOverride struct {
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the default value of /projects is used.
 	// +optional
+	// +kubebuilder:default=/projects
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
 	// Specify if a container should run in its own separated pod,
@@ -292,6 +293,7 @@ type EndpointPluginOverride struct {
 	//
 	// Default value is `public`
 	// +optional
+	// +kubebuilder:default=public
 	Exposure EndpointExposurePluginOverride `json:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
@@ -312,6 +314,7 @@ type EndpointPluginOverride struct {
 	//
 	// Default value is `http`
 	// +optional
+	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some

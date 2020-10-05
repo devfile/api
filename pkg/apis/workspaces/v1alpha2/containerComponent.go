@@ -53,6 +53,7 @@ type Container struct {
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the default value of /projects is used.
 	// +optional
+	// +kubebuilder:default=/projects
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
 	// Specify if a container should run in its own separated pod,
