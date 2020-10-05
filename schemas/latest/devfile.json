@@ -3213,7 +3213,7 @@
     "schemaVersion": {
       "description": "Devfile schema version",
       "type": "string",
-      "pattern": "^([2-9][0-9]*)\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
+      "pattern": "^2\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
     },
     "starterProjects": {
       "description": "StarterProjects is a project that can be used as a starting point when bootstrapping new projects",
