@@ -207,21 +207,35 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				return err
 			}
 
-			toAddMarkdownDescriptions := orderedmap.New()
-			json.Unmarshal(jsonSchema, toAddMarkdownDescriptions)
-			addMarkdownDescription(toAddMarkdownDescriptions)
-			schemaWithMarkdownDescriptions, err := json.MarshalIndent(toAddMarkdownDescriptions, "", "  ")
+			genutils.EditJSONSchema(
+				&currentJSONSchema,
+				func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
+					if schema != nil {
+						schema.Default = nil
+					}
+					return
+				})
+
+			(&currentJSONSchema).Title = (&currentJSONSchema).Title + " - IDE-targeted variant"
+			ideTargetedJsonSchema, err := json.MarshalIndent(&currentJSONSchema, "", "  ")
+			if err != nil {
+				return err
+			}
+			ideTargetedJsonSchemaMap := orderedmap.New()
+			json.Unmarshal(ideTargetedJsonSchema, ideTargetedJsonSchemaMap)
+			addMarkdownDescription(ideTargetedJsonSchemaMap)
+			ideTargetedJsonSchema, err = json.MarshalIndent(ideTargetedJsonSchemaMap, "", "  ")
 
 			schemaBaseName := strcase.ToKebab(typeToProcess.Name)
 			schemaFolder := "latest"
-			folderForSchemasWithMarkdown := filepath.Join(schemaFolder, "with-markdown-descriptions")
+			folderForIdeTargetedSchemas := filepath.Join(schemaFolder, "ide-targeted")
 			schemaFileName := schemaBaseName + ".json"
 			err = writeFile(ctx, schemaFolder, schemaFileName, jsonSchema)
 			if err != nil {
 				root.AddError(err)
 				return nil
 			}
-			err = writeFile(ctx, folderForSchemasWithMarkdown, schemaFileName, schemaWithMarkdownDescriptions)
+			err = writeFile(ctx, folderForIdeTargetedSchemas, schemaFileName, ideTargetedJsonSchema)
 			if err != nil {
 				root.AddError(err)
 				return nil

@@ -39,6 +39,7 @@ type ParentOverrides struct {
 
 //+k8s:openapi-gen=true
 type ComponentParentOverride struct {
+
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
@@ -47,6 +48,7 @@ type ComponentParentOverride struct {
 }
 
 type ProjectParentOverride struct {
+
 	// Project name
 	Name string `json:"name"`
 
@@ -66,6 +68,7 @@ type StarterProjectParentOverride struct {
 }
 
 type CommandParentOverride struct {
+
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
@@ -358,7 +361,6 @@ type ContainerParentOverride struct {
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the default value of /projects is used.
 	// +optional
-	// +kubebuilder:default=/projects
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
 	// Specify if a container should run in its own separated pod,
@@ -389,7 +391,6 @@ type EndpointParentOverride struct {
 	//
 	// Default value is `public`
 	// +optional
-	// +kubebuilder:default=public
 	Exposure EndpointExposureParentOverride `json:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
@@ -410,7 +411,6 @@ type EndpointParentOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
@@ -441,6 +441,7 @@ type K8sLikeComponentParentOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumeParentOverride struct {
+
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
@@ -448,6 +449,7 @@ type VolumeParentOverride struct {
 
 type ImportReferenceParentOverride struct {
 	ImportReferenceUnionParentOverride `json:",inline"`
+
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }
@@ -485,6 +487,7 @@ type GitLikeProjectSourceParentOverride struct {
 }
 
 type CommonProjectSourceParentOverride struct {
+
 	// Part of project to populate in the working directory.
 	// +optional
 	SparseCheckoutDir string `json:"sparseCheckoutDir,omitempty"`
@@ -506,6 +509,7 @@ type EnvVarParentOverride struct {
 }
 
 type BaseCommandParentOverride struct {
+
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupParentOverride `json:"group,omitempty"`
@@ -536,6 +540,7 @@ type VscodeConfigurationCommandLocationParentOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumeMountParentOverride struct {
+
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
@@ -601,6 +606,7 @@ type OverridesBaseParentOverride struct{}
 
 //+k8s:openapi-gen=true
 type ComponentPluginOverrideParentOverride struct {
+
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
@@ -609,6 +615,7 @@ type ComponentPluginOverrideParentOverride struct {
 }
 
 type CommandPluginOverrideParentOverride struct {
+
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
@@ -617,10 +624,12 @@ type CommandPluginOverrideParentOverride struct {
 }
 
 type CheckoutFromParentOverride struct {
+
 	// The revision to checkout from. Should be branch name, tag or commit id.
 	// Default branch is used if missing or specified revision is not found.
 	// +optional
 	Revision string `json:"revision,omitempty"`
+
 	// The remote name should be used as init. Required if there are more than one remote configured
 	// +optional
 	Remote string `json:"remote,omitempty"`
@@ -843,6 +852,7 @@ type BaseComponentPluginOverrideParentOverride struct {
 }
 
 type ContainerPluginOverrideParentOverride struct {
+
 	//  +optional
 	Image string `json:"image,omitempty"`
 
@@ -888,7 +898,6 @@ type ContainerPluginOverrideParentOverride struct {
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the default value of /projects is used.
 	// +optional
-	// +kubebuilder:default=/projects
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
 	// Specify if a container should run in its own separated pod,
@@ -919,7 +928,6 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// Default value is `public`
 	// +optional
-	// +kubebuilder:default=public
 	Exposure EndpointExposurePluginOverrideParentOverride `json:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
@@ -940,7 +948,6 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
@@ -971,6 +978,7 @@ type K8sLikeComponentPluginOverrideParentOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumePluginOverrideParentOverride struct {
+
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
@@ -987,11 +995,13 @@ type LabeledCommandPluginOverrideParentOverride struct {
 
 type EnvVarPluginOverrideParentOverride struct {
 	Name string `json:"name" yaml:"name"`
+
 	//  +optional
 	Value string `json:"value,omitempty" yaml:"value"`
 }
 
 type BaseCommandPluginOverrideParentOverride struct {
+
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverrideParentOverride `json:"group,omitempty"`
@@ -1022,6 +1032,7 @@ type VscodeConfigurationCommandLocationPluginOverrideParentOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumeMountPluginOverrideParentOverride struct {
+
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.

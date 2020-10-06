@@ -207,7 +207,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 
 	overrideGenDecl := astcopy.GenDecl(typeToOverride.RawDecl)
 	if typeToOverride.Markers.Get(overridesTypeMarker.Name) != nil {
-		overrideGenDecl.Doc = updateComments(overrideGenDecl, overrideGenDecl.Doc, `.*`, ` *\+`+overridesTypeMarker.Name)
+		overrideGenDecl.Doc = updateComments(overrideGenDecl, overrideGenDecl.Doc, `.*`, ` *\+`+overridesTypeMarker.Name+` *`)
 	}
 	if newTypeToProcess.DropEnumAnnotation {
 		overrideGenDecl.Doc = updateComments(
@@ -220,7 +220,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 	overrideGenDecl.Doc = updateComments(
 		overrideGenDecl, overrideGenDecl.Doc,
 		`.*`,
-		` *`+regexp.QuoteMeta("+devfile:jsonschema:generate"),
+		` *`+regexp.QuoteMeta("+devfile:jsonschema:generate")+` *`,
 	)
 
 	if newTypeToProcess == g.rootTypeToProcess {
@@ -298,9 +298,15 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 							` *`+regexp.QuoteMeta("+optional")+`.*`,
 							` +optional`,
 						)
-
 					}
 				}
+
+				// Remove the `default` directives for overrides, since it doesn't make sense.
+				astField.Doc = updateComments(
+					astField, astField.Doc,
+					`.*`,
+					` *`+regexp.QuoteMeta("+kubebuilder:default")+` *=.*`,
+				)
 
 				processFieldType := func(ident *ast.Ident) *typeToProcess {
 					typeToOverride, existsInPackage := packageTypes[ident.Name]
@@ -338,7 +344,11 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 							}
 						}
 						kubebuilderAnnotation := "+kubebuilder:validation:Enum=" + strings.Join(enumValues, ";")
-						astField.Doc = updateComments(astField, astField.Doc, `.*`, ` *`+regexp.QuoteMeta("+kubebuilder:validation:Enum=")+`.*`, kubebuilderAnnotation)
+						astField.Doc = updateComments(
+							astField, astField.Doc,
+							`.*`,
+							` *`+regexp.QuoteMeta("+kubebuilder:validation:Enum=")+`.*`,
+							kubebuilderAnnotation)
 						fieldTypeToProcess.DropEnumAnnotation = true
 					}
 				case *ast.StarExpr:
@@ -402,8 +412,8 @@ func updateComments(commentedNode ast.Node, commentGroup *ast.CommentGroup, keep
 	}
 	commentsToKeep := []*ast.Comment{}
 	for _, comment := range commentGroup.List {
-		if keep, _ := regexp.MatchString(` *//`+keepRegexp+` *`, comment.Text); keep {
-			if drop, _ := regexp.MatchString(` *//`+dropRegexp+` *`, comment.Text); !drop {
+		if keep, _ := regexp.MatchString(`^ *//`+keepRegexp+`$`, comment.Text); keep {
+			if drop, _ := regexp.MatchString(`^ *//`+dropRegexp+`$`, comment.Text); !drop {
 				comment.Slash = token.NoPos
 				commentsToKeep = append(commentsToKeep, comment)
 			}
@@ -413,9 +423,9 @@ func updateComments(commentedNode ast.Node, commentGroup *ast.CommentGroup, keep
 	for _, line := range additionalLines {
 		commentGroup.List = append(commentGroup.List, &ast.Comment{Text: "// " + line})
 	}
+	commentGroup.List = append(commentGroup.List, commentsToKeep...)
 	if len(commentGroup.List) > 0 {
 		commentGroup.List[0].Slash = commentedNode.Pos() - 1
 	}
-	commentGroup.List = append(commentGroup.List, commentsToKeep...)
 	return commentGroup
 }

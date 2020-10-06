@@ -1,7 +1,10 @@
 {
-  "description": "Structure of the workspace. This is also the specification of a workspace template.",
+  "description": "Devfile describes the structure of a cloud-native workspace and development environment.",
   "type": "object",
-  "title": "DevWorkspaceTemplateSpec schema - Version 2.0.0-alpha2",
+  "title": "Devfile schema - Version 2.0.0-alpha2 - IDE-targeted variant",
+  "required": [
+    "schemaVersion"
+  ],
   "properties": {
     "commands": {
       "description": "Predefined, ready-to-use, workspace-related commands",
@@ -35,11 +38,6 @@
           {
             "required": [
               "composite"
-            ]
-          },
-          {
-            "required": [
-              "custom"
             ]
           }
         ],
@@ -157,69 +155,6 @@
             },
             "additionalProperties": false,
             "markdownDescription": "Composite command that allows executing several sub-commands either sequentially or concurrently"
-          },
-          "custom": {
-            "description": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin",
-            "type": "object",
-            "required": [
-              "commandClass",
-              "embeddedResource"
-            ],
-            "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
-              "commandClass": {
-                "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
-                "type": "string",
-                "markdownDescription": "Class of command that the associated implementation component should use to process this command with the appropriate logic"
-              },
-              "embeddedResource": {
-                "description": "Additional free-form configuration for this custom command that the implementation component will know how to use",
-                "type": "object",
-                "additionalProperties": true,
-                "markdownDescription": "Additional free-form configuration for this custom command that the implementation component will know how to use"
-              },
-              "group": {
-                "description": "Defines the group this command is part of",
-                "type": "object",
-                "required": [
-                  "kind"
-                ],
-                "properties": {
-                  "isDefault": {
-                    "description": "Identifies the default command for a given group kind",
-                    "type": "boolean",
-                    "markdownDescription": "Identifies the default command for a given group kind"
-                  },
-                  "kind": {
-                    "description": "Kind of group the command is part of",
-                    "type": "string",
-                    "enum": [
-                      "build",
-                      "run",
-                      "test",
-                      "debug"
-                    ],
-                    "markdownDescription": "Kind of group the command is part of"
-                  }
-                },
-                "additionalProperties": false,
-                "markdownDescription": "Defines the group this command is part of"
-              },
-              "label": {
-                "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
-                "type": "string",
-                "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
-              }
-            },
-            "additionalProperties": false,
-            "markdownDescription": "Custom command whose logic is implementation-dependant and should be provided by the user possibly through some dedicated plugin"
           },
           "exec": {
             "description": "CLI Command executed in an existing component container",
@@ -486,11 +421,6 @@
             "required": [
               "plugin"
             ]
-          },
-          {
-            "required": [
-              "custom"
-            ]
           }
         ],
         "properties": {
@@ -542,7 +472,6 @@
                     "exposure": {
                       "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
-                      "default": "public",
                       "enum": [
                         "public",
                         "internal",
@@ -561,7 +490,6 @@
                     "protocol": {
                       "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
-                      "default": "http",
                       "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
@@ -611,7 +539,6 @@
               "sourceMapping": {
                 "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                 "type": "string",
-                "default": "/projects",
                 "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
               },
               "volumeMounts": {
@@ -643,29 +570,6 @@
             },
             "additionalProperties": false,
             "markdownDescription": "Allows adding and configuring workspace-related containers"
-          },
-          "custom": {
-            "description": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller",
-            "type": "object",
-            "required": [
-              "componentClass",
-              "embeddedResource"
-            ],
-            "properties": {
-              "componentClass": {
-                "description": "Class of component that the associated implementation controller should use to process this command with the appropriate logic",
-                "type": "string",
-                "markdownDescription": "Class of component that the associated implementation controller should use to process this command with the appropriate logic"
-              },
-              "embeddedResource": {
-                "description": "Additional free-form configuration for this custom component that the implementation controller will know how to use",
-                "type": "object",
-                "additionalProperties": true,
-                "markdownDescription": "Additional free-form configuration for this custom component that the implementation controller will know how to use"
-              }
-            },
-            "additionalProperties": false,
-            "markdownDescription": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller"
           },
           "kubernetes": {
             "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -703,7 +607,6 @@
                     "exposure": {
                       "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
-                      "default": "public",
                       "enum": [
                         "public",
                         "internal",
@@ -722,7 +625,6 @@
                     "protocol": {
                       "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
-                      "default": "http",
                       "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
@@ -792,7 +694,6 @@
                     "exposure": {
                       "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
-                      "default": "public",
                       "enum": [
                         "public",
                         "internal",
@@ -811,7 +712,6 @@
                     "protocol": {
                       "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
-                      "default": "http",
                       "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
@@ -1299,7 +1199,6 @@
                               "exposure": {
                                 "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                 "type": "string",
-                                "default": "public",
                                 "enum": [
                                   "public",
                                   "internal",
@@ -1318,7 +1217,6 @@
                               "protocol": {
                                 "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                 "type": "string",
-                                "default": "http",
                                 "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                               },
                               "secure": {
@@ -1367,7 +1265,6 @@
                         "sourceMapping": {
                           "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                           "type": "string",
-                          "default": "/projects",
                           "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                         },
                         "volumeMounts": {
@@ -1435,7 +1332,6 @@
                               "exposure": {
                                 "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                 "type": "string",
-                                "default": "public",
                                 "enum": [
                                   "public",
                                   "internal",
@@ -1454,7 +1350,6 @@
                               "protocol": {
                                 "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                 "type": "string",
-                                "default": "http",
                                 "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                               },
                               "secure": {
@@ -1523,7 +1418,6 @@
                               "exposure": {
                                 "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                 "type": "string",
-                                "default": "public",
                                 "enum": [
                                   "public",
                                   "internal",
@@ -1542,7 +1436,6 @@
                               "protocol": {
                                 "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                 "type": "string",
-                                "default": "http",
                                 "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                               },
                               "secure": {
@@ -1680,6 +1573,25 @@
       },
       "additionalProperties": false,
       "markdownDescription": "Bindings of commands to events. Each command is referred-to by its name."
+    },
+    "metadata": {
+      "description": "Optional metadata",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Optional devfile name",
+          "type": "string",
+          "markdownDescription": "Optional devfile name"
+        },
+        "version": {
+          "description": "Optional semver-compatible version",
+          "type": "string",
+          "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$",
+          "markdownDescription": "Optional semver-compatible version"
+        }
+      },
+      "additionalProperties": true,
+      "markdownDescription": "Optional metadata"
     },
     "parent": {
       "description": "Parent workspace template",
@@ -2145,7 +2057,6 @@
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
-                          "default": "public",
                           "enum": [
                             "public",
                             "internal",
@@ -2164,7 +2075,6 @@
                         "protocol": {
                           "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
-                          "default": "http",
                           "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
@@ -2213,7 +2123,6 @@
                   "sourceMapping": {
                     "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                     "type": "string",
-                    "default": "/projects",
                     "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                   },
                   "volumeMounts": {
@@ -2281,7 +2190,6 @@
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
-                          "default": "public",
                           "enum": [
                             "public",
                             "internal",
@@ -2300,7 +2208,6 @@
                         "protocol": {
                           "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
-                          "default": "http",
                           "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
@@ -2369,7 +2276,6 @@
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
-                          "default": "public",
                           "enum": [
                             "public",
                             "internal",
@@ -2388,7 +2294,6 @@
                         "protocol": {
                           "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
-                          "default": "http",
                           "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
@@ -2876,7 +2781,6 @@
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
-                                    "default": "public",
                                     "enum": [
                                       "public",
                                       "internal",
@@ -2895,7 +2799,6 @@
                                   "protocol": {
                                     "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                     "type": "string",
-                                    "default": "http",
                                     "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                                   },
                                   "secure": {
@@ -2944,7 +2847,6 @@
                             "sourceMapping": {
                               "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
                               "type": "string",
-                              "default": "/projects",
                               "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
                             },
                             "volumeMounts": {
@@ -3012,7 +2914,6 @@
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
-                                    "default": "public",
                                     "enum": [
                                       "public",
                                       "internal",
@@ -3031,7 +2932,6 @@
                                   "protocol": {
                                     "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                     "type": "string",
-                                    "default": "http",
                                     "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                                   },
                                   "secure": {
@@ -3100,7 +3000,6 @@
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
-                                    "default": "public",
                                     "enum": [
                                       "public",
                                       "internal",
@@ -3119,7 +3018,6 @@
                                   "protocol": {
                                     "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                                     "type": "string",
-                                    "default": "http",
                                     "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                                   },
                                   "secure": {
@@ -3551,11 +3449,6 @@
             "required": [
               "zip"
             ]
-          },
-          {
-            "required": [
-              "custom"
-            ]
           }
         ],
         "properties": {
@@ -3563,25 +3456,6 @@
             "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
             "type": "string",
             "markdownDescription": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name."
-          },
-          "custom": {
-            "description": "Project's Custom source",
-            "type": "object",
-            "required": [
-              "embeddedResource",
-              "projectSourceClass"
-            ],
-            "properties": {
-              "embeddedResource": {
-                "type": "object",
-                "additionalProperties": true
-              },
-              "projectSourceClass": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false,
-            "markdownDescription": "Project's Custom source"
           },
           "git": {
             "description": "Project's Git source",
@@ -3695,6 +3569,12 @@
       },
       "markdownDescription": "Projects worked on in the workspace, containing names and sources locations"
     },
+    "schemaVersion": {
+      "description": "Devfile schema version",
+      "type": "string",
+      "pattern": "^2\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$",
+      "markdownDescription": "Devfile schema version"
+    },
     "starterProjects": {
       "description": "StarterProjects is a project that can be used as a starting point when bootstrapping new projects",
       "type": "array",
@@ -3718,11 +3598,6 @@
             "required": [
               "zip"
             ]
-          },
-          {
-            "required": [
-              "custom"
-            ]
           }
         ],
         "properties": {
@@ -3730,25 +3605,6 @@
             "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
             "type": "string",
             "markdownDescription": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name."
-          },
-          "custom": {
-            "description": "Project's Custom source",
-            "type": "object",
-            "required": [
-              "embeddedResource",
-              "projectSourceClass"
-            ],
-            "properties": {
-              "embeddedResource": {
-                "type": "object",
-                "additionalProperties": true
-              },
-              "projectSourceClass": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false,
-            "markdownDescription": "Project's Custom source"
           },
           "description": {
             "description": "Description of a starter project",
@@ -3869,5 +3725,5 @@
     }
   },
   "additionalProperties": false,
-  "markdownDescription": "Structure of the workspace. This is also the specification of a workspace template."
+  "markdownDescription": "Devfile describes the structure of a cloud-native workspace and development environment."
 }

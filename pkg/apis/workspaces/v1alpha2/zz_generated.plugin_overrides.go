@@ -23,6 +23,7 @@ type PluginOverrides struct {
 
 //+k8s:openapi-gen=true
 type ComponentPluginOverride struct {
+
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
@@ -31,6 +32,7 @@ type ComponentPluginOverride struct {
 }
 
 type CommandPluginOverride struct {
+
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
@@ -262,7 +264,6 @@ type ContainerPluginOverride struct {
 	// project sources should be transferred/mounted when `mountSources` is `true`.
 	// When omitted, the default value of /projects is used.
 	// +optional
-	// +kubebuilder:default=/projects
 	SourceMapping string `json:"sourceMapping,omitempty"`
 
 	// Specify if a container should run in its own separated pod,
@@ -293,7 +294,6 @@ type EndpointPluginOverride struct {
 	//
 	// Default value is `public`
 	// +optional
-	// +kubebuilder:default=public
 	Exposure EndpointExposurePluginOverride `json:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
@@ -314,7 +314,6 @@ type EndpointPluginOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
@@ -345,6 +344,7 @@ type K8sLikeComponentPluginOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumePluginOverride struct {
+
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
@@ -366,6 +366,7 @@ type EnvVarPluginOverride struct {
 }
 
 type BaseCommandPluginOverride struct {
+
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverride `json:"group,omitempty"`
@@ -396,6 +397,7 @@ type VscodeConfigurationCommandLocationPluginOverride struct {
 
 // Volume that should be mounted to a component container
 type VolumeMountPluginOverride struct {
+
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
