@@ -347,8 +347,12 @@ type ContainerParentOverride struct {
 	// +optional
 	Args []string `json:"args,omitempty" patchStrategy:"replace"`
 
+	// Toggles whether or not the project source code should
+	// be mounted in the component.
+	//
+	// Defaults to true for all component types except plugins and components that set `dedicatedPod` to true.
 	// +optional
-	MountSources bool `json:"mountSources,omitempty"`
+	MountSources *bool `json:"mountSources,omitempty"`
 
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
@@ -870,8 +874,12 @@ type ContainerPluginOverrideParentOverride struct {
 	// +optional
 	Args []string `json:"args,omitempty" patchStrategy:"replace"`
 
+	// Toggles whether or not the project source code should
+	// be mounted in the component.
+	//
+	// Defaults to true for all component types except plugins and components that set `dedicatedPod` to true.
 	// +optional
-	MountSources bool `json:"mountSources,omitempty"`
+	MountSources *bool `json:"mountSources,omitempty"`
 
 	// Optional specification of the path in the container where
 	// project sources should be transferred/mounted when `mountSources` is `true`.
