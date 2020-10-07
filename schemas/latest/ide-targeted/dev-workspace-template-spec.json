@@ -1,5 +1,5 @@
 {
-  "description": "Structure of the workspace. This is also the specification of a workspace template.",
+  "description": "Structure of the workspace. This is also the specification of a workspace template.\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.",
   "type": "object",
   "title": "DevWorkspaceTemplateSpec schema - Version 2.0.0-alpha2 - IDE-targeted variant",
   "properties": {
@@ -3841,5 +3841,5 @@
     }
   },
   "additionalProperties": false,
-  "markdownDescription": "Structure of the workspace. This is also the specification of a workspace template."
+  "markdownDescription": "Structure of the workspace. This is also the specification of a workspace template.\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs."
 }

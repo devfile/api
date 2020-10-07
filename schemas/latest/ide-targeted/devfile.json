@@ -1,5 +1,5 @@
 {
-  "description": "Devfile describes the structure of a cloud-native workspace and development environment.",
+  "description": "Devfile describes the structure of a cloud-native workspace and development environment.\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.",
   "type": "object",
   "title": "Devfile schema - Version 2.0.0-alpha2 - IDE-targeted variant",
   "required": [
@@ -3725,5 +3725,5 @@
     }
   },
   "additionalProperties": false,
-  "markdownDescription": "Devfile describes the structure of a cloud-native workspace and development environment."
+  "markdownDescription": "Devfile describes the structure of a cloud-native workspace and development environment.\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs."
 }
