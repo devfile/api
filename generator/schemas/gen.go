@@ -216,7 +216,15 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 					return
 				})
 
+			ideTargetedSchemasExplanation :=
+				`IDE-targeted variants of the schemas provide the following difference compared to the main schemas:
+- They contain additional non-standard ` + "`markdownDescription`" + ` attributes that are used by IDEs such a VSCode
+to provide markdown-rendered documentation hovers. 
+- They don't contain ` + "`default`" + ` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.`
+
 			(&currentJSONSchema).Title = (&currentJSONSchema).Title + " - IDE-targeted variant"
+			(&currentJSONSchema).Description = (&currentJSONSchema).Description + "\n\n" + ideTargetedSchemasExplanation
+
 			ideTargetedJsonSchema, err := json.MarshalIndent(&currentJSONSchema, "", "  ")
 			if err != nil {
 				return err
@@ -231,6 +239,11 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			folderForIdeTargetedSchemas := filepath.Join(schemaFolder, "ide-targeted")
 			schemaFileName := schemaBaseName + ".json"
 			err = writeFile(ctx, schemaFolder, schemaFileName, jsonSchema)
+			if err != nil {
+				root.AddError(err)
+				return nil
+			}
+			err = writeFile(ctx, folderForIdeTargetedSchemas, "Readme.md", []byte(ideTargetedSchemasExplanation))
 			if err != nil {
 				root.AddError(err)
 				return nil
