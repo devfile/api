@@ -93,6 +93,8 @@ spec:
                         description: Optional label that provides a label for this
                           command to be used in Editor UI menus for example
                         type: string
+                    required:
+                    - component
                     type: object
                   commandType:
                     description: Type of workspace command
@@ -269,6 +271,7 @@ spec:
                         type: string
                     required:
                     - commandLine
+                    - component
                     type: object
                   id:
                     description: Mandatory identifier that allows referencing this

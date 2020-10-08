@@ -257,8 +257,9 @@ type ExecCommandParentOverride struct {
 	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	CommandLine string `json:"commandLine,omitempty"`
 
+	//  +optional
 	// Describes component to which given action relates
-	// +optional
+	//
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
@@ -289,8 +290,9 @@ type ExecCommandParentOverride struct {
 type ApplyCommandParentOverride struct {
 	LabeledCommandParentOverride `json:",inline"`
 
+	//  +optional
 	// Describes component that will be applied
-	// +optional
+	//
 	Component string `json:"component,omitempty"`
 }
 
@@ -793,8 +795,9 @@ type ExecCommandPluginOverrideParentOverride struct {
 	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	CommandLine string `json:"commandLine,omitempty"`
 
+	//  +optional
 	// Describes component to which given action relates
-	// +optional
+	//
 	Component string `json:"component,omitempty"`
 
 	// Working directory where the command should be executed
@@ -825,8 +828,9 @@ type ExecCommandPluginOverrideParentOverride struct {
 type ApplyCommandPluginOverrideParentOverride struct {
 	LabeledCommandPluginOverrideParentOverride `json:",inline"`
 
+	//  +optional
 	// Describes component that will be applied
-	// +optional
+	//
 	Component string `json:"component,omitempty"`
 }
 
