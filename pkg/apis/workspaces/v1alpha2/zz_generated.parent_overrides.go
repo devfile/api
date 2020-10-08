@@ -56,15 +56,27 @@ type ProjectParentOverride struct {
 	// +optional
 	ClonePath string `json:"clonePath,omitempty"`
 
+	// Populate the project sparsely with selected directories.
+	// +optional
+	SparseCheckoutDirs []string `json:"sparseCheckoutDirs,omitempty"`
+
 	ProjectSourceParentOverride `json:",inline"`
 }
 
 type StarterProjectParentOverride struct {
-	ProjectParentOverride `json:",inline"`
+
+	// Project name
+	Name string `json:"name"`
 
 	// Description of a starter project
 	// +optional
 	Description string `json:"description,omitempty"`
+
+	// Sub-directory from a starter project to be used as root for starter project.
+	// +optional
+	SubDir string `json:"subDir,omitempty"`
+
+	ProjectSourceParentOverride `json:",inline"`
 }
 
 type CommandParentOverride struct {
@@ -487,10 +499,6 @@ type GitLikeProjectSourceParentOverride struct {
 }
 
 type CommonProjectSourceParentOverride struct {
-
-	// Part of project to populate in the working directory.
-	// +optional
-	SparseCheckoutDir string `json:"sparseCheckoutDir,omitempty"`
 }
 
 type LabeledCommandParentOverride struct {

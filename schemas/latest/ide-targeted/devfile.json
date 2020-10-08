@@ -3195,11 +3195,6 @@
                       "type": "string"
                     },
                     "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3234,11 +3229,6 @@
                       "type": "string"
                     },
                     "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3249,6 +3239,14 @@
                 "type": "string",
                 "markdownDescription": "Project name"
               },
+              "sparseCheckoutDirs": {
+                "description": "Populate the project sparsely with selected directories.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "markdownDescription": "Populate the project sparsely with selected directories."
+              },
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
@@ -3257,11 +3255,6 @@
                     "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                     "type": "string",
                     "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3301,11 +3294,6 @@
               }
             ],
             "properties": {
-              "clonePath": {
-                "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
-                "type": "string",
-                "markdownDescription": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name."
-              },
               "description": {
                 "description": "Description of a starter project",
                 "type": "string",
@@ -3340,11 +3328,6 @@
                       "type": "string"
                     },
                     "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3379,11 +3362,6 @@
                       "type": "string"
                     },
                     "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3394,6 +3372,11 @@
                 "type": "string",
                 "markdownDescription": "Project name"
               },
+              "subDir": {
+                "description": "Sub-directory from a starter project to be used as root for starter project.",
+                "type": "string",
+                "markdownDescription": "Sub-directory from a starter project to be used as root for starter project."
+              },
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
@@ -3402,11 +3385,6 @@
                     "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                     "type": "string",
                     "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
-                  },
-                  "sparseCheckoutDir": {
-                    "description": "Part of project to populate in the working directory.",
-                    "type": "string",
-                    "markdownDescription": "Part of project to populate in the working directory."
                   }
                 },
                 "additionalProperties": false,
@@ -3489,11 +3467,6 @@
                   "type": "string"
                 },
                 "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
@@ -3531,11 +3504,6 @@
                   "type": "string"
                 },
                 "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
@@ -3546,6 +3514,14 @@
             "type": "string",
             "markdownDescription": "Project name"
           },
+          "sparseCheckoutDirs": {
+            "description": "Populate the project sparsely with selected directories.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "markdownDescription": "Populate the project sparsely with selected directories."
+          },
           "zip": {
             "description": "Project's Zip source",
             "type": "object",
@@ -3554,11 +3530,6 @@
                 "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                 "type": "string",
                 "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
@@ -3601,11 +3572,6 @@
           }
         ],
         "properties": {
-          "clonePath": {
-            "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
-            "type": "string",
-            "markdownDescription": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name."
-          },
           "description": {
             "description": "Description of a starter project",
             "type": "string",
@@ -3643,11 +3609,6 @@
                   "type": "string"
                 },
                 "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
@@ -3685,11 +3646,6 @@
                   "type": "string"
                 },
                 "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
@@ -3700,6 +3656,11 @@
             "type": "string",
             "markdownDescription": "Project name"
           },
+          "subDir": {
+            "description": "Sub-directory from a starter project to be used as root for starter project.",
+            "type": "string",
+            "markdownDescription": "Sub-directory from a starter project to be used as root for starter project."
+          },
           "zip": {
             "description": "Project's Zip source",
             "type": "object",
@@ -3708,11 +3669,6 @@
                 "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
                 "type": "string",
                 "markdownDescription": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH"
-              },
-              "sparseCheckoutDir": {
-                "description": "Part of project to populate in the working directory.",
-                "type": "string",
-                "markdownDescription": "Part of project to populate in the working directory."
               }
             },
             "additionalProperties": false,
