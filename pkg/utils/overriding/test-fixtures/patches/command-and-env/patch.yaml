@@ -4,6 +4,7 @@ commands:
     id: "commandWithTypeChanged"
   - exec:
       commandLine: "commandToReplaceCommandLineReplaced"
+      component: "mycomponent"
       env:
         - name:  "commandToReplaceEnvVarToReplace"
           value: "commandToReplaceEnvVarToReplaceNewValue"

@@ -33,6 +33,7 @@ commands:
         - name: "USER"
           value: "John Doe"
       commandLine: 'echo "Hello ${USER}"'
+      component: build-tools
 events:
   postStart:
     - "buildSchemaAndOpenDevfile"
