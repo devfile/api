@@ -121,8 +121,8 @@ type ExecCommand struct {
 	CommandLine string `json:"commandLine"`
 
 	// Describes component to which given action relates
-	// +optional
-	Component string `json:"component,omitempty"`
+	//
+	Component string `json:"component"`
 
 	// Working directory where the command should be executed
 	//
@@ -153,8 +153,8 @@ type ApplyCommand struct {
 	LabeledCommand `json:",inline"`
 
 	// Describes component that will be applied
-	// +optional
-	Component string `json:"component,omitempty"`
+	//
+	Component string `json:"component"`
 }
 
 type CompositeCommand struct {

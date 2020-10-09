@@ -212,6 +212,9 @@
               "apply": {
                 "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                 "type": "object",
+                "required": [
+                  "component"
+                ],
                 "properties": {
                   "attributes": {
                     "description": "Optional map of free-form additional command attributes",
@@ -367,7 +370,8 @@
                 "description": "CLI Command executed in an existing component container",
                 "type": "object",
                 "required": [
-                  "commandLine"
+                  "commandLine",
+                  "component"
                 ],
                 "properties": {
                   "attributes": {
