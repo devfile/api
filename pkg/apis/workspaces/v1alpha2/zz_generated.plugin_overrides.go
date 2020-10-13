@@ -123,7 +123,6 @@ type ComponentTypePluginOverride string
 type ContainerComponentPluginOverride struct {
 	BaseComponentPluginOverride `json:",inline"`
 	ContainerPluginOverride     `json:",inline"`
-	MemoryLimit                 string                   `json:"memoryLimit,omitempty"`
 	Endpoints                   []EndpointPluginOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 

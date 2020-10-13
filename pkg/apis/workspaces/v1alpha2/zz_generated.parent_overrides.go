@@ -192,7 +192,6 @@ type ComponentTypeParentOverride string
 type ContainerComponentParentOverride struct {
 	BaseComponentParentOverride `json:",inline"`
 	ContainerParentOverride     `json:",inline"`
-	MemoryLimit                 string                   `json:"memoryLimit,omitempty"`
 	Endpoints                   []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
@@ -758,7 +757,6 @@ type ComponentTypePluginOverrideParentOverride string
 type ContainerComponentPluginOverrideParentOverride struct {
 	BaseComponentPluginOverrideParentOverride `json:",inline"`
 	ContainerPluginOverrideParentOverride     `json:",inline"`
-	MemoryLimit                               string                                 `json:"memoryLimit,omitempty"`
 	Endpoints                                 []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
