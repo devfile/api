@@ -96,7 +96,7 @@ jobs:
           
           lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
           lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
-          lastCommitterEmail "$(cd ../api-repo; git log -1 --format=%ae)"
+          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
           
           git config --global user.email "${lastCommitterEmail}"
           git config --global user.name "${lastCommitterName}"
