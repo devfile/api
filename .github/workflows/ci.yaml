@@ -80,16 +80,11 @@ jobs:
           name: devfile-json-schema
       - name: Overwrite Next Json Schema in Docs
         run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
-      - name: Upload Json schemas
-        uses: actions/upload-artifact@v2
+      - uses: EndBug/add-and-commit@v5
         with:
-          name: modified-docs
-          path: docs-repo/docs/
-#      - uses: EndBug/add-and-commit@v5
-#        with:
-#          add: 'docs/modules/ROOT/attachments/jsonschemas/next/devfile.json'
-#          branch: master
-#          message: 'Update next devfile schema in docs'
-#          signoff: false
-#        env:
-#          GITHUB_TOKEN: "${{ secrets.DOCS_UPDATE_SECRET}}"
+          add: 'docs/modules/ROOT/attachments/jsonschemas/next/devfile.json'
+          branch: sync-schemas-to-docs
+          message: 'Update next devfile schema in docs'
+          signoff: false
+        env:
+          GITHUB_TOKEN: "${{ secrets.DOCS_UPDATE_SECRET}}"
