@@ -84,12 +84,12 @@ jobs:
           name: devfile-json-schema
       - name: Overwrite Next Json Schema in Docs
         run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
-      - name: Push to the docs repo
+      - name: Push to the devfile/docs repo
         working-directory: docs-repo/
         run: |
           if [ "$(git status -s)" == "" ]
           then
-            echo "Nothing to commit, Json schema didn't changfe"
+            echo "Nothing to commit, Json schema didn't change"
             exit 0
           fi
           
