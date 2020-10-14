@@ -73,16 +73,19 @@ jobs:
         with:
           repository: devfile/docs
           persist-credentials: false
-      - name: Overwrite Next Json Schema in Docs
+          path: docs-repo
+      - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
           name: devfile-json-schema
           path: docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+      - name: Overwrite Next Json Schema in Docs
+        run: cp -f docs/modules/ROOT/attachments/jsonschemas/next/devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
       - name: Upload Json schemas
         uses: actions/upload-artifact@v2
         with:
           name: modified-docs
-          path: docs/
+          path: docs-repo/docs/
 #      - uses: EndBug/add-and-commit@v5
 #        with:
 #          add: 'docs/modules/ROOT/attachments/jsonschemas/next/devfile.json'
