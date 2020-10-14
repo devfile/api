@@ -82,6 +82,7 @@ jobs:
         run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
       - uses: EndBug/add-and-commit@v5
         with:
+          cwd: docs-repo/
           add: 'docs/modules/ROOT/attachments/jsonschemas/next/devfile.json'
           branch: sync-schemas-to-docs
           message: 'Update next devfile schema in docs'
