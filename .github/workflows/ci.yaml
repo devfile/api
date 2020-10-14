@@ -75,6 +75,10 @@ jobs:
           persist-credentials: false
           path: docs-repo
           ref: sync-schemas-to-docs
+      - name: Checkout devfile api
+        uses: actions/checkout@v2
+        with:
+          path: api-repo
       - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
@@ -104,6 +108,10 @@ jobs:
             exit 0
           fi
           
+          echo "Last devfile/api commit: $(cd api-repo; git log -1 --format=%H)"
+          echo "Last devfile/api author name: $(cd api-repo; git log -1 --format=%an)"
+          echo "Last devfile/api author email: $(cd api-repo; git log -1 --format=%ae)"
+
           git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
           git commit -m "Update next devfile schema in docs"
           git push "https://devfile-ci-robot:${{ secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
