@@ -88,30 +88,20 @@ jobs:
       - name: Push to the docs repo
         working-directory: docs-repo/
         run: |
-          if [ "${{ github.event.pusher.email }}" != "" ]
-          then
-            git config --global user.email "${{ github.event.pusher.email }}"
-          else
-            git config --global user.email "ci-robot@devfile.io"
-          fi
-          
-          if [ "${{ github.event.pusher.name }}" != "" ]
-          then
-            git config --global user.name "${{ github.event.pusher.name }}"
-          else
-            git config --global user.name "devfile-ci-robot"
-          fi
-          
           if [ "$(git status -s)" == "" ]
           then
-            echo "Nothing to commit, Json schema didn't change"
+            echo "Nothing to commit, Json schema didn't changfe"
             exit 0
           fi
           
-          echo "Last devfile/api commit: $(cd ../api-repo; git log -1 --format=%H)"
-          echo "Last devfile/api author name: $(cd ../api-repo; git log -1 --format=%an)"
-          echo "Last devfile/api author email: $(cd ../api-repo; git log -1 --format=%ae)"
-
+          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
+          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
+          lastCommitterEmail "$(cd ../api-repo; git log -1 --format=%ae)"
+          
+          git config --global user.email "${lastCommitterEmail}"
+          git config --global user.name "${lastCommitterName}"
+          
           git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
-          git commit -m "Update next devfile schema in docs"
+          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
           git push "https://devfile-ci-robot:${{ secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
+          
