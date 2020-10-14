@@ -108,9 +108,9 @@ jobs:
             exit 0
           fi
           
-          echo "Last devfile/api commit: $(cd api-repo; git log -1 --format=%H)"
-          echo "Last devfile/api author name: $(cd api-repo; git log -1 --format=%an)"
-          echo "Last devfile/api author email: $(cd api-repo; git log -1 --format=%ae)"
+          echo "Last devfile/api commit: $(cd ../api-repo; git log -1 --format=%H)"
+          echo "Last devfile/api author name: $(cd ../api-repo; git log -1 --format=%an)"
+          echo "Last devfile/api author email: $(cd ../api-repo; git log -1 --format=%ae)"
 
           git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
           git commit -m "Update next devfile schema in docs"
