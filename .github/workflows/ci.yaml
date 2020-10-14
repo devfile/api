@@ -97,7 +97,13 @@ jobs:
           else
             git config --global user.name "devfile-ci-robot"
           fi
-
+          
+          if [ "$(git status -s)" == "" ]
+          then
+            echo "Nothing to commit, Json schema didn't change"
+            exit 0
+          fi
+          
           git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
           git commit -m "Update next devfile schema in docs"
           git push "https://devfile-ci-robot:${{ secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
