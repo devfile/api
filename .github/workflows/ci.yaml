@@ -74,7 +74,7 @@ jobs:
           repository: devfile/docs
           persist-credentials: false
           path: docs-repo
-          ref: sync-schema-to-docs
+          ref: sync-schemas-to-docs
       - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
