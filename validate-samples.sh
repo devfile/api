@@ -46,8 +46,11 @@ rm -f validate-output.txt &> /dev/null
 
 for schema in "devfile" "dev-workspace" "dev-workspace-template"
 do
-  schemaPath="./schemas/latest/with-markdown-descriptions/${schema}.json"
+  schemaPath="./schemas/latest/ide-targeted/${schema}.json"
   devfiles=$(jq -r '."yaml.schemas"."'${schemaPath}'"[]' .theia/settings.json)
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi 
   echo "Validating $schema files against ${schemaPath}"
   for devfile in $devfiles
   do
