@@ -56,4 +56,51 @@ jobs:
       working-directory: generator
       run: |
         go fmt -x ./...
-        git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+        git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }      
+    - name: Upload Json schemas
+      uses: actions/upload-artifact@v2
+      with:
+        name: devfile-json-schema
+        path: schemas/latest/devfile.json
+
+  publish-next-json-schema:
+    if: success() && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: [build-and-validate]
+    steps:
+      - name: Checkout devfile docs
+        uses: actions/checkout@v2
+        with:
+          repository: devfile/docs
+          persist-credentials: false
+          path: docs-repo
+      - name: Checkout devfile api
+        uses: actions/checkout@v2
+        with:
+          path: api-repo
+      - name: Download Json Schema
+        uses: actions/download-artifact@v2
+        with:
+          name: devfile-json-schema
+      - name: Overwrite Next Json Schema in Docs
+        run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+      - name: Push to the devfile/docs repo
+        working-directory: docs-repo/
+        run: |
+          if [ "$(git status -s)" == "" ]
+          then
+            echo "Nothing to commit, Json schema didn't change"
+            exit 0
+          fi
+          
+          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
+          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
+          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
+          
+          git config --global user.email "${lastCommitterEmail}"
+          git config --global user.name "${lastCommitterName}"
+          
+          git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
+          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
+          
