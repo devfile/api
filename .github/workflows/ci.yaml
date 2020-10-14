@@ -64,7 +64,7 @@ jobs:
         path: schemas/latest/devfile.json
 
   publish-next-json-schema:
-    if: success() # && github.event_name == 'push'
+    if: success() && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: [build-and-validate]
     steps:
@@ -74,7 +74,6 @@ jobs:
           repository: devfile/docs
           persist-credentials: false
           path: docs-repo
-          ref: sync-schemas-to-docs
       - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
