@@ -64,7 +64,7 @@ jobs:
         path: schemas/latest/devfile.json
 
   publish-next-json-schema:
-    if: success() && github.event_name == 'push'
+    if: success() # && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: [build-and-validate]
     steps:
@@ -74,6 +74,7 @@ jobs:
           repository: devfile/docs
           persist-credentials: false
           path: docs-repo
+          ref: sync-schema-to-docs
       - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
@@ -83,8 +84,8 @@ jobs:
       - name: Push to the docs repo
         working-directory: docs-repo/
         run: |
-          git config --global user.email "ci-robot@devfile.io"
-          git config --global user.name "Devfile CI Robot"
+          # git config --global user.email "ci-robot@devfile.io"
+          # git config --global user.name "Devfile CI Robot"
           git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
           git commit -m "Update next devfile schema in docs"
           git push "https://devfile-ci-robot:${{ secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
