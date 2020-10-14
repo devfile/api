@@ -74,6 +74,7 @@ jobs:
           repository: devfile/docs
           persist-credentials: false
           path: docs-repo
+          ref: sync-schemas-to-docs
       - name: Download Json Schema
         uses: actions/download-artifact@v2
         with:
@@ -87,5 +88,7 @@ jobs:
           branch: sync-schemas-to-docs
           message: 'Update next devfile schema in docs'
           signoff: false
+          author_name: Devfile CI Robot
+          author_email: ci-robot@devfile.io
         env:
           GITHUB_TOKEN: "${{ secrets.DOCS_UPDATE_SECRET}}"
