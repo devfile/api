@@ -10,14 +10,26 @@ type Project struct {
 	// +optional
 	ClonePath string `json:"clonePath,omitempty"`
 
+	// Populate the project sparsely with selected directories.
+	// +optional
+	SparseCheckoutDirs []string `json:"sparseCheckoutDirs,omitempty"`
+
 	ProjectSource `json:",inline"`
 }
+
 type StarterProject struct {
-	Project `json:",inline"`
+	// Project name
+	Name string `json:"name"`
 
 	// Description of a starter project
 	// +optional
 	Description string `json:"description,omitempty"`
+
+	// Sub-directory from a starter project to be used as root for starter project.
+	// +optional
+	SubDir string `json:"subDir,omitempty"`
+
+	ProjectSource `json:",inline"`
 }
 
 // ProjectSourceType describes the type of Project sources.
@@ -61,9 +73,6 @@ type ProjectSource struct {
 }
 
 type CommonProjectSource struct {
-	// Part of project to populate in the working directory.
-	// +optional
-	SparseCheckoutDir string `json:"sparseCheckoutDir,omitempty"`
 }
 
 type CustomProjectSource struct {

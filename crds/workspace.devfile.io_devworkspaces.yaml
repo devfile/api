@@ -3168,10 +3168,6 @@ spec:
                                     in the git project. Must have at least one remote
                                     configured
                                   type: object
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
-                                  type: string
                               type: object
                             github:
                               description: Project's GitHub source
@@ -3200,10 +3196,6 @@ spec:
                                     in the git project. Must have at least one remote
                                     configured
                                   type: object
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
-                                  type: string
                               type: object
                             name:
                               description: Project name
@@ -3215,16 +3207,18 @@ spec:
                               - Github
                               - Zip
                               type: string
+                            sparseCheckoutDirs:
+                              description: Populate the project sparsely with selected
+                                directories.
+                              items:
+                                type: string
+                              type: array
                             zip:
                               description: Project's Zip source
                               properties:
                                 location:
                                   description: Zip project's source location address.
                                     Should be file path of the archive, e.g. file://$FILE_PATH
-                                  type: string
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
                                   type: string
                               type: object
                           required:
@@ -3246,14 +3240,6 @@ spec:
                           - required:
                             - zip
                           properties:
-                            clonePath:
-                              description: Path relative to the root of the projects
-                                to which this project should be cloned into. This
-                                is a unix-style relative path (i.e. uses forward slashes).
-                                The path is invalid if it is absolute or tries to
-                                escape the project root through the usage of '..'.
-                                If not specified, defaults to the project name.
-                              type: string
                             description:
                               description: Description of a starter project
                               type: string
@@ -3284,10 +3270,6 @@ spec:
                                     in the git project. Must have at least one remote
                                     configured
                                   type: object
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
-                                  type: string
                               type: object
                             github:
                               description: Project's GitHub source
@@ -3316,10 +3298,6 @@ spec:
                                     in the git project. Must have at least one remote
                                     configured
                                   type: object
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
-                                  type: string
                               type: object
                             name:
                               description: Project name
@@ -3331,16 +3309,16 @@ spec:
                               - Github
                               - Zip
                               type: string
+                            subDir:
+                              description: Sub-directory from a starter project to
+                                be used as root for starter project.
+                              type: string
                             zip:
                               description: Project's Zip source
                               properties:
                                 location:
                                   description: Zip project's source location address.
                                     Should be file path of the archive, e.g. file://$FILE_PATH
-                                  type: string
-                                sparseCheckoutDir:
-                                  description: Part of project to populate in the
-                                    working directory.
                                   type: string
                               type: object
                           required:
@@ -3412,10 +3390,6 @@ spec:
                                 in the git project. Must have at least one remote
                                 configured
                               type: object
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
-                              type: string
                           required:
                           - remotes
                           type: object
@@ -3445,10 +3419,6 @@ spec:
                                 in the git project. Must have at least one remote
                                 configured
                               type: object
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
-                              type: string
                           required:
                           - remotes
                           type: object
@@ -3463,16 +3433,18 @@ spec:
                           - Zip
                           - Custom
                           type: string
+                        sparseCheckoutDirs:
+                          description: Populate the project sparsely with selected
+                            directories.
+                          items:
+                            type: string
+                          type: array
                         zip:
                           description: Project's Zip source
                           properties:
                             location:
                               description: Zip project's source location address.
                                 Should be file path of the archive, e.g. file://$FILE_PATH
-                              type: string
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
                               type: string
                           type: object
                       required:
@@ -3493,14 +3465,6 @@ spec:
                       - required:
                         - custom
                       properties:
-                        clonePath:
-                          description: Path relative to the root of the projects to
-                            which this project should be cloned into. This is a unix-style
-                            relative path (i.e. uses forward slashes). The path is
-                            invalid if it is absolute or tries to escape the project
-                            root through the usage of '..'. If not specified, defaults
-                            to the project name.
-                          type: string
                         custom:
                           description: Project's Custom source
                           properties:
@@ -3543,10 +3507,6 @@ spec:
                                 in the git project. Must have at least one remote
                                 configured
                               type: object
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
-                              type: string
                           required:
                           - remotes
                           type: object
@@ -3576,10 +3536,6 @@ spec:
                                 in the git project. Must have at least one remote
                                 configured
                               type: object
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
-                              type: string
                           required:
                           - remotes
                           type: object
@@ -3594,16 +3550,16 @@ spec:
                           - Zip
                           - Custom
                           type: string
+                        subDir:
+                          description: Sub-directory from a starter project to be
+                            used as root for starter project.
+                          type: string
                         zip:
                           description: Project's Zip source
                           properties:
                             location:
                               description: Zip project's source location address.
                                 Should be file path of the archive, e.g. file://$FILE_PATH
-                              type: string
-                            sparseCheckoutDir:
-                              description: Part of project to populate in the working
-                                directory.
                               type: string
                           type: object
                       required:
