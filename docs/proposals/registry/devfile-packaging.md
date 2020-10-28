@@ -23,7 +23,7 @@ Storing the devfiles (and any associated artifacts) on a dedicated Github reposi
 
 But, with the move to OCI registries, we need a way to easily package the devfile stacks from GitHub and load them into the OCI registry
 
-   - Needs to be offline
+   - Needs to retrieve the devfiles without an internet connection
      - Means we can’t have the metadata container git clone the devfiles before pushing them up
    - Needs to be easily built and distributable by registry admins.  
      - Once we support “deploying your own registry”, with custom devfiles this will become especially important
@@ -47,5 +47,5 @@ An example of what the devfile registry repository may look like can be found at
 ### Benefits
 - Easy and straightforward method of way and distributing devfiles and their artifacts. 
     - If a user wants to deploy a registry with their own devfiles, this will be the only thing they have to change
-- Offline by default. Everything needed to preload the OCI registry is contained in this image
+- Everything needed to preload the OCI registry is contained in this image
 - No need to build custom components of the registry (such as the bootstrap container)
