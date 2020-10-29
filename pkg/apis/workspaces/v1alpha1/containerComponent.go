@@ -4,7 +4,6 @@ package v1alpha1
 type ContainerComponent struct {
 	BaseComponent `json:",inline"`
 	Container     `json:",inline"`
-	MemoryLimit   string     `json:"memoryLimit,omitempty"`
 	Endpoints     []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
