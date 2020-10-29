@@ -24,22 +24,25 @@ Storing the devfiles (and any associated artifacts) on a dedicated Github reposi
 But, with the move to OCI registries, we need a way to easily package the devfile stacks from GitHub and load them into the OCI registry
 
    - Needs to retrieve the devfiles without an internet connection
-     - Means we can’t have the metadata container git clone the devfiles before pushing them up
+     - Means we can’t have the bootstrap container git clone the devfiles before pushing them up
    - Needs to be easily built and distributable by registry admins.  
      - Once we support “deploying your own registry”, with custom devfiles this will become especially important
-   - Shouldn’t require building and deploying custom components of the registry to distribute (i.e. it shouldn’t be baked into the registry or metadata container images)
-     - Currently, the metadata container has the devfiles built into it, meaning users need to build their own metadata container image to customize devfiles
+   - Shouldn’t require building multiple components of the registry to distribute
 
 ## Proposed Changes
 
-**To address the requirements listed above, rather than bundling the devfiles as part of registry's bootstrap container, build the “devfile registry repository” into its own docker image**
+**To address the requirements listed above, have the “devfile registry repository” built into a custom bootstrap image, based on a base-image provided by us.**
 
-<img width="636" alt="Screen Shot 2020-10-26 at 3 39 33 PM" src="https://user-images.githubusercontent.com/6880023/97220180-767cdc80-17a1-11eb-85fd-cf1a5a623aeb.png">
+<img width="633" alt="Screen Shot 2020-10-29 at 12 25 53 PM" src="https://user-images.githubusercontent.com/6880023/97602641-eaa5c300-19e1-11eb-8c3b-1c3ee0cb6f11.png">
 
 
-This container image will contain just the devfiles (and their artifacts), as well as any other required files.
+The base-image will be the "bootstrap container" image that's currently in the [devfile/registry-support](https://github.com/devfile/registry-support) repo and will be hosted on the `devfile` org on quay.io. It contains the logic for loading the devfiles into the OCI registry as well as hosting the index.json.
 
-When deploying the OCI registry, the image will be specified as an init container, with an entrypoint command that copies the devfiles (and artifacts) to the bootstrap container’s volume. Then, as-is today, when the bootstrap container starts up, it generates the index.json and pushes the devfiles up into the OCI registry using `oras`.
+The Dockerfile will just contain lines to copy the devfiles and index.json into the container, nothing else will be required (unless the registry administrator chooses to add more).
+
+As part of the registry build in the registry repository (such as [devfile/registry](https://github.com/devfile/registry)), the index.json will be generated and any tests/validation specific to the repository will be run. After this, the Dockerfile will be built and an image will be produced and pushed up to a Docker registry (if required).
+
+When deploying the OCI registry, the registry's image will be specified as the bootstrap container. Then, when the bootstrap container starts, it pushes the devfiles up into the OCI registry using `oras` and serves the pre-generated index.json.
 
 An example of what the devfile registry repository may look like can be found at https://github.com/johnmcollier/registry/tree/registryDockerfile
 
@@ -48,4 +51,3 @@ An example of what the devfile registry repository may look like can be found at
 - Easy and straightforward method of way and distributing devfiles and their artifacts. 
     - If a user wants to deploy a registry with their own devfiles, this will be the only thing they have to change
 - Everything needed to preload the OCI registry is contained in this image
-- No need to build custom components of the registry (such as the bootstrap container)
