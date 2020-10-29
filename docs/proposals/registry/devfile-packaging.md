@@ -40,7 +40,7 @@ The base-image will be the "bootstrap container" image that's currently in the [
 
 The Dockerfile will just contain lines to copy the devfiles and index.json into the container, nothing else will be required (unless the registry administrator chooses to add more).
 
-As part of the registry build in the registry repository (such as [devfile/registry](https://github.com/devfile/registry)), the index.json will be generated and any tests/validation specific to the repository will be run. After this, the Dockerfile will be built and an image will be produced and pushed up to a Docker registry (if required).
+As part of the registry build in the registry repository (such as [devfile/registry](https://github.com/devfile/registry)), the index.json will be generated and any tests/validation specific to the repository will be run. After this, the Dockerfile will be built and an image will be produced and pushed up to a Docker registry.
 
 When deploying the OCI registry, the registry's image will be specified as the bootstrap container. Then, when the bootstrap container starts, it pushes the devfiles up into the OCI registry using `oras` and serves the pre-generated index.json.
 
