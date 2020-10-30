@@ -49,6 +49,10 @@ func (union Component) Key() (string, error) {
 			key = vol.Name
 			return nil
 		},
+		Custom: func(custom *CustomComponent) error {
+			key = custom.Name
+			return nil
+		},
 	})
 	return key, err
 }
