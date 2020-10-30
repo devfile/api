@@ -4,9 +4,20 @@ This document will define how devfiles and their artifacts that are hosted on Gi
 
 I recommend having a read over the [OCI Registry Lifecycle design](https://docs.google.com/document/d/1rQHCp4SWslWWJv5KK3A_iXHvgbqjsuDkSKDD72ifJio/edit) first, before reading this doc. 
 
+## Terminology
+
+Some of the following terms will be used throughout this design proposal:
+
+**Devfile Registry Repository:** The GitHub repository that hosts the devfile stacks for consumption within an OCI registry. For example, [devfile/registry](https://github.com/devfile/registry).
+
+**Registry Support Repository:** The GitHub repository that hosts tooling for OCI devfile registries. This includes the [index generator tool](https://github.com/johnmcollier/registry-support/tree/master/index/generator), and the [bootstrap container base image](https://github.com/johnmcollier/registry-support/tree/master/oci-devfile-registry-metadata)
+
+**Bootstrap Container:** The sidecar container deployed alongside the OCI registry that loads the devfile stacks into the OCI registry and hosts the index.json for consumption by tools such as Che and Odo.
+
+**Registry Dockerfile / Image:** The Dockerfile and resulting container image that the `Devfile Registry Repository` is built up into. It's based upon a base image provided by us.
 
 ## As-is Today
-Currently, devfiles are stored on Github in a “devfile registry repository” (such as [devfile/registry](https://github.com/devfile/registry), [odo-devfiles/registry](https://github.com/odo-devfiles/registry), and [eclipse/che-devfile-registry](https://github.com/eclipse/che-devfile-registry)). Generally, each registry repository will have a devfiles folder:
+Currently, devfiles are stored on Github in a "devfile registry repository” (such as [devfile/registry](https://github.com/devfile/registry), [odo-devfiles/registry](https://github.com/odo-devfiles/registry), and [eclipse/che-devfile-registry](https://github.com/eclipse/che-devfile-registry)). Generally, each registry repository will have a devfiles folder:
 
 <img width="742" alt="Screen Shot 2020-10-22 at 1 54 00 PM" src="https://user-images.githubusercontent.com/6880023/97219676-b2637200-17a0-11eb-8465-1063aa048768.png">
 
@@ -40,7 +51,7 @@ The base-image will be the "bootstrap container" image that's currently in the [
 
 The Dockerfile will just contain lines to copy the devfiles and index.json into the container, nothing else will be required (unless the registry administrator chooses to add more).
 
-As part of the registry build in the registry repository (such as [devfile/registry](https://github.com/devfile/registry)), the index.json will be generated and any tests/validation specific to the repository will be run. After this, the Dockerfile will be built and an image will be produced and pushed up to a Docker registry.
+As part of the registry build in the registry repository (such as [devfile/registry](https://github.com/devfile/registry)), the index.json will be generated and any tests/validation specific to the repository will be run. After this, the Registry Dockerfile will be built and an image will be produced and pushed up to a container registry.
 
 When deploying the OCI registry, the registry's image will be specified as the bootstrap container. Then, when the bootstrap container starts, it pushes the devfiles up into the OCI registry using `oras` and serves the pre-generated index.json.
 
