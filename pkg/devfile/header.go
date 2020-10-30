@@ -5,21 +5,21 @@ package devfile
 type DevfileHeader struct {
 	// Devfile schema version
 	// +kubebuilder:validation:Pattern=^([2-9])\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
-	SchemaVersion string `json:"schemaVersion"`
+	SchemaVersion string `json:"schemaVersion" yaml:"schemaVersion"`
 
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +optional
 	// Optional metadata
-	Metadata DevfileMetadata `json:"metadata,omitempty"`
+	Metadata DevfileMetadata `json:"metadata,omitempty" yaml:"metadata,omitempty"`
 }
 
 type DevfileMetadata struct {
 	// Optional devfile name
 	// +optional
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 
 	// Optional semver-compatible version
 	// +optional
 	// +kubebuilder:validation:Pattern=^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
-	Version string `json:"version,omitempty"`
+	Version string `json:"version,omitempty" yaml:"version,omitempty"`
 }

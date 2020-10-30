@@ -7,7 +7,7 @@ import (
 // Devfile describes the structure of a cloud-native workspace and development environment.
 // +devfile:jsonschema:generate:omitCustomUnionMembers=true
 type Devfile struct {
-	devfile.DevfileHeader `json:",inline"`
+	devfile.DevfileHeader `json:",inline" yaml:",inline"`
 
-	DevWorkspaceTemplateSpec `json:",inline"`
+	DevWorkspaceTemplateSpec `json:",inline" yaml:",inline"`
 }

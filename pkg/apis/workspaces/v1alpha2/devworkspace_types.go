@@ -7,20 +7,20 @@ import (
 
 // DevWorkspaceSpec defines the desired state of DevWorkspace
 type DevWorkspaceSpec struct {
-	Started      bool                     `json:"started"`
-	RoutingClass string                   `json:"routingClass,omitempty"`
-	Template     DevWorkspaceTemplateSpec `json:"template,omitempty"`
+	Started      bool                     `json:"started" yaml:"started"`
+	RoutingClass string                   `json:"routingClass,omitempty" yaml:"routingClass,omitempty"`
+	Template     DevWorkspaceTemplateSpec `json:"template,omitempty" yaml:"template,omitempty"`
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
 type DevWorkspaceStatus struct {
 	// Id of the workspace
-	WorkspaceId string `json:"workspaceId"`
+	WorkspaceId string `json:"workspaceId" yaml:"workspaceId"`
 	// URL at which the Worksace Editor can be joined
-	IdeUrl string         `json:"ideUrl,omitempty"`
-	Phase  WorkspacePhase `json:"phase,omitempty"`
+	IdeUrl string         `json:"ideUrl,omitempty" yaml:"ideUrl,omitempty"`
+	Phase  WorkspacePhase `json:"phase,omitempty" yaml:"phase,omitempty"`
 	// Conditions represent the latest available observations of an object's state
-	Conditions []WorkspaceCondition `json:"conditions,omitempty"`
+	Conditions []WorkspaceCondition `json:"conditions,omitempty" yaml:"conditions,omitempty"`
 }
 
 type WorkspacePhase string
@@ -37,16 +37,16 @@ const (
 // WorkspaceCondition contains details for the current condition of this workspace.
 type WorkspaceCondition struct {
 	// Type is the type of the condition.
-	Type WorkspaceConditionType `json:"type"`
+	Type WorkspaceConditionType `json:"type" yaml:"type"`
 	// Phase is the status of the condition.
 	// Can be True, False, Unknown.
-	Status corev1.ConditionStatus `json:"status"`
+	Status corev1.ConditionStatus `json:"status" yaml:"status"`
 	// Last time the condition transitioned from one status to another.
-	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty" yaml:"lastTransitionTime,omitempty"`
 	// Unique, one-word, CamelCase reason for the condition's last transition.
-	Reason string `json:"reason,omitempty"`
+	Reason string `json:"reason,omitempty" yaml:"reason,omitempty"`
 	// Human-readable message indicating details about last transition.
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Types of conditions reported by workspace
@@ -70,20 +70,20 @@ const (
 // +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".status.ideUrl",description="Url endpoint for accessing workspace"
 // +devfile:jsonschema:generate
 type DevWorkspace struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.TypeMeta   `json:",inline" yaml:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty" yaml:"metadata,omitempty"`
 
-	Spec   DevWorkspaceSpec   `json:"spec,omitempty"`
-	Status DevWorkspaceStatus `json:"status,omitempty"`
+	Spec   DevWorkspaceSpec   `json:"spec,omitempty" yaml:"spec,omitempty"`
+	Status DevWorkspaceStatus `json:"status,omitempty" yaml:"status,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // DevWorkspaceList contains a list of DevWorkspace
 type DevWorkspaceList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []DevWorkspace `json:"items"`
+	metav1.TypeMeta `json:",inline" yaml:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty" yaml:"metadata,omitempty"`
+	Items           []DevWorkspace `json:"items" yaml:"items"`
 }
 
 func init() {

@@ -17,29 +17,29 @@ type K8sLikeComponentLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType K8sLikeComponentLocationType `json:"locationType,omitempty"`
+	LocationType K8sLikeComponentLocationType `json:"locationType,omitempty" yaml:"locationType,omitempty"`
 
 	// Location in a file fetched from a uri.
 	// +optional
-	Uri string `json:"uri,omitempty"`
+	Uri string `json:"uri,omitempty" yaml:"uri,omitempty"`
 
 	// Inlined manifest
 	// +optional
-	Inlined string `json:"inlined,omitempty"`
+	Inlined string `json:"inlined,omitempty" yaml:"inlined,omitempty"`
 }
 
 type K8sLikeComponent struct {
-	BaseComponent            `json:",inline"`
-	K8sLikeComponentLocation `json:",inline"`
-	Endpoints                []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	BaseComponent            `json:",inline" yaml:",inline"`
+	K8sLikeComponentLocation `json:",inline" yaml:",inline"`
+	Endpoints                []Endpoint `json:"endpoints,omitempty" yaml:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Component that allows partly importing Kubernetes resources into the workspace POD
 type KubernetesComponent struct {
-	K8sLikeComponent `json:",inline"`
+	K8sLikeComponent `json:",inline" yaml:",inline"`
 }
 
 // Component that allows partly importing Openshift resources into the workspace POD
 type OpenshiftComponent struct {
-	K8sLikeComponent `json:",inline"`
+	K8sLikeComponent `json:",inline" yaml:",inline"`
 }

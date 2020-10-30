@@ -43,9 +43,9 @@ const (
 )
 
 type Endpoint struct {
-	Name string `json:"name"`
+	Name string `json:"name" yaml:"name"`
 
-	TargetPort int `json:"targetPort"`
+	TargetPort int `json:"targetPort" yaml:"targetPort"`
 
 	// Describes how the endpoint should be exposed on the network.
 	//
@@ -62,7 +62,7 @@ type Endpoint struct {
 	// Default value is `public`
 	// +optional
 	// +kubebuilder:default=public
-	Exposure EndpointExposure `json:"exposure,omitempty"`
+	Exposure EndpointExposure `json:"exposure,omitempty" yaml:"exposure,omitempty"`
 
 	// Describes the application and transport protocols of the traffic that will go through this endpoint.
 	//
@@ -83,16 +83,16 @@ type Endpoint struct {
 	// Default value is `http`
 	// +optional
 	// +kubebuilder:default=http
-	Protocol string `json:"protocol,omitempty"`
+	Protocol string `json:"protocol,omitempty" yaml:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
 	// +optional
-	Secure bool `json:"secure,omitempty"`
+	Secure bool `json:"secure,omitempty" yaml:"secure,omitempty"`
 
 	// Path of the endpoint URL
 	// +optional
-	Path string `json:"path,omitempty"`
+	Path string `json:"path,omitempty" yaml:"path,omitempty"`
 
 	// Map of implementation-dependant string-based free-form attributes.
 	//
@@ -102,5 +102,5 @@ type Endpoint struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes map[string]string `json:"attributes,omitempty" yaml:"attributes,omitempty"`
 }

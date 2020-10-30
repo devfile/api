@@ -24,7 +24,7 @@ type OverrideDirective struct {
 	// 	```
 	//
 	// the path would be: `commands["commandId"]`.
-	Path string `json:"path"`
+	Path string `json:"path" yaml:"path"`
 
 	// `$Patch` directlive as defined in
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#basic-patch-format
@@ -36,7 +36,7 @@ type OverrideDirective struct {
 	// - *delete*: indicates that the element matched by the `jsonPath` field should be deleted.
 	//
 	// +optional
-	Patch OverridingPatchDirective `json:"patch,omitempty"`
+	Patch OverridingPatchDirective `json:"patch,omitempty" yaml:"patch,omitempty"`
 
 	// `DeleteFromPrimitiveList` directive as defined in
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#deletefromprimitivelist-directive
@@ -44,7 +44,7 @@ type OverrideDirective struct {
 	// This indicates that the elements in this list should be deleted from the original primitive list.
 	// The original primitive list is the element matched by the `jsonPath` field.
 	// +optional
-	DeleteFromPrimitiveList []string `json:"deleteFromPrimitiveList,omitempty"`
+	DeleteFromPrimitiveList []string `json:"deleteFromPrimitiveList,omitempty" yaml:"deleteFromPrimitiveList,omitempty"`
 
 	// `SetElementOrder` directive as defined in
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md#deletefromprimitivelist-directive
@@ -54,5 +54,5 @@ type OverrideDirective struct {
 	// If the controller list is a list of objects, then the values in this list should be
 	// the merge keys of the objects to order.
 	// +optional
-	SetElementOrder []string `json:"setElementOrder,omitempty"`
+	SetElementOrder []string `json:"setElementOrder,omitempty" yaml:"setElementOrder,omitempty"`
 }

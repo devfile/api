@@ -26,8 +26,8 @@ type Component struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name           string `json:"name"`
-	ComponentUnion `json:",inline"`
+	Name           string `json:"name" yaml:"name"`
+	ComponentUnion `json:",inline" yaml:",inline"`
 }
 
 // +union
@@ -36,30 +36,30 @@ type ComponentUnion struct {
 	//
 	// +unionDiscriminator
 	// +optional
-	ComponentType ComponentType `json:"componentType,omitempty"`
+	ComponentType ComponentType `json:"componentType,omitempty" yaml:"componentType,omitempty"`
 
 	// Allows adding and configuring workspace-related containers
 	// +optional
-	Container *ContainerComponent `json:"container,omitempty"`
+	Container *ContainerComponent `json:"container,omitempty" yaml:"container,omitempty"`
 
 	// Allows importing into the workspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
 	// definitions used to deploy some runtime components in production.
 	//
 	// +optional
-	Kubernetes *KubernetesComponent `json:"kubernetes,omitempty"`
+	Kubernetes *KubernetesComponent `json:"kubernetes,omitempty" yaml:"kubernetes,omitempty"`
 
 	// Allows importing into the workspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift
 	// definitions used to deploy some runtime components in production.
 	//
 	// +optional
-	Openshift *OpenshiftComponent `json:"openshift,omitempty"`
+	Openshift *OpenshiftComponent `json:"openshift,omitempty" yaml:"openshift,omitempty"`
 
 	// Allows specifying the definition of a volume
 	// shared by several other components
 	// +optional
-	Volume *VolumeComponent `json:"volume,omitempty"`
+	Volume *VolumeComponent `json:"volume,omitempty" yaml:"volume,omitempty"`
 
 	// Allows importing a plugin.
 	//
@@ -69,25 +69,25 @@ type ComponentUnion struct {
 	// or as `DevWorkspaceTemplate` Kubernetes Custom Resources
 	// +optional
 	// +devfile:overrides:include:omitInPlugin=true
-	Plugin *PluginComponent `json:"plugin,omitempty"`
+	Plugin *PluginComponent `json:"plugin,omitempty" yaml:"plugin,omitempty"`
 
 	// Custom component whose logic is implementation-dependant
 	// and should be provided by the user
 	// possibly through some dedicated controller
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Custom *CustomComponent `json:"custom,omitempty"`
+	Custom *CustomComponent `json:"custom,omitempty" yaml:"custom,omitempty"`
 }
 
 type CustomComponent struct {
 	// Class of component that the associated implementation controller
 	// should use to process this command with the appropriate logic
-	ComponentClass string `json:"componentClass"`
+	ComponentClass string `json:"componentClass" yaml:"componentClass"`
 
 	// Additional free-form configuration for this custom component
 	// that the implementation controller will know how to use
 	//
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
-	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`
+	EmbeddedResource runtime.RawExtension `json:"embeddedResource" yaml:"embeddedResource"`
 }

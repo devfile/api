@@ -292,6 +292,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 						!strings.Contains(jsonTag, ",omitempty") {
 						newJSONTag := jsonTag + ",omitempty"
 						astField.Tag.Value = strings.Replace(astField.Tag.Value, `json:"`+jsonTag+`"`, `json:"`+newJSONTag+`"`, 1)
+						astField.Tag.Value = strings.Replace(astField.Tag.Value, `yaml:"`+jsonTag+`"`, `yaml:"`+newJSONTag+`"`, 1)
 						astField.Doc = updateComments(
 							astField, astField.Doc,
 							`.*`,

@@ -1,7 +1,7 @@
 package v1alpha2
 
 type PluginComponent struct {
-	BaseComponent   `json:",inline"`
-	ImportReference `json:",inline"`
-	PluginOverrides `json:",inline"`
+	BaseComponent   `json:",inline" yaml:",inline"`
+	ImportReference `json:",inline" yaml:",inline"`
+	PluginOverrides `json:",inline" yaml:",inline"`
 }

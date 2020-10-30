@@ -19,30 +19,30 @@ type ImportReferenceUnion struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	ImportReferenceType ImportReferenceType `json:"importReferenceType,omitempty"`
+	ImportReferenceType ImportReferenceType `json:"importReferenceType,omitempty" yaml:"importReferenceType,omitempty"`
 
 	// Uri of a Devfile yaml file
 	// +optional
-	Uri string `json:"uri,omitempty"`
+	Uri string `json:"uri,omitempty" yaml:"uri,omitempty"`
 
 	// Id in a registry that contains a Devfile yaml file
 	// +optional
-	Id string `json:"id,omitempty"`
+	Id string `json:"id,omitempty" yaml:"id,omitempty"`
 
 	// Reference to a Kubernetes CRD of type DevWorkspaceTemplate
 	// +optional
-	Kubernetes *KubernetesCustomResourceImportReference `json:"kubernetes,omitempty"`
+	Kubernetes *KubernetesCustomResourceImportReference `json:"kubernetes,omitempty" yaml:"kubernetes,omitempty"`
 }
 
 type KubernetesCustomResourceImportReference struct {
-	Name string `json:"name"`
+	Name string `json:"name" yaml:"name"`
 
 	// +optional
-	Namespace string `json:"namespace,omitempty"`
+	Namespace string `json:"namespace,omitempty" yaml:"namespace,omitempty"`
 }
 
 type ImportReference struct {
-	ImportReferenceUnion `json:",inline"`
+	ImportReferenceUnion `json:",inline" yaml:",inline"`
 	// +optional
-	RegistryUrl string `json:"registryUrl,omitempty"`
+	RegistryUrl string `json:"registryUrl,omitempty" yaml:"registryUrl,omitempty"`
 }

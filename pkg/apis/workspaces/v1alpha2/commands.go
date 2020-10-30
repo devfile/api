@@ -29,37 +29,37 @@ const (
 
 type CommandGroup struct {
 	// Kind of group the command is part of
-	Kind CommandGroupKind `json:"kind"`
+	Kind CommandGroupKind `json:"kind" yaml:"kind"`
 
 	// +optional
 	// Identifies the default command for a given group kind
-	IsDefault bool `json:"isDefault,omitempty"`
+	IsDefault bool `json:"isDefault,omitempty" yaml:"isDefault,omitempty"`
 }
 
 type BaseCommand struct {
 	// +optional
 	// Defines the group this command is part of
-	Group *CommandGroup `json:"group,omitempty"`
+	Group *CommandGroup `json:"group,omitempty" yaml:"group,omitempty"`
 
 	// Optional map of free-form additional command attributes
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes map[string]string `json:"attributes,omitempty" yaml:"attributes,omitempty"`
 }
 
 type LabeledCommand struct {
-	BaseCommand `json:",inline"`
+	BaseCommand `json:",inline" yaml:",inline"`
 
 	// +optional
 	// Optional label that provides a label for this command
 	// to be used in Editor UI menus for example
-	Label string `json:"label,omitempty"`
+	Label string `json:"label,omitempty" yaml:"label,omitempty"`
 }
 
 type Command struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id           string `json:"id"`
-	CommandUnion `json:",inline"`
+	Id           string `json:"id" yaml:"id"`
+	CommandUnion `json:",inline" yaml:",inline"`
 }
 
 // +union
@@ -67,11 +67,11 @@ type CommandUnion struct {
 	// Type of workspace command
 	// +unionDiscriminator
 	// +optional
-	CommandType CommandType `json:"commandType,omitempty"`
+	CommandType CommandType `json:"commandType,omitempty" yaml:"commandType,omitempty"`
 
 	// CLI Command executed in an existing component container
 	// +optional
-	Exec *ExecCommand `json:"exec,omitempty"`
+	Exec *ExecCommand `json:"exec,omitempty" yaml:"exec,omitempty"`
 
 	// Command that consists in applying a given component definition,
 	// typically bound to a workspace event.
@@ -85,31 +85,31 @@ type CommandUnion struct {
 	// it is assumed the component will be applied at workspace start
 	// by default.
 	// +optional
-	Apply *ApplyCommand `json:"apply,omitempty"`
+	Apply *ApplyCommand `json:"apply,omitempty" yaml:"apply,omitempty"`
 
 	// Command providing the definition of a VsCode Task
 	// +optional
-	VscodeTask *VscodeConfigurationCommand `json:"vscodeTask,omitempty"`
+	VscodeTask *VscodeConfigurationCommand `json:"vscodeTask,omitempty" yaml:"vscodeTask,omitempty"`
 
 	// Command providing the definition of a VsCode launch action
 	// +optional
-	VscodeLaunch *VscodeConfigurationCommand `json:"vscodeLaunch,omitempty"`
+	VscodeLaunch *VscodeConfigurationCommand `json:"vscodeLaunch,omitempty" yaml:"vscodeLaunch,omitempty"`
 
 	// Composite command that allows executing several sub-commands
 	// either sequentially or concurrently
 	// +optional
-	Composite *CompositeCommand `json:"composite,omitempty"`
+	Composite *CompositeCommand `json:"composite,omitempty" yaml:"composite,omitempty"`
 
 	// Custom command whose logic is implementation-dependant
 	// and should be provided by the user
 	// possibly through some dedicated plugin
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Custom *CustomCommand `json:"custom,omitempty"`
+	Custom *CustomCommand `json:"custom,omitempty" yaml:"custom,omitempty"`
 }
 
 type ExecCommand struct {
-	LabeledCommand `json:",inline"`
+	LabeledCommand `json:",inline" yaml:",inline"`
 
 	// The actual command-line string
 	//
@@ -118,11 +118,11 @@ type ExecCommand struct {
 	//  - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.
 	//
 	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
-	CommandLine string `json:"commandLine"`
+	CommandLine string `json:"commandLine" yaml:"commandLine"`
 
 	// Describes component to which given action relates
 	//
-	Component string `json:"component"`
+	Component string `json:"component" yaml:"component"`
 
 	// Working directory where the command should be executed
 	//
@@ -132,40 +132,40 @@ type ExecCommand struct {
 	//
 	//  - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/<project-name>). If there are multiple projects, this will point to the directory of the first one.
 	// +optional
-	WorkingDir string `json:"workingDir,omitempty"`
+	WorkingDir string `json:"workingDir,omitempty" yaml:"workingDir,omitempty"`
 
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
 	// Optional list of environment variables that have to be set
 	// before running the command
-	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Env []EnvVar `json:"env,omitempty" yaml:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// Whether the command is capable to reload itself when source code changes.
 	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
-	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
+	HotReloadCapable bool `json:"hotReloadCapable,omitempty" yaml:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommand struct {
-	LabeledCommand `json:",inline"`
+	LabeledCommand `json:",inline" yaml:",inline"`
 
 	// Describes component that will be applied
 	//
-	Component string `json:"component"`
+	Component string `json:"component" yaml:"component"`
 }
 
 type CompositeCommand struct {
-	LabeledCommand `json:",inline"`
+	LabeledCommand `json:",inline" yaml:",inline"`
 
 	// The commands that comprise this composite command
-	Commands []string `json:"commands,omitempty" patchStrategy:"replace"`
+	Commands []string `json:"commands,omitempty" yaml:"commands,omitempty" patchStrategy:"replace"`
 
 	// Indicates if the sub-commands should be executed concurrently
 	// +optional
-	Parallel bool `json:"parallel,omitempty"`
+	Parallel bool `json:"parallel,omitempty" yaml:"parallel,omitempty"`
 }
 
 // VscodeConfigurationCommandLocationType describes the type of
@@ -185,34 +185,34 @@ type VscodeConfigurationCommandLocation struct {
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType VscodeConfigurationCommandLocationType `json:"locationType,omitempty"`
+	LocationType VscodeConfigurationCommandLocationType `json:"locationType,omitempty" yaml:"locationType,omitempty"`
 
 	// Location as an absolute of relative URI
 	// the VsCode configuration will be fetched from
 	// +optional
-	Uri string `json:"uri,omitempty"`
+	Uri string `json:"uri,omitempty" yaml:"uri,omitempty"`
 
 	// Inlined content of the VsCode configuration
 	// +optional
-	Inlined string `json:"inlined,omitempty"`
+	Inlined string `json:"inlined,omitempty" yaml:"inlined,omitempty"`
 }
 
 type VscodeConfigurationCommand struct {
-	BaseCommand                        `json:",inline"`
-	VscodeConfigurationCommandLocation `json:",inline"`
+	BaseCommand                        `json:",inline" yaml:",inline"`
+	VscodeConfigurationCommandLocation `json:",inline" yaml:",inline"`
 }
 
 type CustomCommand struct {
-	LabeledCommand `json:",inline"`
+	LabeledCommand `json:",inline" yaml:",inline"`
 
 	// Class of command that the associated implementation component
 	// should use to process this command with the appropriate logic
-	CommandClass string `json:"commandClass"`
+	CommandClass string `json:"commandClass" yaml:"commandClass"`
 
 	// Additional free-form configuration for this custom command
 	// that the implementation component will know how to use
 	//
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
-	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`
+	EmbeddedResource runtime.RawExtension `json:"embeddedResource" yaml:"embeddedResource"`
 }
