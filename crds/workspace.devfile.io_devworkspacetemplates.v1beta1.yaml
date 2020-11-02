@@ -477,6 +477,11 @@ spec:
                                 protocol. \n - `udp`: Endpoint will have traffic on
                                 an UDP connection, without specifying an application
                                 protocol. \n Default value is `http`"
+                              enum:
+                              - http
+                              - ws
+                              - tcp
+                              - udp
                               type: string
                             secure:
                               description: Describes whether the endpoint should be
@@ -628,6 +633,11 @@ spec:
                                 protocol. \n - `udp`: Endpoint will have traffic on
                                 an UDP connection, without specifying an application
                                 protocol. \n Default value is `http`"
+                              enum:
+                              - http
+                              - ws
+                              - tcp
+                              - udp
                               type: string
                             secure:
                               description: Describes whether the endpoint should be
@@ -719,6 +729,11 @@ spec:
                                 protocol. \n - `udp`: Endpoint will have traffic on
                                 an UDP connection, without specifying an application
                                 protocol. \n Default value is `http`"
+                              enum:
+                              - http
+                              - ws
+                              - tcp
+                              - udp
                               type: string
                             secure:
                               description: Describes whether the endpoint should be
@@ -1165,6 +1180,11 @@ spec:
                                           an UDP connection, without specifying an
                                           application protocol. \n Default value is
                                           `http`"
+                                        enum:
+                                        - http
+                                        - ws
+                                        - tcp
+                                        - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
@@ -1304,6 +1324,11 @@ spec:
                                           an UDP connection, without specifying an
                                           application protocol. \n Default value is
                                           `http`"
+                                        enum:
+                                        - http
+                                        - ws
+                                        - tcp
+                                        - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
@@ -1404,6 +1429,11 @@ spec:
                                           an UDP connection, without specifying an
                                           application protocol. \n Default value is
                                           `http`"
+                                        enum:
+                                        - http
+                                        - ws
+                                        - tcp
+                                        - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
@@ -1911,6 +1941,11 @@ spec:
                                     will have traffic on an UDP connection, without
                                     specifying an application protocol. \n Default
                                     value is `http`"
+                                  enum:
+                                  - http
+                                  - ws
+                                  - tcp
+                                  - udp
                                   type: string
                                 secure:
                                   description: Describes whether the endpoint should
@@ -2042,6 +2077,11 @@ spec:
                                     will have traffic on an UDP connection, without
                                     specifying an application protocol. \n Default
                                     value is `http`"
+                                  enum:
+                                  - http
+                                  - ws
+                                  - tcp
+                                  - udp
                                   type: string
                                 secure:
                                   description: Describes whether the endpoint should
@@ -2138,6 +2178,11 @@ spec:
                                     will have traffic on an UDP connection, without
                                     specifying an application protocol. \n Default
                                     value is `http`"
+                                  enum:
+                                  - http
+                                  - ws
+                                  - tcp
+                                  - udp
                                   type: string
                                 secure:
                                   description: Describes whether the endpoint should
@@ -2593,6 +2638,11 @@ spec:
                                               on an UDP connection, without specifying
                                               an application protocol. \n Default
                                               value is `http`"
+                                            enum:
+                                            - http
+                                            - ws
+                                            - tcp
+                                            - udp
                                             type: string
                                           secure:
                                             description: Describes whether the endpoint
@@ -2738,6 +2788,11 @@ spec:
                                               on an UDP connection, without specifying
                                               an application protocol. \n Default
                                               value is `http`"
+                                            enum:
+                                            - http
+                                            - ws
+                                            - tcp
+                                            - udp
                                             type: string
                                           secure:
                                             description: Describes whether the endpoint
@@ -2844,6 +2899,11 @@ spec:
                                               on an UDP connection, without specifying
                                               an application protocol. \n Default
                                               value is `http`"
+                                            enum:
+                                            - http
+                                            - ws
+                                            - tcp
+                                            - udp
                                             type: string
                                           secure:
                                             description: Describes whether the endpoint

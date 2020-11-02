@@ -315,7 +315,7 @@ type EndpointPluginOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	Protocol string `json:"protocol,omitempty"`
+	Protocol EndpointProtocolPluginOverride `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
@@ -414,6 +414,11 @@ type VolumeMountPluginOverride struct {
 // Only one of the following exposures may be specified: public, internal, none.
 // +kubebuilder:validation:Enum=public;internal;none
 type EndpointExposurePluginOverride string
+
+// EndpointProtocol defines the application and transport protocols of the traffic that will go through this endpoint.
+// Only one of the following protocols may be specified: http, ws, tcp, udp.
+// +kubebuilder:validation:Enum=http;ws;tcp;udp
+type EndpointProtocolPluginOverride string
 
 // +union
 type K8sLikeComponentLocationPluginOverride struct {
