@@ -424,7 +424,7 @@ type EndpointParentOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	Protocol string `json:"protocol,omitempty"`
+	Protocol EndpointProtocolParentOverride `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
@@ -565,6 +565,11 @@ type VolumeMountParentOverride struct {
 // Only one of the following exposures may be specified: public, internal, none.
 // +kubebuilder:validation:Enum=public;internal;none
 type EndpointExposureParentOverride string
+
+// EndpointProtocol defines the application and transport protocols of the traffic that will go through this endpoint.
+// Only one of the following protocols may be specified: http, ws, tcp, udp.
+// +kubebuilder:validation:Enum=http;ws;tcp;udp
+type EndpointProtocolParentOverride string
 
 // +union
 type K8sLikeComponentLocationParentOverride struct {
@@ -958,7 +963,7 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// Default value is `http`
 	// +optional
-	Protocol string `json:"protocol,omitempty"`
+	Protocol EndpointProtocolPluginOverrideParentOverride `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
@@ -1058,6 +1063,11 @@ type VolumeMountPluginOverrideParentOverride struct {
 // Only one of the following exposures may be specified: public, internal, none.
 // +kubebuilder:validation:Enum=public;internal;none
 type EndpointExposurePluginOverrideParentOverride string
+
+// EndpointProtocol defines the application and transport protocols of the traffic that will go through this endpoint.
+// Only one of the following protocols may be specified: http, ws, tcp, udp.
+// +kubebuilder:validation:Enum=http;ws;tcp;udp
+type EndpointProtocolPluginOverrideParentOverride string
 
 // +union
 type K8sLikeComponentLocationPluginOverrideParentOverride struct {

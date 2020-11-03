@@ -83,7 +83,7 @@ type Endpoint struct {
 	// Default value is `http`
 	// +optional
 	// +kubebuilder:default=http
-	Protocol string `json:"protocol,omitempty"`
+	Protocol EndpointProtocol `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process
