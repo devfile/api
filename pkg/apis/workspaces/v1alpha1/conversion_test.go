@@ -71,6 +71,7 @@ var PluginComponentsOverrideFuzzFunc = func(component *PluginComponentsOverride,
 var PluginComponentFuzzFunc = func(plugin *PluginComponent, c fuzz.Continue) {
 	// TODO: Figure out how to handle custom commands on plugin components
 	c.Fuzz(plugin)
+	plugin.Name = c.RandString()
 	var filteredCommands []Command
 	for _, command := range plugin.Commands {
 		if command.Custom == nil {
