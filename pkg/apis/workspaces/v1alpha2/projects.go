@@ -6,6 +6,11 @@ type Project struct {
 	// Project name
 	Name string `json:"name"`
 
+	// Map of implementation-dependant string-based free-form attributes.
+	// +optional
+	// +devfile:overrides:include:omit=true
+	Attributes map[string]string `json:"attributes,omitempty"`
+
 	// Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.
 	// +optional
 	ClonePath string `json:"clonePath,omitempty"`
@@ -20,6 +25,11 @@ type Project struct {
 type StarterProject struct {
 	// Project name
 	Name string `json:"name"`
+
+	// Map of implementation-dependant string-based free-form attributes.
+	// +optional
+	// +devfile:overrides:include:omit=true
+	Attributes map[string]string `json:"attributes,omitempty"`
 
 	// Description of a starter project
 	// +optional

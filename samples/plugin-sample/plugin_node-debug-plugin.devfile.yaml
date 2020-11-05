@@ -1,0 +1,22 @@
+schemaVersion: 2.0.0
+preferences:
+  - name: vscode-node-debug-preferences
+    yaml: {}
+components:
+  - name: vscode-node-debug
+    attributes:
+      "vsx.che.eclipse.org/node-debug/url": https://download.jboss.org/jbosstools/vscode/3rdparty/vscode-node-debug/node-debug-1.41.1.vsix
+      "vsx.che.eclipse.org/node-debug2/url": https://download.jboss.org/jbosstools/vscode/3rdparty/vscode-node-debug2/node-debug2-1.42.3.vsix
+    container:
+      image: "quay.io/eclipse/che-sidecar-node:12-026416c"
+      memoryLimit: '512Mi'
+      env:
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint 
+        - name: THEIA_PLUGINS
+          value: local-dir:///plugins/sidecars/vscode-node-debug
+      volumeMounts:
+        - path: "/remote-endpoint"
+          name: remote-endpoint
+        - name: plugins-node-debug-plugin
+          path: /plugins

@@ -1,0 +1,15 @@
+schemaVersion: 2.0.0
+components:
+  - name: che-machine-exec
+    container:
+      image: "quay.io/eclipse/che-machine-exec:7.20.0"
+      command: ['/go/bin/che-machine-exec', '--url', '0.0.0.0:4444']
+      endpoints:
+        - name: "che-machine-exec"
+          exposure: public
+          targetPort: 4444
+          protocol: ws
+          secure: true
+          attributes:
+            type: terminal
+            cookiesAuthEnabled: "true"

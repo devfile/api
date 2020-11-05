@@ -1,0 +1,96 @@
+schemaVersion: 2.0.0
+components:
+  - name: theia-ide
+    container:
+      image: "quay.io/eclipse/che-theia:7.20.0"
+      env:
+        - name: THEIA_PLUGINS
+          value: local-dir:///plugins
+        - name: HOSTED_PLUGIN_HOSTNAME
+          value: 0.0.0.0
+        - name: HOSTED_PLUGIN_PORT
+          value: "3130"
+        - name: THEIA_HOST
+          value: 127.0.0.1
+      volumeMounts:
+        - path: "/plugins"
+          name: plugins
+      mountSources: true
+      memoryLimit: "512M"
+      endpoints:
+        - name: "theia"
+          exposure: public
+          targetPort: 3100
+          secure: true
+          protocol: http
+          attributes:
+            type: ide
+            cookiesAuthEnabled: "true"
+        - name: "webviews"
+          exposure: public
+          targetPort: 3100
+          protocol: http
+          secure: true
+          attributes:
+            type: webview
+            cookiesAuthEnabled: "true"
+            unique: "true"
+        - name: "theia-dev"
+          exposure: public
+          targetPort: 3130
+          protocol: http
+          attributes:
+            type: ide-dev
+        - name: "theia-redirect-1"
+          exposure: public
+          targetPort: 13131
+          protocol: http
+        - name: "theia-redirect-2"
+          exposure: public
+          targetPort: 13132
+          protocol: http
+        - name: "theia-redirect-3"
+          exposure: public
+          targetPort: 13133
+          protocol: http      
+
+  - name: plugins
+    volume: {}
+
+  - name: vsx-installer  # Mainly reads the container / preferences objects and searches for those with
+                         # attributes starting with vsx.che.eclipse.org/ to get VSX urls
+                         # Those found in container components are with a sidecar,
+                         # Those found in preferences objects are without a sidecar.
+    container:
+      image: "to-be-done-sort-of-plugin-broker"
+      volumeMounts:
+        - path: "/plugins"
+          name: plugins
+
+  - name: remote-endpoint
+    volume: {} 
+    # ephemeral: true                #### We should add it in the Devfile 2.0 spec ! Not critical to implement at start though
+
+  - name: remote-runtime-injector
+    container:                          #### corresponds to `initContainer` definition in old meta.yaml.
+      image: "quay.io/eclipse/che-theia-endpoint-runtime-binary:7.20.0"
+      volumeMounts:
+        - path: "/remote-endpoint"
+          name: remote-endpoint
+      env:
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint
+        - name: REMOTE_ENDPOINT_VOLUME_NAME
+          value: remote-endpoint
+
+commands:
+  - id: inject-theia-in-remote-sidecar
+    apply:
+      component: remote-runtime-injector
+  - id: copy-vsx
+    apply:
+      component: vsx-installer
+events:
+  preStart:
+      - inject-theia-in-remote-sidecar
+      - copy-vsx

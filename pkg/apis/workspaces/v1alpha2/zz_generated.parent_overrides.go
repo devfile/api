@@ -1,8 +1,20 @@
 package v1alpha2
 
+import (
+	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+)
+
 // +devfile:jsonschema:generate
 type ParentOverrides struct {
 	OverridesBase `json:",inline"`
+
+	// Overrides of preferences encapsulated in a parent devfile or a plugin.
+	// Overriding is done according to K8S strategic merge patch standard rules.
+	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
+	// +devfile:toplevellist
+	Preferences []PreferenceParentOverride `json:"preferences,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// Overrides of components encapsulated in a parent devfile or a plugin.
 	// Overriding is done according to K8S strategic merge patch standard rules.
@@ -37,13 +49,24 @@ type ParentOverrides struct {
 	Commands []CommandParentOverride `json:"commands,omitempty" patchStrategy:"merge" patchMergeKey:"id"`
 }
 
+type PreferenceParentOverride struct {
+
+	// Mandatory key that uniquely references the preference
+	// especially from an external defvile that may override this preference
+	// through a parent or a plugin.
+	Name string `json:"name"`
+
+	PreferenceLocationUnionParentOverride `json:",inline"`
+}
+
 //+k8s:openapi-gen=true
 type ComponentParentOverride struct {
 
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name                         string `json:"name"`
+	Name string `json:"name"`
+
 	ComponentUnionParentOverride `json:",inline"`
 }
 
@@ -84,8 +107,32 @@ type CommandParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id                         string `json:"id"`
+	Id string `json:"id"`
+
 	CommandUnionParentOverride `json:",inline"`
+}
+
+// +union
+type PreferenceLocationUnionParentOverride struct {
+
+	// +kubebuilder:validation:Enum=Yaml;Inline;Uri
+	// Type of preference
+	//
+	// +unionDiscriminator
+	// +optional
+	PreferenceType string `json:"preferenceType,omitempty"`
+
+	// Free-form Yaml preference
+	// +optional
+	Yaml YamlPreferenceParentOverride `json:"yaml,omitempty"`
+
+	// Opaque raw string preference
+	// +optional
+	Inline string `json:"inline,omitempty"`
+
+	// uri where the preferences string should be loaded from
+	// +optional
+	Uri string `json:"uri,omitempty"`
 }
 
 // +union
@@ -195,6 +242,8 @@ type CommandUnionParentOverride struct {
 	// +optional
 	Composite *CompositeCommandParentOverride `json:"composite,omitempty"`
 }
+
+type YamlPreferenceParentOverride map[string]apiext.JSON
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
@@ -470,6 +519,14 @@ type ImportReferenceParentOverride struct {
 type PluginOverridesParentOverride struct {
 	OverridesBaseParentOverride `json:",inline"`
 
+	// Overrides of preferences encapsulated in a parent devfile or a plugin.
+	// Overriding is done according to K8S strategic merge patch standard rules.
+	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
+	// +devfile:toplevellist
+	Preferences []PreferencePluginOverrideParentOverride `json:"preferences,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
 	// Overrides of components encapsulated in a parent devfile or a plugin.
 	// Overriding is done according to K8S strategic merge patch standard rules.
 	// +optional
@@ -618,13 +675,24 @@ type ImportReferenceUnionParentOverride struct {
 // So please be careful when renaming
 type OverridesBaseParentOverride struct{}
 
+type PreferencePluginOverrideParentOverride struct {
+
+	// Mandatory key that uniquely references the preference
+	// especially from an external defvile that may override this preference
+	// through a parent or a plugin.
+	Name string `json:"name"`
+
+	PreferenceLocationUnionPluginOverrideParentOverride `json:",inline"`
+}
+
 //+k8s:openapi-gen=true
 type ComponentPluginOverrideParentOverride struct {
 
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name                                       string `json:"name"`
+	Name string `json:"name"`
+
 	ComponentUnionPluginOverrideParentOverride `json:",inline"`
 }
 
@@ -633,7 +701,8 @@ type CommandPluginOverrideParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id                                       string `json:"id"`
+	Id string `json:"id"`
+
 	CommandUnionPluginOverrideParentOverride `json:",inline"`
 }
 
@@ -681,6 +750,29 @@ type KubernetesCustomResourceImportReferenceParentOverride struct {
 
 	// +optional
 	Namespace string `json:"namespace,omitempty"`
+}
+
+// +union
+type PreferenceLocationUnionPluginOverrideParentOverride struct {
+
+	// +kubebuilder:validation:Enum=Yaml;Inline;Uri
+	// Type of preference
+	//
+	// +unionDiscriminator
+	// +optional
+	PreferenceType string `json:"preferenceType,omitempty"`
+
+	// Free-form Yaml preference
+	// +optional
+	Yaml YamlPreferencePluginOverrideParentOverride `json:"yaml,omitempty"`
+
+	// Opaque raw string preference
+	// +optional
+	Inline string `json:"inline,omitempty"`
+
+	// uri where the preferences string should be loaded from
+	// +optional
+	Uri string `json:"uri,omitempty"`
 }
 
 // +union
@@ -761,6 +853,8 @@ type CommandUnionPluginOverrideParentOverride struct {
 // CommandGroupKind describes the kind of command group.
 // +kubebuilder:validation:Enum=build;run;test;debug
 type CommandGroupKindParentOverride string
+
+type YamlPreferencePluginOverrideParentOverride map[string]apiext.JSON
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.

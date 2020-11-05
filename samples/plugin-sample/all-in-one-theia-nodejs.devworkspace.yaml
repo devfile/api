@@ -1,0 +1,277 @@
+kind: DevWorkspace
+apiVersion: workspace.devfile.io/v1alpha1
+metadata:
+  name: theia-nodejs
+spec:
+  started: true
+  template:
+    projects:
+      - name: project
+        git:
+          remotes:
+            origin: "https://github.com/che-samples/web-nodejs-sample.git"
+
+    preferences:
+      # plugin:
+      #   name: typescript-plugin
+      #   id: che-incubator/typescript/latest
+
+      - name: vscode-typescript-preferences
+        attributes:
+          "devworkspace.devfile.io/plugin": typescript-plugin # Added during merging of plugin inside main devfile
+        yaml:
+          "typescript.implementationsCodeLens.enabled": true
+
+      # plugin:
+      #   name: node-debug-plugin
+      #   id: ms-vscode/node-debug2/latest
+
+      - name: vscode-node-debug-preferences
+        attributes:
+          "devworkspace.devfile.io/plugin": node-debug-plugin # Added during merging of plugin inside main devfile
+        yaml: {}
+
+      #   id: ms-vscode/vscode-github-pullrequest
+      #   name: pull-request-plugin
+      
+      - name: pull-request-plugin-preferences
+        attributes:
+          "devworkspace.devfile.io/plugin": pull-request-plugin # Added during merging of plugin inside main devfile
+          "vsx.che.eclipse.org/vscode-pull-request-github": https://github.com/microsoft/vscode-pull-request-github/releases/download/v0.8.0/vscode-pull-request-github-0.8.0.vsix
+        yaml: {}
+
+    components:
+
+      # plugin: 
+      #   name: editor
+      #   id: eclipse/che-theia/latest
+
+      - name: theia-ide
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        container:
+          image: "quay.io/eclipse/che-theia:7.20.0"
+          env:
+            - name: THEIA_PLUGINS
+              value: local-dir:///plugins
+            - name: HOSTED_PLUGIN_HOSTNAME
+              value: 0.0.0.0
+            - name: HOSTED_PLUGIN_PORT
+              value: "3130"
+            - name: THEIA_HOST
+              value: 127.0.0.1
+          volumeMounts:
+            - path: "/plugins"
+              name: plugins
+          mountSources: true
+          memoryLimit: "512M"
+          endpoints:
+            - name: "theia"
+              exposure: public
+              targetPort: 3100
+              secure: true
+              protocol: http
+              attributes:
+                type: ide
+                cookiesAuthEnabled: "true"
+            - name: "webviews"
+              exposure: public
+              targetPort: 3100
+              protocol: http
+              secure: true
+              attributes:
+                type: webview
+                cookiesAuthEnabled: "true"
+                unique: "true"
+            - name: "theia-dev"
+              exposure: public
+              targetPort: 3130
+              protocol: http
+              attributes:
+                type: ide-dev
+            - name: "theia-redirect-1"
+              exposure: public
+              targetPort: 13131
+              protocol: http
+            - name: "theia-redirect-2"
+              exposure: public
+              targetPort: 13132
+              protocol: http
+            - name: "theia-redirect-3"
+              exposure: public
+              targetPort: 13133
+              protocol: http      
+
+      - name: plugins
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        volume: {} 
+          
+      - name: vsx-installer  # Mainly reads the container / preferences objects and searches for those with
+                            # attributes starting with vsx.che.eclipse.org/ to get VSX urls
+                            # Those found in container components are with a sidecar,
+                            # Those found in preferences objects are without a sidecar.
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        container:
+          image: "to-be-done-sort-of-plugin-broker"
+          volumeMounts:
+            - path: "/plugins"
+              name: plugins
+
+      - name: remote-endpoint
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        volume: {}
+          # ephemeral: true                #### We should add it in the Devfile 2.0 spec ! Not critical to implement at start though
+
+      - name: remote-runtime-injector
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        container:                          #### corresponds to `initContainer` definition in old meta.yaml.
+          image: "quay.io/eclipse/che-theia-endpoint-runtime-binary:7.20.0"
+          volumeMounts:
+            - path: "/remote-endpoint"
+              name: remote-endpoint
+          env:
+            - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+              value: /remote-endpoint/plugin-remote-endpoint
+            - name: REMOTE_ENDPOINT_VOLUME_NAME
+              value: remote-endpoint
+
+      # plugin:
+      #   name: terminal
+      #   id: eclipse/che-machine-exec-plugin/latest
+
+      - name: che-machine-exec
+        attributes:
+          "devworkspace.devfile.io/plugin": terminal
+        container:
+          image: "quay.io/eclipse/che-machine-exec:7.20.0"
+          command: ['/go/bin/che-machine-exec', '--url', '0.0.0.0:4444']
+          endpoints:
+            - name: "che-machine-exec"
+              exposure: public
+              targetPort: 4444
+              protocol: ws
+              secure: true
+              attributes:
+                type: terminal
+                cookiesAuthEnabled: "true"
+
+      # plugin:
+      #   name: typescript-plugin
+      #   id: che-incubator/typescript/latest
+
+      - name: vscode-typescript
+        attributes:
+          "devworkspace.devfile.io/plugin": typescript-plugin
+          "vsx.che.eclipse.org/che-typescript-language/url": https://download.jboss.org/jbosstools/vscode/3rdparty/ms-code.typescript/che-typescript-language-1.35.1.vsix
+        container:
+          image: "quay.io/eclipse/che-sidecar-node:10-0cb5d78"
+          memoryLimit: '512Mi'
+          env:
+            - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+              value: /remote-endpoint/plugin-remote-endpoint 
+            - name: THEIA_PLUGINS
+              value: local-dir:///plugins/sidecars/vscode-typescript
+          volumeMounts:
+            - path: "/remote-endpoint"
+              name: remote-endpoint
+            - name: plugins
+              path: /plugins
+              
+      # plugin:
+      #   name: node-debug-plugin
+      #   id: ms-vscode/node-debug2/latest
+
+      - name: vscode-node-debug
+        attributes:
+          "devworkspace.devfile.io/plugin": vscode-node-debug
+          "vsx.che.eclipse.org/node-debug/url": https://download.jboss.org/jbosstools/vscode/3rdparty/vscode-node-debug/node-debug-1.41.1.vsix
+          "vsx.che.eclipse.org/node-debug2/url": https://download.jboss.org/jbosstools/vscode/3rdparty/vscode-node-debug2/node-debug2-1.42.3.vsix
+        container:
+          image: "quay.io/eclipse/che-sidecar-node:12-026416c"
+          memoryLimit: '512Mi'
+          env:
+            - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+              value: /remote-endpoint/plugin-remote-endpoint 
+            - name: THEIA_PLUGINS
+              value: local-dir:///plugins/sidecars/vscode-node-debug
+          volumeMounts:
+            - path: "/remote-endpoint"
+              name: remote-endpoint
+            - name: plugins-node-debug-plugin
+              path: /plugins
+
+
+      # User runtime container 
+      - name: nodejs
+        container:
+          image: quay.io/eclipse/che-nodejs10-ubi:nightly
+          memoryLimit: 512Mi
+          endpoints:
+            - name: nodejs
+              protocol: http
+              targetPort: 3000
+          mountSources: true
+
+    commands:
+
+      # Commands coming from plugin editor
+      - id: inject-theia-in-remote-sidecar
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        apply:
+          component: remote-runtime-injector
+      - id: copy-vsx
+        attributes:
+          "devworkspace.devfile.io/plugin": editor
+        apply:
+          component: vsx-installer
+
+      # User commands
+      - id: download dependencies
+        exec:
+          component: nodejs
+          commandLine: npm install
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: run the app
+        exec:
+          component: nodejs
+          commandLine: nodemon app.js
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: run the app (debugging enabled)
+        exec:
+          component: nodejs
+          commandLine: nodemon --inspect app.js
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: stop the app
+        exec:
+          component: nodejs
+          commandLine: >-
+              node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+              echo "Stopping node server with PIDs: ${node_server_pids}" &&
+              kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
+      - id: Attach remote debugger
+        vscodeLaunch:
+          inlined: |
+            {
+              "version": "0.2.0",
+              "configurations": [
+                {
+                  "type": "node",
+                  "request": "attach",
+                  "name": "Attach to Remote",
+                  "address": "localhost",
+                  "port": 9229,
+                  "localRoot": "${workspaceFolder}",
+                  "remoteRoot": "${workspaceFolder}"
+                }
+              ]
+            }
+    
+    events:
+      preStart:
+        - inject-theia-in-remote-sidecar
+        - copy-vsx

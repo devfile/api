@@ -12,6 +12,16 @@ type DevWorkspaceTemplateSpec struct {
 
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
+	// List of preferences contributed to workspace components, such as editor and plugins,
+	// user-provided containers, or other types of components that can have access to the devfile
+	// content
+	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
+	// +devfile:overrides:include:description=Overrides of preferences encapsulated in a parent devfile or a plugin.
+	// +devfile:toplevellist
+	Preferences []Preference `json:"preferences,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
 	// List of the workspace components, such as editor and plugins,
 	// user-provided containers, or other types of components
 	// +optional

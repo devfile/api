@@ -741,6 +741,58 @@
         "additionalProperties": false
       },
       "markdownDescription": "Overrides of components encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+    },
+    "preferences": {
+      "description": "Overrides of preferences encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "oneOf": [
+          {
+            "required": [
+              "yaml"
+            ]
+          },
+          {
+            "required": [
+              "inline"
+            ]
+          },
+          {
+            "required": [
+              "uri"
+            ]
+          }
+        ],
+        "properties": {
+          "inline": {
+            "description": "Opaque raw string preference",
+            "type": "string",
+            "markdownDescription": "Opaque raw string preference"
+          },
+          "name": {
+            "description": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin.",
+            "type": "string",
+            "markdownDescription": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin."
+          },
+          "uri": {
+            "description": "uri where the preferences string should be loaded from",
+            "type": "string",
+            "markdownDescription": "uri where the preferences string should be loaded from"
+          },
+          "yaml": {
+            "description": "Free-form Yaml preference",
+            "type": "object",
+            "additionalProperties": {},
+            "markdownDescription": "Free-form Yaml preference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "markdownDescription": "Overrides of preferences encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
     }
   },
   "additionalProperties": false,

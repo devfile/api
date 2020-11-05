@@ -1,8 +1,20 @@
 package v1alpha2
 
+import (
+	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+)
+
 // +devfile:jsonschema:generate
 type PluginOverrides struct {
 	OverridesBase `json:",inline"`
+
+	// Overrides of preferences encapsulated in a parent devfile or a plugin.
+	// Overriding is done according to K8S strategic merge patch standard rules.
+	// +optional
+	// +patchMergeKey=name
+	// +patchStrategy=merge
+	// +devfile:toplevellist
+	Preferences []PreferencePluginOverride `json:"preferences,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// Overrides of components encapsulated in a parent devfile or a plugin.
 	// Overriding is done according to K8S strategic merge patch standard rules.
@@ -21,13 +33,24 @@ type PluginOverrides struct {
 	Commands []CommandPluginOverride `json:"commands,omitempty" patchStrategy:"merge" patchMergeKey:"id"`
 }
 
+type PreferencePluginOverride struct {
+
+	// Mandatory key that uniquely references the preference
+	// especially from an external defvile that may override this preference
+	// through a parent or a plugin.
+	Name string `json:"name"`
+
+	PreferenceLocationUnionPluginOverride `json:",inline"`
+}
+
 //+k8s:openapi-gen=true
 type ComponentPluginOverride struct {
 
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name                         string `json:"name"`
+	Name string `json:"name"`
+
 	ComponentUnionPluginOverride `json:",inline"`
 }
 
@@ -36,8 +59,32 @@ type CommandPluginOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id                         string `json:"id"`
+	Id string `json:"id"`
+
 	CommandUnionPluginOverride `json:",inline"`
+}
+
+// +union
+type PreferenceLocationUnionPluginOverride struct {
+
+	// +kubebuilder:validation:Enum=Yaml;Inline;Uri
+	// Type of preference
+	//
+	// +unionDiscriminator
+	// +optional
+	PreferenceType string `json:"preferenceType,omitempty"`
+
+	// Free-form Yaml preference
+	// +optional
+	Yaml YamlPreferencePluginOverride `json:"yaml,omitempty"`
+
+	// Opaque raw string preference
+	// +optional
+	Inline string `json:"inline,omitempty"`
+
+	// uri where the preferences string should be loaded from
+	// +optional
+	Uri string `json:"uri,omitempty"`
 }
 
 // +union
@@ -114,6 +161,8 @@ type CommandUnionPluginOverride struct {
 	// +optional
 	Composite *CompositeCommandPluginOverride `json:"composite,omitempty"`
 }
+
+type YamlPreferencePluginOverride map[string]apiext.JSON
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.

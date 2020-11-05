@@ -96,6 +96,12 @@ spec:
                     required:
                     - component
                     type: object
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Map of implementation-dependant string-based free-form
+                      attributes.
+                    type: object
                   commandType:
                     description: Type of workspace command
                     enum:
@@ -392,6 +398,12 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Map of implementation-dependant string-based free-form
+                      attributes.
+                    type: object
                   componentType:
                     description: Type of component
                     enum:
@@ -1493,6 +1505,48 @@ spec:
                         required:
                         - name
                         type: object
+                      preferences:
+                        description: Overrides of preferences encapsulated in a parent
+                          devfile or a plugin. Overriding is done according to K8S
+                          strategic merge patch standard rules.
+                        items:
+                          oneOf:
+                          - required:
+                            - yaml
+                          - required:
+                            - inline
+                          - required:
+                            - uri
+                          properties:
+                            inline:
+                              description: Opaque raw string preference
+                              type: string
+                            name:
+                              description: Mandatory key that uniquely references
+                                the preference especially from an external defvile
+                                that may override this preference through a parent
+                                or a plugin.
+                              type: string
+                            preferenceType:
+                              description: Type of preference
+                              enum:
+                              - Yaml
+                              - Inline
+                              - Uri
+                              type: string
+                            uri:
+                              description: uri where the preferences string should
+                                be loaded from
+                              type: string
+                            yaml:
+                              additionalProperties:
+                                x-kubernetes-preserve-unknown-fields: true
+                              description: Free-form Yaml preference
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        type: array
                       registryUrl:
                         type: string
                       uri:
@@ -2962,6 +3016,48 @@ spec:
                               namespace:
                                 type: string
                             type: object
+                          preferences:
+                            description: Overrides of preferences encapsulated in
+                              a parent devfile or a plugin. Overriding is done according
+                              to K8S strategic merge patch standard rules.
+                            items:
+                              oneOf:
+                              - required:
+                                - yaml
+                              - required:
+                                - inline
+                              - required:
+                                - uri
+                              properties:
+                                inline:
+                                  description: Opaque raw string preference
+                                  type: string
+                                name:
+                                  description: Mandatory key that uniquely references
+                                    the preference especially from an external defvile
+                                    that may override this preference through a parent
+                                    or a plugin.
+                                  type: string
+                                preferenceType:
+                                  description: Type of preference
+                                  enum:
+                                  - Yaml
+                                  - Inline
+                                  - Uri
+                                  type: string
+                                uri:
+                                  description: uri where the preferences string should
+                                    be loaded from
+                                  type: string
+                                yaml:
+                                  additionalProperties:
+                                    x-kubernetes-preserve-unknown-fields: true
+                                  description: Free-form Yaml preference
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            type: array
                           registryUrl:
                             type: string
                           uri:
@@ -3001,6 +3097,47 @@ spec:
                   required:
                   - name
                   type: object
+                preferences:
+                  description: Overrides of preferences encapsulated in a parent devfile
+                    or a plugin. Overriding is done according to K8S strategic merge
+                    patch standard rules.
+                  items:
+                    oneOf:
+                    - required:
+                      - yaml
+                    - required:
+                      - inline
+                    - required:
+                      - uri
+                    properties:
+                      inline:
+                        description: Opaque raw string preference
+                        type: string
+                      name:
+                        description: Mandatory key that uniquely references the preference
+                          especially from an external defvile that may override this
+                          preference through a parent or a plugin.
+                        type: string
+                      preferenceType:
+                        description: Type of preference
+                        enum:
+                        - Yaml
+                        - Inline
+                        - Uri
+                        type: string
+                      uri:
+                        description: uri where the preferences string should be loaded
+                          from
+                        type: string
+                      yaml:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: Free-form Yaml preference
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  type: array
                 projects:
                   description: Overrides of projects encapsulated in a parent devfile.
                     Overriding is done according to K8S strategic merge patch standard
@@ -3197,6 +3334,53 @@ spec:
                   description: Uri of a Devfile yaml file
                   type: string
               type: object
+            preferences:
+              description: List of preferences contributed to workspace components,
+                such as editor and plugins, user-provided containers, or other types
+                of components that can have access to the devfile content
+              items:
+                oneOf:
+                - required:
+                  - yaml
+                - required:
+                  - inline
+                - required:
+                  - uri
+                properties:
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Map of implementation-dependant string-based free-form
+                      attributes.
+                    type: object
+                  inline:
+                    description: Opaque raw string preference
+                    type: string
+                  name:
+                    description: Mandatory key that uniquely references the preference
+                      especially from an external defvile that may override this preference
+                      through a parent or a plugin.
+                    type: string
+                  preferenceType:
+                    description: Type of preference
+                    enum:
+                    - Yaml
+                    - Inline
+                    - Uri
+                    type: string
+                  uri:
+                    description: uri where the preferences string should be loaded
+                      from
+                    type: string
+                  yaml:
+                    additionalProperties:
+                      x-kubernetes-preserve-unknown-fields: true
+                    description: Free-form Yaml preference
+                    type: object
+                required:
+                - name
+                type: object
+              type: array
             projects:
               description: Projects worked on in the workspace, containing names and
                 sources locations
@@ -3211,6 +3395,12 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Map of implementation-dependant string-based free-form
+                      attributes.
+                    type: object
                   clonePath:
                     description: Path relative to the root of the projects to which
                       this project should be cloned into. This is a unix-style relative
@@ -3325,6 +3515,12 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Map of implementation-dependant string-based free-form
+                      attributes.
+                    type: object
                   custom:
                     description: Project's Custom source
                     properties:

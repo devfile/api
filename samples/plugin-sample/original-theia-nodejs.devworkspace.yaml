@@ -1,0 +1,91 @@
+kind: DevWorkspace
+apiVersion: workspace.devfile.io/v1alpha1
+metadata:
+  name: theia-nodejs
+spec:
+  started: true
+  template:
+    projects:
+      - name: project
+        git:
+          remotes:
+            origin: "https://github.com/che-samples/web-nodejs-sample.git"
+
+    components:     
+      - name: editor
+        plugin:
+          id: eclipse/che-theia/latest
+
+      - name: terminal
+        plugin:
+          id: eclipse/che-machine-exec-plugin/latest
+
+      - name: typescript-plugin
+        plugin:
+          id: che-incubator/typescript/latest
+          preferences:
+            - name: vscode-typescript-preferences
+              yaml:
+                "typescript.implementationsCodeLens.enabled": true
+
+      - name: node-debug-plugin
+        plugin:
+          id: ms-vscode/node-debug2/latest
+
+      - name: pull-request-plugin
+        plugin:
+          id: ms-vscode/vscode-github-pullrequest
+      
+      # User runtime container 
+      - name: nodejs
+        container:
+          image: quay.io/eclipse/che-nodejs10-ubi:nightly
+          memoryLimit: 512Mi
+          endpoints:
+            - name: nodejs
+              protocol: http
+              targetPort: 3000
+          mountSources: true
+
+    commands:
+
+      # User commands
+      - id: download dependencies
+        exec:
+          component: nodejs
+          commandLine: npm install
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: run the app
+        exec:
+          component: nodejs
+          commandLine: nodemon app.js
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: run the app (debugging enabled)
+        exec:
+          component: nodejs
+          commandLine: nodemon --inspect app.js
+          workingDir: ${PROJECTS_ROOT}/project/app
+      - id: stop the app
+        exec:
+          component: nodejs
+          commandLine: >-
+              node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+              echo "Stopping node server with PIDs: ${node_server_pids}" &&
+              kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
+      - id: Attach remote debugger
+        vscodeLaunch:
+          inlined: |
+            {
+              "version": "0.2.0",
+              "configurations": [
+                {
+                  "type": "node",
+                  "request": "attach",
+                  "name": "Attach to Remote",
+                  "address": "localhost",
+                  "port": 9229,
+                  "localRoot": "${workspaceFolder}",
+                  "remoteRoot": "${workspaceFolder}"
+                }
+              ]
+            }

@@ -1,0 +1,21 @@
+schemaVersion: 2.0.0
+preferences:
+  - name: vscode-typescript-preferences
+    yaml: {}
+components:
+  - name: vscode-typescript
+    attributes:
+      "vsx.che.eclipse.org/che-typescript-language/url": https://download.jboss.org/jbosstools/vscode/3rdparty/ms-code.typescript/che-typescript-language-1.35.1.vsix
+    container:
+      image: "quay.io/eclipse/che-sidecar-node:10-0cb5d78"
+      memoryLimit: '512Mi'
+      env:
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint 
+        - name: THEIA_PLUGINS
+          value: local-dir:///plugins/sidecars/vscode-typescript
+      volumeMounts:
+        - path: "/remote-endpoint"
+          name: remote-endpoint
+        - name: plugins
+          path: /plugins

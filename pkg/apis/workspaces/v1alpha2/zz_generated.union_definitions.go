@@ -118,6 +118,28 @@ type K8sLikeComponentLocationVisitor struct {
 	Inlined func(string) error
 }
 
+var preferenceLocationUnion reflect.Type = reflect.TypeOf(PreferenceLocationUnionVisitor{})
+
+func (union PreferenceLocationUnion) Visit(visitor PreferenceLocationUnionVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *PreferenceLocationUnion) discriminator() *string {
+	return (*string)(&union.PreferenceType)
+}
+func (union *PreferenceLocationUnion) Normalize() error {
+	return normalizeUnion(union, preferenceLocationUnion)
+}
+func (union *PreferenceLocationUnion) Simplify() {
+	simplifyUnion(union, preferenceLocationUnion)
+}
+
+// +k8s:deepcopy-gen=false
+type PreferenceLocationUnionVisitor struct {
+	Yaml   func(YamlPreference) error
+	Inline func(string) error
+	Uri    func(string) error
+}
+
 var projectSource reflect.Type = reflect.TypeOf(ProjectSourceVisitor{})
 
 func (union ProjectSource) Visit(visitor ProjectSourceVisitor) error {
@@ -139,6 +161,28 @@ type ProjectSourceVisitor struct {
 	Github func(*GithubProjectSource) error
 	Zip    func(*ZipProjectSource) error
 	Custom func(*CustomProjectSource) error
+}
+
+var preferenceLocationUnionParentOverride reflect.Type = reflect.TypeOf(PreferenceLocationUnionParentOverrideVisitor{})
+
+func (union PreferenceLocationUnionParentOverride) Visit(visitor PreferenceLocationUnionParentOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *PreferenceLocationUnionParentOverride) discriminator() *string {
+	return (*string)(&union.PreferenceType)
+}
+func (union *PreferenceLocationUnionParentOverride) Normalize() error {
+	return normalizeUnion(union, preferenceLocationUnionParentOverride)
+}
+func (union *PreferenceLocationUnionParentOverride) Simplify() {
+	simplifyUnion(union, preferenceLocationUnionParentOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type PreferenceLocationUnionParentOverrideVisitor struct {
+	Yaml   func(YamlPreferenceParentOverride) error
+	Inline func(string) error
+	Uri    func(string) error
 }
 
 var componentUnionParentOverride reflect.Type = reflect.TypeOf(ComponentUnionParentOverrideVisitor{})
@@ -275,6 +319,28 @@ type ImportReferenceUnionParentOverrideVisitor struct {
 	Kubernetes func(*KubernetesCustomResourceImportReferenceParentOverride) error
 }
 
+var preferenceLocationUnionPluginOverrideParentOverride reflect.Type = reflect.TypeOf(PreferenceLocationUnionPluginOverrideParentOverrideVisitor{})
+
+func (union PreferenceLocationUnionPluginOverrideParentOverride) Visit(visitor PreferenceLocationUnionPluginOverrideParentOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *PreferenceLocationUnionPluginOverrideParentOverride) discriminator() *string {
+	return (*string)(&union.PreferenceType)
+}
+func (union *PreferenceLocationUnionPluginOverrideParentOverride) Normalize() error {
+	return normalizeUnion(union, preferenceLocationUnionPluginOverrideParentOverride)
+}
+func (union *PreferenceLocationUnionPluginOverrideParentOverride) Simplify() {
+	simplifyUnion(union, preferenceLocationUnionPluginOverrideParentOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type PreferenceLocationUnionPluginOverrideParentOverrideVisitor struct {
+	Yaml   func(YamlPreferencePluginOverrideParentOverride) error
+	Inline func(string) error
+	Uri    func(string) error
+}
+
 var componentUnionPluginOverrideParentOverride reflect.Type = reflect.TypeOf(ComponentUnionPluginOverrideParentOverrideVisitor{})
 
 func (union ComponentUnionPluginOverrideParentOverride) Visit(visitor ComponentUnionPluginOverrideParentOverrideVisitor) error {
@@ -362,6 +428,28 @@ func (union *K8sLikeComponentLocationPluginOverrideParentOverride) Simplify() {
 type K8sLikeComponentLocationPluginOverrideParentOverrideVisitor struct {
 	Uri     func(string) error
 	Inlined func(string) error
+}
+
+var preferenceLocationUnionPluginOverride reflect.Type = reflect.TypeOf(PreferenceLocationUnionPluginOverrideVisitor{})
+
+func (union PreferenceLocationUnionPluginOverride) Visit(visitor PreferenceLocationUnionPluginOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *PreferenceLocationUnionPluginOverride) discriminator() *string {
+	return (*string)(&union.PreferenceType)
+}
+func (union *PreferenceLocationUnionPluginOverride) Normalize() error {
+	return normalizeUnion(union, preferenceLocationUnionPluginOverride)
+}
+func (union *PreferenceLocationUnionPluginOverride) Simplify() {
+	simplifyUnion(union, preferenceLocationUnionPluginOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type PreferenceLocationUnionPluginOverrideVisitor struct {
+	Yaml   func(YamlPreferencePluginOverride) error
+	Inline func(string) error
+	Uri    func(string) error
 }
 
 var componentUnionPluginOverride reflect.Type = reflect.TypeOf(ComponentUnionPluginOverrideVisitor{})

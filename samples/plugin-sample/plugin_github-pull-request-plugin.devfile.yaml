@@ -1,0 +1,6 @@
+schemaVersion: 2.0.0
+preferences:
+  - name: pull-request-plugin-preferences
+    attributes:
+      "vsx.che.eclipse.org/vscode-pull-request-github": https://github.com/microsoft/vscode-pull-request-github/releases/download/v0.8.0/vscode-pull-request-github-0.8.0.vsix
+    yaml: {}

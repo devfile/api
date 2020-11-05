@@ -93,6 +93,13 @@
             },
             "additionalProperties": false
           },
+          "attributes": {
+            "description": "Map of implementation-dependant string-based free-form attributes.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "composite": {
             "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
             "type": "object",
@@ -448,6 +455,13 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant string-based free-form attributes.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "container": {
             "description": "Allows adding and configuring workspace-related containers",
             "type": "object",
@@ -1477,6 +1491,53 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "preferences": {
+                "description": "Overrides of preferences encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name"
+                  ],
+                  "oneOf": [
+                    {
+                      "required": [
+                        "yaml"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "inline"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "uri"
+                      ]
+                    }
+                  ],
+                  "properties": {
+                    "inline": {
+                      "description": "Opaque raw string preference",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin.",
+                      "type": "string"
+                    },
+                    "uri": {
+                      "description": "uri where the preferences string should be loaded from",
+                      "type": "string"
+                    },
+                    "yaml": {
+                      "description": "Free-form Yaml preference",
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "additionalProperties": false
+                }
               },
               "registryUrl": {
                 "type": "string"
@@ -2909,6 +2970,53 @@
                     },
                     "additionalProperties": false
                   },
+                  "preferences": {
+                    "description": "Overrides of preferences encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "oneOf": [
+                        {
+                          "required": [
+                            "yaml"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "inline"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "uri"
+                          ]
+                        }
+                      ],
+                      "properties": {
+                        "inline": {
+                          "description": "Opaque raw string preference",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin.",
+                          "type": "string"
+                        },
+                        "uri": {
+                          "description": "uri where the preferences string should be loaded from",
+                          "type": "string"
+                        },
+                        "yaml": {
+                          "description": "Free-form Yaml preference",
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
                   "registryUrl": {
                     "type": "string"
                   },
@@ -2953,6 +3061,53 @@
             }
           },
           "additionalProperties": false
+        },
+        "preferences": {
+          "description": "Overrides of preferences encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "yaml"
+                ]
+              },
+              {
+                "required": [
+                  "inline"
+                ]
+              },
+              {
+                "required": [
+                  "uri"
+                ]
+              }
+            ],
+            "properties": {
+              "inline": {
+                "description": "Opaque raw string preference",
+                "type": "string"
+              },
+              "name": {
+                "description": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin.",
+                "type": "string"
+              },
+              "uri": {
+                "description": "uri where the preferences string should be loaded from",
+                "type": "string"
+              },
+              "yaml": {
+                "description": "Free-form Yaml preference",
+                "type": "object",
+                "additionalProperties": {}
+              }
+            },
+            "additionalProperties": false
+          }
         },
         "projects": {
           "description": "Overrides of projects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
@@ -3189,6 +3344,60 @@
       },
       "additionalProperties": false
     },
+    "preferences": {
+      "description": "List of preferences contributed to workspace components, such as editor and plugins, user-provided containers, or other types of components that can have access to the devfile content",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "oneOf": [
+          {
+            "required": [
+              "yaml"
+            ]
+          },
+          {
+            "required": [
+              "inline"
+            ]
+          },
+          {
+            "required": [
+              "uri"
+            ]
+          }
+        ],
+        "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant string-based free-form attributes.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "inline": {
+            "description": "Opaque raw string preference",
+            "type": "string"
+          },
+          "name": {
+            "description": "Mandatory key that uniquely references the preference especially from an external defvile that may override this preference through a parent or a plugin.",
+            "type": "string"
+          },
+          "uri": {
+            "description": "uri where the preferences string should be loaded from",
+            "type": "string"
+          },
+          "yaml": {
+            "description": "Free-form Yaml preference",
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "projects": {
       "description": "Projects worked on in the workspace, containing names and sources locations",
       "type": "array",
@@ -3220,6 +3429,13 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant string-based free-form attributes.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "clonePath": {
             "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
             "type": "string"
@@ -3363,6 +3579,13 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant string-based free-form attributes.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "custom": {
             "description": "Project's Custom source",
             "type": "object",
