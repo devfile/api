@@ -172,3 +172,67 @@ var ProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 // embeddedResource.Object is an interface and hard to fuzz right now.
 var RawExtFuzzFunc = func(embeddedResource *runtime.RawExtension, c fuzz.Continue) {}
 
+func TestDevWorkspaceConversion_v1alpha1(t *testing.T) {
+	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
+		DevWorkspaceFuzzFunc,
+		ConditionFuzzFunc,
+		ParentFuzzFunc,
+		ComponentFuzzFunc,
+		CommandFuzzFunc,
+		ProjectFuzzFunc,
+		PluginComponentsOverrideFuzzFunc,
+		PluginComponentFuzzFunc,
+		RawExtFuzzFunc,
+	)
+	for i := 0; i < fuzzIterations; i++ {
+		original := &DevWorkspace{}
+		intermediate := &v1alpha2.DevWorkspace{}
+		output := &DevWorkspace{}
+		f.Fuzz(original)
+		input := original.DeepCopy()
+		err := convertDevWorkspaceTo_v1alpha2(input, intermediate)
+		if !assert.NoError(t, err, "Should not return error when converting to v1alpha2") {
+			return
+		}
+		err = convertDevWorkspaceFrom_v1alpha2(intermediate, output)
+		if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
+			return
+		}
+		if !assert.True(t, cmp.Equal(original, output), "Component should not be changed when converting between v1alpha1 and v1alpha2") {
+			t.Logf("Diff: \n%s\n", cmp.Diff(original, output))
+		}
+	}
+}
+
+func TestDevWorkspaceTemplateConversion_v1alpha1(t *testing.T) {
+	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
+		DevWorkspaceTemplateFuzzFunc,
+		ConditionFuzzFunc,
+		ParentFuzzFunc,
+		ComponentFuzzFunc,
+		CommandFuzzFunc,
+		ProjectFuzzFunc,
+		PluginComponentsOverrideFuzzFunc,
+		PluginComponentFuzzFunc,
+		RawExtFuzzFunc,
+	)
+	for i := 0; i < fuzzIterations; i++ {
+		original := &DevWorkspaceTemplate{}
+		intermediate := &v1alpha2.DevWorkspaceTemplate{}
+		output := &DevWorkspaceTemplate{}
+		f.Fuzz(original)
+		input := original.DeepCopy()
+		err := convertDevWorkspaceTemplateTo_v1alpha2(input, intermediate)
+		if !assert.NoError(t, err, "Should not return error when converting to v1alpha2") {
+			return
+		}
+		err = convertDevWorkspaceTemplateFrom_v1alpha2(intermediate, output)
+		if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
+			return
+		}
+		if !assert.True(t, cmp.Equal(original, output), "Component should not be changed when converting between v1alpha1 and v1alpha2") {
+			t.Logf("Diff: \n%s\n", cmp.Diff(original, output))
+		}
+	}
+}
+
