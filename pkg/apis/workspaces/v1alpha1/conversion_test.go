@@ -236,3 +236,47 @@ func TestDevWorkspaceTemplateConversion_v1alpha1(t *testing.T) {
 	}
 }
 
+func BenchmarkDevWorkspaceConversion(b *testing.B) {
+	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
+		DevWorkspaceFuzzFunc,
+		ConditionFuzzFunc,
+		ParentFuzzFunc,
+		ComponentFuzzFunc,
+		CommandFuzzFunc,
+		ProjectFuzzFunc,
+		PluginComponentsOverrideFuzzFunc,
+		PluginComponentFuzzFunc,
+		RawExtFuzzFunc,
+	)
+	b.ResetTimer()
+	b.Run("Convert to v1alpha2", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			b.StopTimer()
+			v1alpha1DW := &DevWorkspace{}
+			v1alpha2DW := &v1alpha2.DevWorkspace{}
+			f.Fuzz(v1alpha1DW)
+			b.StartTimer()
+			err := convertDevWorkspaceTo_v1alpha2(v1alpha1DW, v1alpha2DW)
+			if err != nil {
+				b.FailNow()
+			}
+		}
+	})
+	b.Run("Convert from v1alpha2", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			b.StopTimer()
+			v1alpha1DW := &DevWorkspace{}
+			v1alpha2DW := &v1alpha2.DevWorkspace{}
+			f.Fuzz(v1alpha1DW)
+			err := convertDevWorkspaceTo_v1alpha2(v1alpha1DW, v1alpha2DW)
+			if err != nil {
+				b.FailNow()
+			}
+			b.StartTimer()
+			err = convertDevWorkspaceFrom_v1alpha2(v1alpha2DW, v1alpha1DW)
+			if err != nil {
+				b.FailNow()
+			}
+		}
+	})
+}
