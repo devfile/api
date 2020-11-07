@@ -44,7 +44,7 @@ Implementing an operator to programatically deploy devfile registries will strea
 #### Storage
 `enabled` (bool) Enables persistent storage for the registry. Defaults to true.
 
-`registryVolumeSize` (string). Size of the volume to use. Defaults to 3Gi.
+`registryVolumeSize` (string). Size of the volume to use. Defaults to 1Gi.
 
 #### TLS
 `enabled` (bool) TLS mode for the devfile registry. Defaults to true.
@@ -79,7 +79,7 @@ spec:
 When an instance of a `DevfileRegistry` resource is created in the namespace where the Devfile Registry operator is deployed, the following occurs in the operator's `reconcile` loop:
 
 1) A service exposing the devfile index server and OCI registry is created
-2) If persistence was enabled, The service that exposes the registry is created
+2) If persistence was enabled, a persistent volume claim (PVC) is provisioned.
 3) The deployment containing the OCI registry and bootstrap container is deployed
 4) The OpenShift route or Kubernetes ingress resource is created
     a) (OpenShift only) If TLS was enabled, configure the OpenShift route to re-use the cluster's certificate
