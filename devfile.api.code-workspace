@@ -18,9 +18,9 @@
         },
         "go.autocompleteUnimportedPackages": true,
         "yaml.schemas": {
-            "./schemas/latest/ide-targeted/devfile.json": [ "samples/devfiles/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
-            "./schemas/latest/ide-targeted/dev-workspace.json": [ "samples/devworkspaces/*.yaml" ],
-            "./schemas/latest/ide-targeted/dev-workspace-template.json": [ "samples/devworkspace-templates/*.yaml" ],
+            "./schemas/latest/ide-targeted/devfile.json": [ "samples/*/*devfile.yaml", "samples/devfile-registry/*.yaml" ],
+            "./schemas/latest/ide-targeted/dev-workspace.json": [ "samples/*/*devworkspace.yaml" ],
+            "./schemas/latest/ide-targeted/dev-workspace-template.json": [ "samples/*/*devworkspacetemplate.yaml" ],
             "./schemas/latest/ide-targeted/dev-workspace-template-spec.json": [ "pkg/utils/overriding/test-fixtures/patches/**/original.yaml", "pkg/utils/overriding/test-fixtures/patches/**/result.yaml", "pkg/utils/overriding/test-fixtures/merges/*.yaml" ],
             "./schemas/latest/ide-targeted/parent-overrides.json": [ "pkg/utils/overriding/test-fixtures/**/patch.yaml" ]
         }
