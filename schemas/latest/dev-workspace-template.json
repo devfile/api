@@ -258,6 +258,11 @@
                 },
                 "additionalProperties": false
               },
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": {}
+              },
               "composite": {
                 "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                 "type": "object",
@@ -613,6 +618,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": {}
+              },
               "container": {
                 "description": "Allows adding and configuring workspace-related containers",
                 "type": "object",
@@ -650,9 +660,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          }
+                          "additionalProperties": {}
                         },
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -801,9 +809,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          }
+                          "additionalProperties": {}
                         },
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -887,9 +893,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          }
+                          "additionalProperties": {}
                         },
                         "exposure": {
                           "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -1347,9 +1351,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    }
+                                    "additionalProperties": {}
                                   },
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -1473,9 +1475,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    }
+                                    "additionalProperties": {}
                                   },
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -1556,9 +1556,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    }
+                                    "additionalProperties": {}
                                   },
                                   "exposure": {
                                     "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2114,9 +2112,7 @@
                             "attributes": {
                               "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                               "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              }
+                              "additionalProperties": {}
                             },
                             "exposure": {
                               "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2240,9 +2236,7 @@
                             "attributes": {
                               "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                               "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              }
+                              "additionalProperties": {}
                             },
                             "exposure": {
                               "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2323,9 +2317,7 @@
                             "attributes": {
                               "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                               "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              }
+                              "additionalProperties": {}
                             },
                             "exposure": {
                               "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2781,9 +2773,7 @@
                                       "attributes": {
                                         "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                         "type": "object",
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        }
+                                        "additionalProperties": {}
                                       },
                                       "exposure": {
                                         "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2907,9 +2897,7 @@
                                       "attributes": {
                                         "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                         "type": "object",
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        }
+                                        "additionalProperties": {}
                                       },
                                       "exposure": {
                                         "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -2990,9 +2978,7 @@
                                       "attributes": {
                                         "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                         "type": "object",
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        }
+                                        "additionalProperties": {}
                                       },
                                       "exposure": {
                                         "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
@@ -3385,6 +3371,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": {}
+              },
               "clonePath": {
                 "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
                 "type": "string"
@@ -3528,6 +3519,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": {}
+              },
               "custom": {
                 "description": "Project's Custom source",
                 "type": "object",

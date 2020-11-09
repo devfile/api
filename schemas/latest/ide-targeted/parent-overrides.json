@@ -438,9 +438,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": {},
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -577,9 +575,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": {},
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -669,9 +665,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": {},
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -1180,9 +1174,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": {},
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {
@@ -1319,9 +1311,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": {},
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {
@@ -1411,9 +1401,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": {},
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {

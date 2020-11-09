@@ -1,5 +1,9 @@
 package v1alpha2
 
+import (
+	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+)
+
 // +devfile:jsonschema:generate
 type ParentOverrides struct {
 	OverridesBase `json:",inline"`
@@ -43,7 +47,8 @@ type ComponentParentOverride struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name                         string `json:"name"`
+	Name string `json:"name"`
+
 	ComponentUnionParentOverride `json:",inline"`
 }
 
@@ -84,7 +89,8 @@ type CommandParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id                         string `json:"id"`
+	Id string `json:"id"`
+
 	CommandUnionParentOverride `json:",inline"`
 }
 
@@ -443,7 +449,7 @@ type EndpointParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes AttributesParentOverride `json:"attributes,omitempty"`
 }
 
 type K8sLikeComponentParentOverride struct {
@@ -571,6 +577,10 @@ type EndpointExposureParentOverride string
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
 type EndpointProtocolParentOverride string
 
+// Attributes provides a way to add a map of arbitrary YAML/JSON
+// objects.
+type AttributesParentOverride map[string]apiext.JSON
+
 // +union
 type K8sLikeComponentLocationParentOverride struct {
 
@@ -624,7 +634,8 @@ type ComponentPluginOverrideParentOverride struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name                                       string `json:"name"`
+	Name string `json:"name"`
+
 	ComponentUnionPluginOverrideParentOverride `json:",inline"`
 }
 
@@ -633,7 +644,8 @@ type CommandPluginOverrideParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
-	Id                                       string `json:"id"`
+	Id string `json:"id"`
+
 	CommandUnionPluginOverrideParentOverride `json:",inline"`
 }
 
@@ -982,7 +994,7 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes AttributesPluginOverrideParentOverride `json:"attributes,omitempty"`
 }
 
 type K8sLikeComponentPluginOverrideParentOverride struct {
@@ -1068,6 +1080,10 @@ type EndpointExposurePluginOverrideParentOverride string
 // Only one of the following protocols may be specified: http, ws, tcp, udp.
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
 type EndpointProtocolPluginOverrideParentOverride string
+
+// Attributes provides a way to add a map of arbitrary YAML/JSON
+// objects.
+type AttributesPluginOverrideParentOverride map[string]apiext.JSON
 
 // +union
 type K8sLikeComponentLocationPluginOverrideParentOverride struct {

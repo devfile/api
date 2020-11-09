@@ -97,6 +97,12 @@ spec:
                       required:
                       - component
                       type: object
+                    attributes:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: Map of implementation-dependant free-form YAML
+                        attributes.
+                      type: object
                     commandType:
                       description: Type of workspace command
                       enum:
@@ -393,6 +399,12 @@ spec:
                   - required:
                     - custom
                   properties:
+                    attributes:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: Map of implementation-dependant free-form YAML
+                        attributes.
+                      type: object
                     componentType:
                       description: Type of component
                       enum:
@@ -434,7 +446,7 @@ spec:
                             properties:
                               attributes:
                                 additionalProperties:
-                                  type: string
+                                  x-kubernetes-preserve-unknown-fields: true
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
                                   attributes: \n - cookiesAuthEnabled: \"true\" /
@@ -595,7 +607,7 @@ spec:
                             properties:
                               attributes:
                                 additionalProperties:
-                                  type: string
+                                  x-kubernetes-preserve-unknown-fields: true
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
                                   attributes: \n - cookiesAuthEnabled: \"true\" /
@@ -696,7 +708,7 @@ spec:
                             properties:
                               attributes:
                                 additionalProperties:
-                                  type: string
+                                  x-kubernetes-preserve-unknown-fields: true
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
                                   attributes: \n - cookiesAuthEnabled: \"true\" /
@@ -1147,7 +1159,7 @@ spec:
                                       properties:
                                         attributes:
                                           additionalProperties:
-                                            type: string
+                                            x-kubernetes-preserve-unknown-fields: true
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
                                             Examples of Che-specific attributes: \n
@@ -1293,7 +1305,7 @@ spec:
                                       properties:
                                         attributes:
                                           additionalProperties:
-                                            type: string
+                                            x-kubernetes-preserve-unknown-fields: true
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
                                             Examples of Che-specific attributes: \n
@@ -1400,7 +1412,7 @@ spec:
                                       properties:
                                         attributes:
                                           additionalProperties:
-                                            type: string
+                                            x-kubernetes-preserve-unknown-fields: true
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
                                             Examples of Che-specific attributes: \n
@@ -1926,7 +1938,7 @@ spec:
                                 properties:
                                   attributes:
                                     additionalProperties:
-                                      type: string
+                                      x-kubernetes-preserve-unknown-fields: true
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
                                       of Che-specific attributes: \n - cookiesAuthEnabled:
@@ -2064,7 +2076,7 @@ spec:
                                 properties:
                                   attributes:
                                     additionalProperties:
-                                      type: string
+                                      x-kubernetes-preserve-unknown-fields: true
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
                                       of Che-specific attributes: \n - cookiesAuthEnabled:
@@ -2166,7 +2178,7 @@ spec:
                                 properties:
                                   attributes:
                                     additionalProperties:
-                                      type: string
+                                      x-kubernetes-preserve-unknown-fields: true
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
                                       of Che-specific attributes: \n - cookiesAuthEnabled:
@@ -2624,7 +2636,7 @@ spec:
                                           properties:
                                             attributes:
                                               additionalProperties:
-                                                type: string
+                                                x-kubernetes-preserve-unknown-fields: true
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.
                                                 \n Examples of Che-specific attributes:
@@ -2776,7 +2788,7 @@ spec:
                                           properties:
                                             attributes:
                                               additionalProperties:
-                                                type: string
+                                                x-kubernetes-preserve-unknown-fields: true
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.
                                                 \n Examples of Che-specific attributes:
@@ -2889,7 +2901,7 @@ spec:
                                           properties:
                                             attributes:
                                               additionalProperties:
-                                                type: string
+                                                x-kubernetes-preserve-unknown-fields: true
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.
                                                 \n Examples of Che-specific attributes:
@@ -3269,6 +3281,12 @@ spec:
                   - required:
                     - custom
                   properties:
+                    attributes:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: Map of implementation-dependant free-form YAML
+                        attributes.
+                      type: object
                     clonePath:
                       description: Path relative to the root of the projects to which
                         this project should be cloned into. This is a unix-style relative
@@ -3383,6 +3401,12 @@ spec:
                   - required:
                     - custom
                   properties:
+                    attributes:
+                      additionalProperties:
+                        x-kubernetes-preserve-unknown-fields: true
+                      description: Map of implementation-dependant free-form YAML
+                        attributes.
+                      type: object
                     custom:
                       description: Project's Custom source
                       properties:

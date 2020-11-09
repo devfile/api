@@ -59,6 +59,10 @@ type Command struct {
 	// this command in composite commands, from
 	// a parent, or in events.
 	Id           string `json:"id"`
+	// Map of implementation-dependant free-form YAML attributes.
+	// +optional
+	// +devfile:overrides:include:omit=true
+	Attributes Attributes `json:"attributes,omitempty"`
 	CommandUnion `json:",inline"`
 }
 

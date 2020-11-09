@@ -102,5 +102,5 @@ type Endpoint struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes Attributes `json:"attributes,omitempty"`
 }
