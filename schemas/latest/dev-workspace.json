@@ -1686,28 +1686,28 @@
               "type": "object",
               "properties": {
                 "postStart": {
-                  "description": "Names of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
+                  "description": "IDs of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "postStop": {
-                  "description": "Names of commands that should be executed after stopping the workspace.",
+                  "description": "IDs of commands that should be executed after stopping the workspace.",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "preStart": {
-                  "description": "Names of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD.",
+                  "description": "IDs of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD.",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "preStop": {
-                  "description": "Names of commands that should be executed before stopping the workspace.",
+                  "description": "IDs of commands that should be executed before stopping the workspace.",
                   "type": "array",
                   "items": {
                     "type": "string"

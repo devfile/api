@@ -1584,8 +1584,8 @@ spec:
                     by its name.
                   properties:
                     postStart:
-                      description: Names of commands that should be executed after
-                        the workspace is completely started. In the case of Che-Theia,
+                      description: IDs of commands that should be executed after the
+                        workspace is completely started. In the case of Che-Theia,
                         these commands should be executed after all plugins and extensions
                         have started, including project cloning. This means that those
                         commands are not triggered until the user opens the IDE in
@@ -1594,13 +1594,13 @@ spec:
                         type: string
                       type: array
                     postStop:
-                      description: Names of commands that should be executed after
-                        stopping the workspace.
+                      description: IDs of commands that should be executed after stopping
+                        the workspace.
                       items:
                         type: string
                       type: array
                     preStart:
-                      description: Names of commands that should be executed before
+                      description: IDs of commands that should be executed before
                         the workspace start. Kubernetes-wise, these commands would
                         typically be executed in init containers of the workspace
                         POD.
@@ -1608,7 +1608,7 @@ spec:
                         type: string
                       type: array
                     preStop:
-                      description: Names of commands that should be executed before
+                      description: IDs of commands that should be executed before
                         stopping the workspace.
                       items:
                         type: string
