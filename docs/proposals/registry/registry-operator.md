@@ -36,20 +36,19 @@ Implementing an operator to programatically deploy devfile registries will strea
 
 ### Fields
 
-#### Registry 
 `devfileIndexImage` (string) Image used to bootstrap the OCI registry with devfiles and host the index.json.
 
 `ociRegistryImage` (string) Image used for the OCI registry instance. Defaults to `registry:2.7.1`
-
-#### Storage
-`enabled` (bool) Enables persistent storage for the registry. Defaults to true. Can be disabled for development or testing only.
-
-`registryVolumeSize` (string). Size of the volume to use. Defaults to 1Gi.
 
 #### TLS
 `enabled` (bool) TLS mode for the devfile registry. Defaults to true. If on OpenShift, the cluster's routing certificate will be re-used. If on Kubernetes, cert-manager will be used to provision a TLS secret.
 
 `tlsSecretName` (string) Optional pre-existing Kubernetes secret for TLS termination on the ingress resource. If set, cert-manager will **not** be used to provision a TLS secret.
+
+#### Storage
+`enabled` (bool) Enables persistent storage for the registry. Defaults to true. Can be disabled for development or testing only.
+
+`registryVolumeSize` (string). Size of the volume to use. Defaults to 1Gi.
 
 #### Kubernetes Specific
 `ingressDomain` (string) Ingress domain to be used when deploying on Kubernetes.
@@ -61,7 +60,7 @@ kind: DevfileRegistry
 metadata:
   name: registry
 spec:
-  bootstrapImage: ''
+  devfileIndexImage: ''
   ociRegistryImage: ''
   tls:
     enabled: true
