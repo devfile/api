@@ -1,7 +1,11 @@
 package v1alpha2
 
-import runtime "k8s.io/apimachinery/pkg/runtime"
-
+import (
+	runtime "k8s.io/apimachinery/pkg/runtime"
+	attributes "github.com/devfile/api/pkg/attributes"
+  )
+  
+  
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
 // +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Plugin;Custom
@@ -30,7 +34,7 @@ type Component struct {
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Attributes     Attributes `json:"attributes,omitempty"`
+	Attributes     attributes.Attributes `json:"attributes,omitempty"`
 	ComponentUnion `json:",inline"`
 }
 

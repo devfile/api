@@ -1,5 +1,10 @@
 package v1alpha2
 
+import (
+  attributes "github.com/devfile/api/pkg/attributes"
+)
+  
+  
 // EndpointProtocol defines the application and transport protocols of the traffic that will go through this endpoint.
 // Only one of the following protocols may be specified: http, ws, tcp, udp.
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
@@ -102,5 +107,5 @@ type Endpoint struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes Attributes `json:"attributes,omitempty"`
+	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }

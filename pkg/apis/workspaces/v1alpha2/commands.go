@@ -1,6 +1,9 @@
 package v1alpha2
 
-import runtime "k8s.io/apimachinery/pkg/runtime"
+import (
+  runtime "k8s.io/apimachinery/pkg/runtime"
+  attributes "github.com/devfile/api/pkg/attributes"
+)
 
 // CommandType describes the type of command.
 // Only one of the following command type may be specified.
@@ -62,7 +65,7 @@ type Command struct {
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Attributes   Attributes `json:"attributes,omitempty"`
+	Attributes   apiUtils.Attributes `json:"attributes,omitempty"`
 	CommandUnion `json:",inline"`
 }
 
@@ -219,4 +222,11 @@ type CustomCommand struct {
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
 	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`
+}
+
+func test() {
+	_ = attributes.Builder{
+		"": attributes.FromInterface(true),
+	}.LenientBuild()[""].Decode()
+
 }
