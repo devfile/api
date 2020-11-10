@@ -1,12 +1,13 @@
 package v1alpha1
 
 import (
+	"testing"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
 	"github.com/google/go-cmp/cmp"
 	fuzz "github.com/google/gofuzz"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/runtime"
-	"testing"
 )
 
 const fuzzIterations = 500
@@ -69,7 +70,6 @@ var PluginComponentsOverrideFuzzFunc = func(component *PluginComponentsOverride,
 }
 
 var PluginComponentFuzzFunc = func(plugin *PluginComponent, c fuzz.Continue) {
-	// TODO: Figure out how to handle custom commands on plugin components
 	c.Fuzz(plugin)
 	plugin.Name = c.RandString()
 	var filteredCommands []Command
@@ -198,7 +198,7 @@ func TestDevWorkspaceConversion_v1alpha1(t *testing.T) {
 		if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
 			return
 		}
-		if !assert.True(t, cmp.Equal(original, output), "Component should not be changed when converting between v1alpha1 and v1alpha2") {
+		if !assert.True(t, cmp.Equal(original, output), "DevWorkspace should not be changed when converting between v1alpha1 and v1alpha2") {
 			t.Logf("Diff: \n%s\n", cmp.Diff(original, output))
 		}
 	}
@@ -230,7 +230,7 @@ func TestDevWorkspaceTemplateConversion_v1alpha1(t *testing.T) {
 		if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
 			return
 		}
-		if !assert.True(t, cmp.Equal(original, output), "Component should not be changed when converting between v1alpha1 and v1alpha2") {
+		if !assert.True(t, cmp.Equal(original, output), "DevWorkspaceTemplate should not be changed when converting between v1alpha1 and v1alpha2") {
 			t.Logf("Diff: \n%s\n", cmp.Diff(original, output))
 		}
 	}
