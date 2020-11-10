@@ -26,11 +26,11 @@ type Component struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
-	Name           string `json:"name"`
+	Name string `json:"name"`
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Attributes Attributes `json:"attributes,omitempty"`
+	Attributes     Attributes `json:"attributes,omitempty"`
 	ComponentUnion `json:",inline"`
 }
 
