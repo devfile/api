@@ -1,16 +1,17 @@
 package v1alpha1
 
 import (
-	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"github.com/google/gofuzz"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
+	fuzz "github.com/google/gofuzz"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestProjectConversion_v1alpha1(t *testing.T) {
 	f := fuzz.New().NilChance(fuzzNilChance).Funcs(
-		RawExtFuzzFunc,
-		ProjectFuzzFunc,
+		rawExtFuzzFunc,
+		projectFuzzFunc,
 	)
 	for i := 0; i < fuzzIterations; i++ {
 		original := &Project{}
@@ -32,8 +33,8 @@ func TestProjectConversion_v1alpha1(t *testing.T) {
 
 func TestStarterProjectConversion_v1alpha1(t *testing.T) {
 	f := fuzz.New().NilChance(fuzzNilChance).Funcs(
-		RawExtFuzzFunc,
-		ProjectFuzzFunc,
+		rawExtFuzzFunc,
+		projectFuzzFunc,
 	)
 	for i := 0; i < fuzzIterations; i++ {
 		original := &StarterProject{}

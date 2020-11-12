@@ -1,16 +1,17 @@
 package v1alpha1
 
 import (
+	"encoding/json"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"sigs.k8s.io/yaml"
 )
 
 func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
-	yamlProject, err := yaml.Marshal(src)
+	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlProject, dest)
+	err = json.Unmarshal(jsonProject, dest)
 	if err != nil {
 		return err
 	}
@@ -30,11 +31,11 @@ func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
 }
 
 func convertProjectFrom_v1alpha2(src *v1alpha2.Project, dest *Project) error {
-	yamlProject, err := yaml.Marshal(src)
+	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlProject, dest)
+	err = json.Unmarshal(jsonProject, dest)
 	if err != nil {
 		return err
 	}
@@ -58,11 +59,11 @@ func convertProjectFrom_v1alpha2(src *v1alpha2.Project, dest *Project) error {
 }
 
 func convertStarterProjectTo_v1alpha2(src *StarterProject, dest *v1alpha2.StarterProject) error {
-	yamlProject, err := yaml.Marshal(src)
+	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlProject, dest)
+	err = json.Unmarshal(jsonProject, dest)
 	if err != nil {
 		return err
 	}
@@ -83,11 +84,11 @@ func convertStarterProjectTo_v1alpha2(src *StarterProject, dest *v1alpha2.Starte
 }
 
 func convertStarterProjectFrom_v1alpha2(src *v1alpha2.StarterProject, dest *StarterProject) error {
-	yamlProject, err := yaml.Marshal(src)
+	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlProject, dest)
+	err = json.Unmarshal(jsonProject, dest)
 	if err != nil {
 		return err
 	}

@@ -1,8 +1,9 @@
 package v1alpha1
 
 import (
+	"encoding/json"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"sigs.k8s.io/yaml"
 )
 
 func convertPluginComponentTo_v1alpha2(srcComponent *Component, destComponent *v1alpha2.Component) error {
@@ -54,11 +55,11 @@ func convertPluginComponentCommandTo_v1alpha2(src *Command, dest *v1alpha2.Comma
 	if err != nil {
 		return err
 	}
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, &dest)
+	err = json.Unmarshal(jsonCommand, &dest)
 	if err != nil {
 		return err
 	}
@@ -71,11 +72,11 @@ func convertPluginComponentSubComponentTo_v1alpha2(src *PluginComponentsOverride
 	if err != nil {
 		return err
 	}
-	yamlComponent, err := yaml.Marshal(src)
+	jsonComponent, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlComponent, dest)
+	err = json.Unmarshal(jsonComponent, dest)
 	if err != nil {
 		return err
 	}
@@ -122,11 +123,11 @@ func convertPluginComponentFrom_v1alpha2(srcComponent *v1alpha2.Component, destC
 
 func convertPluginComponentCommandFrom_v1alpha2(src *v1alpha2.CommandPluginOverride, dest *Command) error {
 	srcId := src.Key()
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, &dest)
+	err = json.Unmarshal(jsonCommand, &dest)
 	if err != nil {
 		return err
 	}
@@ -147,11 +148,11 @@ func convertPluginComponentCommandFrom_v1alpha2(src *v1alpha2.CommandPluginOverr
 
 func convertPluginComponentSubComponentFrom_v1alpha2(src *v1alpha2.ComponentPluginOverride, dest *PluginComponentsOverride) error {
 	srcName := src.Key()
-	yamlComponent, err := yaml.Marshal(src)
+	jsonComponent, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlComponent, &dest)
+	err = json.Unmarshal(jsonComponent, &dest)
 	if err != nil {
 		return err
 	}

@@ -1,8 +1,9 @@
 package v1alpha1
 
 import (
+	"encoding/json"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"sigs.k8s.io/yaml"
 )
 
 func convertCommandTo_v1alpha2(src *Command, dest *v1alpha2.Command) error {
@@ -10,11 +11,11 @@ func convertCommandTo_v1alpha2(src *Command, dest *v1alpha2.Command) error {
 	if err != nil {
 		return err
 	}
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, dest)
+	err = json.Unmarshal(jsonCommand, dest)
 	if err != nil {
 		return err
 	}
@@ -24,11 +25,11 @@ func convertCommandTo_v1alpha2(src *Command, dest *v1alpha2.Command) error {
 
 func convertCommandFrom_v1alpha2(src *v1alpha2.Command, dest *Command) error {
 	id := src.Key()
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, dest)
+	err = json.Unmarshal(jsonCommand, dest)
 	switch {
 	case dest.Apply != nil:
 		dest.Apply.Id = id
