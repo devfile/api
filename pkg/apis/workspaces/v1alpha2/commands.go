@@ -43,9 +43,6 @@ type BaseCommand struct {
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroup `json:"group,omitempty"`
-
-	// Optional map of free-form additional command attributes
-	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 type LabeledCommand struct {
@@ -65,7 +62,7 @@ type Command struct {
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
 	// +devfile:overrides:include:omit=true
-	Attributes   apiUtils.Attributes `json:"attributes,omitempty"`
+	Attributes   attributes.Attributes `json:"attributes,omitempty"`
 	CommandUnion `json:",inline"`
 }
 
@@ -222,11 +219,4 @@ type CustomCommand struct {
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:EmbeddedResource
 	EmbeddedResource runtime.RawExtension `json:"embeddedResource"`
-}
-
-func test() {
-	_ = attributes.Builder{
-		"": attributes.FromInterface(true),
-	}.LenientBuild()[""].Decode()
-
 }

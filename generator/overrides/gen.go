@@ -127,7 +127,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		genutils.WriteFormattedSourceFile(fileNamePart, ctx, root, func(buf *bytes.Buffer) {
 			buf.WriteString(`
 import (
-	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	attributes "github.com/devfile/api/pkg/attributes"
 )
 
 `)

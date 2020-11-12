@@ -1,7 +1,7 @@
 package v1alpha2
 
 import (
-	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	attributes "github.com/devfile/api/pkg/attributes"
 )
 
 // +devfile:jsonschema:generate
@@ -340,7 +340,7 @@ type EndpointPluginOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes AttributesPluginOverride `json:"attributes,omitempty"`
+	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
 
 type K8sLikeComponentPluginOverride struct {
@@ -377,9 +377,6 @@ type BaseCommandPluginOverride struct {
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverride `json:"group,omitempty"`
-
-	// Optional map of free-form additional command attributes
-	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 // +union
@@ -425,10 +422,6 @@ type EndpointExposurePluginOverride string
 // Only one of the following protocols may be specified: http, ws, tcp, udp.
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
 type EndpointProtocolPluginOverride string
-
-// Attributes provides a way to add a map of arbitrary YAML/JSON
-// objects.
-type AttributesPluginOverride map[string]apiext.JSON
 
 // +union
 type K8sLikeComponentLocationPluginOverride struct {

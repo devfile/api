@@ -1,7 +1,7 @@
 package v1alpha2
 
 import (
-	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	attributes "github.com/devfile/api/pkg/attributes"
 )
 
 // +devfile:jsonschema:generate
@@ -449,7 +449,7 @@ type EndpointParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes AttributesParentOverride `json:"attributes,omitempty"`
+	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
 
 type K8sLikeComponentParentOverride struct {
@@ -528,9 +528,6 @@ type BaseCommandParentOverride struct {
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupParentOverride `json:"group,omitempty"`
-
-	// Optional map of free-form additional command attributes
-	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 // +union
@@ -576,10 +573,6 @@ type EndpointExposureParentOverride string
 // Only one of the following protocols may be specified: http, ws, tcp, udp.
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
 type EndpointProtocolParentOverride string
-
-// Attributes provides a way to add a map of arbitrary YAML/JSON
-// objects.
-type AttributesParentOverride map[string]apiext.JSON
 
 // +union
 type K8sLikeComponentLocationParentOverride struct {
@@ -994,7 +987,7 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
-	Attributes AttributesPluginOverrideParentOverride `json:"attributes,omitempty"`
+	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
 
 type K8sLikeComponentPluginOverrideParentOverride struct {
@@ -1032,9 +1025,6 @@ type BaseCommandPluginOverrideParentOverride struct {
 	// +optional
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverrideParentOverride `json:"group,omitempty"`
-
-	// Optional map of free-form additional command attributes
-	Attributes map[string]string `json:"attributes,omitempty"`
 }
 
 // +union
@@ -1080,10 +1070,6 @@ type EndpointExposurePluginOverrideParentOverride string
 // Only one of the following protocols may be specified: http, ws, tcp, udp.
 // +kubebuilder:validation:Enum=http;ws;tcp;udp
 type EndpointProtocolPluginOverrideParentOverride string
-
-// Attributes provides a way to add a map of arbitrary YAML/JSON
-// objects.
-type AttributesPluginOverrideParentOverride map[string]apiext.JSON
 
 // +union
 type K8sLikeComponentLocationPluginOverrideParentOverride struct {

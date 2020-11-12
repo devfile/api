@@ -63,12 +63,6 @@ spec:
                         command exist for a given component, it is assumed the component
                         will be applied at workspace start by default."
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         component:
                           description: Describes component that will be applied
                           type: string
@@ -117,12 +111,6 @@ spec:
                       description: Composite command that allows executing several
                         sub-commands either sequentially or concurrently
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         commands:
                           description: The commands that comprise this composite command
                           items:
@@ -160,12 +148,6 @@ spec:
                         and should be provided by the user possibly through some dedicated
                         plugin
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         commandClass:
                           description: Class of command that the associated implementation
                             component should use to process this command with the
@@ -207,12 +189,6 @@ spec:
                     exec:
                       description: CLI Command executed in an existing component container
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         commandLine:
                           description: "The actual command-line string \n Special
                             variables that can be used: \n  - `$PROJECTS_ROOT`: A
@@ -293,12 +269,6 @@ spec:
                       - required:
                         - inlined
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         group:
                           description: Defines the group this command is part of
                           properties:
@@ -339,12 +309,6 @@ spec:
                       - required:
                         - inlined
                       properties:
-                        attributes:
-                          additionalProperties:
-                            type: string
-                          description: Optional map of free-form additional command
-                            attributes
-                          type: object
                         group:
                           description: Defines the group this command is part of
                           properties:
@@ -830,12 +794,6 @@ spec:
                                   component, it is assumed the component will be applied
                                   at workspace start by default."
                                 properties:
-                                  attributes:
-                                    additionalProperties:
-                                      type: string
-                                    description: Optional map of free-form additional
-                                      command attributes
-                                    type: object
                                   component:
                                     description: Describes component that will be
                                       applied
@@ -877,12 +835,6 @@ spec:
                                 description: Composite command that allows executing
                                   several sub-commands either sequentially or concurrently
                                 properties:
-                                  attributes:
-                                    additionalProperties:
-                                      type: string
-                                    description: Optional map of free-form additional
-                                      command attributes
-                                    type: object
                                   commands:
                                     description: The commands that comprise this composite
                                       command
@@ -921,12 +873,6 @@ spec:
                                 description: CLI Command executed in an existing component
                                   container
                                 properties:
-                                  attributes:
-                                    additionalProperties:
-                                      type: string
-                                    description: Optional map of free-form additional
-                                      command attributes
-                                    type: object
                                   commandLine:
                                     description: "The actual command-line string \n
                                       Special variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -1010,12 +956,6 @@ spec:
                                 - required:
                                   - inlined
                                 properties:
-                                  attributes:
-                                    additionalProperties:
-                                      type: string
-                                    description: Optional map of free-form additional
-                                      command attributes
-                                    type: object
                                   group:
                                     description: Defines the group this command is
                                       part of
@@ -1059,12 +999,6 @@ spec:
                                 - required:
                                   - inlined
                                 properties:
-                                  attributes:
-                                    additionalProperties:
-                                      type: string
-                                    description: Optional map of free-form additional
-                                      command attributes
-                                    type: object
                                   group:
                                     description: Defines the group this command is
                                       part of
@@ -1621,12 +1555,6 @@ spec:
                             for a given component, it is assumed the component will
                             be applied at workspace start by default."
                           properties:
-                            attributes:
-                              additionalProperties:
-                                type: string
-                              description: Optional map of free-form additional command
-                                attributes
-                              type: object
                             component:
                               description: Describes component that will be applied
                               type: string
@@ -1665,12 +1593,6 @@ spec:
                           description: Composite command that allows executing several
                             sub-commands either sequentially or concurrently
                           properties:
-                            attributes:
-                              additionalProperties:
-                                type: string
-                              description: Optional map of free-form additional command
-                                attributes
-                              type: object
                             commands:
                               description: The commands that comprise this composite
                                 command
@@ -1707,12 +1629,6 @@ spec:
                           description: CLI Command executed in an existing component
                             container
                           properties:
-                            attributes:
-                              additionalProperties:
-                                type: string
-                              description: Optional map of free-form additional command
-                                attributes
-                              type: object
                             commandLine:
                               description: "The actual command-line string \n Special
                                 variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -1792,12 +1708,6 @@ spec:
                           - required:
                             - inlined
                           properties:
-                            attributes:
-                              additionalProperties:
-                                type: string
-                              description: Optional map of free-form additional command
-                                attributes
-                              type: object
                             group:
                               description: Defines the group this command is part
                                 of
@@ -1838,12 +1748,6 @@ spec:
                           - required:
                             - inlined
                           properties:
-                            attributes:
-                              additionalProperties:
-                                type: string
-                              description: Optional map of free-form additional command
-                                attributes
-                              type: object
                             group:
                               description: Defines the group this command is part
                                 of
@@ -2302,12 +2206,6 @@ spec:
                                       it is assumed the component will be applied
                                       at workspace start by default."
                                     properties:
-                                      attributes:
-                                        additionalProperties:
-                                          type: string
-                                        description: Optional map of free-form additional
-                                          command attributes
-                                        type: object
                                       component:
                                         description: Describes component that will
                                           be applied
@@ -2350,12 +2248,6 @@ spec:
                                       several sub-commands either sequentially or
                                       concurrently
                                     properties:
-                                      attributes:
-                                        additionalProperties:
-                                          type: string
-                                        description: Optional map of free-form additional
-                                          command attributes
-                                        type: object
                                       commands:
                                         description: The commands that comprise this
                                           composite command
@@ -2394,12 +2286,6 @@ spec:
                                     description: CLI Command executed in an existing
                                       component container
                                     properties:
-                                      attributes:
-                                        additionalProperties:
-                                          type: string
-                                        description: Optional map of free-form additional
-                                          command attributes
-                                        type: object
                                       commandLine:
                                         description: "The actual command-line string
                                           \n Special variables that can be used: \n
@@ -2484,12 +2370,6 @@ spec:
                                     - required:
                                       - inlined
                                     properties:
-                                      attributes:
-                                        additionalProperties:
-                                          type: string
-                                        description: Optional map of free-form additional
-                                          command attributes
-                                        type: object
                                       group:
                                         description: Defines the group this command
                                           is part of
@@ -2534,12 +2414,6 @@ spec:
                                     - required:
                                       - inlined
                                     properties:
-                                      attributes:
-                                        additionalProperties:
-                                          type: string
-                                        description: Optional map of free-form additional
-                                          command attributes
-                                        type: object
                                       group:
                                         description: Defines the group this command
                                           is part of
