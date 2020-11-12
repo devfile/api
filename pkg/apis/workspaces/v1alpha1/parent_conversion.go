@@ -1,8 +1,9 @@
 package v1alpha1
 
 import (
+	"encoding/json"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"sigs.k8s.io/yaml"
 )
 
 func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
@@ -48,11 +49,11 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 			return err
 		}
 		destParentProject := v1alpha2.ProjectParentOverride{}
-		yamlProject, err := yaml.Marshal(destProject)
+		jsonProject, err := json.Marshal(destProject)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlProject, &destParentProject)
+		err = json.Unmarshal(jsonProject, &destParentProject)
 		if err != nil {
 			return err
 		}
@@ -66,11 +67,11 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 			return err
 		}
 		destParentProject := v1alpha2.StarterProjectParentOverride{}
-		yamlProject, err := yaml.Marshal(destProject)
+		jsonProject, err := json.Marshal(destProject)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlProject, &destParentProject)
+		err = json.Unmarshal(jsonProject, &destParentProject)
 		if err != nil {
 			return err
 		}
@@ -85,11 +86,11 @@ func convertParentCommandTo_v1alpha2(src *Command, dest *v1alpha2.CommandParentO
 	if err != nil {
 		return err
 	}
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, &dest)
+	err = json.Unmarshal(jsonCommand, &dest)
 	if err != nil {
 		return err
 	}
@@ -110,22 +111,22 @@ func convertParentComponentTo_v1alpha2(src *Component, dest *v1alpha2.ComponentP
 		if err != nil {
 			return err
 		}
-		// Though identical in yaml representation, we can't assign between PluginComponentParentOverride and Plugin
-		yamlPlugin, err := yaml.Marshal(pluginComponent)
+		// Though identical in json representation, we can't assign between PluginComponentParentOverride and Plugin
+		jsonPlugin, err := json.Marshal(pluginComponent)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlPlugin, destPluginComponent)
+		err = json.Unmarshal(jsonPlugin, destPluginComponent)
 		if err != nil {
 			return err
 		}
 		dest.Plugin = destPluginComponent
 	} else {
-		yamlComponent, err := yaml.Marshal(src)
+		jsonComponent, err := json.Marshal(src)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlComponent, &dest)
+		err = json.Unmarshal(jsonComponent, &dest)
 		if err != nil {
 			return err
 		}
@@ -165,11 +166,11 @@ func convertParentFrom_v1alpha2(src *v1alpha2.Parent, dest *Parent) error {
 	for _, srcParentProject := range src.Projects {
 		destProject := Project{}
 		srcProject := v1alpha2.Project{}
-		yamlProject, err := yaml.Marshal(srcParentProject)
+		jsonProject, err := json.Marshal(srcParentProject)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlProject, &srcProject)
+		err = json.Unmarshal(jsonProject, &srcProject)
 		if err != nil {
 			return err
 		}
@@ -183,11 +184,11 @@ func convertParentFrom_v1alpha2(src *v1alpha2.Parent, dest *Parent) error {
 	for _, srcParentProject := range src.StarterProjects {
 		destProject := StarterProject{}
 		srcProject := v1alpha2.StarterProject{}
-		yamlProject, err := yaml.Marshal(srcParentProject)
+		jsonProject, err := json.Marshal(srcParentProject)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlProject, &srcProject)
+		err = json.Unmarshal(jsonProject, &srcProject)
 		if err != nil {
 			return err
 		}
@@ -203,11 +204,11 @@ func convertParentFrom_v1alpha2(src *v1alpha2.Parent, dest *Parent) error {
 
 func convertParentCommandFrom_v1alpha2(src *v1alpha2.CommandParentOverride, dest *Command) error {
 	srcId := src.Key()
-	yamlCommand, err := yaml.Marshal(src)
+	jsonCommand, err := json.Marshal(src)
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(yamlCommand, &dest)
+	err = json.Unmarshal(jsonCommand, &dest)
 	if err != nil {
 		return err
 	}
@@ -231,15 +232,15 @@ func convertParentComponentFrom_v1alpha2(src *v1alpha2.ComponentParentOverride, 
 
 	if src.Plugin != nil {
 		// If the parent component is a Plugin, we need to first convert it to v1alpha2.Component, then to a v1alpha1.Component
-		// Through the yaml representation of v1alpha2 Plugin and PluginComponentParentOverride is identical they're not assignable in go
-		// so we convert with a yaml intermediary
+		// Through the json representation of v1alpha2 Plugin and PluginComponentParentOverride is identical they're not assignable in go
+		// so we convert with a json intermediary
 		srcPluginComponent := &v1alpha2.PluginComponent{}
 		v1alpha2Component := v1alpha2.Component{}
-		yamlPlugin, err := yaml.Marshal(src.Plugin)
+		jsonPlugin, err := json.Marshal(src.Plugin)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlPlugin, srcPluginComponent)
+		err = json.Unmarshal(jsonPlugin, srcPluginComponent)
 		if err != nil {
 			return err
 		}
@@ -250,11 +251,11 @@ func convertParentComponentFrom_v1alpha2(src *v1alpha2.ComponentParentOverride, 
 			return err
 		}
 	} else {
-		yamlComponent, err := yaml.Marshal(src)
+		jsonComponent, err := json.Marshal(src)
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlComponent, &dest)
+		err = json.Unmarshal(jsonComponent, &dest)
 		if err != nil {
 			return err
 		}

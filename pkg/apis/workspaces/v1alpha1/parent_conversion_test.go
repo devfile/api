@@ -1,21 +1,22 @@
 package v1alpha1
 
 import (
+	"testing"
+
 	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/gofuzz"
+	fuzz "github.com/google/gofuzz"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestParentConversion_v1alpha1(t *testing.T) {
 	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
-		ParentComponentFuzzFunc,
-		ParentCommandFuzzFunc,
-		ParentProjectFuzzFunc,
-		PluginComponentsOverrideFuzzFunc,
-		PluginComponentFuzzFunc,
-		RawExtFuzzFunc,
+		parentComponentFuzzFunc,
+		parentCommandFuzzFunc,
+		parentProjectFuzzFunc,
+		pluginComponentsOverrideFuzzFunc,
+		pluginComponentFuzzFunc,
+		rawExtFuzzFunc,
 	)
 	for i := 0; i < fuzzIterations; i++ {
 		original := &Parent{}

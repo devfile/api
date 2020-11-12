@@ -13,16 +13,16 @@ import (
 const fuzzIterations = 500
 const fuzzNilChance = 0.2
 
-var DevWorkspaceFuzzFunc = func(workspace *DevWorkspace, c fuzz.Continue) {
+var devWorkspaceFuzzFunc = func(workspace *DevWorkspace, c fuzz.Continue) {
 	c.Fuzz(&workspace.Status)
 	c.Fuzz(&workspace.Spec)
 }
 
-var DevWorkspaceTemplateFuzzFunc = func(workspace *DevWorkspaceTemplate, c fuzz.Continue) {
+var devWorkspaceTemplateFuzzFunc = func(workspace *DevWorkspaceTemplate, c fuzz.Continue) {
 	c.Fuzz(&workspace.Spec)
 }
 
-var ComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
+var componentFuzzFunc = func(component *Component, c fuzz.Continue) {
 	switch c.Intn(6) {
 	case 0: // Generate Container
 		c.Fuzz(&component.Container)
@@ -39,7 +39,7 @@ var ComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
 	}
 }
 
-var CommandFuzzFunc = func(command *Command, c fuzz.Continue) {
+var commandFuzzFunc = func(command *Command, c fuzz.Continue) {
 	switch c.Intn(6) {
 	case 0:
 		c.Fuzz(&command.Apply)
@@ -56,7 +56,7 @@ var CommandFuzzFunc = func(command *Command, c fuzz.Continue) {
 	}
 }
 
-var PluginComponentsOverrideFuzzFunc = func(component *PluginComponentsOverride, c fuzz.Continue) {
+var pluginComponentsOverrideFuzzFunc = func(component *PluginComponentsOverride, c fuzz.Continue) {
 	switch c.Intn(4) {
 	case 0:
 		c.Fuzz(&component.Container)
@@ -69,7 +69,7 @@ var PluginComponentsOverrideFuzzFunc = func(component *PluginComponentsOverride,
 	}
 }
 
-var PluginComponentFuzzFunc = func(plugin *PluginComponent, c fuzz.Continue) {
+var pluginComponentFuzzFunc = func(plugin *PluginComponent, c fuzz.Continue) {
 	c.Fuzz(plugin)
 	plugin.Name = c.RandString()
 	var filteredCommands []Command
@@ -81,37 +81,37 @@ var PluginComponentFuzzFunc = func(plugin *PluginComponent, c fuzz.Continue) {
 	plugin.Commands = filteredCommands
 }
 
-var ParentFuzzFunc = func(parent *Parent, c fuzz.Continue) {
+var parentFuzzFunc = func(parent *Parent, c fuzz.Continue) {
 	for i := 0; i < c.Intn(4); i++ {
 		component := Component{}
-		ParentComponentFuzzFunc(&component, c)
+		parentComponentFuzzFunc(&component, c)
 		parent.Components = append(parent.Components, component)
 	}
 	for i := 0; i < c.Intn(4); i++ {
 		command := Command{}
-		ParentCommandFuzzFunc(&command, c)
+		parentCommandFuzzFunc(&command, c)
 		parent.Commands = append(parent.Commands, command)
 	}
 	for i := 0; i < c.Intn(4); i++ {
 		project := Project{}
-		ParentProjectFuzzFunc(&project, c)
+		parentProjectFuzzFunc(&project, c)
 		parent.Projects = append(parent.Projects, project)
 	}
 	for i := 0; i < c.Intn(4); i++ {
 		starterProject := StarterProject{}
 		starterProject.Description = c.RandString()
-		ParentProjectFuzzFunc(&starterProject.Project, c)
+		parentProjectFuzzFunc(&starterProject.Project, c)
 		parent.StarterProjects = append(parent.StarterProjects, starterProject)
 	}
 }
 
-var ConditionFuzzFunc = func(condition *WorkspaceCondition, c fuzz.Continue) {
+var conditionFuzzFunc = func(condition *WorkspaceCondition, c fuzz.Continue) {
 	condition.Reason = c.RandString()
 	condition.Type = WorkspaceConditionType(c.RandString())
 	condition.Message = c.RandString()
 }
 
-var ParentComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
+var parentComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
 	// Do not generate custom components when working with Parents
 	switch c.Intn(5) {
 	case 0: // Generate Container
@@ -127,7 +127,7 @@ var ParentComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
 	}
 }
 
-var ParentCommandFuzzFunc = func(command *Command, c fuzz.Continue) {
+var parentCommandFuzzFunc = func(command *Command, c fuzz.Continue) {
 	// Do not generate Custom commands for Parents
 	switch c.Intn(5) {
 	case 0:
@@ -143,7 +143,7 @@ var ParentCommandFuzzFunc = func(command *Command, c fuzz.Continue) {
 	}
 }
 
-var ParentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
+var parentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	// Custom projects are not supported in v1alpha2 parent
 	project.Name = c.RandString()
 	switch c.Intn(3) {
@@ -156,7 +156,7 @@ var ParentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	}
 }
 
-var ProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
+var projectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	switch c.Intn(4) {
 	case 0:
 		c.Fuzz(&project.Git)
@@ -170,19 +170,19 @@ var ProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 }
 
 // embeddedResource.Object is an interface and hard to fuzz right now.
-var RawExtFuzzFunc = func(embeddedResource *runtime.RawExtension, c fuzz.Continue) {}
+var rawExtFuzzFunc = func(embeddedResource *runtime.RawExtension, c fuzz.Continue) {}
 
 func TestDevWorkspaceConversion_v1alpha1(t *testing.T) {
 	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
-		DevWorkspaceFuzzFunc,
-		ConditionFuzzFunc,
-		ParentFuzzFunc,
-		ComponentFuzzFunc,
-		CommandFuzzFunc,
-		ProjectFuzzFunc,
-		PluginComponentsOverrideFuzzFunc,
-		PluginComponentFuzzFunc,
-		RawExtFuzzFunc,
+		devWorkspaceFuzzFunc,
+		conditionFuzzFunc,
+		parentFuzzFunc,
+		componentFuzzFunc,
+		commandFuzzFunc,
+		projectFuzzFunc,
+		pluginComponentsOverrideFuzzFunc,
+		pluginComponentFuzzFunc,
+		rawExtFuzzFunc,
 	)
 	for i := 0; i < fuzzIterations; i++ {
 		original := &DevWorkspace{}
@@ -206,15 +206,15 @@ func TestDevWorkspaceConversion_v1alpha1(t *testing.T) {
 
 func TestDevWorkspaceTemplateConversion_v1alpha1(t *testing.T) {
 	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
-		DevWorkspaceTemplateFuzzFunc,
-		ConditionFuzzFunc,
-		ParentFuzzFunc,
-		ComponentFuzzFunc,
-		CommandFuzzFunc,
-		ProjectFuzzFunc,
-		PluginComponentsOverrideFuzzFunc,
-		PluginComponentFuzzFunc,
-		RawExtFuzzFunc,
+		devWorkspaceTemplateFuzzFunc,
+		conditionFuzzFunc,
+		parentFuzzFunc,
+		componentFuzzFunc,
+		commandFuzzFunc,
+		projectFuzzFunc,
+		pluginComponentsOverrideFuzzFunc,
+		pluginComponentFuzzFunc,
+		rawExtFuzzFunc,
 	)
 	for i := 0; i < fuzzIterations; i++ {
 		original := &DevWorkspaceTemplate{}
@@ -238,15 +238,15 @@ func TestDevWorkspaceTemplateConversion_v1alpha1(t *testing.T) {
 
 func BenchmarkDevWorkspaceConversion(b *testing.B) {
 	f := fuzz.New().NilChance(fuzzNilChance).MaxDepth(100).Funcs(
-		DevWorkspaceFuzzFunc,
-		ConditionFuzzFunc,
-		ParentFuzzFunc,
-		ComponentFuzzFunc,
-		CommandFuzzFunc,
-		ProjectFuzzFunc,
-		PluginComponentsOverrideFuzzFunc,
-		PluginComponentFuzzFunc,
-		RawExtFuzzFunc,
+		devWorkspaceFuzzFunc,
+		conditionFuzzFunc,
+		parentFuzzFunc,
+		componentFuzzFunc,
+		commandFuzzFunc,
+		projectFuzzFunc,
+		pluginComponentsOverrideFuzzFunc,
+		pluginComponentFuzzFunc,
+		rawExtFuzzFunc,
 	)
 	b.ResetTimer()
 	b.Run("Convert to v1alpha2", func(b *testing.B) {

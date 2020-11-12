@@ -1,10 +1,11 @@
 package v1alpha1
 
 import (
-	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
-	"github.com/google/gofuzz"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
+	fuzz "github.com/google/gofuzz"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestEventsConversion_v1alpha1(t *testing.T) {
