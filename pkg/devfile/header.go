@@ -22,4 +22,14 @@ type DevfileMetadata struct {
 	// +optional
 	// +kubebuilder:validation:Pattern=^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
 	Version string `json:"version,omitempty"`
+
+	// Optional devfile metadata artifact
+	// +optional
+	Artifact []MetadataArtifact `json:"artifact,omitempty"`
+}
+
+// MetadataArtifact contains additional information that is not defined in devfile schema
+type MetadataArtifact struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }

@@ -1618,6 +1618,29 @@
       "description": "Optional metadata",
       "type": "object",
       "properties": {
+        "artifact": {
+          "description": "Optional devfile metadata artifact",
+          "type": "array",
+          "items": {
+            "description": "MetadataArtifact contains additional information that is not defined in devfile schema",
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "markdownDescription": "MetadataArtifact contains additional information that is not defined in devfile schema"
+          },
+          "markdownDescription": "Optional devfile metadata artifact"
+        },
         "name": {
           "description": "Optional devfile name",
           "type": "string",
