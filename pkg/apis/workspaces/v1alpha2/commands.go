@@ -1,8 +1,8 @@
 package v1alpha2
 
 import (
-  runtime "k8s.io/apimachinery/pkg/runtime"
-  attributes "github.com/devfile/api/pkg/attributes"
+	attributes "github.com/devfile/api/pkg/attributes"
+	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
 // CommandType describes the type of command.

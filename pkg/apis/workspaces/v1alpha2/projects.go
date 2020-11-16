@@ -1,11 +1,10 @@
 package v1alpha2
 
 import (
-	runtime "k8s.io/apimachinery/pkg/runtime"
 	attributes "github.com/devfile/api/pkg/attributes"
+	runtime "k8s.io/apimachinery/pkg/runtime"
 )
-  
-  
+
 type Project struct {
 	// Project name
 	Name string `json:"name"`
