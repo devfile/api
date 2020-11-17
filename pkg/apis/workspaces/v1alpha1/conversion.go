@@ -9,6 +9,7 @@ func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspa
 	dest.Status.WorkspaceId = src.Status.WorkspaceId
 	dest.Status.IdeUrl = src.Status.IdeUrl
 	dest.Status.Phase = v1alpha2.WorkspacePhase(src.Status.Phase)
+	dest.Status.Message = src.Status.Message
 	convertConditionsTo_v1alpha2(src, dest)
 	dest.Spec.RoutingClass = src.Spec.RoutingClass
 	dest.Spec.Started = src.Spec.Started
@@ -21,6 +22,7 @@ func convertDevWorkspaceFrom_v1alpha2(src *v1alpha2.DevWorkspace, dest *DevWorks
 	dest.Status.WorkspaceId = src.Status.WorkspaceId
 	dest.Status.IdeUrl = src.Status.IdeUrl
 	dest.Status.Phase = WorkspacePhase(src.Status.Phase)
+	dest.Status.Message = src.Status.Message
 	convertConditionsFrom_v1alpha2(src, dest)
 	dest.Spec.RoutingClass = src.Spec.RoutingClass
 	dest.Spec.Started = src.Spec.Started
