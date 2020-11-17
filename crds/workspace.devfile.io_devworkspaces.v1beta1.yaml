@@ -6,19 +6,6 @@ metadata:
   creationTimestamp: null
   name: devworkspaces.workspace.devfile.io
 spec:
-  additionalPrinterColumns:
-  - JSONPath: .status.workspaceId
-    description: The workspace's unique id
-    name: Workspace ID
-    type: string
-  - JSONPath: .status.phase
-    description: The current workspace startup phase
-    name: Phase
-    type: string
-  - JSONPath: .status.ideUrl
-    description: Url endpoint for accessing workspace
-    name: URL
-    type: string
   group: workspace.devfile.io
   names:
     kind: DevWorkspace
@@ -33,7 +20,20 @@ spec:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - JSONPath: .status.workspaceId
+      description: The workspace's unique id
+      name: Workspace ID
+      type: string
+    - JSONPath: .status.phase
+      description: The current workspace startup phase
+      name: Phase
+      type: string
+    - JSONPath: .status.ideUrl
+      description: Url endpoint for accessing workspace
+      name: URL
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: DevWorkspace is the Schema for the devworkspaces API
@@ -4063,6 +4063,10 @@ spec:
               ideUrl:
                 description: URL at which the Worksace Editor can be joined
                 type: string
+              message:
+                description: Message is a short user-readable message giving additional
+                  information about an object's state
+                type: string
               phase:
                 type: string
               workspaceId:
@@ -4074,7 +4078,24 @@ spec:
         type: object
     served: true
     storage: false
-  - name: v1alpha2
+  - additionalPrinterColumns:
+    - JSONPath: .status.workspaceId
+      description: The workspace's unique id
+      name: Workspace ID
+      type: string
+    - JSONPath: .status.phase
+      description: The current workspace startup phase
+      name: Phase
+      type: string
+    - JSONPath: .status.message
+      description: Additional information about workspace state
+      name: Info
+      type: string
+    - JSONPath: .status.ideUrl
+      description: Url endpoint for accessing workspace
+      name: URL
+      type: string
+    name: v1alpha2
     schema:
       openAPIV3Schema:
         description: DevWorkspace is the Schema for the devworkspaces API
@@ -7724,6 +7745,10 @@ spec:
                 type: array
               ideUrl:
                 description: URL at which the Worksace Editor can be joined
+                type: string
+              message:
+                description: Message is a short user-readable message giving additional
+                  information about an object's state
                 type: string
               phase:
                 type: string

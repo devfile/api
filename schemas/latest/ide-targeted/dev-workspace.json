@@ -4105,6 +4105,11 @@
           "type": "string",
           "markdownDescription": "URL at which the Worksace Editor can be joined"
         },
+        "message": {
+          "description": "Message is a short user-readable message giving additional information about an object's state",
+          "type": "string",
+          "markdownDescription": "Message is a short user-readable message giving additional information about an object's state"
+        },
         "phase": {
           "type": "string"
         },
