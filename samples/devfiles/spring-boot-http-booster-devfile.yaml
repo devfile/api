@@ -1,7 +1,8 @@
 schemaVersion: 2.0.0
 metadata:
   name: spring-boot-http-booster
-  type: workspace
+  attributes:
+    type: workspace
 projects:
   - name: spring-boot-http-booster
     git:

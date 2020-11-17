@@ -1,10 +1,11 @@
 schemaVersion: 2.0.0
 metadata:
-  publisher: redhat
-  name: vsx-template
-  type: template
-  parameters:
-    VSX_LIST 
+  attributes:
+    publisher: redhat
+    name: vsx-template
+    type: template
+    parameters:
+      VSX_LIST 
 components:
   - name: vsx-installer
     container:
