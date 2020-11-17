@@ -15,53 +15,21 @@ type Attributes map[string]apiext.JSON
 
 // MarshalJSON implements custom JSON marshaling
 // to support free-form attributes
-func (s Attributes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(map[string]apiext.JSON(s))
+func (attributes Attributes) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]apiext.JSON(attributes))
 }
 
 // UnmarshalJSON implements custom JSON unmarshaling
 // to support free-form attributes
-func (s *Attributes) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, (*map[string]apiext.JSON)(s))
+func (attributes *Attributes) UnmarshalJSON(data []byte) error {
+	return json.Unmarshal(data, (*map[string]apiext.JSON)(attributes))
 }
 
-// GetDecodedInto allows decoding the attribute with the given key
-// into a given interface. The provided interface should be a pointer
-// to a struct, to an array, or to any simple type.
-//
-// An error is returned if the provided interface type is not compatible
-// with the attribute content
-func (attributes Attributes) GetDecodedInto(key string, into interface{}) error {
-	var err error
-	if attribute, exists := attributes[key]; exists {
-		err = json.Unmarshal(attribute.Raw, into)
-	} else {
-		err = errors.New("Key '" + key + "' doesn't exist")
-	}
-	return err
-}
-
-// Get allows returning the attribute with the given key
-// as an interface. The underlying type of the returned interface
-// depends on the JSON/YAML content of the attribute. It can be either a simple type
-// like a string, a float64 or a bool, either a structured type like
-// a map of interfaces or an array of interfaces.
-//
-// An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attribute
-// decoding
-func (attributes Attributes) Get(key string, errorHolder ...*error) interface{} {
-	if attribute, exists := attributes[key]; exists {
-		container := &[]interface{}{}
-		err := json.Unmarshal([]byte("[ "+string(attribute.Raw)+" ]"), container)
-		if err != nil && len(errorHolder) > 0 && errorHolder != nil {
-			*errorHolder[0] = err
-		}
-		if len(*container) > 0 {
-			return (*container)[0]
-		}
-	}
-	return nil
+// Exists returns `true` if the attribute with the given key
+// exists in the attributes map.
+func (attributes Attributes) Exists(key string) bool {
+	_, exists := attributes[key]
+	return exists
 }
 
 // GetString allows returning the attribute with the given key
@@ -130,11 +98,43 @@ func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool 
 	return false
 }
 
-// Exists returns `true` if the attribute with the given key
-// exists in the attributes map.
-func (attributes Attributes) Exists(key string) bool {
-	_, exists := attributes[key]
-	return exists
+// Get allows returning the attribute with the given key
+// as an interface. The underlying type of the returned interface
+// depends on the JSON/YAML content of the attribute. It can be either a simple type
+// like a string, a float64 or a bool, either a structured type like
+// a map of interfaces or an array of interfaces.
+//
+// An optional error holder can be passed as an argument
+// to receive any error that might have occured during the attribute
+// decoding
+func (attributes Attributes) Get(key string, errorHolder ...*error) interface{} {
+	if attribute, exists := attributes[key]; exists {
+		container := &[]interface{}{}
+		err := json.Unmarshal([]byte("[ "+string(attribute.Raw)+" ]"), container)
+		if err != nil && len(errorHolder) > 0 && errorHolder != nil {
+			*errorHolder[0] = err
+		}
+		if len(*container) > 0 {
+			return (*container)[0]
+		}
+	}
+	return nil
+}
+
+// GetInto allows decoding the attribute with the given key
+// into a given interface. The provided interface should be a pointer
+// to a struct, to an array, or to any simple type.
+//
+// An error is returned if the provided interface type is not compatible
+// with the attribute content
+func (attributes Attributes) GetInto(key string, into interface{}) error {
+	var err error
+	if attribute, exists := attributes[key]; exists {
+		err = json.Unmarshal(attribute.Raw, into)
+	} else {
+		err = errors.New("Key '" + key + "' doesn't exist")
+	}
+	return err
 }
 
 // Strings allows returning only the attributes whose content
@@ -185,13 +185,13 @@ func (attributes Attributes) Booleans(errorHolder ...*error) map[string]bool {
 	return result
 }
 
-// DecodeInto allows decoding the whole attributes map
+// Into allows decoding the whole attributes map
 // into a given interface. The provided interface should be either a pointer
 // to a struct, or to a map.
 //
 // An error is returned if the provided interface type is not compatible
 // with the structure of the attributes
-func (attributes Attributes) DecodeInto(into interface{}) error {
+func (attributes Attributes) Into(into interface{}) error {
 	rawJSON, err := json.Marshal(attributes)
 	if err != nil {
 		return err
@@ -201,7 +201,7 @@ func (attributes Attributes) DecodeInto(into interface{}) error {
 	return err
 }
 
-// Interface allows returning the whole attributes map
+// AsInterface allows returning the whole attributes map
 // as an interface. When the attributes are not empty,
 // the returned interface will be a map
 // of interfaces.
@@ -209,7 +209,7 @@ func (attributes Attributes) DecodeInto(into interface{}) error {
 // An optional error holder can be passed as an argument
 // to receive any error that might have occured during the attributes
 // decoding
-func (attributes Attributes) Interface(errorHolder ...*error) interface{} {
+func (attributes Attributes) AsInterface(errorHolder ...*error) interface{} {
 	rawJSON, err := json.Marshal(attributes)
 	if err != nil && len(errorHolder) > 0 && errorHolder != nil {
 		*errorHolder[0] = err

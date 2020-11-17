@@ -8,7 +8,6 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-
 func TestDecodeAttribute(t *testing.T) {
 	devfileWithEnhancedHeader := `
 schemaVersion: 2.0.0

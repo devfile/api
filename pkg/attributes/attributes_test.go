@@ -388,7 +388,7 @@ func TestDecodeAttribute(t *testing.T) {
 			assert.Equal(t, test.expectedInterface, attributes.Get("test", &err))
 			checkError(t, err, test.expectedInterfaceError)
 
-			err = attributes.GetDecodedInto("test", test.decodeInto)
+			err = attributes.GetInto("test", test.decodeInto)
 			checkError(t, err, test.decodeIntoError)
 
 			decodedValue := reflect.ValueOf(test.decodeInto)
@@ -540,10 +540,10 @@ func TestDecodeAttributes(t *testing.T) {
 			}
 
 			err = nil
-			assert.Equal(t, test.expectedInterface, test.attributes.Interface(&err))
+			assert.Equal(t, test.expectedInterface, test.attributes.AsInterface(&err))
 			checkError(t, err, test.expectedInterfaceError)
 
-			err = test.attributes.DecodeInto(test.decodeInto)
+			err = test.attributes.Into(test.decodeInto)
 			checkError(t, err, test.decodeIntoError)
 
 			decodedValue := reflect.ValueOf(test.decodeInto)
