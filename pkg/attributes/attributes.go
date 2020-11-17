@@ -105,7 +105,7 @@ func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool 
 // a map of interfaces or an array of interfaces.
 //
 // An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attribute
+// to receive any error that might have occurred during the attribute
 // decoding
 func (attributes Attributes) Get(key string, errorHolder ...*error) interface{} {
 	if attribute, exists := attributes[key]; exists {
