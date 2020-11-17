@@ -47,7 +47,7 @@ func (attributes Attributes) GetString(key string, errorHolder ...*error) string
 		if err == nil {
 			return *result
 		}
-		if len(errorHolder) > 0 && errorHolder != nil {
+		if len(errorHolder) > 0 && errorHolder[0] != nil {
 			*errorHolder[0] = err
 		}
 	}
@@ -69,7 +69,7 @@ func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float6
 		if err == nil {
 			return *result
 		}
-		if len(errorHolder) > 0 && errorHolder != nil {
+		if len(errorHolder) > 0 && errorHolder[0] != nil {
 			*errorHolder[0] = err
 		}
 	}
@@ -91,7 +91,7 @@ func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool 
 		if err == nil {
 			return *result
 		}
-		if len(errorHolder) > 0 && errorHolder != nil {
+		if len(errorHolder) > 0 && errorHolder[0] != nil {
 			*errorHolder[0] = err
 		}
 	}
@@ -220,14 +220,14 @@ func (attributes Attributes) Into(into interface{}) error {
 // decoding
 func (attributes Attributes) AsInterface(errorHolder ...*error) interface{} {
 	rawJSON, err := json.Marshal(attributes)
-	if err != nil && len(errorHolder) > 0 && errorHolder != nil {
+	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
 		*errorHolder[0] = err
 		return nil
 	}
 
 	container := &[]interface{}{}
 	err = json.Unmarshal([]byte("[ "+string(rawJSON)+" ]"), container)
-	if err != nil && len(errorHolder) > 0 && errorHolder != nil {
+	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
 		*errorHolder[0] = err
 		return nil
 	}
@@ -327,7 +327,7 @@ func (attributes Attributes) FromBooleanMap(strings map[string]bool) Attributes 
 // decoding
 func (attributes Attributes) Put(key string, value interface{}, errorHolder ...*error) Attributes {
 	rawJSON, err := json.Marshal(value)
-	if err != nil && len(errorHolder) > 0 && errorHolder != nil {
+	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
 		*errorHolder[0] = err
 	}
 
@@ -368,7 +368,7 @@ func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder
 func (attributes Attributes) FromInterface(structure interface{}, errorHolder ...*error) Attributes {
 	newAttributes := Attributes{}
 	completeJSON, err := json.Marshal(structure)
-	if err != nil && len(errorHolder) > 0 && errorHolder != nil {
+	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
 		*errorHolder[0] = err
 	}
 
