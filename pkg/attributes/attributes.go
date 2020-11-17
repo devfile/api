@@ -146,6 +146,9 @@ func (attributes Attributes) GetInto(key string, into interface{}) error {
 func (attributes Attributes) Strings(errorHolder ...*error) map[string]string {
 	result := map[string]string{}
 	for key := range attributes {
+		// Here only the last error is returned.
+		// Let's keep it simple and avoid adding a dependency
+		// on an external package just for gathering errors.
 		if value, isRightType := attributes.Get(key, errorHolder...).(string); isRightType {
 			result[key] = value
 		}
@@ -162,6 +165,9 @@ func (attributes Attributes) Strings(errorHolder ...*error) map[string]string {
 func (attributes Attributes) Numbers(errorHolder ...*error) map[string]float64 {
 	result := map[string]float64{}
 	for key := range attributes {
+		// Here only the last error is returned.
+		// Let's keep it simple and avoid adding a dependency
+		// on an external package just for gathering errors.
 		if value, isRightType := attributes.Get(key, errorHolder...).(float64); isRightType {
 			result[key] = value
 		}
@@ -178,6 +184,9 @@ func (attributes Attributes) Numbers(errorHolder ...*error) map[string]float64 {
 func (attributes Attributes) Booleans(errorHolder ...*error) map[string]bool {
 	result := map[string]bool{}
 	for key := range attributes {
+		// Here only the last error is returned.
+		// Let's keep it simple and avoid adding a dependency
+		// on an external package just for gathering errors
 		if value, isRightType := attributes.Get(key, errorHolder...).(bool); isRightType {
 			result[key] = value
 		}
@@ -338,6 +347,9 @@ func (attributes Attributes) Put(key string, value interface{}, errorHolder ...*
 // decoding
 func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder ...*error) Attributes {
 	for key, value := range strings {
+		// Here only the last error is returned.
+		// Let's keep it simple and avoid adding a dependency
+		// on an external package just for gathering errors.
 		attributes.Put(key, value, errorHolder...)
 	}
 	return attributes
