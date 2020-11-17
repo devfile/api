@@ -4059,6 +4059,10 @@ spec:
               ideUrl:
                 description: URL at which the Worksace Editor can be joined
                 type: string
+              message:
+                description: Message is a short user-readable message giving additional
+                  information about an object's state
+                type: string
               phase:
                 type: string
               workspaceId:
@@ -4080,6 +4084,10 @@ spec:
     - description: The current workspace startup phase
       jsonPath: .status.phase
       name: Phase
+      type: string
+    - description: Additional information about workspace state
+      jsonPath: .status.message
+      name: Info
       type: string
     - description: Url endpoint for accessing workspace
       jsonPath: .status.ideUrl
@@ -7742,6 +7750,10 @@ spec:
                 type: array
               ideUrl:
                 description: URL at which the Worksace Editor can be joined
+                type: string
+              message:
+                description: Message is a short user-readable message giving additional
+                  information about an object's state
                 type: string
               phase:
                 type: string
