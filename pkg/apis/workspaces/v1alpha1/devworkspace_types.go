@@ -23,6 +23,9 @@ type DevWorkspaceStatus struct {
 	Phase  WorkspacePhase `json:"phase,omitempty"`
 	// Conditions represent the latest available observations of an object's state
 	Conditions []WorkspaceCondition `json:"conditions,omitempty"`
+	// Message is a short user-readable message giving additional information
+	// about an object's state
+	Message string `json:"message,omitempty"`
 }
 
 type WorkspacePhase string

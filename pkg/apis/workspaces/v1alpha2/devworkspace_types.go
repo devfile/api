@@ -21,6 +21,9 @@ type DevWorkspaceStatus struct {
 	Phase  WorkspacePhase `json:"phase,omitempty"`
 	// Conditions represent the latest available observations of an object's state
 	Conditions []WorkspaceCondition `json:"conditions,omitempty"`
+	// Message is a short user-readable message giving additional information
+	// about an object's state
+	Message string `json:"message,omitempty"`
 }
 
 type WorkspacePhase string
@@ -67,6 +70,7 @@ const (
 // +kubebuilder:resource:path=devworkspaces,scope=Namespaced,shortName=dw
 // +kubebuilder:printcolumn:name="Workspace ID",type="string",JSONPath=".status.workspaceId",description="The workspace's unique id"
 // +kubebuilder:printcolumn:name="Phase",type="string",JSONPath=".status.phase",description="The current workspace startup phase"
+// +kubebuilder:printcolumn:name="Info",type="string",JSONPath=".status.message",description="Additional information about workspace state"
 // +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".status.ideUrl",description="Url endpoint for accessing workspace"
 // +devfile:jsonschema:generate
 // +kubebuilder:storageversion
