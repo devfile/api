@@ -1,6 +1,7 @@
 schemaVersion: "2.0.0"
 metadata:
   name: "devfile example"
+  version: "1.0.0"
 projects:
   - name: "my-project"
     git:
@@ -11,6 +12,10 @@ projects:
         remote: origin
 components:
   - name: editor
+    attributes:
+      kjkh: "128M"
+      kjhkjh:
+        "": ""
     plugin:
       id: eclipse/che-theia/latest
   - name: "ownPlugin"

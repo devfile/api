@@ -113,11 +113,10 @@ spec:
                         - component
                         type: object
                       attributes:
-                        additionalProperties:
-                          x-kubernetes-preserve-unknown-fields: true
                         description: Map of implementation-dependant free-form YAML
                           attributes.
                         type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       commandType:
                         description: Type of workspace command
                         enum:
@@ -391,11 +390,10 @@ spec:
                       - custom
                     properties:
                       attributes:
-                        additionalProperties:
-                          x-kubernetes-preserve-unknown-fields: true
                         description: Map of implementation-dependant free-form YAML
                           attributes.
                         type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       componentType:
                         description: Type of component
                         enum:
@@ -437,14 +435,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    x-kubernetes-preserve-unknown-fields: true
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -598,14 +595,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    x-kubernetes-preserve-unknown-fields: true
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -700,14 +696,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    x-kubernetes-preserve-unknown-fields: true
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -1123,8 +1118,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              x-kubernetes-preserve-unknown-fields: true
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -1132,6 +1125,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -1273,8 +1267,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              x-kubernetes-preserve-unknown-fields: true
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -1282,6 +1274,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -1384,8 +1377,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              x-kubernetes-preserve-unknown-fields: true
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -1393,6 +1384,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -1894,14 +1886,13 @@ spec:
                                 items:
                                   properties:
                                     attributes:
-                                      additionalProperties:
-                                        x-kubernetes-preserve-unknown-fields: true
                                       description: "Map of implementation-dependant
                                         string-based free-form attributes. \n Examples
                                         of Che-specific attributes: \n - cookiesAuthEnabled:
                                         \"true\" / \"false\", \n - type: \"terminal\"
                                         / \"ide\" / \"ide-dev\","
                                       type: object
+                                      x-kubernetes-preserve-unknown-fields: true
                                     exposure:
                                       description: "Describes how the endpoint should
                                         be exposed on the network. \n - `public` means
@@ -2034,14 +2025,13 @@ spec:
                                 items:
                                   properties:
                                     attributes:
-                                      additionalProperties:
-                                        x-kubernetes-preserve-unknown-fields: true
                                       description: "Map of implementation-dependant
                                         string-based free-form attributes. \n Examples
                                         of Che-specific attributes: \n - cookiesAuthEnabled:
                                         \"true\" / \"false\", \n - type: \"terminal\"
                                         / \"ide\" / \"ide-dev\","
                                       type: object
+                                      x-kubernetes-preserve-unknown-fields: true
                                     exposure:
                                       description: "Describes how the endpoint should
                                         be exposed on the network. \n - `public` means
@@ -2137,14 +2127,13 @@ spec:
                                 items:
                                   properties:
                                     attributes:
-                                      additionalProperties:
-                                        x-kubernetes-preserve-unknown-fields: true
                                       description: "Map of implementation-dependant
                                         string-based free-form attributes. \n Examples
                                         of Che-specific attributes: \n - cookiesAuthEnabled:
                                         \"true\" / \"false\", \n - type: \"terminal\"
                                         / \"ide\" / \"ide-dev\","
                                       type: object
+                                      x-kubernetes-preserve-unknown-fields: true
                                     exposure:
                                       description: "Describes how the endpoint should
                                         be exposed on the network. \n - `public` means
@@ -2571,8 +2560,6 @@ spec:
                                           items:
                                             properties:
                                               attributes:
-                                                additionalProperties:
-                                                  x-kubernetes-preserve-unknown-fields: true
                                                 description: "Map of implementation-dependant
                                                   string-based free-form attributes.
                                                   \n Examples of Che-specific attributes:
@@ -2580,6 +2567,7 @@ spec:
                                                   / \"false\", \n - type: \"terminal\"
                                                   / \"ide\" / \"ide-dev\","
                                                 type: object
+                                                x-kubernetes-preserve-unknown-fields: true
                                               exposure:
                                                 description: "Describes how the endpoint
                                                   should be exposed on the network.
@@ -2729,8 +2717,6 @@ spec:
                                           items:
                                             properties:
                                               attributes:
-                                                additionalProperties:
-                                                  x-kubernetes-preserve-unknown-fields: true
                                                 description: "Map of implementation-dependant
                                                   string-based free-form attributes.
                                                   \n Examples of Che-specific attributes:
@@ -2738,6 +2724,7 @@ spec:
                                                   / \"false\", \n - type: \"terminal\"
                                                   / \"ide\" / \"ide-dev\","
                                                 type: object
+                                                x-kubernetes-preserve-unknown-fields: true
                                               exposure:
                                                 description: "Describes how the endpoint
                                                   should be exposed on the network.
@@ -2846,8 +2833,6 @@ spec:
                                           items:
                                             properties:
                                               attributes:
-                                                additionalProperties:
-                                                  x-kubernetes-preserve-unknown-fields: true
                                                 description: "Map of implementation-dependant
                                                   string-based free-form attributes.
                                                   \n Examples of Che-specific attributes:
@@ -2855,6 +2840,7 @@ spec:
                                                   / \"false\", \n - type: \"terminal\"
                                                   / \"ide\" / \"ide-dev\","
                                                 type: object
+                                                x-kubernetes-preserve-unknown-fields: true
                                               exposure:
                                                 description: "Describes how the endpoint
                                                   should be exposed on the network.
@@ -3236,11 +3222,10 @@ spec:
                       - custom
                     properties:
                       attributes:
-                        additionalProperties:
-                          x-kubernetes-preserve-unknown-fields: true
                         description: Map of implementation-dependant free-form YAML
                           attributes.
                         type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       clonePath:
                         description: Path relative to the root of the projects to
                           which this project should be cloned into. This is a unix-style
@@ -3359,11 +3344,10 @@ spec:
                       - custom
                     properties:
                       attributes:
-                        additionalProperties:
-                          x-kubernetes-preserve-unknown-fields: true
                         description: Map of implementation-dependant free-form YAML
                           attributes.
                         type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       custom:
                         description: Project's Custom source
                         properties:

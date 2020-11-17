@@ -511,10 +511,10 @@ var decodeAttributesTestCases []decodeAttributesTestCase = []decodeAttributesTes
 			},
 		},
 		expectedInterface:       nil,
-		expectedInterfaceError:  "json: error calling MarshalJSON for type v1.JSON: invalid character 'i' looking for beginning of object key string",
+		expectedInterfaceError:  "json: error calling MarshalJSON for type attributes.Attributes: json: error calling MarshalJSON for type v1.JSON: invalid character 'i' looking for beginning of object key string",
 		decodeInto:              &[]string{},
 		decodeIntoExpectedValue: []string{},
-		decodeIntoError:         "json: error calling MarshalJSON for type v1.JSON: invalid character 'i' looking for beginning of object key string",
+		decodeIntoError:         "json: error calling MarshalJSON for type attributes.Attributes: json: error calling MarshalJSON for type v1.JSON: invalid character 'i' looking for beginning of object key string",
 	},
 }
 

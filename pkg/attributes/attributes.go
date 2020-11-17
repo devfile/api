@@ -9,7 +9,21 @@ import (
 
 // Attributes provides a way to add a map of arbitrary YAML/JSON
 // objects.
+// +kubebuilder:validation:Type=object
+// +kubebuilder:validation:XPreserveUnknownFields
 type Attributes map[string]apiext.JSON
+
+// MarshalJSON implements custom JSON marshaling
+// to support free-form attributes
+func (s Attributes) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]apiext.JSON(s))
+}
+
+// UnmarshalJSON implements custom JSON unmarshaling
+// to support free-form attributes
+func (s *Attributes) UnmarshalJSON(data []byte) error {
+	return json.Unmarshal(data, (*map[string]apiext.JSON)(s))
+}
 
 // GetDecodedInto allows decoding the attribute with the given key
 // into a given interface. The provided interface should be a pointer
@@ -42,9 +56,10 @@ func (attributes Attributes) Get(key string, errorHolder ...*error) interface{} 
 		err := json.Unmarshal([]byte("[ "+string(attribute.Raw)+" ]"), container)
 		if err != nil && len(errorHolder) > 0 && errorHolder != nil {
 			*errorHolder[0] = err
-			return nil
 		}
-		return (*container)[0]
+		if len(*container) > 0 {
+			return (*container)[0]
+		}
 	}
 	return nil
 }

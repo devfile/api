@@ -11,7 +11,6 @@ type DevfileHeader struct {
 	// +kubebuilder:validation:Pattern=^([2-9])\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
 	SchemaVersion string `json:"schemaVersion"`
 
-	// +kubebuilder:pruning:PreserveUnknownFields
 	// +optional
 	// Optional metadata
 	Metadata DevfileMetadata `json:"metadata,omitempty"`
@@ -27,5 +26,7 @@ type DevfileMetadata struct {
 	// +kubebuilder:validation:Pattern=^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
 	Version string `json:"version,omitempty"`
 
-	attributes.Attributes `json:",inline"`
+	// Map of implementation-dependant free-form YAML attributes.
+	// +optional
+	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
