@@ -3,6 +3,7 @@ package attributes
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
 
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
@@ -32,70 +33,137 @@ func (attributes Attributes) Exists(key string) bool {
 	return exists
 }
 
+type convertPrimitiveFunc func(attributes Attributes, key string, attributeType string) (interface{}, error)
+
+func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, resultType string, convert convertPrimitiveFunc, errorHolder ...*error) interface{} {
+	var err error
+	if attribute, exists := attributes[key]; exists {
+		var result interface{}
+		switch resultType {
+		case "string":
+			primitiveResult := new(string)
+			err = json.Unmarshal(attribute.Raw, primitiveResult)
+			result = *primitiveResult
+		case "boolean":
+			primitiveResult := new(bool)
+			err = json.Unmarshal(attribute.Raw, primitiveResult)
+			result = *primitiveResult
+		case "number":
+			primitiveResult := new(float64)
+			err = json.Unmarshal(attribute.Raw, primitiveResult)
+			result = *primitiveResult
+		}
+		if err == nil {
+			return result
+		}
+
+		switch typeError := err.(type) {
+		case *json.UnmarshalTypeError:
+			convertedValue, retryError := convert(attributes, key, typeError.Value)
+			if retryError == nil && convertedValue != nil {
+				return convertedValue
+			}
+		}
+	} else {
+		err = errors.New("Attribute with key '" + key + "' does not exist")
+	}
+	if len(errorHolder) > 0 && errorHolder[0] != nil {
+		*errorHolder[0] = err
+	}
+	return zeroValue
+}
+
 // GetString allows returning the attribute with the given key
 // as a string. If the attribute JSON/YAML content is
-// not a JSON string, then the result will be the empty string
-// and an error is raised.
+// not a JSON string (or a primitive type that can be converted into a string),
+// then the result will be the empty string and an error will be raised.
 //
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
 func (attributes Attributes) GetString(key string, errorHolder ...*error) string {
-	if attribute, exists := attributes[key]; exists {
-		result := new(string)
-		err := json.Unmarshal(attribute.Raw, result)
-		if err == nil {
-			return *result
-		}
-		if len(errorHolder) > 0 && errorHolder[0] != nil {
-			*errorHolder[0] = err
-		}
-	}
-	return ""
+	return attributes.getPrimitive(
+		key,
+		"",
+		"string",
+		func(attributes Attributes, key string, attributeType string) (interface{}, error) {
+			var convertedValue interface{}
+			var retryError error
+			switch attributeType {
+			case "bool":
+				convertedValue = strconv.FormatBool(attributes.GetBoolean(key, &retryError))
+			case "number":
+				convertedValue = strconv.FormatFloat(attributes.GetNumber(key, &retryError), 'g', -1, 64)
+			}
+			return convertedValue, retryError
+		},
+		errorHolder...).(string)
 }
 
 // GetNumber allows returning the attribute with the given key
 // as a float64. If the attribute JSON/YAML content is
-// not a JSON number, then the result will be the zero value
-// and an error is raised.
+// not a JSON number (or a JSON string that can be converted into a JSON number),
+// then the result will be the zero value and an error is raised.
 //
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
 func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float64 {
-	if attribute, exists := attributes[key]; exists {
-		result := new(float64)
-		err := json.Unmarshal(attribute.Raw, result)
-		if err == nil {
-			return *result
-		}
-		if len(errorHolder) > 0 && errorHolder[0] != nil {
-			*errorHolder[0] = err
-		}
-	}
-	return 0
+	return attributes.getPrimitive(
+		key,
+		0.0,
+		"number",
+		func(attributes Attributes, key string, attributeType string) (interface{}, error) {
+			var convertedValue interface{}
+			var retryError error
+			switch attributeType {
+			case "string":
+				var convError error
+				convertedValue, convError = strconv.ParseFloat(attributes.GetString(key, &retryError), 64)
+				if retryError == nil {
+					retryError = convError
+				}
+			}
+			return convertedValue, retryError
+		},
+		errorHolder...).(float64)
 }
 
 // GetBoolean allows returning the attribute with the given key
 // as a bool. If the attribute JSON/YAML content is
-// not a JSON boolean, then the result will be the `false` zero value
-// and an error is raised.
+// not a JSON boolean  (or a JSON string that can be converted into a JSON boolean),
+// then the result will be the `false` zero value and an error is raised.
+//
+// String values can be converted to boolean values according to the following rules:
+//
+// - strings "1", "t", "T", "TRUE", "true", and "True" will be converted to a `true` boolean
+//
+// - strings "0, "f", "F", "FALSE", "false", "False" will be converted to a `true` boolean
+//
+// - any other string value will raise an error.
 //
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
 func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool {
-	if attribute, exists := attributes[key]; exists {
-		result := new(bool)
-		err := json.Unmarshal(attribute.Raw, result)
-		if err == nil {
-			return *result
-		}
-		if len(errorHolder) > 0 && errorHolder[0] != nil {
-			*errorHolder[0] = err
-		}
-	}
-	return false
+	return attributes.getPrimitive(
+		key,
+		false,
+		"boolean",
+		func(attributes Attributes, key string, attributeType string) (interface{}, error) {
+			var convertedValue interface{}
+			var retryError error
+			switch attributeType {
+			case "string":
+				var convError error
+				convertedValue, convError = strconv.ParseBool(attributes.GetString(key, &retryError))
+				if retryError == nil {
+					retryError = convError
+				}
+			}
+			return convertedValue, retryError
+		},
+		errorHolder...).(bool)
 }
 
 // Get allows returning the attribute with the given key
