@@ -647,8 +647,8 @@ var decodeAttributesTestCases []decodeAttributesTestCase = []decodeAttributesTes
 		decodeIntoError:         "json: error calling MarshalJSON for type attributes.Attributes: json: error calling MarshalJSON for type v1.JSON: invalid character 'i' looking for beginning of object key string",
 	},
 	{
-		name: "DecodeMap / nil / Should not change the provided map",
-		attributes: nil,
+		name:                    "DecodeMap / nil / Should not change the provided map",
+		attributes:              nil,
 		expectedInterface:       nil,
 		decodeInto:              &map[string]interface{}{},
 		decodeIntoExpectedValue: map[string]interface{}{},

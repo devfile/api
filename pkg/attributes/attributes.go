@@ -272,7 +272,7 @@ func (attributes Attributes) Into(into interface{}) error {
 	if attributes == nil {
 		return nil
 	}
-	
+
 	rawJSON, err := json.Marshal(attributes)
 	if err != nil {
 		return err
