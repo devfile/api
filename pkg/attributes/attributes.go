@@ -269,6 +269,10 @@ func (attributes Attributes) Booleans(errorHolder ...*error) map[string]bool {
 // An error is returned if the provided interface type is not compatible
 // with the structure of the attributes
 func (attributes Attributes) Into(into interface{}) error {
+	if attributes == nil {
+		return nil
+	}
+	
 	rawJSON, err := json.Marshal(attributes)
 	if err != nil {
 		return err
