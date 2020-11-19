@@ -138,7 +138,7 @@ func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float6
 //
 // - strings "1", "t", "T", "TRUE", "true", and "True" will be converted to a `true` boolean
 //
-// - strings "0, "f", "F", "FALSE", "false", "False" will be converted to a `true` boolean
+// - strings "0, "f", "F", "FALSE", "false", "False" will be converted to a `false` boolean
 //
 // - any other string value will raise an error.
 //
