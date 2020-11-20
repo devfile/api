@@ -55,6 +55,10 @@ components:
         value: "bar"
 ```
 
+Without the build guidance devfile spec, the proposed change here is to mention the dockerfile location in the metadata attribute. The attributes is a free form key-value pair and in the above example, a `alpha.build-dockerfile` key holds the dockerfile location; which would have otherwise been specified by the Dockerfile Build Guidance spec.
+
+Asides the devfile change, the POC PR would need to be updated to use the above devfile's image and endpoint. 
+
 Console's devfile import POC is using a `BuildConfig` to build the Dockerfile from the dockerfile path location, currently found from the context dir. The POC PR `BuildConfig` outputs it to an `ImageStreamTag`. However, the POC PR assumes the `ImageStream` and `ImageStreamTag` are all the same name as the application name. This is tightly coupled and dependant on the information entered in the Console Devfile Import form and thus does not allow us to mention a custom image name in the devfile.
 
 If we want to decouple `ImageStream` and `ImageStreamTag` from the application name, so that a custom image name can be specified in the devfile's component container; then we would need to update the following files: 
@@ -67,7 +71,7 @@ If we want to decouple `ImageStream` and `ImageStreamTag` from the application n
   
 This allows us to use the image name from devfile.yaml rather than always using the application name.
 
-The above proposed devfile container component can also mentions an endpoint instead of hardcoding a default 8080. This can be updated in `createOrUpdateResources()` in `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`
+The proposed devfile also mentions an endpoint instead of hardcoding a default 8080. This can be updated in the POC PR's function `createOrUpdateResources()` in `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`
 
 These devfile information would be parsed and returned by the library and thus ensuring a consistent UX.
 
