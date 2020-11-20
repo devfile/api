@@ -24,6 +24,8 @@ The Dockerfile is assumed to be present in the context directory. The Container 
 ### Note:
 The context path is present in both the Console import form and the open devfile spec(Refer to the OpenShift Console Devfile Import screenshot above and the open Build Guidance PR screenshot below). Do we require two context dir information? Is the context dir in the Console form for devfile.yaml and the context dir in the build guidance spec for Dockerfile relative to devfile.yaml? Or do we always assume both the devfile.yaml and Dockerfile are always at the same dir level.
 
+ For phase 1, only the Dockerfile Build Guidance is to be implemented. SourceToImage(S2I) will be implemented in the future sprints.
+
 <img src="https://user-images.githubusercontent.com/31771087/99319306-4c19be80-2837-11eb-9639-a5c130deb4ba.png">
 
 ## Proposed Changes
@@ -55,11 +57,21 @@ components:
 
 Console's devfile import POC is using a `BuildConfig` to build the Dockerfile from the dockerfile path location, currently found from the context dir. The POC PR `BuildConfig` outputs it to an `ImageStreamTag`. However, the POC PR assumes the `ImageStream` and `ImageStreamTag` are all the same name as the application name. This is tightly coupled and dependant on the information entered in the Console Devfile Import form and thus does not allow us to mention a custom image name in the devfile.
 
-If we want to decouple `ImageStream` and `ImageStreamTag` from the application name, so that a custom image name can be specified in the devfile's component container; then we would need to update 1. image stream name 2. build config output image stream tag 3. deployment's container image in `pkg/server/devfile-handler.go` and also the annotation mapping for the `ImageStreamTag` in `getTriggerAnnotation()` in `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`. This allows us to use the image name from devfile.yaml rather than always using the application name.
+If we want to decouple `ImageStream` and `ImageStreamTag` from the application name, so that a custom image name can be specified in the devfile's component container; then we would need to update the following files: 
+1. `pkg/server/devfile-handler.go`
+   - image stream name 
+   - build config output image stream tag 
+   - deployment's container image
+2. `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`
+   - the annotation mapping for the `ImageStreamTag` in `getTriggerAnnotation()` 
+  
+This allows us to use the image name from devfile.yaml rather than always using the application name.
 
 The above proposed devfile container component can also mentions an endpoint instead of hardcoding a default 8080. This can be updated in `createOrUpdateResources()` in `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`
 
 These devfile information would be parsed and returned by the library and thus ensuring a consistent UX.
 
 ### Note:
-The above devfile proposal and POC PR assumes the `BuildConfig` outputs the build to an `ImageStreamTag` which is used by the OpenShift internal registry. To push the image to a non-OpenShift Image Registry, the `BuiidConfig` output can pushed to a private registry. OpenShift [doc](https://docs.openshift.com/container-platform/4.6/builds/managing-build-output.html) outlines how this can be achieved via a `BuildConfig` and pushes the build to a private or dockerhub registry. Pushing to a private registry requires secret configuration from the Docker config, and this OpenShift [doc](https://docs.openshift.com/container-platform/3.11/dev_guide/builds/build_inputs.html#using-docker-credentials-for-private-registries) explains how to achieve it.
+The above devfile proposal and POC PR assumes the `BuildConfig` outputs the build to an `ImageStreamTag` which is used by the OpenShift internal registry. To push the image to a non-OpenShift Image Registry, the `BuiidConfig` output can pushed to a private or Dockerhub registry using `DockerImage`. OpenShift [doc](https://docs.openshift.com/container-platform/4.6/builds/managing-build-output.html) outlines how this can be achieved via a `BuildConfig`. Pushing to a private registry requires secret configuration from the Docker config, and this OpenShift [doc](https://docs.openshift.com/container-platform/3.11/dev_guide/builds/build_inputs.html#using-docker-credentials-for-private-registries) explains how to achieve it.
+
+For phase 1, only the `ImageStreamTag` is to be implemented in the `BuildConfig`, `DockerImage` is to be implemented in the future sprints.
