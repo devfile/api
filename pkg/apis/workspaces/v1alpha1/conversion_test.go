@@ -129,17 +129,33 @@ var parentComponentFuzzFunc = func(component *Component, c fuzz.Continue) {
 
 var parentCommandFuzzFunc = func(command *Command, c fuzz.Continue) {
 	// Do not generate Custom commands for Parents
+	// Also: commands in Parents cannot have attributes.
 	switch c.Intn(5) {
 	case 0:
 		c.Fuzz(&command.Apply)
+		if command.Apply != nil {
+			command.Apply.Attributes = nil
+		}
 	case 1:
 		c.Fuzz(&command.Composite)
+		if command.Composite != nil {
+			command.Composite.Attributes = nil
+		}
 	case 2:
 		c.Fuzz(&command.Exec)
+		if command.Exec != nil {
+			command.Exec.Attributes = nil
+		}
 	case 3:
 		c.Fuzz(&command.VscodeLaunch)
+		if command.VscodeLaunch != nil {
+			command.VscodeLaunch.Attributes = nil
+		}
 	case 4:
 		c.Fuzz(&command.VscodeTask)
+		if command.VscodeTask != nil {
+			command.VscodeTask.Attributes = nil
+		}
 	}
 }
 
