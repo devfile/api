@@ -85,6 +85,7 @@ jobs:
       - name: Overwrite Next Json Schema in Docs
         run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
       - name: Push to the devfile/docs repo
+        id: vars
         working-directory: docs-repo/
         run: |
           if [ "$(git status -s)" == "" ]
@@ -93,14 +94,28 @@ jobs:
             exit 0
           fi
           
-          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
-          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
-          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
+          echo ::set-output name=lastCommit::"$(cd ../api-repo; git log -1 --format=%H)"
+          echo ::set-output name=lastCommitterName::"$(cd ../api-repo; git log -1 --format=%an)"
+          echo ::set-output name=lastCommitterEmail::"$(cd ../api-repo; git log -1 --format=%ae)"
           
-          git config --global user.email "${lastCommitterEmail}"
-          git config --global user.name "${lastCommitterName}"
-          
-          git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
-          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
-          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
-          
+#          git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+#          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
+#          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.DOCS_UPDATE_SECRET }}
+          path: docs-repo
+          commit-message: Update devfile schema based on devfile/api@${{ steps.vars.outputs.lastCommit }}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: json-schema-update
+          delete-branch: true
+          title: '[Generated] Update Json Schema'
+          body: |
+            Update devfile schema based on devfile/api@${{ steps.vars.outputs.lastCommit }}
+          labels: |
+            automated pr
+          draft: false          
