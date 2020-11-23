@@ -35,7 +35,7 @@ func (attributes Attributes) Exists(key string) bool {
 
 type convertPrimitiveFunc func(attributes Attributes, key string, attributeType string) (interface{}, error)
 
-func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, resultType string, convert convertPrimitiveFunc, errorHolder ...*error) interface{} {
+func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, resultType string, convert convertPrimitiveFunc, errorHolder *error) interface{} {
 	var err error
 	if attribute, exists := attributes[key]; exists {
 		var result interface{}
@@ -67,8 +67,8 @@ func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, res
 	} else {
 		err = errors.New("Attribute with key '" + key + "' does not exist")
 	}
-	if len(errorHolder) > 0 && errorHolder[0] != nil {
-		*errorHolder[0] = err
+	if errorHolder != nil {
+		*errorHolder = err
 	}
 	return zeroValue
 }
@@ -81,7 +81,7 @@ func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, res
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) GetString(key string, errorHolder ...*error) string {
+func (attributes Attributes) GetString(key string, errorHolder *error) string {
 	return attributes.getPrimitive(
 		key,
 		"",
@@ -97,7 +97,7 @@ func (attributes Attributes) GetString(key string, errorHolder ...*error) string
 			}
 			return convertedValue, retryError
 		},
-		errorHolder...).(string)
+		errorHolder).(string)
 }
 
 // GetNumber allows returning the attribute with the given key
@@ -108,7 +108,7 @@ func (attributes Attributes) GetString(key string, errorHolder ...*error) string
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float64 {
+func (attributes Attributes) GetNumber(key string, errorHolder *error) float64 {
 	return attributes.getPrimitive(
 		key,
 		0.0,
@@ -126,7 +126,7 @@ func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float6
 			}
 			return convertedValue, retryError
 		},
-		errorHolder...).(float64)
+		errorHolder).(float64)
 }
 
 // GetBoolean allows returning the attribute with the given key
@@ -145,7 +145,7 @@ func (attributes Attributes) GetNumber(key string, errorHolder ...*error) float6
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool {
+func (attributes Attributes) GetBoolean(key string, errorHolder *error) bool {
 	return attributes.getPrimitive(
 		key,
 		false,
@@ -163,7 +163,7 @@ func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool 
 			}
 			return convertedValue, retryError
 		},
-		errorHolder...).(bool)
+		errorHolder).(bool)
 }
 
 // Get allows returning the attribute with the given key
@@ -175,12 +175,12 @@ func (attributes Attributes) GetBoolean(key string, errorHolder ...*error) bool 
 // An optional error holder can be passed as an argument
 // to receive any error that might have occurred during the attribute
 // decoding
-func (attributes Attributes) Get(key string, errorHolder ...*error) interface{} {
+func (attributes Attributes) Get(key string, errorHolder *error) interface{} {
 	if attribute, exists := attributes[key]; exists {
 		container := &[]interface{}{}
 		err := json.Unmarshal([]byte("[ "+string(attribute.Raw)+" ]"), container)
-		if err != nil && len(errorHolder) > 0 && errorHolder != nil {
-			*errorHolder[0] = err
+		if err != nil && errorHolder != nil {
+			*errorHolder = err
 		}
 		if len(*container) > 0 {
 			return (*container)[0]
@@ -211,13 +211,13 @@ func (attributes Attributes) GetInto(key string, into interface{}) error {
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) Strings(errorHolder ...*error) map[string]string {
+func (attributes Attributes) Strings(errorHolder *error) map[string]string {
 	result := map[string]string{}
 	for key := range attributes {
 		// Here only the last error is returned.
 		// Let's keep it simple and avoid adding a dependency
 		// on an external package just for gathering errors.
-		if value, isRightType := attributes.Get(key, errorHolder...).(string); isRightType {
+		if value, isRightType := attributes.Get(key, errorHolder).(string); isRightType {
 			result[key] = value
 		}
 	}
@@ -230,13 +230,13 @@ func (attributes Attributes) Strings(errorHolder ...*error) map[string]string {
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) Numbers(errorHolder ...*error) map[string]float64 {
+func (attributes Attributes) Numbers(errorHolder *error) map[string]float64 {
 	result := map[string]float64{}
 	for key := range attributes {
 		// Here only the last error is returned.
 		// Let's keep it simple and avoid adding a dependency
 		// on an external package just for gathering errors.
-		if value, isRightType := attributes.Get(key, errorHolder...).(float64); isRightType {
+		if value, isRightType := attributes.Get(key, errorHolder).(float64); isRightType {
 			result[key] = value
 		}
 	}
@@ -249,13 +249,13 @@ func (attributes Attributes) Numbers(errorHolder ...*error) map[string]float64 {
 // An optional error holder can be passed as an argument
 // to receive any error that might have be raised during the attribute
 // decoding
-func (attributes Attributes) Booleans(errorHolder ...*error) map[string]bool {
+func (attributes Attributes) Booleans(errorHolder *error) map[string]bool {
 	result := map[string]bool{}
 	for key := range attributes {
 		// Here only the last error is returned.
 		// Let's keep it simple and avoid adding a dependency
 		// on an external package just for gathering errors
-		if value, isRightType := attributes.Get(key, errorHolder...).(bool); isRightType {
+		if value, isRightType := attributes.Get(key, errorHolder).(bool); isRightType {
 			result[key] = value
 		}
 	}
@@ -282,7 +282,7 @@ func (attributes Attributes) Into(into interface{}) error {
 	return err
 }
 
-// AsInterface allows returning the whole attributes map
+// AsInterface allows returning the whole attributes map...
 // as an interface. When the attributes are not empty,
 // the returned interface will be a map
 // of interfaces.
@@ -290,17 +290,17 @@ func (attributes Attributes) Into(into interface{}) error {
 // An optional error holder can be passed as an argument
 // to receive any error that might have occured during the attributes
 // decoding
-func (attributes Attributes) AsInterface(errorHolder ...*error) interface{} {
+func (attributes Attributes) AsInterface(errorHolder *error) interface{} {
 	rawJSON, err := json.Marshal(attributes)
-	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
-		*errorHolder[0] = err
+	if err != nil && errorHolder != nil {
+		*errorHolder = err
 		return nil
 	}
 
 	container := &[]interface{}{}
 	err = json.Unmarshal([]byte("[ "+string(rawJSON)+" ]"), container)
-	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
-		*errorHolder[0] = err
+	if err != nil && errorHolder != nil {
+		*errorHolder = err
 		return nil
 	}
 
@@ -397,10 +397,10 @@ func (attributes Attributes) FromBooleanMap(strings map[string]bool) Attributes 
 // An optional error holder can be passed as an argument
 // to receive any error that might have occured during the attributes
 // decoding
-func (attributes Attributes) Put(key string, value interface{}, errorHolder ...*error) Attributes {
+func (attributes Attributes) Put(key string, value interface{}, errorHolder *error) Attributes {
 	rawJSON, err := json.Marshal(value)
-	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
-		*errorHolder[0] = err
+	if err != nil && errorHolder != nil {
+		*errorHolder = err
 	}
 
 	attributes[key] = apiext.JSON{
@@ -417,12 +417,12 @@ func (attributes Attributes) Put(key string, value interface{}, errorHolder ...*
 // An optional error holder can be passed as an argument
 // to receive any error that might have occured during the attributes
 // decoding
-func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder ...*error) Attributes {
+func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder *error) Attributes {
 	for key, value := range strings {
 		// Here only the last error is returned.
 		// Let's keep it simple and avoid adding a dependency
 		// on an external package just for gathering errors.
-		attributes.Put(key, value, errorHolder...)
+		attributes.Put(key, value, errorHolder)
 	}
 	return attributes
 }
@@ -437,11 +437,11 @@ func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder
 // An optional error holder can be passed as an argument
 // to receive any error that might have occured during the attributes
 // decoding
-func (attributes Attributes) FromInterface(structure interface{}, errorHolder ...*error) Attributes {
+func (attributes Attributes) FromInterface(structure interface{}, errorHolder *error) Attributes {
 	newAttributes := Attributes{}
 	completeJSON, err := json.Marshal(structure)
-	if err != nil && len(errorHolder) > 0 && errorHolder[0] != nil {
-		*errorHolder[0] = err
+	if err != nil && errorHolder != nil {
+		*errorHolder = err
 	}
 
 	err = json.Unmarshal(completeJSON, &newAttributes)

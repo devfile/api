@@ -119,7 +119,7 @@ var buildAttributesTestCases []buildAttributesTestCase = []buildAttributesTestCa
 		builder: func(*error) Attributes {
 			return Attributes{}.FromStringMap(map[string]string{
 				"field1": "value1",
-			}).Put("field2", map[string]string{"subfield1": "subvalue1", "subfield2": "subvalue2"})
+			}).Put("field2", map[string]string{"subfield1": "subvalue1", "subfield2": "subvalue2"}, nil)
 		},
 		expectedResult: &struct {
 			Field1 string                 `json:"field1"`
@@ -180,7 +180,7 @@ var buildAttributesTestCases []buildAttributesTestCase = []buildAttributesTestCa
 			return Attributes{}.FromInterface(struct {
 				Field1 string  `json:"field1"`
 				Field2 float64 `json:"field2"`
-			}{Field1: "value1", Field2: 9.9})
+			}{Field1: "value1", Field2: 9.9}, nil)
 		},
 		expectedResult: &struct {
 			Field1 string  `json:"field1"`
@@ -193,7 +193,7 @@ var buildAttributesTestCases []buildAttributesTestCase = []buildAttributesTestCa
 			return Attributes{}.FromInterface(&struct {
 				Field1 string  `json:"field1"`
 				Field2 float64 `json:"field2"`
-			}{Field1: "value1", Field2: 9.9})
+			}{Field1: "value1", Field2: 9.9}, nil)
 		},
 		expectedResult: &struct {
 			Field1 string  `json:"field1"`
@@ -569,7 +569,7 @@ var decodeAttributesTestCases []decodeAttributesTestCase = []decodeAttributesTes
 			"attribute1": "value1",
 			"attribute2": 9.9,
 			"attribute3": true,
-		}),
+		}, nil),
 		expectedInterface: map[string]interface{}{
 			"attribute1": "value1",
 			"attribute2": 9.9,
@@ -603,7 +603,7 @@ var decodeAttributesTestCases []decodeAttributesTestCase = []decodeAttributesTes
 		name: "DecodeStruct / missing attribute",
 		attributes: Attributes{}.FromMap(map[string]interface{}{
 			"attribute1": "value1",
-		}),
+		}, nil),
 		expectedInterface: map[string]interface{}{
 			"attribute1": "value1",
 		},
@@ -624,7 +624,7 @@ var decodeAttributesTestCases []decodeAttributesTestCase = []decodeAttributesTes
 		attributes: Attributes{}.FromMap(map[string]interface{}{
 			"attribute1": "value1",
 			"attribute2": 9.9,
-		}),
+		}, nil),
 		expectedInterface: map[string]interface{}{
 			"attribute1": "value1",
 			"attribute2": 9.9,
