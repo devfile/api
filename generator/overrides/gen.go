@@ -125,6 +125,12 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		}
 
 		genutils.WriteFormattedSourceFile(fileNamePart, ctx, root, func(buf *bytes.Buffer) {
+			buf.WriteString(`
+import (
+	attributes "github.com/devfile/api/pkg/attributes"
+)
+
+`)
 			config.Fprint(buf, root.Fset, overrides)
 			buf.WriteString(`
 func (overrides ` + g.rootTypeToProcess.OverrideTypeName + `) isOverride() {}
@@ -349,7 +355,9 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 							`.*`,
 							` *`+regexp.QuoteMeta("+kubebuilder:validation:Enum=")+`.*`,
 							kubebuilderAnnotation)
-						fieldTypeToProcess.DropEnumAnnotation = true
+						if fieldTypeToProcess != nil {
+							fieldTypeToProcess.DropEnumAnnotation = true
+						}
 					}
 				case *ast.StarExpr:
 					switch elementType := fieldType.X.(type) {

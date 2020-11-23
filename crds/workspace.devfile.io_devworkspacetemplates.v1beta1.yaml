@@ -62,12 +62,6 @@ spec:
                       command exist for a given component, it is assumed the component
                       will be applied at workspace start by default."
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       component:
                         description: Describes component that will be applied
                         type: string
@@ -96,6 +90,10 @@ spec:
                     required:
                     - component
                     type: object
+                  attributes:
+                    description: Map of implementation-dependant free-form YAML attributes.
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   commandType:
                     description: Type of workspace command
                     enum:
@@ -110,12 +108,6 @@ spec:
                     description: Composite command that allows executing several sub-commands
                       either sequentially or concurrently
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       commands:
                         description: The commands that comprise this composite command
                         items:
@@ -153,12 +145,6 @@ spec:
                       and should be provided by the user possibly through some dedicated
                       plugin
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       commandClass:
                         description: Class of command that the associated implementation
                           component should use to process this command with the appropriate
@@ -200,12 +186,6 @@ spec:
                   exec:
                     description: CLI Command executed in an existing component container
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       commandLine:
                         description: "The actual command-line string \n Special variables
                           that can be used: \n  - `$PROJECTS_ROOT`: A path where projects
@@ -286,12 +266,6 @@ spec:
                     - required:
                       - inlined
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       group:
                         description: Defines the group this command is part of
                         properties:
@@ -332,12 +306,6 @@ spec:
                     - required:
                       - inlined
                     properties:
-                      attributes:
-                        additionalProperties:
-                          type: string
-                        description: Optional map of free-form additional command
-                          attributes
-                        type: object
                       group:
                         description: Defines the group this command is part of
                         properties:
@@ -392,6 +360,10 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    description: Map of implementation-dependant free-form YAML attributes.
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   componentType:
                     description: Type of component
                     enum:
@@ -431,13 +403,12 @@ spec:
                         items:
                           properties:
                             attributes:
-                              additionalProperties:
-                                type: string
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
                                 attributes: \n - cookiesAuthEnabled: \"true\" / \"false\",
                                 \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                               type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             exposure:
                               description: "Describes how the endpoint should be exposed
                                 on the network. \n - `public` means that the endpoint
@@ -587,13 +558,12 @@ spec:
                         items:
                           properties:
                             attributes:
-                              additionalProperties:
-                                type: string
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
                                 attributes: \n - cookiesAuthEnabled: \"true\" / \"false\",
                                 \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                               type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             exposure:
                               description: "Describes how the endpoint should be exposed
                                 on the network. \n - `public` means that the endpoint
@@ -683,13 +653,12 @@ spec:
                         items:
                           properties:
                             attributes:
-                              additionalProperties:
-                                type: string
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
                                 attributes: \n - cookiesAuthEnabled: \"true\" / \"false\",
                                 \n - type: \"terminal\" / \"ide\" / \"ide-dev\","
                               type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             exposure:
                               description: "Describes how the endpoint should be exposed
                                 on the network. \n - `public` means that the endpoint
@@ -802,12 +771,6 @@ spec:
                                 the component will be applied at workspace start by
                                 default."
                               properties:
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
-                                  type: object
                                 component:
                                   description: Describes component that will be applied
                                   type: string
@@ -848,12 +811,6 @@ spec:
                               description: Composite command that allows executing
                                 several sub-commands either sequentially or concurrently
                               properties:
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
-                                  type: object
                                 commands:
                                   description: The commands that comprise this composite
                                     command
@@ -892,12 +849,6 @@ spec:
                               description: CLI Command executed in an existing component
                                 container
                               properties:
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
-                                  type: object
                                 commandLine:
                                   description: "The actual command-line string \n
                                     Special variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -980,12 +931,6 @@ spec:
                               - required:
                                 - inlined
                               properties:
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
-                                  type: object
                                 group:
                                   description: Defines the group this command is part
                                     of
@@ -1028,12 +973,6 @@ spec:
                               - required:
                                 - inlined
                               properties:
-                                attributes:
-                                  additionalProperties:
-                                    type: string
-                                  description: Optional map of free-form additional
-                                    command attributes
-                                  type: object
                                 group:
                                   description: Defines the group this command is part
                                     of
@@ -1126,14 +1065,13 @@ spec:
                                   items:
                                     properties:
                                       attributes:
-                                        additionalProperties:
-                                          type: string
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
                                           of Che-specific attributes: \n - cookiesAuthEnabled:
                                           \"true\" / \"false\", \n - type: \"terminal\"
                                           / \"ide\" / \"ide-dev\","
                                         type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       exposure:
                                         description: "Describes how the endpoint should
                                           be exposed on the network. \n - `public`
@@ -1270,14 +1208,13 @@ spec:
                                   items:
                                     properties:
                                       attributes:
-                                        additionalProperties:
-                                          type: string
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
                                           of Che-specific attributes: \n - cookiesAuthEnabled:
                                           \"true\" / \"false\", \n - type: \"terminal\"
                                           / \"ide\" / \"ide-dev\","
                                         type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       exposure:
                                         description: "Describes how the endpoint should
                                           be exposed on the network. \n - `public`
@@ -1375,14 +1312,13 @@ spec:
                                   items:
                                     properties:
                                       attributes:
-                                        additionalProperties:
-                                          type: string
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
                                           of Che-specific attributes: \n - cookiesAuthEnabled:
                                           \"true\" / \"false\", \n - type: \"terminal\"
                                           / \"ide\" / \"ide-dev\","
                                         type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       exposure:
                                         description: "Describes how the endpoint should
                                           be exposed on the network. \n - `public`
@@ -1582,12 +1518,6 @@ spec:
                           it is assumed the component will be applied at workspace
                           start by default."
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           component:
                             description: Describes component that will be applied
                             type: string
@@ -1625,12 +1555,6 @@ spec:
                         description: Composite command that allows executing several
                           sub-commands either sequentially or concurrently
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           commands:
                             description: The commands that comprise this composite
                               command
@@ -1666,12 +1590,6 @@ spec:
                         description: CLI Command executed in an existing component
                           container
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           commandLine:
                             description: "The actual command-line string \n Special
                               variables that can be used: \n  - `$PROJECTS_ROOT`:
@@ -1749,12 +1667,6 @@ spec:
                         - required:
                           - inlined
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           group:
                             description: Defines the group this command is part of
                             properties:
@@ -1794,12 +1706,6 @@ spec:
                         - required:
                           - inlined
                         properties:
-                          attributes:
-                            additionalProperties:
-                              type: string
-                            description: Optional map of free-form additional command
-                              attributes
-                            type: object
                           group:
                             description: Defines the group this command is part of
                             properties:
@@ -1891,14 +1797,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    type: string
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -2027,14 +1932,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    type: string
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -2128,14 +2032,13 @@ spec:
                             items:
                               properties:
                                 attributes:
-                                  additionalProperties:
-                                    type: string
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
                                     attributes: \n - cookiesAuthEnabled: \"true\"
                                     / \"false\", \n - type: \"terminal\" / \"ide\"
                                     / \"ide-dev\","
                                   type: object
+                                  x-kubernetes-preserve-unknown-fields: true
                                 exposure:
                                   description: "Describes how the endpoint should
                                     be exposed on the network. \n - `public` means
@@ -2252,12 +2155,6 @@ spec:
                                     is assumed the component will be applied at workspace
                                     start by default."
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     component:
                                       description: Describes component that will be
                                         applied
@@ -2299,12 +2196,6 @@ spec:
                                   description: Composite command that allows executing
                                     several sub-commands either sequentially or concurrently
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     commands:
                                       description: The commands that comprise this
                                         composite command
@@ -2343,12 +2234,6 @@ spec:
                                   description: CLI Command executed in an existing
                                     component container
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     commandLine:
                                       description: "The actual command-line string
                                         \n Special variables that can be used: \n
@@ -2432,12 +2317,6 @@ spec:
                                   - required:
                                     - inlined
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     group:
                                       description: Defines the group this command
                                         is part of
@@ -2481,12 +2360,6 @@ spec:
                                   - required:
                                     - inlined
                                   properties:
-                                    attributes:
-                                      additionalProperties:
-                                        type: string
-                                      description: Optional map of free-form additional
-                                        command attributes
-                                      type: object
                                     group:
                                       description: Defines the group this command
                                         is part of
@@ -2580,8 +2453,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              type: string
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -2589,6 +2460,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -2730,8 +2602,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              type: string
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -2739,6 +2609,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -2841,8 +2712,6 @@ spec:
                                       items:
                                         properties:
                                           attributes:
-                                            additionalProperties:
-                                              type: string
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
                                               Examples of Che-specific attributes:
@@ -2850,6 +2719,7 @@ spec:
                                               \"false\", \n - type: \"terminal\" /
                                               \"ide\" / \"ide-dev\","
                                             type: object
+                                            x-kubernetes-preserve-unknown-fields: true
                                           exposure:
                                             description: "Describes how the endpoint
                                               should be exposed on the network. \n
@@ -3211,6 +3081,10 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    description: Map of implementation-dependant free-form YAML attributes.
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   clonePath:
                     description: Path relative to the root of the projects to which
                       this project should be cloned into. This is a unix-style relative
@@ -3325,6 +3199,10 @@ spec:
                 - required:
                   - custom
                 properties:
+                  attributes:
+                    description: Map of implementation-dependant free-form YAML attributes.
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   custom:
                     description: Project's Custom source
                     properties:

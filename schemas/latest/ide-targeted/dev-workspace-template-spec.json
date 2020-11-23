@@ -51,14 +51,6 @@
               "component"
             ],
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "component": {
                 "description": "Describes component that will be applied",
                 "type": "string",
@@ -100,18 +92,16 @@
             "additionalProperties": false,
             "markdownDescription": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default."
           },
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true,
+            "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+          },
           "composite": {
             "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
             "type": "object",
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "commands": {
                 "description": "The commands that comprise this composite command",
                 "type": "array",
@@ -169,14 +159,6 @@
               "embeddedResource"
             ],
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "commandClass": {
                 "description": "Class of command that the associated implementation component should use to process this command with the appropriate logic",
                 "type": "string",
@@ -232,14 +214,6 @@
               "component"
             ],
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "commandLine": {
                 "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                 "type": "string",
@@ -338,14 +312,6 @@
               }
             ],
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "group": {
                 "description": "Defines the group this command is part of",
                 "type": "object",
@@ -403,14 +369,6 @@
               }
             ],
             "properties": {
-              "attributes": {
-                "description": "Optional map of free-form additional command attributes",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "markdownDescription": "Optional map of free-form additional command attributes"
-              },
               "group": {
                 "description": "Defines the group this command is part of",
                 "type": "object",
@@ -498,6 +456,12 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true,
+            "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+          },
           "container": {
             "description": "Allows adding and configuring workspace-related containers",
             "type": "object",
@@ -538,9 +502,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": true,
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -702,9 +664,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": true,
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -795,9 +755,7 @@
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
+                      "additionalProperties": true,
                       "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
@@ -916,14 +874,6 @@
                       "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                       "type": "object",
                       "properties": {
-                        "attributes": {
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "component": {
                           "description": "Describes component that will be applied",
                           "type": "string",
@@ -966,14 +916,6 @@
                       "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                       "type": "object",
                       "properties": {
-                        "attributes": {
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "commands": {
                           "description": "The commands that comprise this composite command",
                           "type": "array",
@@ -1024,14 +966,6 @@
                       "description": "CLI Command executed in an existing component container",
                       "type": "object",
                       "properties": {
-                        "attributes": {
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "commandLine": {
                           "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                           "type": "string",
@@ -1126,14 +1060,6 @@
                         }
                       ],
                       "properties": {
-                        "attributes": {
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "group": {
                           "description": "Defines the group this command is part of",
                           "type": "object",
@@ -1188,14 +1114,6 @@
                         }
                       ],
                       "properties": {
-                        "attributes": {
-                          "description": "Optional map of free-form additional command attributes",
-                          "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
-                          "markdownDescription": "Optional map of free-form additional command attributes"
-                        },
                         "group": {
                           "description": "Defines the group this command is part of",
                           "type": "object",
@@ -1306,9 +1224,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": true,
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {
@@ -1445,9 +1361,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": true,
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {
@@ -1537,9 +1451,7 @@
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
-                                "additionalProperties": {
-                                  "type": "string"
-                                },
+                                "additionalProperties": true,
                                 "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                               },
                               "exposure": {
@@ -1768,14 +1680,6 @@
                 "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                 "type": "object",
                 "properties": {
-                  "attributes": {
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "component": {
                     "description": "Describes component that will be applied",
                     "type": "string",
@@ -1818,14 +1722,6 @@
                 "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                 "type": "object",
                 "properties": {
-                  "attributes": {
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "commands": {
                     "description": "The commands that comprise this composite command",
                     "type": "array",
@@ -1876,14 +1772,6 @@
                 "description": "CLI Command executed in an existing component container",
                 "type": "object",
                 "properties": {
-                  "attributes": {
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "commandLine": {
                     "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                     "type": "string",
@@ -1978,14 +1866,6 @@
                   }
                 ],
                 "properties": {
-                  "attributes": {
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "group": {
                     "description": "Defines the group this command is part of",
                     "type": "object",
@@ -2040,14 +1920,6 @@
                   }
                 ],
                 "properties": {
-                  "attributes": {
-                    "description": "Optional map of free-form additional command attributes",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "markdownDescription": "Optional map of free-form additional command attributes"
-                  },
                   "group": {
                     "description": "Defines the group this command is part of",
                     "type": "object",
@@ -2163,9 +2035,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
+                          "additionalProperties": true,
                           "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
@@ -2302,9 +2172,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
+                          "additionalProperties": true,
                           "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
@@ -2394,9 +2262,7 @@
                         "attributes": {
                           "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
-                          "additionalProperties": {
-                            "type": "string"
-                          },
+                          "additionalProperties": true,
                           "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
@@ -2515,14 +2381,6 @@
                           "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
                           "type": "object",
                           "properties": {
-                            "attributes": {
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "component": {
                               "description": "Describes component that will be applied",
                               "type": "string",
@@ -2565,14 +2423,6 @@
                           "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                           "type": "object",
                           "properties": {
-                            "attributes": {
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "commands": {
                               "description": "The commands that comprise this composite command",
                               "type": "array",
@@ -2623,14 +2473,6 @@
                           "description": "CLI Command executed in an existing component container",
                           "type": "object",
                           "properties": {
-                            "attributes": {
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "commandLine": {
                               "description": "The actual command-line string\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
                               "type": "string",
@@ -2725,14 +2567,6 @@
                             }
                           ],
                           "properties": {
-                            "attributes": {
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "group": {
                               "description": "Defines the group this command is part of",
                               "type": "object",
@@ -2787,14 +2621,6 @@
                             }
                           ],
                           "properties": {
-                            "attributes": {
-                              "description": "Optional map of free-form additional command attributes",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              },
-                              "markdownDescription": "Optional map of free-form additional command attributes"
-                            },
                             "group": {
                               "description": "Defines the group this command is part of",
                               "type": "object",
@@ -2905,9 +2731,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
+                                    "additionalProperties": true,
                                     "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                                   },
                                   "exposure": {
@@ -3044,9 +2868,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
+                                    "additionalProperties": true,
                                     "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                                   },
                                   "exposure": {
@@ -3136,9 +2958,7 @@
                                   "attributes": {
                                     "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                     "type": "object",
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
+                                    "additionalProperties": true,
                                     "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                                   },
                                   "exposure": {
@@ -3585,6 +3405,12 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true,
+            "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+          },
           "clonePath": {
             "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
             "type": "string",
@@ -3745,6 +3571,12 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true,
+            "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+          },
           "custom": {
             "description": "Project's Custom source",
             "type": "object",
