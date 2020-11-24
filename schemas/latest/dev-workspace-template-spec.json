@@ -831,6 +831,11 @@
                       },
                       "additionalProperties": false
                     },
+                    "attributes": {
+                      "description": "Map of implementation-dependant free-form YAML attributes.",
+                      "type": "object",
+                      "additionalProperties": true
+                    },
                     "composite": {
                       "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                       "type": "object",
@@ -1076,6 +1081,11 @@
                     }
                   ],
                   "properties": {
+                    "attributes": {
+                      "description": "Map of implementation-dependant free-form YAML attributes.",
+                      "type": "object",
+                      "additionalProperties": true
+                    },
                     "container": {
                       "description": "Allows adding and configuring workspace-related containers",
                       "type": "object",
@@ -1552,6 +1562,11 @@
                 },
                 "additionalProperties": false
               },
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": true
+              },
               "composite": {
                 "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                 "type": "object",
@@ -1802,6 +1817,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": true
+              },
               "container": {
                 "description": "Allows adding and configuring workspace-related containers",
                 "type": "object",
@@ -2183,6 +2203,11 @@
                           },
                           "additionalProperties": false
                         },
+                        "attributes": {
+                          "description": "Map of implementation-dependant free-form YAML attributes.",
+                          "type": "object",
+                          "additionalProperties": true
+                        },
                         "composite": {
                           "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
                           "type": "object",
@@ -2428,6 +2453,11 @@
                         }
                       ],
                       "properties": {
+                        "attributes": {
+                          "description": "Map of implementation-dependant free-form YAML attributes.",
+                          "type": "object",
+                          "additionalProperties": true
+                        },
                         "container": {
                           "description": "Allows adding and configuring workspace-related containers",
                           "type": "object",
@@ -2819,6 +2849,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": true
+              },
               "clonePath": {
                 "description": "Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.",
                 "type": "string"
@@ -2936,6 +2971,11 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": true
+              },
               "description": {
                 "description": "Description of a starter project",
                 "type": "string"

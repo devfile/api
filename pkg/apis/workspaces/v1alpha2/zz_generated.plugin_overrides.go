@@ -33,6 +33,9 @@ type ComponentPluginOverride struct {
 	// devfile that may reference this component through a parent or a plugin.
 	Name string `json:"name"`
 
+	// Map of implementation-dependant free-form YAML attributes.
+	// +optional
+	Attributes                   attributes.Attributes `json:"attributes,omitempty"`
 	ComponentUnionPluginOverride `json:",inline"`
 }
 
@@ -43,6 +46,9 @@ type CommandPluginOverride struct {
 	// a parent, or in events.
 	Id string `json:"id"`
 
+	// Map of implementation-dependant free-form YAML attributes.
+	// +optional
+	Attributes                 attributes.Attributes `json:"attributes,omitempty"`
 	CommandUnionPluginOverride `json:",inline"`
 }
 

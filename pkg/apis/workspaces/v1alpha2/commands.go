@@ -61,7 +61,6 @@ type Command struct {
 	Id string `json:"id"`
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
-	// +devfile:overrides:include:omit=true
 	Attributes   attributes.Attributes `json:"attributes,omitempty"`
 	CommandUnion `json:",inline"`
 }

@@ -32,7 +32,6 @@ type Component struct {
 	Name string `json:"name"`
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
-	// +devfile:overrides:include:omit=true
 	Attributes     attributes.Attributes `json:"attributes,omitempty"`
 	ComponentUnion `json:",inline"`
 }
