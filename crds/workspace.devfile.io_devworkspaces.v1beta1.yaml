@@ -25,7 +25,6 @@ spec:
     listKind: DevWorkspaceList
     plural: devworkspaces
     shortNames:
-    - dev
     - dw
     singular: devworkspace
   preserveUnknownFields: false
