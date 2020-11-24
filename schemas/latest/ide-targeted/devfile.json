@@ -1568,7 +1568,7 @@
           "markdownDescription": "Optional semver-compatible version"
         }
       },
-      "additionalProperties": false,
+      "additionalProperties": true,
       "markdownDescription": "Optional metadata"
     },
     "parent": {

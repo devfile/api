@@ -11,6 +11,7 @@ type DevfileHeader struct {
 	// +kubebuilder:validation:Pattern=^([2-9])\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$
 	SchemaVersion string `json:"schemaVersion"`
 
+	// +kubebuilder:pruning:PreserveUnknownFields
 	// +optional
 	// Optional metadata
 	Metadata DevfileMetadata `json:"metadata,omitempty"`
