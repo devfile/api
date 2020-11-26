@@ -4924,6 +4924,11 @@ spec:
                                           UI menus for example
                                         type: string
                                     type: object
+                                  attributes:
+                                    description: Map of implementation-dependant free-form
+                                      YAML attributes.
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   commandType:
                                     description: Type of workspace command
                                     enum:
@@ -5158,6 +5163,11 @@ spec:
                                 - required:
                                   - volume
                                 properties:
+                                  attributes:
+                                    description: Map of implementation-dependant free-form
+                                      YAML attributes.
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   componentType:
                                     description: Type of component
                                     enum:
@@ -5705,6 +5715,11 @@ spec:
                                     for example
                                   type: string
                               type: object
+                            attributes:
+                              description: Map of implementation-dependant free-form
+                                YAML attributes.
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             commandType:
                               description: Type of workspace command
                               enum:
@@ -5934,6 +5949,11 @@ spec:
                           - required:
                             - plugin
                           properties:
+                            attributes:
+                              description: Map of implementation-dependant free-form
+                                YAML attributes.
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             componentType:
                               description: Type of component
                               enum:
@@ -6379,6 +6399,11 @@ spec:
                                               in Editor UI menus for example
                                             type: string
                                         type: object
+                                      attributes:
+                                        description: Map of implementation-dependant
+                                          free-form YAML attributes.
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       commandType:
                                         description: Type of workspace command
                                         enum:
@@ -6618,6 +6643,11 @@ spec:
                                     - required:
                                       - volume
                                     properties:
+                                      attributes:
+                                        description: Map of implementation-dependant
+                                          free-form YAML attributes.
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       componentType:
                                         description: Type of component
                                         enum:
@@ -7123,6 +7153,11 @@ spec:
                           - required:
                             - zip
                           properties:
+                            attributes:
+                              description: Map of implementation-dependant free-form
+                                YAML attributes.
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             clonePath:
                               description: Path relative to the root of the projects
                                 to which this project should be cloned into. This
@@ -7230,6 +7265,11 @@ spec:
                           - required:
                             - zip
                           properties:
+                            attributes:
+                              description: Map of implementation-dependant free-form
+                                YAML attributes.
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
                             description:
                               description: Description of a starter project
                               type: string

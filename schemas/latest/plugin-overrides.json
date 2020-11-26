@@ -74,6 +74,11 @@
             },
             "additionalProperties": false
           },
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true
+          },
           "composite": {
             "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
             "type": "object",
@@ -319,6 +324,11 @@
           }
         ],
         "properties": {
+          "attributes": {
+            "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true
+          },
           "container": {
             "description": "Allows adding and configuring workspace-related containers",
             "type": "object",
