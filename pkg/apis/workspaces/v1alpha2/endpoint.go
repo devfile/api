@@ -47,6 +47,8 @@ const (
 )
 
 type Endpoint struct {
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	TargetPort int `json:"targetPort"`

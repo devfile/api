@@ -47,6 +47,8 @@ type ComponentParentOverride struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -58,6 +60,8 @@ type ComponentParentOverride struct {
 type ProjectParentOverride struct {
 
 	// Project name
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -78,6 +82,8 @@ type ProjectParentOverride struct {
 type StarterProjectParentOverride struct {
 
 	// Project name
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -100,6 +106,8 @@ type CommandParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Id string `json:"id"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -405,6 +413,9 @@ type ContainerParentOverride struct {
 }
 
 type EndpointParentOverride struct {
+
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	//  +optional
@@ -570,6 +581,8 @@ type VolumeMountParentOverride struct {
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// The path in the component container where the volume should be mounted.
@@ -641,6 +654,8 @@ type ComponentPluginOverrideParentOverride struct {
 	// Mandatory name that allows referencing the component
 	// from other elements (such as commands) or from an external
 	// devfile that may reference this component through a parent or a plugin.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -654,6 +669,8 @@ type CommandPluginOverrideParentOverride struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Id string `json:"id"`
 
 	// Map of implementation-dependant free-form YAML attributes.
@@ -949,6 +966,9 @@ type ContainerPluginOverrideParentOverride struct {
 }
 
 type EndpointPluginOverrideParentOverride struct {
+
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	//  +optional
@@ -1073,6 +1093,8 @@ type VolumeMountPluginOverrideParentOverride struct {
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// The path in the component container where the volume should be mounted.

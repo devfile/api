@@ -19,7 +19,7 @@ spec:
       plugin:
         id: che-incubator/typescript/1.30.2
         components:
-          - name: ""
+          - name: random-name
             container:
               memoryLimit: 512Mi
     - name: nodejs
@@ -32,29 +32,29 @@ spec:
             targetPort: 3000
         mountSources: true
   commands:
-    - id: download dependencies
+    - id: download-dependencies
       exec:
         component: nodejs
         commandLine: npm install
         workingDir: ${PROJECTS_ROOT}/project/app
-    - id: run the app
+    - id: run-the-app
       exec:
         component: nodejs
         commandLine: nodemon app.js
         workingDir: ${PROJECTS_ROOT}/project/app
-    - id: run the app (debugging enabled)
+    - id: run-the-app-debugging-enabled
       exec:
         component: nodejs
         commandLine: nodemon --inspect app.js
         workingDir: ${PROJECTS_ROOT}/project/app
-    - id: stop the app
+    - id: stop-the-app
       exec:
         component: nodejs
         commandLine: >-
             node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
             echo "Stopping node server with PIDs: ${node_server_pids}" && 
             kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
-    - id: Attach remote debugger
+    - id: attach-remote-debugger
       vscodeLaunch:
         inlined: |
           {

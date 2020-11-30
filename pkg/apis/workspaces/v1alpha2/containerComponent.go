@@ -73,6 +73,8 @@ type VolumeMount struct {
 	// The volume mount name is the name of an existing `Volume` component.
 	// If several containers mount the same volume name
 	// then they will reuse the same volume and will be able to access to the same files.
+	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
 	// The path in the component container where the volume should be mounted.

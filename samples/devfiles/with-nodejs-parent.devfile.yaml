@@ -9,7 +9,7 @@ parent:
         checkoutFrom:
           revision: 'mybranch'
 commands:
-  - id: sayHello
+  - id: sayhello
     exec:
       label: Say Hello
       commandLine: echo "hello"

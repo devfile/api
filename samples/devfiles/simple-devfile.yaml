@@ -8,7 +8,7 @@ projects:
       remotes:
         origin: "https://github.com/devfile/api"
 commands:
-  - id: buildSchema
+  - id: buildschema
     exec:
       label: Build the schema
       commandLine: "./buildSchema.sh"
@@ -16,18 +16,18 @@ commands:
       group:
         kind: build
         isDefault: true
-  - id: openDevfile
+  - id: opendevfile
     vscodeTask:
       inlined:
         json        
-  - id: buildSchemaAndOpenDevfile
+  - id: build-schema-and-open-devfile
     composite:
       label: Build schema and open devfile
       commands:
-        - buildSchema
-        - openDevfile
+        - buildschema
+        - opendevfile
       parallel: false
-  - id: helloWorld
+  - id: helloworld
     exec:
       env:
         - name: "USER"
@@ -36,7 +36,7 @@ commands:
       component: build-tools
 events:
   postStart:
-    - "buildSchemaAndOpenDevfile"
+    - "build-schema-and-open-devfile"
 components:
   - name: yaml-support
     plugin:

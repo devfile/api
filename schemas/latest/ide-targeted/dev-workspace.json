@@ -505,6 +505,8 @@
                   "id": {
                     "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                     "type": "string",
+                    "maxLength": 63,
+                    "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                     "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                   },
                   "vscodeLaunch": {
@@ -727,7 +729,9 @@
                               "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                             },
                             "name": {
-                              "type": "string"
+                              "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
                               "description": "Path of the endpoint URL",
@@ -807,6 +811,8 @@
                             "name": {
                               "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                               "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                               "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                             },
                             "path": {
@@ -889,7 +895,9 @@
                               "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                             },
                             "name": {
-                              "type": "string"
+                              "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
                               "description": "Path of the endpoint URL",
@@ -936,6 +944,8 @@
                   "name": {
                     "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
                     "type": "string",
+                    "maxLength": 63,
+                    "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                     "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
                   },
                   "openshift": {
@@ -980,7 +990,9 @@
                               "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                             },
                             "name": {
-                              "type": "string"
+                              "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
                               "description": "Path of the endpoint URL",
@@ -1259,6 +1271,8 @@
                             "id": {
                               "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                               "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                               "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                             },
                             "vscodeLaunch": {
@@ -1461,7 +1475,9 @@
                                         "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                       },
                                       "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "maxLength": 63,
+                                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
                                         "description": "Path of the endpoint URL",
@@ -1540,6 +1556,8 @@
                                       "name": {
                                         "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                                         "type": "string",
+                                        "maxLength": 63,
+                                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                                         "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                                       },
                                       "path": {
@@ -1598,7 +1616,9 @@
                                         "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                       },
                                       "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "maxLength": 63,
+                                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
                                         "description": "Path of the endpoint URL",
@@ -1645,6 +1665,8 @@
                             "name": {
                               "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
                               "type": "string",
+                              "maxLength": 63,
+                              "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                               "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
                             },
                             "openshift": {
@@ -1688,7 +1710,9 @@
                                         "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                       },
                                       "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "maxLength": 63,
+                                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
                                         "description": "Path of the endpoint URL",
@@ -2077,6 +2101,8 @@
                       "id": {
                         "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                         "type": "string",
+                        "maxLength": 63,
+                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                         "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                       },
                       "vscodeLaunch": {
@@ -2284,7 +2310,9 @@
                                   "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                 },
                                 "name": {
-                                  "type": "string"
+                                  "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
                                   "description": "Path of the endpoint URL",
@@ -2363,6 +2391,8 @@
                                 "name": {
                                   "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                                   "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                                   "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                                 },
                                 "path": {
@@ -2421,7 +2451,9 @@
                                   "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                 },
                                 "name": {
-                                  "type": "string"
+                                  "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
                                   "description": "Path of the endpoint URL",
@@ -2468,6 +2500,8 @@
                       "name": {
                         "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
                         "type": "string",
+                        "maxLength": 63,
+                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                         "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
                       },
                       "openshift": {
@@ -2511,7 +2545,9 @@
                                   "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                 },
                                 "name": {
-                                  "type": "string"
+                                  "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
                                   "description": "Path of the endpoint URL",
@@ -2790,6 +2826,8 @@
                                 "id": {
                                   "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                                   "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                                   "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                                 },
                                 "vscodeLaunch": {
@@ -2992,7 +3030,9 @@
                                             "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                           },
                                           "name": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "maxLength": 63,
+                                            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
                                             "description": "Path of the endpoint URL",
@@ -3071,6 +3111,8 @@
                                           "name": {
                                             "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                                             "type": "string",
+                                            "maxLength": 63,
+                                            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                                             "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                                           },
                                           "path": {
@@ -3129,7 +3171,9 @@
                                             "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                           },
                                           "name": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "maxLength": 63,
+                                            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
                                             "description": "Path of the endpoint URL",
@@ -3176,6 +3220,8 @@
                                 "name": {
                                   "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
                                   "type": "string",
+                                  "maxLength": 63,
+                                  "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                                   "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
                                 },
                                 "openshift": {
@@ -3219,7 +3265,9 @@
                                             "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`"
                                           },
                                           "name": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "maxLength": 63,
+                                            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
                                             "description": "Path of the endpoint URL",
@@ -3460,6 +3508,8 @@
                       "name": {
                         "description": "Project name",
                         "type": "string",
+                        "maxLength": 63,
+                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                         "markdownDescription": "Project name"
                       },
                       "sparseCheckoutDirs": {
@@ -3599,6 +3649,8 @@
                       "name": {
                         "description": "Project name",
                         "type": "string",
+                        "maxLength": 63,
+                        "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                         "markdownDescription": "Project name"
                       },
                       "subDir": {
@@ -3771,6 +3823,8 @@
                   "name": {
                     "description": "Project name",
                     "type": "string",
+                    "maxLength": 63,
+                    "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                     "markdownDescription": "Project name"
                   },
                   "sparseCheckoutDirs": {
@@ -3937,6 +3991,8 @@
                   "name": {
                     "description": "Project name",
                     "type": "string",
+                    "maxLength": 63,
+                    "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
                     "markdownDescription": "Project name"
                   },
                   "subDir": {

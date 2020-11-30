@@ -42,7 +42,7 @@ commands:
           MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean
           install
         component: maven
-  - name: Debug remote java application
+  - name: debug-remote-java-application
     actions:
       - referenceContent: |
           {
@@ -86,7 +86,7 @@ commands:
           ${PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
           ${PROJECTS_ROOT}/spring-boot-http-booster
         component: maven
-  - name: deploy to OpenShift
+  - name: deploy-to-openshift
     actions:
       - workdir: '${PROJECTS_ROOT}/spring-boot-http-booster'
         type: exec

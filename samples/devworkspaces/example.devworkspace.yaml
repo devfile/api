@@ -17,11 +17,11 @@ spec:
       - name: editor
         plugin:
           id: eclipse/che-theia/latest
-      - name: "ownPlugin"
+      - name: "ownplugin"
         plugin:
           id: acme/newPlugin/latest
           registryUrl: "https://acme.com/registry/"
-      - name: "myPlugin"
+      - name: "myplugin"
         plugin:
           uri: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
       - name: "mycontainer"
@@ -35,7 +35,7 @@ spec:
               attributes:
                 type: terminal
               targetPort: 4000
-      - name: "myNewComponent"
+      - name: "mynewcomponent"
         custom:
           componentClass: "NewComponentType"
           embeddedResource:
