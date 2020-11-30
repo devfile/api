@@ -11,8 +11,6 @@ spec:
     kind: DevWorkspace
     listKind: DevWorkspaceList
     plural: devworkspaces
-    shortNames:
-    - dw
     singular: devworkspace
   scope: Namespaced
   versions:
