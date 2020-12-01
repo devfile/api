@@ -33,7 +33,7 @@ When deploying the OCI registry, the registry bootstrap process parses the index
 ## Problem
 Our approach of pushing only the devfile.yaml works fine currently because the stacks we’re pushing only have a devfile.yaml in them. However, devfile stacks may contain more than _just_ the devfile, and may also contains resources that are re-used across multiple stacks (such as certain vsx plugins).
 
-We need a defined way of knowing what files in a stack to push up in a, what layers each file in the stack should belong to, and where the stack's file should located. 
+We need a defined way of knowing what files in a stack to push up in a, what layers each file in the stack should belong to, and where the stack's files should located. 
 
 ## Proposal
 
@@ -53,17 +53,17 @@ Currently, when we push devfile stacks to an OCI registry, it's pushed as a sing
 
 **VSX Plugins**
 
-*.vsx - `application/vnd.devfileio.vsx.layer.v1.tar`
+`*.vsx` -> `application/vnd.devfileio.vsx.layer.v1.tar`
 
 **Stack logos**
 
-logo.svg - `image/svg+xml` or
+`logo.svg` -> `image/svg+xml` or
 
-logo.png - `image/png`
+`logo.png` -> `image/png`
 
 **Everything else**
 
-archive.tar - `application/x-tar`
+`archive.tar` - `application/x-tar`
 
 As part of the registry build process that packages the stacks into a container image, any files not belonging to the devfile, vsx or logo media types will be lumped together in a tar archive (using the media type `application/x-tar`).
 
