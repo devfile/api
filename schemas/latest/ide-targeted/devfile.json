@@ -1580,10 +1580,38 @@
           "additionalProperties": true,
           "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
         },
+        "description": {
+          "description": "Optional devfile description",
+          "type": "string",
+          "markdownDescription": "Optional devfile description"
+        },
+        "displayName": {
+          "description": "Optional devfile display name",
+          "type": "string",
+          "markdownDescription": "Optional devfile display name"
+        },
+        "globalMemoryLimit": {
+          "description": "Optional devfile global memory limit",
+          "type": "string",
+          "markdownDescription": "Optional devfile global memory limit"
+        },
+        "icon": {
+          "description": "Optional devfile icon",
+          "type": "string",
+          "markdownDescription": "Optional devfile icon"
+        },
         "name": {
           "description": "Optional devfile name",
           "type": "string",
           "markdownDescription": "Optional devfile name"
+        },
+        "tags": {
+          "description": "Optional devfile tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Optional devfile tags"
         },
         "version": {
           "description": "Optional semver-compatible version",

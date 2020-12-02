@@ -30,4 +30,24 @@ type DevfileMetadata struct {
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
+
+	// Optional devfile display name
+	// +optional
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Optional devfile description
+	// +optional
+	Description string `json:"description,omitempty"`
+
+	// Optional devfile tags
+	// +optional
+	Tags []string `json:"tags,omitempty"`
+
+	// Optional devfile icon
+	// +optional
+	Icon string `json:"icon,omitempty"`
+
+	// Optional devfile global memory limit
+	// +optional
+	GlobalMemoryLimit string `json:"globalMemoryLimit,omitempty"`
 }
