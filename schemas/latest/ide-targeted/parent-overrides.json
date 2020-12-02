@@ -218,7 +218,7 @@
             "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
             "type": "string",
             "maxLength": 63,
-            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
             "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
           },
           "vscodeLaunch": {
@@ -427,8 +427,8 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                      "maxLength": 15,
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
                       "description": "Path of the endpoint URL",
@@ -508,7 +508,7 @@
                       "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                       "type": "string",
                       "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
                       "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                     },
                     "path": {
@@ -568,8 +568,8 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                      "maxLength": 15,
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
                       "description": "Path of the endpoint URL",
@@ -617,7 +617,7 @@
             "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
             "type": "string",
             "maxLength": 63,
-            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
             "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
           },
           "openshift": {
@@ -662,8 +662,8 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                      "maxLength": 15,
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
                       "description": "Path of the endpoint URL",
@@ -943,7 +943,7 @@
                       "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
                       "type": "string",
                       "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
                       "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
                     },
                     "vscodeLaunch": {
@@ -1147,8 +1147,8 @@
                               },
                               "name": {
                                 "type": "string",
-                                "maxLength": 63,
-                                "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                                "maxLength": 15,
+                                "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                               },
                               "path": {
                                 "description": "Path of the endpoint URL",
@@ -1228,7 +1228,7 @@
                                 "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
                                 "type": "string",
                                 "maxLength": 63,
-                                "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+                                "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
                                 "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
                               },
                               "path": {
@@ -1288,8 +1288,8 @@
                               },
                               "name": {
                                 "type": "string",
-                                "maxLength": 63,
-                                "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                                "maxLength": 15,
+                                "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                               },
                               "path": {
                                 "description": "Path of the endpoint URL",
@@ -1337,7 +1337,7 @@
                       "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
                       "type": "string",
                       "maxLength": 63,
-                      "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
                       "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
                     },
                     "openshift": {
@@ -1382,8 +1382,8 @@
                               },
                               "name": {
                                 "type": "string",
-                                "maxLength": 63,
-                                "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$"
+                                "maxLength": 15,
+                                "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                               },
                               "path": {
                                 "description": "Path of the endpoint URL",
@@ -1603,7 +1603,7 @@
             "description": "Project name",
             "type": "string",
             "maxLength": 63,
-            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
             "markdownDescription": "Project name"
           },
           "sparseCheckoutDirs": {
@@ -1741,7 +1741,7 @@
             "description": "Project name",
             "type": "string",
             "maxLength": 63,
-            "pattern": "^[a-z]([-a-z0-9]*[a-z0-9])?$",
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
             "markdownDescription": "Project name"
           },
           "subDir": {

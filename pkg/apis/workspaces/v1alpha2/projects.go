@@ -7,7 +7,7 @@ import (
 
 type Project struct {
 	// Project name
-	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
 	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 
@@ -28,7 +28,7 @@ type Project struct {
 
 type StarterProject struct {
 	// Project name
-	// +kubebuilder:validation:Pattern=^[a-z]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
 	// +kubebuilder:validation:MaxLength=63
 	Name string `json:"name"`
 

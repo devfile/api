@@ -4115,7 +4115,7 @@ spec:
                       description: Mandatory identifier that allows referencing this
                         command in composite commands, from a parent, or in events.
                       maxLength: 63
-                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                       type: string
                     vscodeLaunch:
                       description: Command providing the definition of a VsCode launch
@@ -4290,8 +4290,8 @@ spec:
                                 - none
                                 type: string
                               name:
-                                maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                maxLength: 15
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               path:
                                 description: Path of the endpoint URL
@@ -4376,7 +4376,7 @@ spec:
                                   the same volume and will be able to access to the
                                   same files.
                                 maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               path:
                                 description: The path in the component container where
@@ -4451,8 +4451,8 @@ spec:
                                 - none
                                 type: string
                               name:
-                                maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                maxLength: 15
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               path:
                                 description: Path of the endpoint URL
@@ -4511,7 +4511,7 @@ spec:
                         devfile that may reference this component through a parent
                         or a plugin.
                       maxLength: 63
-                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                       type: string
                     openshift:
                       description: Allows importing into the workspace the OpenShift
@@ -4553,8 +4553,8 @@ spec:
                                 - none
                                 type: string
                               name:
-                                maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                maxLength: 15
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               path:
                                 description: Path of the endpoint URL
@@ -4808,7 +4808,7 @@ spec:
                                   this command in composite commands, from a parent,
                                   or in events.
                                 maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               vscodeLaunch:
                                 description: Command providing the definition of a
@@ -4988,8 +4988,8 @@ spec:
                                           - none
                                           type: string
                                         name:
-                                          maxLength: 63
-                                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                          maxLength: 15
+                                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                           type: string
                                         path:
                                           description: Path of the endpoint URL
@@ -5081,7 +5081,7 @@ spec:
                                             and will be able to access to the same
                                             files.
                                           maxLength: 63
-                                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                           type: string
                                         path:
                                           description: The path in the component container
@@ -5137,8 +5137,8 @@ spec:
                                           - none
                                           type: string
                                         name:
-                                          maxLength: 63
-                                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                          maxLength: 15
+                                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                           type: string
                                         path:
                                           description: Path of the endpoint URL
@@ -5202,7 +5202,7 @@ spec:
                                   or from an external devfile that may reference this
                                   component through a parent or a plugin.
                                 maxLength: 63
-                                pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
                               openshift:
                                 description: Allows importing into the workspace the
@@ -5247,8 +5247,8 @@ spec:
                                           - none
                                           type: string
                                         name:
-                                          maxLength: 63
-                                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                          maxLength: 15
+                                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                           type: string
                                         path:
                                           description: Path of the endpoint URL
@@ -5579,7 +5579,7 @@ spec:
                             this command in composite commands, from a parent, or
                             in events.
                           maxLength: 63
-                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         vscodeLaunch:
                           description: Command providing the definition of a VsCode
@@ -5755,8 +5755,8 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    maxLength: 15
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
                                     description: Path of the endpoint URL
@@ -5842,7 +5842,7 @@ spec:
                                       will reuse the same volume and will be able
                                       to access to the same files.
                                     maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
                                     description: The path in the component container
@@ -5896,8 +5896,8 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    maxLength: 15
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
                                     description: Path of the endpoint URL
@@ -5957,7 +5957,7 @@ spec:
                             an external devfile that may reference this component
                             through a parent or a plugin.
                           maxLength: 63
-                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         openshift:
                           description: Allows importing into the workspace the OpenShift
@@ -6001,8 +6001,8 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    maxLength: 15
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
                                     description: Path of the endpoint URL
@@ -6260,7 +6260,7 @@ spec:
                                       referencing this command in composite commands,
                                       from a parent, or in events.
                                     maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   vscodeLaunch:
                                     description: Command providing the definition
@@ -6446,8 +6446,8 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
-                                              pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                              maxLength: 15
+                                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
                                               description: Path of the endpoint URL
@@ -6541,7 +6541,7 @@ spec:
                                                 same volume and will be able to access
                                                 to the same files.
                                               maxLength: 63
-                                              pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
                                               description: The path in the component
@@ -6601,8 +6601,8 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
-                                              pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                              maxLength: 15
+                                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
                                               description: Path of the endpoint URL
@@ -6668,7 +6668,7 @@ spec:
                                       or from an external devfile that may reference
                                       this component through a parent or a plugin.
                                     maxLength: 63
-                                    pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   openshift:
                                     description: Allows importing into the workspace
@@ -6717,8 +6717,8 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
-                                              pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                                              maxLength: 15
+                                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
                                               description: Path of the endpoint URL
@@ -6932,7 +6932,7 @@ spec:
                         name:
                           description: Project name
                           maxLength: 63
-                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         sourceType:
                           description: Type of project source
@@ -7039,7 +7039,7 @@ spec:
                         name:
                           description: Project name
                           maxLength: 63
-                          pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         sourceType:
                           description: Type of project source
@@ -7162,7 +7162,7 @@ spec:
                     name:
                       description: Project name
                       maxLength: 63
-                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                       type: string
                     sourceType:
                       description: Type of project source
@@ -7279,7 +7279,7 @@ spec:
                     name:
                       description: Project name
                       maxLength: 63
-                      pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                       type: string
                     sourceType:
                       description: Type of project source
