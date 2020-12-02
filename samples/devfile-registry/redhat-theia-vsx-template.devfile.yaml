@@ -19,9 +19,9 @@ components:
   - name: vsx
     volume: {}
 commands:
- - id: copyVsx
+ - id: copyvsx
    apply:
      component: vsx-installer
 events:
   preStart:
-    - copyVsx
+    - copyvsx

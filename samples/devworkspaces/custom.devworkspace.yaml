@@ -16,7 +16,7 @@ spec:
       - name: "production"
         kubernetes:
           uri: "https://somewhere/production-environment.yaml"
-      - name: "myNewComponent"
+      - name: "mynewcomponent"
         custom:
           componentClass: "NewComponentType"
           embeddedResource:
@@ -25,7 +25,7 @@ spec:
               config2-1: "" 
               config2-2: "" 
     commands:
-      - id: myCustomCommand
+      - id: mycustomcommand
         custom:
           commandClass: myCommandType
           embeddedResource:

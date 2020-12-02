@@ -58,6 +58,8 @@ type Command struct {
 	// Mandatory identifier that allows referencing
 	// this command in composite commands, from
 	// a parent, or in events.
+	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+	// +kubebuilder:validation:MaxLength=63
 	Id string `json:"id"`
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional

@@ -8,7 +8,7 @@ spec:
     parent:
       uri: https://raw.githubusercontent.com/che-incubator/devworkspace-api/proposal-25-variant-1-define-stacks/devfile-support/samples/nodejs-stack.devfile.yaml
     commands:
-      - id: sayHello
+      - id: sayhello
         exec:
           label: Say Hello
           commandLine: echo "hello"

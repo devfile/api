@@ -39,7 +39,7 @@ components:
         - name: MAVEN_OPTS
           value: $(JAVA_OPTS)
       endpoints:
-        - name: 8080-tcp
+        - name: tcp-8080
           targetPort: 8080
           exposure: public
       volumeMounts:
@@ -54,7 +54,7 @@ commands:
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
-  - id: debug remote java application
+  - id: debug-remote-java-application
     vscodeLaunch:
       inlined: |
         {
@@ -99,7 +99,7 @@ commands:
         ${HOME}/stack-analysis.sh -f
         ${PROJECTS_ROOT}/spring-boot-http-booster/pom.xml -p
         ${PROJECTS_ROOT}/spring-boot-http-booster
-  - id: deploy to OpenShift 
+  - id: deploy-to-openshift 
     exec:
       component: maven
       commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
