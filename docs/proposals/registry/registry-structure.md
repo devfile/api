@@ -30,10 +30,11 @@ To solve the issue listed above, we should:
 2) Define the layers that compose a devfile stack on an OCI registry, and what each layer contains.
 
 ### Repository Structure
-In addition to the registry's Dockerfile and build tools (for those, see [Devfile Registry Packaging](https://github.com/devfile/api/blob/master/docs/proposals/registry/devfile-packaging.md)), the following requirements are imposed on the devfile registry repository:
+The following requirements are imposed on the devfile registry repository:
 
 1) A top-level folder called `stacks`, which contains folders for each devfile stack.
 2) Each devfile stack folder must contain a `devfile.yaml`. Other files such as vsx plugins, stack logos, etc. can be included as needed. 
+3) Any build tools for the registry (such as scripts or Dockerfiles) should not be located at the top-level of the stack, and should reside in their own folder.
 
 ### Layer Media types
 Currently, when we push devfile stacks to an OCI registry, it's pushed as a single layer, using the `application/vnd.devfileio.devfile.layer.v2+yaml` media type. We should instead be pushing the stack as a multi-layer artifact, adding the additional layers:
@@ -60,7 +61,7 @@ When the registry bootstrap process pushes the stack up to the OCI registry, eac
 ### Index.json Modification
 The index.json already includes a link to a stack’s devfile, which the registry bootstrap process parses when pushing devfiles up to the registry. 
 
-To make it easier to bootstrap the registry, and to avoid having to programmatically find which files to push individually; as part of the registry build process, include a new `layers` array in the index.json that tells the registry bootstrap process which layers the stack is composed of:
+To make it easier to bootstrap the registry, and to avoid having to programmatically find which files to push individually; as part of the registry build process, include a new `resources` array in the index.json that tells the registry bootstrap process which resources the stack is composed of:
 ```
 {
     "name": "java-maven",
@@ -70,7 +71,7 @@ To make it easier to bootstrap the registry, and to avoid having to programmatic
       "Java",
       "Maven"
     ],
-    "layers": [
+    "resources": [
       "devfile.yaml",
       "java-lsp.vsx",
       "xml-lsp.vsx",
