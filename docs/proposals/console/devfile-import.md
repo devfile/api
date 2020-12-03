@@ -40,7 +40,7 @@ metadata:
   name: nodejs
   version: 1.0.0
   attributes:
-    alpha.build-dockerfile: https://raw.githubusercontent.com/odo-devfiles/registry/master/devfiles/nodejs/build/Dockerfile # can also be a path relative to the context
+    alpha.build-dockerfile: ./mydir/Dockerfile # is a relative path to the context dir containing src files in the repo
 components:
 - name: myapplication
   attributes:
@@ -53,6 +53,20 @@ components:
     env:
       - name: FOO # set container env through the devfile.yaml for the container
         value: "bar"
+- name: otherapplication1
+  container:
+    image: someimage1
+    endpoints:
+    - name: http-3001
+- name: otherapplication2
+  container:
+    image: someimage2
+    endpoints:
+    - name: http-3002
+      targetPort: 3002
+    env:
+      - name: ABC
+        value: "xyz"
 ```
 
 Without the build guidance devfile spec, the proposed change here is to mention the dockerfile location in the metadata attribute. The attributes is a free form key-value pair and in the above example, a `alpha.build-dockerfile` key holds the dockerfile location; which would have otherwise been specified by the Dockerfile Build Guidance spec.
