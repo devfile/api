@@ -1427,9 +1427,32 @@
           "type": "object",
           "additionalProperties": true
         },
+        "description": {
+          "description": "Optional devfile description",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional devfile display name",
+          "type": "string"
+        },
+        "globalMemoryLimit": {
+          "description": "Optional devfile global memory limit",
+          "type": "string"
+        },
+        "icon": {
+          "description": "Optional devfile icon",
+          "type": "string"
+        },
         "name": {
           "description": "Optional devfile name",
           "type": "string"
+        },
+        "tags": {
+          "description": "Optional devfile tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "version": {
           "description": "Optional semver-compatible version",
