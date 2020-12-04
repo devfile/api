@@ -83,7 +83,7 @@ jobs:
         with:
           name: devfile-json-schema
       - name: Overwrite Next Json Schema in Docs
-        run: cp -f devfile.json docs-repo/docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+        run: cp -f devfile.json docs-repo/docs/modules/user-guide/attachments/jsonschemas/next/devfile.json
       - name: Push to the devfile/docs repo
         working-directory: docs-repo/
         run: |
