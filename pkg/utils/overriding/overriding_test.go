@@ -308,7 +308,7 @@ func TestMerging(t *testing.T) {
 // in a weaker way than asserting string equality.
 func compareErrorMessages(t *testing.T, expected, actual string, failReason string) {
 	if expected == "" {
-		t.Error("Received error but did not expect one")
+		t.Error("Received error but did not expect one: " + actual)
 		return
 	}
 	expectedLines := strings.Split(strings.TrimSpace(expected), "\n")
