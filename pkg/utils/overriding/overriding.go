@@ -138,16 +138,15 @@ var _ strategicpatch.LookupPatchMeta = mapEnabledPatchMetaFromStruct{
 	strategicpatch.PatchMetaFromStruct{},
 }
 
-
 func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string, elementIsSlice bool) {
-	t := s.T	
+	t := s.T
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
 	}
 
 	if t.Kind() == reflect.Map {
 		typeName := t.Name()
-		tag := `json:"` + key + `"` 
+		tag := `json:"` + key + `"`
 		elemType := t.Elem()
 		if typeName == "Attributes" {
 			if elementIsSlice {
@@ -158,13 +157,13 @@ func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string
 			}
 		}
 
-		s.T = reflect.StructOf([]reflect.StructField{{ Name: strings.Title(key), Type: elemType, Tag: reflect.StructTag(tag) }})
+		s.T = reflect.StructOf([]reflect.StructField{{Name: strings.Title(key), Type: elemType, Tag: reflect.StructTag(tag)}})
 	}
 }
 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
 	s.replaceMapWithSingleKeyStruct(key, false)
-	
+
 	schema, patchMeta, err := s.PatchMetaFromStruct.LookupPatchMetadataForStruct(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
 	if schema != nil {
@@ -175,7 +174,7 @@ func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) 
 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForSlice(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
 	s.replaceMapWithSingleKeyStruct(key, true)
-	
+
 	schema, patchMeta, err := s.PatchMetaFromStruct.LookupPatchMetadataForSlice(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
 	if schema != nil {
