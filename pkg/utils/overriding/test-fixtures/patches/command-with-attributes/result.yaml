@@ -1,0 +1,24 @@
+commands:
+  - attributes:
+      boolAttributeToChange: false
+      stringAttributeToKeep: stringValue
+      newAttribute: true
+      objectAttributeToReplaceFully:
+      
+        objectAttributeField:
+          objectAttributeSubField: 11
+          newObjectAttributeSubField: newObjectAttributeFieldValue
+        newAttributeField: newAttributeFieldValue
+      arrayAttributeToReplaceFully:
+        - stringElementNew
+        - objectElementNew:
+            objectElementNewField: objectElementNewFieldValue
+        - arrayElementNew:
+          - subArray1:
+            - d
+          - subArray2:
+            - e
+            - f
+    apply:
+      component: "mycomponent"
+    id: command-with-attributes-changed
