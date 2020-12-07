@@ -100,7 +100,7 @@ jobs:
           git config --global user.email "${lastCommitterEmail}"
           git config --global user.name "${lastCommitterName}"
           
-          git add docs/modules/ROOT/attachments/jsonschemas/next/devfile.json
+          git add docs/modules/user-guide/attachments/jsonschemas/next/devfile.json
           git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
           git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
           
