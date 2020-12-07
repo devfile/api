@@ -4552,8 +4552,8 @@ spec:
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process. This requires a protocol of "https"
-                                      or "wss".
+                                      process. This requires a protocol of `https`
+                                      or `wss`.
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -4721,8 +4721,8 @@ spec:
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process. This requires a protocol of "https"
-                                      or "wss".
+                                      process. This requires a protocol of `https`
+                                      or `wss`.
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -4830,8 +4830,8 @@ spec:
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process. This requires a protocol of "https"
-                                      or "wss".
+                                      process. This requires a protocol of `https`
+                                      or `wss`.
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -5285,8 +5285,8 @@ spec:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
                                                 some authentication process. This
-                                                requires a protocol of "https" or
-                                                "wss".
+                                                requires a protocol of `https` or
+                                                `wss`.
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -5444,8 +5444,8 @@ spec:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
                                                 some authentication process. This
-                                                requires a protocol of "https" or
-                                                "wss".
+                                                requires a protocol of `https` or
+                                                `wss`.
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -5564,8 +5564,8 @@ spec:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
                                                 some authentication process. This
-                                                requires a protocol of "https" or
-                                                "wss".
+                                                requires a protocol of `https` or
+                                                `wss`.
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -6089,7 +6089,7 @@ spec:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
                                           authentication process. This requires a
-                                          protocol of "https" or "wss".
+                                          protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6239,7 +6239,7 @@ spec:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
                                           authentication process. This requires a
-                                          protocol of "https" or "wss".
+                                          protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6350,7 +6350,7 @@ spec:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
                                           authentication process. This requires a
-                                          protocol of "https" or "wss".
+                                          protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6818,7 +6818,7 @@ spec:
                                                     endpoint should be secured and
                                                     protected by some authentication
                                                     process. This requires a protocol
-                                                    of "https" or "wss".
+                                                    of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
@@ -6986,7 +6986,7 @@ spec:
                                                     endpoint should be secured and
                                                     protected by some authentication
                                                     process. This requires a protocol
-                                                    of "https" or "wss".
+                                                    of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
@@ -7112,7 +7112,7 @@ spec:
                                                     endpoint should be secured and
                                                     protected by some authentication
                                                     process. This requires a protocol
-                                                    of "https" or "wss".
+                                                    of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
