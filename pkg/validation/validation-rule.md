@@ -1,7 +1,7 @@
 ### Id and Name:
 `^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
 
-The restriction is added to allow easy translation to K8 resource names, and also to have consistent rules for both name and id fields
+The restriction is added to allow easy translation to K8s resource names, and also to have consistent rules for both name and id fields
 The validation will be done as part of schema validation, the rule will be introduced as a regex in schema definition, any objection of the rule in devfile will result in a failure.
 
 - limit to lowercase characters i.e.; no uppercase allowed
@@ -14,7 +14,7 @@ The validation will be done as part of schema validation, the rule will be intro
 
 ### Endpoints:
 - all the endpoint names are unique across components
-Since network is shared in the same pod, endpoint ports should be unique across components, two components cannot have the same target port but two endpoints in a single component can have the same target port. only exception: container component with `dedicatedpod=true`
+Since network is shared in the same pod, endpoint ports should be unique across components, two components cannot have the same target port but two endpoints in a single component can have the same target port. Only exception: container component with `dedicatedpod=true`
 
 ### Commands:
 1. Id must be unique
@@ -25,18 +25,22 @@ Since network is shared in the same pod, endpoint ports should be unique across 
     - Subcommands should be valid as well
 3. exec command should:
 map to a valid container component
-4. vscodeLaunch & vscodeTask: uri needs to be in valid uri form 
-5. `{build, run, test, debug}`, each kind of group can only have one default command associated with it.  If there are multiple commands of the same kind without a default, a warning will be displayed.
-
+4. vscodeLaunch & vscodeTask: URI needs to be in valid URI format
+5. `{build, run, test, debug}`, each kind of group can only have one default command associated with it. If there are multiple commands of the same kind without a default, a warning will be displayed.
 
 ### Components:
-1.  name must be unique
-2.  Container component:
-the container components must reference a valid volume component if it uses volume mounts, and the volume components are unique
-PROJECT_SOURCE or PROJECTS_ROOT are reserved Env, cannot be defined again in Env
-3. Plugin Component:
-Commands and components share the same validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
-1. Kubernetes & Openshift component:  uri needs to be in valid uri format 
+Common rules for all components types:
+- Name must be unique
+
+#### Container component 
+1. the container components must reference a valid volume component if it uses volume mounts, and the volume components are unique
+2. `PROJECT_SOURCE` or `PROJECTS_ROOT` are reserved Env, cannot be defined again in Env
+
+#### Plugin Component
+- Commands in plugins components share the same commands validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
+
+#### Kubernetes & Openshift component 
+- URI needs to be in valid URI format
 
 
 ### Events:
@@ -47,8 +51,8 @@ Commands and components share the same validation rules as listed above. Validat
 
 
 ### Parent:
-Share the same validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
+- Share the same validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
 
 
 ### starterProjects:
-Starter project entries cannot have more than one remotes defined
+- Starter project entries cannot have more than one remotes defined
