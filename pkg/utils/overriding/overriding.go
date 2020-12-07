@@ -131,15 +131,13 @@ func ensureOnlyExistingElementsAreOverridden(spec *workspaces.DevWorkspaceTempla
 }
 
 type mapEnabledPatchMetaFromStruct struct {
-	strategicpatch.PatchMetaFromStruct
+	delegate strategicpatch.PatchMetaFromStruct
 }
 
-var _ strategicpatch.LookupPatchMeta = mapEnabledPatchMetaFromStruct{
-	strategicpatch.PatchMetaFromStruct{},
-}
+var _ strategicpatch.LookupPatchMeta = (*mapEnabledPatchMetaFromStruct)(nil)
 
 func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string, elementIsSlice bool) {
-	t := s.T
+	t := s.delegate.T
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
 	}
@@ -157,17 +155,17 @@ func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string
 			}
 		}
 
-		s.T = reflect.StructOf([]reflect.StructField{{Name: strings.Title(key), Type: elemType, Tag: reflect.StructTag(tag)}})
+		s.delegate.T = reflect.StructOf([]reflect.StructField{{Name: strings.Title(key), Type: elemType, Tag: reflect.StructTag(tag)}})
 	}
 }
 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
 	s.replaceMapWithSingleKeyStruct(key, false)
 
-	schema, patchMeta, err := s.PatchMetaFromStruct.LookupPatchMetadataForStruct(key)
+	schema, patchMeta, err := s.delegate.LookupPatchMetadataForStruct(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
 	if schema != nil {
-		lookupPatchMeta = mapEnabledPatchMetaFromStruct{schema.(strategicpatch.PatchMetaFromStruct)}
+		lookupPatchMeta = mapEnabledPatchMetaFromStruct{delegate: schema.(strategicpatch.PatchMetaFromStruct)}
 	}
 	return lookupPatchMeta, patchMeta, err
 }
@@ -175,10 +173,14 @@ func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForSlice(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
 	s.replaceMapWithSingleKeyStruct(key, true)
 
-	schema, patchMeta, err := s.PatchMetaFromStruct.LookupPatchMetadataForSlice(key)
+	schema, patchMeta, err := s.delegate.LookupPatchMetadataForSlice(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
 	if schema != nil {
 		lookupPatchMeta = mapEnabledPatchMetaFromStruct{schema.(strategicpatch.PatchMetaFromStruct)}
 	}
 	return lookupPatchMeta, patchMeta, err
+}
+
+func (s mapEnabledPatchMetaFromStruct) Name() string {
+	return s.delegate.Name()
 }
