@@ -35,7 +35,8 @@ func LatestKubeLikeVersion(versions []string) string {
 	if len(versions) == 0 {
 		return ""
 	}
-	versionsToSort := versions
+	versionsToSort := make([]string, len(versions))
+	copy(versionsToSort, versions)
 	sort.Sort(sortByKubeLikeVersion(versionsToSort))
 	return versionsToSort[len(versionsToSort)-1]	
 }
