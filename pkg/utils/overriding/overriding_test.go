@@ -18,13 +18,13 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	original := workspaces.DevWorkspaceTemplateSpecContent{
 		Commands: []workspaces.Command{
 			{
-				Id: "commandWithTypeChanged",
+				Id: "command-with-type-changed",
 				CommandUnion: workspaces.CommandUnion{
 					Exec: &workspaces.ExecCommand{},
 				},
 			},
 			{
-				Id: "commandToReplace",
+				Id: "command-to-replace",
 				CommandUnion: workspaces.CommandUnion{
 					Exec: &workspaces.ExecCommand{
 						Env: []workspaces.EnvVar{
@@ -41,7 +41,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 			{
-				Id: "commandNotChanged",
+				Id: "command-not-changed",
 				CommandUnion: workspaces.CommandUnion{
 					Exec: &workspaces.ExecCommand{
 						LabeledCommand: workspaces.LabeledCommand{
@@ -56,7 +56,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	patch := workspaces.ParentOverrides{
 		Commands: []workspaces.CommandParentOverride{
 			{
-				Id: "commandWithTypeChanged",
+				Id: "command-with-type-changed",
 				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
 					Apply: &workspaces.ApplyCommandParentOverride{
 						Component: "mycomponent",
@@ -64,7 +64,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 			{
-				Id: "commandToReplace",
+				Id: "command-to-replace",
 				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
 					Exec: &workspaces.ExecCommandParentOverride{
 						Env: []workspaces.EnvVarParentOverride{
@@ -86,7 +86,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	expected := &workspaces.DevWorkspaceTemplateSpecContent{
 		Commands: []workspaces.Command{
 			{
-				Id: "commandWithTypeChanged",
+				Id: "command-with-type-changed",
 				CommandUnion: workspaces.CommandUnion{
 					Apply: &workspaces.ApplyCommand{
 						Component: "mycomponent",
@@ -94,7 +94,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 			{
-				Id: "commandToReplace",
+				Id: "command-to-replace",
 				CommandUnion: workspaces.CommandUnion{
 					Exec: &workspaces.ExecCommand{
 						Env: []workspaces.EnvVar{
@@ -115,7 +115,7 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 			{
-				Id: "commandNotChanged",
+				Id: "command-not-changed",
 				CommandUnion: workspaces.CommandUnion{
 					Exec: &workspaces.ExecCommand{
 						LabeledCommand: workspaces.LabeledCommand{

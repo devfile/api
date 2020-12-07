@@ -1,12 +1,12 @@
 components:
-  - name: "UnchangedPluginName"
+  - name: "unchanged-plugin-name"
     plugin:
-      id: "UnchangedPluginId"
-  - name: componentToUpdate
+      id: "unchanged-plugin-id"
+  - name: component-to-update
     kubernetes:
       uri: "componentToUpdateUri"
       endpoints:
-        - name: endpointName
+        - name: endpoint-name
           targetPort: 8080
 
 # Note:

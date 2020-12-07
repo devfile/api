@@ -1,10 +1,10 @@
 components:
-  - name: UnchangedPluginName
+  - name: unchanged-plugin-name
     plugin:
-      id: "UnchangedPluginId"
-  - name: componentToUpdate
+      id: "unchanged-plugin-id"
+  - name: component-to-update
     kubernetes:
       inlined: "componentToUpdateInline"
       endpoints:
-        - name: endpointName
+        - name: endpoint-name
           targetPort: 8080

@@ -1,2 +1,2 @@
 1 error occurred:
-	* Some Components are already defined in parent: existingInParent. If you want to override them, you should do it in the parent scope.
+	* Some Components are already defined in parent: existing-in-parent. If you want to override them, you should do it in the parent scope.

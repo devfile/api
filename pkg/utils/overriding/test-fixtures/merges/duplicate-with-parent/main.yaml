@@ -3,4 +3,4 @@ parent:
 components:
   - container:
       image: "aDifferentValue"
-    name: "existingInParent"
+    name: "existing-in-parent"

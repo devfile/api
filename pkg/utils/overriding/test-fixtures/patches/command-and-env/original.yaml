@@ -2,7 +2,7 @@ commands:
   - exec:
       commandLine: "commandWithTypeChangedCommandLine"
       component: "mycomponent"
-    id: "commandWithTypeChanged"
+    id: "command-with-type-changed"
   - exec:
       commandLine: "commandToReplaceCommandLineToReplace"
       component: "mycomponent"
@@ -11,8 +11,8 @@ commands:
           value: "commandToReplaceEnvVarToReplaceOriginalValue"
         - name:  "commandToReplaceEnvVarNotChanged"
           value: "commandToReplaceEnvVarNotChangedOriginalValue"
-    id: "commandToReplace"
+    id: "command-to-replace"
   - exec:
       commandLine: "commandNotChangedCommandLine"
       component: "mycomponent"
-    id: "commandNotChanged"
+    id: "command-not-changed"

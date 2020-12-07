@@ -3,7 +3,7 @@ parent:
 components:
   - plugin:
       uri: "aCustomLocation"
-    name: "theOnlyPlugin"
+    name: "the-only-plugin"
   - container:
       image: "anyValue"
-    name: "newComponent"
+    name: "new-component"
