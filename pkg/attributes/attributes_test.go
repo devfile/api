@@ -224,6 +224,7 @@ func TestBuildAttributes(t *testing.T) {
 
 type decodeAttributeTestCase struct {
 	name                    string
+	attributeKey            string
 	attributeJson           string
 	expectedNumber          float64
 	expectedNumberError     string
@@ -241,6 +242,7 @@ type decodeAttributeTestCase struct {
 var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCase{
 	{
 		name:                    "DecodeSimpleString",
+		attributeKey:            "test",
 		attributeJson:           `"simpleString"`,
 		expectedInterface:       "simpleString",
 		expectedString:          "simpleString",
@@ -251,6 +253,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / true",
+		attributeKey:            "test",
 		attributeJson:           `"true"`,
 		expectedInterface:       "true",
 		expectedString:          "true",
@@ -261,6 +264,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / false",
+		attributeKey:            "test",
 		attributeJson:           `"false"`,
 		expectedInterface:       "false",
 		expectedString:          "false",
@@ -271,6 +275,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / True",
+		attributeKey:            "test",
 		attributeJson:           `"True"`,
 		expectedInterface:       "True",
 		expectedString:          "True",
@@ -281,6 +286,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / False",
+		attributeKey:            "test",
 		attributeJson:           `"False"`,
 		expectedInterface:       "False",
 		expectedString:          "False",
@@ -291,6 +297,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / TRUE",
+		attributeKey:            "test",
 		attributeJson:           `"TRUE"`,
 		expectedInterface:       "TRUE",
 		expectedString:          "TRUE",
@@ -301,6 +308,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / FALSE",
+		attributeKey:            "test",
 		attributeJson:           `"FALSE"`,
 		expectedInterface:       "FALSE",
 		expectedString:          "FALSE",
@@ -311,6 +319,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / t",
+		attributeKey:            "test",
 		attributeJson:           `"t"`,
 		expectedInterface:       "t",
 		expectedString:          "t",
@@ -321,6 +330,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / f",
+		attributeKey:            "test",
 		attributeJson:           `"f"`,
 		expectedInterface:       "f",
 		expectedString:          "f",
@@ -331,6 +341,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / T",
+		attributeKey:            "test",
 		attributeJson:           `"T"`,
 		expectedInterface:       "T",
 		expectedString:          "T",
@@ -341,6 +352,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / F",
+		attributeKey:            "test",
 		attributeJson:           `"F"`,
 		expectedInterface:       "F",
 		expectedString:          "F",
@@ -351,6 +363,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / 1",
+		attributeKey:            "test",
 		attributeJson:           `"1"`,
 		expectedInterface:       "1",
 		expectedString:          "1",
@@ -361,6 +374,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / 0",
+		attributeKey:            "test",
 		attributeJson:           `"0"`,
 		expectedInterface:       "0",
 		expectedString:          "0",
@@ -371,6 +385,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleString / Number",
+		attributeKey:            "test",
 		attributeJson:           `"9.9"`,
 		expectedInterface:       "9.9",
 		expectedString:          "9.9",
@@ -381,6 +396,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleInt",
+		attributeKey:            "test",
 		attributeJson:           `9`,
 		expectedInterface:       float64(9),
 		expectedNumber:          float64(9),
@@ -391,6 +407,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleFloat",
+		attributeKey:            "test",
 		attributeJson:           `9.9`,
 		expectedInterface:       9.9,
 		expectedNumber:          float64(9.9),
@@ -401,6 +418,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeSimpleBool",
+		attributeKey:            "test",
 		attributeJson:           `true`,
 		expectedInterface:       true,
 		expectedBool:            true,
@@ -411,6 +429,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeArray",
+		attributeKey:            "test",
 		attributeJson:           `[ 1, 2 ]`,
 		expectedInterface:       []interface{}{float64(1), float64(2)},
 		expectedBoolError:       "json: cannot unmarshal array into Go value of type bool",
@@ -421,6 +440,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:          "DecodeObject",
+		attributeKey:  "test",
 		attributeJson: `{ "Field1": "value1", "Field2": 9 }`,
 		expectedInterface: map[string]interface{}{
 			"Field1": "value1",
@@ -442,6 +462,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:          "DecodeObjectIntoIncompleteStruct",
+		attributeKey:  "test",
 		attributeJson: `{ "Field1": "value1", "Field2": 9 }`,
 		expectedInterface: map[string]interface{}{
 			"Field1": "value1",
@@ -456,6 +477,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:          "DecodeObjectIntoStringFails",
+		attributeKey:  "test",
 		attributeJson: `{ "Field1": "value1", "Field2": 9 }`,
 		expectedInterface: map[string]interface{}{
 			"Field1": "value1",
@@ -469,6 +491,7 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "DecodeInvalidObject",
+		attributeKey:            "test",
 		attributeJson:           `{ invalidObject }`,
 		expectedInterface:       nil,
 		expectedInterfaceError:  "invalid character 'i' looking for beginning of object key string",
@@ -478,6 +501,20 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 		decodeInto:              &map[string]interface{}{},
 		decodeIntoExpectedValue: map[string]interface{}{},
 		decodeIntoError:         "invalid character 'i' looking for beginning of object key string",
+	},
+	{
+		name:                    "GetInvalidKey",
+		attributeKey:            "randomKey",
+		attributeJson:           `9`,
+		expectedInterface:       nil,
+		expectedNumber:          float64(0),
+		expectedInterfaceError:  "Attribute with key 'randomKey' does not exist",
+		expectedBoolError:       "Attribute with key 'randomKey' does not exist",
+		expectedNumberError:     "Attribute with key 'randomKey' does not exist",
+		expectedStringError:     "Attribute with key 'randomKey' does not exist",
+		decodeInto:              &map[string]interface{}{},
+		decodeIntoExpectedValue: map[string]interface{}{},
+		decodeIntoError:         "Attribute with key 'randomKey' does not exist",
 	},
 }
 
@@ -503,22 +540,22 @@ func TestDecodeAttribute(t *testing.T) {
 			}
 
 			var err error = nil
-			assert.Equal(t, test.expectedBool, attributes.GetBoolean("test", &err))
+			assert.Equal(t, test.expectedBool, attributes.GetBoolean(test.attributeKey, &err))
 			checkError(t, err, test.expectedBoolError)
 
 			err = nil
-			assert.Equal(t, test.expectedString, attributes.GetString("test", &err))
+			assert.Equal(t, test.expectedString, attributes.GetString(test.attributeKey, &err))
 			checkError(t, err, test.expectedStringError)
 
 			err = nil
-			assert.Equal(t, test.expectedNumber, attributes.GetNumber("test", &err))
+			assert.Equal(t, test.expectedNumber, attributes.GetNumber(test.attributeKey, &err))
 			checkError(t, err, test.expectedNumberError)
 
 			err = nil
-			assert.Equal(t, test.expectedInterface, attributes.Get("test", &err))
+			assert.Equal(t, test.expectedInterface, attributes.Get(test.attributeKey, &err))
 			checkError(t, err, test.expectedInterfaceError)
 
-			err = attributes.GetInto("test", test.decodeInto)
+			err = attributes.GetInto(test.attributeKey, test.decodeInto)
 			checkError(t, err, test.decodeIntoError)
 
 			decodedValue := reflect.ValueOf(test.decodeInto)

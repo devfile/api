@@ -185,6 +185,8 @@ func (attributes Attributes) Get(key string, errorHolder *error) interface{} {
 		if len(*container) > 0 {
 			return (*container)[0]
 		}
+	} else if !exists && errorHolder != nil {
+		*errorHolder = errors.New("Attribute with key '" + key + "' does not exist")
 	}
 	return nil
 }
@@ -200,7 +202,7 @@ func (attributes Attributes) GetInto(key string, into interface{}) error {
 	if attribute, exists := attributes[key]; exists {
 		err = json.Unmarshal(attribute.Raw, into)
 	} else {
-		err = errors.New("Key '" + key + "' doesn't exist")
+		err = errors.New("Attribute with key '" + key + "' does not exist")
 	}
 	return err
 }
