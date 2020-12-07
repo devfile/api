@@ -6,6 +6,7 @@ import (
 	"github.com/devfile/api/generator/genutils"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/controller-tools/pkg/crd"
+	"sigs.k8s.io/controller-tools/pkg/loader"
 
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	crdmarkers "sigs.k8s.io/controller-tools/pkg/crd/markers"
@@ -99,11 +100,39 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	for groupKind := range kubeKinds {
 		parser.NeedCRDFor(groupKind, nil)
 		crdRaw := parser.CustomResourceDefinitions[groupKind]
+		apiVersions := []string{}
 		for _, apiVersion := range crdRaw.Spec.Versions {
+			apiVersions = append(apiVersions, apiVersion.Name)
 			unionDiscriminators := unionDiscriminatorsByGV[groupKind.WithVersion(apiVersion.Name).GroupVersion()]
 			genutils.AddUnionOneOfConstraints(apiVersion.Schema.OpenAPIV3Schema, unionDiscriminators, false)
 		}
 
+		latestAPIVersion := genutils.LatestKubeLikeVersion(apiVersions)
+
+		for pkg, gv := range parser.GroupVersions {
+			if gv.Group != groupKind.Group || gv.Version != latestAPIVersion {
+				continue
+			}
+
+			typeIdent := crd.TypeIdent{Package: pkg, Name: groupKind.Kind}
+			typeInfo := parser.Types[typeIdent]
+			if typeInfo == nil {
+				continue
+			}
+	
+			for _, markerVals := range typeInfo.Markers {
+				for _, val := range markerVals {
+					crdMarker, isCrdResourceMarker := val.(crdmarkers.Resource)
+					if !isCrdResourceMarker {
+						continue
+					}
+					if err := crdMarker.ApplyToCRD(&crdRaw.Spec, latestAPIVersion); err != nil {
+						pkg.AddError(loader.ErrFromNode(err /* an okay guess */, typeInfo.RawSpec))
+					}
+				}
+			}
+		}
+	
 		for i, ver := range crdVersions {
 			copiedCrd := crdRaw.DeepCopy()
 			if crdVersions[i] == "v1beta1" {
