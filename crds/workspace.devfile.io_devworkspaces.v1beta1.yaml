@@ -4543,14 +4543,17 @@ spec:
                                       value is `http`"
                                     enum:
                                     - http
+                                    - https
                                     - ws
+                                    - wss
                                     - tcp
                                     - udp
                                     type: string
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process
+                                      process. This requires a protocol of "https"
+                                      or "wss".
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -4709,14 +4712,17 @@ spec:
                                       value is `http`"
                                     enum:
                                     - http
+                                    - https
                                     - ws
+                                    - wss
                                     - tcp
                                     - udp
                                     type: string
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process
+                                      process. This requires a protocol of "https"
+                                      or "wss".
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -4815,14 +4821,17 @@ spec:
                                       value is `http`"
                                     enum:
                                     - http
+                                    - https
                                     - ws
+                                    - wss
                                     - tcp
                                     - udp
                                     type: string
                                   secure:
                                     description: Describes whether the endpoint should
                                       be secured and protected by some authentication
-                                      process
+                                      process. This requires a protocol of "https"
+                                      or "wss".
                                     type: boolean
                                   targetPort:
                                     type: integer
@@ -5266,14 +5275,18 @@ spec:
                                                 is `http`"
                                               enum:
                                               - http
+                                              - https
                                               - ws
+                                              - wss
                                               - tcp
                                               - udp
                                               type: string
                                             secure:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
-                                                some authentication process
+                                                some authentication process. This
+                                                requires a protocol of "https" or
+                                                "wss".
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -5421,14 +5434,18 @@ spec:
                                                 is `http`"
                                               enum:
                                               - http
+                                              - https
                                               - ws
+                                              - wss
                                               - tcp
                                               - udp
                                               type: string
                                             secure:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
-                                                some authentication process
+                                                some authentication process. This
+                                                requires a protocol of "https" or
+                                                "wss".
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -5537,14 +5554,18 @@ spec:
                                                 is `http`"
                                               enum:
                                               - http
+                                              - https
                                               - ws
+                                              - wss
                                               - tcp
                                               - udp
                                               type: string
                                             secure:
                                               description: Describes whether the endpoint
                                                 should be secured and protected by
-                                                some authentication process
+                                                some authentication process. This
+                                                requires a protocol of "https" or
+                                                "wss".
                                               type: boolean
                                             targetPort:
                                               type: integer
@@ -6058,14 +6079,17 @@ spec:
                                           `http`"
                                         enum:
                                         - http
+                                        - https
                                         - ws
+                                        - wss
                                         - tcp
                                         - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
-                                          authentication process
+                                          authentication process. This requires a
+                                          protocol of "https" or "wss".
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6205,14 +6229,17 @@ spec:
                                           `http`"
                                         enum:
                                         - http
+                                        - https
                                         - ws
+                                        - wss
                                         - tcp
                                         - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
-                                          authentication process
+                                          authentication process. This requires a
+                                          protocol of "https" or "wss".
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6313,14 +6340,17 @@ spec:
                                           `http`"
                                         enum:
                                         - http
+                                        - https
                                         - ws
+                                        - wss
                                         - tcp
                                         - udp
                                         type: string
                                       secure:
                                         description: Describes whether the endpoint
                                           should be secured and protected by some
-                                          authentication process
+                                          authentication process. This requires a
+                                          protocol of "https" or "wss".
                                         type: boolean
                                       targetPort:
                                         type: integer
@@ -6777,7 +6807,9 @@ spec:
                                                     `http`"
                                                   enum:
                                                   - http
+                                                  - https
                                                   - ws
+                                                  - wss
                                                   - tcp
                                                   - udp
                                                   type: string
@@ -6785,7 +6817,8 @@ spec:
                                                   description: Describes whether the
                                                     endpoint should be secured and
                                                     protected by some authentication
-                                                    process
+                                                    process. This requires a protocol
+                                                    of "https" or "wss".
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
@@ -6942,7 +6975,9 @@ spec:
                                                     `http`"
                                                   enum:
                                                   - http
+                                                  - https
                                                   - ws
+                                                  - wss
                                                   - tcp
                                                   - udp
                                                   type: string
@@ -6950,7 +6985,8 @@ spec:
                                                   description: Describes whether the
                                                     endpoint should be secured and
                                                     protected by some authentication
-                                                    process
+                                                    process. This requires a protocol
+                                                    of "https" or "wss".
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
@@ -7065,7 +7101,9 @@ spec:
                                                     `http`"
                                                   enum:
                                                   - http
+                                                  - https
                                                   - ws
+                                                  - wss
                                                   - tcp
                                                   - udp
                                                   type: string
@@ -7073,7 +7111,8 @@ spec:
                                                   description: Describes whether the
                                                     endpoint should be secured and
                                                     protected by some authentication
-                                                    process
+                                                    process. This requires a protocol
+                                                    of "https" or "wss".
                                                   type: boolean
                                                 targetPort:
                                                   type: integer
