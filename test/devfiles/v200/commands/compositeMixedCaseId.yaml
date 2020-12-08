@@ -1,0 +1,4 @@
+  - id: compositeTest1
+    composite:
+      group:
+        kind: test

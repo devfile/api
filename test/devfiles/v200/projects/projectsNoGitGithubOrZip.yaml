@@ -1,0 +1,3 @@
+  - name: testproject1
+    clonePath: /Users/test/projects
+    sparseCheckoutDirs: [thisDir, thatDir]

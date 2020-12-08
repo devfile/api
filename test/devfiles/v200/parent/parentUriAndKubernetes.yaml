@@ -1,0 +1,5 @@
+parent:
+  kubernetes: 
+    name: test-kubernetes
+    namespace: test-namespace
+  uri: test-uri

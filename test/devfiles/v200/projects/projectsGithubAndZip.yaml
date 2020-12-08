@@ -1,0 +1,6 @@
+  - name: testproject1
+    github:
+      remotes: 
+        origin: test-origin
+    zip: 
+      location: git-repo.zip

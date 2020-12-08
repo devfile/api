@@ -1,0 +1,10 @@
+parent:
+  id: test-parent11
+  registryUrl: test-url
+parent:
+  kubernetes:
+    name: test-kubernetes
+  registryUrl: test-url
+parent:
+  uri: test-uri
+  registryUrl: test-url

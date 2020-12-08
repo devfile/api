@@ -1,0 +1,6 @@
+  - name: "testkubernetes3"
+    kubernetes:
+      inlined: testInlined
+      endpoints:
+        - name: MixedCaseName
+          targetPort: 1234

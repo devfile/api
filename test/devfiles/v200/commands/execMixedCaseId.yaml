@@ -1,0 +1,10 @@
+  - id: testExec1
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+  - id: testexec2      
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+      group: 
+        kind: debug

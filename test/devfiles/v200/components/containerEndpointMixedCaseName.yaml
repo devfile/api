@@ -1,0 +1,6 @@
+  - name: "testcontainer2"
+    container:
+      image: testImage
+      endpoints:
+        - name: MixedCaseName
+          targetPort: 1234

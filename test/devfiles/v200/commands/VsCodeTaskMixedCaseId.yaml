@@ -1,0 +1,6 @@
+- id: testVscodetask1
+  vscodeTask:
+    uri: http://testingland
+- id: testvscodetask2
+  vscodeTask:
+    inlined:  inline

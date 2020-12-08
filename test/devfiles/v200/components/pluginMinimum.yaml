@@ -1,0 +1,10 @@
+  - name: "testpluginid"
+    plugin:
+      id: test-plugin1
+  - name: "testpluginuri"    
+    plugin:
+      uri: test-uri
+  - name: "testpluginkubernetes"  
+    plugin:
+      kubernetes: 
+        name: test-kubernetes

@@ -1,0 +1,6 @@
+  - name: "testcontainer2"
+    container:
+      image: testImage
+      endpoints:
+        - name: endpoint-name-more-than-15-characters
+          targetPort: 1234

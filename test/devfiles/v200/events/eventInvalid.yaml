@@ -1,0 +1,9 @@
+  postStart:
+    - "ApplyThisPostStartCommand"
+  preStart:
+    - "ApplyThisPreStartCommand1"
+    - "ApplyThisPreStartCommand2"
+  preStep:
+    - "ApplyThisPreStopCommand"
+  postStop:
+    - "ApplyThisPostStopCommand"

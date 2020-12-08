@@ -1,0 +1,25 @@
+  - name: "testcontainer"
+    container:
+      args: [Arg1,Arg]
+      command: [run1,run2]
+      dedicatedPod: false
+      image: "tester"
+      memoryLimit: "128M"
+      mountSources: true
+      endpoints:
+        - name: test-http
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: nope
+          targetPort: 1234
+      volumeMounts:
+        - name: volume
+          path: mount
+      sourceMapping: sourceMapping 
+      env: 
+        - name: envName
+          value: envValue

@@ -1,0 +1,4 @@
+  - name: testproject1
+    zip: 
+    clonePath: /Users/test/projects
+    sparseCheckoutDirs: [thisDir, thatDir]

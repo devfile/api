@@ -1,0 +1,7 @@
+  - id: testapply
+    apply:
+      component: api-testing
+      group:
+        isDefault: fasle
+        kind: test
+      label: Test Apply command

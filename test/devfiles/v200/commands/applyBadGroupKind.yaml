@@ -1,0 +1,7 @@
+  - id: testapply
+    apply:
+      component: api-testing
+      group:
+        isDefault: true
+        kind: green
+      label: Test Apply command

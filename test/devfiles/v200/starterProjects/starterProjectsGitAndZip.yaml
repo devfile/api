@@ -1,0 +1,6 @@
+  - name: starterproject11
+    git:
+      remotes: 
+        origin: test-origin
+    zip: 
+      location: git-repo.zip

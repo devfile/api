@@ -1,0 +1,14 @@
+  - id: testexec1
+    exec:
+      component: api-tests
+      group: 
+        isDefault: true
+        kind: test
+      hotReloadCapable: false
+      label: "Command Exec test"
+      env:
+        - name: "USER"
+          value: "Test Tester"
+        - name : "GREETING"
+          value : "Hello" 
+      workingDir: $PROJECTS_ROOT

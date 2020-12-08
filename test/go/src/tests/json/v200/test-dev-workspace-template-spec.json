@@ -1,0 +1,9 @@
+{
+    "SchemaFile" : "schemas/latest/ide-targeted/dev-workspace-template-spec.json",
+    "Tests" : ["command-tests.json",
+        "component-tests.json",
+        "event-tests.json",
+        "parent-tests.json",
+        "project-tests.json",
+        "starterProject-tests.json"]                         
+}

@@ -1,0 +1,21 @@
+  - name: starterproject1
+    git:
+      checkoutFrom: 
+        remote: test-branch
+      remotes: 
+        origin: test-origin
+    description: Test starter project
+    subDir: test-subdir
+  - name: starterproject2
+    github:
+      checkoutFrom: 
+        remote: test-branch
+      remotes: 
+        origin: test-origin
+    description: Test starter project
+    subDir: test-subdir
+  - name: starterproject3
+    zip: 
+      location: git-repo.zip
+    description: Test starter project
+    subDir: test-subdir

@@ -1,0 +1,6 @@
+  - name: testproject1
+    git:
+      checkoutFrom: 
+        remote: test-branch
+    clonePath: /Users/test/projects
+    sparseCheckoutDirs: [thisDir, thatDir]

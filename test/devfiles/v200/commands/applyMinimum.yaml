@@ -1,0 +1,8 @@
+  - id: testapplytest1
+    apply:
+     component: api-testing
+  - id: testapplytest2
+    apply:
+      component: api-testing
+      group:
+        kind: test

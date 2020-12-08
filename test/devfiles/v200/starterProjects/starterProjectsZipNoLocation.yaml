@@ -1,0 +1,4 @@
+  - name: starterproject1
+    description: Test starter project
+    subDir: test-subdir
+    zip:

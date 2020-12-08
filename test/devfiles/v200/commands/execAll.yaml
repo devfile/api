@@ -1,0 +1,63 @@
+  - id: testexec1
+    attributes: 
+      test: Exec Test test
+      scope: Api
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+      group: 
+        isDefault: true
+        kind: test
+      hotReloadCapable: false
+      label: "Command Exec test"
+      env:
+        - name: "USER"
+          value: "Test Tester"
+        - name : "GREETING"
+          value : "Hello" 
+      workingDir: $PROJECTS_ROOT  
+  - id: testexec2
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+      group: 
+        isDefault: true
+        kind: build
+      hotReloadCapable: true
+      label: "Command Exec build"
+      env:
+        - name: "USER"
+          value: "Test Tester"
+        - name : "GREETING"
+          value : "Hello" 
+      workingDir: $PROJECT_SOURCE 
+  - id: testexec3
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+      group: 
+        isDefault: false
+        kind: debug
+      hotReloadCapable: true
+      label: "Command Exec debug"
+      env:
+        - name: "USER"
+          value: "Test Tester"
+        - name : "GREETING"
+          value : "Hello" 
+      workingDir: $PROJECTS_NODEFINED 
+  - id: testexec4
+    exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests
+      group: 
+        isDefault: false
+        kind: run
+      hotReloadCapable: false
+      label: "Command Exec run"
+      env:
+        - name: "USER"
+          value: "Test Tester"
+        - name : "GREETING"
+          value : "Hello" 
+      workingDir: This Directory

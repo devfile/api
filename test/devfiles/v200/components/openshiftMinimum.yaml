@@ -1,0 +1,12 @@
+  - name: "testopenshift1"
+    openshift:
+      inlined: testInlined
+  - name: "testopenshift1"
+    openshift:
+      uri: test-uri
+  - name: "testopenshift1"
+    openshift:
+      inlined: testInlined
+      endpoints:
+        - name: test-endpoint
+          targetPort: 1234

@@ -1,0 +1,14 @@
+  - name: "testcontainer1"
+    container:
+      image: testImage
+  - name: "testcontainer2"
+    container:
+      image: testImage
+      endpoints:
+        - name: test-http
+          targetPort: 1234
+  - name: "testcontainer3"
+    container:
+      image: testImage
+      volumeMounts:
+        - name: volume

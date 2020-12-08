@@ -1,0 +1,7 @@
+  - git:
+    checkoutFrom: 
+      remote: test-branch
+    remotes: 
+      origin: test-origin
+    description: Test starter project
+    subDir: test-subdir

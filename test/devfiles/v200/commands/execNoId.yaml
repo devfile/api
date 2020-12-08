@@ -1,0 +1,3 @@
+  - exec:
+      commandLine: 'echo "Hello ${GREETING} ${USER}"'
+      component: api-tests

@@ -1,0 +1,6 @@
+- id: testvscode
+  vscodeLaunch:
+    inlined: inline
+    group:
+      isDefault: nope
+      kind: test

@@ -1,0 +1,6 @@
+  - name: "testopenshift1"
+    openshift:
+      inlined: testInlined
+      endpoints:
+        - name: endpoint-name-more-than-15-characters
+          targetPort: 1234
