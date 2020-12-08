@@ -70,11 +70,11 @@ func (Generator) RegisterMarkers(into *markers.Registry) error {
 }
 
 type toGenerate struct {
-	groupName string
-	version string
+	groupName            string
+	version              string
 	devfileSchemaVersion *semver.Version
-	unionDiscriminators []markers.FieldInfo
-	jsonschemaRequested []*markers.TypeInfo
+	unionDiscriminators  []markers.FieldInfo
+	jsonschemaRequested  []*markers.TypeInfo
 }
 
 // Generate generates the artifacts
@@ -93,16 +93,16 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	}
 
 	toGenerateByPackage := map[*loader.Package]toGenerate{}
-	
+
 	apiVersionsByAPIGroup := map[string][]string{}
 	schemaVersionsByGV := map[schema.GroupVersion]*semver.Version{}
 	packageByGV := map[schema.GroupVersion]*loader.Package{}
 
 	for _, root := range ctx.Roots {
-		forRoot := toGenerate {
+		forRoot := toGenerate{
 			version: root.Name,
 		}
-		
+
 		ctx.Checker.Check(root, func(node ast.Node) bool {
 			// ignore interfaces
 			_, isIface := node.(*ast.InterfaceType)
@@ -161,7 +161,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			return nil
 		}
 		groupVersion := schema.GroupVersion{
-			Group: forRoot.groupName,
+			Group:   forRoot.groupName,
 			Version: forRoot.version,
 		}
 
@@ -173,7 +173,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 	for groupName, apiVersions := range apiVersionsByAPIGroup {
 		genutils.SortKubeLikeVersion(apiVersions)
-		
+
 		var currentSchemaVersion *semver.Version
 		var currentAPIVersion string
 		for _, apiVersion := range apiVersions {
@@ -181,10 +181,10 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			schemaVersion := schemaVersionsByGV[groupVersion]
 			if currentSchemaVersion != nil && schemaVersion != nil {
 				if schemaVersion.Compare(*currentSchemaVersion) <= 0 {
-					packageByGV[groupVersion].AddError(fmt.Errorf("The schema versions should be incremented on each increment of the corresponding K8S apiVersion.\n" + 
-					"This is not the case in the '" + groupName + "' API group:\n" +
-					"  '" + currentAPIVersion + "' K8S apiVersion => '" + currentSchemaVersion.String() + "' Json schema version\n" +
-					"  '" + apiVersion + "' K8S apiVersion => '" + schemaVersion.String() + "' Json schema version\n"))
+					packageByGV[groupVersion].AddError(fmt.Errorf("The schema versions should be incremented on each increment of the corresponding K8S apiVersion.\n" +
+						"This is not the case in the '" + groupName + "' API group:\n" +
+						"  '" + currentAPIVersion + "' K8S apiVersion => '" + currentSchemaVersion.String() + "' Json schema version\n" +
+						"  '" + apiVersion + "' K8S apiVersion => '" + schemaVersion.String() + "' Json schema version\n"))
 					return nil
 				}
 			}
@@ -193,7 +193,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		}
 	}
 
-	for root, toDo := range toGenerateByPackage {		
+	for root, toDo := range toGenerateByPackage {
 		for _, typeToProcess := range toDo.jsonschemaRequested {
 			typeIdent := crd.TypeIdent{
 				Package: root,

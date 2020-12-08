@@ -6,14 +6,13 @@ import (
 	"k8s.io/apimachinery/pkg/version"
 )
 
-
-
 type sortByKubeLikeVersion []string
-		
-func (a sortByKubeLikeVersion) Len() int           { return len(a) }
-func (a sortByKubeLikeVersion) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a sortByKubeLikeVersion) Less(i, j int) bool { return version.CompareKubeAwareVersionStrings(a[i], a[j]) < 0 }
 
+func (a sortByKubeLikeVersion) Len() int      { return len(a) }
+func (a sortByKubeLikeVersion) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a sortByKubeLikeVersion) Less(i, j int) bool {
+	return version.CompareKubeAwareVersionStrings(a[i], a[j]) < 0
+}
 
 // SortKubeLikeVersion sorts the provided versions according to "kube-like" versioning order.
 // "Kube-like" versions start with a "v", then are followed by a number (the major version),
@@ -38,5 +37,5 @@ func LatestKubeLikeVersion(versions []string) string {
 	versionsToSort := make([]string, len(versions))
 	copy(versionsToSort, versions)
 	sort.Sort(sortByKubeLikeVersion(versionsToSort))
-	return versionsToSort[len(versionsToSort)-1]	
+	return versionsToSort[len(versionsToSort)-1]
 }

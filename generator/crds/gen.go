@@ -119,7 +119,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			if typeInfo == nil {
 				continue
 			}
-	
+
 			for _, markerVals := range typeInfo.Markers {
 				for _, val := range markerVals {
 					crdMarker, isCrdResourceMarker := val.(crdmarkers.Resource)
@@ -132,7 +132,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				}
 			}
 		}
-	
+
 		for i, ver := range crdVersions {
 			copiedCrd := crdRaw.DeepCopy()
 			if crdVersions[i] == "v1beta1" {
