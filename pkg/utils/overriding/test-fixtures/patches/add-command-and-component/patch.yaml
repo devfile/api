@@ -1,7 +1,7 @@
 commands:
   - apply:
       component: "mycomponent"
-    id: "commandWithTypeChanged"
+    id: "command-with-type-changed"
   - exec:
       commandLine: "commandToReplaceCommandLineReplaced"
       env:
@@ -9,10 +9,10 @@ commands:
           value: "commandToReplaceEnvVarToReplaceNewValue"
         - name:  "commandToReplaceEndVarToAdd"
           value: "commandToReplaceEndVarToAddValue"
-    id: "commandToReplace"
+    id: "command-to-replace"
   - exec:
       commandLine: "commandToAddCommandLine"
-    id: "commandToAdd"
+    id: "command-to-add"
 components:
   - volume: {}
-    name: newVolume
+    name: new-volume

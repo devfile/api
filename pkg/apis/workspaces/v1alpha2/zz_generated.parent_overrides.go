@@ -458,7 +458,7 @@ type EndpointParentOverride struct {
 	Protocol EndpointProtocolParentOverride `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
-	// authentication process. This requires a protocol of "https" or "wss".
+	// authentication process. This requires a protocol of `https` or `wss`.
 	// +optional
 	Secure bool `json:"secure,omitempty"`
 
@@ -1011,7 +1011,7 @@ type EndpointPluginOverrideParentOverride struct {
 	Protocol EndpointProtocolPluginOverrideParentOverride `json:"protocol,omitempty"`
 
 	// Describes whether the endpoint should be secured and protected by some
-	// authentication process. This requires a protocol of "https" or "wss".
+	// authentication process. This requires a protocol of `https` or `wss`.
 	// +optional
 	Secure bool `json:"secure,omitempty"`
 

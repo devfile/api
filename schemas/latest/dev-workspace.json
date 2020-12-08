@@ -668,7 +668,7 @@
                               ]
                             },
                             "secure": {
-                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                               "type": "boolean"
                             },
                             "targetPort": {
@@ -823,7 +823,7 @@
                               ]
                             },
                             "secure": {
-                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                               "type": "boolean"
                             },
                             "targetPort": {
@@ -913,7 +913,7 @@
                               ]
                             },
                             "secure": {
-                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                              "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                               "type": "boolean"
                             },
                             "targetPort": {
@@ -1350,7 +1350,7 @@
                                         ]
                                       },
                                       "secure": {
-                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                         "type": "boolean"
                                       },
                                       "targetPort": {
@@ -1480,7 +1480,7 @@
                                         ]
                                       },
                                       "secure": {
-                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                         "type": "boolean"
                                       },
                                       "targetPort": {
@@ -1567,7 +1567,7 @@
                                         ]
                                       },
                                       "secure": {
-                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                        "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                         "type": "boolean"
                                       },
                                       "targetPort": {
@@ -2104,7 +2104,7 @@
                                   ]
                                 },
                                 "secure": {
-                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                   "type": "boolean"
                                 },
                                 "targetPort": {
@@ -2234,7 +2234,7 @@
                                   ]
                                 },
                                 "secure": {
-                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                   "type": "boolean"
                                 },
                                 "targetPort": {
@@ -2321,7 +2321,7 @@
                                   ]
                                 },
                                 "secure": {
-                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                  "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                   "type": "boolean"
                                 },
                                 "targetPort": {
@@ -2758,7 +2758,7 @@
                                             ]
                                           },
                                           "secure": {
-                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                             "type": "boolean"
                                           },
                                           "targetPort": {
@@ -2888,7 +2888,7 @@
                                             ]
                                           },
                                           "secure": {
-                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                             "type": "boolean"
                                           },
                                           "targetPort": {
@@ -2975,7 +2975,7 @@
                                             ]
                                           },
                                           "secure": {
-                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of \"https\" or \"wss\".",
+                                            "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
                                             "type": "boolean"
                                           },
                                           "targetPort": {
