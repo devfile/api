@@ -6,7 +6,7 @@ The validation will be done as part of schema validation, the rule will be intro
 
 - limit to lowercase characters i.e.; no uppercase allowed
 - limit within 63 characters, except for endpoint’s name which is limited within 15 characters
-- no special characters allowed, only dash(-)
+- no special characters allowed except dash(-)
 - start with an alphanumeric character
 - end with an alphanumeric character
 - must not be with all numbers (not included in schema validation, will have extra validation function)
@@ -17,7 +17,7 @@ The validation will be done as part of schema validation, the rule will be intro
 Since network is shared in the same pod, endpoint ports should be unique across components, two components cannot have the same target port but two endpoints in a single component can have the same target port. Only exception: container component with `dedicatedpod=true`
 
 ### Commands:
-1. Id must be unique
+1. id must be unique
 2. composite command:
     - Should not reference itself via a subcommand
     - Should not indirectly reference itself via a subcommand which is a composite command
@@ -34,7 +34,7 @@ Common rules for all components types:
 
 #### Container component 
 1. the container components must reference a valid volume component if it uses volume mounts, and the volume components are unique
-2. `PROJECT_SOURCE` or `PROJECTS_ROOT` are reserved Env, cannot be defined again in Env
+2. `PROJECT_SOURCE` or `PROJECTS_ROOT` are reserved env, cannot be defined again in env
 
 #### Plugin Component
 - Commands in plugins components share the same commands validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
