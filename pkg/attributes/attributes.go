@@ -2,7 +2,6 @@ package attributes
 
 import (
 	"encoding/json"
-	"errors"
 	"strconv"
 
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
@@ -65,7 +64,7 @@ func (attributes Attributes) getPrimitive(key string, zeroValue interface{}, res
 			}
 		}
 	} else {
-		err = errors.New("Attribute with key '" + key + "' does not exist")
+		err = &KeyNotFoundError{Key: key}
 	}
 	if errorHolder != nil {
 		*errorHolder = err
@@ -186,7 +185,7 @@ func (attributes Attributes) Get(key string, errorHolder *error) interface{} {
 			return (*container)[0]
 		}
 	} else if !exists && errorHolder != nil {
-		*errorHolder = errors.New("Attribute with key '" + key + "' does not exist")
+		*errorHolder = &KeyNotFoundError{Key: key}
 	}
 	return nil
 }
@@ -202,7 +201,7 @@ func (attributes Attributes) GetInto(key string, into interface{}) error {
 	if attribute, exists := attributes[key]; exists {
 		err = json.Unmarshal(attribute.Raw, into)
 	} else {
-		err = errors.New("Attribute with key '" + key + "' does not exist")
+		err = &KeyNotFoundError{Key: key}
 	}
 	return err
 }
