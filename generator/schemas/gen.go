@@ -181,10 +181,12 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			schemaVersion := schemaVersionsByGV[groupVersion]
 			if currentSchemaVersion != nil && schemaVersion != nil {
 				if schemaVersion.Compare(*currentSchemaVersion) <= 0 {
-					packageByGV[groupVersion].AddError(fmt.Errorf("The schema versions should be incremented on each increment of the corresponding K8S apiVersion.\n" +
-						"This is not the case in the "%s' API group:\n" +
-						"  '%s' K8S apiVersion => '%s' Json schema version\n" +
-						"  '%s' K8S apiVersion => '%s' Json schema version\n", groupName, currentAPIVersion, currentSchemaVersion.String(), apiVersion, schemaVersion.String()))
+					packageByGV[groupVersion].AddError(
+						fmt.Errorf(`The schema versions should be incremented on each increment of the corresponding K8S apiVersion.
+This is not the case in the "%s' API group:
+  '%s' K8S apiVersion => '%s' Json schema version
+  '%s' K8S apiVersion => '%s' Json schema version`,
+							groupName, currentAPIVersion, currentSchemaVersion.String(), apiVersion, schemaVersion.String()))
 					return nil
 				}
 			}
