@@ -16,6 +16,7 @@ import (
 	"github.com/devfile/api/generator/genutils"
 	"github.com/iancoleman/strcase"
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/controller-tools/pkg/crd"
 	"sigs.k8s.io/controller-tools/pkg/loader"
 
@@ -68,6 +69,14 @@ func (Generator) RegisterMarkers(into *markers.Registry) error {
 	return genutils.RegisterUnionMarkers(into)
 }
 
+type toGenerate struct {
+	groupName            string
+	version              string
+	devfileSchemaVersion *semver.Version
+	unionDiscriminators  []markers.FieldInfo
+	jsonschemaRequested  []*markers.TypeInfo
+}
+
 // Generate generates the artifacts
 func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	parser := &crd.Parser{
@@ -83,7 +92,17 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		delete(p.Schemata, crd.TypeIdent{Name: "ObjectMeta", Package: pkg})
 	}
 
+	toGenerateByPackage := map[*loader.Package]toGenerate{}
+
+	apiVersionsByAPIGroup := map[string][]string{}
+	schemaVersionsByGV := map[schema.GroupVersion]*semver.Version{}
+	packageByGV := map[schema.GroupVersion]*loader.Package{}
+
 	for _, root := range ctx.Roots {
+		forRoot := toGenerate{
+			version: root.Name,
+		}
+
 		ctx.Checker.Check(root, func(node ast.Node) bool {
 			// ignore interfaces
 			_, isIface := node.(*ast.InterfaceType)
@@ -94,20 +113,17 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 		parser.NeedPackage(root)
 
-		unionDiscriminators := []markers.FieldInfo{}
-		jsonschemaRequested := []*markers.TypeInfo{}
-
 		if err := markers.EachType(ctx.Collector, root, func(info *markers.TypeInfo) {
 			if info.Markers.Get(genutils.UnionMarker.Name) != nil {
 				for _, field := range info.Fields {
 					if field.Markers.Get(genutils.UnionDiscriminatorMarker.Name) != nil {
-						unionDiscriminators = append(unionDiscriminators, field)
+						forRoot.unionDiscriminators = append(forRoot.unionDiscriminators, field)
 					}
 				}
 				return
 			}
 			if info.Markers.Get(jsonschemaGenerateMarker.Name) != nil {
-				jsonschemaRequested = append(jsonschemaRequested, info)
+				forRoot.jsonschemaRequested = append(forRoot.jsonschemaRequested, info)
 				return
 			}
 		}); err != nil {
@@ -115,8 +131,8 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			return nil
 		}
 
-		if len(jsonschemaRequested) == 0 {
-			return nil
+		if len(forRoot.jsonschemaRequested) == 0 {
+			continue
 		}
 
 		var devfileSchemaVersion *semver.Version
@@ -131,12 +147,56 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				root.AddError(fmt.Errorf("In order to generate Json schemas from the K8S API, you should provide a valid semver-compatible devfile version in the +devfile:jsonschema:version comment marker of the K8S API package (in the doc.go file)"))
 				return nil
 			}
+			forRoot.devfileSchemaVersion = devfileSchemaVersion
 		default:
 			root.AddError(fmt.Errorf("In order to generate Json schemas from the K8S API, you should annotate the K8S API package (in the doc.go file) with the +devfile:jsonschema:version comment marker"))
 			return nil
 		}
 
-		for _, typeToProcess := range jsonschemaRequested {
+		switch groupName := packageMarkers.Get("groupName").(type) {
+		case string:
+			forRoot.groupName = groupName
+		default:
+			root.AddError(fmt.Errorf("The package should have a valid 'groupName' annotation"))
+			return nil
+		}
+		groupVersion := schema.GroupVersion{
+			Group:   forRoot.groupName,
+			Version: forRoot.version,
+		}
+
+		apiVersionsByAPIGroup[groupVersion.Group] = append(apiVersionsByAPIGroup[groupVersion.Group], groupVersion.Version)
+		schemaVersionsByGV[groupVersion] = forRoot.devfileSchemaVersion
+		packageByGV[groupVersion] = root
+		toGenerateByPackage[root] = forRoot
+	}
+
+	for groupName, apiVersions := range apiVersionsByAPIGroup {
+		genutils.SortKubeLikeVersion(apiVersions)
+
+		var currentSchemaVersion *semver.Version
+		var currentAPIVersion string
+		for _, apiVersion := range apiVersions {
+			groupVersion := schema.GroupVersion{Group: groupName, Version: apiVersion}
+			schemaVersion := schemaVersionsByGV[groupVersion]
+			if currentSchemaVersion != nil && schemaVersion != nil {
+				if schemaVersion.Compare(*currentSchemaVersion) <= 0 {
+					packageByGV[groupVersion].AddError(
+						fmt.Errorf(`The schema versions should be incremented on each increment of the corresponding K8S apiVersion.
+This is not the case in the "%s' API group:
+  '%s' K8S apiVersion => '%s' Json schema version
+  '%s' K8S apiVersion => '%s' Json schema version`,
+							groupName, currentAPIVersion, currentSchemaVersion.String(), apiVersion, schemaVersion.String()))
+					return nil
+				}
+			}
+			currentAPIVersion = apiVersion
+			currentSchemaVersion = schemaVersion
+		}
+	}
+
+	for root, toDo := range toGenerateByPackage {
+		for _, typeToProcess := range toDo.jsonschemaRequested {
 			typeIdent := crd.TypeIdent{
 				Package: root,
 				Name:    typeToProcess.Name,
@@ -154,7 +214,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				fieldsToSkip = append(fieldsToSkip, "Custom")
 			}
 
-			genutils.AddUnionOneOfConstraints(&currentJSONSchema, unionDiscriminators, true, fieldsToSkip...)
+			genutils.AddUnionOneOfConstraints(&currentJSONSchema, toDo.unionDiscriminators, true, fieldsToSkip...)
 
 			// Fix descriptions to have them Markdown compatible
 			genutils.EditJSONSchema(&currentJSONSchema, func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
@@ -197,7 +257,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			})
 
 			if schemaGenerateMarker.Title == "" {
-				schemaGenerateMarker.Title = typeToProcess.Name + " schema - Version " + devfileSchemaVersion.String()
+				schemaGenerateMarker.Title = typeToProcess.Name + " schema - Version " + toDo.devfileSchemaVersion.String()
 			}
 
 			(&currentJSONSchema).Title = schemaGenerateMarker.Title
@@ -236,6 +296,9 @@ to provide markdown-rendered documentation hovers.
 
 			schemaBaseName := strcase.ToKebab(typeToProcess.Name)
 			schemaFolder := "latest"
+			if toDo.version != genutils.LatestKubeLikeVersion(apiVersionsByAPIGroup[toDo.groupName]) {
+				schemaFolder = toDo.version
+			}
 			folderForIdeTargetedSchemas := filepath.Join(schemaFolder, "ide-targeted")
 			schemaFileName := schemaBaseName + ".json"
 			err = writeFile(ctx, schemaFolder, schemaFileName, jsonSchema)
@@ -253,7 +316,7 @@ to provide markdown-rendered documentation hovers.
 				root.AddError(err)
 				return nil
 			}
-			err = writeFile(ctx, schemaFolder, "jsonSchemaVersion.txt", []byte(devfileSchemaVersion.String()))
+			err = writeFile(ctx, schemaFolder, "jsonSchemaVersion.txt", []byte(toDo.devfileSchemaVersion.String()))
 			if err != nil {
 				root.AddError(err)
 				return nil
