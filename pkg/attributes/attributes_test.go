@@ -239,6 +239,10 @@ type decodeAttributeTestCase struct {
 	decodeIntoError         string
 }
 
+var invalidKey = "randomKey"
+
+var keyNotFoundErr error = &KeyNotFoundError{Key: invalidKey}
+
 var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCase{
 	{
 		name:                    "DecodeSimpleString",
@@ -504,17 +508,17 @@ var decodeAttributeTestCases []decodeAttributeTestCase = []decodeAttributeTestCa
 	},
 	{
 		name:                    "GetInvalidKey",
-		attributeKey:            "randomKey",
+		attributeKey:            invalidKey,
 		attributeJson:           `9`,
 		expectedInterface:       nil,
 		expectedNumber:          float64(0),
-		expectedInterfaceError:  "Attribute with key 'randomKey' does not exist",
-		expectedBoolError:       "Attribute with key 'randomKey' does not exist",
-		expectedNumberError:     "Attribute with key 'randomKey' does not exist",
-		expectedStringError:     "Attribute with key 'randomKey' does not exist",
+		expectedInterfaceError:  keyNotFoundErr.Error(),
+		expectedBoolError:       keyNotFoundErr.Error(),
+		expectedNumberError:     keyNotFoundErr.Error(),
+		expectedStringError:     keyNotFoundErr.Error(),
 		decodeInto:              &map[string]interface{}{},
 		decodeIntoExpectedValue: map[string]interface{}{},
-		decodeIntoError:         "Attribute with key 'randomKey' does not exist",
+		decodeIntoError:         keyNotFoundErr.Error(),
 	},
 }
 
