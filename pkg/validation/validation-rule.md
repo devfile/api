@@ -1,10 +1,11 @@
 ### Id and Name:
 `^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
 
-The restriction is added to allow easy translation to K8s resource names, and also to have consistent rules for both name and id fields
+The restriction is added to allow easy translation to K8s resource names, and also to have consistent rules for both name and id fields.
+
 The validation will be done as part of schema validation, the rule will be introduced as a regex in schema definition, any objection of the rule in devfile will result in a failure.
 
-- limit to lowercase characters i.e.; no uppercase allowed
+- limit to lowercase characters i.e., no uppercase allowed
 - limit within 63 characters, except for endpoint’s name which is limited within 15 characters
 - no special characters allowed except dash(-)
 - start with an alphanumeric character
@@ -14,6 +15,7 @@ The validation will be done as part of schema validation, the rule will be intro
 
 ### Endpoints:
 - all the endpoint names are unique across components
+  
 Since network is shared in the same pod, endpoint ports should be unique across components, two components cannot have the same target port but two endpoints in a single component can have the same target port. Only exception: container component with `dedicatedpod=true`
 
 ### Commands:
@@ -22,9 +24,7 @@ Since network is shared in the same pod, endpoint ports should be unique across 
     - Should not reference itself via a subcommand
     - Should not indirectly reference itself via a subcommand which is a composite command
     - Should reference a valid devfile command
-    - Subcommands should be valid as well
-3. exec command should:
-map to a valid container component
+3. exec command should: map to a valid container component
 4. vscodeLaunch & vscodeTask: URI needs to be in valid URI format
 5. `{build, run, test, debug}`, each kind of group can only have one default command associated with it. If there are multiple commands of the same kind without a default, a warning will be displayed.
 
@@ -55,4 +55,4 @@ Common rules for all components types:
 
 
 ### starterProjects:
-- Starter project entries cannot have more than one remotes defined
+- Starter project entries cannot have more than one remote defined
