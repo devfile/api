@@ -60,7 +60,7 @@ The following steps outline the steps done to release a new version of the Devfi
       v) Finally, a PR is opened to merge these changes into the release branch
 
    3) Once the release PR is approved and merged, the release engineer creates a new release on GitHub based off the release branch that was just created and includes the generated `devfile.json` as a release artifact. 
-       - The tag `v{major}.{minor}.{bugfix}` is used, to enable the new version of the API to be pulled in as a Go module.
+       - The tag `v{major}.{minor}.{bugfix}`, where the semver corresponds to the devfile schema version, is used to enable the new version of the API to be pulled in as a Go module.
 
    4) Once the release is published, GitHub actions run to publish the new schema to devfile.io. The “stable” schema is also updated to point to the new schema.
 
