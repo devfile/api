@@ -116,6 +116,9 @@ func OverrideDevWorkspaceTemplateSpec(original *workspaces.DevWorkspaceTemplateS
 
 func ensureOnlyExistingElementsAreOverridden(spec *workspaces.DevWorkspaceTemplateSpecContent, overrides workspaces.Overrides) error {
 	return checkKeys(func(elementType string, keysSets []sets.String) []error {
+		if len(keysSets) <= 1 {
+			return []error{}
+		}
 		specKeys := keysSets[0]
 		overlayKeys := keysSets[1]
 		newElementsInOverlay := overlayKeys.Difference(specKeys)
