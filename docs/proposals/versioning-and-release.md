@@ -39,7 +39,7 @@ As mentioned above, the Devfile JSON schema is generated from the Go structs def
 
 ### Relationship Between K8s API version and JSON Schema Version
 
-The Devfile JSON schema is generated from the Kubernetes API, and the version for the JSON schema is set in the doc.go file in the K8S API (`pkg/apis/workspace/<api-version>/doc.go).
+The Devfile JSON schema is generated from the Kubernetes API, and the version for the JSON schema is set in the doc.go file in the K8S API (`pkg/apis/workspace/<api-version>/doc.go`).
 
 As we’re only updating the K8S API version when needed, but incrementing the schema version more frequently, this means that any given API version may point to multiple, backwards-compatible, schema versions over its lifespan. The schema version under `schemas/<api-version>` in [devfile/api repo](https://github.com/devfile/api/) points to the latest JSON schema generated from the K8S API.
 
@@ -69,4 +69,3 @@ An example pull request, `make-release.sh` script and GitHub action can be found
 - [Release Pull Request](https://github.com/johnmcollier/api/pull/7)
 - [make-release.sh](https://github.com/johnmcollier/api/blob/master/make-release.sh)
 - [release-schema.yaml](https://github.com/johnmcollier/api/blob/master/.github/workflows/release-schema.yaml)
-
