@@ -36,6 +36,10 @@ func MergeDevWorkspaceTemplateSpec(
 	if err := ensureNoConflictsWithPlugins(mainContent, pluginFlattenedContents...); err != nil {
 		return nil, err
 	}
+	// also need to ensure no conflict between parent and plugins
+	if err := ensureNoConflictsWithPlugins(parentFlattenedContent, pluginFlattenedContents...); err != nil {
+		return nil, err
+	}
 
 	result := workspaces.DevWorkspaceTemplateSpecContent{}
 
