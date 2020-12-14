@@ -78,4 +78,3 @@ An example pull request, `make-release.sh` script and GitHub action can be found
 - [Release Pull Request](https://github.com/johnmcollier/api/pull/7)
 - [make-release.sh](https://github.com/johnmcollier/api/blob/master/make-release.sh)
 - [release-schema.yaml](https://github.com/johnmcollier/api/blob/master/.github/workflows/release-schema.yaml)
-
