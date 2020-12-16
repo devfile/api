@@ -1,7 +1,7 @@
 package devfile
 
 import (
-	attributes "github.com/devfile/api/pkg/attributes"
+	attributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
 // DevfileHeader describes the structure of the devfile-specific top-level fields

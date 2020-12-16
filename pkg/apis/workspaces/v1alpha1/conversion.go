@@ -1,7 +1,7 @@
 package v1alpha1
 
 import (
-	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
+	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
 func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspace) error {

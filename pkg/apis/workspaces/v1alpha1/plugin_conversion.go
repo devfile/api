@@ -3,7 +3,7 @@ package v1alpha1
 import (
 	"encoding/json"
 
-	"github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
+	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
 func convertPluginComponentTo_v1alpha2(srcComponent *Component, destComponent *v1alpha2.Component) error {

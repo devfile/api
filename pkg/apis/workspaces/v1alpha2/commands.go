@@ -1,7 +1,7 @@
 package v1alpha2
 
 import (
-	attributes "github.com/devfile/api/pkg/attributes"
+	attributes "github.com/devfile/api/v2/pkg/attributes"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
