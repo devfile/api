@@ -12,7 +12,7 @@ The Devfile Kubernetes API (defined in https://github.com/devfile/api/) is the s
 
 **Versioning Scheme**: [Kubernetes](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning) (e.g. v1alpha1, v1beta2, v1, v2, etc)
 
-**How to Update**: 
+**How to Update?**: 
 
    1) Add a new folder for the version in the [devfile/api](https://github.com/devfile/api/) repository under [pkg/apis/workspaces](https://github.com/devfile/api/tree/master/pkg/apis/workspaces). For example `pkg/apis/workspaces/v1` if bumping the K8S API version to `v1`.
    2) Add a schema and version in the CRD manifests
@@ -29,7 +29,7 @@ As mentioned above, the Devfile JSON schema is generated from the Go structs def
 
 **Versioning Scheme**: Semantic Versioning (major.minor.bugfix)
 
-**How to Update**: 
+**How to Update?**: 
   
    1) Update the schema version string in the `// +devfile:jsonschema:version=<schema-version>` annotation in `pkg/apis/workspace/<k8s-api-version>/doc.go`
    2) Re-generate the json schema
@@ -37,7 +37,7 @@ As mentioned above, the Devfile JSON schema is generated from the Go structs def
 
 **When to Update?** On each release of the schema, incremented based on the changes going in to the release. E.g.:
    
-   - major == breaking / backwards incompatible changes). 
+   - major == breaking / backwards incompatible changes. 
    - minor == larger and / or backwards compatible changes
    - bugfix == comments / bugfixes
 
