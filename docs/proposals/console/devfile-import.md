@@ -2,37 +2,38 @@
 
 This document outlines how the console is going to use a devfile 2.0.0 spec for it's import feature targeted for the upcoming release.
 
-## As-Is Today
+## Dev Preview POC
 
-Currently the Devfile import feature is mocked with a POC [openshift/console PR](https://github.com/openshift/console/pull/6321). The POC PR, requires the build guidance devfile spec to be implemented. However, the build guidance spec is still an open discussion in the [devfile/api PR](https://github.com/devfile/api/pull/127). 
+The Devfile import feature was mocked with a POC [openshift/console PR](https://github.com/openshift/console/pull/6321). The POC PR, required the build guidance devfile spec to be implemented. However, the build guidance spec is still an open discussion in the [devfile/api PR](https://github.com/devfile/api/pull/127). 
 
 With an initial target date for the Dec 04, 2020; the devfile import developer preview should look similar to this [demo video](https://drive.google.com/file/d/1uLzDibVZlkMqbjtKkho04e8k2-Ns5A2W/view).
 
-The information required to build a component from build guidance are:
+## Required Data
+
+The information required to build a component from devfile are:
 - Git Repo Url
 - Git Repo Ref
-- Build Context Path
+- Devfile Context Dir
+- Docker Build Context Dir
+- Dockerfile Location
 - Container Port
 - Image Name
 
-The console devfile import page has the Git Repo Url, Git Repo Ref & the Build Context Path
+The console devfile import page has the Git Repo Url, Git Repo Ref & the Devfile Context Dir.
 
 <img src="https://user-images.githubusercontent.com/31771087/99319303-4ae89180-2837-11eb-8933-eaaf41160bcd.png">
 
-The Dockerfile is assumed to be present in the context directory. The Container Port is assumed to be 8080 and the Image Name is assumed to be the same as the application name.
-
-### Note:
-The context path is present in both the Console import form and the open devfile spec(Refer to the OpenShift Console Devfile Import screenshot above and the open Build Guidance PR screenshot below). Do we require two context dir information? Is the context dir in the Console form for devfile.yaml and the context dir in the build guidance spec for Dockerfile relative to devfile.yaml? Or do we always assume both the devfile.yaml and Dockerfile are always at the same dir level.
+There are two context directories info required. The `Devfile Context Dir` present in the Console form is used to find the devfile.yaml in a repository. The `Docker Build Context Dir` present in the devfile.yaml is used to establish a context dir for Docker builds relative to the devfile.yaml.
 
  For phase 1, only the Dockerfile Build Guidance is to be implemented. SourceToImage(S2I) will be implemented in the future sprints.
 
 <img src="https://user-images.githubusercontent.com/31771087/99319306-4c19be80-2837-11eb-9639-a5c130deb4ba.png">
 
-## Proposed Changes
-
 With the target deadline approaching soon, we may need to provide an alternative path for the OpenShift Console to consume the devfile. With the Build Guidance spec [devfile/api PR](https://github.com/devfile/api/pull/127) still an open discussion, this document proposes a solution within the boundaries of the devfile 2.0.0 spec to achieve this.
 
-Here is a proposed 2.0.0 spec devfile that can support build guidance for OpenShift Console:
+## Proposed Changes
+
+Here is a proposed 2.0.0 spec devfile that can support devfile build guidance for OpenShift Console:
 
 ```yaml
 schemaVersion: 2.0.0
@@ -40,42 +41,55 @@ metadata:
   name: nodejs
   version: 1.0.0
   attributes:
-    alpha.build-dockerfile: ./mydir/Dockerfile # is a relative path to the context dir containing src files in the repo
+    alpha.build-context: mydir # key:value pair that establishes the context dir for Docker builds relative to devfile.yaml
+    alpha.build-dockerfile: Dockerfile # key:value pair that specifies the location of the Dockerfile relative to alpha.build-context
 components:
-- name: myapplication
-  attributes:
-    tool: console-import # key:value pair used to filter container type component that only the Console Devfile Import is interested in
-  container:
-    image: buildContextImageOutput:latest # this is the image which will be used by the Console's buildConfig output
-    endpoints:
-    - name: http-3000 # define endpoints in devfile.yaml, rather than hardcoding a default
-      targetPort: 3000
-    env:
-      - name: FOO # set container env through the devfile.yaml for the container
-        value: "bar"
-- name: otherapplication1
-  container:
-    image: someimage1
-    endpoints:
-    - name: http-3001
-- name: otherapplication2
-  container:
-    image: someimage2
-    endpoints:
-    - name: http-3002
-      targetPort: 3002
-    env:
-      - name: ABC
-        value: "xyz"
+  - name: runtime
+    attributes:
+      tool: console-import # key:value pair used to filter container type component that only the Console Devfile Import is interested in
+    container:
+      image: imageplaceholder # image which will be used by the buildConfig output but not supported for Dev Preview, defaults to Console's application name
+      memoryLimit: 1024Mi
+      endpoints:
+        - name: http-3000 
+          targetPort: 3000 # define endpoints in devfile.yaml, that will be used for the devfile service
+  - name: runtime2 # other components ignored by the Console Devfile Import
+    container:
+      image: registry.access.redhat.com/ubi8/nodejs-12:1-45
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+      endpoints:
+        - name: http-3000
+          targetPort: 3000
+commands:
+  - id: install
+    exec:
+      component: runtime2
+      commandLine: npm install
+      workingDir: /project
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime2
+      commandLine: npm start
+      workingDir: /project
+      group:
+        kind: run
+        isDefault: true
 ```
 
-Without the build guidance devfile spec, the proposed change here is to mention the dockerfile location in the metadata attribute. The attributes is a free form key-value pair and in the above example, a `alpha.build-dockerfile` key holds the dockerfile location; which would have otherwise been specified by the Dockerfile Build Guidance spec.
+Without the build guidance devfile spec, the proposed change here is to mention the docker build context and the dockerfile location in the metadata attribute. The attributes is a free form key-value pair and in the above example, `alpha.build-context` & `alpha.build-dockerfile` are used for the values; which would have otherwise been specified by the Dockerfile Build Guidance spec.
 
-Asides the devfile change, the POC PR would need to be updated to use the above devfile's image and endpoint. 
+To allow the Console to filter only devfile component containers, we use a `tool: console-import` key value pair attribute in the container component. Any other components in the devfile are ignored by the Console.
 
-Console's devfile import POC is using a `BuildConfig` to build the Dockerfile from the dockerfile path location, currently found from the context dir. The POC PR `BuildConfig` outputs it to an `ImageStreamTag`. However, the POC PR assumes the `ImageStream` and `ImageStreamTag` are all the same name as the application name. This is tightly coupled and dependant on the information entered in the Console Devfile Import form and thus does not allow us to mention a custom image name in the devfile.
+Asides the devfile change, the Dev Preview would need to be updated to use the above devfile's image in the future. 
 
-If we want to decouple `ImageStream` and `ImageStreamTag` from the application name, so that a custom image name can be specified in the devfile's component container; then we would need to update the following files: 
+Console's devfile import Dev Preview is using a `BuildConfig` to build the Dockerfile from the dockerfile path location and build context directory. The `BuildConfig` outputs it to an `ImageStreamTag`. However, for the Dev Preview it assumes the `ImageStream` and `ImageStreamTag` are all the same name as the application name. This is tightly coupled and dependant on the information entered in the Console Devfile Import form and thus does not allow us to mention a custom image name in the devfile.
+
+If we want to decouple `ImageStream` and `ImageStreamTag` from the application name, so that a custom image name can be specified in the devfile's component container; then we would need to update the following information: 
 1. `pkg/server/devfile-handler.go`
    - image stream name 
    - build config output image stream tag 
@@ -84,8 +98,6 @@ If we want to decouple `ImageStream` and `ImageStreamTag` from the application n
    - the annotation mapping for the `ImageStreamTag` in `getTriggerAnnotation()` 
   
 This allows us to use the image name from devfile.yaml rather than always using the application name.
-
-The proposed devfile also mentions an endpoint instead of hardcoding a default 8080. This can be updated in the POC PR's function `createOrUpdateResources()` in `frontend/packages/dev-console/src/components/import/import-submit-utils.ts`
 
 These devfile information would be parsed and returned by the library and thus ensuring a consistent UX.
 
