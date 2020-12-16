@@ -19,8 +19,9 @@ The Devfile Kubernetes API (defined in https://github.com/devfile/api/) is the s
    3) Generate the JSON schema from the API. New JSON schema will be located under `schemas/latest`.
    4) Update the devworkspace operator and devfile library to consume the Go structs in the new K8S API version, as needed.
 
-**When to Update?**  As incrementing the Kubernetes API version for Devfile is a relatively heavy process, and affects the library, only update the K8s API version when absolutely needed (for **big** changes or backwards incompatible changes).
-   - Backwards incompatible changes are defined as any change in the schema that would cause K8S API validation errors on the old resource version (e.g. removed fields or new mandatory fields)
+**When to Update?**
+As incrementing the Kubernetes API version for Devfile is a relatively heavy process, and affects the library, only update the K8s API version when absolutely needed (for **big** changes or backwards incompatible changes).
+   - Backwards incompatible changes are defined as any change in the schema that would cause K8S API validation errors on the old resource version (e.g. removed fields or new mandatory fields without a default)
    - New, optional fields to the API do not necessarily require a version bump, but if it's a large change, it may be wise to bump the version.
 
 ### Devfile JSON Schema
