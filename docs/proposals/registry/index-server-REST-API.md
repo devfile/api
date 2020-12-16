@@ -4,7 +4,7 @@ This documentation explains how to use the index server REST APIs
 ## Gets registry index file  
 ### HTTP request
 ```
-GET http://<registry host>/index
+GET http://{registry host}/index
 ```
 ### Request parameters
 | Parameter | Description |
