@@ -167,6 +167,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
 
 ## Gets registry stack devfile
 Gets the specific registry stack devfile content from HTTP response
+
 Note: this REST API only returns the content of `devfile.yaml`, it won't return other resources in the stack
 ### HTTP request
 ```
