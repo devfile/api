@@ -1,7 +1,8 @@
 # Index server REST APIs
 This documentation explains how to use the index server REST APIs
 
-## Gets registry index file  
+## Gets registry index file
+Gets the registry index file content from HTTP response
 ### HTTP request
 ```
 GET http://{registry host}/index
@@ -17,7 +18,7 @@ The request body must be empty.
 curl http://devfile-registry.192.168.1.1.nip.io/index
 ```
 ### Response example
-```
+```json
 [
   {
     "name": "java-maven",
@@ -165,6 +166,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
 ```
 
 ## Gets registry stack devfile
+Gets the specific registry stack devfile content from HTTP response
 ### HTTP request
 ```
 GET http://{registry host}/devfiles/{stack}
@@ -181,7 +183,7 @@ The request body must be empty.
 curl http://devfile-registry.192.168.1.1.nip.io/devfiles/nodejs
 ```
 ### Response example
-```
+```yaml
 schemaVersion: 2.0.0
 metadata:
   name: nodejs
