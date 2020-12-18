@@ -89,7 +89,7 @@ commitChanges() {
 
 createReleaseBranch() {
   echo "[INFO] Create the release branch based on $VERSION"
-  git push origin $VERSION:release -f
+  git push origin $VERSION -f
 }
 
 createPR() {
