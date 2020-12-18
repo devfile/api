@@ -58,8 +58,7 @@ resetChanges() {
 
 checkoutToReleaseBranch() {
   echo "[INFO] Checking out to $BRANCH branch."
-  local branchExist=$(git ls-remote -q --heads | grep $BRANCH | wc -l)
-  if [[ $branchExist == 1 ]]; then
+  if git ls-remote -q --heads | grep -q $BRANCH ; then
     echo "[INFO] $BRANCH exists."
     resetChanges $BRANCH
   else
