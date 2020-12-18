@@ -1,0 +1,48 @@
+name: Release Devfile Schema
+
+# Triggers the workflow when a release is published on GitHub.
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-json-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout devfile docs
+        uses: actions/checkout@v2
+        with:
+          repository: devfile/docs
+          persist-credentials: false
+          path: docs-repo
+      - name: Checkout devfile api
+        uses: actions/checkout@v2
+        with:
+          path: api-repo
+      - name: Get the version being released
+        id: get_version
+        run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
+      - name: Overwrite Stable Json Schema in Docs
+        run: mkdir -p docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable && cp -f api-repo/schemas/latest/devfile.json docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/devfile.json
+      - name: Copy released Json Schema to Docs
+        run: mkdir -p docs-repo/docs/modules/user-guide/attachments/jsonschemas/${{ steps.get_version.outputs.VERSION }} && cp -f api-repo/schemas/latest/devfile.json docs-repo/docs/modules/user-guide/attachments/jsonschemas/${{ steps.get_version.outputs.VERSION }}/devfile.json
+      - name: Push to the devfile/docs repo
+        working-directory: docs-repo/
+        run: |
+          if [ "$(git status -s)" == "" ]
+          then
+            echo "Nothing to commit, Json schema didn't change"
+            exit 0
+          fi
+          
+          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
+          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
+          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
+          
+          git config --global user.email "${lastCommitterEmail}"
+          git config --global user.name "${lastCommitterName}"
+          
+          git add docs/modules/user-guide/attachments/jsonschemas/stable/devfile.json docs/modules/user-guide/attachments/jsonschemas/${{ steps.get_version.outputs.VERSION }}/devfile.json 
+          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
+          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
+          
