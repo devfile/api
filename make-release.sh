@@ -22,6 +22,9 @@ usage ()
 
 if [[ $# -lt 2 ]]; then usage; fi
 
+VERSION=$1
+API_VERSION=$2
+
 if ! command -v hub > /dev/null; then
   echo "[ERROR] The hub CLI needs to be installed. See https://github.com/github/hub/releases"
   exit
@@ -31,11 +34,14 @@ if [[ -z "${GITHUB_TOKEN}" ]]; then
   exit
 fi
 
-VERSION=$1
-API_VERSION=$2
+if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+	echo >&2 "$VERSION isn't a valid semver tag for the schema. Aborting..."
+	exit 1
+fi
+
 
 init() {
-  BRANCH=$(echo $VERSION | sed 's/.$/x/')
+  BRANCH="${VERSION%.*}.x"
   echo $BRANCH
 }
 
@@ -73,7 +79,7 @@ checkoutToReleaseBranch() {
 release() {
   echo "[INFO] Releasing a new $VERSION version"
 
-  # replace nightly versions by release version
+  # Replace pre-release version with release version
   apply_sed "s#jsonschema:version=.*#jsonschema:version=${VERSION}#g" pkg/apis/workspaces/$API_VERSION/doc.go #src/constants.ts
 
   # Generate the schema
@@ -89,7 +95,7 @@ commitChanges() {
 
 createReleaseBranch() {
   echo "[INFO] Create the release branch based on $VERSION"
-  git push origin $VERSION -f
+  git push origin $VERSION
 }
 
 createPR() {
