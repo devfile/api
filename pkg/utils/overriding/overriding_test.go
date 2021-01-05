@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	workspaces "github.com/devfile/api/pkg/apis/workspaces/v1alpha2"
+	workspaces "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/util/json"
 	yamlMachinery "k8s.io/apimachinery/pkg/util/yaml"
