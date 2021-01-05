@@ -68,16 +68,14 @@ checkoutToReleaseBranch() {
     echo "[INFO] $BRANCH exists."
     resetChanges $BRANCH
   else
-    echo "[INFO] $BRANCH does not exist. Will be created a new one from master."
+    echo "[INFO] $BRANCH does not exist. Will create a new one from master."
     resetChanges master
     git push origin master:$BRANCH
   fi
   git checkout -B $VERSION
 }
 
-release() {
-  echo "[INFO] Releasing a new $VERSION version"
-
+setVersionAndBuild() {
   # Replace pre-release version with release version
   apply_sed "s#jsonschema:version=.*#jsonschema:version=${VERSION}#g" pkg/apis/workspaces/$API_VERSION/doc.go #src/constants.ts
 
@@ -88,7 +86,7 @@ release() {
 commitChanges() {
   echo "[INFO] Pushing changes to $VERSION branch"
   git add -A
-  git commit -s -m "chore(release): release version ${VERSION}"
+  git commit -s -m "$1"
   git push origin $VERSION
 }
 
@@ -102,12 +100,39 @@ createPR() {
   hub pull-request --base ${BRANCH} --head ${VERSION} -m "Release version ${VERSION}"
 }
 
+bumpVersion() {
+  IFS='.' read -a semver <<< "$VERSION"
+  MAJOR=${semver[0]}
+  MINOR=${semver[1]}
+  VERSION=$MAJOR.$((MINOR+1)).0-alpha
+}
+
+updateVersionOnMaster() {
+  # Switch back to the master branch
+  BRANCH=master
+  resetChanges $BRANCH
+  git checkout -b $VERSION
+
+  # Set the schema version on master to the new version (with -alpha appended) and build the schemas
+  setVersionAndBuild
+  
+  commitChanges "chore(post-release): bump schema version to ${VERSION}"
+}
+
 run() {
+  # Create the release branch and open a PR against the release branch, updating the release version
+  echo "[INFO] Releasing a new $VERSION version"
   checkoutToReleaseBranch
-  release
-  commitChanges
+  setVersionAndBuild
+  commitChanges "chore(release): release version ${VERSION}"
   createReleaseBranch
-  createPR
+  createPR "Release version ${VERSION}"
+
+  # Bump the schema version in master and open a PR against master
+  echo "[INFO] Updating schema version on master to $VERSION"
+  bumpVersion
+  updateVersionOnMaster
+  createPR "Bump schema version to ${VERSION}"
 }
 
 init
