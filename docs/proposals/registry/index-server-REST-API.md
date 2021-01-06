@@ -35,7 +35,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -49,7 +49,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -67,7 +67,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -85,7 +85,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -103,7 +103,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -122,7 +122,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -140,7 +140,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   },
   {
@@ -159,7 +159,7 @@ curl http://devfile-registry.192.168.1.1.nip.io/index
     },
     "resources": [
       "devfile.yaml",
-      "meta.yaml"
+      "archive.tar"
     ]
   }
 ]
@@ -190,8 +190,6 @@ schemaVersion: 2.0.0
 metadata:
   name: nodejs
   version: 1.0.0
-  alpha.build-dockerfile: "https://raw.githubusercontent.com/odo-devfiles/registry/master/devfiles/nodejs/build/Dockerfile"
-  alpha.deployment-manifest: "https://raw.githubusercontent.com/odo-devfiles/registry/master/devfiles/nodejs/deploy/deployment-manifest.yaml"
 starterProjects:
   - name: nodejs-starter
     git:
