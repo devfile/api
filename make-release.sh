@@ -22,8 +22,8 @@ usage ()
 
 if [[ $# -lt 2 ]]; then usage; fi
 
-VERSION=$1
-API_VERSION=$2
+SCHEMA_VERSION=$1
+K8S_VERSION=$2
 
 if ! command -v hub > /dev/null; then
   echo "[ERROR] The hub CLI needs to be installed. See https://github.com/github/hub/releases"
@@ -34,15 +34,14 @@ if [[ -z "${GITHUB_TOKEN}" ]]; then
   exit
 fi
 
-if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-	echo >&2 "$VERSION isn't a valid semver tag for the schema. Aborting..."
+if ! [[ "$SCHEMA_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+	echo >&2 "$SCHEMA_VERSION isn't a valid semver tag for the schema. Aborting..."
 	exit 1
 fi
 
 
 init() {
-  BRANCH="${VERSION%.*}.x"
-  echo $BRANCH
+  BRANCH="${SCHEMA_VERSION%.*}.x"
 }
 
 apply_sed() {
@@ -72,67 +71,94 @@ checkoutToReleaseBranch() {
     resetChanges master
     git push origin master:$BRANCH
   fi
-  git checkout -B $VERSION
+  git checkout -B $SCHEMA_VERSION
 }
 
 setVersionAndBuild() {
   # Replace pre-release version with release version
-  apply_sed "s#jsonschema:version=.*#jsonschema:version=${VERSION}#g" pkg/apis/workspaces/$API_VERSION/doc.go #src/constants.ts
+  apply_sed "s#jsonschema:version=.*#jsonschema:version=${SCHEMA_VERSION}#g" pkg/apis/workspaces/$K8S_VERSION/doc.go #src/constants.ts
 
   # Generate the schema
   ./build.sh
 }
 
 commitChanges() {
-  echo "[INFO] Pushing changes to $VERSION branch"
+  echo "[INFO] Pushing changes to $SCHEMA_VERSION branch"
   git add -A
   git commit -s -m "$1"
-  git push origin $VERSION
+  git push origin $SCHEMA_VERSION
 }
 
 createReleaseBranch() {
-  echo "[INFO] Create the release branch based on $VERSION"
-  git push origin $VERSION
+  echo "[INFO] Create the release branch based on $SCHEMA_VERSION"
+  git push origin $SCHEMA_VERSION
 }
 
 createPR() {
   echo "[INFO] Creating a PR"
-  hub pull-request --base ${BRANCH} --head ${VERSION} -m "Release version ${VERSION}"
+  hub pull-request --base ${BRANCH} --head ${SCHEMA_VERSION} -m "$1"
 }
 
 bumpVersion() {
-  IFS='.' read -a semver <<< "$VERSION"
+  IFS='.' read -a semver <<< "$SCHEMA_VERSION"
   MAJOR=${semver[0]}
   MINOR=${semver[1]}
-  VERSION=$MAJOR.$((MINOR+1)).0-alpha
+  SCHEMA_VERSION=$MAJOR.$((MINOR+1)).0-alpha
 }
 
 updateVersionOnMaster() {
   # Switch back to the master branch
   BRANCH=master
   resetChanges $BRANCH
-  git checkout -b $VERSION
+  git checkout -b $SCHEMA_VERSION
 
   # Set the schema version on master to the new version (with -alpha appended) and build the schemas
   setVersionAndBuild
   
-  commitChanges "chore(post-release): bump schema version to ${VERSION}"
+  commitChanges "chore(post-release): bump schema version to ${SCHEMA_VERSION}"
+}
+
+compareMasterVersion() {
+  # Parse the version passed in.
+  IFS='.' read -a semver <<< "$SCHEMA_VERSION"
+  MAJOR=${semver[0]}
+  MINOR=${semver[1]}
+  BUGFIX=${semver[2]}
+
+  # Parse the version currently set in the schema
+  latestVersion=`cat schemas/latest/jsonSchemaVersion.txt`
+  IFS='.' read -a latestSemVer <<< "$latestVersion"
+  local latestMajor=${latestSemVer[0]}
+  local latestMinor=${latestSemVer[1]}
+  local latestBugfix=$(echo ${latestSemVer[2]} | awk -F '-' '{print $1}')
+
+  # Compare the new vers
+  if ((latestMajor <= MAJOR)) && ((latestMinor <= MINOR)) && ((latestBugfix <= BUGFIX)); then
+    return 0
+  else
+    return 1
+  fi
 }
 
 run() {
   # Create the release branch and open a PR against the release branch, updating the release version
-  echo "[INFO] Releasing a new $VERSION version"
+  echo "[INFO] Releasing a new ${SCHEMA_VERSION} version"
   checkoutToReleaseBranch
   setVersionAndBuild
-  commitChanges "chore(release): release version ${VERSION}"
+  commitChanges "chore(release): release version ${SCHEMA_VERSION}"
   createReleaseBranch
-  createPR "Release version ${VERSION}"
+  createPR "Release version ${SCHEMA_VERSION}"
 
-  # Bump the schema version in master and open a PR against master
-  echo "[INFO] Updating schema version on master to $VERSION"
-  bumpVersion
-  updateVersionOnMaster
-  createPR "Bump schema version to ${VERSION}"
+  # If needed, bump the schema version in master and open a PR against master
+  if compareMasterVersion; then
+    echo "[INFO] Updating schema version on master to ${SCHEMA_VERSION}"
+    bumpVersion
+    updateVersionOnMaster
+    createPR "Bump schema version on master to ${SCHEMA_VERSION}"
+  else
+    echo "[WARN] The passed in schema version ${SCHEMA_VERSION} is less than the current version on master, so not updating the master branch version"
+    exit 
+  fi
 }
 
 init
