@@ -107,12 +107,10 @@ bumpVersion() {
 }
 
 updateVersionOnMaster() {
-  # Switch back to the master branch
-  BRANCH=master
-  resetChanges $BRANCH
+  # Checkout to a PR branch based on master to make our changes in
   git checkout -b $SCHEMA_VERSION
-
-  # Set the schema version on master to the new version (with -alpha appended) and build the schemas
+  
+  # Set the schema version to the new version (with -alpha appended) and build the schemas
   setVersionAndBuild
   
   commitChanges "chore(post-release): bump schema version to ${SCHEMA_VERSION}"
@@ -124,14 +122,14 @@ compareMasterVersion() {
   MAJOR=${semver[0]}
   MINOR=${semver[1]}
   BUGFIX=${semver[2]}
-
+  
   # Parse the version currently set in the schema
   latestVersion=`cat schemas/latest/jsonSchemaVersion.txt`
   IFS='.' read -a latestSemVer <<< "$latestVersion"
   local latestMajor=${latestSemVer[0]}
   local latestMinor=${latestSemVer[1]}
   local latestBugfix=$(echo ${latestSemVer[2]} | awk -F '-' '{print $1}')
-
+  
   # Compare the new vers
   if ((latestMajor <= MAJOR)) && ((latestMinor <= MINOR)) && ((latestBugfix <= BUGFIX)); then
     return 0
@@ -150,6 +148,9 @@ run() {
   createPR "Release version ${SCHEMA_VERSION}"
 
   # If needed, bump the schema version in master and open a PR against master
+  # Switch back to the master branch
+  BRANCH=master
+  resetChanges $BRANCH
   if compareMasterVersion; then
     echo "[INFO] Updating schema version on master to ${SCHEMA_VERSION}"
     bumpVersion
