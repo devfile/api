@@ -50,7 +50,7 @@ jobs:
             cp -f api-repo/schemas/latest/{devfile.json,jsonSchemaVersion.txt} \
               docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/
           else
-            echo "::warning::Current stable schema version is newer than the schema version being released, so the stable version will not be updated."
+            echo "::warning::Current stable schema version is newer than the schema version being released, so the stable schema will not be updated."
           fi
       - name: Copy released Json Schema to Docs
         run: |
