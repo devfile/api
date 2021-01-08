@@ -35,6 +35,7 @@ const (
 	WorkspaceStatusStopped  WorkspacePhase = "Stopped"
 	WorkspaceStatusStopping WorkspacePhase = "Stopping"
 	WorkspaceStatusFailed   WorkspacePhase = "Failed"
+	WorkspaceStatusError    WorkspacePhase = "Error"
 )
 
 // WorkspaceCondition contains details for the current condition of this workspace.
@@ -61,6 +62,7 @@ const (
 	WorkspaceServiceAccountReady WorkspaceConditionType = "ServiceAccountReady"
 	WorkspaceReady               WorkspaceConditionType = "Ready"
 	WorkspaceFailedStart         WorkspaceConditionType = "FailedStart"
+	WorkspaceError               WorkspaceConditionType = "Error"
 )
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
