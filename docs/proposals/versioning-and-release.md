@@ -58,7 +58,11 @@ The following steps outline the steps done to release a new version of the Devfi
 
    1) The release engineer tasked with creating the release clones the repository (and checks out the release branch if one already exists)
 
-   2) `make-release.sh <schema-version> <k8s-api-version>` is run:
+   2) The release engineer installs the `hub` CLI from https://github.com/github/hub if it is not already installed on their machine.
+
+   3) `export GITHUB_TOKEN=<token>` is run, where `<token>` is a GitHub personal access token with `repo` permissions created from https://github.com/settings/tokens.
+
+   4) `./make-release.sh <schema-version> <k8s-api-version>` is run:
 
       i) A release branch (the name corresponding to the schema version) is created, if one does not already exist.
 
@@ -68,14 +72,16 @@ The following steps outline the steps done to release a new version of the Devfi
       
       iv) A new commit including the changes
 
-      v) Finally, a PR is opened to merge these changes into the release branch
+      v) A PR is opened to merge these changes into the release branch
 
-   3) Once the release PR is approved and merged, the release engineer creates a new release on GitHub based off the release branch that was just created and includes the generated `devfile.json` as a release artifact. 
+      vi) The schema version on the master branch is bumped and a PR is opened, provided the schema version passed in is **not** older than the master branch schema version. 
+
+   5) Once the release PR is approved and merged, the release engineer creates a new release on GitHub based off the release branch that was just created and includes the generated `devfile.json` as a release artifact. 
        - The tag `v{major}.{minor}.{bugfix}`, where the `{major}.{minor}.{bugfix}` corresponds to the devfile schema version, is used to enable the new version of the API to be pulled in as a Go module.
 
-   4) Once the release is published, GitHub actions run to publish the new schema to devfile.io. The “stable” schema is also updated to point to the new schema.
+   6) Once the release is published, GitHub actions run to publish the new schema to devfile.io. The “stable” schema is also updated to point to the new schema.
 
-   5) Make a release announcement on the devfile mailing list and slack channel
+   7) Make a release announcement on the devfile mailing list and slack channel
 
 An example pull request, `make-release.sh` script and GitHub action can be found here:
 - [Release Pull Request](https://github.com/johnmcollier/api/pull/7)

@@ -1,0 +1,79 @@
+name: Release Devfile Schema
+
+# Triggers the workflow when a release is published on GitHub.
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-json-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout devfile docs
+        uses: actions/checkout@v2
+        with:
+          repository: devfile/docs
+          persist-credentials: false
+          path: docs-repo
+      - name: Checkout devfile api
+        uses: actions/checkout@v2
+        with:
+          path: api-repo
+      - name: Get the version being released
+        id: get_version
+        run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
+      - name: Overwrite Stable Json Schema in Docs if needed
+        run: |
+          if [ ! -f docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/jsonSchemaVersion.txt ]; then
+            # Stable version doesn't currently exist, so just copy over the schema we're releasing
+            mkdir -p docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable
+            cp -f api-repo/schemas/latest/{devfile.json,jsonSchemaVersion.txt} \
+              docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/
+            exit 0
+          fi
+
+          # Parse the schema version that's being released
+          IFS='.' read -a semver <<< "${{ steps.get_version.outputs.VERSION }}"
+          MAJOR=${semver[0]}
+          MINOR=${semver[1]}
+          BUGFIX=${semver[2]}
+          
+          # Parse the version currently set to stable
+          stableVersion=`cat docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/jsonSchemaVersion.txt`
+          IFS='.' read -a stableSemVer <<< "$stableVersion"
+          stableMajor=${stableSemVer[0]}
+          stableMinor=${stableSemVer[1]}
+          stableBugfix=$(echo ${stableSemVer[2]} | awk -F '-' '{print $1}')
+
+          # Compare the two versions, only update stable if needed
+          if ((stableMajor <= MAJOR)) && ((stableMinor <= MINOR)) && ((stableBugfix <= BUGFIX)); then
+            cp -f api-repo/schemas/latest/{devfile.json,jsonSchemaVersion.txt} \
+              docs-repo/docs/modules/user-guide/attachments/jsonschemas/stable/
+          else
+            echo "::warning::Current stable schema version is newer than the schema version being released, so the stable schema will not be updated."
+          fi
+      - name: Copy released Json Schema to Docs
+        run: |
+          mkdir -p docs-repo/docs/modules/user-guide/attachments/jsonschemas/${{ steps.get_version.outputs.VERSION }} && \
+          cp -f api-repo/schemas/latest/devfile.json \
+            docs-repo/docs/modules/user-guide/attachments/jsonschemas/${{ steps.get_version.outputs.VERSION }}/devfile.json
+      - name: Push to the devfile/docs repo
+        working-directory: docs-repo/
+        run: |
+          if [ "$(git status -s)" == "" ]
+          then
+            echo "Nothing to commit, Json schema didn't change"
+            exit 0
+          fi
+          
+          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
+          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
+          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
+          
+          git config --global user.email "${lastCommitterEmail}"
+          git config --global user.name "${lastCommitterName}"
+          
+          git add --all
+          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
+          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
+          
