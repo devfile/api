@@ -1,4 +1,4 @@
-package tests
+package schemaTest
 
 import (
 	"bytes"
@@ -32,19 +32,17 @@ type TestToRun struct {
 	Files         []string `json:"Files"`
 }
 
-const testDir = "../../../"
-const schemaDir = "../../../../"
-const jsonDir = "./json/v200/"
-const tempRootDir = "./tmp/"
-const tempDir = "./tmp/v200/"
+const testDir = "../"
+const schemaDir = "../../../"
+const jsonDir = "../json/"
+const tempDir = "./tmp/"
 
-func Test_API_200(t *testing.T) {
+func Test_Schema(t *testing.T) {
 
 	// Clear the temp directory if it exists
-	if _, err := os.Stat(tempRootDir); !os.IsNotExist(err) {
-		os.RemoveAll(tempRootDir)
+	if _, err := os.Stat(tempDir); !os.IsNotExist(err) {
+		os.RemoveAll(tempDir)
 	}
-	os.Mkdir(tempRootDir, 0755)
 	os.Mkdir(tempDir, 0755)
 
 	// Read the content of the jso directory to find test files
@@ -52,6 +50,7 @@ func Test_API_200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error finding test json files in : %s :  %v", jsonDir, err)
 	}
+
 	combinedTests := 0
 	combinedPasses := 0
 	for _, testJsonFile := range files {
@@ -77,7 +76,7 @@ func Test_API_200(t *testing.T) {
 			// Unmarshall the contents of the json file which defines the tests to run for each test
 			err = json.Unmarshal(byteValue, &testJsonContent)
 			if err != nil {
-				t.Fatalf("FAIL : failed to unmarshal : %s : %v", testJsonFile.Name(), err)
+				t.Errorf("FAIL : failed to unmarshal : %s : %v", testJsonFile.Name(), err)
 				continue
 			}
 
@@ -224,35 +223,5 @@ func Test_API_200(t *testing.T) {
 	} else {
 		t.Logf("OVERALL PASS : %d of %d tests passed.", combinedPasses, combinedTests)
 	}
-
-}
-
-// Users struct which contains
-// an array of users
-type Command struct {
-	id            string `yaml:"id"`
-	SchemaVersion string `yam:"SchemaVersion"`
-}
-
-func Test_WriteYaml(t *testing.T) {
-
-	command := Command{}
-
-	command.id = "TestYaml"
-	command.SchemaVersion = "2.0.0"
-
-	c, err := yaml.Marshal(&command)
-
-	f, err := os.Create("/tmp/data")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = ioutil.WriteFile("command.yaml", c, 0644)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	f.Close()
 
 }

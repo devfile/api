@@ -1,0 +1,70 @@
+{
+    "Tests" : [
+        { 
+            "FileName" : "starterProjectsAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsAll.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsMinimum.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsNoName.yaml"] 
+        },
+        { 
+            "FileName" : "starterPprojectsMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                "devfiles/starterProjects/starterProjectsMixedCaseName.yaml"] 
+        }, 
+        { 
+            "FileName" : "starterProjectsGitAndGithub.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsGitAndGithub.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsGitAndZip.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 2",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsGitAndZip.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsGithubAndZip.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 1 and 2",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsGithubAndZip.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsGitNoRemotes.yaml",
+            "ExpectOutcome" : "missing properties: \"remotes\"",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsGitNoRemotes.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsGithubNoRemotes.yaml",
+            "ExpectOutcome" : "missing properties: \"remotes\"",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsGithubNoRemotes.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsZipNoLocation.yaml",
+            "ExpectOutcome" : "expected object, but got null",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsZipNoLocation.yaml"] 
+        },
+        { 
+            "FileName" : "starterProjectsNoGitGithubOrZip.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/starterProjects/starterProjectsStart.yaml",
+                        "devfiles/starterProjects/starterProjectsNoGitGithubOrZip.yaml"] 
+        }
+    ]                             
+}

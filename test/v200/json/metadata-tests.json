@@ -3,12 +3,12 @@
         { 
             "FileName" : "metadataAll.yaml",
             "ExpectOutcome" : "PASS",
-            "Files": ["devfiles/v200/metadata/metadataAll.yaml"] 
+            "Files": ["devfiles/metadata/metadataAll.yaml"] 
         }, 
         { 
             "FileName" : "metadataBadVersion.yaml",
             "ExpectOutcome" : "does not match pattern",
-            "Files": ["devfiles/v200/metadata/metadataBadVersion.yaml"] 
+            "Files": ["devfiles/metadata/metadataBadVersion.yaml"] 
         }
     ]                             
 }
