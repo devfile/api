@@ -79,8 +79,8 @@ func (e *InvalidComponentError) Error() string {
 
 // InvalidNameOrIdError returns an error if the name or is is invalid
 type InvalidNameOrIdError struct {
-	name string
-	id string
+	name         string
+	id           string
 	resourceType string
 }
 

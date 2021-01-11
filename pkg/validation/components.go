@@ -32,13 +32,12 @@ func ValidateComponents(components []v1alpha2.Component) error {
 
 	for _, component := range components {
 		if isInt(component.Name) {
-			return &InvalidNameOrIdError{name:component.Name, resourceType: "component"}
+			return &InvalidNameOrIdError{name: component.Name, resourceType: "component"}
 		}
-		if _,exists:= componentNameMap[component.Name]; exists {
+		if _, exists := componentNameMap[component.Name]; exists {
 			return &InvalidComponentError{name: component.Name}
 		}
 		componentNameMap[component.Name] = true
-
 
 		if component.Container != nil {
 			// Process all the volume mounts in container components to validate them later
@@ -61,7 +60,7 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			// and check if endpoint port are unique across component containers ie;
 			// two component containers cannot have the same target port but two endpoints
 			// in a single component container can have the same target port
-			err := validateEndpoints(component.Container.Endpoints, processedEndPointPort,processedEndPointName )
+			err := validateEndpoints(component.Container.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
 				return err
 			}
@@ -82,18 +81,18 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			}
 		} else if component.Openshift != nil {
 			if component.Openshift.Uri != "" {
-				return ValidateURI( component.Openshift.Uri )
+				return ValidateURI(component.Openshift.Uri)
 			}
 
-			err := validateEndpoints(component.Openshift.Endpoints, processedEndPointPort,processedEndPointName )
+			err := validateEndpoints(component.Openshift.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
 				return err
 			}
-		}else if component.Kubernetes != nil {
+		} else if component.Kubernetes != nil {
 			if component.Kubernetes.Uri != "" {
-				return ValidateURI( component.Kubernetes.Uri )
+				return ValidateURI(component.Kubernetes.Uri)
 			}
-			err := validateEndpoints(component.Kubernetes.Endpoints, processedEndPointPort,processedEndPointName )
+			err := validateEndpoints(component.Kubernetes.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
 				return err
 			}
