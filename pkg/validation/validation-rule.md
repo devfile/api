@@ -6,7 +6,7 @@ The restriction is added to allow easy translation to K8s resource names, and al
 The validation will be done as part of schema validation, the rule will be introduced as a regex in schema definition, any objection of the rule in devfile will result in a failure.
 
 - limit to lowercase characters i.e., no uppercase allowed
-- limit within 63 characters, except for endpoint’s name which is limited within 15 characters
+- limit within 63 characters
 - no special characters allowed except dash(-)
 - start with an alphanumeric character
 - end with an alphanumeric character
