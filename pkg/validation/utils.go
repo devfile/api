@@ -1,6 +1,8 @@
 package validation
 
 import (
+	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -16,4 +18,27 @@ func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 	}
 
 	return commandMap
+}
+
+// isInt checks if the string is an integer
+func isInt(str string) bool {
+	if _, err := strconv.Atoi(str); err == nil {
+		return true
+	}
+	return false
+}
+
+// isValidURI checks if the string is with valid uri format, return error if not valid
+func isValidURI(uri string) (bool, error) {
+	 if strings.HasPrefix(uri, "http"){
+		 if _, err := url.ParseRequestURI(uri); err != nil {
+		 	return false, err
+		 }
+		 return true, nil
+	 }
+
+	 if  _, err := url.Parse(uri); err!= nil {
+		 return false, err
+	 }
+	return true, nil
 }
