@@ -7,6 +7,13 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
+const (
+	preStart  = "preStart"
+	postStart = "postStart"
+	preStop   = "preStop"
+	postStop  = "postStop"
+)
+
 // ValidateEvents validates all the devfile events
 func ValidateEvents(events v1alpha2.Events, commands []v1alpha2.Command) error {
 
@@ -16,22 +23,22 @@ func ValidateEvents(events v1alpha2.Events, commands []v1alpha2.Command) error {
 
 	switch {
 	case len(events.PreStart) > 0:
-		if preStartErr := isEventValid(events.PreStart, "preStart", commandMap); preStartErr != nil {
+		if preStartErr := isEventValid(events.PreStart, preStart, commandMap); preStartErr != nil {
 			eventErrors += fmt.Sprintf("\n%s", preStartErr.Error())
 		}
 		fallthrough
 	case len(events.PostStart) > 0:
-		if postStartErr := isEventValid(events.PostStart, "postStart", commandMap); postStartErr != nil {
+		if postStartErr := isEventValid(events.PostStart, postStart, commandMap); postStartErr != nil {
 			eventErrors += fmt.Sprintf("\n%s", postStartErr.Error())
 		}
 		fallthrough
 	case len(events.PreStop) > 0:
-		if preStopErr := isEventValid(events.PreStop, "preStop", commandMap); preStopErr != nil {
+		if preStopErr := isEventValid(events.PreStop, preStop, commandMap); preStopErr != nil {
 			eventErrors += fmt.Sprintf("\n%s", preStopErr.Error())
 		}
 		fallthrough
 	case len(events.PostStop) > 0:
-		if postStopErr := isEventValid(events.PostStop, "postStop", commandMap); postStopErr != nil {
+		if postStopErr := isEventValid(events.PostStop, postStop, commandMap); postStopErr != nil {
 			eventErrors += fmt.Sprintf("\n%s", postStopErr.Error())
 		}
 	}
@@ -44,20 +51,86 @@ func ValidateEvents(events v1alpha2.Events, commands []v1alpha2.Command) error {
 	return nil
 }
 
-// isEventValid checks if events belonging to a specific event type are valid ie; event should map to a valid devfile command
+// isEventValid checks if events belonging to a specific event type are valid ie;
+// 1. event should map to a valid devfile command
+// 2. preStart and postStop events should either map to an apply command or a composite command with apply commands
+// 3. postStart and preStop events should either map to an exec command or a composite command with exec commands
 func isEventValid(eventNames []string, eventType string, commandMap map[string]v1alpha2.Command) error {
-	var invalidEvents []string
+	var invalidCommand, applyEvents, execEvents []string
 
 	for _, eventName := range eventNames {
-		if _, ok := commandMap[strings.ToLower(eventName)]; !ok {
-			invalidEvents = append(invalidEvents, eventName)
+		if command, ok := commandMap[strings.ToLower(eventName)]; !ok { // check if event is in the list of devfile commands
+			invalidCommand = append(invalidCommand, eventName)
+		} else {
+			switch eventType {
+			case preStart:
+				fallthrough
+			case postStop:
+				// check if the event is either an apply command or a composite of apply commands
+				if command.Apply == nil && command.Composite == nil {
+					applyEvents = append(applyEvents, eventName)
+				} else if command.Composite != nil {
+					applyEvents = append(applyEvents, validateCompositeEvents(*command.Composite, eventName, eventType, commandMap)...)
+				}
+			case postStart:
+				fallthrough
+			case preStop:
+				// check if the event is either an exec command or a composite of exec commands
+				if command.Exec == nil && command.Composite == nil {
+					execEvents = append(execEvents, eventName)
+				} else if command.Composite != nil {
+					execEvents = append(execEvents, validateCompositeEvents(*command.Composite, eventName, eventType, commandMap)...)
+				}
+			}
 		}
 	}
 
-	if len(invalidEvents) > 0 {
-		eventErrors := fmt.Sprintf("\n%s does not map to a valid devfile command", strings.Join(invalidEvents, ", "))
-		return &InvalidEventError{eventType: eventType, errorMsg: eventErrors}
+	var eventErrors string
+	var err error
+
+	if len(invalidCommand) > 0 {
+		eventErrors = fmt.Sprintf("\n%s does not map to a valid devfile command", strings.Join(invalidCommand, ", "))
 	}
 
-	return nil
+	if len(applyEvents) > 0 {
+		eventErrors += fmt.Sprintf("\n%s should either map to an apply command or a composite command with apply commands", strings.Join(applyEvents, ", "))
+	}
+
+	if len(execEvents) > 0 {
+		eventErrors += fmt.Sprintf("\n%s should either map to an exec command or a composite command with exec commands", strings.Join(execEvents, ", "))
+	}
+
+	if len(eventErrors) != 0 {
+		err = &InvalidEventError{eventType: eventType, errorMsg: eventErrors}
+	}
+
+	return err
+}
+
+// validateCompositeEvents checks if a composite subcommands are
+// 1. apply commands for preStart and postStop
+// 2. exec commands for postStart and preStop
+func validateCompositeEvents(composite v1alpha2.CompositeCommand, eventName, eventType string, commandMap map[string]v1alpha2.Command) []string {
+	var invalidEvents []string
+
+	switch eventType {
+	case preStart:
+		fallthrough
+	case postStop:
+		for _, subCommand := range composite.Commands {
+			if command, ok := commandMap[subCommand]; ok && command.Apply == nil {
+				invalidEvents = append(invalidEvents, eventName)
+			}
+		}
+	case postStart:
+		fallthrough
+	case preStop:
+		for _, subCommand := range composite.Commands {
+			if command, ok := commandMap[subCommand]; ok && command.Exec == nil {
+				invalidEvents = append(invalidEvents, eventName)
+			}
+		}
+	}
+
+	return invalidEvents
 }

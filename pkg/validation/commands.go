@@ -26,7 +26,8 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 		}
 		processedCommands[commandID] = commandID
 
-		err = validateCommand(command, commandMap, components)
+		parentCommands := make(map[string]string)
+		err = validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
 			return err
 		}
@@ -52,14 +53,13 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 }
 
 // validateCommand validates a given devfile command
-func validateCommand(command v1alpha2.Command, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) (err error) {
+func validateCommand(command v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) (err error) {
 
 	switch {
 	case command.Composite != nil:
-		parentCommands := make(map[string]string)
 		return validateCompositeCommand(&command, parentCommands, devfileCommands, components)
-	case command.Exec != nil:
-		return validateExecCommand(command, components)
+	case command.Exec != nil || command.Apply != nil:
+		return validateCommandComponent(command, components)
 	case command.VscodeLaunch != nil:
 		if command.VscodeLaunch.Uri != "" {
 			return validateURI(command.VscodeLaunch.Uri)
@@ -122,17 +122,24 @@ func getGroup(command v1alpha2.Command) *v1alpha2.CommandGroup {
 	}
 }
 
-// validateExecCommand validates the given exec command, the command should map to a valid container component
-func validateExecCommand(command v1alpha2.Command, components []v1alpha2.Component) (err error) {
+// validateCommandComponent validates the given exec or apply command, the command should map to a valid container component
+func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Component) (err error) {
 
-	if command.Exec == nil {
-		return &InvalidCommandError{commandId: command.Id, reason: "should be of type exec"}
+	if command.Exec == nil && command.Apply == nil {
+		return &InvalidCommandError{commandId: command.Id, reason: "should be of type exec or apply"}
+	}
+
+	var commandComponent string
+	if command.Exec != nil {
+		commandComponent = command.Exec.Component
+	} else if command.Apply != nil {
+		commandComponent = command.Apply.Component
 	}
 
 	// must map to a container component
 	isComponentValid := false
 	for _, component := range components {
-		if component.Container != nil && command.Exec.Component == component.Name {
+		if component.Container != nil && commandComponent == component.Name {
 			isComponentValid = true
 		}
 	}
@@ -174,19 +181,24 @@ func validateCompositeCommand(command *v1alpha2.Command, parentCommands map[stri
 			return &InvalidCommandError{commandId: command.Id, reason: fmt.Sprintf("the command %q mentioned in the composite command does not exist in the devfile", cmd)}
 		}
 
-		if subCommand.Composite != nil {
-			// Recursively validate the composite subcommand
-			err := validateCompositeCommand(&subCommand, parentCommands, devfileCommands, components)
-			if err != nil {
-				// Don't wrap the error message here to make the error message more readable to the user
-				return err
-			}
-		} else {
-			err := validateExecCommand(subCommand, components)
-			if err != nil {
-				return err
-			}
+		err := validateCommand(subCommand, parentCommands, devfileCommands, components)
+		if err != nil {
+			return err
 		}
+
+		// if subCommand.Composite != nil {
+		// 	// Recursively validate the composite subcommand
+		// 	err := validateCompositeCommand(&subCommand, parentCommands, devfileCommands, components)
+		// 	if err != nil {
+		// 		// Don't wrap the error message here to make the error message more readable to the user
+		// 		return err
+		// 	}
+		// } else {
+		// 	err := validateCommandComponent(subCommand, components)
+		// 	if err != nil {
+		// 		return err
+		// 	}
+		// }
 	}
 	return nil
 }
