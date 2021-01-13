@@ -1,0 +1,6 @@
+  - id: testapply
+    apply:
+      group:
+        isDefault: true
+        kind: test
+      label: Test Apply command

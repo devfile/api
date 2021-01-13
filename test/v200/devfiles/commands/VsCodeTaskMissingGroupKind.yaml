@@ -1,0 +1,6 @@
+- id: testvscodetask
+  vscodeTask:
+    inlined: inline
+    group:
+      isDefault: false
+      kind: free

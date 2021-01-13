@@ -1,0 +1,43 @@
+  - id: compositetest1
+    attributes: 
+      test: Composite Test test
+      scope: Api
+    composite:
+      label: Composite Test
+      commands:
+        - runTest1
+        - runTest2
+      parallel: false
+      group:
+        isDefault: true
+        kind: test
+  - id: compositetest2
+    composite:
+      label: Composite Test
+      commands:
+        - runTest1
+        - runTest2
+      parallel: true
+      group:
+        isDefault: true
+        kind: debug
+  - id: compositetest3
+    composite:
+      label: Composite Test
+      commands:
+        - runTest1
+        - runTest2
+      parallel: false
+      group:
+        isDefault: false
+        kind: test
+  - id: compositetest4
+    composite:
+      label: Composite Test
+      commands:
+        - runTest1
+        - runTest2
+      parallel: true
+      group:
+        isDefault: false
+        kind: build

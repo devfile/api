@@ -1,0 +1,95 @@
+  - name: "testcontainer1"
+    container:
+      args: [Arg1,Arg]
+      command: [run1,run2]
+      dedicatedPod: false
+      image: "tester"
+      memoryLimit: "128M"
+      mountSources: true
+      endpoints:
+        - name: test-http
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
+        - name: test-http2
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: internal
+          path: test-path
+          protocol: http
+          secure: true
+          targetPort: 1234
+        - name: test-https
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: none
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
+        - name: test-ws1
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: ws
+          secure: false
+          targetPort: 1234
+        - name: test-ws2
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: internal
+          path: test-path
+          protocol: ws
+          secure: true
+          targetPort: 1234
+        - name: test-wss
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: none
+          path: test-path
+          protocol: wss
+          secure: false
+          targetPort: 1234
+      sourceMapping: sourceMapping
+      volumeMounts:
+        - name: volume
+          path: mount
+      env: 
+        - name: envName
+          value: envValue
+  - container:
+      args: [Arg1,Arg2]
+      command: [run1,run2]
+      dedicatedPod: true
+      image: "tester"
+      memoryLimit: "128M"
+      mountSources: false
+      endpoints:
+        - name: test-endpoint
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
+      volumeMounts:
+        - name: volume
+          path: mount
+      sourceMapping: sourceMapping 
+      env: 
+        - name: envName
+          value: envValue
+    name: "testcontainer2"

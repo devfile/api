@@ -1,0 +1,28 @@
+{
+    "Tests" : [
+        { 
+            "FileName" : "allEvents.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": [ "devfiles/events/eventsStart.yaml",
+                        "devfiles/events/allEvents.yaml"] 
+        },
+        { 
+            "FileName" : "eventIvalid.yaml",
+            "ExpectOutcome" : "additionalProperties \"preStep\" not allowed",
+            "Files": [ "devfiles/events/eventsStart.yaml",
+                        "devfiles/events/eventInvalid.yaml"] 
+        },
+        { 
+            "FileName" : "eventNoItemMid.yaml",
+            "ExpectOutcome" : "expected array, but got null",
+            "Files": ["devfiles/events/eventsStart.yaml",
+                        "devfiles/events/eventNoItemMid.yaml"] 
+        },
+        { 
+            "FileName" : "eventNoItemLast.yaml",
+            "ExpectOutcome" : "expected array, but got null",
+            "Files": ["devfiles/events/eventsStart.yaml",
+                        "devfiles/events/eventNoItemLast.yaml"] 
+        }
+    ]                             
+}

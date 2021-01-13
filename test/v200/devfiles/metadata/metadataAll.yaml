@@ -1,0 +1,15 @@
+metadata:
+  attributes: 
+    test: Apply Test
+    scope: Api
+  name: Test-MetaData1
+  version: 1.0.0
+metadata:
+  name: test-metadata2
+metadata:  
+  version: 1.0.b 
+metadata:
+  attributes: 
+    test: metadata
+    outcome: pass
+   

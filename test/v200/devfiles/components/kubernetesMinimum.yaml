@@ -1,0 +1,12 @@
+  - name: "testkubernetes1"
+    kubernetes:
+      inlined: testInlined
+  - name: "testkubernetes2"
+    kubernetes:
+      uri: test-uri
+  - name: "testkubernetes3"
+    kubernetes:
+      inlined: testInlined
+      endpoints:
+        - name: test-http
+          targetPort: 1234

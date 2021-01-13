@@ -1,0 +1,7 @@
+  - name: starterproject11
+    git:
+      remotes: 
+        origin: test-origin
+    github:
+      remotes: 
+        origin: test-origin

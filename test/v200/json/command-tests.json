@@ -1,0 +1,290 @@
+{
+    "Tests" : [
+        { 
+            "FileName" : "applyCommandAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyAll.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyMinimum.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandNoId.yaml",
+            "ExpectOutcome" : "missing properties: \"id\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyNoId.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandMixedCaseId.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyMixedCaseId.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandBadGroupIsDefault.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyBadGroupIsDefault.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandBadGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyBadGroupKind.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandMissingGroupKind.yaml",
+            "ExpectOutcome" : "missing properties: \"kind\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyMissingGroupKind.yaml"] 
+        }, 
+        { 
+            "FileName" : "applyCommandNoComponent.yaml",
+            "ExpectOutcome" : "missing properties: \"component\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/applyNoComponent.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execAll.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execMinimum.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandNoId.yaml",
+            "ExpectOutcome" : "missing properties: \"id\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execNoId.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandMixedCaseId.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execMixedCaseId.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandBadGroupIsDefault.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execBadGroupIsDefault.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandBadGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execBadGroupKind.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandBadHotReloadCapable.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execBadHotReloadCapable.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandMissingEnvName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execMissingEnvName.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandMissingEnvValue.yaml",
+            "ExpectOutcome" : "missing properties: \"value\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execMissingEnvValue.yaml"] 
+        } , 
+        { 
+            "FileName" : "execCommandMissingGroupKind.yaml",
+            "ExpectOutcome" : "missing properties: \"kind\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execMissingGroupKind.yaml"] 
+        }, 
+        { 
+            "FileName" : "execCommandNoCommand.yaml",
+            "ExpectOutcome" : "missing properties: \"commandLine\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execNoCommand.yaml"] 
+        },         
+        { 
+            "FileName" : "execCommandNoComponent.yaml",
+            "ExpectOutcome" : "missing properties: \"component\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execNoComponent.yaml"] 
+        },         
+        {
+            "FileName" : "compositeCommandAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeAll.yaml"]    
+        }, 
+        {
+            "FileName" : "compositeCommandMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeMinimum.yaml"]    
+        }, 
+        { 
+            "FileName" : "compositeCommandNoId.yaml",
+            "ExpectOutcome" : "missing properties: \"id\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeNoId.yaml"] 
+        }, 
+        { 
+            "FileName" : "compositeCommandMixedCaseId.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeMixedCaseId.yaml"] 
+        }, 
+        {
+            "FileName" : "compositeCommandBadGroupIsDefault.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeBadGroupIsDefault.yaml"]    
+        }, 
+        {
+            "FileName" : "compositeCommandBadGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": [ "devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeBadGroupKind.yaml"]    
+        }, 
+        {
+            "FileName" : "compositeCommandBadParallel.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": [ "devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeBadParallel.yaml"]    
+        }, 
+        {
+            "FileName" : "compositeCommandMissingGroupKind.yaml",
+            "ExpectOutcome" : "missing properties: \"kind\"",
+            "Files": [ "devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/compositeMissingGroupKind.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchAll.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchMinimum.yaml"]    
+        },        
+        { 
+            "FileName" : "VsCodeLaunchCommandNoId.yaml",
+            "ExpectOutcome" : "missing properties: \"id\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchNoId.yaml"] 
+        }, 
+        { 
+            "FileName" : "VsCodeLaunchCommandMixedCaseId.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchMixedCaseId.yaml"] 
+        }, 
+        {
+            "FileName" : "VsCodeLaunchCommandBadGroupIsDefault.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchBadGroupIsDefault.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandBadGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchBadGroupKind.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandMissingGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchMissingGroupKind.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandInlinedAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchInlinedAndUri.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeLaunchCommandMissingInlinedAndUri.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeLaunchMissingInlinedAndUri.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskAll.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskMinimum.yaml"]    
+        },        
+        { 
+            "FileName" : "VsCodeTaskCommandNoId.yaml",
+            "ExpectOutcome" : "missing properties: \"id\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskNoId.yaml"] 
+        }, 
+        { 
+            "FileName" : "VsCodeTaskCommandMixedCaseId.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskMixedCaseId.yaml"] 
+        }, 
+        {
+            "FileName" : "VsCodeTaskCommandBadGroupIsDefault.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskBadGroupIsDefault.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandBadGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskBadGroupKind.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandMissingGroupKind.yaml",
+            "ExpectOutcome" : "value must be one of \"build\", \"run\", \"test\", \"debug\"",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskMissingGroupKind.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandInlinedAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskInlinedAndUri.yaml"]    
+        },        
+        {
+            "FileName" : "VsCodeTaskCommandMissingInlinedAndUri.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/VsCodeTaskMissingInlinedAndUri.yaml"]    
+        },        
+        {
+            "FileName" : "CommandsAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/commands/commandStart.yaml",
+                        "devfiles/commands/execAll.yaml",
+                        "devfiles/commands/compositeAll.yaml",
+                        "devfiles/commands/VsCodeTaskAll.yaml",
+                        "devfiles/commands/applyAll.yaml",
+                        "devfiles/commands/VsCodeLaunchAll.yaml"]    
+        }
+    ]                             
+}

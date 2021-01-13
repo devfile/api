@@ -1,0 +1,86 @@
+parent:
+  id: Test-Parent11
+  registryUrl: test-url
+  components:
+    - name: "testcontainers"
+      container:
+        image: testImage
+    - name: "testkubernetes1"
+      kubernetes:
+        inlined: testInlined
+    - name: "testkubernetes2"
+      kubernetes:
+        uri: test-uri
+    - name: "testopenshift1"
+      openshift:
+        inlined: testInlined
+    - name: "testopenshift2"
+      openshift:
+        uri: test-uri
+    - name: testplugin1
+      plugin:
+        id: test-plugin1
+    - name: testplugin2
+      plugin:
+        kubernetes: test-kubernetes
+    - name: testplugin3
+      plugin:
+        uri: test-uri
+    - name: "testvolume"
+      volume:
+        size: 2G
+  commands:
+    - id: "testapply"
+      apply:
+        label: api-testing
+    - id: "testexec"
+      exec:
+        commandLine: 'echo "Hello ${GREETING} ${USER}"'
+    - id: "testcomposite"
+      composite:
+          group:
+            kind: test
+    - id: "testvscodeLaunch1"        
+      vscodeLaunch:
+        uri: http://testingland
+    - id: "testvscodeLaunch2"        
+      vscodeLaunch:
+        inlined:  inline      
+    - id: testvscodeTask1
+      vscodeTask:
+        uri: http://testingland
+    - id: testvscodeTask1
+      vscodeTask:
+        inlined:  inline
+  projects:
+    - name: testProject1
+      git:
+        remotes: 
+          origin: test-origin
+    - name: testProject2
+      github:
+        remotes: 
+          origin: test-origin
+    - name: testProject3
+      zip: 
+        location: git-repo.zip
+  starterProjects:
+    - name: testStarterProject1
+      git:
+        remotes: 
+          origin: test-origin
+    - name: testStarterProject2
+      github:
+        remotes: 
+          origin: test-origin
+    - name: testStarterProject3
+      zip: 
+        location: git-repo.zip        
+parent:
+  kubernetes: 
+    name: test-kubernetes
+    namespace: test-namespace
+  registryUrl: test-url
+parent:
+  uri: test-uri
+  registryUrl: test-url

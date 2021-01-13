@@ -1,0 +1,7 @@
+  postStart:
+    - "ApplyThisPostStartCommand"
+  preStart:
+  preStop:
+    - "ApplyThisPreStopCommand"
+  postStop:
+    - "ApplyThisPostStopCommand"

@@ -1,0 +1,12 @@
+  - name: "testopenshift"
+    openshift:
+      endpoints:
+        - name: test-endpoint
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234

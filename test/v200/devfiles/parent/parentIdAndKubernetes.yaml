@@ -1,0 +1,5 @@
+parent:
+  id: test-plugin1
+  kubernetes: 
+    name: test-kubernetes
+    namespace: test-namespace

@@ -1,0 +1,3 @@
+parent:
+  id: test-plugin1
+  uri: test-uri

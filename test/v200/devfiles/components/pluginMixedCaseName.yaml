@@ -1,0 +1,3 @@
+  - name: "testPluginid"
+    plugin:
+      id: test-plugin1

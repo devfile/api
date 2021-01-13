@@ -1,0 +1,13 @@
+  - name: "testkubernetes"
+    kubernetes:
+      inlined: test-inlined
+      endpoints:
+        - name: test-endpoint
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: hppt
+          secure: false
+          targetPort: 1234

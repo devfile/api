@@ -1,0 +1,6 @@
+  - name: starterproject12
+    github:
+      checkoutFrom: 
+        remote: test-branch
+    description: Test starter project
+    subDir: test-subdir

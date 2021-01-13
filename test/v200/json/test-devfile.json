@@ -1,0 +1,11 @@
+{
+    "SchemaFile" : "schemas/latest/ide-targeted/devfile.json",
+    "SchemaVersion" : "2.0.0",
+    "Tests" : ["command-tests.json",
+                "component-tests.json",
+                "event-tests.json",
+                "metadata-tests.json",
+                "parent-tests.json",
+                "project-tests.json",
+                "starterProject-tests.json"]                          
+}

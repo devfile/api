@@ -1,0 +1,34 @@
+{
+    "Tests" : [
+        { 
+            "FileName" : "parentAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/parent/parentAll.yaml"] 
+        },
+        { 
+            "FileName" : "parentMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/parent/parentAll.yaml"] 
+        },     
+        { 
+            "FileName" : "parentPluginIdAndKubernetes.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 1 and 2",
+            "Files": ["devfiles/parent/parentIdAndKubernetes.yaml"] 
+        },
+        { 
+            "FileName" : "parentPluginIdAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/parent/parentIdAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "parentPluginUriAndKubernetes.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 2",
+            "Files": ["devfiles/parent/parentUriAndKubernetes.yaml"] 
+        },
+        { 
+            "FileName" : "parentPluginMissingIdUriAndKubernetes.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/parent/parentMissingIdUriAndKubernetes.yaml"] 
+        }
+    ]                             
+}

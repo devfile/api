@@ -1,0 +1,6 @@
+  - name: starterproject11
+    git:
+      checkoutFrom: 
+        remote: test-branch
+    description: Test starter project
+    subDir: test-subdir

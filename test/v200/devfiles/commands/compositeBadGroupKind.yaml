@@ -1,0 +1,10 @@
+  - id: compositetest1
+    composite:
+      label: Composite Test
+      commands:
+        - runTest1
+        - runTest2
+      parallel: false
+      group:
+        isDefault: true
+        kind: all

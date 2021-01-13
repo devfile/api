@@ -1,0 +1,31 @@
+  - id: testapplytest
+    attributes: 
+      test: Apply Test
+      scope: Api
+    apply:
+      component: api-testing
+      group:
+        isDefault: true
+        kind: test
+      label: Test Apply test
+  - id: testapplybuild
+    apply:
+      component: api-testing
+      group:
+        isDefault: true
+        kind: build
+      label: Test Apply build
+  - id: testapplyrun
+    apply:
+      component: api-testing
+      group:
+        isDefault: false
+        kind: run
+      label: Test Apply run 
+  - id: testapplydebug
+    apply:
+      component: api-testing
+      group:
+        isDefault: false
+        kind: debug
+      label: Test Apply debug

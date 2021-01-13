@@ -1,0 +1,4 @@
+  - name: "testplugin"
+    plugin:
+      kubernetes: test-kubernetes
+      uri: test-uri

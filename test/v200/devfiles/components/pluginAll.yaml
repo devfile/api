@@ -1,0 +1,53 @@
+  - name: "testpluginid"
+    plugin:
+      id: testplugin1
+      registryUrl: test-url
+      components:
+        - name: "testcontainers"
+          container:
+            image: testImage
+        - name: "testkubernetes"
+          kubernetes:
+            inlined: testInlined
+          kubernetes:
+            uri: test-uri
+        - name: "testopenshift"
+          openshift:
+            inlined: testInlined
+          openshift:
+            uri: test-uri
+        - name: "testvolume"
+          volume:
+            size: 2G
+      commands:
+        - id: "testapply"
+          apply:
+            component: api-testing
+        - id: "testexec"
+          exec:
+            commandLine: 'echo "Hello ${GREETING} ${USER}"'
+            component: api-tests
+        - id: "testcomposite"
+          composite:
+              group:
+                kind: test
+        - id: "testvscodelnch"        
+          vscodeLaunch:
+            uri: http://testingland
+          vscodeLaunch:
+            inlined:  inline
+        - id: testvscodetask
+          vscodeTask:
+            uri: http://testingland
+          vscodeTask:
+            inlined:  inline        
+  - name: "testpluginkube"
+    plugin:
+      kubernetes:
+        name: test-kubernetes
+        namespace: test-namespace
+      registryUrl: test-url
+  - name: "testpluginuri"
+    plugin:
+      uri: test-uri
+      registryUrl: test-url

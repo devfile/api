@@ -1,0 +1,6 @@
+  - apply:
+      component: api-testing
+      group:
+        isDefault: true
+        kind: test
+      label: Test Apply test

@@ -1,0 +1,347 @@
+{
+    "Tests" : [
+        { 
+            "FileName" : "componentContainerAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerAll.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerMinimum.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerBadDedicatedPod.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerBadDedicatedPod.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerBadEndpointExposure.yaml",
+            "ExpectOutcome" : "value must be one of \"public\", \"internal\", \"none\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerBadEndpointExposure.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerBadMountSources.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerBadMountSources.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerBadEndpointProtocol.yaml",
+            "ExpectOutcome" : "value must be one of \"http\", \"htpps\", \"ws\", \"wss\",\"tcp\"",
+            "Disabled" : true,
+            "Files": [ "devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerBadEndpointProtocol.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerBadEndpointSecure.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerBadEndpointSecure.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEndpointMissingName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEndpointMissingName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEndpointMissingPort.yaml",
+            "ExpectOutcome" : "missing properties: \"targetPort\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEndpointMissingPort.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEndpointMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEndpointMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEndpointLongName.yaml",
+            "ExpectOutcome" : "length must be <= 15",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEndpointLongName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEnvNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEnvNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerEnvNoValue.yaml",
+            "ExpectOutcome" : "missing properties: \"value\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerEnvNoValue.yaml"] 
+        },
+        { 
+            "FileName" : "componentContainerVolumeMissingName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerVolumeMissingName.yaml"] 
+        },        
+        { 
+            "FileName" : "componentContainerNoImage.yaml",
+            "ExpectOutcome" : "missing properties: \"image\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerNoImage.yaml"] 
+        },        
+        { 
+            "FileName" : "componentKubernetesAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesAll.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesMinimum.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesBadEndpointExposure.yaml",
+            "ExpectOutcome" : "value must be one of \"public\", \"internal\", \"none\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesBadEndpointExposure.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesBadEndpointProtocol.yaml",
+            "ExpectOutcome" : "value must be one of \"http\", \"htpps\", \"ws\", \"wss\",\"tcp\"",
+            "Disabled" : true,
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesBadEndpointProtocol.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesBadEndpointSecure.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesBadEndpointSecure.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesEndpointMissingName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesEndpointMissingName.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesEndpointMissingPort.yaml",
+            "ExpectOutcome" : "missing properties: \"targetPort\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesEndpointMissingPort.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesEndpointMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesEndpointMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesEndpointLongName.yaml",
+            "ExpectOutcome" : "length must be <= 15",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesEndpointLongName.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesMissingInlinedAndUri.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesMissingInlinedAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "componentKubernetesBothInlinedAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/kubernetesBothInlinedAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftAll.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftMinimum.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftBadEndpointExposure.yaml",
+            "ExpectOutcome" : "value must be one of \"public\", \"internal\", \"none\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftBadEndpointExposure.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftBadEndpointProtocol.yaml",
+            "ExpectOutcome" : "value must be one of \"http\", \"htpps\", \"ws\", \"wss\",\"tcp\"",
+            "Disabled" : true,
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftBadEndpointProtocol.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftBadEndpointSecure.yaml",
+            "ExpectOutcome" : "expected boolean, but got string",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftBadEndpointSecure.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftEndpointMissingName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftEndpointMissingName.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftEndpointMissingPort.yaml",
+            "ExpectOutcome" : "missing properties: \"targetPort\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftEndpointMissingPort.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftEndpointMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftEndpointMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftEndpointLongName.yaml",
+            "ExpectOutcome" : "length must be <= 15",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftEndpointLongName.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftMissingInlinedAndUri.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftMissingInlinedAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "componentOpenshiftBothInlinedAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/openshiftBothInlinedAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginAll.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginMinimum.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginMinimum.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginNoName.yaml",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginContainsPlugin.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginContainsPlugin.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginIdAndKubernetes.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 1 and 2",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginIdAndKubernetes.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginIdAndUri.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginIdAndUri.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginUriAndKubernetes.yaml",
+            "ExpectOutcome" : "valid against schemas at indexes 0 and 2",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginUriAndKubernetes.yaml"] 
+        },
+        { 
+            "FileName" : "componentPluginMissingIdUriAndKubernetes.yaml",
+            "ExpectOutcome" : "oneOf failed",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/pluginMissingIdUriAndKubernetes.yaml"] 
+        },
+        { 
+            "FileName" : "componentVolumeAll",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/volumeAll.yaml"] 
+        },
+        { 
+            "FileName" : "componentVolumeNoName",
+            "ExpectOutcome" : "missing properties: \"name\"",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/volumeNoName.yaml"] 
+        },
+        { 
+            "FileName" : "componentVolumeMixedCaseName.yaml",
+            "ExpectOutcome" : "does not match pattern",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/volumeMixedCaseName.yaml"] 
+        },
+        { 
+            "FileName" : "componentAll.yaml",
+            "ExpectOutcome" : "PASS",
+            "Files": ["devfiles/components/componentStart.yaml",
+                        "devfiles/components/containerAll.yaml",
+                        "devfiles/components/kubernetesAll.yaml",
+                        "devfiles/components/openshiftAll.yaml",
+                        "devfiles/components/openshiftAll.yaml",
+                        "devfiles/components/volumeAll.yaml"] 
+        }
+    ]                             
+}

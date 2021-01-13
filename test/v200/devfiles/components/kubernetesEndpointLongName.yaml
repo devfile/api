@@ -1,0 +1,6 @@
+  - name: "testkubernetes3"
+    kubernetes:
+      inlined: testInlined
+      endpoints:
+        - name: endpoint-name-more-than-15-characters
+          targetPort: 1234

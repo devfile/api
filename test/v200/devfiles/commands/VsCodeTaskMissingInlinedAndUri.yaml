@@ -1,0 +1,5 @@
+- id: testvscodetask
+  vscodeTask:
+    group:
+      isDefault: false
+      kind: test

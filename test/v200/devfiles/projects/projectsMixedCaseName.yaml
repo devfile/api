@@ -1,0 +1,4 @@
+  - name: TestProject1
+    git:
+      remotes: 
+        origin: test-origin

@@ -1,6 +1,8 @@
 # Temporary Build Files
 build/_output
 build/_test
+test/v200/schemaTest/tmp
+test/go/pkg
 # Created by https://www.gitignore.io/api/go,vim,emacs,visualstudiocode
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -78,3 +80,5 @@ tags
 # IDE folders
 .idea
 generator/build/generator
+#Mac file
+.DS_Store

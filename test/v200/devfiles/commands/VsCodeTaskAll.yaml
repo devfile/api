@@ -1,0 +1,27 @@
+  - id: testvscodetask1
+    attributes: 
+      test: Exec Test test
+      scope: Api
+    vscodeTask:
+      inlined: inline
+      group:
+        isDefault: false
+        kind: test
+  - id: testvscodetask2
+    vscodeTask:
+      uri: http://testingland
+      group:
+        isDefault: false
+        kind: run  
+  - id: testvscodetask3
+    vscodeTask:
+      inlined: inline
+      group:
+        isDefault: true
+        kind: debug
+  - id: testvscodetask4
+    vscodeTask:
+      uri: http://testingland
+      group:
+        isDefault: false
+        kind: build

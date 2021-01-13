@@ -1,0 +1,71 @@
+  - name: "testopenshift1"
+    openshift:
+      inlined: test-inlined
+      endpoints:
+        - name: test-http1
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
+        - name: test-http2
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: internal
+          path: test-path
+          protocol: http
+          secure: true
+          targetPort: 1234
+        - name: test-https
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: none
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
+        - name: test-ws1
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: ws
+          secure: false
+          targetPort: 1234
+        - name: test-ws2
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: internal
+          path: test-path
+          protocol: ws
+          secure: true
+          targetPort: 1234
+        - name: test-wss
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: none
+          path: test-path
+          protocol: wss
+          secure: false
+          targetPort: 1234
+  - name: "testopenshift2"
+    openshift:
+      uri: test-uri
+      endpoints:
+        - name: test-endpoint
+          attributes: 
+            test: Apply Test
+            scope: Api
+          exposure: public
+          path: test-path
+          protocol: http
+          secure: false
+          targetPort: 1234
