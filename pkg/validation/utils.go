@@ -28,17 +28,15 @@ func isInt(str string) bool {
 	return false
 }
 
-// isValidURI checks if the string is with valid uri format, return error if not valid
-func isValidURI(uri string) (bool, error) {
-	 if strings.HasPrefix(uri, "http"){
-		 if _, err := url.ParseRequestURI(uri); err != nil {
-		 	return false, err
-		 }
-		 return true, nil
-	 }
+// validateURI checks if the string is with valid uri format, return error if not valid
+func validateURI(uri string) error {
+	if strings.HasPrefix(uri, "http") {
+		if _, err := url.ParseRequestURI(uri); err != nil {
+			return err
+		}
+	} else if _, err := url.Parse(uri); err != nil {
+		return err
+	}
 
-	 if  _, err := url.Parse(uri); err!= nil {
-		 return false, err
-	 }
-	return true, nil
+	return nil
 }
