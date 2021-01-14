@@ -41,6 +41,42 @@ func generateDummyVolumeComponent(name, size string) v1alpha2.Component {
 	}
 }
 
+// generateDummyOpenshiftComponent returns a dummy Openshift component for testing
+func generateDummyOpenshiftComponent(name string, endpoints []v1alpha2.Endpoint, uri string) v1alpha2.Component {
+
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Openshift: &v1alpha2.OpenshiftComponent{
+				K8sLikeComponent: v1alpha2.K8sLikeComponent{
+					K8sLikeComponentLocation: v1alpha2.K8sLikeComponentLocation{
+						Uri: uri,
+					},
+					Endpoints: endpoints,
+				},
+			},
+		},
+	}
+}
+
+// generateDummyKubernetesComponent returns a dummy Kubernetes component for testing
+func generateDummyKubernetesComponent(name string, endpoints []v1alpha2.Endpoint, uri string) v1alpha2.Component {
+
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Kubernetes: &v1alpha2.KubernetesComponent{
+				K8sLikeComponent: v1alpha2.K8sLikeComponent{
+					K8sLikeComponentLocation: v1alpha2.K8sLikeComponentLocation{
+						Uri: uri,
+					},
+					Endpoints: endpoints,
+				},
+			},
+		},
+	}
+}
+
 func TestValidateComponents(t *testing.T) {
 
 	volMounts := []v1alpha2.VolumeMount{

@@ -81,7 +81,10 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			}
 		} else if component.Openshift != nil {
 			if component.Openshift.Uri != "" {
-				return ValidateURI(component.Openshift.Uri)
+				err := ValidateURI(component.Openshift.Uri)
+				if err != nil {
+					return err
+				}
 			}
 
 			err := validateEndpoints(component.Openshift.Endpoints, processedEndPointPort, processedEndPointName)
@@ -90,7 +93,10 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			}
 		} else if component.Kubernetes != nil {
 			if component.Kubernetes.Uri != "" {
-				return ValidateURI(component.Kubernetes.Uri)
+				err := ValidateURI(component.Kubernetes.Uri)
+				if err != nil {
+					return err
+				}
 			}
 			err := validateEndpoints(component.Kubernetes.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
