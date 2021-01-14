@@ -20,11 +20,13 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 	for _, command := range commands {
 		// Check if the command is in the list of already processed commands
 		// If there's a hit, it means more than one command share the same ID and we should error out
-		commandID := strings.ToLower(command.Id)
-		if _, exists := processedCommands[commandID]; exists {
+		if isInt(command.Id) {
+			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
+		}
+		if _, exists := processedCommands[command.Id]; exists {
 			return &InvalidCommandError{commandId: command.Id, reason: "duplicate commands present with the same id"}
 		}
-		processedCommands[commandID] = commandID
+		processedCommands[command.Id] = command.Id
 
 		parentCommands := make(map[string]string)
 		err = validateCommand(command, parentCommands, commandMap, components)
@@ -62,11 +64,11 @@ func validateCommand(command v1alpha2.Command, parentCommands map[string]string,
 		return validateCommandComponent(command, components)
 	case command.VscodeLaunch != nil:
 		if command.VscodeLaunch.Uri != "" {
-			return validateURI(command.VscodeLaunch.Uri)
+			return ValidateURI(command.VscodeLaunch.Uri)
 		}
 	case command.VscodeTask != nil:
 		if command.VscodeTask.Uri != "" {
-			return validateURI(command.VscodeTask.Uri)
+			return ValidateURI(command.VscodeTask.Uri)
 		}
 	default:
 		err = fmt.Errorf("command %s type is invalid", command.Id)

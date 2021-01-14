@@ -6,13 +6,6 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
-func generateDummyEndpoint(name string, port int) v1alpha2.Endpoint {
-	return v1alpha2.Endpoint{
-		Name:       name,
-		TargetPort: port,
-	}
-}
-
 // generateDummyContainerComponent returns a dummy container component for testing
 func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMount, endpoints []v1alpha2.Endpoint, envs []v1alpha2.EnvVar) v1alpha2.Component {
 	image := "docker.io/maven:latest"

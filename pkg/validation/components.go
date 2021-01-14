@@ -19,19 +19,26 @@ const (
 // ValidateComponents validates that the components
 // 1. makes sure the container components reference a valid volume component if it uses volume mounts
 // 2. makes sure the volume components are unique
+// 3. checks the URI specified in openshift components and kubernetest components are with valid format
+// 4. makes sure the component name is not a numeric string
+// 5. makes sure the component name is unique
 func ValidateComponents(components []v1alpha2.Component) error {
 
 	processedVolumes := make(map[string]bool)
 	processedVolumeMounts := make(map[string]bool)
 	processedEndPointName := make(map[string]bool)
 	processedEndPointPort := make(map[int]bool)
+	componentNameMap := make(map[string]bool)
 
 	for _, component := range components {
+		if isInt(component.Name) {
+			return &InvalidNameOrIdError{name:component.Name, resourceType: "component"}
+		}
+		if _,exists:= componentNameMap[component.Name]; exists {
+			return &InvalidComponentError{name: component.Name}
+		}
+		componentNameMap[component.Name] = true
 
-		// err := util.ValidateK8sResourceName("devfile component name", component.Name)
-		// if err != nil {
-		// 	return err
-		// }
 
 		if component.Container != nil {
 			// Process all the volume mounts in container components to validate them later
@@ -54,26 +61,11 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			// and check if endpoint port are unique across component containers ie;
 			// two component containers cannot have the same target port but two endpoints
 			// in a single component container can have the same target port
-
-			processedContainerEndPointPort := make(map[int]bool)
-
-			for _, endPoint := range component.Container.Endpoints {
-				if _, ok := processedEndPointName[endPoint.Name]; ok {
-					return &InvalidEndpointError{name: endPoint.Name}
-				}
-				processedEndPointName[endPoint.Name] = true
-				processedContainerEndPointPort[endPoint.TargetPort] = true
+			err := validateEndpoints(component.Container.Endpoints, processedEndPointPort,processedEndPointName )
+			if err != nil {
+				return err
 			}
-
-			for targetPort := range processedContainerEndPointPort {
-				if _, ok := processedEndPointPort[targetPort]; ok {
-					return &InvalidEndpointError{port: targetPort}
-				}
-				processedEndPointPort[targetPort] = true
-			}
-		}
-
-		if component.Volume != nil {
+		} else if component.Volume != nil {
 			if _, ok := processedVolumes[component.Name]; !ok {
 				processedVolumes[component.Name] = true
 				if len(component.Volume.Size) > 0 {
@@ -88,7 +80,25 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			} else {
 				return &InvalidVolumeError{name: component.Name, reason: "duplicate volume components present with the same name"}
 			}
+		} else if component.Openshift != nil {
+			if component.Openshift.Uri != "" {
+				return ValidateURI( component.Openshift.Uri )
+			}
+
+			err := validateEndpoints(component.Openshift.Endpoints, processedEndPointPort,processedEndPointName )
+			if err != nil {
+				return err
+			}
+		}else if component.Kubernetes != nil {
+			if component.Kubernetes.Uri != "" {
+				return ValidateURI( component.Kubernetes.Uri )
+			}
+			err := validateEndpoints(component.Kubernetes.Endpoints, processedEndPointPort,processedEndPointName )
+			if err != nil {
+				return err
+			}
 		}
+
 	}
 
 	// Check if the volume mounts mentioned in the containers are referenced by a volume component

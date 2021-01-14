@@ -67,3 +67,29 @@ func (e *InvalidEndpointError) Error() string {
 
 	return errMsg
 }
+
+// InvalidComponentError returns an error if the component is invalid
+type InvalidComponentError struct {
+	name string
+}
+
+func (e *InvalidComponentError) Error() string {
+	return fmt.Sprintf("devfile contains multiple components with same name: %v", e.name)
+}
+
+// InvalidNameOrIdError returns an error if the name or is is invalid
+type InvalidNameOrIdError struct {
+	name string
+	id string
+	resourceType string
+}
+
+func (e *InvalidNameOrIdError) Error() string {
+	var errMsg string
+	if e.name != "" {
+		errMsg = fmt.Sprintf("%v name: %v is invalid, the name cannot be with all numeric characters", e.resourceType, e.name)
+	} else if e.id != "" {
+		errMsg = fmt.Sprintf("%v id: %v is invalid, the id cannot be with all numeric characters", e.resourceType, e.id)
+	}
+	return errMsg
+}
