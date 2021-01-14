@@ -69,7 +69,7 @@
         },
         { 
             "FileName" : "componentContainerEndpointLongName.yaml",
-            "ExpectOutcome" : "length must be <= 15",
+            "ExpectOutcome" : "length must be <= 63",
             "Files": ["devfiles/components/componentStart.yaml",
                         "devfiles/components/containerEndpointLongName.yaml"] 
         },
@@ -142,7 +142,7 @@
         },
         { 
             "FileName" : "componentKubernetesEndpointLongName.yaml",
-            "ExpectOutcome" : "length must be <= 15",
+            "ExpectOutcome" : "length must be <= 63",
             "Files": ["devfiles/components/componentStart.yaml",
                         "devfiles/components/kubernetesEndpointLongName.yaml"] 
         },
@@ -215,7 +215,7 @@
         },
         { 
             "FileName" : "componentOpenshiftEndpointLongName.yaml",
-            "ExpectOutcome" : "length must be <= 15",
+            "ExpectOutcome" : "length must be <= 63",
             "Files": ["devfiles/components/componentStart.yaml",
                         "devfiles/components/openshiftEndpointLongName.yaml"] 
         },

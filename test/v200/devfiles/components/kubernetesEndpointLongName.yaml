@@ -2,5 +2,5 @@
     kubernetes:
       inlined: testInlined
       endpoints:
-        - name: endpoint-name-more-than-15-characters
+        - name: this-invalid-kubernetes-endpoint-name-is-more-than-63-characters-long
           targetPort: 1234
