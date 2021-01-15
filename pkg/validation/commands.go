@@ -187,20 +187,6 @@ func validateCompositeCommand(command *v1alpha2.Command, parentCommands map[stri
 		if err != nil {
 			return err
 		}
-
-		// if subCommand.Composite != nil {
-		// 	// Recursively validate the composite subcommand
-		// 	err := validateCompositeCommand(&subCommand, parentCommands, devfileCommands, components)
-		// 	if err != nil {
-		// 		// Don't wrap the error message here to make the error message more readable to the user
-		// 		return err
-		// 	}
-		// } else {
-		// 	err := validateCommandComponent(subCommand, components)
-		// 	if err != nil {
-		// 		return err
-		// 	}
-		// }
 	}
 	return nil
 }

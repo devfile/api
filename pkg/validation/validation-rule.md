@@ -56,3 +56,8 @@ Common rules for all components types:
 
 ### starterProjects:
 - Starter project entries cannot have more than one remote defined
+- if checkout remote is mentioned, validate it against the starter project remote configured map
+
+### projects
+- if more than one remote map is configured, a checkout remote is mandatory
+- if checkout remote is mentioned, validate it against the starter project remote configured map
