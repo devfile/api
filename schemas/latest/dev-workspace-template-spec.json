@@ -1,7 +1,7 @@
 {
   "description": "Structure of the workspace. This is also the specification of a workspace template.",
   "type": "object",
-  "title": "DevWorkspaceTemplateSpec schema - Version 2.0.0-alpha2",
+  "title": "DevWorkspaceTemplateSpec schema - Version 2.0.0",
   "properties": {
     "commands": {
       "description": "Predefined, ready-to-use, workspace-related commands",
