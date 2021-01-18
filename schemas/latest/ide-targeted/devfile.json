@@ -1476,6 +1476,34 @@
                       "description": "Allows specifying the definition of a volume shared by several other components",
                       "type": "object",
                       "properties": {
+                        "external": {
+                          "description": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created.",
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "description": "Name defines the name of the resource",
+                              "type": "string",
+                              "markdownDescription": "Name defines the name of the resource"
+                            },
+                            "type": {
+                              "description": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\"",
+                              "type": "string",
+                              "markdownDescription": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\""
+                            }
+                          },
+                          "additionalProperties": false,
+                          "markdownDescription": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created."
+                        },
+                        "persistent": {
+                          "description": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete.",
+                          "type": "boolean",
+                          "markdownDescription": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete."
+                        },
+                        "readonly": {
+                          "description": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false.",
+                          "type": "boolean",
+                          "markdownDescription": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false."
+                        },
                         "size": {
                           "description": "Size of the volume",
                           "type": "string",
@@ -1528,6 +1556,38 @@
             "description": "Allows specifying the definition of a volume shared by several other components",
             "type": "object",
             "properties": {
+              "external": {
+                "description": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created.",
+                "type": "object",
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "Name defines the name of the resource",
+                    "type": "string",
+                    "markdownDescription": "Name defines the name of the resource"
+                  },
+                  "type": {
+                    "description": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\"",
+                    "type": "string",
+                    "markdownDescription": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\""
+                  }
+                },
+                "additionalProperties": false,
+                "markdownDescription": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created."
+              },
+              "persistent": {
+                "description": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete.",
+                "type": "boolean",
+                "markdownDescription": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete."
+              },
+              "readonly": {
+                "description": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false.",
+                "type": "boolean",
+                "markdownDescription": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false."
+              },
               "size": {
                 "description": "Size of the volume",
                 "type": "string",
@@ -3096,6 +3156,34 @@
                           "description": "Allows specifying the definition of a volume shared by several other components",
                           "type": "object",
                           "properties": {
+                            "external": {
+                              "description": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created.",
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "description": "Name defines the name of the resource",
+                                  "type": "string",
+                                  "markdownDescription": "Name defines the name of the resource"
+                                },
+                                "type": {
+                                  "description": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\"",
+                                  "type": "string",
+                                  "markdownDescription": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\""
+                                }
+                              },
+                              "additionalProperties": false,
+                              "markdownDescription": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created."
+                            },
+                            "persistent": {
+                              "description": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete.",
+                              "type": "boolean",
+                              "markdownDescription": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete."
+                            },
+                            "readonly": {
+                              "description": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false.",
+                              "type": "boolean",
+                              "markdownDescription": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false."
+                            },
                             "size": {
                               "description": "Size of the volume",
                               "type": "string",
@@ -3145,6 +3233,34 @@
                 "description": "Allows specifying the definition of a volume shared by several other components",
                 "type": "object",
                 "properties": {
+                  "external": {
+                    "description": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created.",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "description": "Name defines the name of the resource",
+                        "type": "string",
+                        "markdownDescription": "Name defines the name of the resource"
+                      },
+                      "type": {
+                        "description": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\"",
+                        "type": "string",
+                        "markdownDescription": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"storage,configmap,secret\""
+                      }
+                    },
+                    "additionalProperties": false,
+                    "markdownDescription": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created."
+                  },
+                  "persistent": {
+                    "description": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete.",
+                    "type": "boolean",
+                    "markdownDescription": "Persistent defines whether to use persistent storage for this volume. Defaults to true. When set to false, storage is tied to a pod lifecycle and is erased on delete."
+                  },
+                  "readonly": {
+                    "description": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false.",
+                    "type": "boolean",
+                    "markdownDescription": "ReadOnly specifies whether the volume should be mounted without write capabilities. Defaults to false."
+                  },
                   "size": {
                     "description": "Size of the volume",
                     "type": "string",
