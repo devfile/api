@@ -1,7 +1,7 @@
 {
   "description": "\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.",
   "type": "object",
-  "title": "ParentOverrides schema - Version 2.0.0-alpha2 - IDE-targeted variant",
+  "title": "ParentOverrides schema - Version 2.0.0 - IDE-targeted variant",
   "properties": {
     "commands": {
       "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
