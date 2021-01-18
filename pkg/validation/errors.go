@@ -77,7 +77,7 @@ func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("devfile contains multiple components with same name: %v", e.name)
 }
 
-// InvalidNameOrIdError returns an error if the name or is is invalid
+// InvalidNameOrIdError returns an error if the name or id is invalid
 type InvalidNameOrIdError struct {
 	name         string
 	id           string
@@ -87,9 +87,9 @@ type InvalidNameOrIdError struct {
 func (e *InvalidNameOrIdError) Error() string {
 	var errMsg string
 	if e.name != "" {
-		errMsg = fmt.Sprintf("%v name: %v is invalid, the name cannot be with all numeric characters", e.resourceType, e.name)
+		errMsg = fmt.Sprintf("%s name: %s is invalid, the name cannot be with all numeric characters", e.resourceType, e.name)
 	} else if e.id != "" {
-		errMsg = fmt.Sprintf("%v id: %v is invalid, the id cannot be with all numeric characters", e.resourceType, e.id)
+		errMsg = fmt.Sprintf("%s id: %s is invalid, the id cannot be with all numeric characters", e.resourceType, e.id)
 	}
 	return errMsg
 }

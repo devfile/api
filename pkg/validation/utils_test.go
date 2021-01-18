@@ -45,17 +45,17 @@ func TestValidateURI(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Case 1: valid uri format starts with http",
+			name:    "Case 1: valid URI format starts with http",
 			uri:     "http://devfile.yaml",
 			wantErr: false,
 		},
 		{
-			name:    "Case 2: invalid uri format starts with http",
+			name:    "Case 2: invalid URI format starts with http",
 			uri:     "http//devfile.yaml",
 			wantErr: true,
 		},
 		{
-			name:    "Case 3: invalid uri format does not start with http",
+			name:    "Case 3: valid URI format does not start with http",
 			uri:     "./devfile.yaml",
 			wantErr: false,
 		},

@@ -54,6 +54,16 @@ func TestValidateEvents(t *testing.T) {
 						"exec2",
 						"compositeExecApply",
 					},
+					PreStart: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
+					PreStop: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
 				},
 			},
 			wantErr: true,

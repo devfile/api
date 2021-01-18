@@ -20,7 +20,7 @@ func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 	return commandMap
 }
 
-// isInt checks if the string is an integer
+// isInt returns true if the string is an integer, false otherwise
 func isInt(str string) bool {
 	if _, err := strconv.Atoi(str); err == nil {
 		return true

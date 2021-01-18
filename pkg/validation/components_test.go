@@ -182,6 +182,41 @@ func TestValidateComponents(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		{
+			name: "Case 9: Valid container with multiple same target ports but different endpoint name",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpoint1, endpoint3}, nil),
+			},
+			wantErr: false,
+		},
+		{
+			name: "Case 10: Invalid Openshift Component with bad URI",
+			components: []v1alpha2.Component{
+				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint3}, "http//wronguri"),
+			},
+			wantErr: true,
+		},
+		{
+			name: "Case 11: Valid Kubernetes Component",
+			components: []v1alpha2.Component{
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint3}, "http://uri"),
+			},
+			wantErr: false,
+		},
+		{
+			name: "Case 12: Invalid OpenShift Component endpoints",
+			components: []v1alpha2.Component{
+				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint2}, "http://uri"),
+			},
+			wantErr: true,
+		},
+		{
+			name: "Case 13: Invalid component name with all numeric values",
+			components: []v1alpha2.Component{
+				generateDummyVolumeComponent("123", "1Gi"),
+			},
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

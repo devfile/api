@@ -9,7 +9,8 @@ import (
 )
 
 // ValidateCommands validates the devfile commands:
-// 1. if there are commands with duplicate IDs, an error is returned
+// 1. if the command id is all numeric, an error is returned
+// 2. if there are commands with duplicate IDs, an error is returned
 // 2. checks if its either a valid command
 // 3. checks if commands belonging to a specific group obeys the rule of 1 default command
 func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (err error) {
@@ -18,11 +19,13 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 	commandMap := getCommandsMap(commands)
 
 	for _, command := range commands {
-		// Check if the command is in the list of already processed commands
-		// If there's a hit, it means more than one command share the same ID and we should error out
+		// Check if command id is all numeric
 		if isInt(command.Id) {
 			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
 		}
+
+		// Check if the command is in the list of already processed commands
+		// If there's a hit, it means more than one command share the same ID and we should error out
 		if _, exists := processedCommands[command.Id]; exists {
 			return &InvalidCommandError{commandId: command.Id, reason: "duplicate commands present with the same id"}
 		}

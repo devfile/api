@@ -6,7 +6,8 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
-// ValidateStarterProjects validates the starter projects
+// ValidateStarterProjects checks if starter project has only one remote configured
+// and if the checkout remote matches the renote configured
 func ValidateStarterProjects(starterProject v1alpha2.StarterProject) (err error) {
 
 	var gitSource v1alpha2.GitLikeProjectSource
@@ -27,7 +28,8 @@ func ValidateStarterProjects(starterProject v1alpha2.StarterProject) (err error)
 	return
 }
 
-// ValidateProjects validates the projects
+// ValidateProjects checks if the project has more than one remote configured then a checkout
+// remote is mandatory and if the checkout remote matches the renote configured
 func ValidateProjects(project v1alpha2.Project) (err error) {
 
 	var gitSource v1alpha2.GitLikeProjectSource
@@ -50,7 +52,7 @@ func ValidateProjects(project v1alpha2.Project) (err error) {
 func validateRemoteMap(remotes map[string]string, checkoutRemote string) (err error) {
 
 	if _, ok := remotes[checkoutRemote]; !ok {
-		return fmt.Errorf("unable to find the checkout remote in project remotes map")
+		return fmt.Errorf("unable to find the checkout remote %s in the project remotes map", checkoutRemote)
 	}
 
 	return

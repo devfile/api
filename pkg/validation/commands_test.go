@@ -165,7 +165,7 @@ func TestValidateCommands(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Case 7: Valid VscodeTask command with Uri",
+			name: "Case 7: Valid VscodeTask command with URI",
 			commands: []v1alpha2.Command{
 				generateDummyVscodeTaskCommand("somevscodetask", uriCommandLocation, v1alpha2.CommandGroup{}),
 			},
@@ -179,7 +179,7 @@ func TestValidateCommands(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Case 9: Invalid VscodeLaunch command with wrong Uri",
+			name: "Case 9: Invalid VscodeLaunch command with wrong URI",
 			commands: []v1alpha2.Command{
 				generateDummyVscodeLaunchCommand("somevscodelaunch", inValidUriCommandLocation, v1alpha2.CommandGroup{}),
 			},

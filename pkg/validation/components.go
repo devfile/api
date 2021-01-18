@@ -31,9 +31,11 @@ func ValidateComponents(components []v1alpha2.Component) error {
 	componentNameMap := make(map[string]bool)
 
 	for _, component := range components {
+		// Check if component name is all numeric
 		if isInt(component.Name) {
 			return &InvalidNameOrIdError{name: component.Name, resourceType: "component"}
 		}
+
 		if _, exists := componentNameMap[component.Name]; exists {
 			return &InvalidComponentError{name: component.Name}
 		}
@@ -56,10 +58,6 @@ func ValidateComponents(components []v1alpha2.Component) error {
 				}
 			}
 
-			// Check if all the endpoint names are unique across components
-			// and check if endpoint port are unique across component containers ie;
-			// two component containers cannot have the same target port but two endpoints
-			// in a single component container can have the same target port
 			err := validateEndpoints(component.Container.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
 				return err
@@ -68,7 +66,6 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			if _, ok := processedVolumes[component.Name]; !ok {
 				processedVolumes[component.Name] = true
 				if len(component.Volume.Size) > 0 {
-					// Only validate on Kubernetes since Docker volumes do not use sizes
 					// We use the Kube API for validation because there are so many ways to
 					// express storage in Kubernetes. For reference, you may check doc
 					// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -76,8 +73,6 @@ func ValidateComponents(components []v1alpha2.Component) error {
 						return &InvalidVolumeError{name: component.Name, reason: fmt.Sprintf("size %s for volume component is invalid, %v. Example - 2Gi, 1024Mi", component.Volume.Size, err)}
 					}
 				}
-			} else {
-				return &InvalidVolumeError{name: component.Name, reason: "duplicate volume components present with the same name"}
 			}
 		} else if component.Openshift != nil {
 			if component.Openshift.Uri != "" {
