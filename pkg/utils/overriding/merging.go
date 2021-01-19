@@ -25,20 +25,31 @@ func MergeDevWorkspaceTemplateSpec(
 	parentFlattenedContent *workspaces.DevWorkspaceTemplateSpecContent,
 	pluginFlattenedContents ...*workspaces.DevWorkspaceTemplateSpecContent) (*workspaces.DevWorkspaceTemplateSpecContent, error) {
 
-	allContents := []*workspaces.DevWorkspaceTemplateSpecContent{parentFlattenedContent}
-	allContents = append(allContents, pluginFlattenedContents...)
+	allContents := []*workspaces.DevWorkspaceTemplateSpecContent{}
+	if parentFlattenedContent != nil {
+		allContents = append(allContents, parentFlattenedContent)
+	}
+	if len(pluginFlattenedContents) > 0 {
+		allContents = append(allContents, pluginFlattenedContents...)
+	}
 	allContents = append(allContents, mainContent)
 
-	if err := ensureNoConflictWithParent(mainContent, parentFlattenedContent); err != nil {
-		return nil, err
+	// Check for conflicts
+	if parentFlattenedContent != nil {
+		if err := ensureNoConflictWithParent(mainContent, parentFlattenedContent); err != nil {
+			return nil, err
+		}
 	}
-
-	if err := ensureNoConflictsWithPlugins(mainContent, pluginFlattenedContents...); err != nil {
-		return nil, err
-	}
-	// also need to ensure no conflict between parent and plugins
-	if err := ensureNoConflictsWithPlugins(parentFlattenedContent, pluginFlattenedContents...); err != nil {
-		return nil, err
+	if len(pluginFlattenedContents) > 0 {
+		if err := ensureNoConflictsWithPlugins(mainContent, pluginFlattenedContents...); err != nil {
+			return nil, err
+		}
+		if parentFlattenedContent != nil {
+			// also need to ensure no conflict between parent and plugins
+			if err := ensureNoConflictsWithPlugins(parentFlattenedContent, pluginFlattenedContents...); err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	result := workspaces.DevWorkspaceTemplateSpecContent{}
