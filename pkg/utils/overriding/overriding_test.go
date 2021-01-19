@@ -323,6 +323,45 @@ func TestPluginOverrides(t *testing.T) {
 	}
 }
 
+func TestMergingOnlyPlugins(t *testing.T) {
+	baseFile := "test-fixtures/merges/no-parent/main.yaml"
+	pluginFile := "test-fixtures/merges/no-parent/plugin.yaml"
+	resultFile := "test-fixtures/merges/no-parent/result.yaml"
+
+	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	pluginDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+
+	readFileToStruct(t, baseFile, &baseDWT)
+	readFileToStruct(t, pluginFile, &pluginDWT)
+	readFileToStruct(t, resultFile, &expectedDWT)
+
+	gotDWT, err := MergeDevWorkspaceTemplateSpec(&baseDWT, nil, &pluginDWT)
+	if assert.NoError(t, err) {
+		assert.Equal(t, &expectedDWT, gotDWT)
+	}
+}
+
+func TestMergingOnlyParent(t *testing.T) {
+	// Reuse only plugin case since it's compatible
+	baseFile := "test-fixtures/merges/no-parent/main.yaml"
+	parentFile := "test-fixtures/merges/no-parent/plugin.yaml"
+	resultFile := "test-fixtures/merges/no-parent/result.yaml"
+
+	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	parentDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+
+	readFileToStruct(t, baseFile, &baseDWT)
+	readFileToStruct(t, parentFile, &parentDWT)
+	readFileToStruct(t, resultFile, &expectedDWT)
+
+	gotDWT, err := MergeDevWorkspaceTemplateSpec(&baseDWT, &parentDWT)
+	if assert.NoError(t, err) {
+		assert.Equal(t, &expectedDWT, gotDWT)
+	}
+}
+
 func readFileToStruct(t *testing.T, path string, into interface{}) {
 	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
