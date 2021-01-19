@@ -304,6 +304,36 @@ func TestMerging(t *testing.T) {
 	})
 }
 
+func TestPluginOverrides(t *testing.T) {
+	originalFile := "test-fixtures/patches/override-just-plugin/original.yaml"
+	patchFile := "test-fixtures/patches/override-just-plugin/patch.yaml"
+	resultFile := "test-fixtures/patches/override-just-plugin/result.yaml"
+
+	originalDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	patch := workspaces.PluginOverrides{}
+	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+
+	readFileToStruct(t, originalFile, &originalDWT)
+	readFileToStruct(t, patchFile, &patch)
+	readFileToStruct(t, resultFile, &expectedDWT)
+
+	gotDWT, err := OverrideDevWorkspaceTemplateSpec(&originalDWT, patch)
+	if assert.NoError(t, err) {
+		assert.Equal(t, &expectedDWT, gotDWT)
+	}
+}
+
+func readFileToStruct(t *testing.T, path string, into interface{}) {
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Fatalf("Failed to read test file from %s: %s", path, err.Error())
+	}
+	err = yaml.Unmarshal(bytes, into)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal file into struct: %s", err.Error())
+	}
+}
+
 // Since order of error message lines is not deterministic, it's necessary to compare
 // in a weaker way than asserting string equality.
 func compareErrorMessages(t *testing.T, expected, actual string, failReason string) {
