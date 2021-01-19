@@ -1,0 +1,20 @@
+projects:
+  - name: test-project
+    git:
+      remotes:
+        origin: "https://test-data.io"
+
+components:
+  - name: my-component
+    container:
+      image: testimg
+
+commands:
+  - id: test-command
+    exec:
+      component: my-component
+      commandLine: "echo 'just a test'"
+
+events:
+  preStart:
+    - test-command

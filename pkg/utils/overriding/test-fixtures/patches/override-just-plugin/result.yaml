@@ -1,0 +1,20 @@
+projects:
+  - name: test-project
+    git:
+      remotes:
+        origin: "https://test-data.io"
+
+components:
+  - name: my-component
+    container:
+      image: overridden-image
+
+commands:
+  - id: test-command
+    exec:
+      component: my-component
+      commandLine: "echo 'this bit is updated'"
+
+events:
+  preStart:
+    - test-command
