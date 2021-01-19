@@ -1,0 +1,7 @@
+components:
+  - name: test-plugin-component
+    container:
+      image: test-plugin-image
+  - name: test-component
+    container:
+      image: test-image
