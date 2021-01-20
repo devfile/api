@@ -439,6 +439,12 @@
                   "type": "string"
                 }
               },
+              "cpuLimit": {
+                "type": "string"
+              },
+              "cpuRequest": {
+                "type": "string"
+              },
               "dedicatedPod": {
                 "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                 "type": "boolean"
@@ -524,6 +530,9 @@
                 "type": "string"
               },
               "memoryLimit": {
+                "type": "string"
+              },
+              "memoryRequest": {
                 "type": "string"
               },
               "mountSources": {
@@ -1124,6 +1133,12 @@
                             "type": "string"
                           }
                         },
+                        "cpuLimit": {
+                          "type": "string"
+                        },
+                        "cpuRequest": {
+                          "type": "string"
+                        },
                         "dedicatedPod": {
                           "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                           "type": "boolean"
@@ -1205,6 +1220,9 @@
                           "type": "string"
                         },
                         "memoryLimit": {
+                          "type": "string"
+                        },
+                        "memoryRequest": {
                           "type": "string"
                         },
                         "mountSources": {
@@ -1878,6 +1896,12 @@
                       "type": "string"
                     }
                   },
+                  "cpuLimit": {
+                    "type": "string"
+                  },
+                  "cpuRequest": {
+                    "type": "string"
+                  },
                   "dedicatedPod": {
                     "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                     "type": "boolean"
@@ -1959,6 +1983,9 @@
                     "type": "string"
                   },
                   "memoryLimit": {
+                    "type": "string"
+                  },
+                  "memoryRequest": {
                     "type": "string"
                   },
                   "mountSources": {
@@ -2532,6 +2559,12 @@
                                 "type": "string"
                               }
                             },
+                            "cpuLimit": {
+                              "type": "string"
+                            },
+                            "cpuRequest": {
+                              "type": "string"
+                            },
                             "dedicatedPod": {
                               "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                               "type": "boolean"
@@ -2613,6 +2646,9 @@
                               "type": "string"
                             },
                             "memoryLimit": {
+                              "type": "string"
+                            },
+                            "memoryRequest": {
                               "type": "string"
                             },
                             "mountSources": {

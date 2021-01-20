@@ -425,6 +425,12 @@
                 },
                 "markdownDescription": "The command to run in the dockerimage component instead of the default one provided in the image.\n\nDefaults to an empty array, meaning use whatever is defined in the image."
               },
+              "cpuLimit": {
+                "type": "string"
+              },
+              "cpuRequest": {
+                "type": "string"
+              },
               "dedicatedPod": {
                 "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                 "type": "boolean",
@@ -515,6 +521,9 @@
                 "type": "string"
               },
               "memoryLimit": {
+                "type": "string"
+              },
+              "memoryRequest": {
                 "type": "string"
               },
               "mountSources": {
@@ -1155,6 +1164,12 @@
                           },
                           "markdownDescription": "The command to run in the dockerimage component instead of the default one provided in the image.\n\nDefaults to an empty array, meaning use whatever is defined in the image."
                         },
+                        "cpuLimit": {
+                          "type": "string"
+                        },
+                        "cpuRequest": {
+                          "type": "string"
+                        },
                         "dedicatedPod": {
                           "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                           "type": "boolean",
@@ -1243,6 +1258,9 @@
                           "type": "string"
                         },
                         "memoryLimit": {
+                          "type": "string"
+                        },
+                        "memoryRequest": {
                           "type": "string"
                         },
                         "mountSources": {
@@ -2049,6 +2067,12 @@
                     },
                     "markdownDescription": "The command to run in the dockerimage component instead of the default one provided in the image.\n\nDefaults to an empty array, meaning use whatever is defined in the image."
                   },
+                  "cpuLimit": {
+                    "type": "string"
+                  },
+                  "cpuRequest": {
+                    "type": "string"
+                  },
                   "dedicatedPod": {
                     "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                     "type": "boolean",
@@ -2137,6 +2161,9 @@
                     "type": "string"
                   },
                   "memoryLimit": {
+                    "type": "string"
+                  },
+                  "memoryRequest": {
                     "type": "string"
                   },
                   "mountSources": {
@@ -2775,6 +2802,12 @@
                               },
                               "markdownDescription": "The command to run in the dockerimage component instead of the default one provided in the image.\n\nDefaults to an empty array, meaning use whatever is defined in the image."
                             },
+                            "cpuLimit": {
+                              "type": "string"
+                            },
+                            "cpuRequest": {
+                              "type": "string"
+                            },
                             "dedicatedPod": {
                               "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
                               "type": "boolean",
@@ -2863,6 +2896,9 @@
                               "type": "string"
                             },
                             "memoryLimit": {
+                              "type": "string"
+                            },
+                            "memoryRequest": {
                               "type": "string"
                             },
                             "mountSources": {

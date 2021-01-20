@@ -4256,6 +4256,10 @@ spec:
                           items:
                             type: string
                           type: array
+                        cpuLimit:
+                          type: string
+                        cpuRequest:
+                          type: string
                         dedicatedPod:
                           description: "Specify if a container should run in its own
                             separated pod, instead of running as part of the main
@@ -4352,6 +4356,8 @@ spec:
                         image:
                           type: string
                         memoryLimit:
+                          type: string
+                        memoryRequest:
                           type: string
                         mountSources:
                           description: "Toggles whether or not the project source
@@ -4959,6 +4965,10 @@ spec:
                                     items:
                                       type: string
                                     type: array
+                                  cpuLimit:
+                                    type: string
+                                  cpuRequest:
+                                    type: string
                                   dedicatedPod:
                                     description: "Specify if a container should run
                                       in its own separated pod, instead of running
@@ -5063,6 +5073,8 @@ spec:
                                   image:
                                     type: string
                                   memoryLimit:
+                                    type: string
+                                  memoryRequest:
                                     type: string
                                   mountSources:
                                     description: "Toggles whether or not the project
@@ -5736,6 +5748,10 @@ spec:
                               items:
                                 type: string
                               type: array
+                            cpuLimit:
+                              type: string
+                            cpuRequest:
+                              type: string
                             dedicatedPod:
                               description: "Specify if a container should run in its
                                 own separated pod, instead of running as part of the
@@ -5836,6 +5852,8 @@ spec:
                             image:
                               type: string
                             memoryLimit:
+                              type: string
+                            memoryRequest:
                               type: string
                             mountSources:
                               description: "Toggles whether or not the project source
@@ -6432,6 +6450,10 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                      cpuLimit:
+                                        type: string
+                                      cpuRequest:
+                                        type: string
                                       dedicatedPod:
                                         description: "Specify if a container should
                                           run in its own separated pod, instead of
@@ -6542,6 +6564,8 @@ spec:
                                       image:
                                         type: string
                                       memoryLimit:
+                                        type: string
+                                      memoryRequest:
                                         type: string
                                       mountSources:
                                         description: "Toggles whether or not the project

@@ -379,6 +379,15 @@ type ContainerParentOverride struct {
 	// +optional
 	MemoryLimit string `json:"memoryLimit,omitempty"`
 
+	// +optional
+	MemoryRequest string `json:"memoryRequest,omitempty"`
+
+	// +optional
+	CpuLimit string `json:"cpuLimit,omitempty"`
+
+	// +optional
+	CpuRequest string `json:"cpuRequest,omitempty"`
+
 	// The command to run in the dockerimage component instead of the default one provided in the image.
 	//
 	// Defaults to an empty array, meaning use whatever is defined in the image.
@@ -931,6 +940,15 @@ type ContainerPluginOverrideParentOverride struct {
 
 	// +optional
 	MemoryLimit string `json:"memoryLimit,omitempty"`
+
+	// +optional
+	MemoryRequest string `json:"memoryRequest,omitempty"`
+
+	// +optional
+	CpuLimit string `json:"cpuLimit,omitempty"`
+
+	// +optional
+	CpuRequest string `json:"cpuRequest,omitempty"`
 
 	// The command to run in the dockerimage component instead of the default one provided in the image.
 	//
