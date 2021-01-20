@@ -44,11 +44,11 @@ func (e *InvalidVolumeError) Error() string {
 
 // MissingVolumeMountError returns an error if the container volume mount does not reference a valid volume component
 type MissingVolumeMountError struct {
-	volumeName string
+	errMsg string
 }
 
 func (e *MissingVolumeMountError) Error() string {
-	return fmt.Sprintf("unable to find volume mount %s in devfile volume components", e.volumeName)
+	return fmt.Sprintf("unable to find the following volume mounts in devfile volume components: %s", e.errMsg)
 }
 
 // InvalidEndpointError returns an error if the component endpoint is invalid

@@ -2,21 +2,25 @@ package validation
 
 import (
 	"fmt"
-	"reflect"
 	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
-// ValidateCommands validates the devfile commands:
-// 1. if the command id is all numeric, an error is returned
-// 2. if there are commands with duplicate IDs, an error is returned
-// 2. checks if its either a valid command
-// 3. checks if commands belonging to a specific group obeys the rule of 1 default command
+// ValidateCommands validates the devfile commands and checks:
+// 1. the command id is not all numeric
+// 2. there are no duplicate command ids
+// 3. the command type is not invalid
+// 4. commands belonging to a specific group obeys the rule of 1 default command
 func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (err error) {
-	processedCommands := make(map[string]string, len(commands))
-	groupCommandMap := make(map[v1alpha2.CommandGroup][]v1alpha2.Command)
+	// processedCommands := make(map[string]string, len(commands))
+	groupKindCommandMap := make(map[v1alpha2.CommandGroupKind][]v1alpha2.Command)
 	commandMap := getCommandsMap(commands)
+
+	err = v1alpha2.CheckDuplicateKeys(commands)
+	if err != nil {
+		return err
+	}
 
 	for _, command := range commands {
 		// Check if command id is all numeric
@@ -24,29 +28,22 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
 		}
 
-		// Check if the command is in the list of already processed commands
-		// If there's a hit, it means more than one command share the same ID and we should error out
-		if _, exists := processedCommands[command.Id]; exists {
-			return &InvalidCommandError{commandId: command.Id, reason: "duplicate commands present with the same id"}
-		}
-		processedCommands[command.Id] = command.Id
-
 		parentCommands := make(map[string]string)
 		err = validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
 			return err
 		}
 
-		commandGroup := *getGroup(command)
-		if !reflect.DeepEqual(commandGroup, v1alpha2.CommandGroup{}) {
-			groupCommandMap[commandGroup] = append(groupCommandMap[commandGroup], command)
+		commandGroup := getGroup(command)
+		if commandGroup != nil {
+			groupKindCommandMap[commandGroup.Kind] = append(groupKindCommandMap[commandGroup.Kind], command)
 		}
 	}
 
 	groupErrors := ""
-	for group, commands := range groupCommandMap {
+	for groupKind, commands := range groupKindCommandMap {
 		if err = validateGroup(commands); err != nil {
-			groupErrors += fmt.Sprintf("\ncommand group %s error - %s", group.Kind, err.Error())
+			groupErrors += fmt.Sprintf("\ncommand group %s error - %s", groupKind, err.Error())
 		}
 	}
 
@@ -156,7 +153,7 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 }
 
 // validateCompositeCommand checks that the specified composite command is valid. The command:
-// 1. should not reference itself via s subcommand
+// 1. should not reference itself via a subcommand
 // 2. should not indirectly reference itself via a subcommand which is a composite command
 // 3. should reference a valid devfile command
 // 4. should have a valid exec sub command

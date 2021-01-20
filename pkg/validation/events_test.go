@@ -12,13 +12,13 @@ func TestValidateEvents(t *testing.T) {
 	containers := []string{"container1", "container2"}
 
 	commands := []v1alpha2.Command{
-		generateDummyApplyCommand("apply1", containers[0], v1alpha2.CommandGroup{}),
-		generateDummyApplyCommand("apply2", containers[0], v1alpha2.CommandGroup{}),
-		generateDummyExecCommand("exec1", containers[1], v1alpha2.CommandGroup{}),
-		generateDummyExecCommand("exec2", containers[1], v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeOnlyExec", []string{"exec1", "exec2"}, v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, v1alpha2.CommandGroup{}),
+		generateDummyApplyCommand("apply1", containers[0], nil),
+		generateDummyApplyCommand("apply2", containers[0], nil),
+		generateDummyExecCommand("exec1", containers[1], nil),
+		generateDummyExecCommand("exec2", containers[1], nil),
+		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, nil),
+		generateDummyCompositeCommand("compositeOnlyExec", []string{"exec1", "exec2"}, nil),
+		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, nil),
 	}
 
 	tests := []struct {
@@ -84,13 +84,13 @@ func TestIsEventValid(t *testing.T) {
 	containers := []string{"container1", "container2"}
 
 	commands := []v1alpha2.Command{
-		generateDummyApplyCommand("apply1", containers[0], v1alpha2.CommandGroup{}),
-		generateDummyApplyCommand("apply2", containers[0], v1alpha2.CommandGroup{}),
-		generateDummyExecCommand("exec1", containers[1], v1alpha2.CommandGroup{}),
-		generateDummyExecCommand("exec2", containers[1], v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeOnlyExec", []string{"exec1", "exec2"}, v1alpha2.CommandGroup{}),
-		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, v1alpha2.CommandGroup{}),
+		generateDummyApplyCommand("apply1", containers[0], nil),
+		generateDummyApplyCommand("apply2", containers[0], nil),
+		generateDummyExecCommand("exec1", containers[1], nil),
+		generateDummyExecCommand("exec2", containers[1], nil),
+		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, nil),
+		generateDummyCompositeCommand("compositeOnlyExec", []string{"exec1", "exec2"}, nil),
+		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, nil),
 	}
 
 	tests := []struct {

@@ -120,10 +120,10 @@ func TestValidateComponents(t *testing.T) {
 		wantErrType error
 	}{
 		{
-			name: "Case 1: Duplicate volume components present",
+			name: "Case 1: Duplicate components present",
 			components: []v1alpha2.Component{
-				generateDummyVolumeComponent("myvol", "1Gi"),
-				generateDummyVolumeComponent("myvol", "1Gi"),
+				generateDummyVolumeComponent("component1", "1Gi"),
+				generateDummyContainerComponent("component1", volMounts, nil, nil),
 			},
 			wantErr: true,
 		},
@@ -162,7 +162,8 @@ func TestValidateComponents(t *testing.T) {
 			name: "Case 6: Invalid volume mount",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "1Gi"),
-				generateDummyContainerComponent("container", invalidVolMounts, nil, nil),
+				generateDummyContainerComponent("container1", invalidVolMounts, nil, nil),
+				generateDummyContainerComponent("container2", invalidVolMounts, nil, nil),
 			},
 			wantErr: true,
 		},

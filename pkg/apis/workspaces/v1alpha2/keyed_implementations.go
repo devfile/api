@@ -1,6 +1,7 @@
 package v1alpha2
 
 import (
+	"fmt"
 	"reflect"
 )
 
@@ -17,4 +18,24 @@ func extractKeys(keyedList interface{}) []Keyed {
 		}
 	}
 	return keys
+}
+
+// CheckDuplicateKeys checks if duplicate keys are present in the devfile objects
+func CheckDuplicateKeys(keyedList interface{}) error {
+	seen := map[string]bool{}
+	value := reflect.ValueOf(keyedList)
+	for i := 0; i < value.Len(); i++ {
+		elem := value.Index(i)
+		if elem.CanInterface() {
+			i := elem.Interface()
+			if keyed, ok := i.(Keyed); ok {
+				key := keyed.Key()
+				if seen[key] {
+					return fmt.Errorf("duplicate key: %s", key)
+				}
+				seen[key] = true
+			}
+		}
+	}
+	return nil
 }
