@@ -70,11 +70,12 @@ func (e *InvalidEndpointError) Error() string {
 
 // InvalidComponentError returns an error if the component is invalid
 type InvalidComponentError struct {
-	name string
+	componentName string
+	reason        string
 }
 
 func (e *InvalidComponentError) Error() string {
-	return fmt.Sprintf("devfile contains multiple components with same name: %v", e.name)
+	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
 }
 
 // InvalidNameOrIdError returns an error if the name or id is invalid

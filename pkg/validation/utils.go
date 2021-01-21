@@ -2,7 +2,7 @@ package validation
 
 import (
 	"net/url"
-	"strconv"
+	"regexp"
 	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -21,11 +21,9 @@ func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 }
 
 // isInt returns true if the string is an integer, false otherwise
-func isInt(str string) bool {
-	if _, err := strconv.Atoi(str); err == nil {
-		return true
-	}
-	return false
+func isInt(str string) (bool, error) {
+	match, err := regexp.MatchString("^[0-9]+$", str)
+	return match, err
 }
 
 // ValidateURI checks if the string is with valid uri format, return error if not valid

@@ -18,7 +18,7 @@ func TestIsInt(t *testing.T) {
 		},
 		{
 			name:       "Case 2: alphanumeric string",
-			arg:        "1234abc",
+			arg:        "pp1234abc",
 			wantResult: false,
 		},
 		{
@@ -29,8 +29,10 @@ func TestIsInt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := isInt(tt.arg)
-			if result != tt.wantResult {
+			result, err := isInt(tt.arg)
+			if err != nil {
+				t.Errorf("unexpected err %v", err)
+			} else if result != tt.wantResult {
 				t.Errorf("TestIsInt result: %v, wantResult: %v", result, tt.wantResult)
 			}
 		})

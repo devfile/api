@@ -35,7 +35,10 @@ func ValidateComponents(components []v1alpha2.Component) error {
 
 	for _, component := range components {
 		// Check if component name is all numeric
-		if isInt(component.Name) {
+		isNameNumeric, err := isInt(component.Name)
+		if err != nil {
+			return &InvalidComponentError{componentName: component.Name, reason: err.Error()}
+		} else if isNameNumeric {
 			return &InvalidNameOrIdError{name: component.Name, resourceType: "component"}
 		}
 
@@ -97,20 +100,16 @@ func ValidateComponents(components []v1alpha2.Component) error {
 	}
 
 	// Check if the volume mounts mentioned in the containers are referenced by a volume component
-	// var invalidVolumeMounts []string
 	var invalidVolumeMountsErr string
 	for componentName, volumeMountName := range processedVolumeMounts {
 		if _, ok := processedVolumes[volumeMountName]; !ok {
-			// invalidVolumeMounts = append(invalidVolumeMounts, volumeMountName)
 			invalidVolumeMountsErr += fmt.Sprintf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
 		}
 	}
 
 	if len(invalidVolumeMountsErr) > 0 {
-		// return &MissingVolumeMountError{volumeName: strings.Join(invalidVolumeMounts, ",")}
 		return &MissingVolumeMountError{errMsg: invalidVolumeMountsErr}
 	}
 
-	// Successful
 	return nil
 }

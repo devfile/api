@@ -13,7 +13,6 @@ import (
 // 3. the command type is not invalid
 // 4. commands belonging to a specific group obeys the rule of 1 default command
 func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (err error) {
-	// processedCommands := make(map[string]string, len(commands))
 	groupKindCommandMap := make(map[v1alpha2.CommandGroupKind][]v1alpha2.Command)
 	commandMap := getCommandsMap(commands)
 
@@ -24,10 +23,14 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 	for _, command := range commands {
 		// Check if command id is all numeric
-		if isInt(command.Id) {
+		isIDNumeric, err := isInt(command.Id)
+		if err != nil {
+			return &InvalidCommandError{commandId: command.Id, reason: err.Error()}
+		} else if isIDNumeric {
 			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
 		}
 
+		// parentCommands is a map to keep a track of all the parent commands when validating the composite command's subcommands recursively
 		parentCommands := make(map[string]string)
 		err = validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
@@ -54,7 +57,8 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 	return err
 }
 
-// validateCommand validates a given devfile command
+// validateCommand validates a given devfile command where parentCommands is a map to track all the parent commands when validating
+// the composite command's subcommands recursilvely and devfileCommands is a map of command id to the devfile command
 func validateCommand(command v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) (err error) {
 
 	switch {
@@ -157,6 +161,8 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 // 2. should not indirectly reference itself via a subcommand which is a composite command
 // 3. should reference a valid devfile command
 // 4. should have a valid exec sub command
+// where parentCommands is a map to track all the parent commands when validating the composite command's subcommands recursilvely
+// and devfileCommands is a map of command id to the devfile command
 func validateCompositeCommand(command *v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) error {
 
 	// Store the command ID in a map of parent commands

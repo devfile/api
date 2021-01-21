@@ -324,13 +324,14 @@ func TestValidateCompositeCommand(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Case 6: test",
+			name: "Case 6: Valid Nested Composite Command",
 			execCommands: []v1alpha2.Command{
-				generateDummyExecCommand("exec1", component, &v1alpha2.CommandGroup{Kind: runGroup}),
-				generateDummyExecCommand("exec2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
+				generateDummyExecCommand("plain-command", component, nil),
 			},
 			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{"exec1", "exec2"}, &v1alpha2.CommandGroup{Kind: buildGroup}),
+				generateDummyCompositeCommand("composite-a", []string{"plain-command"}, nil),
+				generateDummyCompositeCommand("composite-b", []string{"plain-command"}, nil),
+				generateDummyCompositeCommand("composite-1", []string{"composite-a", "composite-b"}, nil),
 			},
 			wantErr: false,
 		},
