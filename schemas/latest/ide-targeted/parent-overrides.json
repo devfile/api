@@ -1461,6 +1461,11 @@
                       "description": "Allows specifying the definition of a volume shared by several other components",
                       "type": "object",
                       "properties": {
+                        "ephemeral": {
+                          "description": "Ephemeral volumes are not stored persistently across restarts. Defaults to false",
+                          "type": "boolean",
+                          "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults to false"
+                        },
                         "size": {
                           "description": "Size of the volume",
                           "type": "string",
@@ -1510,6 +1515,11 @@
             "description": "Allows specifying the definition of a volume shared by several other components",
             "type": "object",
             "properties": {
+              "ephemeral": {
+                "description": "Ephemeral volumes are not stored persistently across restarts. Defaults to false",
+                "type": "boolean",
+                "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults to false"
+              },
               "size": {
                 "description": "Size of the volume",
                 "type": "string",
