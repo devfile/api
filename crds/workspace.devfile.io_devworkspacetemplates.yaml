@@ -1582,6 +1582,10 @@ spec:
                                 description: Configuration overriding for a Volume
                                   component in a plugin
                                 properties:
+                                  ephemeral:
+                                    description: Ephemeral volumes are not stored
+                                      persistently across restarts. Defaults to false
+                                    type: boolean
                                   name:
                                     description: Mandatory name that allows referencing
                                       the Volume component in Container volume mounts
@@ -1632,6 +1636,10 @@ spec:
                       description: Allows specifying the definition of a volume shared
                         by several other components
                       properties:
+                        ephemeral:
+                          description: Ephemeral volumes are not stored persistently
+                            across restarts. Defaults to false
+                          type: boolean
                         name:
                           description: Mandatory name that allows referencing the
                             Volume component in Container volume mounts or inside
@@ -3286,6 +3294,11 @@ spec:
                                     description: Configuration overriding for a Volume
                                       component in a plugin
                                     properties:
+                                      ephemeral:
+                                        description: Ephemeral volumes are not stored
+                                          persistently across restarts. Defaults to
+                                          false
+                                        type: boolean
                                       name:
                                         description: Mandatory name that allows referencing
                                           the Volume component in Container volume
@@ -3336,6 +3349,10 @@ spec:
                           description: Allows specifying the definition of a volume
                             shared by several other components
                           properties:
+                            ephemeral:
+                              description: Ephemeral volumes are not stored persistently
+                                across restarts. Defaults to false
+                              type: boolean
                             name:
                               description: Mandatory name that allows referencing
                                 the Volume component in Container volume mounts or
@@ -5345,6 +5362,10 @@ spec:
                                 description: Allows specifying the definition of a
                                   volume shared by several other components
                                 properties:
+                                  ephemeral:
+                                    description: Ephemeral volumes are not stored
+                                      persistently across restarts. Defaults to false
+                                    type: boolean
                                   size:
                                     description: Size of the volume
                                     type: string
@@ -5385,6 +5406,10 @@ spec:
                       description: Allows specifying the definition of a volume shared
                         by several other components
                       properties:
+                        ephemeral:
+                          description: Ephemeral volumes are not stored persistently
+                            across restarts. Defaults to false
+                          type: boolean
                         size:
                           description: Size of the volume
                           type: string
@@ -6850,6 +6875,11 @@ spec:
                                     description: Allows specifying the definition
                                       of a volume shared by several other components
                                     properties:
+                                      ephemeral:
+                                        description: Ephemeral volumes are not stored
+                                          persistently across restarts. Defaults to
+                                          false
+                                        type: boolean
                                       size:
                                         description: Size of the volume
                                         type: string
@@ -6888,6 +6918,10 @@ spec:
                           description: Allows specifying the definition of a volume
                             shared by several other components
                           properties:
+                            ephemeral:
+                              description: Ephemeral volumes are not stored persistently
+                                across restarts. Defaults to false
+                              type: boolean
                             size:
                               description: Size of the volume
                               type: string
