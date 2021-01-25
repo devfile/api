@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/stretchr/testify/assert"
 )
 
 var buildGroup = v1alpha2.BuildCommandGroupKind
@@ -110,95 +111,107 @@ func TestValidateCommands(t *testing.T) {
 		Inlined: "inlined code",
 	}
 
+	duplicateKeyErr := "duplicate key: somecommand1"
+	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
+	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
+	invalidURIErr := "invalid URI for request"
+	invalidCmdErr := ".*command does not map to a container component"
+
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
-		wantErr  bool
+		wantErr  *string
 	}{
 		{
-			name: "Case 1: Valid Exec Command",
+			name: "Valid Exec Command",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("command", component, &v1alpha2.CommandGroup{Kind: runGroup}),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 2: Valid Composite Command",
+			name: "Valid Composite Command",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyExecCommand("somecommand2", component, nil),
 				generateDummyCompositeCommand("composite1", []string{"somecommand1", "somecommand2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 3: Duplicate commands",
+			name: "Duplicate commands",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyExecCommand("somecommand1", component, nil),
 			},
-			wantErr: true,
+			wantErr: &duplicateKeyErr,
 		},
 		{
-			name: "Case 4: Duplicate commands, different types",
+			name: "Duplicate commands, different types",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyCompositeCommand("somecommand1", []string{"fakecommand"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: true,
+			wantErr: &duplicateKeyErr,
 		},
 		{
-			name: "Case 5: Multiple same group kind but no default",
+			name: "Different command types belonging to the same group but no default",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			wantErr: true,
+			wantErr: &noDefaultCmdErr,
 		},
 		{
-			name: "Case 6: Multiple same group kind with more than 1 default",
+			name: "Different command types belonging to the same group with more than one default",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 				generateDummyExecCommand("somecommand3", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: true,
+			wantErr: &multipleDefaultCmdErr,
 		},
 		{
-			name: "Case 7: Valid VscodeTask command with URI",
+			name: "Valid VscodeTask command with URI",
 			commands: []v1alpha2.Command{
 				generateDummyVscodeTaskCommand("somevscodetask", uriCommandLocation, nil),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 8: Valid VscodeLaunch command with Inlined",
+			name: "Valid VscodeLaunch command with Inlined",
 			commands: []v1alpha2.Command{
 				generateDummyVscodeLaunchCommand("somevscodelaunch", inlinedCommandLocation, nil),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 9: Invalid VscodeLaunch command with wrong URI",
+			name: "Invalid VscodeLaunch command with wrong URI",
 			commands: []v1alpha2.Command{
 				generateDummyVscodeLaunchCommand("somevscodelaunch", inValidUriCommandLocation, nil),
 			},
-			wantErr: true,
+			wantErr: &invalidURIErr,
 		},
 		{
-			name: "Case 10: Invalid apply command with wrong component",
+			name: "Invalid Apply command with wrong component",
 			commands: []v1alpha2.Command{
 				generateDummyApplyCommand("command", "invalidComponent", nil),
 			},
-			wantErr: true,
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name: "Valid Composite command with one subcommand referencing the other",
+			commands: []v1alpha2.Command{
+				generateDummyCompositeCommand("composite-1", []string{"composite-a", "composite-b"}, nil),
+				generateDummyExecCommand("basic-exec", component, nil),
+				generateDummyCompositeCommand("composite-b", []string{"composite-a"}, nil),
+				generateDummyCompositeCommand("composite-a", []string{"basic-exec"}, nil),
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateCommands(tt.commands, components)
-			if !tt.wantErr == (err != nil) {
-				t.Errorf("TestValidateAction unexpected error: %v", err)
-				return
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}
@@ -213,48 +226,48 @@ func TestValidateCommandComponent(t *testing.T) {
 		generateDummyContainerComponent(component, nil, nil, nil),
 	}
 
+	invalidCmdErr := ".*command does not map to a container component"
+
 	tests := []struct {
 		name    string
 		command v1alpha2.Command
-		wantErr bool
+		wantErr *string
 	}{
 		{
-			name:    "Case 1: Valid Exec Command",
+			name:    "Valid Exec Command",
 			command: generateDummyExecCommand("command", component, &v1alpha2.CommandGroup{Kind: runGroup}),
-			wantErr: false,
 		},
 		{
-			name:    "Case 2: Invalid Exec Command with missing component",
+			name:    "Invalid Exec Command with missing component",
 			command: generateDummyExecCommand("command", "", &v1alpha2.CommandGroup{Kind: runGroup}),
-			wantErr: true,
+			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Case 3: Valid Exec Command with invalid component",
+			name:    "Valid Exec Command with invalid component",
 			command: generateDummyExecCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
-			wantErr: true,
+			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Case 4: Valid Exec Command with Group nil",
+			name:    "Valid Exec Command with Group nil",
 			command: generateDummyExecCommand("command", component, nil),
-			wantErr: false,
 		},
 		{
-			name:    "Case 5: Valid Apply Command",
+			name:    "Valid Apply Command",
 			command: generateDummyApplyCommand("command", component, nil),
-			wantErr: false,
 		},
 		{
-			name:    "Case 6: Invalid Apply Command with wrong component",
-			command: generateDummyApplyCommand("command", invalidComponent, nil),
-			wantErr: true,
+			name:    "Invalid Apply Command with wrong component",
+			command: generateDummyApplyCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			wantErr: &invalidCmdErr,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validateCommandComponent(tt.command, components)
-			if !tt.wantErr == (err != nil) {
-				t.Errorf("TestValidateAction unexpected error: %v", err)
-				return
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}
@@ -263,90 +276,87 @@ func TestValidateCommandComponent(t *testing.T) {
 func TestValidateCompositeCommand(t *testing.T) {
 
 	component := "alias1"
-	id := []string{"command1", "command2", "command3", "command4", "command5"}
 	validExecCommands := []v1alpha2.Command{
-		generateDummyExecCommand(id[0], component, &v1alpha2.CommandGroup{Kind: runGroup}),
-		generateDummyExecCommand(id[1], component, &v1alpha2.CommandGroup{Kind: buildGroup}),
-		generateDummyExecCommand(id[2], component, &v1alpha2.CommandGroup{Kind: runGroup}),
+		generateDummyExecCommand("command1", component, &v1alpha2.CommandGroup{Kind: runGroup}),
+		generateDummyExecCommand("command2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
+		generateDummyExecCommand("command3", component, &v1alpha2.CommandGroup{Kind: runGroup}),
 	}
 	components := []v1alpha2.Component{
 		generateDummyContainerComponent(component, nil, nil, nil),
 	}
 
+	invalidCmdErr := ".*command does not map to a container component"
+	missingCmdErr := ".*the command .* mentioned in the composite command does not exist in the devfile"
+	selfRefCmdErr := ".*composite command cannot reference itself"
+	indirectRefCmdErr := "composite command cannot indirectly reference itself"
+
 	tests := []struct {
-		name              string
-		compositeCommands []v1alpha2.Command
-		execCommands      []v1alpha2.Command
-		wantErr           bool
+		name                 string
+		commands             []v1alpha2.Command
+		testCompositeCommand string
+		wantErr              *string
 	}{
 		{
-			name: "Case 1: Valid Composite Command",
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{id[0], id[1], id[2]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
-			},
-			execCommands: validExecCommands,
-			wantErr:      false,
+			name: "Valid Composite Command",
+			commands: append(validExecCommands,
+				generateDummyCompositeCommand("command4", []string{"command1", "command2", "command3"}, &v1alpha2.CommandGroup{Kind: buildGroup})),
+			testCompositeCommand: "command4",
 		},
 		{
-			name: "Case 2: Invalid composite command, references non-existent command",
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{id[0], "fakecommand", id[2]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
-			},
-			execCommands: validExecCommands,
-			wantErr:      true,
+			name: "Invalid composite command, references non-existent command",
+			commands: append(validExecCommands,
+				generateDummyCompositeCommand("command4", []string{"command1", "fakecommand", "command3"}, &v1alpha2.CommandGroup{Kind: buildGroup})),
+			testCompositeCommand: "command4",
+			wantErr:              &missingCmdErr,
 		},
 		{
-			name: "Case 3: Invalid composite command, references itself",
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{id[0], id[3], id[2]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
-			},
-			execCommands: validExecCommands,
-			wantErr:      true,
+			name: "Invalid composite command, references itself",
+			commands: append(validExecCommands,
+				generateDummyCompositeCommand("command4", []string{"command1", "command4", "command3"}, &v1alpha2.CommandGroup{Kind: buildGroup})),
+			testCompositeCommand: "command4",
+			wantErr:              &selfRefCmdErr,
 		},
 		{
-			name: "Case 4: Invalid composite command, indirectly references itself",
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{id[4], id[3], id[2]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
-				generateDummyCompositeCommand(id[4], []string{id[0], id[3], id[2]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
-			},
-			execCommands: validExecCommands,
-			wantErr:      true,
+			name: "Invalid composite command, indirectly references itself",
+			commands: append(validExecCommands,
+				generateDummyCompositeCommand("command4", []string{"command5", "command3"}, &v1alpha2.CommandGroup{Kind: buildGroup}),
+				generateDummyCompositeCommand("command5", []string{"command1", "command4", "command3"}, &v1alpha2.CommandGroup{Kind: buildGroup})),
+			testCompositeCommand: "command4",
+			wantErr:              &indirectRefCmdErr,
 		},
 		{
-			name: "Case 5: Invalid composite command, points to invalid exec command",
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand(id[3], []string{id[0], id[1]}, &v1alpha2.CommandGroup{Kind: buildGroup}),
+			name: "Invalid composite command, points to invalid exec command",
+			commands: []v1alpha2.Command{
+				generateDummyCompositeCommand("command4", []string{"command1", "command2"}, &v1alpha2.CommandGroup{Kind: buildGroup}),
+				generateDummyExecCommand("command1", component, &v1alpha2.CommandGroup{Kind: runGroup}),
+				generateDummyExecCommand("command2", "some-fake-component", &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			execCommands: []v1alpha2.Command{
-				generateDummyExecCommand(id[0], component, &v1alpha2.CommandGroup{Kind: runGroup}),
-				generateDummyExecCommand(id[1], "some-fake-component", &v1alpha2.CommandGroup{Kind: buildGroup}),
-			},
-			wantErr: true,
+			testCompositeCommand: "command4",
+			wantErr:              &invalidCmdErr,
 		},
 		{
-			name: "Case 6: Valid Nested Composite Command",
-			execCommands: []v1alpha2.Command{
-				generateDummyExecCommand("plain-command", component, nil),
-			},
-			compositeCommands: []v1alpha2.Command{
-				generateDummyCompositeCommand("composite-a", []string{"plain-command"}, nil),
-				generateDummyCompositeCommand("composite-b", []string{"plain-command"}, nil),
+			name: "Valid Composite command with one subcommand referencing the other",
+			commands: []v1alpha2.Command{
+				generateDummyExecCommand("basic-exec", component, nil),
+				generateDummyCompositeCommand("composite-a", []string{"basic-exec"}, nil),
+				generateDummyCompositeCommand("composite-b", []string{"composite-a"}, nil),
 				generateDummyCompositeCommand("composite-1", []string{"composite-a", "composite-b"}, nil),
 			},
-			wantErr: false,
+			testCompositeCommand: "composite-1",
 		},
 	}
 	for _, tt := range tests {
-		commandMap := getCommandsMap(append(tt.execCommands, tt.compositeCommands...))
+		commandMap := getCommandsMap(tt.commands)
 
 		t.Run(tt.name, func(t *testing.T) {
-			cmd := tt.compositeCommands[0]
+			cmd := commandMap[tt.testCompositeCommand]
 			parentCommands := make(map[string]string)
 
 			err := validateCompositeCommand(&cmd, parentCommands, commandMap, components)
-			if !tt.wantErr == (err != nil) {
-				t.Errorf("TestValidateAction unexpected error: %v", err)
-				return
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}
@@ -356,56 +366,58 @@ func TestValidateGroup(t *testing.T) {
 
 	component := "alias1"
 
+	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
+	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
+
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
-		wantErr  bool
+		wantErr  *string
 	}{
 		{
-			name: "Case 1: Two default run commands",
+			name: "Two default run commands",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 			},
-			wantErr: true,
+			wantErr: &multipleDefaultCmdErr,
 		},
 		{
-			name: "Case 2: No default for more than one build commands",
+			name: "No default for more than one build commands",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("build command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			wantErr: true,
+			wantErr: &noDefaultCmdErr,
 		},
 		{
-			name: "Case 3: One command does not need default",
+			name: "One command does not need default",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 4: One command can have default",
+			name: "One command can have default",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 5: Composite commands in group",
+			name: "Composite commands in group",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("build command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("composite1", []string{"build command", "build command 2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validateGroup(tt.commands)
-			if !tt.wantErr && err != nil {
-				t.Errorf("TestValidateGroup unexpected error: %v", err)
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}

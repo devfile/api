@@ -8,6 +8,8 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
+var alphaRegexp = regexp.MustCompile(`^[0-9]+$`)
+
 // getCommandsMap iterates through the commands and returns a map of command
 func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 	commandMap := make(map[string]v1alpha2.Command, len(commands))
@@ -21,9 +23,9 @@ func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 }
 
 // isInt returns true if the string is an integer, false otherwise
-func isInt(str string) (bool, error) {
-	match, err := regexp.MatchString("^[0-9]+$", str)
-	return match, err
+func isInt(str string) bool {
+	match := alphaRegexp.MatchString(str)
+	return match
 }
 
 // ValidateURI checks if the string is with valid uri format, return error if not valid

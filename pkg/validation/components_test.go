@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/stretchr/testify/assert"
 )
 
 // generateDummyContainerComponent returns a dummy container component for testing
@@ -77,6 +78,21 @@ func generateDummyKubernetesComponent(name string, endpoints []v1alpha2.Endpoint
 	}
 }
 
+// generateDummyPluginComponent returns a dummy Plugin component for testing
+func generateDummyPluginComponent(name, url string) v1alpha2.Component {
+
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Plugin: &v1alpha2.PluginComponent{
+				ImportReference: v1alpha2.ImportReference{
+					RegistryUrl: url,
+				},
+			},
+		},
+	}
+}
+
 func TestValidateComponents(t *testing.T) {
 
 	volMounts := []v1alpha2.VolumeMount{
@@ -109,124 +125,135 @@ func TestValidateComponents(t *testing.T) {
 		},
 	}
 
-	endpoint1 := generateDummyEndpoint("url1", 8080)
-	endpoint2 := generateDummyEndpoint("url1", 8081)
-	endpoint3 := generateDummyEndpoint("url2", 8080)
+	endpointUrl18080 := generateDummyEndpoint("url1", 8080)
+	endpointUrl18081 := generateDummyEndpoint("url1", 8081)
+	endpointUrl28080 := generateDummyEndpoint("url2", 8080)
+
+	invalidVolMountErr := ".*\nvolume mount myinvalidvol belonging to the container component.*\nvolume mount myinvalidvol2 belonging to the container component.*"
+	duplicateCmdErr := "duplicate key: component1"
+	reservedEnvErr := "env variable .* is reserved and cannot be customized in component.*"
+	invalidSizeErr := "size .* for volume component is invalid"
+	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
+	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
+	invalidURIErr := ".*invalid URI for request"
+	nameNumericErr := "name cannot be with all numeric characters"
 
 	tests := []struct {
-		name        string
-		components  []v1alpha2.Component
-		wantErr     bool
-		wantErrType error
+		name       string
+		components []v1alpha2.Component
+		wantErr    *string
 	}{
 		{
-			name: "Case 1: Duplicate components present",
+			name: "Duplicate components present",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("component1", "1Gi"),
 				generateDummyContainerComponent("component1", volMounts, nil, nil),
 			},
-			wantErr: true,
+			wantErr: &duplicateCmdErr,
 		},
 		{
-			name: "Case 2: Valid container and volume component",
+			name: "Valid container and volume component",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "1Gi"),
 				generateDummyContainerComponent("container", volMounts, nil, nil),
 				generateDummyContainerComponent("container2", volMounts, nil, nil),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 3: Invalid container using reserved env PROJECT_SOURCE",
+			name: "Invalid container using reserved env PROJECT_SOURCE",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("container1", nil, nil, projectSourceEnv),
 			},
-			wantErr: true,
+			wantErr: &reservedEnvErr,
 		},
 		{
-			name: "Case 4: Invalid container using reserved env PROJECTS_ROOT",
+			name: "Invalid container using reserved env PROJECTS_ROOT",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("container", nil, nil, projectsRootEnv),
 			},
-			wantErr: true,
+			wantErr: &reservedEnvErr,
 		},
 		{
-			name: "Case 5: Invalid volume component size",
+			name: "Invalid volume component size",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "invalid"),
 				generateDummyContainerComponent("container", nil, nil, nil),
 			},
-			wantErr: true,
+			wantErr: &invalidSizeErr,
 		},
 		{
-			name: "Case 6: Invalid volume mount",
+			name: "Invalid volume mount referencing a wrong volume component",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "1Gi"),
 				generateDummyContainerComponent("container1", invalidVolMounts, nil, nil),
-				generateDummyContainerComponent("container2", invalidVolMounts, nil, nil),
 			},
-			wantErr: true,
+			wantErr: &invalidVolMountErr,
 		},
 		{
-			name: "Case 7: Invalid container with same endpoint names",
+			name: "Invalid containers with the same endpoint names",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpoint1}, nil),
-				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpoint2}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
+				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl18081}, nil),
 			},
-			wantErr: true,
+			wantErr: &sameEndpointNameErr,
 		},
 		{
-			name: "Case 8: Invalid container with same endpoint target ports",
+			name: "Invalid containers with the same endpoint target ports",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpoint1}, nil),
-				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpoint3}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
+				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl28080}, nil),
 			},
-			wantErr: true,
+			wantErr: &sameTargetPortErr,
 		},
 		{
-			name: "Case 9: Valid container with multiple same target ports but different endpoint name",
+			name: "Valid container with same target ports but different endpoint name",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpoint1, endpoint3}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 10: Invalid Openshift Component with bad URI",
+			name: "Invalid Openshift Component with bad URI",
 			components: []v1alpha2.Component{
-				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint3}, "http//wronguri"),
+				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, "http//wronguri"),
 			},
-			wantErr: true,
+			wantErr: &invalidURIErr,
 		},
 		{
-			name: "Case 11: Valid Kubernetes Component",
+			name: "Valid Kubernetes Component",
 			components: []v1alpha2.Component{
-				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint3}, "http://uri"),
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, "http://uri"),
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 12: Invalid OpenShift Component endpoints",
+			name: "Invalid OpenShift Component with same endpoint names",
 			components: []v1alpha2.Component{
-				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpoint1, endpoint2}, "http://uri"),
+				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl18081}, "http://uri"),
 			},
-			wantErr: true,
+			wantErr: &sameEndpointNameErr,
 		},
 		{
-			name: "Case 13: Invalid component name with all numeric values",
+			name: "Invalid component name with all numeric values",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("123", "1Gi"),
 			},
-			wantErr: true,
+			wantErr: &nameNumericErr,
+		},
+		{
+			name: "Invalid plugin registry url",
+			components: []v1alpha2.Component{
+				generateDummyPluginComponent("abc", "http//invalidregistryurl"),
+			},
+			wantErr: &invalidURIErr,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := ValidateComponents(tt.components)
+			err := ValidateComponents(tt.components)
 
-			if tt.wantErr && got == nil {
-				t.Errorf("TestValidateComponents error - expected an err but got nil")
-			} else if !tt.wantErr && got != nil {
-				t.Errorf("TestValidateComponents error - unexpected err %v", got)
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}

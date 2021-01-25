@@ -23,10 +23,8 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 	for _, command := range commands {
 		// Check if command id is all numeric
-		isIDNumeric, err := isInt(command.Id)
-		if err != nil {
-			return &InvalidCommandError{commandId: command.Id, reason: err.Error()}
-		} else if isIDNumeric {
+		isIDNumeric := isInt(command.Id)
+		if isIDNumeric {
 			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
 		}
 
@@ -193,6 +191,7 @@ func validateCompositeCommand(command *v1alpha2.Command, parentCommands map[stri
 		if err != nil {
 			return err
 		}
+		delete(parentCommands, cmd)
 	}
 	return nil
 }

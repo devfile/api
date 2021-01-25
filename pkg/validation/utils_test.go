@@ -12,27 +12,30 @@ func TestIsInt(t *testing.T) {
 		wantResult bool
 	}{
 		{
-			name:       "Case 1: numeric string",
+			name:       "Numeric string",
 			arg:        "1234",
 			wantResult: true,
 		},
 		{
-			name:       "Case 2: alphanumeric string",
-			arg:        "pp1234abc",
+			name:       "Alphanumeric string",
+			arg:        "pp1234abc-1223",
 			wantResult: false,
 		},
 		{
-			name:       "Case 3: string with numbers and character",
-			arg:        "12_34",
+			name:       "String with numbers and character",
+			arg:        "12-34",
+			wantResult: false,
+		},
+		{
+			name:       "Hexadecimal string",
+			arg:        "0xff",
 			wantResult: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := isInt(tt.arg)
-			if err != nil {
-				t.Errorf("unexpected err %v", err)
-			} else if result != tt.wantResult {
+			result := isInt(tt.arg)
+			if result != tt.wantResult {
 				t.Errorf("TestIsInt result: %v, wantResult: %v", result, tt.wantResult)
 			}
 		})
@@ -47,17 +50,17 @@ func TestValidateURI(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Case 1: valid URI format starts with http",
+			name:    "Valid URI format starts with http",
 			uri:     "http://devfile.yaml",
 			wantErr: false,
 		},
 		{
-			name:    "Case 2: invalid URI format starts with http",
+			name:    "Invalid URI format starts with http",
 			uri:     "http//devfile.yaml",
 			wantErr: true,
 		},
 		{
-			name:    "Case 3: valid URI format does not start with http",
+			name:    "Valid URI format does not start with http",
 			uri:     "./devfile.yaml",
 			wantErr: false,
 		},

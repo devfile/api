@@ -4,29 +4,34 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestValidateEndpoints(t *testing.T) {
+
+	nameNumericErr := "name cannot be with all numeric characters"
+	duplicateNameErr := "multiple endpoint entries with same name"
+	duplicatePortErr := "devfile contains multiple containers with same TargetPort"
 
 	tests := []struct {
 		name                  string
 		endpoints             []v1alpha2.Endpoint
 		processedEndpointName map[string]bool
 		processedEndpointPort map[int]bool
-		wantErr               bool
+		wantErr               *string
 	}{
 		{
-			name: "Case 1: Duplicate endpoint name",
+			name: "Duplicate endpoint name",
 			endpoints: []v1alpha2.Endpoint{
 				generateDummyEndpoint("url1", 8080),
 				generateDummyEndpoint("url1", 8081),
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               true,
+			wantErr:               &duplicateNameErr,
 		},
 		{
-			name: "Case 2:  Duplicate endpoint name across components",
+			name: "Duplicate endpoint name across components",
 			endpoints: []v1alpha2.Endpoint{
 				generateDummyEndpoint("url1", 8080),
 			},
@@ -34,20 +39,19 @@ func TestValidateEndpoints(t *testing.T) {
 				"url1": true,
 			},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               true,
+			wantErr:               &duplicateNameErr,
 		},
 		{
-			name: "Case 3:  Duplicate endpoint port within same component",
+			name: "Duplicate endpoint port within same component",
 			endpoints: []v1alpha2.Endpoint{
 				generateDummyEndpoint("url1", 8080),
 				generateDummyEndpoint("url2", 8080),
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               false,
 		},
 		{
-			name: "Case 4:  Duplicate endpoint port across components",
+			name: "Duplicate endpoint port across components",
 			endpoints: []v1alpha2.Endpoint{
 				generateDummyEndpoint("url1", 8080),
 				generateDummyEndpoint("url2", 8081),
@@ -56,26 +60,26 @@ func TestValidateEndpoints(t *testing.T) {
 			processedEndpointPort: map[int]bool{
 				8080: true,
 			},
-			wantErr: true,
+			wantErr: &duplicatePortErr,
 		},
 		{
-			name: "Case 5: numeric endpoint name",
+			name: "Numeric endpoint name",
 			endpoints: []v1alpha2.Endpoint{
 				generateDummyEndpoint("123", 8080),
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               true,
+			wantErr:               &nameNumericErr,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validateEndpoints(tt.endpoints, tt.processedEndpointPort, tt.processedEndpointName)
 
-			if tt.wantErr && err == nil {
-				t.Errorf("TestValidateEndpoints error - expected an err but got nil")
-			} else if !tt.wantErr && err != nil {
-				t.Errorf("TestValidateEndpoints error - unexpected err %v", err)
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}

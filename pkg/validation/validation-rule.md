@@ -38,6 +38,7 @@ Common rules for all components types:
 
 #### Plugin Component
 - Commands in plugins components share the same commands validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
+- Registry URL needs to be in valid format
 
 #### Kubernetes & Openshift component 
 - URI needs to be in valid URI format

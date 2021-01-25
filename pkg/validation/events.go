@@ -66,18 +66,14 @@ func isEventValid(eventNames []string, eventType string, commandMap map[string]v
 		}
 
 		switch eventType {
-		case preStart:
-			fallthrough
-		case postStop:
+		case preStart, postStop:
 			// check if the event is either an apply command or a composite of apply commands
 			if command.Apply == nil && command.Composite == nil {
 				invalidApplyEvents = append(invalidApplyEvents, eventName)
 			} else if command.Composite != nil {
 				invalidApplyEvents = append(invalidApplyEvents, validateCompositeEvents(*command.Composite, eventName, eventType, commandMap)...)
 			}
-		case postStart:
-			fallthrough
-		case preStop:
+		case postStart, preStop:
 			// check if the event is either an exec command or a composite of exec commands
 			if command.Exec == nil && command.Composite == nil {
 				invalidExecEvents = append(invalidExecEvents, eventName)
@@ -116,17 +112,13 @@ func validateCompositeEvents(composite v1alpha2.CompositeCommand, eventName, eve
 	var invalidEvents []string
 
 	switch eventType {
-	case preStart:
-		fallthrough
-	case postStop:
+	case preStart, postStop:
 		for _, subCommand := range composite.Commands {
 			if command, ok := commandMap[subCommand]; ok && command.Apply == nil {
 				invalidEvents = append(invalidEvents, eventName)
 			}
 		}
-	case postStart:
-		fallthrough
-	case preStop:
+	case postStart, preStop:
 		for _, subCommand := range composite.Commands {
 			if command, ok := commandMap[subCommand]; ok && command.Exec == nil {
 				invalidEvents = append(invalidEvents, eventName)

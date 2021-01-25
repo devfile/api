@@ -1,10 +1,10 @@
 package validation
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestValidateEvents(t *testing.T) {
@@ -21,14 +21,16 @@ func TestValidateEvents(t *testing.T) {
 		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, nil),
 	}
 
+	preStartPostStopErr := ".*does not map to a valid devfile command.*\n.*should either map to an apply command or a composite command with apply commands.*"
+	postStartPreStopErr := ".*does not map to a valid devfile command.*\n.*should either map to an exec command or a composite command with exec commands.*"
+
 	tests := []struct {
-		name       string
-		events     v1alpha2.Events
-		wantErr    bool
-		wantErrMsg string
+		name    string
+		events  v1alpha2.Events
+		wantErr *string
 	}{
 		{
-			name: "Case 1: Valid preStart events - Apply and Composite Apply Commands",
+			name: "Valid preStart events - Apply and Composite Apply Commands",
 			events: v1alpha2.Events{
 				WorkspaceEvents: v1alpha2.WorkspaceEvents{
 					PreStart: []string{
@@ -38,27 +40,50 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: false,
 		},
 		{
-			name: "Case 2: Invalid postStart and postStop events",
+			name: "Invalid exec commands in preStart",
 			events: v1alpha2.Events{
 				WorkspaceEvents: v1alpha2.WorkspaceEvents{
-					PostStart: []string{
-						"apply1",
-						"exec2",
-						"compositeExecApply",
-					},
-					PostStop: []string{
-						"apply12",
-						"exec2",
-						"compositeExecApply",
-					},
 					PreStart: []string{
 						"apply12",
 						"exec2",
 						"compositeExecApply",
 					},
+				},
+			},
+			wantErr: &preStartPostStopErr,
+		},
+		{
+			name: "Invalid exec commands in postStop",
+			events: v1alpha2.Events{
+				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+					PostStop: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
+				},
+			},
+			wantErr: &preStartPostStopErr,
+		},
+		{
+			name: "Invalid apply commands in postStart",
+			events: v1alpha2.Events{
+				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+					PostStart: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
+				},
+			},
+			wantErr: &postStartPreStopErr,
+		},
+		{
+			name: "Invalid apply commands in preStop",
+			events: v1alpha2.Events{
+				WorkspaceEvents: v1alpha2.WorkspaceEvents{
 					PreStop: []string{
 						"apply12",
 						"exec2",
@@ -66,14 +91,17 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: true,
+			wantErr: &postStartPreStopErr,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateEvents(tt.events, commands)
-			if err != nil && !tt.wantErr {
-				t.Errorf("TestValidateEvents error: %v", err)
+
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}
@@ -93,94 +121,94 @@ func TestIsEventValid(t *testing.T) {
 		generateDummyCompositeCommand("compositeExecApply", []string{"exec1", "apply1"}, nil),
 	}
 
+	missingCmdErr := "does not map to a valid devfile command"
+	applyCmdErr := "should either map to an apply command or a composite command with apply commands"
+	execCmdErr := "should either map to an exec command or a composite command with exec commands"
+
 	tests := []struct {
 		name       string
 		eventType  string
 		eventNames []string
-		wantErr    bool
-		wantErrMsg string
+		wantErr    *string
 	}{
 		{
-			name:      "Case 1: Valid preStart events - Apply and Composite Apply Commands",
+			name:      "Valid preStart events - Apply and Composite Apply Commands",
 			eventType: preStart,
 			eventNames: []string{
 				"apply1",
 				"apply2",
 				"compositeOnlyApply",
 			},
-			wantErr: false,
 		},
 		{
-			name:      "Case 2: Invalid postStop events - Non-Apply and Composite Apply Commands",
+			name:      "Invalid postStop events - Invalid Exec Command",
 			eventType: postStop,
 			eventNames: []string{
 				"exec2",
 				"apply2",
 				"compositeOnlyApply",
 			},
-			wantErr: true,
+			wantErr: &applyCmdErr,
 		},
 		{
-			name:      "Case 3: Invalid postStop events - Apply and Composite Mixed Commands",
+			name:      "Invalid postStop events - Invalid Composite Command with Exec & Apply Subcommands",
 			eventType: postStop,
 			eventNames: []string{
 				"apply1",
 				"apply2",
 				"compositeExecApply",
 			},
-			wantErr: true,
+			wantErr: &applyCmdErr,
 		},
 		{
-			name:      "Case 4: Valid postStart events - Exec and Composite Exec Commands",
+			name:      "Valid postStart events - Exec and Composite Exec Commands",
 			eventType: postStart,
 			eventNames: []string{
 				"exec1",
 				"exec2",
 				"compositeOnlyExec",
 			},
-			wantErr: false,
 		},
 		{
-			name:      "Case 5: Invalid postStart events - Exec and Composite Mixed Commands",
+			name:      "Invalid postStart events - Invalid Composite Commands with Exec & Apply Subcommands",
 			eventType: postStart,
 			eventNames: []string{
 				"exec1",
 				"exec2",
 				"compositeExecApply",
 			},
-			wantErr: true,
+			wantErr: &execCmdErr,
 		},
 		{
-			name:      "Case 6: Invalid preStop events - Non-Exec and Composite Exec Commands",
+			name:      "Invalid preStop events - Invalid Apply Command",
 			eventType: preStop,
 			eventNames: []string{
 				"exec1",
 				"apply2",
 				"compositeOnlyExec",
 			},
-			wantErr: true,
+			wantErr: &execCmdErr,
 		},
 		{
-			name:      "Case 7: Invalid events - Missing event",
+			name:      "Invalid events - Missing event",
 			eventType: preStop,
 			eventNames: []string{
 				"exec1",
 				"apply2isInvalid",
 				"compositeOnlyExec",
 			},
-			wantErr: true,
+			wantErr: &missingCmdErr,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			commandMap := getCommandsMap(commands)
 			err := isEventValid(tt.eventNames, tt.eventType, commandMap)
-			if err != nil && !tt.wantErr {
-				t.Errorf("TestIsEventValid error: %v", err)
-			} else if err != nil && tt.wantErr {
-				if !strings.Contains(err.Error(), tt.wantErrMsg) {
-					t.Errorf("TestIsEventValid error mismatch - %s; does not contain: %s", err.Error(), tt.wantErrMsg)
-				}
+
+			if tt.wantErr != nil && assert.Error(t, err) {
+				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			} else {
+				assert.NoError(t, err, "Expected error to be nil")
 			}
 		})
 	}

@@ -24,7 +24,7 @@ const (
 func ValidateComponents(components []v1alpha2.Component) error {
 
 	processedVolumes := make(map[string]bool)
-	processedVolumeMounts := make(map[string]string)
+	processedVolumeMounts := make(map[string][]string)
 	processedEndPointName := make(map[string]bool)
 	processedEndPointPort := make(map[int]bool)
 
@@ -35,10 +35,8 @@ func ValidateComponents(components []v1alpha2.Component) error {
 
 	for _, component := range components {
 		// Check if component name is all numeric
-		isNameNumeric, err := isInt(component.Name)
-		if err != nil {
-			return &InvalidComponentError{componentName: component.Name, reason: err.Error()}
-		} else if isNameNumeric {
+		isNameNumeric := isInt(component.Name)
+		if isNameNumeric {
 			return &InvalidNameOrIdError{name: component.Name, resourceType: "component"}
 		}
 
@@ -46,7 +44,8 @@ func ValidateComponents(components []v1alpha2.Component) error {
 		case component.Container != nil:
 			// Process all the volume mounts in container components to validate them later
 			for _, volumeMount := range component.Container.VolumeMounts {
-				processedVolumeMounts[component.Name] = volumeMount.Name
+				processedVolumeMounts[component.Name] = append(processedVolumeMounts[component.Name], volumeMount.Name)
+
 			}
 
 			// Check if any containers are customizing the reserved PROJECT_SOURCE or PROJECTS_ROOT env
@@ -95,15 +94,24 @@ func ValidateComponents(components []v1alpha2.Component) error {
 			if err != nil {
 				return err
 			}
+		case component.Plugin != nil:
+			if component.Plugin.RegistryUrl != "" {
+				err := ValidateURI(component.Plugin.RegistryUrl)
+				if err != nil {
+					return err
+				}
+			}
 		}
 
 	}
 
 	// Check if the volume mounts mentioned in the containers are referenced by a volume component
 	var invalidVolumeMountsErr string
-	for componentName, volumeMountName := range processedVolumeMounts {
-		if _, ok := processedVolumes[volumeMountName]; !ok {
-			invalidVolumeMountsErr += fmt.Sprintf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
+	for componentName, volumeMountNames := range processedVolumeMounts {
+		for _, volumeMountName := range volumeMountNames {
+			if _, ok := processedVolumes[volumeMountName]; !ok {
+				invalidVolumeMountsErr += fmt.Sprintf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
+			}
 		}
 	}
 

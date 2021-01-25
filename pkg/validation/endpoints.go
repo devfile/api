@@ -12,10 +12,8 @@ func validateEndpoints(endpoints []v1alpha2.Endpoint, processedEndPointPort map[
 
 	for _, endPoint := range endpoints {
 		// Check if endpoint name is all numeric
-		isNameNumeric, err := isInt(endPoint.Name)
-		if err != nil {
-			return err
-		} else if isNameNumeric {
+		isNameNumeric := isInt(endPoint.Name)
+		if isNameNumeric {
 			return &InvalidNameOrIdError{name: endPoint.Name, resourceType: "endpoint"}
 		}
 
