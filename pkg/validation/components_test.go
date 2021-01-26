@@ -136,7 +136,6 @@ func TestValidateComponents(t *testing.T) {
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
 	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
 	invalidURIErr := ".*invalid URI for request"
-	nameNumericErr := "name cannot be with all numeric characters"
 
 	tests := []struct {
 		name       string
@@ -230,13 +229,6 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl18081}, "http://uri"),
 			},
 			wantErr: &sameEndpointNameErr,
-		},
-		{
-			name: "Invalid component name with all numeric values",
-			components: []v1alpha2.Component{
-				generateDummyVolumeComponent("123", "1Gi"),
-			},
-			wantErr: &nameNumericErr,
 		},
 		{
 			name: "Invalid plugin registry url",

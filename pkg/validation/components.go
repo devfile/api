@@ -34,12 +34,6 @@ func ValidateComponents(components []v1alpha2.Component) error {
 	}
 
 	for _, component := range components {
-		// Check if component name is all numeric
-		isNameNumeric := isInt(component.Name)
-		if isNameNumeric {
-			return &InvalidNameOrIdError{name: component.Name, resourceType: "component"}
-		}
-
 		switch {
 		case component.Container != nil:
 			// Process all the volume mounts in container components to validate them later

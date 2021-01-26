@@ -77,20 +77,3 @@ type InvalidComponentError struct {
 func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
 }
-
-// InvalidNameOrIdError returns an error if the name or id is invalid
-type InvalidNameOrIdError struct {
-	name         string
-	id           string
-	resourceType string
-}
-
-func (e *InvalidNameOrIdError) Error() string {
-	var errMsg string
-	if e.name != "" {
-		errMsg = fmt.Sprintf("%s name: %s is invalid, the name cannot be with all numeric characters", e.resourceType, e.name)
-	} else if e.id != "" {
-		errMsg = fmt.Sprintf("%s id: %s is invalid, the id cannot be with all numeric characters", e.resourceType, e.id)
-	}
-	return errMsg
-}

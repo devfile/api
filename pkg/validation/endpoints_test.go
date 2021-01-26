@@ -9,7 +9,6 @@ import (
 
 func TestValidateEndpoints(t *testing.T) {
 
-	nameNumericErr := "name cannot be with all numeric characters"
 	duplicateNameErr := "multiple endpoint entries with same name"
 	duplicatePortErr := "devfile contains multiple containers with same TargetPort"
 
@@ -61,15 +60,6 @@ func TestValidateEndpoints(t *testing.T) {
 				8080: true,
 			},
 			wantErr: &duplicatePortErr,
-		},
-		{
-			name: "Numeric endpoint name",
-			endpoints: []v1alpha2.Endpoint{
-				generateDummyEndpoint("123", 8080),
-			},
-			processedEndpointName: map[string]bool{},
-			processedEndpointPort: map[int]bool{},
-			wantErr:               &nameNumericErr,
 		},
 	}
 	for _, tt := range tests {

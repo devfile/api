@@ -10,7 +10,6 @@ The validation will be done as part of schema validation, the rule will be intro
 - no special characters allowed except dash(-)
 - start with an alphanumeric character
 - end with an alphanumeric character
-- must not be with all numbers (not included in schema validation, will have extra validation function)
 
 
 ### Endpoints:

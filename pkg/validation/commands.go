@@ -22,12 +22,6 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 	}
 
 	for _, command := range commands {
-		// Check if command id is all numeric
-		isIDNumeric := isInt(command.Id)
-		if isIDNumeric {
-			return &InvalidNameOrIdError{id: command.Id, resourceType: "command"}
-		}
-
 		// parentCommands is a map to keep a track of all the parent commands when validating the composite command's subcommands recursively
 		parentCommands := make(map[string]string)
 		err = validateCommand(command, parentCommands, commandMap, components)
