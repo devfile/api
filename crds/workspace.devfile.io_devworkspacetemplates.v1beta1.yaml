@@ -11,6 +11,8 @@ spec:
     kind: DevWorkspaceTemplate
     listKind: DevWorkspaceTemplateList
     plural: devworkspacetemplates
+    shortNames:
+    - dwt
     singular: devworkspacetemplate
   preserveUnknownFields: false
   scope: Namespaced

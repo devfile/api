@@ -8,7 +8,7 @@ import (
 
 // DevWorkspaceTemplate is the Schema for the devworkspacetemplates API
 // +k8s:openapi-gen=true
-// +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced
+// +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced,shortName=dwt
 type DevWorkspaceTemplate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
