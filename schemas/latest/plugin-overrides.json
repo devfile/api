@@ -648,6 +648,21 @@
             "description": "Allows specifying the definition of a volume shared by several other components",
             "type": "object",
             "properties": {
+              "external": {
+                "description": "External defines information about volumes that exist outside of the current workspace. They are not created or deleted while processing a devfile but are still mounted into component containers. When left empty, it is assumed that a new volume is to be created.\n\nNote: External volumes should be used with care, as they make devfiles less portable. It is assumed that external volumes exist already.",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Name defines the name of the resource",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type defines the type of the resource:\n- `storage` specifies that this volume refers to a PersistentVolumeClaim - `configmap` specifies that this volume refers to a ConfigMap - `secret` specifies that this volume refers to a Secret kubebuilder:validation:Enum=\"persistent,configmap,secret\"",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
               "size": {
                 "description": "Size of the volume",
                 "type": "string"

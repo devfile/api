@@ -377,6 +377,15 @@ type VolumePluginOverride struct {
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
+
+	// External defines information about volumes that exist outside of the current workspace.
+	// They are not created or deleted while processing a devfile but are still mounted into
+	// component containers. When left empty, it is assumed that a new volume is to be created.
+	//
+	// Note: External volumes should be used with care, as they make devfiles less portable. It
+	// is assumed that external volumes exist already.
+	// +optional
+	External ExistingVolumeRefPluginOverride `json:"external,omitempty"`
 }
 
 type LabeledCommandPluginOverride struct {
@@ -466,6 +475,23 @@ type K8sLikeComponentLocationPluginOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+// ExistingVolumeRef is a refernce to a volume that exists outside the lifecycle of components
+type ExistingVolumeRefPluginOverride struct {
+
+	//  +optional
+	// Name defines the name of the resource
+	Name string `json:"name,omitempty"`
+
+	//  +optional
+	// Type defines the type of the resource:
+	//
+	// - `storage` specifies that this volume refers to a PersistentVolumeClaim
+	// - `configmap` specifies that this volume refers to a ConfigMap
+	// - `secret` specifies that this volume refers to a Secret
+	// kubebuilder:validation:Enum="persistent,configmap,secret"
+	Type ExistingVolumeTypePluginOverride `json:"type,omitempty"`
+}
+
 type CommandGroupPluginOverride struct {
 
 	//  +optional
@@ -486,6 +512,9 @@ type VscodeConfigurationCommandLocationTypePluginOverride string
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypePluginOverride string
+
+// ExistingVolumeType defines the type of an external Volume
+type ExistingVolumeTypePluginOverride string
 
 // CommandGroupKind describes the kind of command group.
 // +kubebuilder:validation:Enum=build;run;test;debug

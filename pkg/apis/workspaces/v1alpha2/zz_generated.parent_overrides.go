@@ -498,6 +498,15 @@ type VolumeParentOverride struct {
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
+
+	// External defines information about volumes that exist outside of the current workspace.
+	// They are not created or deleted while processing a devfile but are still mounted into
+	// component containers. When left empty, it is assumed that a new volume is to be created.
+	//
+	// Note: External volumes should be used with care, as they make devfiles less portable. It
+	// is assumed that external volumes exist already.
+	// +optional
+	External ExistingVolumeRefParentOverride `json:"external,omitempty"`
 }
 
 type ImportReferenceParentOverride struct {
@@ -629,6 +638,23 @@ type K8sLikeComponentLocationParentOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+// ExistingVolumeRef is a refernce to a volume that exists outside the lifecycle of components
+type ExistingVolumeRefParentOverride struct {
+
+	//  +optional
+	// Name defines the name of the resource
+	Name string `json:"name,omitempty"`
+
+	//  +optional
+	// Type defines the type of the resource:
+	//
+	// - `storage` specifies that this volume refers to a PersistentVolumeClaim
+	// - `configmap` specifies that this volume refers to a ConfigMap
+	// - `secret` specifies that this volume refers to a Secret
+	// kubebuilder:validation:Enum="persistent,configmap,secret"
+	Type ExistingVolumeTypeParentOverride `json:"type,omitempty"`
+}
+
 // Location from where the an import reference is retrieved
 // +union
 type ImportReferenceUnionParentOverride struct {
@@ -720,6 +746,9 @@ type VscodeConfigurationCommandLocationTypeParentOverride string
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypeParentOverride string
+
+// ExistingVolumeType defines the type of an external Volume
+type ExistingVolumeTypeParentOverride string
 
 // ImportReferenceType describes the type of location
 // from where the referenced template structure should be retrieved.
@@ -1060,6 +1089,15 @@ type VolumePluginOverrideParentOverride struct {
 	// +optional
 	// Size of the volume
 	Size string `json:"size,omitempty"`
+
+	// External defines information about volumes that exist outside of the current workspace.
+	// They are not created or deleted while processing a devfile but are still mounted into
+	// component containers. When left empty, it is assumed that a new volume is to be created.
+	//
+	// Note: External volumes should be used with care, as they make devfiles less portable. It
+	// is assumed that external volumes exist already.
+	// +optional
+	External ExistingVolumeRefPluginOverrideParentOverride `json:"external,omitempty"`
 }
 
 type LabeledCommandPluginOverrideParentOverride struct {
@@ -1150,6 +1188,23 @@ type K8sLikeComponentLocationPluginOverrideParentOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+// ExistingVolumeRef is a refernce to a volume that exists outside the lifecycle of components
+type ExistingVolumeRefPluginOverrideParentOverride struct {
+
+	//  +optional
+	// Name defines the name of the resource
+	Name string `json:"name,omitempty"`
+
+	//  +optional
+	// Type defines the type of the resource:
+	//
+	// - `storage` specifies that this volume refers to a PersistentVolumeClaim
+	// - `configmap` specifies that this volume refers to a ConfigMap
+	// - `secret` specifies that this volume refers to a Secret
+	// kubebuilder:validation:Enum="persistent,configmap,secret"
+	Type ExistingVolumeTypePluginOverrideParentOverride `json:"type,omitempty"`
+}
+
 type CommandGroupPluginOverrideParentOverride struct {
 
 	//  +optional
@@ -1170,6 +1225,9 @@ type VscodeConfigurationCommandLocationTypePluginOverrideParentOverride string
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypePluginOverrideParentOverride string
+
+// ExistingVolumeType defines the type of an external Volume
+type ExistingVolumeTypePluginOverrideParentOverride string
 
 // CommandGroupKind describes the kind of command group.
 // +kubebuilder:validation:Enum=build;run;test;debug
