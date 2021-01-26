@@ -7,7 +7,7 @@ import (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // DevWorkspaceTemplate is the Schema for the devworkspacetemplates API
-// +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced
+// +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced,shortName=dwt
 // +devfile:jsonschema:generate
 // +kubebuilder:storageversion
 type DevWorkspaceTemplate struct {
