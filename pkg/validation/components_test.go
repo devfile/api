@@ -130,7 +130,7 @@ func TestValidateComponents(t *testing.T) {
 	endpointUrl28080 := generateDummyEndpoint("url2", 8080)
 
 	invalidVolMountErr := ".*\nvolume mount myinvalidvol belonging to the container component.*\nvolume mount myinvalidvol2 belonging to the container component.*"
-	duplicateCmdErr := "duplicate key: component1"
+	duplicateComponentErr := "duplicate key: component1"
 	reservedEnvErr := "env variable .* is reserved and cannot be customized in component.*"
 	invalidSizeErr := "size .* for volume component is invalid"
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
@@ -148,7 +148,7 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyVolumeComponent("component1", "1Gi"),
 				generateDummyContainerComponent("component1", volMounts, nil, nil),
 			},
-			wantErr: &duplicateCmdErr,
+			wantErr: &duplicateComponentErr,
 		},
 		{
 			name: "Valid container and volume component",

@@ -19,8 +19,7 @@ const (
 // 1. makes sure the container components reference a valid volume component if it uses volume mounts
 // 2. makes sure the volume components are unique
 // 3. checks the URI specified in openshift components and kubernetes components are with valid format
-// 4. makes sure the component name is not a numeric string
-// 5. makes sure the component name is unique
+// 4. makes sure the component name is unique
 func ValidateComponents(components []v1alpha2.Component) error {
 
 	processedVolumes := make(map[string]bool)
@@ -103,7 +102,7 @@ func ValidateComponents(components []v1alpha2.Component) error {
 	var invalidVolumeMountsErr string
 	for componentName, volumeMountNames := range processedVolumeMounts {
 		for _, volumeMountName := range volumeMountNames {
-			if _, ok := processedVolumes[volumeMountName]; !ok {
+			if !processedVolumes[volumeMountName] {
 				invalidVolumeMountsErr += fmt.Sprintf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
 			}
 		}

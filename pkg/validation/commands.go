@@ -8,10 +8,9 @@ import (
 )
 
 // ValidateCommands validates the devfile commands and checks:
-// 1. the command id is not all numeric
-// 2. there are no duplicate command ids
-// 3. the command type is not invalid
-// 4. commands belonging to a specific group obeys the rule of 1 default command
+// 1. there are no duplicate command ids
+// 2. the command type is not invalid
+// 3. if a command is part of a command group, there is a single default command
 func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (err error) {
 	groupKindCommandMap := make(map[v1alpha2.CommandGroupKind][]v1alpha2.Command)
 	commandMap := getCommandsMap(commands)
@@ -50,7 +49,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 }
 
 // validateCommand validates a given devfile command where parentCommands is a map to track all the parent commands when validating
-// the composite command's subcommands recursilvely and devfileCommands is a map of command id to the devfile command
+// the composite command's subcommands recursively and devfileCommands is a map of command id to the devfile command
 func validateCommand(command v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) (err error) {
 
 	switch {
@@ -76,7 +75,7 @@ func validateCommand(command v1alpha2.Command, parentCommands map[string]string,
 // validateGroup validates commands belonging to a specific group kind. If there are multiple commands belonging to the same group:
 // 1. without any default, err out
 // 2. with more than one default, err out
-func validateGroup(commands []v1alpha2.Command) (err error) {
+func validateGroup(commands []v1alpha2.Command) error {
 	defaultCommandCount := 0
 
 	if len(commands) > 1 {
@@ -86,8 +85,7 @@ func validateGroup(commands []v1alpha2.Command) (err error) {
 			}
 		}
 	} else {
-		// if there is only one command, it is the default command for the group
-		defaultCommandCount = 1
+		return nil
 	}
 
 	if defaultCommandCount == 0 {
@@ -99,7 +97,7 @@ func validateGroup(commands []v1alpha2.Command) (err error) {
 	return nil
 }
 
-// getGroup returns the group the command belongs to
+// getGroup returns the group the command belongs to, or nil if the command does not belong to a group
 func getGroup(command v1alpha2.Command) *v1alpha2.CommandGroup {
 	switch {
 	case command.Composite != nil:
@@ -121,7 +119,7 @@ func getGroup(command v1alpha2.Command) *v1alpha2.CommandGroup {
 }
 
 // validateCommandComponent validates the given exec or apply command, the command should map to a valid container component
-func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Component) (err error) {
+func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Component) error {
 
 	if command.Exec == nil && command.Apply == nil {
 		return &InvalidCommandError{commandId: command.Id, reason: "should be of type exec or apply"}
@@ -135,17 +133,12 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 	}
 
 	// must map to a container component
-	isComponentValid := false
 	for _, component := range components {
 		if component.Container != nil && commandComponent == component.Name {
-			isComponentValid = true
+			return nil
 		}
 	}
-	if !isComponentValid {
-		return &InvalidCommandError{commandId: command.Id, reason: "command does not map to a container component"}
-	}
-
-	return
+	return &InvalidCommandError{commandId: command.Id, reason: "command does not map to a container component"}
 }
 
 // validateCompositeCommand checks that the specified composite command is valid. The command:
