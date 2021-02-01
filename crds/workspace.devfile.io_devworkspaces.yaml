@@ -4085,13 +4085,9 @@ spec:
       jsonPath: .status.phase
       name: Phase
       type: string
-    - description: Additional information about workspace state
+    - description: Additional information about the workspace
       jsonPath: .status.message
       name: Info
-      type: string
-    - description: Url endpoint for accessing workspace
-      jsonPath: .status.ideUrl
-      name: URL
       type: string
     name: v1alpha2
     schema:

@@ -4088,12 +4088,8 @@ spec:
       name: Phase
       type: string
     - JSONPath: .status.message
-      description: Additional information about workspace state
+      description: Additional information about the workspace
       name: Info
-      type: string
-    - JSONPath: .status.ideUrl
-      description: Url endpoint for accessing workspace
-      name: URL
       type: string
     name: v1alpha2
     schema:
