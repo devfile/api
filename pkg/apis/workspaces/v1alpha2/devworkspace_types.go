@@ -72,8 +72,7 @@ const (
 // +kubebuilder:resource:path=devworkspaces,scope=Namespaced,shortName=dw
 // +kubebuilder:printcolumn:name="Workspace ID",type="string",JSONPath=".status.workspaceId",description="The workspace's unique id"
 // +kubebuilder:printcolumn:name="Phase",type="string",JSONPath=".status.phase",description="The current workspace startup phase"
-// +kubebuilder:printcolumn:name="Info",type="string",JSONPath=".status.message",description="Additional information about workspace state"
-// +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".status.ideUrl",description="Url endpoint for accessing workspace"
+// +kubebuilder:printcolumn:name="Info",type="string",JSONPath=".status.message",description="Additional information about the workspace"
 // +devfile:jsonschema:generate
 // +kubebuilder:storageversion
 type DevWorkspace struct {
