@@ -35,8 +35,11 @@ import (
 // GenerateJSONSchema drives whether a Json schema should be generated from this GO Struct type
 type GenerateJSONSchema struct {
 
-	// OmitCustomUnionMembers indicates that the Json schema gnerated from this type should omit Custom union members.
+	// OmitCustomUnionMembers indicates that the Json schema gnerated from this type should omit Custom component union members.
 	OmitCustomUnionMembers bool `marker:",optional"`
+
+	// OmitPluginUnionMembers indicates that the Json schema gnerated from this type should omit Plugin component union members.
+	OmitPluginUnionMembers bool `marker:",optional"`
 
 	// Title indicates the content ot the Json Schema `title` attribute
 	Title string `marker:",optional"`
@@ -212,6 +215,9 @@ This is not the case in the "%s' API group:
 			fieldsToSkip := []string{}
 			if schemaGenerateMarker.OmitCustomUnionMembers {
 				fieldsToSkip = append(fieldsToSkip, "Custom")
+			}
+			if schemaGenerateMarker.OmitPluginUnionMembers {
+				fieldsToSkip = append(fieldsToSkip, "Plugin")
 			}
 
 			genutils.AddUnionOneOfConstraints(&currentJSONSchema, toDo.unionDiscriminators, true, fieldsToSkip...)
