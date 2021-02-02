@@ -10,7 +10,6 @@ The validation will be done as part of schema validation, the rule will be intro
 - no special characters allowed except dash(-)
 - start with an alphanumeric character
 - end with an alphanumeric character
-- must not be with all numbers (not included in schema validation, will have extra validation function)
 
 
 ### Endpoints:
@@ -24,7 +23,7 @@ Since network is shared in the same pod, endpoint ports should be unique across 
     - Should not reference itself via a subcommand
     - Should not indirectly reference itself via a subcommand which is a composite command
     - Should reference a valid devfile command
-3. exec command should: map to a valid container component
+3. exec and apply command should: map to a valid container component
 4. vscodeLaunch & vscodeTask: URI needs to be in valid URI format
 5. `{build, run, test, debug}`, each kind of group can only have one default command associated with it. If there are multiple commands of the same kind without a default, a warning will be displayed.
 
@@ -38,6 +37,7 @@ Common rules for all components types:
 
 #### Plugin Component
 - Commands in plugins components share the same commands validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile
+- Registry URL needs to be in valid format
 
 #### Kubernetes & Openshift component 
 - URI needs to be in valid URI format
@@ -56,3 +56,8 @@ Common rules for all components types:
 
 ### starterProjects:
 - Starter project entries cannot have more than one remote defined
+- if checkout remote is mentioned, validate it against the starter project remote configured map
+
+### projects
+- if more than one remote is configured, a checkout remote is mandatory
+- if checkout remote is mentioned, validate it against the starter project remote configured map
