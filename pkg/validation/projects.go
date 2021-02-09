@@ -25,7 +25,7 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) error {
 			errString += fmt.Sprintf("\nstarterProject %s should have at least one remote", starterProject.Name)
 		} else if len(gitSource.Remotes) > 1 {
 			errString += fmt.Sprintf("\nstarterProject %s should have one remote only", starterProject.Name)
-		} else if gitSource.CheckoutFrom.Remote != "" {
+		} else if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
 			err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, starterProject.Name)
 			if err != nil {
 				errString += fmt.Sprintf("\n%s", err.Error())
@@ -58,8 +58,12 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 
 		if len(gitSource.Remotes) == 0 {
 			errString += fmt.Sprintf("\nprojects %s should have at least one remote", project.Name)
-		} else if len(gitSource.Remotes) > 1 || gitSource.CheckoutFrom.Remote != "" {
-			err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name)
+		} else if len(gitSource.Remotes) > 1 || (gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "") {
+			var checkoutRemotes string
+			if gitSource.CheckoutFrom != nil {
+				checkoutRemotes = gitSource.CheckoutFrom.Remote
+			}
+				err := validateRemoteMap(gitSource.Remotes, checkoutRemotes, project.Name)
 			if err != nil {
 				errString += fmt.Sprintf("\n%s", err.Error())
 			}
