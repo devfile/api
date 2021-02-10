@@ -59,11 +59,11 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 		if len(gitSource.Remotes) == 0 {
 			errString += fmt.Sprintf("\nprojects %s should have at least one remote", project.Name)
 		} else if len(gitSource.Remotes) > 1 || (gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "") {
-			var checkoutRemotes string
-			if gitSource.CheckoutFrom != nil {
-				checkoutRemotes = gitSource.CheckoutFrom.Remote
+			if len(gitSource.Remotes) > 1 && (gitSource.CheckoutFrom == nil || (gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote == "")) {
+				errString += fmt.Sprintf("\nproject %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
+				continue
 			}
-				err := validateRemoteMap(gitSource.Remotes, checkoutRemotes, project.Name)
+				err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name)
 			if err != nil {
 				errString += fmt.Sprintf("\n%s", err.Error())
 			}
