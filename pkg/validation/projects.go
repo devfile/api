@@ -63,7 +63,7 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 				errString += fmt.Sprintf("\nproject %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
 				continue
 			}
-				err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name)
+			err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name)
 			if err != nil {
 				errString += fmt.Sprintf("\n%s", err.Error())
 			}
