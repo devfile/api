@@ -21,15 +21,18 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) error {
 			continue
 		}
 
-		if len(gitSource.Remotes) == 0 {
+		switch len(gitSource.Remotes) {
+		case 0:
 			errString += fmt.Sprintf("\nstarterProject %s should have at least one remote", starterProject.Name)
-		} else if len(gitSource.Remotes) > 1 {
-			errString += fmt.Sprintf("\nstarterProject %s should have one remote only", starterProject.Name)
-		} else if gitSource.CheckoutFrom.Remote != "" {
-			err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, starterProject.Name)
-			if err != nil {
-				errString += fmt.Sprintf("\n%s", err.Error())
+		case 1:
+			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
+				err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, starterProject.Name)
+				if err != nil {
+					errString += fmt.Sprintf("\n%s", err.Error())
+				}
 			}
+		default: // len(gitSource.Remotes) >= 2
+			errString += fmt.Sprintf("\nstarterProject %s should have one remote only", starterProject.Name)
 		}
 	}
 
@@ -56,11 +59,21 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 			continue
 		}
 
-		if len(gitSource.Remotes) == 0 {
+		switch len(gitSource.Remotes) {
+		case 0:
 			errString += fmt.Sprintf("\nprojects %s should have at least one remote", project.Name)
-		} else if len(gitSource.Remotes) > 1 || gitSource.CheckoutFrom.Remote != "" {
-			err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name)
-			if err != nil {
+		case 1:
+			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
+				if err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name); err != nil {
+					errString += fmt.Sprintf("\n%s", err.Error())
+				}
+			}
+		default: // len(gitSource.Remotes) >= 2
+			if gitSource.CheckoutFrom == nil || gitSource.CheckoutFrom.Remote == "" {
+				errString += fmt.Sprintf("\nproject %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
+				continue
+			}
+			if err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name); err != nil {
 				errString += fmt.Sprintf("\n%s", err.Error())
 			}
 		}
