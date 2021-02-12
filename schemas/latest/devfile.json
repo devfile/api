@@ -1481,8 +1481,16 @@
           "description": "Optional devfile icon",
           "type": "string"
         },
+        "language": {
+          "description": "Optional devfile language",
+          "type": "string"
+        },
         "name": {
           "description": "Optional devfile name",
+          "type": "string"
+        },
+        "projectType": {
+          "description": "Optional devfile project type",
           "type": "string"
         },
         "tags": {
@@ -1496,6 +1504,10 @@
           "description": "Optional semver-compatible version",
           "type": "string",
           "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
+        },
+        "website": {
+          "description": "Optional devfile website",
+          "type": "string"
         }
       },
       "additionalProperties": true
