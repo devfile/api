@@ -1,5 +1,0 @@
-- id: testvscode
-  vscodeLaunch:
-    group:
-      isDefault: false
-      kind: test

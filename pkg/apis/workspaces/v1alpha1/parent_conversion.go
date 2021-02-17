@@ -219,10 +219,6 @@ func convertParentCommandFrom_v1alpha2(src *v1alpha2.CommandParentOverride, dest
 		dest.Composite.Id = srcId
 	case src.Exec != nil:
 		dest.Exec.Id = srcId
-	case src.VscodeLaunch != nil:
-		dest.VscodeLaunch.Id = srcId
-	case src.VscodeTask != nil:
-		dest.VscodeTask.Id = srcId
 	}
 	return nil
 }

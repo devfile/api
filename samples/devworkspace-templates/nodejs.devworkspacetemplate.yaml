@@ -54,20 +54,3 @@ spec:
             node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
             echo "Stopping node server with PIDs: ${node_server_pids}" && 
             kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
-    - id: attach-remote-debugger
-      vscodeLaunch:
-        inlined: |
-          {
-            "version": "0.2.0",
-            "configurations": [
-              {
-                "type": "node",
-                "request": "attach",
-                "name": "Attach to Remote",
-                "address": "localhost",
-                "port": 9229,
-                "localRoot": "${workspaceFolder}",
-                "remoteRoot": "${workspaceFolder}"
-              }
-            ]
-          }

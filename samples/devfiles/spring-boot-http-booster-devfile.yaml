@@ -54,20 +54,6 @@ commands:
       env:
         - name: MAVEN_OPTS
           value: "-Xmx200m"
-  - id: debug-remote-java-application
-    vscodeLaunch:
-      inlined: |
-        {
-          "version": "0.2.0",
-          "configurations": [
-            {
-              "type": "java",
-              "name": "Debug (Attach) - Remote",
-              "request": "attach",
-              "hostName": "localhost",
-              "port": 8000
-            }]
-          }
   - id: run
     exec:
       component: maven
