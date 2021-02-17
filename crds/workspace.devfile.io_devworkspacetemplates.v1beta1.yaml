@@ -300,8 +300,8 @@ spec:
                       - id
                       type: object
                     vscodeLaunch:
-                      description: Command providing the definition of a VsCode launch
-                        action
+                      description: "Command providing the definition of a VsCode launch
+                        action \n Deprecated; removed in v1alpha2"
                       oneOf:
                       - required:
                         - uri
@@ -354,7 +354,8 @@ spec:
                       - id
                       type: object
                     vscodeTask:
-                      description: Command providing the definition of a VsCode Task
+                      description: "Command providing the definition of a VsCode Task
+                        \n Deprecated; removed in v1alpha2"
                       oneOf:
                       - required:
                         - uri
@@ -1086,8 +1087,9 @@ spec:
                                 - id
                                 type: object
                               vscodeLaunch:
-                                description: Command providing the definition of a
-                                  VsCode launch action
+                                description: "Command providing the definition of
+                                  a VsCode launch action \n Deprecated; removed in
+                                  v1alpha2"
                                 oneOf:
                                 - required:
                                   - uri
@@ -1144,8 +1146,8 @@ spec:
                                 - id
                                 type: object
                               vscodeTask:
-                                description: Command providing the definition of a
-                                  VsCode Task
+                                description: "Command providing the definition of
+                                  a VsCode Task \n Deprecated; removed in v1alpha2"
                                 oneOf:
                                 - required:
                                   - uri
@@ -1971,8 +1973,8 @@ spec:
                           - id
                           type: object
                         vscodeLaunch:
-                          description: Command providing the definition of a VsCode
-                            launch action
+                          description: "Command providing the definition of a VsCode
+                            launch action \n Deprecated; removed in v1alpha2"
                           oneOf:
                           - required:
                             - uri
@@ -2026,8 +2028,8 @@ spec:
                           - id
                           type: object
                         vscodeTask:
-                          description: Command providing the definition of a VsCode
-                            Task
+                          description: "Command providing the definition of a VsCode
+                            Task \n Deprecated; removed in v1alpha2"
                           oneOf:
                           - required:
                             - uri
@@ -2778,8 +2780,9 @@ spec:
                                     - id
                                     type: object
                                   vscodeLaunch:
-                                    description: Command providing the definition
-                                      of a VsCode launch action
+                                    description: "Command providing the definition
+                                      of a VsCode launch action \n Deprecated; removed
+                                      in v1alpha2"
                                     oneOf:
                                     - required:
                                       - uri
@@ -2837,8 +2840,8 @@ spec:
                                     - id
                                     type: object
                                   vscodeTask:
-                                    description: Command providing the definition
-                                      of a VsCode Task
+                                    description: "Command providing the definition
+                                      of a VsCode Task \n Deprecated; removed in v1alpha2"
                                     oneOf:
                                     - required:
                                       - uri
