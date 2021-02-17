@@ -31,10 +31,6 @@ func getCommandAttributes(command *Command) map[string]string {
 		return command.Exec.Attributes
 	case command.Apply != nil:
 		return command.Apply.Attributes
-	case command.VscodeTask != nil:
-		return command.VscodeTask.Attributes
-	case command.VscodeLaunch != nil:
-		return command.VscodeLaunch.Attributes
 	case command.Composite != nil:
 		return command.Composite.Attributes
 	case command.Custom != nil:

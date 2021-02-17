@@ -27,10 +27,6 @@ func convertCommandTo_v1alpha2(src *Command, dest *v1alpha2.Command) error {
 		srcAttributes = src.Exec.Attributes
 	case src.Apply != nil:
 		srcAttributes = src.Apply.Attributes
-	case src.VscodeTask != nil:
-		srcAttributes = src.VscodeTask.Attributes
-	case src.VscodeLaunch != nil:
-		srcAttributes = src.VscodeLaunch.Attributes
 	case src.Composite != nil:
 		srcAttributes = src.Composite.Attributes
 	case src.Custom != nil:
@@ -76,12 +72,6 @@ func convertCommandFrom_v1alpha2(src *v1alpha2.Command, dest *Command) error {
 	case dest.Exec != nil:
 		dest.Exec.Attributes = destAttributes
 		dest.Exec.Id = id
-	case dest.VscodeLaunch != nil:
-		dest.VscodeLaunch.Attributes = destAttributes
-		dest.VscodeLaunch.Id = id
-	case dest.VscodeTask != nil:
-		dest.VscodeTask.Attributes = destAttributes
-		dest.VscodeTask.Id = id
 	}
 	return err
 }
