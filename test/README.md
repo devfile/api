@@ -1,4 +1,4 @@
-# API Tests
+# schemsTest
 
 The API tests are intended to provide a comprehensive verification of the devfile schemas. This includes:
 - Ensuring every possible attribute is valid.
@@ -44,3 +44,27 @@ The test will read each of the test-xxxxxx.json files and run the tests defined 
 1. Modify the copied tests as needed for the new version as decsribed above.
 1. Add `test/v201/schemaTest/tmp` to the .gitignore file.
 1. Run the test
+
+
+# apiTest
+
+A new test approach, shared with the library repository for testing valid devfiles. Basically the test creates lots of valid devfiles whith different content. The attributes which are set and the values to which they are set are randomized. These tests are a work in progress and the intent is to eventually replace schemaTest.  
+
+## Test structure
+
+- `test/v200/apiTest/api-test.go`: The go unit test program
+- `test/v200/utils/api/test-utils.go` : utilites, used by the test, which contain functions uniqiue to the api tests.
+- `test/v200/utils/common/*-utils.go` : utilites, used by the test, which are also used by the library tests. Mostly contain the code to generate valid devfile content.
+
+
+## Running tests
+
+from the `test/v200/apiTest/` directory run
+- `go test -v`
+
+* The test will generate a set of valid devfile.yaml files in `test/v200/apiTest/tmp/api-test/
+* The test will generate a log file:  `test/v200/apiTest/tmp/test.log`
+* Each run of the test removes the  `test/v200/apiTest/tmp` directory from the previous run.
+
+
+
