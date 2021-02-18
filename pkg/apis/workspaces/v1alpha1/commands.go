@@ -86,10 +86,14 @@ type Command struct {
 	Apply *ApplyCommand `json:"apply,omitempty"`
 
 	// Command providing the definition of a VsCode Task
+	//
+	// Deprecated; removed in v1alpha2
 	// +optional
 	VscodeTask *VscodeConfigurationCommand `json:"vscodeTask,omitempty"`
 
 	// Command providing the definition of a VsCode launch action
+	//
+	// Deprecated; removed in v1alpha2
 	// +optional
 	VscodeLaunch *VscodeConfigurationCommand `json:"vscodeLaunch,omitempty"`
 
