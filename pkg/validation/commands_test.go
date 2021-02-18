@@ -71,7 +71,6 @@ func TestValidateCommands(t *testing.T) {
 		generateDummyContainerComponent(component, nil, nil, nil),
 	}
 
-
 	duplicateKeyErr := "duplicate key: somecommand1"
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
 	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"

@@ -11,10 +11,10 @@ import (
 type CommandType string
 
 const (
-	ExecCommandType         CommandType = "Exec"
-	ApplyCommandType        CommandType = "Apply"
-	CompositeCommandType    CommandType = "Composite"
-	CustomCommandType       CommandType = "Custom"
+	ExecCommandType      CommandType = "Exec"
+	ApplyCommandType     CommandType = "Apply"
+	CompositeCommandType CommandType = "Composite"
+	CustomCommandType    CommandType = "Custom"
 )
 
 // CommandGroupKind describes the kind of command group.
