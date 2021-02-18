@@ -26,16 +26,6 @@ func ValidateCommands(attributes apiAttributes.Attributes, commands *[]v1alpha2.
 				if err = validateApplyCommand(attributes, (*commands)[i].Apply); err != nil {
 					return err
 				}
-			case (*commands)[i].VscodeLaunch != nil || (*commands)[i].VscodeTask != nil:
-				var vscodeCommand *v1alpha2.VscodeConfigurationCommand
-				if (*commands)[i].VscodeLaunch != nil {
-					vscodeCommand = (*commands)[i].VscodeLaunch
-				} else {
-					vscodeCommand = (*commands)[i].VscodeTask
-				}
-				if err = validateVsCodeCommand(attributes, vscodeCommand); err != nil {
-					return err
-				}
 			}
 		}
 	}
@@ -112,25 +102,6 @@ func validateApplyCommand(attributes apiAttributes.Attributes, apply *v1alpha2.A
 
 		// Validate apply component
 		if apply.Component, err = validateAndReplaceDataWithAttribute(apply.Component, attributes); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// validateVsCodeCommand validates the vs code command data for a global attribute
-func validateVsCodeCommand(attributes apiAttributes.Attributes, vscodeCommand *v1alpha2.VscodeConfigurationCommand) error {
-	var err error
-
-	if vscodeCommand != nil {
-		// Validate vscode command uri
-		if vscodeCommand.Uri, err = validateAndReplaceDataWithAttribute(vscodeCommand.Uri, attributes); err != nil {
-			return err
-		}
-
-		// Validate vscode command inlined
-		if vscodeCommand.Inlined, err = validateAndReplaceDataWithAttribute(vscodeCommand.Inlined, attributes); err != nil {
 			return err
 		}
 	}
