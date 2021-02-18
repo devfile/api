@@ -1,3 +1,7 @@
+attributes:
+  mainAttribute: true
+  objectAttribute:
+    attributeField: 9.9
 components:
   - container:
       image: "aValue"

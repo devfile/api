@@ -1,0 +1,7 @@
+git:
+  checkoutFrom:
+    revision: "{{foo}}"
+    remote: "{{bar}}"
+  remotes:
+    "foo": "{{bar}}"
+    "{{foo}}{{bar}}": "{{bar}}{{foo}}"

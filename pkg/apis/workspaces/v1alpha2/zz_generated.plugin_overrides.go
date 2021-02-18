@@ -8,6 +8,12 @@ import (
 type PluginOverrides struct {
 	OverridesBase `json:",inline"`
 
+	// Overrides of attributes encapsulated in a parent devfile or a plugin.
+	// Overriding is done according to K8S strategic merge patch standard rules.
+	// +optional
+	// +patchStrategy=merge
+	Attributes attributes.Attributes `json:"attributes,omitempty" patchStrategy:"merge"`
+
 	// Overrides of components encapsulated in a parent devfile or a plugin.
 	// Overriding is done according to K8S strategic merge patch standard rules.
 	// +optional

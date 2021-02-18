@@ -1,0 +1,6 @@
+uri: "{{uri}}"
+inlined: "{{inlined}}"
+endpoints:
+  - name: endpoint1
+    exposure: public
+    path: "{{foo}}"

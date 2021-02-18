@@ -1,0 +1,2 @@
+1 error occurred:
+	* Some Attributes do not override any existing element: newAttributeValid. They should be defined in the main body, as new elements, not in the overriding section

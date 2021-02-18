@@ -1,0 +1,4 @@
+label: "{{version}}"
+commands:
+  - "{{foo}}"
+  - BAR

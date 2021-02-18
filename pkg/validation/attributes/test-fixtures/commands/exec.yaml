@@ -1,0 +1,7 @@
+component: "{{bar}}"
+commandLine: tail -f {{devnull}}
+workingDir: "{{foo}}"
+label: "{{version}}"
+env:
+  - name: "{{foo}}"
+    value: "{{bar}}"

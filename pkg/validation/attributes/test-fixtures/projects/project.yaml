@@ -1,0 +1,11 @@
+name: project1
+clonePath: "/{{foo}}"
+sparseCheckoutDirs:
+  - /FOO
+  - "/{{bar}}"
+git:
+  checkoutFrom:
+    revision: "{{foo}}"
+  remotes:
+    "foo": "{{bar}}"
+    "{{foo}}{{bar}}": "{{bar}}{{foo}}"

@@ -1,0 +1,13 @@
+attributes:
+  devnull: /dev/null
+components:
+- name: component1
+  container:
+    image: image
+    env:
+      - name: BAR
+        value: "{{foo}}"
+    command:
+      - tail
+      - -f
+      - "{{devnull}}"

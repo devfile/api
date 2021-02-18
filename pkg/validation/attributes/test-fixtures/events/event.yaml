@@ -1,0 +1,8 @@
+preStart:
+  - "{{foo}}"
+postStart:
+  - "{{bar}}"
+preStop:
+  - "{{foo}}{{bar}}"
+postStop:
+  - "{{bar}}{{foo}}"

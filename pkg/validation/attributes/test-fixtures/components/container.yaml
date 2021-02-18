@@ -1,0 +1,20 @@
+image: "image-{{version}}"
+env:
+  - name: "{{foo}}"
+    value: "{{bar}}"
+command:
+  - tail
+  - -f
+  - "{{devnull}}"
+args:
+  - "{{devnull}}"
+memoryLimit: "{{foo}}"
+memoryRequest: "{{foo}}"
+sourceMapping: "{{foo}}"
+volumeMounts:
+  - name: vol1
+    path: "/{{foo}}"
+endpoints:
+  - name: endpoint1
+    exposure: public
+    path: "{{foo}}"

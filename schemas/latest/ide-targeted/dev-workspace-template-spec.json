@@ -3,6 +3,12 @@
   "type": "object",
   "title": "DevWorkspaceTemplateSpec schema - Version 2.1.0-alpha - IDE-targeted variant",
   "properties": {
+    "attributes": {
+      "description": "Map of implementation-dependant free-form YAML attributes. Attribute values can be referenced through out the devfile in string type fields in the form {{attribute-key}} except for schemaVersion and metadata",
+      "type": "object",
+      "additionalProperties": true,
+      "markdownDescription": "Map of implementation-dependant free-form YAML attributes. Attribute values can be referenced through out the devfile in string type fields in the form {{attribute-key}} except for schemaVersion and metadata"
+    },
     "commands": {
       "description": "Predefined, ready-to-use, devworkspace-related commands",
       "type": "array",
@@ -737,6 +743,12 @@
               }
             ],
             "properties": {
+              "attributes": {
+                "description": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+                "type": "object",
+                "additionalProperties": true,
+                "markdownDescription": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+              },
               "commands": {
                 "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
                 "type": "array",
@@ -1474,6 +1486,12 @@
         }
       ],
       "properties": {
+        "attributes": {
+          "description": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+          "type": "object",
+          "additionalProperties": true,
+          "markdownDescription": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+        },
         "commands": {
           "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
@@ -2096,6 +2114,12 @@
                   }
                 ],
                 "properties": {
+                  "attributes": {
+                    "description": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "markdownDescription": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+                  },
                   "commands": {
                     "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
                     "type": "array",

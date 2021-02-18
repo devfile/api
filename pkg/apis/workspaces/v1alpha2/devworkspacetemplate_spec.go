@@ -1,5 +1,7 @@
 package v1alpha2
 
+import attributes "github.com/devfile/api/v2/pkg/attributes"
+
 // Structure of the devworkspace. This is also the specification of a devworkspace template.
 // +devfile:jsonschema:generate
 type DevWorkspaceTemplateSpec struct {
@@ -12,6 +14,14 @@ type DevWorkspaceTemplateSpec struct {
 
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
+	// Map of implementation-dependant free-form YAML attributes.
+	// Attribute values can be referenced through out the devfile in string type fields in the form {{attribute-key}}
+	// except for schemaVersion and metadata
+	// +optional
+	// +patchStrategy=merge
+	// +devfile:overrides:include:description=Overrides of attributes encapsulated in a parent devfile or a plugin.
+	Attributes attributes.Attributes `json:"attributes,omitempty" patchStrategy:"merge"`
+
 	// List of the devworkspace components, such as editor and plugins,
 	// user-provided containers, or other types of components
 	// +optional

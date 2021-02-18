@@ -1,0 +1,4 @@
+kubernetes:
+  name: "{{foo}}"
+  namespace: "{{foo}}"
+registryUrl: "{{foo}}"

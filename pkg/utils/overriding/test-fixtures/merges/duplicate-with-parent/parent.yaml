@@ -1,3 +1,6 @@
+attributes:
+  objectAttribute:
+    attributeField: 10.10
 components:
   - container:
       image: "aValue"

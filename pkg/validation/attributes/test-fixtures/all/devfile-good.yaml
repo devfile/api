@@ -1,0 +1,64 @@
+attributes:
+  tag: xyz
+  version: "1"
+  foo: FOO
+  devnull: /dev/null
+projects:
+- name: project1
+  git:
+    checkoutFrom:
+      revision: "{{tag}}"
+    remotes:
+      "{{tag}}": "{{devnull}}"
+      "{{version}}": "test"
+- name: project2
+  zip:
+    location: "{{tag}}"
+starterProjects:
+- name: starterproject1
+  git:
+    checkoutFrom:
+      revision: "{{tag}}"
+    remotes:
+      "{{tag}}": "{{devnull}}"
+      "{{version}}": "test"
+components:
+- name: component1
+  container:
+    image: image
+    env:
+      - name: BAR
+        value: "{{foo}}"
+      - name: FOO
+        value: BAR
+    command:
+      - tail
+      - -f
+      - "{{devnull}}"
+- name: component2
+  kubernetes:
+    inlined: "{{foo}}"
+    endpoints:
+    - name: endpoint1
+      exposure: "public"
+      targetPort: 9999
+commands:
+- id: command1
+  exec:
+    commandLine: "test-{{tag}}"
+    env:
+      - name: tag
+        value: "{{tag}}"
+      - name: FOO
+        value: BAR
+- id: command2
+  composite:
+    commands:
+      - "{{tag}}"
+      - command1
+events:
+  preStart:
+    - "{{tag}}"
+    - test
+  preStop:
+    - "{{version}}"
