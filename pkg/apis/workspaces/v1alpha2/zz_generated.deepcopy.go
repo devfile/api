@@ -2449,13 +2449,6 @@ func (in *PluginComponentParentOverride) DeepCopy() *PluginComponentParentOverri
 func (in *PluginOverrides) DeepCopyInto(out *PluginOverrides) {
 	*out = *in
 	out.OverridesBase = in.OverridesBase
-	if in.Attributes != nil {
-		in, out := &in.Attributes, &out.Attributes
-		*out = make(attributes.Attributes, len(*in))
-		for key, val := range *in {
-			(*out)[key] = *val.DeepCopy()
-		}
-	}
 	if in.Components != nil {
 		in, out := &in.Components, &out.Components
 		*out = make([]ComponentPluginOverride, len(*in))
@@ -2486,13 +2479,6 @@ func (in *PluginOverrides) DeepCopy() *PluginOverrides {
 func (in *PluginOverridesParentOverride) DeepCopyInto(out *PluginOverridesParentOverride) {
 	*out = *in
 	out.OverridesBaseParentOverride = in.OverridesBaseParentOverride
-	if in.Attributes != nil {
-		in, out := &in.Attributes, &out.Attributes
-		*out = make(attributes.Attributes, len(*in))
-		for key, val := range *in {
-			(*out)[key] = *val.DeepCopy()
-		}
-	}
 	if in.Components != nil {
 		in, out := &in.Components, &out.Components
 		*out = make([]ComponentPluginOverrideParentOverride, len(*in))

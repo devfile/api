@@ -41,7 +41,7 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...dw.TopLevelListContain
 			attributeValue = value.FieldByName("Attributes")
 		}
 
-		if attributeValue.CanInterface() {
+		if attributeValue.IsValid() && attributeValue.CanInterface() {
 			attributes := attributeValue.Interface().(attributesPkg.Attributes)
 			var attributeKeys []string
 			for k := range attributes {

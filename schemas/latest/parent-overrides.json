@@ -3,7 +3,7 @@
   "title": "ParentOverrides schema - Version 2.1.0-alpha",
   "properties": {
     "attributes": {
-      "description": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+      "description": "Overrides of attributes encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
       "type": "object",
       "additionalProperties": true
     },
@@ -569,11 +569,6 @@
               }
             ],
             "properties": {
-              "attributes": {
-                "description": "Overrides of attributes encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
-                "type": "object",
-                "additionalProperties": true
-              },
               "commands": {
                 "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
                 "type": "array",

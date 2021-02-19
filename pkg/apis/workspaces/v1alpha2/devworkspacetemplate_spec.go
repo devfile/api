@@ -15,11 +15,12 @@ type DevWorkspaceTemplateSpec struct {
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
 	// Map of implementation-dependant free-form YAML attributes.
-	// Attribute values can be referenced through out the devfile in string type fields in the form {{attribute-key}}
-	// except for schemaVersion and metadata
+	// Attribute values can be referenced throughout the devfile in string type fields in the form {{attribute-key}}
+	// except for schemaVersion and metadata. Exception to the string field include element's key identifiers(command id,
+	// component name, endpoint name, project name, etc.) and string enums(command group kind, endpoint exposure, etc.)
 	// +optional
 	// +patchStrategy=merge
-	// +devfile:overrides:include:description=Overrides of attributes encapsulated in a parent devfile or a plugin.
+	// +devfile:overrides:include:omitInPlugin=true,description=Overrides of attributes encapsulated in a parent devfile.
 	Attributes attributes.Attributes `json:"attributes,omitempty" patchStrategy:"merge"`
 
 	// List of the devworkspace components, such as editor and plugins,
