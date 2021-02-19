@@ -40,18 +40,6 @@ parent:
       composite:
           group:
             kind: test
-    - id: "testvscodeLaunch1"        
-      vscodeLaunch:
-        uri: http://testingland
-    - id: "testvscodeLaunch2"        
-      vscodeLaunch:
-        inlined:  inline      
-    - id: testvscodeTask1
-      vscodeTask:
-        uri: http://testingland
-    - id: testvscodeTask1
-      vscodeTask:
-        inlined:  inline
   projects:
     - name: testProject1
       git:

@@ -63,36 +63,6 @@ func generateDummyCompositeCommand(name string, commands []string, group *v1alph
 	}
 }
 
-// generateDummyCompositeCommand returns a dummy VscodeLaunch command for testing
-func generateDummyVscodeLaunchCommand(name string, commandLocation v1alpha2.VscodeConfigurationCommandLocation, group *v1alpha2.CommandGroup) v1alpha2.Command {
-	return v1alpha2.Command{
-		Id: name,
-		CommandUnion: v1alpha2.CommandUnion{
-			VscodeLaunch: &v1alpha2.VscodeConfigurationCommand{
-				BaseCommand: v1alpha2.BaseCommand{
-					Group: group,
-				},
-				VscodeConfigurationCommandLocation: commandLocation,
-			},
-		},
-	}
-}
-
-// generateDummyCompositeCommand returns a dummy VscodeTask command for testing
-func generateDummyVscodeTaskCommand(name string, commandLocation v1alpha2.VscodeConfigurationCommandLocation, group *v1alpha2.CommandGroup) v1alpha2.Command {
-	return v1alpha2.Command{
-		Id: name,
-		CommandUnion: v1alpha2.CommandUnion{
-			VscodeTask: &v1alpha2.VscodeConfigurationCommand{
-				BaseCommand: v1alpha2.BaseCommand{
-					Group: group,
-				},
-				VscodeConfigurationCommandLocation: commandLocation,
-			},
-		},
-	}
-}
-
 func TestValidateCommands(t *testing.T) {
 
 	component := "alias1"
@@ -101,20 +71,9 @@ func TestValidateCommands(t *testing.T) {
 		generateDummyContainerComponent(component, nil, nil, nil),
 	}
 
-	uriCommandLocation := v1alpha2.VscodeConfigurationCommandLocation{
-		Uri: "/some/path",
-	}
-	inValidUriCommandLocation := v1alpha2.VscodeConfigurationCommandLocation{
-		Uri: "http//wronguri",
-	}
-	inlinedCommandLocation := v1alpha2.VscodeConfigurationCommandLocation{
-		Inlined: "inlined code",
-	}
-
 	duplicateKeyErr := "duplicate key: somecommand1"
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
 	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
-	invalidURIErr := "invalid URI for request"
 	invalidCmdErr := ".*command does not map to a container component"
 
 	tests := []struct {
@@ -168,25 +127,6 @@ func TestValidateCommands(t *testing.T) {
 				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
 			wantErr: &multipleDefaultCmdErr,
-		},
-		{
-			name: "Valid VscodeTask command with URI",
-			commands: []v1alpha2.Command{
-				generateDummyVscodeTaskCommand("somevscodetask", uriCommandLocation, nil),
-			},
-		},
-		{
-			name: "Valid VscodeLaunch command with Inlined",
-			commands: []v1alpha2.Command{
-				generateDummyVscodeLaunchCommand("somevscodelaunch", inlinedCommandLocation, nil),
-			},
-		},
-		{
-			name: "Invalid VscodeLaunch command with wrong URI",
-			commands: []v1alpha2.Command{
-				generateDummyVscodeLaunchCommand("somevscodelaunch", inValidUriCommandLocation, nil),
-			},
-			wantErr: &invalidURIErr,
 		},
 		{
 			name: "Invalid Apply command with wrong component",

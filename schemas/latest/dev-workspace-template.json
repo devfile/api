@@ -189,16 +189,6 @@
               },
               {
                 "required": [
-                  "vscodeTask"
-                ]
-              },
-              {
-                "required": [
-                  "vscodeLaunch"
-                ]
-              },
-              {
-                "required": [
                   "composite"
                 ]
               },
@@ -430,108 +420,6 @@
                 "type": "string",
                 "maxLength": 63,
                 "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
-              },
-              "vscodeLaunch": {
-                "description": "Command providing the definition of a VsCode launch action",
-                "type": "object",
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ],
-                "properties": {
-                  "group": {
-                    "description": "Defines the group this command is part of",
-                    "type": "object",
-                    "required": [
-                      "kind"
-                    ],
-                    "properties": {
-                      "isDefault": {
-                        "description": "Identifies the default command for a given group kind",
-                        "type": "boolean"
-                      },
-                      "kind": {
-                        "description": "Kind of group the command is part of",
-                        "type": "string",
-                        "enum": [
-                          "build",
-                          "run",
-                          "test",
-                          "debug"
-                        ]
-                      }
-                    },
-                    "additionalProperties": false
-                  },
-                  "inlined": {
-                    "description": "Inlined content of the VsCode configuration",
-                    "type": "string"
-                  },
-                  "uri": {
-                    "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false
-              },
-              "vscodeTask": {
-                "description": "Command providing the definition of a VsCode Task",
-                "type": "object",
-                "oneOf": [
-                  {
-                    "required": [
-                      "uri"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "inlined"
-                    ]
-                  }
-                ],
-                "properties": {
-                  "group": {
-                    "description": "Defines the group this command is part of",
-                    "type": "object",
-                    "required": [
-                      "kind"
-                    ],
-                    "properties": {
-                      "isDefault": {
-                        "description": "Identifies the default command for a given group kind",
-                        "type": "boolean"
-                      },
-                      "kind": {
-                        "description": "Kind of group the command is part of",
-                        "type": "string",
-                        "enum": [
-                          "build",
-                          "run",
-                          "test",
-                          "debug"
-                        ]
-                      }
-                    },
-                    "additionalProperties": false
-                  },
-                  "inlined": {
-                    "description": "Inlined content of the VsCode configuration",
-                    "type": "string"
-                  },
-                  "uri": {
-                    "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false
               }
             },
             "additionalProperties": false
@@ -972,16 +860,6 @@
                         },
                         {
                           "required": [
-                            "vscodeTask"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "vscodeLaunch"
-                          ]
-                        },
-                        {
-                          "required": [
                             "composite"
                           ]
                         }
@@ -1143,102 +1021,6 @@
                           "type": "string",
                           "maxLength": 63,
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
-                        },
-                        "vscodeLaunch": {
-                          "description": "Command providing the definition of a VsCode launch action",
-                          "type": "object",
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ],
-                          "properties": {
-                            "group": {
-                              "description": "Defines the group this command is part of",
-                              "type": "object",
-                              "properties": {
-                                "isDefault": {
-                                  "description": "Identifies the default command for a given group kind",
-                                  "type": "boolean"
-                                },
-                                "kind": {
-                                  "description": "Kind of group the command is part of",
-                                  "type": "string",
-                                  "enum": [
-                                    "build",
-                                    "run",
-                                    "test",
-                                    "debug"
-                                  ]
-                                }
-                              },
-                              "additionalProperties": false
-                            },
-                            "inlined": {
-                              "description": "Inlined content of the VsCode configuration",
-                              "type": "string"
-                            },
-                            "uri": {
-                              "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                              "type": "string"
-                            }
-                          },
-                          "additionalProperties": false
-                        },
-                        "vscodeTask": {
-                          "description": "Command providing the definition of a VsCode Task",
-                          "type": "object",
-                          "oneOf": [
-                            {
-                              "required": [
-                                "uri"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "inlined"
-                              ]
-                            }
-                          ],
-                          "properties": {
-                            "group": {
-                              "description": "Defines the group this command is part of",
-                              "type": "object",
-                              "properties": {
-                                "isDefault": {
-                                  "description": "Identifies the default command for a given group kind",
-                                  "type": "boolean"
-                                },
-                                "kind": {
-                                  "description": "Kind of group the command is part of",
-                                  "type": "string",
-                                  "enum": [
-                                    "build",
-                                    "run",
-                                    "test",
-                                    "debug"
-                                  ]
-                                }
-                              },
-                              "additionalProperties": false
-                            },
-                            "inlined": {
-                              "description": "Inlined content of the VsCode configuration",
-                              "type": "string"
-                            },
-                            "uri": {
-                              "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                              "type": "string"
-                            }
-                          },
-                          "additionalProperties": false
                         }
                       },
                       "additionalProperties": false
@@ -1738,16 +1520,6 @@
                   },
                   {
                     "required": [
-                      "vscodeTask"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "vscodeLaunch"
-                    ]
-                  },
-                  {
-                    "required": [
                       "composite"
                     ]
                   }
@@ -1909,102 +1681,6 @@
                     "type": "string",
                     "maxLength": 63,
                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
-                  },
-                  "vscodeLaunch": {
-                    "description": "Command providing the definition of a VsCode launch action",
-                    "type": "object",
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ],
-                    "properties": {
-                      "group": {
-                        "description": "Defines the group this command is part of",
-                        "type": "object",
-                        "properties": {
-                          "isDefault": {
-                            "description": "Identifies the default command for a given group kind",
-                            "type": "boolean"
-                          },
-                          "kind": {
-                            "description": "Kind of group the command is part of",
-                            "type": "string",
-                            "enum": [
-                              "build",
-                              "run",
-                              "test",
-                              "debug"
-                            ]
-                          }
-                        },
-                        "additionalProperties": false
-                      },
-                      "inlined": {
-                        "description": "Inlined content of the VsCode configuration",
-                        "type": "string"
-                      },
-                      "uri": {
-                        "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
-                  },
-                  "vscodeTask": {
-                    "description": "Command providing the definition of a VsCode Task",
-                    "type": "object",
-                    "oneOf": [
-                      {
-                        "required": [
-                          "uri"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "inlined"
-                        ]
-                      }
-                    ],
-                    "properties": {
-                      "group": {
-                        "description": "Defines the group this command is part of",
-                        "type": "object",
-                        "properties": {
-                          "isDefault": {
-                            "description": "Identifies the default command for a given group kind",
-                            "type": "boolean"
-                          },
-                          "kind": {
-                            "description": "Kind of group the command is part of",
-                            "type": "string",
-                            "enum": [
-                              "build",
-                              "run",
-                              "test",
-                              "debug"
-                            ]
-                          }
-                        },
-                        "additionalProperties": false
-                      },
-                      "inlined": {
-                        "description": "Inlined content of the VsCode configuration",
-                        "type": "string"
-                      },
-                      "uri": {
-                        "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
                   }
                 },
                 "additionalProperties": false
@@ -2406,16 +2082,6 @@
                             },
                             {
                               "required": [
-                                "vscodeTask"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "vscodeLaunch"
-                              ]
-                            },
-                            {
-                              "required": [
                                 "composite"
                               ]
                             }
@@ -2577,102 +2243,6 @@
                               "type": "string",
                               "maxLength": 63,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
-                            },
-                            "vscodeLaunch": {
-                              "description": "Command providing the definition of a VsCode launch action",
-                              "type": "object",
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ],
-                              "properties": {
-                                "group": {
-                                  "description": "Defines the group this command is part of",
-                                  "type": "object",
-                                  "properties": {
-                                    "isDefault": {
-                                      "description": "Identifies the default command for a given group kind",
-                                      "type": "boolean"
-                                    },
-                                    "kind": {
-                                      "description": "Kind of group the command is part of",
-                                      "type": "string",
-                                      "enum": [
-                                        "build",
-                                        "run",
-                                        "test",
-                                        "debug"
-                                      ]
-                                    }
-                                  },
-                                  "additionalProperties": false
-                                },
-                                "inlined": {
-                                  "description": "Inlined content of the VsCode configuration",
-                                  "type": "string"
-                                },
-                                "uri": {
-                                  "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                                  "type": "string"
-                                }
-                              },
-                              "additionalProperties": false
-                            },
-                            "vscodeTask": {
-                              "description": "Command providing the definition of a VsCode Task",
-                              "type": "object",
-                              "oneOf": [
-                                {
-                                  "required": [
-                                    "uri"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "inlined"
-                                  ]
-                                }
-                              ],
-                              "properties": {
-                                "group": {
-                                  "description": "Defines the group this command is part of",
-                                  "type": "object",
-                                  "properties": {
-                                    "isDefault": {
-                                      "description": "Identifies the default command for a given group kind",
-                                      "type": "boolean"
-                                    },
-                                    "kind": {
-                                      "description": "Kind of group the command is part of",
-                                      "type": "string",
-                                      "enum": [
-                                        "build",
-                                        "run",
-                                        "test",
-                                        "debug"
-                                      ]
-                                    }
-                                  },
-                                  "additionalProperties": false
-                                },
-                                "inlined": {
-                                  "description": "Inlined content of the VsCode configuration",
-                                  "type": "string"
-                                },
-                                "uri": {
-                                  "description": "Location as an absolute of relative URI the VsCode configuration will be fetched from",
-                                  "type": "string"
-                                }
-                              },
-                              "additionalProperties": false
                             }
                           },
                           "additionalProperties": false
@@ -3177,7 +2747,7 @@
                     "additionalProperties": false
                   },
                   "github": {
-                    "description": "Project's GitHub source",
+                    "description": "Project's GitHub source. Deprecated, use `Git` instead",
                     "type": "object",
                     "properties": {
                       "checkoutFrom": {
@@ -3301,7 +2871,7 @@
                     "additionalProperties": false
                   },
                   "github": {
-                    "description": "Project's GitHub source",
+                    "description": "Project's GitHub source. Deprecated, use `Git` instead",
                     "type": "object",
                     "properties": {
                       "checkoutFrom": {
@@ -3452,7 +3022,7 @@
                 "additionalProperties": false
               },
               "github": {
-                "description": "Project's GitHub source",
+                "description": "Project's GitHub source. Deprecated, use `Git` instead",
                 "type": "object",
                 "required": [
                   "remotes"
@@ -3602,7 +3172,7 @@
                 "additionalProperties": false
               },
               "github": {
-                "description": "Project's GitHub source",
+                "description": "Project's GitHub source. Deprecated, use `Git` instead",
                 "type": "object",
                 "required": [
                   "remotes"

@@ -298,8 +298,8 @@ spec:
                       - id
                       type: object
                     vscodeLaunch:
-                      description: Command providing the definition of a VsCode launch
-                        action
+                      description: "Command providing the definition of a VsCode launch
+                        action \n Deprecated; removed in v1alpha2"
                       oneOf:
                       - required:
                         - uri
@@ -352,7 +352,8 @@ spec:
                       - id
                       type: object
                     vscodeTask:
-                      description: Command providing the definition of a VsCode Task
+                      description: "Command providing the definition of a VsCode Task
+                        \n Deprecated; removed in v1alpha2"
                       oneOf:
                       - required:
                         - uri
@@ -1084,8 +1085,9 @@ spec:
                                 - id
                                 type: object
                               vscodeLaunch:
-                                description: Command providing the definition of a
-                                  VsCode launch action
+                                description: "Command providing the definition of
+                                  a VsCode launch action \n Deprecated; removed in
+                                  v1alpha2"
                                 oneOf:
                                 - required:
                                   - uri
@@ -1142,8 +1144,8 @@ spec:
                                 - id
                                 type: object
                               vscodeTask:
-                                description: Command providing the definition of a
-                                  VsCode Task
+                                description: "Command providing the definition of
+                                  a VsCode Task \n Deprecated; removed in v1alpha2"
                                 oneOf:
                                 - required:
                                   - uri
@@ -1969,8 +1971,8 @@ spec:
                           - id
                           type: object
                         vscodeLaunch:
-                          description: Command providing the definition of a VsCode
-                            launch action
+                          description: "Command providing the definition of a VsCode
+                            launch action \n Deprecated; removed in v1alpha2"
                           oneOf:
                           - required:
                             - uri
@@ -2024,8 +2026,8 @@ spec:
                           - id
                           type: object
                         vscodeTask:
-                          description: Command providing the definition of a VsCode
-                            Task
+                          description: "Command providing the definition of a VsCode
+                            Task \n Deprecated; removed in v1alpha2"
                           oneOf:
                           - required:
                             - uri
@@ -2776,8 +2778,9 @@ spec:
                                     - id
                                     type: object
                                   vscodeLaunch:
-                                    description: Command providing the definition
-                                      of a VsCode launch action
+                                    description: "Command providing the definition
+                                      of a VsCode launch action \n Deprecated; removed
+                                      in v1alpha2"
                                     oneOf:
                                     - required:
                                       - uri
@@ -2835,8 +2838,8 @@ spec:
                                     - id
                                     type: object
                                   vscodeTask:
-                                    description: Command providing the definition
-                                      of a VsCode Task
+                                    description: "Command providing the definition
+                                      of a VsCode Task \n Deprecated; removed in v1alpha2"
                                     oneOf:
                                     - required:
                                       - uri
@@ -3918,10 +3921,6 @@ spec:
                   - required:
                     - apply
                   - required:
-                    - vscodeTask
-                  - required:
-                    - vscodeLaunch
-                  - required:
                     - composite
                   - required:
                     - custom
@@ -3974,8 +3973,6 @@ spec:
                       enum:
                       - Exec
                       - Apply
-                      - VscodeTask
-                      - VscodeLaunch
                       - Composite
                       - Custom
                       type: string
@@ -4134,87 +4131,6 @@ spec:
                       maxLength: 63
                       pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                       type: string
-                    vscodeLaunch:
-                      description: Command providing the definition of a VsCode launch
-                        action
-                      oneOf:
-                      - required:
-                        - uri
-                      - required:
-                        - inlined
-                      properties:
-                        group:
-                          description: Defines the group this command is part of
-                          properties:
-                            isDefault:
-                              description: Identifies the default command for a given
-                                group kind
-                              type: boolean
-                            kind:
-                              description: Kind of group the command is part of
-                              enum:
-                              - build
-                              - run
-                              - test
-                              - debug
-                              type: string
-                          required:
-                          - kind
-                          type: object
-                        inlined:
-                          description: Inlined content of the VsCode configuration
-                          type: string
-                        locationType:
-                          description: Type of Vscode configuration command location
-                          enum:
-                          - Uri
-                          - Inlined
-                          type: string
-                        uri:
-                          description: Location as an absolute of relative URI the
-                            VsCode configuration will be fetched from
-                          type: string
-                      type: object
-                    vscodeTask:
-                      description: Command providing the definition of a VsCode Task
-                      oneOf:
-                      - required:
-                        - uri
-                      - required:
-                        - inlined
-                      properties:
-                        group:
-                          description: Defines the group this command is part of
-                          properties:
-                            isDefault:
-                              description: Identifies the default command for a given
-                                group kind
-                              type: boolean
-                            kind:
-                              description: Kind of group the command is part of
-                              enum:
-                              - build
-                              - run
-                              - test
-                              - debug
-                              type: string
-                          required:
-                          - kind
-                          type: object
-                        inlined:
-                          description: Inlined content of the VsCode configuration
-                          type: string
-                        locationType:
-                          description: Type of Vscode configuration command location
-                          enum:
-                          - Uri
-                          - Inlined
-                          type: string
-                        uri:
-                          description: Location as an absolute of relative URI the
-                            VsCode configuration will be fetched from
-                          type: string
-                      type: object
                   required:
                   - id
                   type: object
@@ -4671,10 +4587,6 @@ spec:
                             - required:
                               - apply
                             - required:
-                              - vscodeTask
-                            - required:
-                              - vscodeLaunch
-                            - required:
                               - composite
                             properties:
                               apply:
@@ -4727,8 +4639,6 @@ spec:
                                 enum:
                                 - Exec
                                 - Apply
-                                - VscodeTask
-                                - VscodeLaunch
                                 - Composite
                                 type: string
                               composite:
@@ -4849,92 +4759,6 @@ spec:
                                 maxLength: 63
                                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                 type: string
-                              vscodeLaunch:
-                                description: Command providing the definition of a
-                                  VsCode launch action
-                                oneOf:
-                                - required:
-                                  - uri
-                                - required:
-                                  - inlined
-                                properties:
-                                  group:
-                                    description: Defines the group this command is
-                                      part of
-                                    properties:
-                                      isDefault:
-                                        description: Identifies the default command
-                                          for a given group kind
-                                        type: boolean
-                                      kind:
-                                        description: Kind of group the command is
-                                          part of
-                                        enum:
-                                        - build
-                                        - run
-                                        - test
-                                        - debug
-                                        type: string
-                                    type: object
-                                  inlined:
-                                    description: Inlined content of the VsCode configuration
-                                    type: string
-                                  locationType:
-                                    description: Type of Vscode configuration command
-                                      location
-                                    enum:
-                                    - Uri
-                                    - Inlined
-                                    type: string
-                                  uri:
-                                    description: Location as an absolute of relative
-                                      URI the VsCode configuration will be fetched
-                                      from
-                                    type: string
-                                type: object
-                              vscodeTask:
-                                description: Command providing the definition of a
-                                  VsCode Task
-                                oneOf:
-                                - required:
-                                  - uri
-                                - required:
-                                  - inlined
-                                properties:
-                                  group:
-                                    description: Defines the group this command is
-                                      part of
-                                    properties:
-                                      isDefault:
-                                        description: Identifies the default command
-                                          for a given group kind
-                                        type: boolean
-                                      kind:
-                                        description: Kind of group the command is
-                                          part of
-                                        enum:
-                                        - build
-                                        - run
-                                        - test
-                                        - debug
-                                        type: string
-                                    type: object
-                                  inlined:
-                                    description: Inlined content of the VsCode configuration
-                                    type: string
-                                  locationType:
-                                    description: Type of Vscode configuration command
-                                      location
-                                    enum:
-                                    - Uri
-                                    - Inlined
-                                    type: string
-                                  uri:
-                                    description: Location as an absolute of relative
-                                      URI the VsCode configuration will be fetched
-                                      from
-                                    type: string
-                                type: object
                             required:
                             - id
                             type: object
@@ -5475,10 +5299,6 @@ spec:
                       - required:
                         - apply
                       - required:
-                        - vscodeTask
-                      - required:
-                        - vscodeLaunch
-                      - required:
                         - composite
                       properties:
                         apply:
@@ -5527,8 +5347,6 @@ spec:
                           enum:
                           - Exec
                           - Apply
-                          - VscodeTask
-                          - VscodeLaunch
                           - Composite
                           type: string
                         composite:
@@ -5643,86 +5461,6 @@ spec:
                           maxLength: 63
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
-                        vscodeLaunch:
-                          description: Command providing the definition of a VsCode
-                            launch action
-                          oneOf:
-                          - required:
-                            - uri
-                          - required:
-                            - inlined
-                          properties:
-                            group:
-                              description: Defines the group this command is part
-                                of
-                              properties:
-                                isDefault:
-                                  description: Identifies the default command for
-                                    a given group kind
-                                  type: boolean
-                                kind:
-                                  description: Kind of group the command is part of
-                                  enum:
-                                  - build
-                                  - run
-                                  - test
-                                  - debug
-                                  type: string
-                              type: object
-                            inlined:
-                              description: Inlined content of the VsCode configuration
-                              type: string
-                            locationType:
-                              description: Type of Vscode configuration command location
-                              enum:
-                              - Uri
-                              - Inlined
-                              type: string
-                            uri:
-                              description: Location as an absolute of relative URI
-                                the VsCode configuration will be fetched from
-                              type: string
-                          type: object
-                        vscodeTask:
-                          description: Command providing the definition of a VsCode
-                            Task
-                          oneOf:
-                          - required:
-                            - uri
-                          - required:
-                            - inlined
-                          properties:
-                            group:
-                              description: Defines the group this command is part
-                                of
-                              properties:
-                                isDefault:
-                                  description: Identifies the default command for
-                                    a given group kind
-                                  type: boolean
-                                kind:
-                                  description: Kind of group the command is part of
-                                  enum:
-                                  - build
-                                  - run
-                                  - test
-                                  - debug
-                                  type: string
-                              type: object
-                            inlined:
-                              description: Inlined content of the VsCode configuration
-                              type: string
-                            locationType:
-                              description: Type of Vscode configuration command location
-                              enum:
-                              - Uri
-                              - Inlined
-                              type: string
-                            uri:
-                              description: Location as an absolute of relative URI
-                                the VsCode configuration will be fetched from
-                              type: string
-                          type: object
                       required:
                       - id
                       type: object
@@ -6158,10 +5896,6 @@ spec:
                                 - required:
                                   - apply
                                 - required:
-                                  - vscodeTask
-                                - required:
-                                  - vscodeLaunch
-                                - required:
                                   - composite
                                 properties:
                                   apply:
@@ -6215,8 +5949,6 @@ spec:
                                     enum:
                                     - Exec
                                     - Apply
-                                    - VscodeTask
-                                    - VscodeLaunch
                                     - Composite
                                     type: string
                                   composite:
@@ -6339,94 +6071,6 @@ spec:
                                     maxLength: 63
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
-                                  vscodeLaunch:
-                                    description: Command providing the definition
-                                      of a VsCode launch action
-                                    oneOf:
-                                    - required:
-                                      - uri
-                                    - required:
-                                      - inlined
-                                    properties:
-                                      group:
-                                        description: Defines the group this command
-                                          is part of
-                                        properties:
-                                          isDefault:
-                                            description: Identifies the default command
-                                              for a given group kind
-                                            type: boolean
-                                          kind:
-                                            description: Kind of group the command
-                                              is part of
-                                            enum:
-                                            - build
-                                            - run
-                                            - test
-                                            - debug
-                                            type: string
-                                        type: object
-                                      inlined:
-                                        description: Inlined content of the VsCode
-                                          configuration
-                                        type: string
-                                      locationType:
-                                        description: Type of Vscode configuration
-                                          command location
-                                        enum:
-                                        - Uri
-                                        - Inlined
-                                        type: string
-                                      uri:
-                                        description: Location as an absolute of relative
-                                          URI the VsCode configuration will be fetched
-                                          from
-                                        type: string
-                                    type: object
-                                  vscodeTask:
-                                    description: Command providing the definition
-                                      of a VsCode Task
-                                    oneOf:
-                                    - required:
-                                      - uri
-                                    - required:
-                                      - inlined
-                                    properties:
-                                      group:
-                                        description: Defines the group this command
-                                          is part of
-                                        properties:
-                                          isDefault:
-                                            description: Identifies the default command
-                                              for a given group kind
-                                            type: boolean
-                                          kind:
-                                            description: Kind of group the command
-                                              is part of
-                                            enum:
-                                            - build
-                                            - run
-                                            - test
-                                            - debug
-                                            type: string
-                                        type: object
-                                      inlined:
-                                        description: Inlined content of the VsCode
-                                          configuration
-                                        type: string
-                                      locationType:
-                                        description: Type of Vscode configuration
-                                          command location
-                                        enum:
-                                        - Uri
-                                        - Inlined
-                                        type: string
-                                      uri:
-                                        description: Location as an absolute of relative
-                                          URI the VsCode configuration will be fetched
-                                          from
-                                        type: string
-                                    type: object
                                 required:
                                 - id
                                 type: object
@@ -7007,7 +6651,8 @@ spec:
                               type: object
                           type: object
                         github:
-                          description: Project's GitHub source
+                          description: Project's GitHub source. Deprecated, use `Git`
+                            instead
                           properties:
                             checkoutFrom:
                               description: Defines from what the project should be
@@ -7114,7 +6759,8 @@ spec:
                               type: object
                           type: object
                         github:
-                          description: Project's GitHub source
+                          description: Project's GitHub source. Deprecated, use `Git`
+                            instead
                           properties:
                             checkoutFrom:
                               description: Defines from what the project should be
@@ -7238,7 +6884,8 @@ spec:
                       - remotes
                       type: object
                     github:
-                      description: Project's GitHub source
+                      description: Project's GitHub source. Deprecated, use `Git`
+                        instead
                       properties:
                         checkoutFrom:
                           description: Defines from what the project should be checked
@@ -7355,7 +7002,8 @@ spec:
                       - remotes
                       type: object
                     github:
-                      description: Project's GitHub source
+                      description: Project's GitHub source. Deprecated, use `Git`
+                        instead
                       properties:
                         checkoutFrom:
                           description: Defines from what the project should be checked

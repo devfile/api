@@ -16,10 +16,6 @@ commands:
       group:
         kind: build
         isDefault: true
-  - id: opendevfile
-    vscodeTask:
-      inlined:
-        json        
   - id: build-schema-and-open-devfile
     composite:
       label: Build schema and open devfile
