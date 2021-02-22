@@ -21,21 +21,16 @@ const (
 	maxCommands = 10
 	// maxComponents : The maximum number of components to include in a generated devfile
 	maxComponents = 10
-	// numDevfiles : the number of devfiles to create for each test
-	numDevfiles = 5
-)
 
-const (
 	defaultTempDir = "./tmp/"
 	logFileName    = "test.log"
 	// logToFileOnly - If set to false the log output will also be output to the console
-	logToFileOnly = true // If set to false the log output will also be output to the console
+	logToFileOnly = true
 )
 
-// tmpDir temporary directory in use
-var tmpDir string
-
 var (
+	// tmpDir temporary directory in use
+	tmpDir     string
 	testLogger *log.Logger
 )
 

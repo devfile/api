@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	common "github.com/devfile/api/v2/test/v200/utils/common"
+	commonUtils "github.com/devfile/api/v2/test/v200/utils/common"
 	"github.com/santhosh-tekuri/jsonschema"
 	"sigs.k8s.io/yaml"
 )
@@ -23,41 +23,43 @@ const (
 
 var schemas = make(map[string]SchemaFile)
 
+// SchemaFile - represents the schema stucture
 type SchemaFile struct {
 	Schema *jsonschema.Schema
 }
 
+// DevfileValidator struct for DevfileValidator interface defined in common utils.
 type DevfileValidator struct{}
 
-// WriteAndVerify implements Saved.DevfileValidator interface.
+// WriteAndValidate implements Saved.DevfileValidator interface.
 // writes to disk and validates the specified devfile
-func (devfileValidator DevfileValidator) WriteAndValidate(devfile *common.TestDevfile) error {
+func (devfileValidator DevfileValidator) WriteAndValidate(devfile *commonUtils.TestDevfile) error {
 	err := writeDevfile(devfile)
 	if err != nil {
-		common.LogErrorMessage(fmt.Sprintf("Error writing file : %s : %v", devfile.FileName, err))
+		commonUtils.LogErrorMessage(fmt.Sprintf("Error writing file : %s : %v", devfile.FileName, err))
 	} else {
 		err = validateDevfile(devfile)
 		if err != nil {
-			common.LogErrorMessage(fmt.Sprintf("Error vaidating file : %s : %v", devfile.FileName, err))
+			commonUtils.LogErrorMessage(fmt.Sprintf("Error vaidating file : %s : %v", devfile.FileName, err))
 		}
 	}
 	return err
 }
 
-// CheckWithSchema checks the validity of aa devfile against the schema.
-func (schemaFile *SchemaFile) CheckWithSchema(devfile string, expectedMessage string) error {
+// checkWithSchema checks the validity of a devfile against the schema.
+func (schemaFile *SchemaFile) checkWithSchema(devfile string, expectedMessage string) error {
 
 	// Read the created yaml file, ready for converison to json
 	devfileData, err := ioutil.ReadFile(devfile)
 	if err != nil {
-		common.LogErrorMessage(fmt.Sprintf("  FAIL: schema : unable to read %s: %v", devfile, err))
+		commonUtils.LogErrorMessage(fmt.Sprintf("  FAIL: schema : unable to read %s: %v", devfile, err))
 		return err
 	}
 
 	// Convert the yaml file to json
 	devfileDataAsJSON, err := yaml.YAMLToJSON(devfileData)
 	if err != nil {
-		common.LogErrorMessage(fmt.Sprintf("  FAIL : %s : schema : failed to convert to json : %v", devfile, err))
+		commonUtils.LogErrorMessage(fmt.Sprintf("  FAIL : %s : schema : failed to convert to json : %v", devfile, err))
 		return err
 	}
 
@@ -65,49 +67,49 @@ func (schemaFile *SchemaFile) CheckWithSchema(devfile string, expectedMessage st
 	if validationErr != nil {
 		if len(expectedMessage) > 0 {
 			if !strings.Contains(validationErr.Error(), expectedMessage) {
-				err = errors.New(common.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s : Did not fail as expected : %s  got : %v", devfile, expectedMessage, validationErr)))
+				err = errors.New(commonUtils.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s : Did not fail as expected : %s  got : %v", devfile, expectedMessage, validationErr)))
 			} else {
-				common.LogInfoMessage(fmt.Sprintf("PASS: schema :  Expected Error received : %s", expectedMessage))
+				commonUtils.LogInfoMessage(fmt.Sprintf("PASS: schema :  Expected Error received : %s", expectedMessage))
 			}
 		} else {
-			err = errors.New(common.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s : Did not pass as expected, got : %v", devfile, validationErr)))
+			err = errors.New(commonUtils.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s : Did not pass as expected, got : %v", devfile, validationErr)))
 		}
 	} else {
 		if len(expectedMessage) > 0 {
-			err = errors.New(common.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s :  was valid - Expected Error not found : %v", devfile, validationErr)))
+			err = errors.New(commonUtils.LogErrorMessage(fmt.Sprintf("  FAIL : schema : %s :  was valid - Expected Error not found : %v", devfile, validationErr)))
 		} else {
-			common.LogInfoMessage(fmt.Sprintf("  PASS : schema : %s : devfile was valid.", devfile))
+			commonUtils.LogInfoMessage(fmt.Sprintf("  PASS : schema : %s : devfile was valid.", devfile))
 		}
 	}
 	return err
 }
 
-// GetSchema downloads and saves a schema from the provided url
-func GetSchema(schemafile string) (SchemaFile, error) {
+// getSchema downloads and saves a schema from the provided url
+func getSchema(schemaFileName string) (SchemaFile, error) {
 
 	var err error
-	schemaFile, found := schemas[schemafile]
+	schemaFile, found := schemas[schemaFileName]
 	if !found {
 
 		schemaFile = SchemaFile{}
 
 		// Prepare the schema file
 		compiler := jsonschema.NewCompiler()
+		// Use Draft 7, github.com/santhosh-tekuri/jsonschema provides 4,6 an 7 so use the latest
 		compiler.Draft = jsonschema.Draft7
-		schemaFile.Schema, err = compiler.Compile(schemafile)
+		schemaFile.Schema, err = compiler.Compile(schemaFileName)
 		if err != nil {
-			//t.Fatalf("  FAIL : Schema compile failed : %s: %v", testJsonContent.SchemaFile, err)
-			common.LogErrorMessage(fmt.Sprintf("FAIL : Failed to compile schema  %v", err))
+			commonUtils.LogErrorMessage(fmt.Sprintf("FAIL : Failed to compile schema  %v", err))
 		} else {
-			common.LogInfoMessage(fmt.Sprintf("Schema compiled from file: %s)", schemafile))
-			schemas[schemafile] = schemaFile
+			commonUtils.LogInfoMessage(fmt.Sprintf("Schema compiled from file: %s)", schemaFileName))
+			schemas[schemaFileName] = schemaFile
 		}
 	}
 	return schemaFile, err
 }
 
-// WriteDevfile creates a devfile on disk for use in a test.
-func writeDevfile(devfile *common.TestDevfile) error {
+// writeDevfile creates a devfile on disk for use in a test.
+func writeDevfile(devfile *commonUtils.TestDevfile) error {
 	var err error
 
 	fileName := devfile.FileName
@@ -115,36 +117,36 @@ func writeDevfile(devfile *common.TestDevfile) error {
 		fileName += ".yaml"
 	}
 
-	common.LogInfoMessage(fmt.Sprintf("Marshall and write devfile %s", devfile.FileName))
+	commonUtils.LogInfoMessage(fmt.Sprintf("Marshall and write devfile %s", devfile.FileName))
 
 	c, marshallErr := yaml.Marshal(&(devfile.SchemaDevFile))
 
 	if marshallErr != nil {
-		err = errors.New(common.LogErrorMessage(fmt.Sprintf("Marshall devfile %s : %v", devfile.FileName, marshallErr)))
+		err = errors.New(commonUtils.LogErrorMessage(fmt.Sprintf("Marshall devfile %s : %v", devfile.FileName, marshallErr)))
 	} else {
 		err = ioutil.WriteFile(fileName, c, 0644)
 		if err != nil {
-			common.LogErrorMessage(fmt.Sprintf("Write devfile %s : %v", devfile.FileName, err))
+			commonUtils.LogErrorMessage(fmt.Sprintf("Write devfile %s : %v", devfile.FileName, err))
 		}
 	}
 	return err
 }
 
 // validateDevfile check the provided defile against the schema
-func validateDevfile(devfile *common.TestDevfile) error {
+func validateDevfile(devfile *commonUtils.TestDevfile) error {
 
 	var err error
 	var schemaFile SchemaFile
 
-	schemaFile, err = GetSchema(schemaFileName)
+	schemaFile, err = getSchema(schemaFileName)
 	if err != nil {
-		common.LogErrorMessage(fmt.Sprintf("Failed to get devfile schema : %v", err))
+		commonUtils.LogErrorMessage(fmt.Sprintf("Failed to get devfile schema : %v", err))
 	} else {
-		err = schemaFile.CheckWithSchema(devfile.FileName, "")
+		err = schemaFile.checkWithSchema(devfile.FileName, "")
 		if err != nil {
-			common.LogErrorMessage(fmt.Sprintf("Verification with devfile schema failed : %v", err))
+			commonUtils.LogErrorMessage(fmt.Sprintf("Verification with devfile schema failed : %v", err))
 		} else {
-			common.LogInfoMessage(fmt.Sprintf("Devfile validated using JSONSchema schema : %s", devfile.FileName))
+			commonUtils.LogInfoMessage(fmt.Sprintf("Devfile validated using JSONSchema schema : %s", devfile.FileName))
 		}
 	}
 
@@ -152,20 +154,20 @@ func validateDevfile(devfile *common.TestDevfile) error {
 }
 
 // RunTest : Runs a test to create and verify a devfile based on the content of the specified TestContent
-func RunTest(testContent common.TestContent, t *testing.T) {
+func RunTest(testContent commonUtils.TestContent, t *testing.T) {
 
-	common.LogMessage(fmt.Sprintf("Start test for %s", testContent.FileName))
+	commonUtils.LogMessage(fmt.Sprintf("Start test for %s", testContent.FileName))
 
 	validator := DevfileValidator{}
 
 	devfileName := testContent.FileName
 	for i := 1; i <= numDevfiles; i++ {
 
-		testContent.FileName = common.AddSuffixToFileName(devfileName, strconv.Itoa(i))
+		testContent.FileName = commonUtils.AddSuffixToFileName(devfileName, strconv.Itoa(i))
 
-		testDevfile, err := common.GetDevfile(testContent.FileName, nil, validator)
+		testDevfile, err := commonUtils.GetDevfile(testContent.FileName, nil, validator)
 		if err != nil {
-			t.Fatalf(common.LogMessage(fmt.Sprintf("Error creating devfile : %v", err)))
+			t.Fatalf(commonUtils.LogMessage(fmt.Sprintf("Error creating devfile : %v", err)))
 		}
 
 		testDevfile.RunTest(testContent, t)

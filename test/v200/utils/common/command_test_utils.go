@@ -15,7 +15,7 @@ func (testDevFile *TestDevfile) commandAdded(command schema.Command) {
 	}
 }
 
-// commandUpdated and notifies the follower of the command which has been updated
+// commandUpdated notifies the follower of the command which has been updated
 func (testDevFile *TestDevfile) commandUpdated(command schema.Command) {
 	LogInfoMessage(fmt.Sprintf("command updated Id: %s", command.Id))
 	if testDevFile.Follower != nil {
@@ -66,13 +66,14 @@ func (testDevFile *TestDevfile) addGroup() *schema.CommandGroup {
 func (testDevFile *TestDevfile) AddCommand(commandType schema.CommandType) schema.Command {
 
 	var command *schema.Command
-	if commandType == schema.ExecCommandType {
+	switch commandType {
+	case schema.ExecCommandType:
 		command = testDevFile.createExecCommand()
 		testDevFile.SetExecCommandValues(command)
-	} else if commandType == schema.CompositeCommandType {
+	case schema.CompositeCommandType:
 		command = testDevFile.createCompositeCommand()
 		testDevFile.SetCompositeCommandValues(command)
-	} else if commandType == schema.ApplyCommandType {
+	case schema.ApplyCommandType:
 		command = testDevFile.createApplyCommand()
 		testDevFile.SetApplyCommandValues(command)
 	}
@@ -92,7 +93,7 @@ func (testDevFile *TestDevfile) createExecCommand() *schema.Command {
 
 }
 
-// SetExecCommandValues randomly sets exec command attribute to random values
+// SetExecCommandValues randomly sets/updates exec command attributes to random values
 func (testDevFile *TestDevfile) SetExecCommandValues(command *schema.Command) {
 
 	execCommand := command.Exec
@@ -149,7 +150,7 @@ func (testDevFile *TestDevfile) createCompositeCommand() *schema.Command {
 	return &command
 }
 
-// SetCompositeCommandValues randomly sets composite command attribute to random values
+// SetCompositeCommandValues randomly sets/updates composite command attributes to random values
 func (testDevFile *TestDevfile) SetCompositeCommandValues(command *schema.Command) {
 
 	compositeCommand := command.Composite
@@ -193,7 +194,7 @@ func (testDevFile *TestDevfile) createApplyCommand() *schema.Command {
 	return &command
 }
 
-// SetApplyCommandValues randomly sets apply command attributes to random values
+// SetApplyCommandValues randomly sets/updates apply command attributes to random values
 func (testDevFile *TestDevfile) SetApplyCommandValues(command *schema.Command) {
 	applyCommand := command.Apply
 

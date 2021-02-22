@@ -1,4 +1,4 @@
-# schemsTest
+# schemaTest
 
 The API tests are intended to provide a comprehensive verification of the devfile schemas. This includes:
 - Ensuring every possible attribute is valid.

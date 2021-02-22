@@ -98,7 +98,7 @@ func (devfile *TestDevfile) GetContainerName() string {
 	return componentName
 }
 
-// SetContainerComponentValues randomly sets container component attributes to random values
+// SetContainerComponentValues randomly sets/updates container component attributes to random values
 func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Component) {
 
 	containerComponent := component.Container
@@ -162,7 +162,7 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 
 }
 
-// SetVolumeComponentValues randomly sets volume component attributes to random values
+// SetVolumeComponentValues randomly sets/updates volume component attributes to random values
 func (devfile *TestDevfile) SetVolumeComponentValues(component *schema.Component) {
 
 	component.Volume.Size = strconv.Itoa(4+GetRandomNumber(64, 256)) + "G"
