@@ -5,8 +5,8 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// ValidateParent validates the parent data for a global attribute except parent overrides
-func ValidateParent(attributes apiAttributes.Attributes, parent *v1alpha2.Parent) error {
+// ValidateAndReplaceForParent validates the parent data for global attribute references(except parent overrides) and replaces them with the attribute value
+func ValidateAndReplaceForParent(attributes apiAttributes.Attributes, parent *v1alpha2.Parent) error {
 	var err error
 
 	if parent != nil {

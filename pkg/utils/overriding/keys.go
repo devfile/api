@@ -1,6 +1,7 @@
 package overriding
 
 import (
+	"fmt"
 	"reflect"
 
 	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -42,7 +43,10 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...dw.TopLevelListContain
 		}
 
 		if attributeValue.IsValid() && attributeValue.CanInterface() {
-			attributes := attributeValue.Interface().(attributesPkg.Attributes)
+			attributes, ok := attributeValue.Interface().(attributesPkg.Attributes)
+			if !ok {
+				return fmt.Errorf("unable to fetch Attributes from the devfile data")
+			}
 			var attributeKeys []string
 			for k := range attributes {
 				attributeKeys = append(attributeKeys, k)

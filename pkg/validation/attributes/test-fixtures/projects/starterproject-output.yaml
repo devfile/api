@@ -1,0 +1,5 @@
+name: starterproject1
+zip:
+  location: "/FOO"
+description: "FOOBAR is not BARFOO"
+subDir: "/FOO"

@@ -7,37 +7,37 @@ projects:
 - name: project1
   git:
     checkoutFrom:
-      revision: "{{tag}}"
+      revision: "xyz"
     remotes:
-      "{{tag}}": "{{devnull}}"
-      "{{version}}": "test"
+      "xyz": "/dev/null"
+      "1": "test"
 - name: project2
   zip:
-    location: "{{tag}}"
+    location: "xyz"
 starterProjects:
 - name: starterproject1
   git:
     checkoutFrom:
-      revision: "{{tag}}"
+      revision: "xyz"
     remotes:
-      "{{tag}}": "{{devnull}}"
-      "{{version}}": "test"
+      "xyz": "/dev/null"
+      "1": "test"
 components:
 - name: component1
   container:
     image: image
     env:
       - name: BAR
-        value: "{{foo}}"
+        value: "FOO"
       - name: FOO
         value: BAR
     command:
       - tail
       - -f
-      - "{{devnull}}"
+      - "/dev/null"
 - name: component2
   kubernetes:
-    inlined: "{{foo}}"
+    inlined: "FOO"
     endpoints:
     - name: endpoint1
       exposure: "public"
@@ -45,16 +45,16 @@ components:
 commands:
 - id: command1
   exec:
-    commandLine: "test-{{tag}}"
+    commandLine: "test-xyz"
     env:
       - name: tag
-        value: "{{tag}}"
+        value: "xyz"
       - name: FOO
         value: BAR
 - id: command2
   composite:
     commands:
-      - "{{tag}}"
+      - "xyz"
       - command1
 events:
   preStart:

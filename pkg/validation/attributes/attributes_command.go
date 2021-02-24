@@ -5,27 +5,25 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// ValidateCommands validates the commands data for a global attribute
-func ValidateCommands(attributes apiAttributes.Attributes, commands *[]v1alpha2.Command) error {
+// ValidateAndReplaceForCommands validates the commands data for global attribute references and replaces them with the attribute value
+func ValidateAndReplaceForCommands(attributes apiAttributes.Attributes, commands []v1alpha2.Command) error {
 
-	if commands != nil {
-		for i := range *commands {
-			var err error
+	for i := range commands {
+		var err error
 
-			// Validate various command types
-			switch {
-			case (*commands)[i].Exec != nil:
-				if err = validateExecCommand(attributes, (*commands)[i].Exec); err != nil {
-					return err
-				}
-			case (*commands)[i].Composite != nil:
-				if err = validateCompositeCommand(attributes, (*commands)[i].Composite); err != nil {
-					return err
-				}
-			case (*commands)[i].Apply != nil:
-				if err = validateApplyCommand(attributes, (*commands)[i].Apply); err != nil {
-					return err
-				}
+		// Validate various command types
+		switch {
+		case commands[i].Exec != nil:
+			if err = validateAndReplaceForExecCommand(attributes, commands[i].Exec); err != nil {
+				return err
+			}
+		case commands[i].Composite != nil:
+			if err = validateAndReplaceForCompositeCommand(attributes, commands[i].Composite); err != nil {
+				return err
+			}
+		case commands[i].Apply != nil:
+			if err = validateAndReplaceForApplyCommand(attributes, commands[i].Apply); err != nil {
+				return err
 			}
 		}
 	}
@@ -33,8 +31,8 @@ func ValidateCommands(attributes apiAttributes.Attributes, commands *[]v1alpha2.
 	return nil
 }
 
-// validateExecCommand validates the exec command data for a global attribute
-func validateExecCommand(attributes apiAttributes.Attributes, exec *v1alpha2.ExecCommand) error {
+// validateAndReplaceForExecCommand validates the exec command data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForExecCommand(attributes apiAttributes.Attributes, exec *v1alpha2.ExecCommand) error {
 	var err error
 
 	if exec != nil {
@@ -60,7 +58,7 @@ func validateExecCommand(attributes apiAttributes.Attributes, exec *v1alpha2.Exe
 
 		// Validate exec env
 		if len(exec.Env) > 0 {
-			if err = validateEnv(attributes, &exec.Env); err != nil {
+			if err = validateAndReplaceForEnv(attributes, exec.Env); err != nil {
 				return err
 			}
 		}
@@ -69,8 +67,8 @@ func validateExecCommand(attributes apiAttributes.Attributes, exec *v1alpha2.Exe
 	return nil
 }
 
-// validateExecCommand validates the composite command data for a global attribute
-func validateCompositeCommand(attributes apiAttributes.Attributes, composite *v1alpha2.CompositeCommand) error {
+// validateAndReplaceForCompositeCommand validates the composite command data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForCompositeCommand(attributes apiAttributes.Attributes, composite *v1alpha2.CompositeCommand) error {
 	var err error
 
 	if composite != nil {
@@ -90,8 +88,8 @@ func validateCompositeCommand(attributes apiAttributes.Attributes, composite *v1
 	return nil
 }
 
-// validateApplyCommand validates the apply command data for a global attribute
-func validateApplyCommand(attributes apiAttributes.Attributes, apply *v1alpha2.ApplyCommand) error {
+// validateAndReplaceForApplyCommand validates the apply command data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForApplyCommand(attributes apiAttributes.Attributes, apply *v1alpha2.ApplyCommand) error {
 	var err error
 
 	if apply != nil {

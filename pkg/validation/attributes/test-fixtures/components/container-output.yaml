@@ -1,0 +1,20 @@
+image: "image-1"
+env:
+  - name: "FOO"
+    value: "BAR"
+command:
+  - tail
+  - -f
+  - "/dev/null"
+args:
+  - "/dev/null"
+memoryLimit: "FOO"
+memoryRequest: "FOO"
+sourceMapping: "FOO"
+volumeMounts:
+  - name: vol1
+    path: "/FOO"
+endpoints:
+  - name: endpoint1
+    exposure: public
+    path: "FOO"

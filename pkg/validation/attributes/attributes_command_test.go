@@ -8,164 +8,136 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestValidateExecCommand(t *testing.T) {
+func TestValidateAndReplaceExecCommand(t *testing.T) {
 
 	tests := []struct {
-		name       string
-		testFile   string
-		expected   v1alpha2.ExecCommand
-		attributes apiAttributes.Attributes
-		wantErr    bool
+		name          string
+		testFile      string
+		outputFile    string
+		attributeFile string
+		wantErr       bool
 	}{
 		{
-			name:     "Good Substitution",
-			testFile: "test-fixtures/commands/exec.yaml",
-			expected: v1alpha2.ExecCommand{
-				CommandLine: "tail -f /dev/null",
-				WorkingDir:  "FOO",
-				Component:   "BAR",
-				LabeledCommand: v1alpha2.LabeledCommand{
-					Label: "1",
-				},
-				Env: []v1alpha2.EnvVar{
-					{
-						Name:  "FOO",
-						Value: "BAR",
-					},
-				},
-			},
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"version": "1",
-				"devnull": "/dev/null",
-				"bar":     "BAR",
-				"foo":     "FOO",
-			}, nil),
-			wantErr: false,
+			name:          "Good Substitution",
+			testFile:      "test-fixtures/commands/exec.yaml",
+			outputFile:    "test-fixtures/commands/exec-output.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-referenced.yaml",
+			wantErr:       false,
 		},
 		{
-			name:     "Invalid Reference",
-			testFile: "test-fixtures/commands/exec.yaml",
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"foo": "FOO",
-			}, nil),
-			wantErr: true,
+			name:          "Invalid Reference",
+			testFile:      "test-fixtures/commands/exec.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-notreferenced.yaml",
+			wantErr:       true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			testExecCommand := v1alpha2.ExecCommand{}
-
 			readFileToStruct(t, tt.testFile, &testExecCommand)
 
-			err := validateExecCommand(tt.attributes, &testExecCommand)
-			if tt.wantErr == (err == nil) {
-				t.Errorf("error: %v", err)
-				return
+			testAttribute := apiAttributes.Attributes{}
+			readFileToStruct(t, tt.attributeFile, &testAttribute)
+
+			err := validateAndReplaceForExecCommand(testAttribute, &testExecCommand)
+			if tt.wantErr && err == nil {
+				t.Errorf("Expected error from test but got nil")
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
 			} else if err == nil {
-				assert.Equal(t, tt.expected, testExecCommand, "The two values should be the same.")
+				expectedExecCommand := v1alpha2.ExecCommand{}
+				readFileToStruct(t, tt.outputFile, &expectedExecCommand)
+				assert.Equal(t, expectedExecCommand, testExecCommand, "The two values should be the same.")
 			}
 		})
 	}
 }
 
-func TestValidateCompositeCommand(t *testing.T) {
+func TestValidateAndReplaceCompositeCommand(t *testing.T) {
 
 	tests := []struct {
-		name       string
-		testFile   string
-		expected   v1alpha2.CompositeCommand
-		attributes apiAttributes.Attributes
-		wantErr    bool
+		name          string
+		testFile      string
+		outputFile    string
+		attributeFile string
+		wantErr       bool
 	}{
 		{
-			name:     "Good Substitution",
-			testFile: "test-fixtures/commands/composite.yaml",
-			expected: v1alpha2.CompositeCommand{
-				LabeledCommand: v1alpha2.LabeledCommand{
-					Label: "1",
-				},
-				Commands: []string{
-					"FOO",
-					"BAR",
-				},
-			},
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"version": "1",
-				"foo":     "FOO",
-			}, nil),
-			wantErr: false,
+			name:          "Good Substitution",
+			testFile:      "test-fixtures/commands/composite.yaml",
+			outputFile:    "test-fixtures/commands/composite-output.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-referenced.yaml",
+			wantErr:       false,
 		},
 		{
-			name:     "Invalid Reference",
-			testFile: "test-fixtures/commands/composite.yaml",
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"foo": "FOO",
-			}, nil),
-			wantErr: true,
+			name:          "Invalid Reference",
+			testFile:      "test-fixtures/commands/composite.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-notreferenced.yaml",
+			wantErr:       true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			testCompositeCommand := v1alpha2.CompositeCommand{}
-
 			readFileToStruct(t, tt.testFile, &testCompositeCommand)
 
-			err := validateCompositeCommand(tt.attributes, &testCompositeCommand)
-			if tt.wantErr == (err == nil) {
-				t.Errorf("error: %v", err)
-				return
+			testAttribute := apiAttributes.Attributes{}
+			readFileToStruct(t, tt.attributeFile, &testAttribute)
+
+			err := validateAndReplaceForCompositeCommand(testAttribute, &testCompositeCommand)
+			if tt.wantErr && err == nil {
+				t.Errorf("Expected error from test but got nil")
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
 			} else if err == nil {
-				assert.Equal(t, tt.expected, testCompositeCommand, "The two values should be the same.")
+				expectedCompositeCommand := v1alpha2.CompositeCommand{}
+				readFileToStruct(t, tt.outputFile, &expectedCompositeCommand)
+				assert.Equal(t, expectedCompositeCommand, testCompositeCommand, "The two values should be the same.")
 			}
 		})
 	}
 }
 
-func TestValidateApplyCommand(t *testing.T) {
+func TestValidateAndReplaceApplyCommand(t *testing.T) {
 
 	tests := []struct {
-		name       string
-		testFile   string
-		expected   v1alpha2.ApplyCommand
-		attributes apiAttributes.Attributes
-		wantErr    bool
+		name          string
+		testFile      string
+		outputFile    string
+		attributeFile string
+		wantErr       bool
 	}{
 		{
-			name:     "Good Substitution",
-			testFile: "test-fixtures/commands/apply.yaml",
-			expected: v1alpha2.ApplyCommand{
-				LabeledCommand: v1alpha2.LabeledCommand{
-					Label: "1",
-				},
-				Component: "FOO",
-			},
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"version": "1",
-				"foo":     "FOO",
-			}, nil),
-			wantErr: false,
+			name:          "Good Substitution",
+			testFile:      "test-fixtures/commands/apply.yaml",
+			outputFile:    "test-fixtures/commands/apply-output.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-referenced.yaml",
+			wantErr:       false,
 		},
 		{
-			name:     "Invalid Reference",
-			testFile: "test-fixtures/commands/apply.yaml",
-			attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-				"foo": "FOO",
-			}, nil),
-			wantErr: true,
+			name:          "Invalid Reference",
+			testFile:      "test-fixtures/commands/apply.yaml",
+			attributeFile: "test-fixtures/attributes/attributes-notreferenced.yaml",
+			wantErr:       true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			testApplyCommand := v1alpha2.ApplyCommand{}
-
 			readFileToStruct(t, tt.testFile, &testApplyCommand)
 
-			err := validateApplyCommand(tt.attributes, &testApplyCommand)
-			if tt.wantErr == (err == nil) {
-				t.Errorf("error: %v", err)
-				return
+			testAttribute := apiAttributes.Attributes{}
+			readFileToStruct(t, tt.attributeFile, &testAttribute)
+
+			err := validateAndReplaceForApplyCommand(testAttribute, &testApplyCommand)
+			if tt.wantErr && err == nil {
+				t.Errorf("Expected error from test but got nil")
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
 			} else if err == nil {
-				assert.Equal(t, tt.expected, testApplyCommand, "The two values should be the same.")
+				expectedApplyCommand := v1alpha2.ApplyCommand{}
+				readFileToStruct(t, tt.outputFile, &expectedApplyCommand)
+				assert.Equal(t, expectedApplyCommand, testApplyCommand, "The two values should be the same.")
 			}
 		})
 	}

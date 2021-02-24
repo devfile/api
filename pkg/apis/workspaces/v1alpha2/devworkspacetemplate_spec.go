@@ -16,7 +16,7 @@ type DevWorkspaceTemplateSpec struct {
 type DevWorkspaceTemplateSpecContent struct {
 	// Map of implementation-dependant free-form YAML attributes.
 	// Attribute values can be referenced throughout the devfile in string type fields in the form {{attribute-key}}
-	// except for schemaVersion and metadata. Exception to the string field include element's key identifiers(command id,
+	// except for schemaVersion, metadata and events. Exception to the string field include element's key identifiers(command id,
 	// component name, endpoint name, project name, etc.) and string enums(command group kind, endpoint exposure, etc.)
 	// +optional
 	// +patchStrategy=merge

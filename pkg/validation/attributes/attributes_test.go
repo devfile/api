@@ -13,153 +13,16 @@ import (
 func TestValidateGlobalAttributeBasic(t *testing.T) {
 
 	tests := []struct {
-		name     string
-		testFile string
-		expected v1alpha2.DevWorkspaceTemplateSpec
-		wantErr  bool
+		name       string
+		testFile   string
+		outputFile string
+		wantErr    bool
 	}{
 		{
-			name:     "Successful global attribute substitution",
-			testFile: "test-fixtures/all/devfile-good.yaml",
-			expected: v1alpha2.DevWorkspaceTemplateSpec{
-				DevWorkspaceTemplateSpecContent: v1alpha2.DevWorkspaceTemplateSpecContent{
-					Attributes: apiAttributes.Attributes{}.FromMap(map[string]interface{}{
-						"tag":     "xyz",
-						"version": "1",
-						"foo":     "FOO",
-						"devnull": "/dev/null",
-					}, nil),
-					Components: []v1alpha2.Component{
-						{
-							Name: "component1",
-							ComponentUnion: v1alpha2.ComponentUnion{
-								Container: &v1alpha2.ContainerComponent{
-									Container: v1alpha2.Container{
-										Image:   "image",
-										Command: []string{"tail", "-f", "/dev/null"},
-										Env: []v1alpha2.EnvVar{
-											{
-												Name:  "BAR",
-												Value: "FOO",
-											},
-											{
-												Name:  "FOO",
-												Value: "BAR",
-											},
-										},
-									},
-								},
-							},
-						},
-						{
-							Name: "component2",
-							ComponentUnion: v1alpha2.ComponentUnion{
-								Kubernetes: &v1alpha2.KubernetesComponent{
-									K8sLikeComponent: v1alpha2.K8sLikeComponent{
-										K8sLikeComponentLocation: v1alpha2.K8sLikeComponentLocation{
-											Inlined: "FOO",
-										},
-										Endpoints: []v1alpha2.Endpoint{
-											{
-												Name:       "endpoint1",
-												Exposure:   "public",
-												TargetPort: 9999,
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-					Commands: []v1alpha2.Command{
-						{
-							Id: "command1",
-							CommandUnion: v1alpha2.CommandUnion{
-								Exec: &v1alpha2.ExecCommand{
-									CommandLine: "test-xyz",
-									Env: []v1alpha2.EnvVar{
-										{
-											Name:  "tag",
-											Value: "xyz",
-										},
-										{
-											Name:  "FOO",
-											Value: "BAR",
-										},
-									},
-								},
-							},
-						},
-						{
-							Id: "command2",
-							CommandUnion: v1alpha2.CommandUnion{
-								Composite: &v1alpha2.CompositeCommand{
-									Commands: []string{
-										"xyz",
-										"command1",
-									},
-								},
-							},
-						},
-					},
-					Events: &v1alpha2.Events{
-						WorkspaceEvents: v1alpha2.WorkspaceEvents{
-							PreStart: []string{
-								"xyz",
-								"test",
-							},
-							PreStop: []string{
-								"1",
-							},
-						},
-					},
-					Projects: []v1alpha2.Project{
-						{
-							Name: "project1",
-							ProjectSource: v1alpha2.ProjectSource{
-								Git: &v1alpha2.GitProjectSource{
-									GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
-										CheckoutFrom: &v1alpha2.CheckoutFrom{
-											Revision: "xyz",
-										},
-										Remotes: map[string]string{
-											"xyz": "/dev/null",
-											"1":   "test",
-										},
-									},
-								},
-							},
-						},
-						{
-							Name: "project2",
-							ProjectSource: v1alpha2.ProjectSource{
-								Zip: &v1alpha2.ZipProjectSource{
-									Location: "xyz",
-								},
-							},
-						},
-					},
-					StarterProjects: []v1alpha2.StarterProject{
-						{
-							Name: "starterproject1",
-							ProjectSource: v1alpha2.ProjectSource{
-								Git: &v1alpha2.GitProjectSource{
-									GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
-										CheckoutFrom: &v1alpha2.CheckoutFrom{
-											Revision: "xyz",
-										},
-										Remotes: map[string]string{
-											"xyz": "/dev/null",
-											"1":   "test",
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-			wantErr: false,
+			name:       "Successful global attribute substitution",
+			testFile:   "test-fixtures/all/devfile-good.yaml",
+			outputFile: "test-fixtures/all/devfile-good-output.yaml",
+			wantErr:    false,
 		},
 		{
 			name:     "Invalid Reference",
@@ -170,15 +33,17 @@ func TestValidateGlobalAttributeBasic(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			testDWT := v1alpha2.DevWorkspaceTemplateSpec{}
-
 			readFileToStruct(t, tt.testFile, &testDWT)
 
-			err := ValidateGlobalAttribute(&testDWT)
-			if tt.wantErr == (err == nil) {
-				t.Errorf("error: %v", err)
-				return
+			err := ValidateAndReplaceGlobalAttribute(&testDWT)
+			if tt.wantErr && err == nil {
+				t.Errorf("Expected error from test but got nil")
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
 			} else if err == nil {
-				assert.Equal(t, tt.expected, testDWT, "The two values should be the same.")
+				expectedDWT := v1alpha2.DevWorkspaceTemplateSpec{}
+				readFileToStruct(t, tt.outputFile, &expectedDWT)
+				assert.Equal(t, expectedDWT, testDWT, "The two values should be the same.")
 			}
 		})
 	}

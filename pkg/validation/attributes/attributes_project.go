@@ -5,64 +5,60 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// ValidateProjects validates the projects data for a global attribute
-func ValidateProjects(attributes apiAttributes.Attributes, projects *[]v1alpha2.Project) error {
+// ValidateAndReplaceForProjects validates the projects data for global attribute references and replaces them with the attribute value
+func ValidateAndReplaceForProjects(attributes apiAttributes.Attributes, projects []v1alpha2.Project) error {
 
-	if projects != nil {
-		for i := range *projects {
-			var err error
+	for i := range projects {
+		var err error
 
-			// Validate project clonepath
-			if (*projects)[i].ClonePath, err = validateAndReplaceDataWithAttribute((*projects)[i].ClonePath, attributes); err != nil {
+		// Validate project clonepath
+		if projects[i].ClonePath, err = validateAndReplaceDataWithAttribute(projects[i].ClonePath, attributes); err != nil {
+			return err
+		}
+
+		// Validate project sparse checkout dir
+		for j := range projects[i].SparseCheckoutDirs {
+			if projects[i].SparseCheckoutDirs[j], err = validateAndReplaceDataWithAttribute(projects[i].SparseCheckoutDirs[j], attributes); err != nil {
 				return err
 			}
+		}
 
-			// Validate project sparse checkout dir
-			for j := range (*projects)[i].SparseCheckoutDirs {
-				if (*projects)[i].SparseCheckoutDirs[j], err = validateAndReplaceDataWithAttribute((*projects)[i].SparseCheckoutDirs[j], attributes); err != nil {
-					return err
-				}
-			}
-
-			// Validate project source
-			if err = validateProjectSource(attributes, &(*projects)[i].ProjectSource); err != nil {
-				return err
-			}
+		// Validate project source
+		if err = validateandReplaceForProjectSource(attributes, &projects[i].ProjectSource); err != nil {
+			return err
 		}
 	}
 
 	return nil
 }
 
-// ValidateStarterProjects validates the starter projects data for a global attribute
-func ValidateStarterProjects(attributes apiAttributes.Attributes, starterProjects *[]v1alpha2.StarterProject) error {
+// ValidateAndReplaceForStarterProjects validates the starter projects data for global attribute references and replaces them with the attribute value
+func ValidateAndReplaceForStarterProjects(attributes apiAttributes.Attributes, starterProjects []v1alpha2.StarterProject) error {
 
-	if starterProjects != nil {
-		for i := range *starterProjects {
-			var err error
+	for i := range starterProjects {
+		var err error
 
-			// Validate starter project description
-			if (*starterProjects)[i].Description, err = validateAndReplaceDataWithAttribute((*starterProjects)[i].Description, attributes); err != nil {
-				return err
-			}
+		// Validate starter project description
+		if starterProjects[i].Description, err = validateAndReplaceDataWithAttribute(starterProjects[i].Description, attributes); err != nil {
+			return err
+		}
 
-			// Validate starter project sub dir
-			if (*starterProjects)[i].SubDir, err = validateAndReplaceDataWithAttribute((*starterProjects)[i].SubDir, attributes); err != nil {
-				return err
-			}
+		// Validate starter project sub dir
+		if starterProjects[i].SubDir, err = validateAndReplaceDataWithAttribute(starterProjects[i].SubDir, attributes); err != nil {
+			return err
+		}
 
-			// Validate starter project source
-			if err = validateProjectSource(attributes, &(*starterProjects)[i].ProjectSource); err != nil {
-				return err
-			}
+		// Validate starter project source
+		if err = validateandReplaceForProjectSource(attributes, &starterProjects[i].ProjectSource); err != nil {
+			return err
 		}
 	}
 
 	return nil
 }
 
-// validateProjectSource validates a project source location for a global attribute
-func validateProjectSource(attributes apiAttributes.Attributes, projectSource *v1alpha2.ProjectSource) error {
+// validateandReplaceForProjectSource validates a project source location for global attribute references and replaces them with the attribute value
+func validateandReplaceForProjectSource(attributes apiAttributes.Attributes, projectSource *v1alpha2.ProjectSource) error {
 
 	var err error
 

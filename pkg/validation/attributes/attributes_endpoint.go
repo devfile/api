@@ -5,17 +5,15 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// validateEndpoint validates the endpoint data for a global attribute
-func validateEndpoint(attributes apiAttributes.Attributes, endpoints *[]v1alpha2.Endpoint) error {
+// validateAndReplaceForEndpoint validates the endpoint data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForEndpoint(attributes apiAttributes.Attributes, endpoints []v1alpha2.Endpoint) error {
 
-	if endpoints != nil {
-		for i := range *endpoints {
-			var err error
+	for i := range endpoints {
+		var err error
 
-			// Validate endpoint path
-			if (*endpoints)[i].Path, err = validateAndReplaceDataWithAttribute((*endpoints)[i].Path, attributes); err != nil {
-				return err
-			}
+		// Validate endpoint path
+		if endpoints[i].Path, err = validateAndReplaceDataWithAttribute(endpoints[i].Path, attributes); err != nil {
+			return err
 		}
 	}
 

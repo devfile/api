@@ -5,31 +5,29 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// ValidateComponents validates the components data for a global attribute
-func ValidateComponents(attributes apiAttributes.Attributes, components *[]v1alpha2.Component) error {
+// ValidateAndReplaceForComponents validates the components data for global attribute references and replaces them with the attribute value
+func ValidateAndReplaceForComponents(attributes apiAttributes.Attributes, components []v1alpha2.Component) error {
 
-	if components != nil {
-		for i := range *components {
-			var err error
+	for i := range components {
+		var err error
 
-			// Validate various component types
-			switch {
-			case (*components)[i].Container != nil:
-				if err = validateContainerComponent(attributes, (*components)[i].Container); err != nil {
-					return err
-				}
-			case (*components)[i].Kubernetes != nil:
-				if err = validateKubernetesComponent(attributes, (*components)[i].Kubernetes); err != nil {
-					return err
-				}
-			case (*components)[i].Openshift != nil:
-				if err = validateOpenShiftComponent(attributes, (*components)[i].Openshift); err != nil {
-					return err
-				}
-			case (*components)[i].Volume != nil:
-				if err = validateVolumeComponent(attributes, (*components)[i].Volume); err != nil {
-					return err
-				}
+		// Validate various component types
+		switch {
+		case components[i].Container != nil:
+			if err = validateAndReplaceForContainerComponent(attributes, components[i].Container); err != nil {
+				return err
+			}
+		case components[i].Kubernetes != nil:
+			if err = validateAndReplaceForKubernetesComponent(attributes, components[i].Kubernetes); err != nil {
+				return err
+			}
+		case components[i].Openshift != nil:
+			if err = validateAndReplaceForOpenShiftComponent(attributes, components[i].Openshift); err != nil {
+				return err
+			}
+		case components[i].Volume != nil:
+			if err = validateAndReplaceForVolumeComponent(attributes, components[i].Volume); err != nil {
+				return err
 			}
 		}
 	}
@@ -37,8 +35,8 @@ func ValidateComponents(attributes apiAttributes.Attributes, components *[]v1alp
 	return nil
 }
 
-// validateContainerComponent validates the container component data for a global attribute
-func validateContainerComponent(attributes apiAttributes.Attributes, container *v1alpha2.ContainerComponent) error {
+// validateAndReplaceForContainerComponent validates the container component data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForContainerComponent(attributes apiAttributes.Attributes, container *v1alpha2.ContainerComponent) error {
 	var err error
 
 	if container != nil {
@@ -78,7 +76,7 @@ func validateContainerComponent(attributes apiAttributes.Attributes, container *
 
 		// Validate container env
 		if len(container.Env) > 0 {
-			if err = validateEnv(attributes, &container.Env); err != nil {
+			if err = validateAndReplaceForEnv(attributes, container.Env); err != nil {
 				return err
 			}
 		}
@@ -95,7 +93,7 @@ func validateContainerComponent(attributes apiAttributes.Attributes, container *
 
 		// Validate container endpoints
 		if len(container.Endpoints) > 0 {
-			if err = validateEndpoint(attributes, &container.Endpoints); err != nil {
+			if err = validateAndReplaceForEndpoint(attributes, container.Endpoints); err != nil {
 				return err
 			}
 		}
@@ -104,31 +102,28 @@ func validateContainerComponent(attributes apiAttributes.Attributes, container *
 	return nil
 }
 
-// validateEnv validates the env data for a global attribute
-func validateEnv(attributes apiAttributes.Attributes, env *[]v1alpha2.EnvVar) error {
+// validateAndReplaceForEnv validates the env data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForEnv(attributes apiAttributes.Attributes, env []v1alpha2.EnvVar) error {
 
-	if env != nil {
-		for i := range *env {
-			var err error
+	for i := range env {
+		var err error
 
-			// Validate env name
-			if (*env)[i].Name, err = validateAndReplaceDataWithAttribute((*env)[i].Name, attributes); err != nil {
-				return err
-			}
+		// Validate env name
+		if env[i].Name, err = validateAndReplaceDataWithAttribute(env[i].Name, attributes); err != nil {
+			return err
+		}
 
-			// Validate env value
-			if (*env)[i].Value, err = validateAndReplaceDataWithAttribute((*env)[i].Value, attributes); err != nil {
-				return err
-			}
-
+		// Validate env value
+		if env[i].Value, err = validateAndReplaceDataWithAttribute(env[i].Value, attributes); err != nil {
+			return err
 		}
 	}
 
 	return nil
 }
 
-// validateKubernetesComponent validates the kubernetes component data for a global attribute
-func validateKubernetesComponent(attributes apiAttributes.Attributes, kubernetes *v1alpha2.KubernetesComponent) error {
+// validateAndReplaceForKubernetesComponent validates the kubernetes component data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForKubernetesComponent(attributes apiAttributes.Attributes, kubernetes *v1alpha2.KubernetesComponent) error {
 	var err error
 
 	if kubernetes != nil {
@@ -144,7 +139,7 @@ func validateKubernetesComponent(attributes apiAttributes.Attributes, kubernetes
 
 		// Validate kubernetes endpoints
 		if len(kubernetes.Endpoints) > 0 {
-			if err = validateEndpoint(attributes, &kubernetes.Endpoints); err != nil {
+			if err = validateAndReplaceForEndpoint(attributes, kubernetes.Endpoints); err != nil {
 				return err
 			}
 		}
@@ -153,8 +148,8 @@ func validateKubernetesComponent(attributes apiAttributes.Attributes, kubernetes
 	return nil
 }
 
-// validateOpenShiftComponent validates the openshift component data for a global attribute
-func validateOpenShiftComponent(attributes apiAttributes.Attributes, openshift *v1alpha2.OpenshiftComponent) error {
+// validateAndReplaceForOpenShiftComponent validates the openshift component data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForOpenShiftComponent(attributes apiAttributes.Attributes, openshift *v1alpha2.OpenshiftComponent) error {
 	var err error
 
 	if openshift != nil {
@@ -170,7 +165,7 @@ func validateOpenShiftComponent(attributes apiAttributes.Attributes, openshift *
 
 		// Validate openshift endpoints
 		if len(openshift.Endpoints) > 0 {
-			if err = validateEndpoint(attributes, &openshift.Endpoints); err != nil {
+			if err = validateAndReplaceForEndpoint(attributes, openshift.Endpoints); err != nil {
 				return err
 			}
 		}
@@ -179,8 +174,8 @@ func validateOpenShiftComponent(attributes apiAttributes.Attributes, openshift *
 	return nil
 }
 
-// validateVolumeComponent validates the volume component data for a global attribute
-func validateVolumeComponent(attributes apiAttributes.Attributes, volume *v1alpha2.VolumeComponent) error {
+// validateAndReplaceForVolumeComponent validates the volume component data for global attribute references and replaces them with the attribute value
+func validateAndReplaceForVolumeComponent(attributes apiAttributes.Attributes, volume *v1alpha2.VolumeComponent) error {
 	var err error
 
 	if volume != nil {

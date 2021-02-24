@@ -8,34 +8,29 @@ import (
 	apiAttributes "github.com/devfile/api/v2/pkg/attributes"
 )
 
-// ValidateGlobalAttribute validates the workspace template spec data for global attribute references
-func ValidateGlobalAttribute(workspaceTemplateSpec *v1alpha2.DevWorkspaceTemplateSpec) error {
+// ValidateAndReplaceGlobalAttribute validates the workspace template spec data for global attribute references and replaces them with the attribute value
+func ValidateAndReplaceGlobalAttribute(workspaceTemplateSpec *v1alpha2.DevWorkspaceTemplateSpec) error {
 
 	var err error
 
 	if workspaceTemplateSpec != nil {
-		// Validate the components
-		if err = ValidateComponents(workspaceTemplateSpec.Attributes, &workspaceTemplateSpec.Components); err != nil {
+		// Validate the components and replace for global attribute
+		if err = ValidateAndReplaceForComponents(workspaceTemplateSpec.Attributes, workspaceTemplateSpec.Components); err != nil {
 			return err
 		}
 
-		// Validate the commands
-		if err = ValidateCommands(workspaceTemplateSpec.Attributes, &workspaceTemplateSpec.Commands); err != nil {
+		// Validate the commands and replace for global attribute
+		if err = ValidateAndReplaceForCommands(workspaceTemplateSpec.Attributes, workspaceTemplateSpec.Commands); err != nil {
 			return err
 		}
 
-		// Validate the events
-		if err = ValidateEvents(workspaceTemplateSpec.Attributes, workspaceTemplateSpec.Events); err != nil {
+		// Validate the projects and replace for global attribute
+		if err = ValidateAndReplaceForProjects(workspaceTemplateSpec.Attributes, workspaceTemplateSpec.Projects); err != nil {
 			return err
 		}
 
-		// Validate the projects
-		if err = ValidateProjects(workspaceTemplateSpec.Attributes, &workspaceTemplateSpec.Projects); err != nil {
-			return err
-		}
-
-		// Validate the starter projects
-		if err = ValidateStarterProjects(workspaceTemplateSpec.Attributes, &workspaceTemplateSpec.StarterProjects); err != nil {
+		// Validate the starter projects and replace for global attribute
+		if err = ValidateAndReplaceForStarterProjects(workspaceTemplateSpec.Attributes, workspaceTemplateSpec.StarterProjects); err != nil {
 			return err
 		}
 	}
@@ -43,7 +38,7 @@ func ValidateGlobalAttribute(workspaceTemplateSpec *v1alpha2.DevWorkspaceTemplat
 	return nil
 }
 
-var globalAttributeRegex = regexp.MustCompile(`\{{2}(.*?)\}{2}`)
+var globalAttributeRegex = regexp.MustCompile(`\{\{(.*?)\}\}`)
 
 // validateAndReplaceDataWithAttribute validates the string for a global attribute and replaces it. An error
 // is returned if the string references an invalid global attribute key
