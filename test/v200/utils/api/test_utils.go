@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	commonUtils "github.com/devfile/api/v2/test/v200/utils/common"
+	commonUtils "github.com/devfile/api/test/v200/utils/common"
 	"github.com/santhosh-tekuri/jsonschema"
 	"sigs.k8s.io/yaml"
 )

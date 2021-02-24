@@ -3,9 +3,9 @@ package apiTest
 import (
 	"testing"
 
+	apiUtils "github.com/devfile/api/test/v200/utils/api"
+	commonUtils "github.com/devfile/api/test/v200/utils/common"
 	schema "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
-	apiUtils "github.com/devfile/api/v2/test/v200/utils/api"
-	commonUtils "github.com/devfile/api/v2/test/v200/utils/common"
 )
 
 func Test_ExecCommand(t *testing.T) {
