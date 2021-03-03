@@ -62,9 +62,8 @@ func (testDevfile *TestDevfile) replaceSchemaStarterProject(starterProject schem
 }
 
 // getRemotes creates and returns a map of remotes
-func getRemotes() map[string]string {
+func getRemotes(numRemotes int) map[string]string {
 	remotes := make(map[string]string)
-	numRemotes := GetRandomNumber(1, 5)
 	for i := 0; i < numRemotes; i++ {
 		key := GetRandomUniqueString(GetRandomNumber(6, 12), false)
 		remotes[key] = GetRandomUniqueString(GetRandomNumber(6, 12), false)
@@ -94,9 +93,9 @@ func (testDevfile *TestDevfile) createProject(projectType schema.ProjectSourceTy
 	LogInfoMessage(fmt.Sprintf("Create Project Name: %s", project.Name))
 
 	if projectType == schema.GitProjectSourceType {
-		project.Git = createGitProject()
+		project.Git = createGitProject(GetRandomNumber(1, 5))
 	} else if projectType == schema.GitHubProjectSourceType {
-		project.Github = createGithubProject()
+		project.Github = createGithubProject(GetRandomNumber(1, 5))
 	} else if projectType == schema.ZipProjectSourceType {
 		project.Zip = createZipProject()
 	}
@@ -111,9 +110,9 @@ func (testDevfile *TestDevfile) createStarterProject(projectType schema.ProjectS
 	LogInfoMessage(fmt.Sprintf("Create StarterProject Name: %s", starterProject.Name))
 
 	if projectType == schema.GitProjectSourceType {
-		starterProject.Git = createGitProject()
+		starterProject.Git = createGitProject(1)
 	} else if projectType == schema.GitHubProjectSourceType {
-		starterProject.Github = createGithubProject()
+		starterProject.Github = createGithubProject(1)
 	} else if projectType == schema.ZipProjectSourceType {
 		starterProject.Zip = createZipProject()
 	}
@@ -123,16 +122,16 @@ func (testDevfile *TestDevfile) createStarterProject(projectType schema.ProjectS
 }
 
 // createGitProject creates a git project structure with mandatory attributes set
-func createGitProject() *schema.GitProjectSource {
+func createGitProject(numRemotes int) *schema.GitProjectSource {
 	project := schema.GitProjectSource{}
-	project.Remotes = getRemotes()
+	project.Remotes = getRemotes(numRemotes)
 	return &project
 }
 
 // createGithubProject creates a github project structure with mandatory attributes set
-func createGithubProject() *schema.GithubProjectSource {
+func createGithubProject(numRemotes int) *schema.GithubProjectSource {
 	project := schema.GithubProjectSource{}
-	project.Remotes = getRemotes()
+	project.Remotes = getRemotes(numRemotes)
 	return &project
 }
 
