@@ -94,8 +94,6 @@ func (testDevfile *TestDevfile) createProject(projectType schema.ProjectSourceTy
 
 	if projectType == schema.GitProjectSourceType {
 		project.Git = createGitProject(GetRandomNumber(1, 5))
-	} else if projectType == schema.GitHubProjectSourceType {
-		project.Github = createGithubProject(GetRandomNumber(1, 5))
 	} else if projectType == schema.ZipProjectSourceType {
 		project.Zip = createZipProject()
 	}
@@ -111,8 +109,6 @@ func (testDevfile *TestDevfile) createStarterProject(projectType schema.ProjectS
 
 	if projectType == schema.GitProjectSourceType {
 		starterProject.Git = createGitProject(1)
-	} else if projectType == schema.GitHubProjectSourceType {
-		starterProject.Github = createGithubProject(1)
 	} else if projectType == schema.ZipProjectSourceType {
 		starterProject.Zip = createZipProject()
 	}
@@ -124,13 +120,6 @@ func (testDevfile *TestDevfile) createStarterProject(projectType schema.ProjectS
 // createGitProject creates a git project structure with mandatory attributes set
 func createGitProject(numRemotes int) *schema.GitProjectSource {
 	project := schema.GitProjectSource{}
-	project.Remotes = getRemotes(numRemotes)
-	return &project
-}
-
-// createGithubProject creates a github project structure with mandatory attributes set
-func createGithubProject(numRemotes int) *schema.GithubProjectSource {
-	project := schema.GithubProjectSource{}
 	project.Remotes = getRemotes(numRemotes)
 	return &project
 }
@@ -161,8 +150,6 @@ func (testDevfile *TestDevfile) SetProjectValues(project *schema.Project) {
 
 	if project.Git != nil {
 		setGitProjectValues(project.Git)
-	} else if project.Github != nil {
-		setGithubProjectValues(project.Github)
 	} else if project.Zip != nil {
 		setZipProjectValues(project.Zip)
 	}
@@ -191,8 +178,6 @@ func (testDevfile *TestDevfile) SetStarterProjectValues(starterProject *schema.S
 
 	if starterProject.Git != nil {
 		setGitProjectValues(starterProject.Git)
-	} else if starterProject.Github != nil {
-		setGithubProjectValues(starterProject.Github)
 	} else if starterProject.Zip != nil {
 		setZipProjectValues(starterProject.Zip)
 	}
@@ -213,24 +198,6 @@ func setGitProjectValues(gitProject *schema.GitProjectSource) {
 				gitProject.CheckoutFrom.Remote = key
 				gitProject.CheckoutFrom.Revision = GetRandomString(8, false)
 				LogInfoMessage(fmt.Sprintf("set CheckoutFrom remote = %s, and revision = %s", gitProject.CheckoutFrom.Remote, gitProject.CheckoutFrom.Revision))
-				break
-			}
-		}
-	}
-}
-
-// setGithubProjectValues randomly sets attributes for a Github project
-func setGithubProjectValues(githubProject *schema.GithubProjectSource) {
-
-	if len(githubProject.Remotes) > 1 {
-		numKey := GetRandomNumber(1, len(githubProject.Remotes))
-		for key, _ := range githubProject.Remotes {
-			numKey--
-			if numKey <= 0 {
-				githubProject.CheckoutFrom = &schema.CheckoutFrom{}
-				githubProject.CheckoutFrom.Remote = key
-				githubProject.CheckoutFrom.Revision = GetRandomString(8, false)
-				LogInfoMessage(fmt.Sprintf("set CheckoutFrom remote = %s, and revision = %s", githubProject.CheckoutFrom.Remote, githubProject.CheckoutFrom.Revision))
 				break
 			}
 		}

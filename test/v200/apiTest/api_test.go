@@ -70,7 +70,6 @@ func Test_Projects(t *testing.T) {
 	testContent := commonUtils.TestContent{}
 	testContent.ProjectTypes = []schema.ProjectSourceType{
 		schema.GitProjectSourceType,
-		schema.GitHubProjectSourceType,
 		schema.ZipProjectSourceType}
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
@@ -80,7 +79,6 @@ func Test_StarterProjects(t *testing.T) {
 	testContent := commonUtils.TestContent{}
 	testContent.StarterProjectTypes = []schema.ProjectSourceType{
 		schema.GitProjectSourceType,
-		schema.GitHubProjectSourceType,
 		schema.ZipProjectSourceType}
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
@@ -97,11 +95,9 @@ func Test_Everything(t *testing.T) {
 		schema.VolumeComponentType}
 	testContent.ProjectTypes = []schema.ProjectSourceType{
 		schema.GitProjectSourceType,
-		schema.GitHubProjectSourceType,
 		schema.ZipProjectSourceType}
 	testContent.StarterProjectTypes = []schema.ProjectSourceType{
 		schema.GitProjectSourceType,
-		schema.GitHubProjectSourceType,
 		schema.ZipProjectSourceType}
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
