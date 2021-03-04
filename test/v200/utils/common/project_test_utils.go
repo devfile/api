@@ -101,7 +101,7 @@ func (testDevfile *TestDevfile) createProject(projectType schema.ProjectSourceTy
 	return project
 }
 
-// generateStarterProject creates a starter project of a specified type with only required attributes set
+// createStarterProject creates a starter project of a specified type with only required attributes set
 func (testDevfile *TestDevfile) createStarterProject(projectType schema.ProjectSourceType) schema.StarterProject {
 	starterProject := schema.StarterProject{}
 	starterProject.Name = GetRandomUniqueString(GetRandomNumber(8, 63), true)
