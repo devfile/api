@@ -21,6 +21,10 @@ const (
 	maxCommands = 10
 	// maxComponents : The maximum number of components to include in a generated devfile
 	maxComponents = 10
+	// maxProjects : The maximum number of projects to include in a generated devfile
+	maxProjects = 10
+	// maxStarterProjects : the number of starterProjects to create for each test
+	maxStarterProjects = 10
 
 	defaultTempDir = "./tmp/"
 	logFileName    = "test.log"
@@ -61,10 +65,12 @@ type DevfileValidator interface {
 
 // TestContent - structure used by a test to configure the tests to run
 type TestContent struct {
-	CommandTypes   []schema.CommandType
-	ComponentTypes []schema.ComponentType
-	FileName       string
-	EditContent    bool
+	CommandTypes        []schema.CommandType
+	ComponentTypes      []schema.ComponentType
+	ProjectTypes        []schema.ProjectSourceType
+	StarterProjectTypes []schema.ProjectSourceType
+	FileName            string
+	EditContent         bool
 }
 
 // init creates:
@@ -152,7 +158,7 @@ func LogMessage(message string) string {
 	return message
 }
 
-var errorPrefix = "..... ERROR : "
+var errorPrefix = "..... ERROR :"
 var infoPrefix = "INFO :"
 
 // LogErrorMessage logs the specified message as an error message and returns the message logged
@@ -185,7 +191,11 @@ var StringCount int = 0
 // If lower is set to true a lower case string is returned.
 func GetRandomUniqueString(n int, lower bool) string {
 	StringCount++
-	return fmt.Sprintf("%s%04d", GetRandomString(n, lower), StringCount)
+	countAsString := fmt.Sprintf("%05d", StringCount)
+	if n < len(countAsString) {
+		n += len(countAsString)
+	}
+	return fmt.Sprintf("%s%s", GetRandomString(n-len(countAsString), lower), countAsString)
 }
 
 const schemaBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -267,6 +277,22 @@ func (testDevfile *TestDevfile) RunTest(testContent TestContent, t *testing.T) {
 		for i := 0; i < numComponents; i++ {
 			componentIndex := GetRandomNumber(1, len(testContent.ComponentTypes))
 			testDevfile.AddComponent(testContent.ComponentTypes[componentIndex-1])
+		}
+	}
+
+	if len(testContent.ProjectTypes) > 0 {
+		numProjects := GetRandomNumber(1, maxProjects)
+		for i := 0; i < numProjects; i++ {
+			projectIndex := GetRandomNumber(1, len(testContent.ProjectTypes))
+			testDevfile.AddProject(testContent.ProjectTypes[projectIndex-1])
+		}
+	}
+
+	if len(testContent.StarterProjectTypes) > 0 {
+		numStarterProjects := GetRandomNumber(1, maxStarterProjects)
+		for i := 0; i < numStarterProjects; i++ {
+			starterProjectIndex := GetRandomNumber(1, len(testContent.StarterProjectTypes))
+			testDevfile.AddStarterProject(testContent.StarterProjectTypes[starterProjectIndex-1])
 		}
 	}
 
