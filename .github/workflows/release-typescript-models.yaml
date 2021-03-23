@@ -60,7 +60,7 @@ jobs:
 
       - name: Modify package.json
         run: |
-          sed -i 's/\"name\": \".*\"/"name": "@devfile\/typescript-types"/g' /tmp/typescript-models/package.json
+          sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' /tmp/typescript-models/package.json
 
@@ -69,6 +69,7 @@ jobs:
         with:
           node-version: 12
           registry-url: 'https://registry.npmjs.org'
+          scope: '@devfile'
 
       - name: Install dependencies
         run: yarn
