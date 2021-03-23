@@ -63,6 +63,7 @@ jobs:
           sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' /tmp/typescript-models/package.json
+          sed -i 's/\"license\": \".*\"/"license": "EPL-2.0"/g' /tmp/typescript-models/package.json
 
       - name: Setup node
         uses: actions/setup-node@v1
