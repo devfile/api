@@ -69,6 +69,7 @@ type TestContent struct {
 	ComponentTypes      []schema.ComponentType
 	ProjectTypes        []schema.ProjectSourceType
 	StarterProjectTypes []schema.ProjectSourceType
+	AddEvents           bool
 	FileName            string
 	EditContent         bool
 }
@@ -294,6 +295,10 @@ func (testDevfile *TestDevfile) RunTest(testContent TestContent, t *testing.T) {
 			starterProjectIndex := GetRandomNumber(1, len(testContent.StarterProjectTypes))
 			testDevfile.AddStarterProject(testContent.StarterProjectTypes[starterProjectIndex-1])
 		}
+	}
+
+	if testContent.AddEvents {
+		testDevfile.AddEvents()
 	}
 
 	err := testDevfile.Validator.WriteAndValidate(testDevfile)

@@ -182,6 +182,19 @@ func (testDevFile *TestDevfile) SetCompositeCommandValues(command *schema.Comman
 	testDevFile.commandUpdated(*command)
 }
 
+// SetCompositeCommandCommands set the commands in a composite command to a specific type
+func (testDevFile *TestDevfile) SetCompositeCommandCommands(command *schema.Command, commandType schema.CommandType) {
+	compositeCommand := command.Composite
+	compositeCommand.Commands = nil
+	numCommands := GetRandomNumber(1, 3)
+	for i := 0; i < numCommands; i++ {
+		command := testDevFile.AddCommand(commandType)
+		compositeCommand.Commands = append(compositeCommand.Commands, command.Id)
+		LogInfoMessage(fmt.Sprintf("....... command %d of %d : %s", i, numCommands, command.Id))
+	}
+	testDevFile.commandUpdated(*command)
+}
+
 // createApplyCommand creates an apply command in a schema structure
 func (testDevFile *TestDevfile) createApplyCommand() *schema.Command {
 
