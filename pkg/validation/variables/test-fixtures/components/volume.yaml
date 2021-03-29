@@ -1,0 +1,2 @@
+# Variables are defined in test-fixtures/variables/variables-referenced.yaml
+size: "{{size}}"

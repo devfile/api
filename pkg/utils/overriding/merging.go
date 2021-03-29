@@ -107,6 +107,15 @@ func MergeDevWorkspaceTemplateSpec(
 			postStopCommands = postStopCommands.Union(sets.NewString(content.Events.PostStop...))
 		}
 
+		if len(content.Variables) > 0 {
+			if len(result.Variables) == 0 {
+				result.Variables = make(map[string]string)
+			}
+			for k, v := range content.Variables {
+				result.Variables[k] = v
+			}
+		}
+
 		var err error
 		if len(content.Attributes) > 0 {
 			if len(result.Attributes) == 0 {

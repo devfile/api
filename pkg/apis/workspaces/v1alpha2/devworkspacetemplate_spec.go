@@ -14,10 +14,17 @@ type DevWorkspaceTemplateSpec struct {
 
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
+	// Map of string variables.
+	// Variable values can be referenced throughout the devfile in string type fields in the form {{variable-key}}
+	// except for schemaVersion, metadata, parent source. Exception to the string field also include element's key identifiers
+	// (command id, component name, endpoint name, project name, etc.) and their references(events, command's component, container's
+	// volume mount name, etc.) and string enums(command group kind, endpoint exposure, etc.)
+	// +optional
+	// +patchStrategy=merge
+	// +devfile:overrides:include:omitInPlugin=true,description=Overrides of variables encapsulated in a parent devfile.
+	Variables map[string]string `json:"variables,omitempty" patchStrategy:"merge"`
+
 	// Map of implementation-dependant free-form YAML attributes.
-	// Attribute values can be referenced throughout the devfile in string type fields in the form {{attribute-key}}
-	// except for schemaVersion, metadata and events. Exception to the string field include element's key identifiers(command id,
-	// component name, endpoint name, project name, etc.) and string enums(command group kind, endpoint exposure, etc.)
 	// +optional
 	// +patchStrategy=merge
 	// +devfile:overrides:include:omitInPlugin=true,description=Overrides of attributes encapsulated in a parent devfile.

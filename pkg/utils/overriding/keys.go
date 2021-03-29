@@ -34,18 +34,37 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...dw.TopLevelListContain
 
 		value := reflect.ValueOf(topLevelListContainer)
 
+		var variableValue reflect.Value
 		var attributeValue reflect.Value
+
 		// toplevelListContainers can contain either a pointer or a struct and needs to be safeguarded when using reflect
 		if value.Kind() == reflect.Ptr {
+			variableValue = value.Elem().FieldByName("Variables")
 			attributeValue = value.Elem().FieldByName("Attributes")
 		} else {
+			variableValue = value.FieldByName("Variables")
 			attributeValue = value.FieldByName("Attributes")
+		}
+
+		if variableValue.IsValid() && variableValue.Kind() == reflect.Map {
+			mapIter := variableValue.MapRange()
+
+			var variableKeys []string
+			for mapIter.Next() {
+				k := mapIter.Key()
+				v := mapIter.Value()
+				if k.Kind() != reflect.String || v.Kind() != reflect.String {
+					return fmt.Errorf("unable to fetch Global Variables, Global Variables should be map of strings")
+				}
+				variableKeys = append(variableKeys, k.String())
+			}
+			listTypeToKeys["Variables"] = append(listTypeToKeys["Variables"], sets.NewString(variableKeys...))
 		}
 
 		if attributeValue.IsValid() && attributeValue.CanInterface() {
 			attributes, ok := attributeValue.Interface().(attributesPkg.Attributes)
 			if !ok {
-				return fmt.Errorf("unable to fetch Attributes from the devfile data")
+				return fmt.Errorf("unable to fetch Global Attributes from the devfile data")
 			}
 			var attributeKeys []string
 			for k := range attributes {

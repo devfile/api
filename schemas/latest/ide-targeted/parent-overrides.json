@@ -1576,6 +1576,14 @@
         "additionalProperties": false
       },
       "markdownDescription": "Overrides of starterProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+    },
+    "variables": {
+      "description": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "markdownDescription": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
     }
   },
   "additionalProperties": false,

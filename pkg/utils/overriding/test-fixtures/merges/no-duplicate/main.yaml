@@ -1,5 +1,7 @@
 parent:
   uri: "anyParent"
+variables:
+  variableValue: main
 attributes:
   mainAttribute: true
 components:

@@ -1,9 +1,0 @@
-attributes:
-  boolAttributeToChange: false
-  stringAttributeToKeep: stringValue
-  objectAttributeToChange:
-
-    newObjectAttributeField:
-      objectAttributeSubField: 11
-      newObjectAttributeSubField: newObjectAttributeFieldValue
-    newField: true

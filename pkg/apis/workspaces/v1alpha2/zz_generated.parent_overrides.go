@@ -8,6 +8,12 @@ import (
 type ParentOverrides struct {
 	OverridesBase `json:",inline"`
 
+	// Overrides of variables encapsulated in a parent devfile.
+	// Overriding is done according to K8S strategic merge patch standard rules.
+	// +optional
+	// +patchStrategy=merge
+	Variables map[string]string `json:"variables,omitempty" patchStrategy:"merge"`
+
 	// Overrides of attributes encapsulated in a parent devfile.
 	// Overriding is done according to K8S strategic merge patch standard rules.
 	// +optional

@@ -1,8 +1,0 @@
-# Attributes are defined in test-fixtures/attributes/attributes-referenced.yaml
-git:
-  checkoutFrom:
-    revision: "{{foo}}"
-    remote: "{{bar}}"
-  remotes:
-    "foo": "{{bar}}"
-    "{{foo}}{{bar}}": "{{bar}}{{foo}}"

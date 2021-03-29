@@ -1,3 +1,0 @@
-# Attributes are defined in test-fixtures/attributes/attributes-referenced.yaml
-uri: "{{foo}}"
-registryUrl: "{{foo}}"

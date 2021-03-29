@@ -1,7 +1,0 @@
-# Attributes are defined in test-fixtures/attributes/attributes-referenced.yaml
-uri: "{{uri}}"
-inlined: "{{inlined}}"
-endpoints:
-  - name: endpoint1
-    exposure: public
-    path: "{{foo}}"

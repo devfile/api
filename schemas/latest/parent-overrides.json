@@ -1408,6 +1408,13 @@
         },
         "additionalProperties": false
       }
+    },
+    "variables": {
+      "description": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   },
   "additionalProperties": false

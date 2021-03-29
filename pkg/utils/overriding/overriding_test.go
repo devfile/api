@@ -52,6 +52,10 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 		},
+		Variables: map[string]string{
+			"version": "main",
+			"xyz":     "xyz",
+		},
 		Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
 			"version": "main",
 			"xyz":     "xyz",
@@ -86,8 +90,13 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 		},
-		Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+		Variables: map[string]string{
 			"version": "patch",
+		},
+		Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+			"version": map[string]interface{}{
+				"patch": true,
+			},
 		}, nil),
 	}
 
@@ -133,9 +142,15 @@ func TestBasicToplevelOverriding(t *testing.T) {
 				},
 			},
 		},
-		Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+		Variables: map[string]string{
 			"version": "patch",
 			"xyz":     "xyz",
+		},
+		Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+			"version": map[string]interface{}{
+				"patch": true,
+			},
+			"xyz": "xyz",
 		}, nil),
 	}
 

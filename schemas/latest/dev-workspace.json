@@ -182,7 +182,7 @@
           "type": "object",
           "properties": {
             "attributes": {
-              "description": "Map of implementation-dependant free-form YAML attributes. Attribute values can be referenced throughout the devfile in string type fields in the form {{attribute-key}} except for schemaVersion, metadata and events. Exception to the string field include element's key identifiers(command id, component name, endpoint name, project name, etc.) and string enums(command group kind, endpoint exposure, etc.)",
+              "description": "Map of implementation-dependant free-form YAML attributes.",
               "type": "object",
               "additionalProperties": true
             },
@@ -2950,6 +2950,13 @@
                 "uri": {
                   "description": "Uri of a Devfile yaml file",
                   "type": "string"
+                },
+                "variables": {
+                  "description": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
                 }
               },
               "additionalProperties": false
@@ -3249,6 +3256,13 @@
                   }
                 },
                 "additionalProperties": false
+              }
+            },
+            "variables": {
+              "description": "Map of string variables. Variable values can be referenced throughout the devfile in string type fields in the form {{variable-key}} except for schemaVersion, metadata, parent source. Exception to the string field also include element's key identifiers (command id, component name, endpoint name, project name, etc.) and their references(events, command's component, container's volume mount name, etc.) and string enums(command group kind, endpoint exposure, etc.)",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
               }
             }
           },

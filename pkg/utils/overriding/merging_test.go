@@ -27,6 +27,9 @@ func TestBasicMerging(t *testing.T) {
 		{
 			name: "Basic Merging",
 			mainContent: &workspaces.DevWorkspaceTemplateSpecContent{
+				Variables: map[string]string{
+					"version1": "main",
+				},
 				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
 					"main": true,
 				}, nil),
@@ -72,8 +75,11 @@ func TestBasicMerging(t *testing.T) {
 			},
 			pluginFlattenedContents: []*workspaces.DevWorkspaceTemplateSpecContent{
 				{
-					Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+					Variables: map[string]string{
 						"version2": "plugin",
+					},
+					Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+						"plugin": true,
 					}, nil),
 					Commands: []workspaces.Command{
 						{
@@ -105,8 +111,11 @@ func TestBasicMerging(t *testing.T) {
 				},
 			},
 			parentFlattenedContent: &workspaces.DevWorkspaceTemplateSpecContent{
+				Variables: map[string]string{
+					"version3": "parent",
+				},
 				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
-					"version": "parent",
+					"parent": true,
 				}, nil),
 				Commands: []workspaces.Command{
 					{
@@ -138,10 +147,15 @@ func TestBasicMerging(t *testing.T) {
 				},
 			},
 			expected: &workspaces.DevWorkspaceTemplateSpecContent{
-				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
-					"version":  "parent",
+				Variables: map[string]string{
+					"version3": "parent",
 					"version2": "plugin",
-					"main":     true,
+					"version1": "main",
+				},
+				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
+					"parent": true,
+					"plugin": true,
+					"main":   true,
 				}, nil),
 				Commands: []workspaces.Command{
 					{

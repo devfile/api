@@ -1,6 +1,7 @@
+variables:
+  variableParentValue: parent
 attributes:
-  objectAttribute:
-    attributeField: 9.9
+  attribute: "parent"
 components:
   - container:
       image: "aValue"

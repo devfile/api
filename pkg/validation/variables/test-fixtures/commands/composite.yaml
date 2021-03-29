@@ -1,0 +1,5 @@
+# Variables are defined in test-fixtures/variables/variables-referenced.yaml
+label: "{{version}}"
+commands:
+  - FOO
+  - BAR

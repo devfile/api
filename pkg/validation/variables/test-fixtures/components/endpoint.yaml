@@ -1,0 +1,6 @@
+# Variables are defined in test-fixtures/variables/variables-referenced.yaml
+name: endpoint1
+exposure: "public"
+protocol: "https"
+path : "/{{foo}}"
+targetPort: 9999
