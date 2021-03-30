@@ -6,14 +6,14 @@ import (
 
 func convertEventsTo_v1alpha2(src *Events, dest *v1alpha2.Events) error {
 	if src != nil {
-		dest.WorkspaceEvents = v1alpha2.WorkspaceEvents(src.WorkspaceEvents)
+		dest.DevWorkspaceEvents = v1alpha2.DevWorkspaceEvents(src.WorkspaceEvents)
 	}
 	return nil
 }
 
 func convertEventsFrom_v1alpha2(src *v1alpha2.Events, dest *Events) error {
 	if src != nil {
-		dest.WorkspaceEvents = WorkspaceEvents(src.WorkspaceEvents)
+		dest.WorkspaceEvents = WorkspaceEvents(src.DevWorkspaceEvents)
 	}
 	return nil
 }

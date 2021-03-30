@@ -32,7 +32,7 @@ func TestValidateEvents(t *testing.T) {
 		{
 			name: "Valid preStart events - Apply and Composite Apply Commands",
 			events: v1alpha2.Events{
-				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
 					PreStart: []string{
 						"apply1",
 						"apply2",
@@ -44,7 +44,7 @@ func TestValidateEvents(t *testing.T) {
 		{
 			name: "Invalid exec commands in preStart",
 			events: v1alpha2.Events{
-				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
 					PreStart: []string{
 						"apply12",
 						"exec2",
@@ -57,7 +57,7 @@ func TestValidateEvents(t *testing.T) {
 		{
 			name: "Invalid exec commands in postStop",
 			events: v1alpha2.Events{
-				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
 					PostStop: []string{
 						"apply12",
 						"exec2",
@@ -70,7 +70,7 @@ func TestValidateEvents(t *testing.T) {
 		{
 			name: "Invalid apply commands in postStart",
 			events: v1alpha2.Events{
-				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
 					PostStart: []string{
 						"apply12",
 						"exec2",
@@ -83,7 +83,7 @@ func TestValidateEvents(t *testing.T) {
 		{
 			name: "Invalid apply commands in preStop",
 			events: v1alpha2.Events{
-				WorkspaceEvents: v1alpha2.WorkspaceEvents{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
 					PreStop: []string{
 						"apply12",
 						"exec2",

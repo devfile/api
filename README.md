@@ -14,7 +14,7 @@ From these Go sources, several files are generated:
 - A Kubernetes Custom Resource Definition(CRD) with an embedded OpenApi schema,
 - json schemas (in the [schemas](schemas) folder) generated from the above CRD, to specify the syntax of:
   - the DevWorkspace CRD itself;
-  - the DevWorkspaceTemplate CRD (a workspace content, without runtime information);
+  - the DevWorkspaceTemplate CRD (a devworkspace content, without runtime information);
   - the Devfile 2.0.0 format, which is generated from the `DevWorkspace` API.
 
 Generated files are created by a build script (see section [How to build](#how-to-build)).
@@ -45,7 +45,7 @@ In order to test existing or new Devfile 2.0 or DevWorkspace sample files in a s
 
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://che.openshift.io/f/?url=https://github.com/devfile/api)
 
-As soon as the workspace is opened, you should be able to:
+As soon as the devworkspace is opened, you should be able to:
 - open the `yaml` files in the following folders:
   - `samples/`
   - `devfile-support/samples`

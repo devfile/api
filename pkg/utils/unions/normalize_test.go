@@ -3,27 +3,27 @@ package unions
 import (
 	"testing"
 
-	workspaces "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
-	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	original := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git: &workspaces.GitProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git: &dw.GitProjectSource{},
 				},
 			},
 		},
 	}
-	expected := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	expected := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git:        &workspaces.GitProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git:        &dw.GitProjectSource{},
 					SourceType: "Git",
 				},
 			},
@@ -40,24 +40,24 @@ func TestNormalizingUnion_SetDiscriminator(t *testing.T) {
 }
 
 func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
-	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	original := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git:        &workspaces.GitProjectSource{},
-					Zip:        &workspaces.ZipProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git:        &dw.GitProjectSource{},
+					Zip:        &dw.ZipProjectSource{},
 					SourceType: "Git",
 				},
 			},
 		},
 	}
-	expected := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	expected := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git:        &workspaces.GitProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git:        &dw.GitProjectSource{},
 					SourceType: "Git",
 				},
 			},
@@ -74,23 +74,23 @@ func TestNormalizingUnion_CleanupOldValue(t *testing.T) {
 }
 
 func TestSimplifyingUnion(t *testing.T) {
-	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	original := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git:        &workspaces.GitProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git:        &dw.GitProjectSource{},
 					SourceType: "Git",
 				},
 			},
 		},
 	}
-	expected := workspaces.DevWorkspaceTemplateSpecContent{
-		Projects: []workspaces.Project{
+	expected := dw.DevWorkspaceTemplateSpecContent{
+		Projects: []dw.Project{
 			{
 				Name: "MyProject",
-				ProjectSource: workspaces.ProjectSource{
-					Git: &workspaces.GitProjectSource{},
+				ProjectSource: dw.ProjectSource{
+					Git: &dw.GitProjectSource{},
 				},
 			},
 		},
