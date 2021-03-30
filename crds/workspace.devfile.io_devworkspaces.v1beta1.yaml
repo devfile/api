@@ -4100,16 +4100,16 @@ spec:
     served: true
     storage: false
   - additionalPrinterColumns:
-    - JSONPath: .status.workspaceId
-      description: The workspace's unique id
-      name: Workspace ID
+    - JSONPath: .status.devworkspaceId
+      description: The devworkspace's unique id
+      name: DevWorkspace ID
       type: string
     - JSONPath: .status.phase
-      description: The current workspace startup phase
+      description: The current devworkspace startup phase
       name: Phase
       type: string
     - JSONPath: .status.message
-      description: Additional information about the workspace
+      description: Additional information about the devworkspace
       name: Info
       type: string
     name: v1alpha2
@@ -4137,11 +4137,11 @@ spec:
               started:
                 type: boolean
               template:
-                description: Structure of the workspace. This is also the specification
-                  of a workspace template.
+                description: Structure of the devworkspace. This is also the specification
+                  of a devworkspace template.
                 properties:
                   commands:
-                    description: Predefined, ready-to-use, workspace-related commands
+                    description: Predefined, ready-to-use, devworkspace-related commands
                     items:
                       oneOf:
                       - required:
@@ -4155,14 +4155,14 @@ spec:
                       properties:
                         apply:
                           description: "Command that consists in applying a given
-                            component definition, typically bound to a workspace event.
-                            \n For example, when an `apply` command is bound to a
-                            `preStart` event, and references a `container` component,
+                            component definition, typically bound to a devworkspace
+                            event. \n For example, when an `apply` command is bound
+                            to a `preStart` event, and references a `container` component,
                             it will start the container as a K8S initContainer in
-                            the workspace POD, unless the component has its `dedicatedPod`
+                            the devworkspace POD, unless the component has its `dedicatedPod`
                             field set to `true`. \n When no `apply` command exist
                             for a given component, it is assumed the component will
-                            be applied at workspace start by default."
+                            be applied at devworkspace start by default."
                           properties:
                             component:
                               description: Describes component that will be applied
@@ -4199,7 +4199,7 @@ spec:
                           type: object
                           x-kubernetes-preserve-unknown-fields: true
                         commandType:
-                          description: Type of workspace command
+                          description: Type of devworkspace command
                           enum:
                           - Exec
                           - Apply
@@ -4375,7 +4375,7 @@ spec:
                       type: object
                     type: array
                   components:
-                    description: List of the workspace components, such as editor
+                    description: List of the devworkspace components, such as editor
                       and plugins, user-provided containers, or other types of components
                     items:
                       oneOf:
@@ -4408,7 +4408,7 @@ spec:
                           - Custom
                           type: string
                         container:
-                          description: Allows adding and configuring workspace-related
+                          description: Allows adding and configuring devworkspace-related
                             containers
                           properties:
                             args:
@@ -4457,12 +4457,12 @@ spec:
                                       network, typically through a K8S ingress or
                                       an OpenShift route. \n - `internal` means that
                                       the endpoint will be exposed internally outside
-                                      of the main workspace POD, typically by K8S
+                                      of the main devworkspace POD, typically by K8S
                                       services, to be consumed by other elements running
                                       on the same cloud internal network. \n - `none`
                                       means that the endpoint will not be exposed
                                       and will only be accessible inside the main
-                                      workspace POD, on a local address. \n Default
+                                      devworkspace POD, on a local address. \n Default
                                       value is `public`"
                                     enum:
                                     - public
@@ -4600,10 +4600,10 @@ spec:
                           - embeddedResource
                           type: object
                         kubernetes:
-                          description: Allows importing into the workspace the Kubernetes
-                            resources defined in a given manifest. For example this
-                            allows reusing the Kubernetes definitions used to deploy
-                            some runtime components in production.
+                          description: Allows importing into the devworkspace the
+                            Kubernetes resources defined in a given manifest. For
+                            example this allows reusing the Kubernetes definitions
+                            used to deploy some runtime components in production.
                           oneOf:
                           - required:
                             - uri
@@ -4628,12 +4628,12 @@ spec:
                                       network, typically through a K8S ingress or
                                       an OpenShift route. \n - `internal` means that
                                       the endpoint will be exposed internally outside
-                                      of the main workspace POD, typically by K8S
+                                      of the main devworkspace POD, typically by K8S
                                       services, to be consumed by other elements running
                                       on the same cloud internal network. \n - `none`
                                       means that the endpoint will not be exposed
                                       and will only be accessible inside the main
-                                      workspace POD, on a local address. \n Default
+                                      devworkspace POD, on a local address. \n Default
                                       value is `public`"
                                     enum:
                                     - public
@@ -4709,10 +4709,10 @@ spec:
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         openshift:
-                          description: Allows importing into the workspace the OpenShift
-                            resources defined in a given manifest. For example this
-                            allows reusing the OpenShift definitions used to deploy
-                            some runtime components in production.
+                          description: Allows importing into the devworkspace the
+                            OpenShift resources defined in a given manifest. For example
+                            this allows reusing the OpenShift definitions used to
+                            deploy some runtime components in production.
                           oneOf:
                           - required:
                             - uri
@@ -4737,12 +4737,12 @@ spec:
                                       network, typically through a K8S ingress or
                                       an OpenShift route. \n - `internal` means that
                                       the endpoint will be exposed internally outside
-                                      of the main workspace POD, typically by K8S
+                                      of the main devworkspace POD, typically by K8S
                                       services, to be consumed by other elements running
                                       on the same cloud internal network. \n - `none`
                                       means that the endpoint will not be exposed
                                       and will only be accessible inside the main
-                                      workspace POD, on a local address. \n Default
+                                      devworkspace POD, on a local address. \n Default
                                       value is `public`"
                                     enum:
                                     - public
@@ -4839,15 +4839,15 @@ spec:
                                   apply:
                                     description: "Command that consists in applying
                                       a given component definition, typically bound
-                                      to a workspace event. \n For example, when an
-                                      `apply` command is bound to a `preStart` event,
-                                      and references a `container` component, it will
-                                      start the container as a K8S initContainer in
-                                      the workspace POD, unless the component has
-                                      its `dedicatedPod` field set to `true`. \n When
-                                      no `apply` command exist for a given component,
-                                      it is assumed the component will be applied
-                                      at workspace start by default."
+                                      to a devworkspace event. \n For example, when
+                                      an `apply` command is bound to a `preStart`
+                                      event, and references a `container` component,
+                                      it will start the container as a K8S initContainer
+                                      in the devworkspace POD, unless the component
+                                      has its `dedicatedPod` field set to `true`.
+                                      \n When no `apply` command exist for a given
+                                      component, it is assumed the component will
+                                      be applied at devworkspace start by default."
                                     properties:
                                       component:
                                         description: Describes component that will
@@ -4883,7 +4883,7 @@ spec:
                                     type: object
                                     x-kubernetes-preserve-unknown-fields: true
                                   commandType:
-                                    description: Type of workspace command
+                                    description: Type of devworkspace command
                                     enum:
                                     - Exec
                                     - Apply
@@ -5042,7 +5042,7 @@ spec:
                                     - Volume
                                     type: string
                                   container:
-                                    description: Allows adding and configuring workspace-related
+                                    description: Allows adding and configuring devworkspace-related
                                       containers
                                     properties:
                                       args:
@@ -5094,13 +5094,13 @@ spec:
                                                 typically through a K8S ingress or
                                                 an OpenShift route. \n - `internal`
                                                 means that the endpoint will be exposed
-                                                internally outside of the main workspace
+                                                internally outside of the main devworkspace
                                                 POD, typically by K8S services, to
                                                 be consumed by other elements running
                                                 on the same cloud internal network.
                                                 \n - `none` means that the endpoint
                                                 will not be exposed and will only
-                                                be accessible inside the main workspace
+                                                be accessible inside the main devworkspace
                                                 POD, on a local address. \n Default
                                                 value is `public`"
                                               enum:
@@ -5224,7 +5224,7 @@ spec:
                                         type: array
                                     type: object
                                   kubernetes:
-                                    description: Allows importing into the workspace
+                                    description: Allows importing into the devworkspace
                                       the Kubernetes resources defined in a given
                                       manifest. For example this allows reusing the
                                       Kubernetes definitions used to deploy some runtime
@@ -5255,13 +5255,13 @@ spec:
                                                 typically through a K8S ingress or
                                                 an OpenShift route. \n - `internal`
                                                 means that the endpoint will be exposed
-                                                internally outside of the main workspace
+                                                internally outside of the main devworkspace
                                                 POD, typically by K8S services, to
                                                 be consumed by other elements running
                                                 on the same cloud internal network.
                                                 \n - `none` means that the endpoint
                                                 will not be exposed and will only
-                                                be accessible inside the main workspace
+                                                be accessible inside the main devworkspace
                                                 POD, on a local address. \n Default
                                                 value is `public`"
                                               enum:
@@ -5344,7 +5344,7 @@ spec:
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   openshift:
-                                    description: Allows importing into the workspace
+                                    description: Allows importing into the devworkspace
                                       the OpenShift resources defined in a given manifest.
                                       For example this allows reusing the OpenShift
                                       definitions used to deploy some runtime components
@@ -5375,13 +5375,13 @@ spec:
                                                 typically through a K8S ingress or
                                                 an OpenShift route. \n - `internal`
                                                 means that the endpoint will be exposed
-                                                internally outside of the main workspace
+                                                internally outside of the main devworkspace
                                                 POD, typically by K8S services, to
                                                 be consumed by other elements running
                                                 on the same cloud internal network.
                                                 \n - `none` means that the endpoint
                                                 will not be exposed and will only
-                                                be accessible inside the main workspace
+                                                be accessible inside the main devworkspace
                                                 POD, on a local address. \n Default
                                                 value is `public`"
                                               enum:
@@ -5522,7 +5522,7 @@ spec:
                     properties:
                       postStart:
                         description: IDs of commands that should be executed after
-                          the workspace is completely started. In the case of Che-Theia,
+                          the devworkspace is completely started. In the case of Che-Theia,
                           these commands should be executed after all plugins and
                           extensions have started, including project cloning. This
                           means that those commands are not triggered until the user
@@ -5532,27 +5532,27 @@ spec:
                         type: array
                       postStop:
                         description: IDs of commands that should be executed after
-                          stopping the workspace.
+                          stopping the devworkspace.
                         items:
                           type: string
                         type: array
                       preStart:
                         description: IDs of commands that should be executed before
-                          the workspace start. Kubernetes-wise, these commands would
-                          typically be executed in init containers of the workspace
+                          the devworkspace start. Kubernetes-wise, these commands
+                          would typically be executed in init containers of the devworkspace
                           POD.
                         items:
                           type: string
                         type: array
                       preStop:
                         description: IDs of commands that should be executed before
-                          stopping the workspace.
+                          stopping the devworkspace.
                         items:
                           type: string
                         type: array
                     type: object
                   parent:
-                    description: Parent workspace template
+                    description: Parent devworkspace template
                     oneOf:
                     - required:
                       - uri
@@ -5576,15 +5576,15 @@ spec:
                           properties:
                             apply:
                               description: "Command that consists in applying a given
-                                component definition, typically bound to a workspace
+                                component definition, typically bound to a devworkspace
                                 event. \n For example, when an `apply` command is
                                 bound to a `preStart` event, and references a `container`
                                 component, it will start the container as a K8S initContainer
-                                in the workspace POD, unless the component has its
-                                `dedicatedPod` field set to `true`. \n When no `apply`
-                                command exist for a given component, it is assumed
-                                the component will be applied at workspace start by
-                                default."
+                                in the devworkspace POD, unless the component has
+                                its `dedicatedPod` field set to `true`. \n When no
+                                `apply` command exist for a given component, it is
+                                assumed the component will be applied at devworkspace
+                                start by default."
                               properties:
                                 component:
                                   description: Describes component that will be applied
@@ -5619,7 +5619,7 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             commandType:
-                              description: Type of workspace command
+                              description: Type of devworkspace command
                               enum:
                               - Exec
                               - Apply
@@ -5778,7 +5778,7 @@ spec:
                               - Plugin
                               type: string
                             container:
-                              description: Allows adding and configuring workspace-related
+                              description: Allows adding and configuring devworkspace-related
                                 containers
                               properties:
                                 args:
@@ -5828,12 +5828,12 @@ spec:
                                           a K8S ingress or an OpenShift route. \n
                                           - `internal` means that the endpoint will
                                           be exposed internally outside of the main
-                                          workspace POD, typically by K8S services,
+                                          devworkspace POD, typically by K8S services,
                                           to be consumed by other elements running
                                           on the same cloud internal network. \n -
                                           `none` means that the endpoint will not
                                           be exposed and will only be accessible inside
-                                          the main workspace POD, on a local address.
+                                          the main devworkspace POD, on a local address.
                                           \n Default value is `public`"
                                         enum:
                                         - public
@@ -5951,8 +5951,8 @@ spec:
                                   type: array
                               type: object
                             kubernetes:
-                              description: Allows importing into the workspace the
-                                Kubernetes resources defined in a given manifest.
+                              description: Allows importing into the devworkspace
+                                the Kubernetes resources defined in a given manifest.
                                 For example this allows reusing the Kubernetes definitions
                                 used to deploy some runtime components in production.
                               oneOf:
@@ -5980,12 +5980,12 @@ spec:
                                           a K8S ingress or an OpenShift route. \n
                                           - `internal` means that the endpoint will
                                           be exposed internally outside of the main
-                                          workspace POD, typically by K8S services,
+                                          devworkspace POD, typically by K8S services,
                                           to be consumed by other elements running
                                           on the same cloud internal network. \n -
                                           `none` means that the endpoint will not
                                           be exposed and will only be accessible inside
-                                          the main workspace POD, on a local address.
+                                          the main devworkspace POD, on a local address.
                                           \n Default value is `public`"
                                         enum:
                                         - public
@@ -6062,9 +6062,9 @@ spec:
                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                               type: string
                             openshift:
-                              description: Allows importing into the workspace the
-                                OpenShift resources defined in a given manifest. For
-                                example this allows reusing the OpenShift definitions
+                              description: Allows importing into the devworkspace
+                                the OpenShift resources defined in a given manifest.
+                                For example this allows reusing the OpenShift definitions
                                 used to deploy some runtime components in production.
                               oneOf:
                               - required:
@@ -6091,12 +6091,12 @@ spec:
                                           a K8S ingress or an OpenShift route. \n
                                           - `internal` means that the endpoint will
                                           be exposed internally outside of the main
-                                          workspace POD, typically by K8S services,
+                                          devworkspace POD, typically by K8S services,
                                           to be consumed by other elements running
                                           on the same cloud internal network. \n -
                                           `none` means that the endpoint will not
                                           be exposed and will only be accessible inside
-                                          the main workspace POD, on a local address.
+                                          the main devworkspace POD, on a local address.
                                           \n Default value is `public`"
                                         enum:
                                         - public
@@ -6196,15 +6196,15 @@ spec:
                                       apply:
                                         description: "Command that consists in applying
                                           a given component definition, typically
-                                          bound to a workspace event. \n For example,
+                                          bound to a devworkspace event. \n For example,
                                           when an `apply` command is bound to a `preStart`
                                           event, and references a `container` component,
                                           it will start the container as a K8S initContainer
-                                          in the workspace POD, unless the component
+                                          in the devworkspace POD, unless the component
                                           has its `dedicatedPod` field set to `true`.
                                           \n When no `apply` command exist for a given
                                           component, it is assumed the component will
-                                          be applied at workspace start by default."
+                                          be applied at devworkspace start by default."
                                         properties:
                                           component:
                                             description: Describes component that
@@ -6240,7 +6240,7 @@ spec:
                                         type: object
                                         x-kubernetes-preserve-unknown-fields: true
                                       commandType:
-                                        description: Type of workspace command
+                                        description: Type of devworkspace command
                                         enum:
                                         - Exec
                                         - Apply
@@ -6405,7 +6405,7 @@ spec:
                                         type: string
                                       container:
                                         description: Allows adding and configuring
-                                          workspace-related containers
+                                          devworkspace-related containers
                                         properties:
                                           args:
                                             description: "The arguments to supply
@@ -6459,15 +6459,16 @@ spec:
                                                     through a K8S ingress or an OpenShift
                                                     route. \n - `internal` means that
                                                     the endpoint will be exposed internally
-                                                    outside of the main workspace
+                                                    outside of the main devworkspace
                                                     POD, typically by K8S services,
                                                     to be consumed by other elements
                                                     running on the same cloud internal
                                                     network. \n - `none` means that
                                                     the endpoint will not be exposed
                                                     and will only be accessible inside
-                                                    the main workspace POD, on a local
-                                                    address. \n Default value is `public`"
+                                                    the main devworkspace POD, on
+                                                    a local address. \n Default value
+                                                    is `public`"
                                                   enum:
                                                   - public
                                                   - internal
@@ -6597,7 +6598,7 @@ spec:
                                             type: array
                                         type: object
                                       kubernetes:
-                                        description: Allows importing into the workspace
+                                        description: Allows importing into the devworkspace
                                           the Kubernetes resources defined in a given
                                           manifest. For example this allows reusing
                                           the Kubernetes definitions used to deploy
@@ -6629,15 +6630,16 @@ spec:
                                                     through a K8S ingress or an OpenShift
                                                     route. \n - `internal` means that
                                                     the endpoint will be exposed internally
-                                                    outside of the main workspace
+                                                    outside of the main devworkspace
                                                     POD, typically by K8S services,
                                                     to be consumed by other elements
                                                     running on the same cloud internal
                                                     network. \n - `none` means that
                                                     the endpoint will not be exposed
                                                     and will only be accessible inside
-                                                    the main workspace POD, on a local
-                                                    address. \n Default value is `public`"
+                                                    the main devworkspace POD, on
+                                                    a local address. \n Default value
+                                                    is `public`"
                                                   enum:
                                                   - public
                                                   - internal
@@ -6723,7 +6725,7 @@ spec:
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       openshift:
-                                        description: Allows importing into the workspace
+                                        description: Allows importing into the devworkspace
                                           the OpenShift resources defined in a given
                                           manifest. For example this allows reusing
                                           the OpenShift definitions used to deploy
@@ -6755,15 +6757,16 @@ spec:
                                                     through a K8S ingress or an OpenShift
                                                     route. \n - `internal` means that
                                                     the endpoint will be exposed internally
-                                                    outside of the main workspace
+                                                    outside of the main devworkspace
                                                     POD, typically by K8S services,
                                                     to be consumed by other elements
                                                     running on the same cloud internal
                                                     network. \n - `none` means that
                                                     the endpoint will not be exposed
                                                     and will only be accessible inside
-                                                    the main workspace POD, on a local
-                                                    address. \n Default value is `public`"
+                                                    the main devworkspace POD, on
+                                                    a local address. \n Default value
+                                                    is `public`"
                                                   enum:
                                                   - public
                                                   - internal
@@ -7147,8 +7150,8 @@ spec:
                         type: string
                     type: object
                   projects:
-                    description: Projects worked on in the workspace, containing names
-                      and sources locations
+                    description: Projects worked on in the devworkspace, containing
+                      names and sources locations
                     items:
                       oneOf:
                       - required:
@@ -7410,8 +7413,8 @@ spec:
                 description: Conditions represent the latest available observations
                   of an object's state
                 items:
-                  description: WorkspaceCondition contains details for the current
-                    condition of this workspace.
+                  description: DevWorkspaceCondition contains details for the current
+                    condition of this devworkspace.
                   properties:
                     lastTransitionTime:
                       description: Last time the condition transitioned from one status
@@ -7438,8 +7441,11 @@ spec:
                   - type
                   type: object
                 type: array
+              devworkspaceId:
+                description: Id of the DevWorkspace
+                type: string
               ideUrl:
-                description: URL at which the Worksace Editor can be joined
+                description: URL at which the DevWorkspace Editor can be joined
                 type: string
               message:
                 description: Message is a short user-readable message giving additional
@@ -7447,11 +7453,8 @@ spec:
                 type: string
               phase:
                 type: string
-              workspaceId:
-                description: Id of the workspace
-                type: string
             required:
-            - workspaceId
+            - devworkspaceId
             type: object
         type: object
     served: true

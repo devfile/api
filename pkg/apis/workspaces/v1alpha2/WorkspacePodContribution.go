@@ -4,7 +4,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 )
 
-type WorkspacePodContributions struct {
+type DevWorkspacePodContributions struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge,retainKeys
@@ -15,7 +15,7 @@ type WorkspacePodContributions struct {
 	// +patchMergeKey=name
 	// +patchStrategy=merge
 	Containers []corev1.Container `json:"containers" patchStrategy:"merge" patchMergeKey:"name" protobuf:"bytes,2,rep,name=containers"`
-	// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by the workspace Pod.
+	// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by the devworkspace Pod.
 	// If specified, these secrets will be passed to individual puller implementations for them to use. For example,
 	// in the case of docker, only DockerConfig type secrets are honored.
 	// More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
@@ -23,7 +23,7 @@ type WorkspacePodContributions struct {
 	// +patchMergeKey=name
 	// +patchStrategy=merge
 	ImagePullSecrets []corev1.LocalObjectReference `json:"imagePullSecrets,omitempty" patchStrategy:"merge" patchMergeKey:"name" protobuf:"bytes,15,rep,name=imagePullSecrets"`
-	// List of workspace-wide environment variables to set in all containers of the workspace POD.
+	// List of devworkspace-wide environment variables to set in all containers of the devworkspace POD.
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge

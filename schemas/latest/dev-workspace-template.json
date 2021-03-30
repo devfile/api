@@ -165,11 +165,11 @@
       "additionalProperties": false
     },
     "spec": {
-      "description": "Structure of the workspace. This is also the specification of a workspace template.",
+      "description": "Structure of the devworkspace. This is also the specification of a devworkspace template.",
       "type": "object",
       "properties": {
         "commands": {
-          "description": "Predefined, ready-to-use, workspace-related commands",
+          "description": "Predefined, ready-to-use, devworkspace-related commands",
           "type": "array",
           "items": {
             "type": "object",
@@ -200,7 +200,7 @@
             ],
             "properties": {
               "apply": {
-                "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
+                "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
                 "type": "object",
                 "required": [
                   "component"
@@ -426,7 +426,7 @@
           }
         },
         "components": {
-          "description": "List of the workspace components, such as editor and plugins, user-provided containers, or other types of components",
+          "description": "List of the devworkspace components, such as editor and plugins, user-provided containers, or other types of components",
           "type": "array",
           "items": {
             "type": "object",
@@ -472,7 +472,7 @@
                 "additionalProperties": true
               },
               "container": {
-                "description": "Allows adding and configuring workspace-related containers",
+                "description": "Allows adding and configuring devworkspace-related containers",
                 "type": "object",
                 "required": [
                   "image"
@@ -517,7 +517,7 @@
                           "additionalProperties": true
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "default": "public",
                           "enum": [
@@ -645,7 +645,7 @@
                 "additionalProperties": false
               },
               "kubernetes": {
-                "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+                "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
                 "type": "object",
                 "oneOf": [
                   {
@@ -675,7 +675,7 @@
                           "additionalProperties": true
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "default": "public",
                           "enum": [
@@ -735,7 +735,7 @@
                 "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
               },
               "openshift": {
-                "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+                "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
                 "type": "object",
                 "oneOf": [
                   {
@@ -765,7 +765,7 @@
                           "additionalProperties": true
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "default": "public",
                           "enum": [
@@ -866,7 +866,7 @@
                       ],
                       "properties": {
                         "apply": {
-                          "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
+                          "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
                           "type": "object",
                           "properties": {
                             "component": {
@@ -1063,7 +1063,7 @@
                           "additionalProperties": true
                         },
                         "container": {
-                          "description": "Allows adding and configuring workspace-related containers",
+                          "description": "Allows adding and configuring devworkspace-related containers",
                           "type": "object",
                           "properties": {
                             "args": {
@@ -1104,7 +1104,7 @@
                                     "additionalProperties": true
                                   },
                                   "exposure": {
-                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
                                     "enum": [
                                       "public",
@@ -1208,7 +1208,7 @@
                           "additionalProperties": false
                         },
                         "kubernetes": {
-                          "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+                          "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
                           "type": "object",
                           "oneOf": [
                             {
@@ -1237,7 +1237,7 @@
                                     "additionalProperties": true
                                   },
                                   "exposure": {
-                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
                                     "enum": [
                                       "public",
@@ -1295,7 +1295,7 @@
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                         },
                         "openshift": {
-                          "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+                          "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
                           "type": "object",
                           "oneOf": [
                             {
@@ -1324,7 +1324,7 @@
                                     "additionalProperties": true
                                   },
                                   "exposure": {
-                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                    "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                     "type": "string",
                                     "enum": [
                                       "public",
@@ -1448,28 +1448,28 @@
           "type": "object",
           "properties": {
             "postStart": {
-              "description": "IDs of commands that should be executed after the workspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
+              "description": "IDs of commands that should be executed after the devworkspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "postStop": {
-              "description": "IDs of commands that should be executed after stopping the workspace.",
+              "description": "IDs of commands that should be executed after stopping the devworkspace.",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "preStart": {
-              "description": "IDs of commands that should be executed before the workspace start. Kubernetes-wise, these commands would typically be executed in init containers of the workspace POD.",
+              "description": "IDs of commands that should be executed before the devworkspace start. Kubernetes-wise, these commands would typically be executed in init containers of the devworkspace POD.",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "preStop": {
-              "description": "IDs of commands that should be executed before stopping the workspace.",
+              "description": "IDs of commands that should be executed before stopping the devworkspace.",
               "type": "array",
               "items": {
                 "type": "string"
@@ -1479,7 +1479,7 @@
           "additionalProperties": false
         },
         "parent": {
-          "description": "Parent workspace template",
+          "description": "Parent devworkspace template",
           "type": "object",
           "oneOf": [
             {
@@ -1526,7 +1526,7 @@
                 ],
                 "properties": {
                   "apply": {
-                    "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
+                    "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
                     "type": "object",
                     "properties": {
                       "component": {
@@ -1728,7 +1728,7 @@
                     "additionalProperties": true
                   },
                   "container": {
-                    "description": "Allows adding and configuring workspace-related containers",
+                    "description": "Allows adding and configuring devworkspace-related containers",
                     "type": "object",
                     "properties": {
                       "args": {
@@ -1769,7 +1769,7 @@
                               "additionalProperties": true
                             },
                             "exposure": {
-                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                               "type": "string",
                               "enum": [
                                 "public",
@@ -1873,7 +1873,7 @@
                     "additionalProperties": false
                   },
                   "kubernetes": {
-                    "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+                    "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
                     "type": "object",
                     "oneOf": [
                       {
@@ -1902,7 +1902,7 @@
                               "additionalProperties": true
                             },
                             "exposure": {
-                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                               "type": "string",
                               "enum": [
                                 "public",
@@ -1960,7 +1960,7 @@
                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                   },
                   "openshift": {
-                    "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+                    "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
                     "type": "object",
                     "oneOf": [
                       {
@@ -1989,7 +1989,7 @@
                               "additionalProperties": true
                             },
                             "exposure": {
-                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                              "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                               "type": "string",
                               "enum": [
                                 "public",
@@ -2088,7 +2088,7 @@
                           ],
                           "properties": {
                             "apply": {
-                              "description": "Command that consists in applying a given component definition, typically bound to a workspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the workspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at workspace start by default.",
+                              "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
                               "type": "object",
                               "properties": {
                                 "component": {
@@ -2285,7 +2285,7 @@
                               "additionalProperties": true
                             },
                             "container": {
-                              "description": "Allows adding and configuring workspace-related containers",
+                              "description": "Allows adding and configuring devworkspace-related containers",
                               "type": "object",
                               "properties": {
                                 "args": {
@@ -2326,7 +2326,7 @@
                                         "additionalProperties": true
                                       },
                                       "exposure": {
-                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                         "type": "string",
                                         "enum": [
                                           "public",
@@ -2430,7 +2430,7 @@
                               "additionalProperties": false
                             },
                             "kubernetes": {
-                              "description": "Allows importing into the workspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+                              "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
                               "type": "object",
                               "oneOf": [
                                 {
@@ -2459,7 +2459,7 @@
                                         "additionalProperties": true
                                       },
                                       "exposure": {
-                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                         "type": "string",
                                         "enum": [
                                           "public",
@@ -2517,7 +2517,7 @@
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "openshift": {
-                              "description": "Allows importing into the workspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+                              "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
                               "type": "object",
                               "oneOf": [
                                 {
@@ -2546,7 +2546,7 @@
                                         "additionalProperties": true
                                       },
                                       "exposure": {
-                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main workspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main workspace POD, on a local address.\n\nDefault value is `public`",
+                                        "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                                         "type": "string",
                                         "enum": [
                                           "public",
@@ -2932,7 +2932,7 @@
           "additionalProperties": false
         },
         "projects": {
-          "description": "Projects worked on in the workspace, containing names and sources locations",
+          "description": "Projects worked on in the devworkspace, containing names and sources locations",
           "type": "array",
           "items": {
             "type": "object",

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	workspaces "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/util/json"
 	yamlMachinery "k8s.io/apimachinery/pkg/util/yaml"
@@ -15,19 +15,19 @@ import (
 )
 
 func TestBasicToplevelOverriding(t *testing.T) {
-	original := workspaces.DevWorkspaceTemplateSpecContent{
-		Commands: []workspaces.Command{
+	original := dw.DevWorkspaceTemplateSpecContent{
+		Commands: []dw.Command{
 			{
 				Id: "command-with-type-changed",
-				CommandUnion: workspaces.CommandUnion{
-					Exec: &workspaces.ExecCommand{},
+				CommandUnion: dw.CommandUnion{
+					Exec: &dw.ExecCommand{},
 				},
 			},
 			{
 				Id: "command-to-replace",
-				CommandUnion: workspaces.CommandUnion{
-					Exec: &workspaces.ExecCommand{
-						Env: []workspaces.EnvVar{
+				CommandUnion: dw.CommandUnion{
+					Exec: &dw.ExecCommand{
+						Env: []dw.EnvVar{
 							{
 								Name:  "envVarToReplace",
 								Value: "envVarToReplaceOriginalValue",
@@ -42,9 +42,9 @@ func TestBasicToplevelOverriding(t *testing.T) {
 			},
 			{
 				Id: "command-not-changed",
-				CommandUnion: workspaces.CommandUnion{
-					Exec: &workspaces.ExecCommand{
-						LabeledCommand: workspaces.LabeledCommand{
+				CommandUnion: dw.CommandUnion{
+					Exec: &dw.ExecCommand{
+						LabeledCommand: dw.LabeledCommand{
 							Label: "commandNotChangedLabel",
 						},
 					},
@@ -53,21 +53,21 @@ func TestBasicToplevelOverriding(t *testing.T) {
 		},
 	}
 
-	patch := workspaces.ParentOverrides{
-		Commands: []workspaces.CommandParentOverride{
+	patch := dw.ParentOverrides{
+		Commands: []dw.CommandParentOverride{
 			{
 				Id: "command-with-type-changed",
-				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
-					Apply: &workspaces.ApplyCommandParentOverride{
+				CommandUnionParentOverride: dw.CommandUnionParentOverride{
+					Apply: &dw.ApplyCommandParentOverride{
 						Component: "mycomponent",
 					},
 				},
 			},
 			{
 				Id: "command-to-replace",
-				CommandUnionParentOverride: workspaces.CommandUnionParentOverride{
-					Exec: &workspaces.ExecCommandParentOverride{
-						Env: []workspaces.EnvVarParentOverride{
+				CommandUnionParentOverride: dw.CommandUnionParentOverride{
+					Exec: &dw.ExecCommandParentOverride{
+						Env: []dw.EnvVarParentOverride{
 							{
 								Name:  "envVarToReplace",
 								Value: "envVarToReplaceNewValue",
@@ -83,21 +83,21 @@ func TestBasicToplevelOverriding(t *testing.T) {
 		},
 	}
 
-	expected := &workspaces.DevWorkspaceTemplateSpecContent{
-		Commands: []workspaces.Command{
+	expected := &dw.DevWorkspaceTemplateSpecContent{
+		Commands: []dw.Command{
 			{
 				Id: "command-with-type-changed",
-				CommandUnion: workspaces.CommandUnion{
-					Apply: &workspaces.ApplyCommand{
+				CommandUnion: dw.CommandUnion{
+					Apply: &dw.ApplyCommand{
 						Component: "mycomponent",
 					},
 				},
 			},
 			{
 				Id: "command-to-replace",
-				CommandUnion: workspaces.CommandUnion{
-					Exec: &workspaces.ExecCommand{
-						Env: []workspaces.EnvVar{
+				CommandUnion: dw.CommandUnion{
+					Exec: &dw.ExecCommand{
+						Env: []dw.EnvVar{
 							{
 								Name:  "envVarToReplace",
 								Value: "envVarToReplaceNewValue",
@@ -116,9 +116,9 @@ func TestBasicToplevelOverriding(t *testing.T) {
 			},
 			{
 				Id: "command-not-changed",
-				CommandUnion: workspaces.CommandUnion{
-					Exec: &workspaces.ExecCommand{
-						LabeledCommand: workspaces.LabeledCommand{
+				CommandUnion: dw.CommandUnion{
+					Exec: &dw.ExecCommand{
+						LabeledCommand: dw.LabeledCommand{
 							Label: "commandNotChangedLabel",
 						},
 					},
@@ -309,9 +309,9 @@ func TestPluginOverrides(t *testing.T) {
 	patchFile := "test-fixtures/patches/override-just-plugin/patch.yaml"
 	resultFile := "test-fixtures/patches/override-just-plugin/result.yaml"
 
-	originalDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	patch := workspaces.PluginOverrides{}
-	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	originalDWT := dw.DevWorkspaceTemplateSpecContent{}
+	patch := dw.PluginOverrides{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
 
 	readFileToStruct(t, originalFile, &originalDWT)
 	readFileToStruct(t, patchFile, &patch)
@@ -328,9 +328,9 @@ func TestMergingOnlyPlugins(t *testing.T) {
 	pluginFile := "test-fixtures/merges/no-parent/plugin.yaml"
 	resultFile := "test-fixtures/merges/no-parent/result.yaml"
 
-	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	pluginDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	baseDWT := dw.DevWorkspaceTemplateSpecContent{}
+	pluginDWT := dw.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
 
 	readFileToStruct(t, baseFile, &baseDWT)
 	readFileToStruct(t, pluginFile, &pluginDWT)
@@ -348,9 +348,9 @@ func TestMergingOnlyParent(t *testing.T) {
 	parentFile := "test-fixtures/merges/no-parent/plugin.yaml"
 	resultFile := "test-fixtures/merges/no-parent/result.yaml"
 
-	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	parentDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	baseDWT := dw.DevWorkspaceTemplateSpecContent{}
+	parentDWT := dw.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
 
 	readFileToStruct(t, baseFile, &baseDWT)
 	readFileToStruct(t, parentFile, &parentDWT)

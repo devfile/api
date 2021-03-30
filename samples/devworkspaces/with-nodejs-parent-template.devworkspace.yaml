@@ -1,4 +1,4 @@
-apiVersion: workspace.che.eclipse.org/v1alpha2
+apiVersion: workspace.devfile.io/v1alpha2
 kind: DevWorkspace
 metadata:
   name: "with-nodejs-template-parent"

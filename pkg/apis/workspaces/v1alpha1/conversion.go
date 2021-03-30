@@ -6,9 +6,9 @@ import (
 
 func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspace) error {
 	dest.ObjectMeta = src.ObjectMeta
-	dest.Status.WorkspaceId = src.Status.WorkspaceId
+	dest.Status.DevWorkspaceId = src.Status.WorkspaceId
 	dest.Status.IdeUrl = src.Status.IdeUrl
-	dest.Status.Phase = v1alpha2.WorkspacePhase(src.Status.Phase)
+	dest.Status.Phase = v1alpha2.DevWorkspacePhase(src.Status.Phase)
 	dest.Status.Message = src.Status.Message
 	convertConditionsTo_v1alpha2(src, dest)
 	dest.Spec.RoutingClass = src.Spec.RoutingClass
@@ -19,7 +19,7 @@ func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspa
 
 func convertDevWorkspaceFrom_v1alpha2(src *v1alpha2.DevWorkspace, dest *DevWorkspace) error {
 	dest.ObjectMeta = src.ObjectMeta
-	dest.Status.WorkspaceId = src.Status.WorkspaceId
+	dest.Status.WorkspaceId = src.Status.DevWorkspaceId
 	dest.Status.IdeUrl = src.Status.IdeUrl
 	dest.Status.Phase = WorkspacePhase(src.Status.Phase)
 	dest.Status.Message = src.Status.Message
@@ -142,12 +142,12 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 
 func convertConditionsTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspace) {
 	for _, srcCondition := range src.Status.Conditions {
-		dstCondition := v1alpha2.WorkspaceCondition{}
+		dstCondition := v1alpha2.DevWorkspaceCondition{}
 		dstCondition.Status = srcCondition.Status
 		dstCondition.LastTransitionTime = srcCondition.LastTransitionTime
 		dstCondition.Message = srcCondition.Message
 		dstCondition.Reason = srcCondition.Reason
-		dstCondition.Type = v1alpha2.WorkspaceConditionType(srcCondition.Type)
+		dstCondition.Type = v1alpha2.DevWorkspaceConditionType(srcCondition.Type)
 		dest.Status.Conditions = append(dest.Status.Conditions, dstCondition)
 	}
 }
