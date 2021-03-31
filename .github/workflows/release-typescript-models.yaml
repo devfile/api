@@ -4,7 +4,7 @@ name: types
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   release-typescript-models:

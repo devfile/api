@@ -67,9 +67,9 @@ checkoutToReleaseBranch() {
     echo "[INFO] $BRANCH exists."
     resetChanges $BRANCH
   else
-    echo "[INFO] $BRANCH does not exist. Will create a new one from master."
-    resetChanges master
-    git push origin master:$BRANCH
+    echo "[INFO] $BRANCH does not exist. Will create a new one from main."
+    resetChanges main
+    git push origin main:$BRANCH
   fi
   git checkout -B $SCHEMA_VERSION
 }
@@ -106,8 +106,8 @@ bumpVersion() {
   SCHEMA_VERSION=$MAJOR.$((MINOR+1)).0-alpha
 }
 
-updateVersionOnMaster() {
-  # Checkout to a PR branch based on master to make our changes in
+updateVersionOnMain() {
+  # Checkout to a PR branch based on main to make our changes in
   git checkout -b $SCHEMA_VERSION
   
   # Set the schema version to the new version (with -alpha appended) and build the schemas
@@ -116,7 +116,7 @@ updateVersionOnMaster() {
   commitChanges "chore(post-release): bump schema version to ${SCHEMA_VERSION}"
 }
 
-compareMasterVersion() {
+compareMainVersion() {
   # Parse the version passed in.
   IFS='.' read -a semver <<< "$SCHEMA_VERSION"
   MAJOR=${semver[0]}
@@ -147,17 +147,17 @@ run() {
   createReleaseBranch
   createPR "Release version ${SCHEMA_VERSION}"
 
-  # If needed, bump the schema version in master and open a PR against master
-  # Switch back to the master branch
-  BRANCH=master
+  # If needed, bump the schema version in main and open a PR against main
+  # Switch back to the main branch
+  BRANCH=main
   resetChanges $BRANCH
-  if compareMasterVersion; then
-    echo "[INFO] Updating schema version on master to ${SCHEMA_VERSION}"
+  if compareMainVersion; then
+    echo "[INFO] Updating schema version on main to ${SCHEMA_VERSION}"
     bumpVersion
-    updateVersionOnMaster
-    createPR "Bump schema version on master to ${SCHEMA_VERSION}"
+    updateVersionOnMain
+    createPR "Bump schema version on main to ${SCHEMA_VERSION}"
   else
-    echo "[WARN] The passed in schema version ${SCHEMA_VERSION} is less than the current version on master, so not updating the master branch version"
+    echo "[WARN] The passed in schema version ${SCHEMA_VERSION} is less than the current version on main, so not updating the main branch version"
     exit 
   fi
 }

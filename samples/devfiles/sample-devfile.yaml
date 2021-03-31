@@ -8,7 +8,7 @@ projects:
       remotes:
         origin: "https://github.com/devfile/api"
       checkoutFrom:
-        revision: "master"
+        revision: "main"
         remote: origin
 components:
   - name: editor

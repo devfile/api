@@ -14,7 +14,7 @@ The Devfile Kubernetes API (defined in https://github.com/devfile/api/) is the s
 
 **How to Update?**
 
-   1) Add a new folder for the version in the [devfile/api](https://github.com/devfile/api/) repository under [pkg/apis/workspaces](https://github.com/devfile/api/tree/master/pkg/apis/workspaces). For example `pkg/apis/workspaces/v1` if bumping the K8S API version to `v1`.
+   1) Add a new folder for the version in the [devfile/api](https://github.com/devfile/api/) repository under [pkg/apis/workspaces](https://github.com/devfile/api/tree/main/pkg/apis/workspaces). For example `pkg/apis/workspaces/v1` if bumping the K8S API version to `v1`.
    2) Add a schema and version in the CRD manifests
    3) Go through the JSON schema update process outlined below to update the JSON schema version.
    4) Update the devworkspace operator and devfile library to consume the Go structs in the new K8S API version, as needed.
@@ -74,7 +74,7 @@ The following steps outline the steps done to release a new version of the Devfi
 
       v) A PR is opened to merge these changes into the release branch
 
-      vi) The schema version on the master branch is bumped and a PR is opened, provided the schema version passed in is **not** older than the master branch schema version. 
+      vi) The schema version on the main branch is bumped and a PR is opened, provided the schema version passed in is **not** older than the main branch schema version. 
 
    5) Once the release PR is approved and merged, the release engineer creates a new release on GitHub based off the release branch that was just created and includes the generated `devfile.json` as a release artifact. 
        - The tag `v{major}.{minor}.{bugfix}`, where the `{major}.{minor}.{bugfix}` corresponds to the devfile schema version, is used to enable the new version of the API to be pulled in as a Go module.
