@@ -1,7 +1,7 @@
 # Devfile Registry Structure
 This document outlines the structure of a Devfile Registry Repository that’s used as the basis for an OCI Devfile Registry, hosted on Kubernetes. It also outlines how individual files in each stack will get pushed up to the OCI registry.
 
-This design proposal is a follow up to [Devfile Registry Packaging](https://github.com/devfile/api/blob/master/docs/proposals/registry/devfile-packaging.md) and I recommend reading that first.
+This design proposal is a follow up to [Devfile Registry Packaging](https://github.com/devfile/api/blob/main/docs/proposals/registry/devfile-packaging.md) and I recommend reading that first.
 
 ## As-is Today
 Currently, the top-level structure of a devfile registry’s repository is unwritten, but it usually consists of a **devfiles** or **stacks** folder, and any associated files specific to that registry
