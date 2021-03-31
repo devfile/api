@@ -116,7 +116,7 @@ updateVersionOnMain() {
   commitChanges "chore(post-release): bump schema version to ${SCHEMA_VERSION}"
 }
 
-comparemainVersion() {
+compareMainVersion() {
   # Parse the version passed in.
   IFS='.' read -a semver <<< "$SCHEMA_VERSION"
   MAJOR=${semver[0]}
@@ -151,7 +151,7 @@ run() {
   # Switch back to the main branch
   BRANCH=main
   resetChanges $BRANCH
-  if comparemainVersion; then
+  if compareMainVersion; then
     echo "[INFO] Updating schema version on main to ${SCHEMA_VERSION}"
     bumpVersion
     updateVersionOnMain
