@@ -35,10 +35,10 @@ import (
 // GenerateJSONSchema drives whether a Json schema should be generated from this GO Struct type
 type GenerateJSONSchema struct {
 
-	// OmitCustomUnionMembers indicates that the Json schema gnerated from this type should omit Custom component union members.
+	// OmitCustomUnionMembers indicates that the Json schema generated from this type should omit Custom union members.
 	OmitCustomUnionMembers bool `marker:",optional"`
 
-	// OmitPluginUnionMembers indicates that the Json schema gnerated from this type should omit Plugin component union members.
+	// OmitPluginUnionMembers indicates that the Json schema generated from this type should omit Plugin component union members.
 	OmitPluginUnionMembers bool `marker:",optional"`
 
 	// Title indicates the content ot the Json Schema `title` attribute

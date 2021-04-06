@@ -232,60 +232,6 @@
                         "devfiles/components/openshiftBothInlinedAndUri.yaml"] 
         },
         { 
-            "FileName" : "componentPluginAll.yaml",
-            "ExpectOutcome" : "PASS",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginAll.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginMinimum.yaml",
-            "ExpectOutcome" : "PASS",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginMinimum.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginNoName.yaml",
-            "ExpectOutcome" : "missing properties: \"name\"",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginNoName.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginMixedCaseName.yaml",
-            "ExpectOutcome" : "does not match pattern",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginMixedCaseName.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginContainsPlugin.yaml",
-            "ExpectOutcome" : "oneOf failed",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginContainsPlugin.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginIdAndKubernetes.yaml",
-            "ExpectOutcome" : "valid against schemas at indexes 1 and 2",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginIdAndKubernetes.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginIdAndUri.yaml",
-            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginIdAndUri.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginUriAndKubernetes.yaml",
-            "ExpectOutcome" : "valid against schemas at indexes 0 and 2",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginUriAndKubernetes.yaml"] 
-        },
-        { 
-            "FileName" : "componentPluginMissingIdUriAndKubernetes.yaml",
-            "ExpectOutcome" : "oneOf failed",
-            "Files": ["devfiles/components/componentStart.yaml",
-                        "devfiles/components/pluginMissingIdUriAndKubernetes.yaml"] 
-        },
-        { 
             "FileName" : "componentVolumeAll",
             "ExpectOutcome" : "PASS",
             "Files": ["devfiles/components/componentStart.yaml",
