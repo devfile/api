@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	workspaces "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	attributesPkg "github.com/devfile/api/v2/pkg/attributes"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/util/json"
@@ -18,37 +18,37 @@ func TestBasicMerging(t *testing.T) {
 
 	tests := []struct {
 		name                    string
-		mainContent             *workspaces.DevWorkspaceTemplateSpecContent
-		parentFlattenedContent  *workspaces.DevWorkspaceTemplateSpecContent
-		pluginFlattenedContents []*workspaces.DevWorkspaceTemplateSpecContent
-		expected                *workspaces.DevWorkspaceTemplateSpecContent
+		mainContent             *dw.DevWorkspaceTemplateSpecContent
+		parentFlattenedContent  *dw.DevWorkspaceTemplateSpecContent
+		pluginFlattenedContents []*dw.DevWorkspaceTemplateSpecContent
+		expected                *dw.DevWorkspaceTemplateSpecContent
 		wantErr                 *string
 	}{
 		{
 			name: "Basic Merging",
-			mainContent: &workspaces.DevWorkspaceTemplateSpecContent{
+			mainContent: &dw.DevWorkspaceTemplateSpecContent{
 				Variables: map[string]string{
 					"version1": "main",
 				},
 				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
 					"main": true,
 				}, nil),
-				Commands: []workspaces.Command{
+				Commands: []dw.Command{
 					{
 						Id: "mainCommand",
-						CommandUnion: workspaces.CommandUnion{
-							Exec: &workspaces.ExecCommand{
+						CommandUnion: dw.CommandUnion{
+							Exec: &dw.ExecCommand{
 								WorkingDir: "dir",
 							},
 						},
 					},
 				},
-				Components: []workspaces.Component{
+				Components: []dw.Component{
 					{
 						Name: "mainComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Container: &workspaces.ContainerComponent{
-								Container: workspaces.Container{
+						ComponentUnion: dw.ComponentUnion{
+							Container: &dw.ContainerComponent{
+								Container: dw.Container{
 									Image: "image",
 								},
 							},
@@ -56,10 +56,10 @@ func TestBasicMerging(t *testing.T) {
 					},
 					{
 						Name: "mainPluginComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Plugin: &workspaces.PluginComponent{
-								ImportReference: workspaces.ImportReference{
-									ImportReferenceUnion: workspaces.ImportReferenceUnion{
+						ComponentUnion: dw.ComponentUnion{
+							Plugin: &dw.PluginComponent{
+								ImportReference: dw.ImportReference{
+									ImportReferenceUnion: dw.ImportReferenceUnion{
 										Uri: "uri",
 									},
 								},
@@ -67,13 +67,13 @@ func TestBasicMerging(t *testing.T) {
 						},
 					},
 				},
-				Events: &workspaces.Events{
-					WorkspaceEvents: workspaces.WorkspaceEvents{
+				Events: &dw.Events{
+					DevWorkspaceEvents: dw.DevWorkspaceEvents{
 						PostStop: []string{"post-stop-main"},
 					},
 				},
 			},
-			pluginFlattenedContents: []*workspaces.DevWorkspaceTemplateSpecContent{
+			pluginFlattenedContents: []*dw.DevWorkspaceTemplateSpecContent{
 				{
 					Variables: map[string]string{
 						"version2": "plugin",
@@ -81,72 +81,72 @@ func TestBasicMerging(t *testing.T) {
 					Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
 						"plugin": true,
 					}, nil),
-					Commands: []workspaces.Command{
+					Commands: []dw.Command{
 						{
 							Id: "pluginCommand",
-							CommandUnion: workspaces.CommandUnion{
-								Exec: &workspaces.ExecCommand{
+							CommandUnion: dw.CommandUnion{
+								Exec: &dw.ExecCommand{
 									WorkingDir: "dir",
 								},
 							},
 						},
 					},
-					Components: []workspaces.Component{
+					Components: []dw.Component{
 						{
 							Name: "pluginComponent",
-							ComponentUnion: workspaces.ComponentUnion{
-								Container: &workspaces.ContainerComponent{
-									Container: workspaces.Container{
+							ComponentUnion: dw.ComponentUnion{
+								Container: &dw.ContainerComponent{
+									Container: dw.Container{
 										Image: "image",
 									},
 								},
 							},
 						},
 					},
-					Events: &workspaces.Events{
-						WorkspaceEvents: workspaces.WorkspaceEvents{
+					Events: &dw.Events{
+						DevWorkspaceEvents: dw.DevWorkspaceEvents{
 							PostStop: []string{"post-stop-plugin"},
 						},
 					},
 				},
 			},
-			parentFlattenedContent: &workspaces.DevWorkspaceTemplateSpecContent{
+			parentFlattenedContent: &dw.DevWorkspaceTemplateSpecContent{
 				Variables: map[string]string{
 					"version3": "parent",
 				},
 				Attributes: attributesPkg.Attributes{}.FromMap(map[string]interface{}{
 					"parent": true,
 				}, nil),
-				Commands: []workspaces.Command{
+				Commands: []dw.Command{
 					{
 						Id: "parentCommand",
-						CommandUnion: workspaces.CommandUnion{
-							Exec: &workspaces.ExecCommand{
+						CommandUnion: dw.CommandUnion{
+							Exec: &dw.ExecCommand{
 								WorkingDir: "dir",
 							},
 						},
 					},
 				},
-				Components: []workspaces.Component{
+				Components: []dw.Component{
 					{
 						Name: "parentComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Container: &workspaces.ContainerComponent{
-								Container: workspaces.Container{
+						ComponentUnion: dw.ComponentUnion{
+							Container: &dw.ContainerComponent{
+								Container: dw.Container{
 									Image: "image",
 								},
 							},
 						},
 					},
 				},
-				Events: &workspaces.Events{
-					WorkspaceEvents: workspaces.WorkspaceEvents{
+				Events: &dw.Events{
+					DevWorkspaceEvents: dw.DevWorkspaceEvents{
 						PostStop:  []string{"post-stop-parent"},
 						PostStart: []string{"post-start-parent"},
 					},
 				},
 			},
-			expected: &workspaces.DevWorkspaceTemplateSpecContent{
+			expected: &dw.DevWorkspaceTemplateSpecContent{
 				Variables: map[string]string{
 					"version3": "parent",
 					"version2": "plugin",
@@ -157,38 +157,38 @@ func TestBasicMerging(t *testing.T) {
 					"plugin": true,
 					"main":   true,
 				}, nil),
-				Commands: []workspaces.Command{
+				Commands: []dw.Command{
 					{
 						Id: "parentCommand",
-						CommandUnion: workspaces.CommandUnion{
-							Exec: &workspaces.ExecCommand{
+						CommandUnion: dw.CommandUnion{
+							Exec: &dw.ExecCommand{
 								WorkingDir: "dir",
 							},
 						},
 					},
 					{
 						Id: "pluginCommand",
-						CommandUnion: workspaces.CommandUnion{
-							Exec: &workspaces.ExecCommand{
+						CommandUnion: dw.CommandUnion{
+							Exec: &dw.ExecCommand{
 								WorkingDir: "dir",
 							},
 						},
 					},
 					{
 						Id: "mainCommand",
-						CommandUnion: workspaces.CommandUnion{
-							Exec: &workspaces.ExecCommand{
+						CommandUnion: dw.CommandUnion{
+							Exec: &dw.ExecCommand{
 								WorkingDir: "dir",
 							},
 						},
 					},
 				},
-				Components: []workspaces.Component{
+				Components: []dw.Component{
 					{
 						Name: "parentComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Container: &workspaces.ContainerComponent{
-								Container: workspaces.Container{
+						ComponentUnion: dw.ComponentUnion{
+							Container: &dw.ContainerComponent{
+								Container: dw.Container{
 									Image: "image",
 								},
 							},
@@ -196,9 +196,9 @@ func TestBasicMerging(t *testing.T) {
 					},
 					{
 						Name: "pluginComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Container: &workspaces.ContainerComponent{
-								Container: workspaces.Container{
+						ComponentUnion: dw.ComponentUnion{
+							Container: &dw.ContainerComponent{
+								Container: dw.Container{
 									Image: "image",
 								},
 							},
@@ -206,17 +206,17 @@ func TestBasicMerging(t *testing.T) {
 					},
 					{
 						Name: "mainComponent",
-						ComponentUnion: workspaces.ComponentUnion{
-							Container: &workspaces.ContainerComponent{
-								Container: workspaces.Container{
+						ComponentUnion: dw.ComponentUnion{
+							Container: &dw.ContainerComponent{
+								Container: dw.Container{
 									Image: "image",
 								},
 							},
 						},
 					},
 				},
-				Events: &workspaces.Events{
-					WorkspaceEvents: workspaces.WorkspaceEvents{
+				Events: &dw.Events{
+					DevWorkspaceEvents: dw.DevWorkspaceEvents{
 						PreStart:  []string{},
 						PostStart: []string{"post-start-parent"},
 						PreStop:   []string{},
@@ -337,9 +337,9 @@ func TestMergingOnlyPlugins(t *testing.T) {
 	pluginFile := "test-fixtures/merges/no-parent/plugin.yaml"
 	resultFile := "test-fixtures/merges/no-parent/result.yaml"
 
-	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	pluginDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	baseDWT := dw.DevWorkspaceTemplateSpecContent{}
+	pluginDWT := dw.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
 
 	readFileToStruct(t, baseFile, &baseDWT)
 	readFileToStruct(t, pluginFile, &pluginDWT)
@@ -357,9 +357,9 @@ func TestMergingOnlyParent(t *testing.T) {
 	parentFile := "test-fixtures/merges/no-parent/plugin.yaml"
 	resultFile := "test-fixtures/merges/no-parent/result.yaml"
 
-	baseDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	parentDWT := workspaces.DevWorkspaceTemplateSpecContent{}
-	expectedDWT := workspaces.DevWorkspaceTemplateSpecContent{}
+	baseDWT := dw.DevWorkspaceTemplateSpecContent{}
+	parentDWT := dw.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
 
 	readFileToStruct(t, baseFile, &baseDWT)
 	readFileToStruct(t, parentFile, &parentDWT)
