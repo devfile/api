@@ -54,7 +54,7 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...dw.TopLevelListContain
 				k := mapIter.Key()
 				v := mapIter.Value()
 				if k.Kind() != reflect.String || v.Kind() != reflect.String {
-					return fmt.Errorf("unable to fetch Global Variables, Global Variables should be map of strings")
+					return fmt.Errorf("unable to fetch top-level Variables, top-level Variables should be map of strings")
 				}
 				variableKeys = append(variableKeys, k.String())
 			}
@@ -64,7 +64,7 @@ func checkKeys(doCheck checkFn, toplevelListContainers ...dw.TopLevelListContain
 		if attributeValue.IsValid() && attributeValue.CanInterface() {
 			attributes, ok := attributeValue.Interface().(attributesPkg.Attributes)
 			if !ok {
-				return fmt.Errorf("unable to fetch Global Attributes from the devfile data")
+				return fmt.Errorf("unable to fetch top-level Attributes from the devfile data")
 			}
 			var attributeKeys []string
 			for k := range attributes {

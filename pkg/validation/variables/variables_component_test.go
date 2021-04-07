@@ -26,6 +26,7 @@ func TestValidateAndReplaceContainerComponent(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/components/container.yaml",
+			outputFile:   "test-fixtures/components/container.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -39,11 +40,12 @@ func TestValidateAndReplaceContainerComponent(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForContainerComponent(testVariable, &testContainerComponent)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedContainerComponent := v1alpha2.ContainerComponent{}
 				readFileToStruct(t, tt.outputFile, &expectedContainerComponent)
 				assert.Equal(t, expectedContainerComponent, testContainerComponent, "The two values should be the same.")
@@ -71,6 +73,7 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/components/openshift-kubernetes.yaml",
+			outputFile:   "test-fixtures/components/openshift-kubernetes.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -98,11 +101,12 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 			}
 
 			err = validateAndReplaceForKubernetesComponent(testVariable, &testKubernetesComponent)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedKubernetesComponent := v1alpha2.KubernetesComponent{}
 				readFileToStruct(t, tt.outputFile, &expectedKubernetesComponent)
 				assert.Equal(t, expectedKubernetesComponent, testKubernetesComponent, "The two values should be the same.")
@@ -130,6 +134,7 @@ func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -143,11 +148,12 @@ func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForVolumeComponent(testVariable, &testVolumeComponent)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedVolumeComponent := v1alpha2.VolumeComponent{}
 				readFileToStruct(t, tt.outputFile, &expectedVolumeComponent)
 				assert.Equal(t, expectedVolumeComponent, testVolumeComponent, "The two values should be the same.")
@@ -175,6 +181,7 @@ func TestValidateAndReplaceEnv(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/components/env.yaml",
+			outputFile:   "test-fixtures/components/env.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -189,11 +196,12 @@ func TestValidateAndReplaceEnv(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForEnv(testVariable, testEnvArr)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedEnv := v1alpha2.EnvVar{}
 				readFileToStruct(t, tt.outputFile, &expectedEnv)
 				expectedEnvArr := []v1alpha2.EnvVar{expectedEnv}

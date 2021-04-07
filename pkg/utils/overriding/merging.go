@@ -122,9 +122,7 @@ func MergeDevWorkspaceTemplateSpec(
 				result.Attributes = attributes.Attributes{}
 			}
 			for k, v := range content.Attributes {
-				result.Attributes.FromMap(map[string]interface{}{
-					k: v,
-				}, &err)
+				result.Attributes.Put(k, v, &err)
 				if err != nil {
 					return nil, err
 				}

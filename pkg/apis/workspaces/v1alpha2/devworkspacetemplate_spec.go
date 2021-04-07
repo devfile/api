@@ -14,11 +14,13 @@ type DevWorkspaceTemplateSpec struct {
 
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
-	// Map of string variables.
-	// Variable values can be referenced throughout the devfile in string type fields in the form {{variable-key}}
-	// except for schemaVersion, metadata, parent source. Exception to the string field also include element's key identifiers
-	// (command id, component name, endpoint name, project name, etc.) and their references(events, command's component, container's
-	// volume mount name, etc.) and string enums(command group kind, endpoint exposure, etc.)
+	// Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}}
+	// to replace the corresponding value in string fields in the devfile. Replacement cannot be used for
+	//
+	//  - schemaVersion, metadata, parent source
+	//  - element identifiers, e.g. command id, component name, endpoint name, project name
+	//  - references to identifiers, e.g. in events, a command's component, container's volume mount name
+	//  - string enums, e.g. command group kind, endpoint exposure
 	// +optional
 	// +patchStrategy=merge
 	// +devfile:overrides:include:omitInPlugin=true,description=Overrides of variables encapsulated in a parent devfile.

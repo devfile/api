@@ -26,6 +26,7 @@ func TestValidateAndReplaceProjects(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/projects/project.yaml",
+			outputFile:   "test-fixtures/projects/project.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -39,17 +40,11 @@ func TestValidateAndReplaceProjects(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := ValidateAndReplaceForProjects(testVariable, testProjectArr)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
-			} else if !tt.wantErr && err != nil {
-				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
-				expectedProject := v1alpha2.Project{}
-				readFileToStruct(t, tt.outputFile, &expectedProject)
-				expectedProjectArr := []v1alpha2.Project{expectedProject}
-				assert.Equal(t, expectedProjectArr, testProjectArr, "The two values should be the same.")
-			}
+			ValidateAndReplaceForProjects(testVariable, testProjectArr)
+			expectedProject := v1alpha2.Project{}
+			readFileToStruct(t, tt.outputFile, &expectedProject)
+			expectedProjectArr := []v1alpha2.Project{expectedProject}
+			assert.Equal(t, expectedProjectArr, testProjectArr, "The two values should be the same.")
 		})
 	}
 }
@@ -61,20 +56,18 @@ func TestValidateAndReplaceStarterProjects(t *testing.T) {
 		testFile     string
 		outputFile   string
 		variableFile string
-		wantErr      bool
 	}{
 		{
 			name:         "Good Substitution",
 			testFile:     "test-fixtures/projects/starterproject.yaml",
 			outputFile:   "test-fixtures/projects/starterproject-output.yaml",
 			variableFile: "test-fixtures/variables/variables-referenced.yaml",
-			wantErr:      false,
 		},
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/projects/starterproject.yaml",
+			outputFile:   "test-fixtures/projects/starterproject.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
-			wantErr:      true,
 		},
 	}
 	for _, tt := range tests {
@@ -86,17 +79,11 @@ func TestValidateAndReplaceStarterProjects(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := ValidateAndReplaceForStarterProjects(testVariable, testStarterProjectArr)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
-			} else if !tt.wantErr && err != nil {
-				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
-				expectedStarterProject := v1alpha2.StarterProject{}
-				readFileToStruct(t, tt.outputFile, &expectedStarterProject)
-				expectedStarterProjectArr := []v1alpha2.StarterProject{expectedStarterProject}
-				assert.Equal(t, expectedStarterProjectArr, testStarterProjectArr, "The two values should be the same.")
-			}
+			ValidateAndReplaceForStarterProjects(testVariable, testStarterProjectArr)
+			expectedStarterProject := v1alpha2.StarterProject{}
+			readFileToStruct(t, tt.outputFile, &expectedStarterProject)
+			expectedStarterProjectArr := []v1alpha2.StarterProject{expectedStarterProject}
+			assert.Equal(t, expectedStarterProjectArr, testStarterProjectArr, "The two values should be the same.")
 		})
 	}
 }
@@ -127,12 +114,14 @@ func TestValidateAndReplaceProjectSrc(t *testing.T) {
 		{
 			name:         "Invalid Git Reference",
 			testFile:     "test-fixtures/projects/git.yaml",
+			outputFile:   "test-fixtures/projects/git.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
 		{
 			name:         "Invalid Zip Reference",
 			testFile:     "test-fixtures/projects/zip.yaml",
+			outputFile:   "test-fixtures/projects/zip.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -146,11 +135,12 @@ func TestValidateAndReplaceProjectSrc(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateandReplaceForProjectSource(testVariable, &testProjectSrc)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedProjectSrc := v1alpha2.ProjectSource{}
 				readFileToStruct(t, tt.outputFile, &expectedProjectSrc)
 				assert.Equal(t, expectedProjectSrc, testProjectSrc, "The two values should be the same.")

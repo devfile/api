@@ -10,7 +10,7 @@ projects:
     checkoutFrom:
       revision: "{{tag}}"
     remotes:
-      "{{dir}}": "{{version1}}{{devnull}}-{{devnull}}"
+      "{{dir}}": "{{version1}}/dev/null-/dev/null"
       "{{version}}": "test"
 - name: project2
   zip:
@@ -23,7 +23,7 @@ starterProjects:
     checkoutFrom:
       revision: "{{tag}}"
     remotes:
-      "{{tag}}": "{{devnull}}"
+      "{{tag}}": "/dev/null"
       "{{dir}}": "test"
 - name: starterproject2
   zip:

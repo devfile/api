@@ -26,6 +26,7 @@ func TestValidateAndReplaceEndpoint(t *testing.T) {
 		{
 			name:         "Invalid Reference",
 			testFile:     "test-fixtures/components/endpoint.yaml",
+			outputFile:   "test-fixtures/components/endpoint.yaml",
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
@@ -40,11 +41,12 @@ func TestValidateAndReplaceEndpoint(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForEndpoint(testVariable, testEndpointArr)
-			if tt.wantErr && err == nil {
-				t.Errorf("Expected error from test but got nil")
+			verr, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
-			} else if err == nil {
+			} else {
 				expectedEndpoint := v1alpha2.Endpoint{}
 				readFileToStruct(t, tt.outputFile, &expectedEndpoint)
 				expectedEndpointArr := []v1alpha2.Endpoint{expectedEndpoint}
