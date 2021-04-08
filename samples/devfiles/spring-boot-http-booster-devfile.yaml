@@ -11,20 +11,7 @@ projects:
       checkoutFrom:
         revision: master
 components:
-  - name: java-support
-    plugin:
-      id: redhat/java8/latest
-      components:
-        - name: vscode-java            
-          container:
-            memoryLimit: 2Gi
-        - name: m2
-          volume:
-            size: 2G
-  - name: dependency-analytics
-    plugin:
-      id: redhat/dependency-analytics/latest
-  - name: maven-tooling
+  - name: maven
     container:
       image: registry.redhat.io/codeready-workspaces/stacks-java-rhel8:2.1
       mountSources: true
@@ -45,6 +32,9 @@ components:
       volumeMounts:
         - name: m2
           path: /home/jboss/.m2
+  - name: m2
+    volume:
+      size: 2G
 commands:
   - id: build 
     exec:

@@ -7,19 +7,6 @@ projects:
       remotes:
         origin: "https://github.com/che-samples/web-nodejs-sample.git"
 components:
-  - name: editor
-    plugin:
-      id: eclipse/che-theia/7.1.0
-  - name: terminal
-    plugin:
-      id: eclipse/che-machine-exec-plugin/7.1.0
-  - name: typescript-plugin
-    plugin:
-      id: che-incubator/typescript/1.30.2
-      components:
-        - name: "somename"
-          container:
-            memoryLimit: 512Mi
   - name: nodejs
     container:
       image: quay.io/eclipse/che-nodejs10-ubi:nightly

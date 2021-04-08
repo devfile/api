@@ -11,20 +11,6 @@ projects:
         revision: "main"
         remote: origin
 components:
-  - name: editor
-    attributes:
-      kjkh: "128M"
-      kjhkjh:
-        "": ""
-    plugin:
-      id: eclipse/che-theia/latest
-  - name: "ownplugin"
-    plugin:
-      id: acme/newPlugin/latest
-      registryUrl: "https://acme.com/registry/"
-  - name: "myplugin"
-    plugin:
-      uri: "https://github.com/johndoe/che-plugins/blob/master/cool-plugin/0.0.1/meta.yaml"
   - name: "mycontainer"
     container:
       image: "busybox"

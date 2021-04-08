@@ -19,12 +19,6 @@ components:
                 command: ["some",  "command", "with", "parameters"]
               restartPolicy: Never
           backoffLimit: 4
-  - name: go-support
-    plugin:
-      id: ms-vscode/go/latest
-  - name: editor
-    plugin:
-      id: eclipse/che-theia/latest
 commands:
   - id: cleanup-job
     apply:

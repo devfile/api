@@ -1,4 +1,0 @@
-  - name: "testplugin"
-    plugin:
-      id: test-plugin1
-      uri: test-uri

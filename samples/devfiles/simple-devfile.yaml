@@ -34,16 +34,6 @@ events:
   postStart:
     - "build-schema-and-open-devfile"
 components:
-  - name: yaml-support
-    plugin:
-      id: redhat/vscode-yaml/latest
-  - name: go-support
-    plugin:
-      id: ms-vscode/go/latest
-  - name: editor
-    plugin:
-      id: eclipse/che-theia/latest
-      registryUrl: "external-registry-url"
   - name: "build-tools"
     container:
       image: some container image with required build tools

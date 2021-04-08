@@ -1,8 +1,0 @@
-  - name: "testplugins"
-    plugin:
-      id: test-plugin1
-      registryUrl: test-url
-      components:
-        - name: "testplugin"
-          plugin:
-            id: testPlugin
