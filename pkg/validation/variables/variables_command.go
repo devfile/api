@@ -69,7 +69,7 @@ func validateAndReplaceForExecCommand(variables map[string]string, exec *v1alpha
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForCompositeCommand validates the composite command data for global variable references and replaces them with the variable value
@@ -85,7 +85,7 @@ func validateAndReplaceForCompositeCommand(variables map[string]string, composit
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForApplyCommand validates the apply command data for global variable references and replaces them with the variable value
@@ -101,5 +101,5 @@ func validateAndReplaceForApplyCommand(variables map[string]string, apply *v1alp
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }

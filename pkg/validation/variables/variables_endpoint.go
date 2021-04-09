@@ -18,5 +18,5 @@ func validateAndReplaceForEndpoint(variables map[string]string, endpoints []v1al
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }

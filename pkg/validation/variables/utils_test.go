@@ -42,7 +42,7 @@ func TestCheckForInvalidError(t *testing.T) {
 	}
 }
 
-func TestProcessInvalidKeys(t *testing.T) {
+func TestNewInvalidKeysError(t *testing.T) {
 
 	tests := []struct {
 		name        string
@@ -65,7 +65,7 @@ func TestProcessInvalidKeys(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := processInvalidKeys(tt.invalidKeys)
+			err := newInvalidKeysError(tt.invalidKeys)
 			if tt.wantErr && err == nil {
 				t.Errorf("Expected error from test but got nil")
 			} else if !tt.wantErr && err != nil {

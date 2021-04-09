@@ -15,10 +15,10 @@ func (e *InvalidKeysError) Error() string {
 	return fmt.Sprintf("invalid variable references - %s", strings.Join(e.Keys, ","))
 }
 
-// processInvalidKeys processes the invalid keys and return InvalidKeysError if present
-func processInvalidKeys(invalidKeys map[string]bool) error {
+// newInvalidKeysError processes the invalid key set and returns an InvalidKeysError if present
+func newInvalidKeysError(keySet map[string]bool) error {
 	var invalidKeysArr []string
-	for key := range invalidKeys {
+	for key := range keySet {
 		invalidKeysArr = append(invalidKeysArr, key)
 	}
 

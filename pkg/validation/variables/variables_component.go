@@ -108,7 +108,7 @@ func validateAndReplaceForContainerComponent(variables map[string]string, contai
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForEnv validates the env data for global variable references and replaces them with the variable value
@@ -130,7 +130,7 @@ func validateAndReplaceForEnv(variables map[string]string, env []v1alpha2.EnvVar
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForKubernetesComponent validates the kubernetes component data for global variable references and replaces them with the variable value
@@ -158,7 +158,7 @@ func validateAndReplaceForKubernetesComponent(variables map[string]string, kuber
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForOpenShiftComponent validates the openshift component data for global variable references and replaces them with the variable value
@@ -186,7 +186,7 @@ func validateAndReplaceForOpenShiftComponent(variables map[string]string, opensh
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
 
 // validateAndReplaceForVolumeComponent validates the volume component data for global variable references and replaces them with the variable value
@@ -202,5 +202,5 @@ func validateAndReplaceForVolumeComponent(variables map[string]string, volume *v
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }

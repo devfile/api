@@ -32,7 +32,7 @@ func ValidateAndReplaceForProjects(variables map[string]string, projects []v1alp
 			checkForInvalidError(invalidKeys, err)
 		}
 
-		err = processInvalidKeys(invalidKeys)
+		err = newInvalidKeysError(invalidKeys)
 		if verr, ok := err.(*InvalidKeysError); ok {
 			projectsWarningMap[projects[i].Name] = verr.Keys
 		}
@@ -67,7 +67,7 @@ func ValidateAndReplaceForStarterProjects(variables map[string]string, starterPr
 			checkForInvalidError(invalidKeys, err)
 		}
 
-		err = processInvalidKeys(invalidKeys)
+		err = newInvalidKeysError(invalidKeys)
 		if verr, ok := err.(*InvalidKeysError); ok {
 			starterProjectsWarningMap[starterProjects[i].Name] = verr.Keys
 		}
@@ -128,5 +128,5 @@ func validateandReplaceForProjectSource(variables map[string]string, projectSour
 		}
 	}
 
-	return processInvalidKeys(invalidKeys)
+	return newInvalidKeysError(invalidKeys)
 }
