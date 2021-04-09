@@ -74,27 +74,3 @@ func TestProcessInvalidKeys(t *testing.T) {
 		})
 	}
 }
-
-// testStringArrElements checks if string slices have the same elements
-func testStringArrElements(aa, bb []string) bool {
-
-	if len(aa) != len(bb) {
-		return false
-	}
-
-	for _, a := range aa {
-		matched := false
-		for _, b := range bb {
-			if a == b {
-				matched = true
-				break
-			}
-		}
-
-		if !matched {
-			return false
-		}
-	}
-
-	return true
-}

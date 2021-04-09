@@ -1,9 +1,11 @@
 variables:
-  variableValue: main
-  variableParentValue: parent
+  version1: main
+  version2: parent
+  version3: plugin
 attributes:
-  mainAttribute: true
-  attribute: "parent"
+  main: true
+  parent: true
+  plugin: true
 components:
   - container:
       image: "aValue"

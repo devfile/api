@@ -1,7 +1,7 @@
 variables:
-  variableParentValue: parent
+  version2: parent
 attributes:
-  attribute: "parent"
+  parent: true
 components:
   - container:
       image: "aValue"

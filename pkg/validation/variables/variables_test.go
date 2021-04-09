@@ -30,22 +30,22 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 			outputFile: "test-fixtures/all/devfile-bad-output.yaml",
 			wantWarning: VariableWarning{
 				Commands: map[string][]string{
-					"command1": {"tag", "BAR"},
+					"command1": {"BAR", "tag"},
 					"command2": {"abc"},
 					"command3": {"abc"},
 				},
 				Components: map[string][]string{
-					"component1": {"a", "b", "c", "bar"},
-					"component2": {"foo", "x", "bar"},
+					"component1": {"a", "b", "bar", "c"},
+					"component2": {"bar", "foo", "x"},
 					"component3": {"xyz"},
 					"component4": {"foo"},
 				},
 				Projects: map[string][]string{
-					"project1": {"tag", "version1", "path", "dir", "version"},
+					"project1": {"dir", "path", "tag", "version", "version1"},
 					"project2": {"tag"},
 				},
 				StarterProjects: map[string][]string{
-					"starterproject1": {"tag", "desc", "dir"},
+					"starterproject1": {"desc", "dir", "tag"},
 					"starterproject2": {"tag"},
 				},
 			},
@@ -69,9 +69,7 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					if wantInvalidVars, ok := tt.wantWarning.Commands[gotCommand]; !ok {
 						t.Errorf("unexpected command %s found in the warning", gotCommand)
 					} else {
-						if isEqual := testStringArrElements(wantInvalidVars, gotInvalidVars); !isEqual {
-							t.Errorf("wantInvalidVars %+v not equal as gotInvalidVars %+v", wantInvalidVars, gotInvalidVars)
-						}
+						assert.Equal(t, wantInvalidVars, gotInvalidVars, "the invalid keys should be the same")
 					}
 				}
 
@@ -80,9 +78,7 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					if wantInvalidVars, ok := tt.wantWarning.Components[gotComponent]; !ok {
 						t.Errorf("unexpected component %s found in the warning", gotComponent)
 					} else {
-						if isEqual := testStringArrElements(wantInvalidVars, gotInvalidVars); !isEqual {
-							t.Errorf("wantInvalidVars %+v not equal as gotInvalidVars %+v", wantInvalidVars, gotInvalidVars)
-						}
+						assert.Equal(t, wantInvalidVars, gotInvalidVars, "the invalid keys should be the same")
 					}
 				}
 
@@ -91,9 +87,7 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					if wantInvalidVars, ok := tt.wantWarning.Projects[gotProject]; !ok {
 						t.Errorf("unexpected project %s found in the warning", gotProject)
 					} else {
-						if isEqual := testStringArrElements(wantInvalidVars, gotInvalidVars); !isEqual {
-							t.Errorf("wantInvalidVars %+v not equal as gotInvalidVars %+v", wantInvalidVars, gotInvalidVars)
-						}
+						assert.Equal(t, wantInvalidVars, gotInvalidVars, "the invalid keys should be the same")
 					}
 				}
 
@@ -102,9 +96,7 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					if wantInvalidVars, ok := tt.wantWarning.StarterProjects[gotStarterProject]; !ok {
 						t.Errorf("unexpected starter project %s found in the warning", gotStarterProject)
 					} else {
-						if isEqual := testStringArrElements(wantInvalidVars, gotInvalidVars); !isEqual {
-							t.Errorf("wantInvalidVars %+v not equal as gotInvalidVars %+v", wantInvalidVars, gotInvalidVars)
-						}
+						assert.Equal(t, wantInvalidVars, gotInvalidVars, "the invalid keys should be the same")
 					}
 				}
 			}

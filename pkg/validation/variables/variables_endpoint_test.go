@@ -41,9 +41,9 @@ func TestValidateAndReplaceEndpoint(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForEndpoint(testVariable, testEndpointArr)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {

@@ -40,9 +40,9 @@ func TestValidateAndReplaceContainerComponent(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForContainerComponent(testVariable, &testContainerComponent)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
@@ -101,9 +101,9 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 			}
 
 			err = validateAndReplaceForKubernetesComponent(testVariable, &testKubernetesComponent)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
@@ -148,9 +148,9 @@ func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForVolumeComponent(testVariable, &testVolumeComponent)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
@@ -196,9 +196,9 @@ func TestValidateAndReplaceEnv(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForEnv(testVariable, testEnvArr)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {

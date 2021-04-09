@@ -40,9 +40,9 @@ func TestValidateAndReplaceExecCommand(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForExecCommand(testVariable, &testExecCommand)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
@@ -87,9 +87,9 @@ func TestValidateAndReplaceCompositeCommand(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForCompositeCommand(testVariable, &testCompositeCommand)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
@@ -134,9 +134,9 @@ func TestValidateAndReplaceApplyCommand(t *testing.T) {
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
 			err := validateAndReplaceForApplyCommand(testVariable, &testApplyCommand)
-			verr, ok := err.(*InvalidKeysError)
+			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
-				t.Errorf("Expected InvalidKeysError error from test but got %+v", verr)
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
 			} else if !tt.wantErr && err != nil {
 				t.Errorf("Got unexpected error: %s", err)
 			} else {
