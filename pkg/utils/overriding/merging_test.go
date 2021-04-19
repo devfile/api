@@ -8,13 +8,11 @@ import (
 
 	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/stretchr/testify/assert"
-	yamlMachinery "k8s.io/apimachinery/pkg/util/yaml"
-	"sigs.k8s.io/yaml"
 )
 
-func mergingPatchTest(main, parent, expected []byte, expectedError string, plugins ...[]byte) func(t *testing.T) {
+func mergingPatchTest(main, parent []byte, expected dw.DevWorkspaceTemplateSpecContent, expectedError string, plugins ...[]byte) func(t *testing.T) {
 	return func(t *testing.T) {
-		result, err := MergeDevWorkspaceTemplateSpecBytes(main, parent, plugins...)
+		actual, err := MergeDevWorkspaceTemplateSpecBytes(main, parent, plugins...)
 		if err != nil {
 			compareErrorMessages(t, expectedError, err.Error(), "wrong error")
 			return
@@ -24,21 +22,7 @@ func mergingPatchTest(main, parent, expected []byte, expectedError string, plugi
 			return
 		}
 
-		resultYaml, err := yaml.Marshal(result)
-		if err != nil {
-			t.Error(err)
-		}
-
-		expectedJson, err := yamlMachinery.ToJSON(expected)
-		if err != nil {
-			t.Error(err)
-		}
-		expectedYaml, err := yaml.JSONToYAML(expectedJson)
-		if err != nil {
-			t.Error(err)
-		}
-
-		assert.Equal(t, string(expectedYaml), string(resultYaml), "The two values should be the same.")
+		assert.Equal(t, &expected, actual, "The two values should be the same")
 	}
 }
 
@@ -75,7 +59,7 @@ func TestMerging(t *testing.T) {
 				}
 				plugins = append(plugins, plugin)
 			}
-			result := []byte{}
+			var resultTemplate dw.DevWorkspaceTemplateSpecContent
 			resultError := ""
 			errorFile := filepath.Join(dirPath, "result-error.txt")
 			if _, err = os.Stat(errorFile); err == nil {
@@ -86,15 +70,11 @@ func TestMerging(t *testing.T) {
 				}
 				resultError = string(resultErrorBytes)
 			} else {
-				result, err = ioutil.ReadFile(filepath.Join(dirPath, "result.yaml"))
-				if err != nil {
-					t.Error(err)
-					return nil
-				}
+				readFileToStruct(t, filepath.Join(dirPath, "result.yaml"), &resultTemplate)
 			}
 			testName := filepath.Base(dirPath)
 
-			t.Run(testName, mergingPatchTest(main, parent, result, resultError, plugins...))
+			t.Run(testName, mergingPatchTest(main, parent, resultTemplate, resultError, plugins...))
 		}
 		return nil
 	})

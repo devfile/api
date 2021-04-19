@@ -10,8 +10,6 @@ import (
 	dw "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	attributesPkg "github.com/devfile/api/v2/pkg/attributes"
 	"github.com/stretchr/testify/assert"
-	"k8s.io/apimachinery/pkg/util/json"
-	yamlMachinery "k8s.io/apimachinery/pkg/util/yaml"
 	"sigs.k8s.io/yaml"
 )
 
@@ -163,9 +161,9 @@ func TestBasicToplevelOverriding(t *testing.T) {
 	assert.Equal(t, expected, result, "The two values should be the same.")
 }
 
-func overridingPatchTest(original, patch, expected []byte, expectedError string) func(t *testing.T) {
+func overridingPatchTest(original, patch []byte, expected dw.DevWorkspaceTemplateSpecContent, expectedError string) func(t *testing.T) {
 	return func(t *testing.T) {
-		result, err := OverrideDevWorkspaceTemplateSpecBytes(original, patch)
+		actual, err := OverrideDevWorkspaceTemplateSpecBytes(original, patch)
 		if err != nil {
 			compareErrorMessages(t, expectedError, err.Error(), "wrong error")
 			return
@@ -175,25 +173,7 @@ func overridingPatchTest(original, patch, expected []byte, expectedError string)
 			return
 		}
 
-		resultJson, err := json.Marshal(result)
-		if err != nil {
-			t.Error(err)
-		}
-		resultYaml, err := yaml.JSONToYAML(resultJson)
-		if err != nil {
-			t.Error(err)
-		}
-
-		expectedJson, err := yamlMachinery.ToJSON(expected)
-		if err != nil {
-			t.Error(err)
-		}
-		expectedYaml, err := yaml.JSONToYAML(expectedJson)
-		if err != nil {
-			t.Error(err)
-		}
-
-		assert.Equal(t, string(expectedYaml), string(resultYaml), "The two values should be the same.")
+		assert.Equal(t, &expected, actual, "The two values should be the same")
 	}
 }
 
@@ -215,7 +195,7 @@ func TestOverridingPatches(t *testing.T) {
 				t.Error(err)
 				return nil
 			}
-			result := []byte{}
+			var resultTemplate dw.DevWorkspaceTemplateSpecContent
 			resultError := ""
 			errorFile := filepath.Join(dirPath, "result-error.txt")
 			if _, err = os.Stat(errorFile); err == nil {
@@ -226,15 +206,11 @@ func TestOverridingPatches(t *testing.T) {
 				}
 				resultError = string(resultErrorBytes)
 			} else {
-				result, err = ioutil.ReadFile(filepath.Join(dirPath, "result.yaml"))
-				if err != nil {
-					t.Error(err)
-					return nil
-				}
+				readFileToStruct(t, filepath.Join(dirPath, "result.yaml"), &resultTemplate)
 			}
 			testName := filepath.Base(dirPath)
 
-			t.Run(testName, overridingPatchTest(original, patch, result, resultError))
+			t.Run(testName, overridingPatchTest(original, patch, resultTemplate, resultError))
 		}
 		return nil
 	})
