@@ -7,7 +7,7 @@ import (
 func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspace) error {
 	dest.ObjectMeta = src.ObjectMeta
 	dest.Status.DevWorkspaceId = src.Status.WorkspaceId
-	dest.Status.IdeUrl = src.Status.IdeUrl
+	dest.Status.MainUrl = src.Status.IdeUrl
 	dest.Status.Phase = v1alpha2.DevWorkspacePhase(src.Status.Phase)
 	dest.Status.Message = src.Status.Message
 	convertConditionsTo_v1alpha2(src, dest)
@@ -20,7 +20,7 @@ func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspa
 func convertDevWorkspaceFrom_v1alpha2(src *v1alpha2.DevWorkspace, dest *DevWorkspace) error {
 	dest.ObjectMeta = src.ObjectMeta
 	dest.Status.WorkspaceId = src.Status.DevWorkspaceId
-	dest.Status.IdeUrl = src.Status.IdeUrl
+	dest.Status.IdeUrl = src.Status.MainUrl
 	dest.Status.Phase = WorkspacePhase(src.Status.Phase)
 	dest.Status.Message = src.Status.Message
 	convertConditionsFrom_v1alpha2(src, dest)
