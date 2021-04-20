@@ -1,0 +1,5 @@
+name: endpoint1
+exposure: "public"
+protocol: "https"
+path : "/FOO"
+targetPort: 9999

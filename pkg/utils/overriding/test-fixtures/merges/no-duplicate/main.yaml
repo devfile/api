@@ -1,5 +1,9 @@
 parent:
   uri: "anyParent"
+variables:
+  version1: main
+attributes:
+  main: true
 components:
   - plugin:
       uri: "aCustomLocation"

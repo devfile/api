@@ -1,0 +1,16 @@
+uri: "http://link/uri"
+inlined: |
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          name: pi
+        spec:
+          template:
+            spec:
+              containers:
+              - name: job
+                image: inlined
+endpoints:
+  - name: endpoint1
+    exposure: public
+    path: "FOO"

@@ -4138,6 +4138,10 @@ spec:
                 description: Structure of the devworkspace. This is also the specification
                   of a devworkspace template.
                 properties:
+                  attributes:
+                    description: Map of implementation-dependant free-form YAML attributes.
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   commands:
                     description: Predefined, ready-to-use, devworkspace-related commands
                     items:
@@ -5566,6 +5570,12 @@ spec:
                     - required:
                       - kubernetes
                     properties:
+                      attributes:
+                        description: Overrides of attributes encapsulated in a parent
+                          devfile. Overriding is done according to K8S strategic merge
+                          patch standard rules.
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       commands:
                         description: Overrides of commands encapsulated in a parent
                           devfile or a plugin. Overriding is done according to K8S
@@ -7153,6 +7163,13 @@ spec:
                       uri:
                         description: Uri of a Devfile yaml file
                         type: string
+                      variables:
+                        additionalProperties:
+                          type: string
+                        description: Overrides of variables encapsulated in a parent
+                          devfile. Overriding is done according to K8S strategic merge
+                          patch standard rules.
+                        type: object
                     type: object
                   projects:
                     description: Projects worked on in the devworkspace, containing
@@ -7407,6 +7424,18 @@ spec:
                       - name
                       type: object
                     type: array
+                  variables:
+                    additionalProperties:
+                      type: string
+                    description: "Map of key-value variables used for string replacement
+                      in the devfile. Values can can be referenced via {{variable-key}}
+                      to replace the corresponding value in string fields in the devfile.
+                      Replacement cannot be used for \n  - schemaVersion, metadata,
+                      parent source  - element identifiers, e.g. command id, component
+                      name, endpoint name, project name  - references to identifiers,
+                      e.g. in events, a command's component, container's volume mount
+                      name  - string enums, e.g. command group kind, endpoint exposure"
+                    type: object
                 type: object
             required:
             - started

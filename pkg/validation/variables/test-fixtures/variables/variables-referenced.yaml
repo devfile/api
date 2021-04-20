@@ -1,0 +1,8 @@
+tag: xyz
+version: "1"
+foo: FOO
+bar: BAR
+devnull: /dev/null
+size: "1Gi"
+uri: uri
+inlined: inlined

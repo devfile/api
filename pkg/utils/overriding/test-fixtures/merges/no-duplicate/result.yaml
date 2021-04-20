@@ -1,3 +1,11 @@
+variables:
+  version1: main
+  version2: parent
+  version3: plugin
+attributes:
+  main: true
+  parent: true
+  plugin: true
 components:
   - container:
       image: "aValue"
