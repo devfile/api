@@ -7478,8 +7478,8 @@ spec:
               devworkspaceId:
                 description: Id of the DevWorkspace
                 type: string
-              ideUrl:
-                description: URL at which the DevWorkspace Editor can be joined
+              mainUrl:
+                description: Main URL for this DevWorkspace
                 type: string
               message:
                 description: Message is a short user-readable message giving additional
