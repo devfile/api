@@ -1,6 +1,7 @@
 package validation
 
 import (
+	"github.com/devfile/api/v2/pkg/attributes"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -137,6 +138,10 @@ func TestValidateComponents(t *testing.T) {
 	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
 	invalidURIErr := ".*invalid URI for request"
 
+	pluginOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(PluginOverrideAttribute, "main devfile")
+	invalidURIErrWithImportAttributes := ".*invalid URI for request, imported from uri: http://127.0.0.1:8080, in plugin overrides from main devfile"
+
 	tests := []struct {
 		name       string
 		components []v1alpha2.Component
@@ -236,6 +241,23 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyPluginComponent("abc", "http//invalidregistryurl"),
 			},
 			wantErr: &invalidURIErr,
+		},
+		{
+			name: "Invalid component due to bad URI with import source attributes",
+			components: []v1alpha2.Component{
+				{
+					Attributes: pluginOverridesFromMainDevfile,
+					Name: "name",
+					ComponentUnion: v1alpha2.ComponentUnion{
+						Plugin: &v1alpha2.PluginComponent{
+							ImportReference: v1alpha2.ImportReference{
+								RegistryUrl: "http//invalidregistryurl",
+							},
+						},
+					},
+				},
+			},
+			wantErr: &invalidURIErrWithImportAttributes,
 		},
 	}
 	for _, tt := range tests {

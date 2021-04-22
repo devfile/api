@@ -25,7 +25,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 		parentCommands := make(map[string]string)
 		err = validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
-			return err
+			return resolveErrorMessageWithImportArrtibutes(err, command.Attributes)
 		}
 
 		commandGroup := getGroup(command)
@@ -50,7 +50,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 // validateCommand validates a given devfile command where parentCommands is a map to track all the parent commands when validating
 // the composite command's subcommands recursively and devfileCommands is a map of command id to the devfile command
-func validateCommand(command v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) (err error) {
+func validateCommand(command v1alpha2.Command, parentCommands map[string]string, devfileCommands map[string]v1alpha2.Command, components []v1alpha2.Component) error {
 
 	switch {
 	case command.Composite != nil:
@@ -58,10 +58,9 @@ func validateCommand(command v1alpha2.Command, parentCommands map[string]string,
 	case command.Exec != nil || command.Apply != nil:
 		return validateCommandComponent(command, components)
 	default:
-		err = fmt.Errorf("command %s type is invalid", command.Id)
+		return &InvalidCommandTypeError{commandId: command.Id}
 	}
 
-	return err
 }
 
 // validateGroup validates commands belonging to a specific group kind. If there are multiple commands belonging to the same group:

@@ -1,6 +1,7 @@
 package validation
 
 import (
+	"github.com/devfile/api/v2/pkg/attributes"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -69,6 +70,10 @@ func TestValidateStarterProjects(t *testing.T) {
 	wrongCheckoutErr := "unable to find the checkout remote .* in the remotes for project.*"
 	atleastOneRemoteErr := "starterProject .* should have at least one remote"
 
+	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
+	wrongCheckoutErrWithImportAttributes := "unable to find the checkout remote .* in the remotes for project.*, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
+
 	tests := []struct {
 		name            string
 		starterProjects []v1alpha2.StarterProject
@@ -115,6 +120,24 @@ func TestValidateStarterProjects(t *testing.T) {
 			},
 			wantErr: &atleastOneRemoteErr,
 		},
+		{
+			name: "Invalid Starter Project due to wrong checkout with import source attributes",
+			starterProjects: []v1alpha2.StarterProject{
+				{
+					Attributes: parentOverridesFromMainDevfile,
+					Name: "starterproject1",
+					ProjectSource: v1alpha2.ProjectSource{
+						Github: &v1alpha2.GithubProjectSource{
+							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+								Remotes:      map[string]string{"test": "testremote"},
+								CheckoutFrom: &v1alpha2.CheckoutFrom{Remote: "origin"},
+							},
+						},
+					},
+				},
+			},
+			wantErr: &wrongCheckoutErrWithImportAttributes,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -134,6 +157,10 @@ func TestValidateProjects(t *testing.T) {
 	wrongCheckoutErr := "unable to find the checkout remote .* in the remotes for project.*"
 	atleastOneRemoteErr := "projects .* should have at least one remote"
 	missingCheckOutFromRemoteErr := "project .* has more than one remote defined, but has no checkoutfrom remote defined"
+
+	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
+	wrongCheckoutErrWithImportAttributes := "unable to find the checkout remote .* in the remotes for project.*, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 
 	tests := []struct {
 		name     string
@@ -183,6 +210,24 @@ func TestValidateProjects(t *testing.T) {
 				generateDummyGithubProject("project2", &v1alpha2.CheckoutFrom{Remote: "origins"}, map[string]string{"origin": "originremote", "test": "testremote"}),
 			},
 			wantErr: &atleastOneRemoteErr,
+		},
+		{
+			name: "Invalid Project due to wrong checkout with import source attributes",
+			projects: []v1alpha2.Project{
+				{
+					Attributes: parentOverridesFromMainDevfile,
+					Name: "project1",
+					ProjectSource: v1alpha2.ProjectSource{
+						Github: &v1alpha2.GithubProjectSource{
+							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+								Remotes:      map[string]string{"test": "testremote"},
+								CheckoutFrom: &v1alpha2.CheckoutFrom{Remote: "origin"},
+							},
+						},
+					},
+				},
+			},
+			wantErr: &wrongCheckoutErrWithImportAttributes,
 		},
 	}
 	for _, tt := range tests {

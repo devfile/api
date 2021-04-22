@@ -1,6 +1,9 @@
 package validation
 
-import "fmt"
+import (
+	"fmt"
+	attributesAPI "github.com/devfile/api/v2/pkg/attributes"
+)
 
 // InvalidEventError returns an error if the devfile event type has invalid events
 type InvalidEventError struct {
@@ -20,6 +23,15 @@ type InvalidCommandError struct {
 
 func (e *InvalidCommandError) Error() string {
 	return fmt.Sprintf("the command %q is invalid - %s", e.commandId, e.reason)
+}
+
+// InvalidCommandError returns an error if the command is invalid
+type InvalidCommandTypeError struct {
+	commandId string
+}
+
+func (e *InvalidCommandTypeError) Error() string {
+	return fmt.Sprintf("command %s type is invalid", e.commandId)
 }
 
 // ReservedEnvError returns an error if the user attempts to customize a reserved ENV in a container
@@ -76,4 +88,30 @@ type InvalidComponentError struct {
 
 func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
+}
+
+
+// resolveErrorMessageWithImportArrtibutes returns an error message with detailed information on the import resource
+// example: "the component <compName> is invalid - <reason>", imported from Uri: http://example.com/devfile.yaml, in parent overrides from main devfile"
+func resolveErrorMessageWithImportArrtibutes(err error, attributes attributesAPI.Attributes) error {
+	var findKeyErr error
+	importReference := attributes.Get(ImportSourceAttribute, &findKeyErr)
+	returnErr := err
+
+	if findKeyErr == nil {
+		returnErr = fmt.Errorf("%s, imported from %s", returnErr.Error(), importReference)
+		parentOverrideReference := attributes.Get(ParentOverrideAttribute, &findKeyErr)
+		if findKeyErr == nil {
+			returnErr = fmt.Errorf("%s, in parent overrides from %s", returnErr.Error(), parentOverrideReference)
+		} else {
+			// reset findKeyErr to nil
+			findKeyErr = nil
+			pluginOverrideReference := attributes.Get(PluginOverrideAttribute, &findKeyErr)
+			if findKeyErr == nil {
+				returnErr = fmt.Errorf("%s, in plugin overrides from %s", returnErr.Error(), pluginOverrideReference)
+			}
+		}
+	}
+
+	return returnErr
 }

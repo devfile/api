@@ -7,6 +7,12 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
+const (
+	ImportSourceAttribute   = "library.devfile.io/imported-from"
+	ParentOverrideAttribute = "library.devfile.io/parent-override-from"
+	PluginOverrideAttribute = "library.devfile.io/plugin-override-from"
+)
+
 // getCommandsMap iterates through the commands and returns a map of command
 func getCommandsMap(commands []v1alpha2.Command) map[string]v1alpha2.Command {
 	commandMap := make(map[string]v1alpha2.Command, len(commands))

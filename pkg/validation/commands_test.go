@@ -1,6 +1,7 @@
 package validation
 
 import (
+	"github.com/devfile/api/v2/pkg/attributes"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -76,6 +77,12 @@ func TestValidateCommands(t *testing.T) {
 	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
 	invalidCmdErr := ".*command does not map to a container component"
 
+
+	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
+	invalidCmdErrWithImportAttributes := ".*command does not map to a container component, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
+
+
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
@@ -143,6 +150,26 @@ func TestValidateCommands(t *testing.T) {
 				generateDummyCompositeCommand("composite-b", []string{"composite-a"}, nil),
 				generateDummyCompositeCommand("composite-a", []string{"basic-exec"}, nil),
 			},
+		},
+		{
+			name: "Invalid command with import source attribute",
+			commands: []v1alpha2.Command{
+				{
+					Attributes: parentOverridesFromMainDevfile,
+					Id: "command",
+					CommandUnion: v1alpha2.CommandUnion{
+						Apply: &v1alpha2.ApplyCommand{
+							LabeledCommand: v1alpha2.LabeledCommand{
+								BaseCommand: v1alpha2.BaseCommand{
+									Group: nil,
+								},
+							},
+							Component: "invalidComponent",
+						},
+					},
+				},
+			},
+			wantErr: &invalidCmdErrWithImportAttributes,
 		},
 	}
 	for _, tt := range tests {

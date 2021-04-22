@@ -23,16 +23,22 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) error {
 
 		switch len(gitSource.Remotes) {
 		case 0:
-			errString += fmt.Sprintf("\nstarterProject %s should have at least one remote", starterProject.Name)
+			starterProjectErr := fmt.Errorf("\nstarterProject %s should have at least one remote", starterProject.Name)
+			newErr := resolveErrorMessageWithImportArrtibutes(starterProjectErr, starterProject.Attributes)
+			errString += newErr.Error()
 		case 1:
 			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
 				err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, starterProject.Name)
 				if err != nil {
-					errString += fmt.Sprintf("\n%s", err.Error())
+					newErr := resolveErrorMessageWithImportArrtibutes(err, starterProject.Attributes)
+					errString += newErr.Error()
+					errString += fmt.Sprintf("\n%s", newErr.Error())
 				}
 			}
 		default: // len(gitSource.Remotes) >= 2
-			errString += fmt.Sprintf("\nstarterProject %s should have one remote only", starterProject.Name)
+			starterProjectErr := fmt.Errorf("\nstarterProject %s should have one remote only", starterProject.Name)
+			newErr := resolveErrorMessageWithImportArrtibutes(starterProjectErr, starterProject.Attributes)
+			errString += newErr.Error()
 		}
 	}
 
@@ -61,20 +67,26 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 
 		switch len(gitSource.Remotes) {
 		case 0:
-			errString += fmt.Sprintf("\nprojects %s should have at least one remote", project.Name)
+			projectErr := fmt.Errorf("\nprojects %s should have at least one remote", project.Name)
+			newErr := resolveErrorMessageWithImportArrtibutes(projectErr, project.Attributes)
+			errString += newErr.Error()
 		case 1:
 			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
 				if err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name); err != nil {
-					errString += fmt.Sprintf("\n%s", err.Error())
+					newErr := resolveErrorMessageWithImportArrtibutes(err, project.Attributes)
+					errString += fmt.Sprintf("\n%s", newErr.Error())
 				}
 			}
 		default: // len(gitSource.Remotes) >= 2
 			if gitSource.CheckoutFrom == nil || gitSource.CheckoutFrom.Remote == "" {
-				errString += fmt.Sprintf("\nproject %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
+				projectErr := fmt.Errorf("\nproject %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
+				newErr := resolveErrorMessageWithImportArrtibutes(projectErr, project.Attributes)
+				errString += newErr.Error()
 				continue
 			}
 			if err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, project.Name); err != nil {
-				errString += fmt.Sprintf("\n%s", err.Error())
+				newErr := resolveErrorMessageWithImportArrtibutes(err, project.Attributes)
+				errString += fmt.Sprintf("\n%s", newErr.Error())
 			}
 		}
 	}
