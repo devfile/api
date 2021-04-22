@@ -1,0 +1,11 @@
+variables:
+  stringVariableToChange: patchedValue
+attributes:
+  boolAttributeToChange: false
+
+  objectAttributeToChange:
+      
+    newObjectAttributeField:
+      objectAttributeSubField: 11
+      newObjectAttributeSubField: newObjectAttributeFieldValue
+    newField: true

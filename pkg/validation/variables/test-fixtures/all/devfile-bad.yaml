@@ -1,0 +1,80 @@
+variables:
+  devnull: /dev/null
+projects:
+- name: project1
+  clonePath: "{{path}}"
+  sparseCheckoutDirs:
+    - xyz
+    - "{{dir}}"
+  git:
+    checkoutFrom:
+      revision: "{{tag}}"
+    remotes:
+      "{{dir}}": "{{version1}}{{devnull}}-{{devnull}}"
+      "{{version}}": "test"
+- name: project2
+  zip:
+    location: "{{tag}}"
+starterProjects:
+- name: starterproject1
+  description: "{{desc}}"
+  subDir: "{{dir}}"
+  git:
+    checkoutFrom:
+      revision: "{{tag}}"
+    remotes:
+      "{{tag}}": "{{devnull}}"
+      "{{dir}}": "test"
+- name: starterproject2
+  zip:
+    location: "{{tag}}"
+components:
+- name: component1
+  container:
+    image: "{{a}}"
+    env:
+      - name: BAR
+        value: "{{b}}"
+      - name: "{{c}}"
+        value: "{{bar}}"
+    command:
+      - tail
+      - -f
+      - "{{b}}"
+      - "{{c}}"
+- name: component2
+  kubernetes:
+    inlined: "{{foo}}"
+    endpoints:
+      - name: endpoint1
+        exposure: "public"
+        protocol: "https"
+        path : "/{{x}}}"
+        targetPort: 9998
+      - name: endpoint2
+        path : "{{bar}}"
+        targetPort: 9999
+- name: component3
+  volume:
+    size: "{{xyz}}"
+- name: component4
+  openshift:
+    uri: "{{foo}}"
+commands:
+- id: command1
+  exec:
+    commandLine: "test-{{tag}}"
+    env:
+      - name: tag
+        value: "{{tag}}"
+      - name: FOO
+        value: "{{BAR}}"
+- id: command2
+  composite:
+    commands:
+      - xyz
+      - command1
+    label: "{{abc}}"
+- id: command3
+  apply:
+    label: "{{abc}}"

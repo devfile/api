@@ -1,3 +1,7 @@
+variables:
+  version2: parent
+attributes:
+  parent: true
 components:
   - container:
       image: "aValue"

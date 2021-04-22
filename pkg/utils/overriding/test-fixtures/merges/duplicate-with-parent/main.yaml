@@ -1,5 +1,9 @@
 parent:
   uri: "anyParent"
+variables:
+  objectVariable: mainValue
+attributes:
+  mainAttribute: true
 components:
   - container:
       image: "aDifferentValue"

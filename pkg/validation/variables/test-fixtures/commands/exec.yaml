@@ -1,0 +1,8 @@
+# Variables are defined in test-fixtures/variables/variables-referenced.yaml
+component: component
+commandLine: tail -f {{devnull}}
+workingDir: "{{foo}}"
+label: "{{version}}"
+env:
+  - name: "{{foo}}"
+    value: "{{bar}}"

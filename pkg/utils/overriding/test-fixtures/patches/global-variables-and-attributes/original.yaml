@@ -1,0 +1,10 @@
+variables:
+  stringVariableToChange: originalValue
+  stringVariableToKeep: stringValue
+attributes:
+  boolAttributeToChange: true
+  stringAttributeToKeep: stringValue
+  objectAttributeToChange:
+    attributeField: 9.9
+    objectAttributeField:
+      objectAttributeSubField: 10

@@ -1,3 +1,7 @@
+variables:
+  objectVariable: parentValue
+attributes:
+  mainAttribute: false
 components:
   - container:
       image: "aValue"
