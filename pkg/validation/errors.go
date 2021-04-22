@@ -90,7 +90,6 @@ func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
 }
 
-
 // resolveErrorMessageWithImportArrtibutes returns an error message with detailed information on the import resource
 // example: "the component <compName> is invalid - <reason>", imported from Uri: http://example.com/devfile.yaml, in parent overrides from main devfile"
 func resolveErrorMessageWithImportArrtibutes(err error, attributes attributesAPI.Attributes) error {

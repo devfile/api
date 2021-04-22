@@ -247,7 +247,7 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				{
 					Attributes: pluginOverridesFromMainDevfile,
-					Name: "name",
+					Name:       "name",
 					ComponentUnion: v1alpha2.ComponentUnion{
 						Plugin: &v1alpha2.PluginComponent{
 							ImportReference: v1alpha2.ImportReference{

@@ -77,11 +77,9 @@ func TestValidateCommands(t *testing.T) {
 	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
 	invalidCmdErr := ".*command does not map to a container component"
 
-
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
 	invalidCmdErrWithImportAttributes := ".*command does not map to a container component, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
-
 
 	tests := []struct {
 		name     string
@@ -156,7 +154,7 @@ func TestValidateCommands(t *testing.T) {
 			commands: []v1alpha2.Command{
 				{
 					Attributes: parentOverridesFromMainDevfile,
-					Id: "command",
+					Id:         "command",
 					CommandUnion: v1alpha2.CommandUnion{
 						Apply: &v1alpha2.ApplyCommand{
 							LabeledCommand: v1alpha2.LabeledCommand{

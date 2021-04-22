@@ -125,7 +125,7 @@ func TestValidateStarterProjects(t *testing.T) {
 			starterProjects: []v1alpha2.StarterProject{
 				{
 					Attributes: parentOverridesFromMainDevfile,
-					Name: "starterproject1",
+					Name:       "starterproject1",
 					ProjectSource: v1alpha2.ProjectSource{
 						Github: &v1alpha2.GithubProjectSource{
 							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
@@ -216,7 +216,7 @@ func TestValidateProjects(t *testing.T) {
 			projects: []v1alpha2.Project{
 				{
 					Attributes: parentOverridesFromMainDevfile,
-					Name: "project1",
+					Name:       "project1",
 					ProjectSource: v1alpha2.ProjectSource{
 						Github: &v1alpha2.GithubProjectSource{
 							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
