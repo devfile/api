@@ -6963,8 +6963,6 @@ spec:
                           - required:
                             - git
                           - required:
-                            - github
-                          - required:
                             - zip
                           properties:
                             attributes:
@@ -7008,35 +7006,6 @@ spec:
                                     configured
                                   type: object
                               type: object
-                            github:
-                              description: Project's GitHub source. Deprecated, use
-                                `Git` instead
-                              properties:
-                                checkoutFrom:
-                                  description: Defines from what the project should
-                                    be checked out. Required if there are more than
-                                    one remote configured
-                                  properties:
-                                    remote:
-                                      description: The remote name should be used
-                                        as init. Required if there are more than one
-                                        remote configured
-                                      type: string
-                                    revision:
-                                      description: The revision to checkout from.
-                                        Should be branch name, tag or commit id. Default
-                                        branch is used if missing or specified revision
-                                        is not found.
-                                      type: string
-                                  type: object
-                                remotes:
-                                  additionalProperties:
-                                    type: string
-                                  description: The remotes map which should be initialized
-                                    in the git project. Must have at least one remote
-                                    configured
-                                  type: object
-                              type: object
                             name:
                               description: Project name
                               maxLength: 63
@@ -7046,7 +7015,6 @@ spec:
                               description: Type of project source
                               enum:
                               - Git
-                              - Github
                               - Zip
                               type: string
                             sparseCheckoutDirs:
@@ -7082,8 +7050,6 @@ spec:
                           oneOf:
                           - required:
                             - git
-                          - required:
-                            - github
                           - required:
                             - zip
                           properties:
@@ -7123,35 +7089,6 @@ spec:
                                     configured
                                   type: object
                               type: object
-                            github:
-                              description: Project's GitHub source. Deprecated, use
-                                `Git` instead
-                              properties:
-                                checkoutFrom:
-                                  description: Defines from what the project should
-                                    be checked out. Required if there are more than
-                                    one remote configured
-                                  properties:
-                                    remote:
-                                      description: The remote name should be used
-                                        as init. Required if there are more than one
-                                        remote configured
-                                      type: string
-                                    revision:
-                                      description: The revision to checkout from.
-                                        Should be branch name, tag or commit id. Default
-                                        branch is used if missing or specified revision
-                                        is not found.
-                                      type: string
-                                  type: object
-                                remotes:
-                                  additionalProperties:
-                                    type: string
-                                  description: The remotes map which should be initialized
-                                    in the git project. Must have at least one remote
-                                    configured
-                                  type: object
-                              type: object
                             name:
                               description: Project name
                               maxLength: 63
@@ -7161,7 +7098,6 @@ spec:
                               description: Type of project source
                               enum:
                               - Git
-                              - Github
                               - Zip
                               type: string
                             subDir:
@@ -7200,8 +7136,6 @@ spec:
                       oneOf:
                       - required:
                         - git
-                      - required:
-                        - github
                       - required:
                         - zip
                       - required:
@@ -7262,36 +7196,6 @@ spec:
                           required:
                           - remotes
                           type: object
-                        github:
-                          description: Project's GitHub source. Deprecated, use `Git`
-                            instead
-                          properties:
-                            checkoutFrom:
-                              description: Defines from what the project should be
-                                checked out. Required if there are more than one remote
-                                configured
-                              properties:
-                                remote:
-                                  description: The remote name should be used as init.
-                                    Required if there are more than one remote configured
-                                  type: string
-                                revision:
-                                  description: The revision to checkout from. Should
-                                    be branch name, tag or commit id. Default branch
-                                    is used if missing or specified revision is not
-                                    found.
-                                  type: string
-                              type: object
-                            remotes:
-                              additionalProperties:
-                                type: string
-                              description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
-                              type: object
-                          required:
-                          - remotes
-                          type: object
                         name:
                           description: Project name
                           maxLength: 63
@@ -7301,7 +7205,6 @@ spec:
                           description: Type of project source
                           enum:
                           - Git
-                          - Github
                           - Zip
                           - Custom
                           type: string
@@ -7330,8 +7233,6 @@ spec:
                       oneOf:
                       - required:
                         - git
-                      - required:
-                        - github
                       - required:
                         - zip
                       - required:
@@ -7387,36 +7288,6 @@ spec:
                           required:
                           - remotes
                           type: object
-                        github:
-                          description: Project's GitHub source. Deprecated, use `Git`
-                            instead
-                          properties:
-                            checkoutFrom:
-                              description: Defines from what the project should be
-                                checked out. Required if there are more than one remote
-                                configured
-                              properties:
-                                remote:
-                                  description: The remote name should be used as init.
-                                    Required if there are more than one remote configured
-                                  type: string
-                                revision:
-                                  description: The revision to checkout from. Should
-                                    be branch name, tag or commit id. Default branch
-                                    is used if missing or specified revision is not
-                                    found.
-                                  type: string
-                              type: object
-                            remotes:
-                              additionalProperties:
-                                type: string
-                              description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
-                              type: object
-                          required:
-                          - remotes
-                          type: object
                         name:
                           description: Project name
                           maxLength: 63
@@ -7426,7 +7297,6 @@ spec:
                           description: Type of project source
                           enum:
                           - Git
-                          - Github
                           - Zip
                           - Custom
                           type: string
