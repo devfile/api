@@ -3034,11 +3034,6 @@
                       },
                       {
                         "required": [
-                          "github"
-                        ]
-                      },
-                      {
-                        "required": [
                           "zip"
                         ]
                       }
@@ -3088,40 +3083,6 @@
                         },
                         "additionalProperties": false,
                         "markdownDescription": "Project's Git source"
-                      },
-                      "github": {
-                        "description": "Project's GitHub source. Deprecated, use `Git` instead",
-                        "type": "object",
-                        "properties": {
-                          "checkoutFrom": {
-                            "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
-                            "type": "object",
-                            "properties": {
-                              "remote": {
-                                "description": "The remote name should be used as init. Required if there are more than one remote configured",
-                                "type": "string",
-                                "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
-                              },
-                              "revision": {
-                                "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
-                                "type": "string",
-                                "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
-                              }
-                            },
-                            "additionalProperties": false,
-                            "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
-                          },
-                          "remotes": {
-                            "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
-                            "type": "object",
-                            "additionalProperties": {
-                              "type": "string"
-                            },
-                            "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                          }
-                        },
-                        "additionalProperties": false,
-                        "markdownDescription": "Project's GitHub source. Deprecated, use `Git` instead"
                       },
                       "name": {
                         "description": "Project name",
@@ -3177,11 +3138,6 @@
                       },
                       {
                         "required": [
-                          "github"
-                        ]
-                      },
-                      {
-                        "required": [
                           "zip"
                         ]
                       }
@@ -3231,40 +3187,6 @@
                         },
                         "additionalProperties": false,
                         "markdownDescription": "Project's Git source"
-                      },
-                      "github": {
-                        "description": "Project's GitHub source. Deprecated, use `Git` instead",
-                        "type": "object",
-                        "properties": {
-                          "checkoutFrom": {
-                            "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
-                            "type": "object",
-                            "properties": {
-                              "remote": {
-                                "description": "The remote name should be used as init. Required if there are more than one remote configured",
-                                "type": "string",
-                                "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
-                              },
-                              "revision": {
-                                "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
-                                "type": "string",
-                                "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
-                              }
-                            },
-                            "additionalProperties": false,
-                            "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
-                          },
-                          "remotes": {
-                            "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
-                            "type": "object",
-                            "additionalProperties": {
-                              "type": "string"
-                            },
-                            "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                          }
-                        },
-                        "additionalProperties": false,
-                        "markdownDescription": "Project's GitHub source. Deprecated, use `Git` instead"
                       },
                       "name": {
                         "description": "Project name",
@@ -3325,11 +3247,6 @@
                   {
                     "required": [
                       "git"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "github"
                     ]
                   },
                   {
@@ -3411,43 +3328,6 @@
                     "additionalProperties": false,
                     "markdownDescription": "Project's Git source"
                   },
-                  "github": {
-                    "description": "Project's GitHub source. Deprecated, use `Git` instead",
-                    "type": "object",
-                    "required": [
-                      "remotes"
-                    ],
-                    "properties": {
-                      "checkoutFrom": {
-                        "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
-                        "type": "object",
-                        "properties": {
-                          "remote": {
-                            "description": "The remote name should be used as init. Required if there are more than one remote configured",
-                            "type": "string",
-                            "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
-                          },
-                          "revision": {
-                            "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
-                            "type": "string",
-                            "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
-                          }
-                        },
-                        "additionalProperties": false,
-                        "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
-                      },
-                      "remotes": {
-                        "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                      }
-                    },
-                    "additionalProperties": false,
-                    "markdownDescription": "Project's GitHub source. Deprecated, use `Git` instead"
-                  },
                   "name": {
                     "description": "Project name",
                     "type": "string",
@@ -3493,11 +3373,6 @@
                   {
                     "required": [
                       "git"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "github"
                     ]
                   },
                   {
@@ -3578,43 +3453,6 @@
                     },
                     "additionalProperties": false,
                     "markdownDescription": "Project's Git source"
-                  },
-                  "github": {
-                    "description": "Project's GitHub source. Deprecated, use `Git` instead",
-                    "type": "object",
-                    "required": [
-                      "remotes"
-                    ],
-                    "properties": {
-                      "checkoutFrom": {
-                        "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
-                        "type": "object",
-                        "properties": {
-                          "remote": {
-                            "description": "The remote name should be used as init. Required if there are more than one remote configured",
-                            "type": "string",
-                            "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
-                          },
-                          "revision": {
-                            "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
-                            "type": "string",
-                            "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
-                          }
-                        },
-                        "additionalProperties": false,
-                        "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
-                      },
-                      "remotes": {
-                        "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
-                      }
-                    },
-                    "additionalProperties": false,
-                    "markdownDescription": "Project's GitHub source. Deprecated, use `Git` instead"
                   },
                   "name": {
                     "description": "Project name",
