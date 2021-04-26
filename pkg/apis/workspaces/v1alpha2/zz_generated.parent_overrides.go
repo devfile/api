@@ -175,7 +175,7 @@ type ComponentUnionParentOverride struct {
 // +union
 type ProjectSourceParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Git;Github;Zip
+	// +kubebuilder:validation:Enum=Git;Zip
 	// Type of project source
 	// +
 	// +unionDiscriminator
@@ -185,10 +185,6 @@ type ProjectSourceParentOverride struct {
 	// Project's Git source
 	// +optional
 	Git *GitProjectSourceParentOverride `json:"git,omitempty"`
-
-	// Project's GitHub source. Deprecated, use `Git` instead
-	// +optional
-	Github *GithubProjectSourceParentOverride `json:"github,omitempty"`
 
 	// Project's Zip source
 	// +optional
@@ -268,10 +264,6 @@ type PluginComponentParentOverride struct {
 type ProjectSourceTypeParentOverride string
 
 type GitProjectSourceParentOverride struct {
-	GitLikeProjectSourceParentOverride `json:",inline"`
-}
-
-type GithubProjectSourceParentOverride struct {
 	GitLikeProjectSourceParentOverride `json:",inline"`
 }
 
