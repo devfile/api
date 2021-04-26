@@ -19,8 +19,6 @@ func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
 	switch {
 	case src.Git != nil:
 		sparseCheckoutDir = src.Git.SparseCheckoutDir
-	case src.Github != nil:
-		sparseCheckoutDir = src.Github.SparseCheckoutDir
 	case src.Zip != nil:
 		sparseCheckoutDir = src.Zip.SparseCheckoutDir
 	}
@@ -49,8 +47,6 @@ func convertProjectFrom_v1alpha2(src *v1alpha2.Project, dest *Project) error {
 		switch {
 		case src.Git != nil:
 			dest.Git.SparseCheckoutDir = sparseCheckoutDir
-		case src.Github != nil:
-			dest.Github.SparseCheckoutDir = sparseCheckoutDir
 		case src.Zip != nil:
 			dest.Zip.SparseCheckoutDir = sparseCheckoutDir
 		}
@@ -74,8 +70,6 @@ func convertStarterProjectTo_v1alpha2(src *StarterProject, dest *v1alpha2.Starte
 	switch {
 	case src.Git != nil:
 		dest.SubDir = src.Git.SparseCheckoutDir
-	case src.Github != nil:
-		dest.SubDir = src.Github.SparseCheckoutDir
 	case src.Zip != nil:
 		dest.SubDir = src.Zip.SparseCheckoutDir
 	}
@@ -97,8 +91,6 @@ func convertStarterProjectFrom_v1alpha2(src *v1alpha2.StarterProject, dest *Star
 		switch {
 		case src.Git != nil:
 			dest.Git.SparseCheckoutDir = src.SubDir
-		case src.Github != nil:
-			dest.Github.SparseCheckoutDir = src.SubDir
 		case src.Zip != nil:
 			dest.Zip.SparseCheckoutDir = src.SubDir
 		}

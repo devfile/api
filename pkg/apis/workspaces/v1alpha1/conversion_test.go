@@ -148,25 +148,21 @@ var parentCommandFuzzFunc = func(command *Command, c fuzz.Continue) {
 var parentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	// Custom projects are not supported in v1alpha2 parent
 	project.Name = c.RandString()
-	switch c.Intn(3) {
+	switch c.Intn(2) {
 	case 0:
 		c.Fuzz(&project.Git)
 	case 1:
-		c.Fuzz(&project.Github)
-	case 2:
 		c.Fuzz(&project.Zip)
 	}
 }
 
 var projectFuzzFunc = func(project *Project, c fuzz.Continue) {
-	switch c.Intn(4) {
+	switch c.Intn(3) {
 	case 0:
 		c.Fuzz(&project.Git)
 	case 1:
-		c.Fuzz(&project.Github)
-	case 2:
 		c.Fuzz(&project.Zip)
-	case 3:
+	case 2:
 		c.Fuzz(&project.Custom)
 	}
 }
