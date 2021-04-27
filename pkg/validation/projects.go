@@ -15,8 +15,6 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) error {
 		var gitSource v1alpha2.GitLikeProjectSource
 		if starterProject.Git != nil {
 			gitSource = starterProject.Git.GitLikeProjectSource
-		} else if starterProject.Github != nil {
-			gitSource = starterProject.Github.GitLikeProjectSource
 		} else {
 			continue
 		}
@@ -53,8 +51,6 @@ func ValidateProjects(projects []v1alpha2.Project) error {
 		var gitSource v1alpha2.GitLikeProjectSource
 		if project.Git != nil {
 			gitSource = project.Git.GitLikeProjectSource
-		} else if project.Github != nil {
-			gitSource = project.Github.GitLikeProjectSource
 		} else {
 			continue
 		}
