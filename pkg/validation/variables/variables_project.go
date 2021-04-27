@@ -89,13 +89,8 @@ func validateandReplaceForProjectSource(variables map[string]string, projectSour
 			if projectSource.Zip.Location, err = validateAndReplaceDataWithVariable(projectSource.Zip.Location, variables); err != nil {
 				checkForInvalidError(invalidKeys, err)
 			}
-		case projectSource.Git != nil || projectSource.Github != nil:
-			var gitProject *v1alpha2.GitLikeProjectSource
-			if projectSource.Git != nil {
-				gitProject = &projectSource.Git.GitLikeProjectSource
-			} else if projectSource.Github != nil {
-				gitProject = &projectSource.Github.GitLikeProjectSource
-			}
+		case projectSource.Git != nil:
+			gitProject := &projectSource.Git.GitLikeProjectSource
 
 			if gitProject.CheckoutFrom != nil {
 				// validate git checkout revision
