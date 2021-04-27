@@ -156,6 +156,7 @@ func (union *VscodeConfigurationCommandLocation) Simplify() {
 // +k8s:deepcopy-gen=false
 type ProjectSourceVisitor struct {
 	Git    func(*GitProjectSource) error
+	Github func(*GithubProjectSource) error
 	Zip    func(*ZipProjectSource) error
 	Custom func(*CustomProjectSource) error
 }
