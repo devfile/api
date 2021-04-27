@@ -45,20 +45,12 @@ parent:
       git:
         remotes: 
           origin: test-origin
-    - name: testProject2
-      github:
-        remotes: 
-          origin: test-origin
     - name: testProject3
       zip: 
         location: git-repo.zip
   starterProjects:
     - name: testStarterProject1
       git:
-        remotes: 
-          origin: test-origin
-    - name: testStarterProject2
-      github:
         remotes: 
           origin: test-origin
     - name: testStarterProject3

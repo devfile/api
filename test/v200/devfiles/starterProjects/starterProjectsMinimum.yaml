@@ -2,10 +2,6 @@
     git:
       remotes: 
         origin: test-origin
-  - name: starterproject12
-    github:
-      remotes: 
-        origin: test-origin
   - name: starterproject13
     zip: 
       location: git-repo.zip
