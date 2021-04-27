@@ -21,7 +21,8 @@ type ImportReferenceUnion struct {
 	// +optional
 	ImportReferenceType ImportReferenceType `json:"importReferenceType,omitempty"`
 
-	// Uri of a Devfile yaml file
+	// URI Reference of a Devfile yaml file, can be a full URL
+	// or a relative URI with the current devfile as the base URI
 	// +optional
 	Uri string `json:"uri,omitempty"`
 
@@ -43,6 +44,9 @@ type KubernetesCustomResourceImportReference struct {
 
 type ImportReference struct {
 	ImportReferenceUnion `json:",inline"`
+	// Registry URL to pull devfile from with the specified Id in the import reference.
+	// It is recommended to always have the regsitryURL specified if Id is provided to reference a parent devfile
+	// It to provides a well-defined parent and ensures it gets resolved consistently in different envrionments.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }

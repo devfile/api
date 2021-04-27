@@ -507,6 +507,9 @@ type VolumeParentOverride struct {
 type ImportReferenceParentOverride struct {
 	ImportReferenceUnionParentOverride `json:",inline"`
 
+	// Registry URL to pull devfile from with the specified Id in the import reference.
+	// It is recommended to always have the regsitryURL specified if Id is provided to reference a parent devfile
+	// It to provides a well-defined parent and ensures it gets resolved consistently in different envrionments.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }
@@ -617,7 +620,8 @@ type ImportReferenceUnionParentOverride struct {
 	// +optional
 	ImportReferenceType ImportReferenceTypeParentOverride `json:"importReferenceType,omitempty"`
 
-	// Uri of a Devfile yaml file
+	// URI Reference of a Devfile yaml file, can be a full URL
+	// or a relative URI with the current devfile as the base URI
 	// +optional
 	Uri string `json:"uri,omitempty"`
 

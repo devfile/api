@@ -1570,7 +1570,9 @@
           "markdownDescription": "Overrides of projects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
         },
         "registryUrl": {
-          "type": "string"
+          "description": "Registry URL to pull devfile from with the specified Id in the import reference. It is recommended to always have the regsitryURL specified if Id is provided to reference a parent devfile It to provides a well-defined parent and ensures it gets resolved consistently in different envrionments.",
+          "type": "string",
+          "markdownDescription": "Registry URL to pull devfile from with the specified Id in the import reference. It is recommended to always have the regsitryURL specified if Id is provided to reference a parent devfile It to provides a well-defined parent and ensures it gets resolved consistently in different envrionments."
         },
         "starterProjects": {
           "description": "Overrides of starterProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
@@ -1708,9 +1710,9 @@
           "markdownDescription": "Overrides of starterProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
         },
         "uri": {
-          "description": "Uri of a Devfile yaml file",
+          "description": "URI Reference of a Devfile yaml file, can be a full URL or a relative URI with the current devfile as the base URI",
           "type": "string",
-          "markdownDescription": "Uri of a Devfile yaml file"
+          "markdownDescription": "URI Reference of a Devfile yaml file, can be a full URL or a relative URI with the current devfile as the base URI"
         },
         "variables": {
           "description": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
