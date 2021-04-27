@@ -3,7 +3,7 @@
       remotes: 
         origin: test-origin
   - name: starterproject12
-    github:
+    git:
       remotes: 
         origin: test-origin
   - name: starterproject13

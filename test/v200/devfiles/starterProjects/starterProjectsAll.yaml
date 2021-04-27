@@ -7,7 +7,7 @@
     description: Test starter project
     subDir: test-subdir
   - name: starterproject2
-    github:
+    git:
       checkoutFrom: 
         remote: test-branch
       remotes: 

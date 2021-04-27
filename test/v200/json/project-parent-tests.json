@@ -23,12 +23,6 @@
             "ExpectOutcome" : "does not match pattern",
             "Files": ["devfiles/projects/projectsStart.yaml",
                 "devfiles/projects/projectsMixedCaseName.yaml"] 
-        }, 
-        { 
-            "FileName" : "projectsGitAndGithub.yaml",
-            "ExpectOutcome" : "valid against schemas at indexes 0 and 1",
-            "Files": ["devfiles/projects/projectsStart.yaml",
-                        "devfiles/projects/projectsGitAndGithub.yaml"] 
         },
         { 
             "FileName" : "projectsGitAndZip.yaml",
@@ -37,22 +31,16 @@
                         "devfiles/projects/projectsGitAndZip.yaml"] 
         },
         { 
-            "FileName" : "projectsGithubAndZip.yaml",
-            "ExpectOutcome" : "valid against schemas at indexes 1 and 2",
-            "Files": ["devfiles/projects/projectsStart.yaml",
-                        "devfiles/projects/projectsGithubAndZip.yaml"] 
-        },
-        { 
             "FileName" : "projectsZipNoLocation.yaml",
             "ExpectOutcome" : "expected object, but got null",
             "Files": ["devfiles/projects/projectsStart.yaml",
                         "devfiles/projects/projectsZipNoLocation.yaml"] 
         },
-        { 
-            "FileName" : "projectsNoGitGithubOrZip.yaml",
+        {
+            "FileName" : "projectsNoGitOrZip.yaml",
             "ExpectOutcome" : "oneOf failed",
             "Files": ["devfiles/projects/projectsStart.yaml",
-                        "devfiles/projects/projectsNoGitGithubOrZip.yaml"] 
+                        "devfiles/projects/projectsNoGitOrZip.yaml"]
         }
     ]                             
 }

@@ -7,7 +7,7 @@
     clonePath: /Users/test/projects
     sparseCheckoutDirs: [thisDir, thatDir]
   - name: testproject2
-    github:
+    git:
       checkoutFrom: 
         remote: test-branch
       remotes: 
