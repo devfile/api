@@ -31,7 +31,6 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) error {
 				err := validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, starterProject.Name)
 				if err != nil {
 					newErr := resolveErrorMessageWithImportArrtibutes(err, starterProject.Attributes)
-					errString += newErr.Error()
 					errString += fmt.Sprintf("\n%s", newErr.Error())
 				}
 			}

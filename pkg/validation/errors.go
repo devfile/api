@@ -90,27 +90,34 @@ func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
 }
 
-// resolveErrorMessageWithImportArrtibutes returns an error message with detailed information on the import resource
-// example: "the component <compName> is invalid - <reason>", imported from Uri: http://example.com/devfile.yaml, in parent overrides from main devfile"
-func resolveErrorMessageWithImportArrtibutes(err error, attributes attributesAPI.Attributes) error {
+// resolveErrorMessageWithImportArrtibutes returns an updated error message
+// with detailed information on the imported and overriden resource.
+// example:
+// "the component <compName> is invalid - <reason>, imported from Uri: http://example.com/devfile.yaml, in parent overrides from main devfile"
+func resolveErrorMessageWithImportArrtibutes(validationErr error, attributes attributesAPI.Attributes) error {
 	var findKeyErr error
 	importReference := attributes.Get(ImportSourceAttribute, &findKeyErr)
-	returnErr := err
 
+	// overridden element must contain import resource information
+	// an overridden element can be either parentOverride or pluginOverride
+	// example:
+	// if an element is imported from another devfile, but contains no overrides - ImportSourceAttribute
+	// if an element is from parentOverride - ImportSourceAttribute + ParentOverrideAttribute
+	// if an element is from pluginOverride - ImportSourceAttribute + PluginOverrideAttribute
 	if findKeyErr == nil {
-		returnErr = fmt.Errorf("%s, imported from %s", returnErr.Error(), importReference)
+		validationErr = fmt.Errorf("%s, imported from %s", validationErr.Error(), importReference)
 		parentOverrideReference := attributes.Get(ParentOverrideAttribute, &findKeyErr)
 		if findKeyErr == nil {
-			returnErr = fmt.Errorf("%s, in parent overrides from %s", returnErr.Error(), parentOverrideReference)
+			validationErr = fmt.Errorf("%s, in parent overrides from %s", validationErr.Error(), parentOverrideReference)
 		} else {
 			// reset findKeyErr to nil
 			findKeyErr = nil
 			pluginOverrideReference := attributes.Get(PluginOverrideAttribute, &findKeyErr)
 			if findKeyErr == nil {
-				returnErr = fmt.Errorf("%s, in plugin overrides from %s", returnErr.Error(), pluginOverrideReference)
+				validationErr = fmt.Errorf("%s, in plugin overrides from %s", validationErr.Error(), pluginOverrideReference)
 			}
 		}
 	}
 
-	return returnErr
+	return validationErr
 }
