@@ -8,9 +8,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func generateDummyGitStarterProject(name string, checkoutRemote *v1alpha2.CheckoutFrom, remotes map[string]string) v1alpha2.StarterProject {
+func generateDummyGitStarterProject(name string, checkoutRemote *v1alpha2.CheckoutFrom, remotes map[string]string, projectAttribute attributes.Attributes) v1alpha2.StarterProject {
 	return v1alpha2.StarterProject{
-		Name: name,
+		Attributes: projectAttribute,
+		Name:       name,
 		ProjectSource: v1alpha2.ProjectSource{
 			Git: &v1alpha2.GitProjectSource{
 				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
@@ -36,9 +37,10 @@ func generateDummyGithubStarterProject(name string, checkoutRemote *v1alpha2.Che
 	}
 }
 
-func generateDummyGitProject(name string, checkoutRemote *v1alpha2.CheckoutFrom, remotes map[string]string) v1alpha2.Project {
+func generateDummyGitProject(name string, checkoutRemote *v1alpha2.CheckoutFrom, remotes map[string]string, projectAttribute attributes.Attributes) v1alpha2.Project {
 	return v1alpha2.Project{
-		Name: name,
+		Attributes: projectAttribute,
+		Name:       name,
 		ProjectSource: v1alpha2.ProjectSource{
 			Git: &v1alpha2.GitProjectSource{
 				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
@@ -82,8 +84,8 @@ func TestValidateStarterProjects(t *testing.T) {
 		{
 			name: "Valid Starter Project",
 			starterProjects: []v1alpha2.StarterProject{
-				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}),
-				generateDummyGitStarterProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote2"}),
+				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
+				generateDummyGitStarterProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote2"}, attributes.Attributes{}),
 			},
 		},
 		{
@@ -103,13 +105,13 @@ func TestValidateStarterProjects(t *testing.T) {
 		{
 			name: "Valid Starter Project with empty checkout remote",
 			starterProjects: []v1alpha2.StarterProject{
-				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote"}),
+				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 			},
 		},
 		{
 			name: "Valid Starter Project with no checkout remote",
 			starterProjects: []v1alpha2.StarterProject{
-				generateDummyGitStarterProject("project1", nil, map[string]string{"origin": "originremote"}),
+				generateDummyGitStarterProject("project1", nil, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 			},
 		},
 		{
@@ -123,18 +125,7 @@ func TestValidateStarterProjects(t *testing.T) {
 		{
 			name: "Invalid Starter Project due to wrong checkout with import source attributes",
 			starterProjects: []v1alpha2.StarterProject{
-				{
-					Attributes: parentOverridesFromMainDevfile,
-					Name:       "starterproject1",
-					ProjectSource: v1alpha2.ProjectSource{
-						Github: &v1alpha2.GithubProjectSource{
-							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
-								Remotes:      map[string]string{"test": "testremote"},
-								CheckoutFrom: &v1alpha2.CheckoutFrom{Remote: "origin"},
-							},
-						},
-					},
-				},
+				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"test": "testremote"}, parentOverridesFromMainDevfile),
 			},
 			wantErr: &wrongCheckoutErrWithImportAttributes,
 		},
@@ -170,7 +161,7 @@ func TestValidateProjects(t *testing.T) {
 		{
 			name: "Valid Project",
 			projects: []v1alpha2.Project{
-				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}),
+				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 				generateDummyGithubProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}),
 			},
 		},
@@ -184,7 +175,7 @@ func TestValidateProjects(t *testing.T) {
 		{
 			name: "Invalid Project with multiple remote and empty checkout remote",
 			projects: []v1alpha2.Project{
-				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}),
+				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 				generateDummyGithubProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote", "test": "testremote"}),
 			},
 			wantErr: &missingCheckOutFromRemoteErr,
@@ -193,20 +184,20 @@ func TestValidateProjects(t *testing.T) {
 			name: "Invalid Project with wrong checkout",
 			projects: []v1alpha2.Project{
 				generateDummyGithubProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin1"}, map[string]string{"origin": "originremote", "test": "testremote"}),
-				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin1"}, map[string]string{"origin2": "originremote2"}),
+				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin1"}, map[string]string{"origin2": "originremote2"}, attributes.Attributes{}),
 			},
 			wantErr: &wrongCheckoutErr,
 		},
 		{
 			name: "Valid Project with empty checkout remote",
 			projects: []v1alpha2.Project{
-				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote"}),
+				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 			},
 		},
 		{
 			name: "Invalid Project with empty remotes",
 			projects: []v1alpha2.Project{
-				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{}),
+				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{}, attributes.Attributes{}),
 				generateDummyGithubProject("project2", &v1alpha2.CheckoutFrom{Remote: "origins"}, map[string]string{"origin": "originremote", "test": "testremote"}),
 			},
 			wantErr: &atleastOneRemoteErr,
@@ -214,18 +205,7 @@ func TestValidateProjects(t *testing.T) {
 		{
 			name: "Invalid Project due to wrong checkout with import source attributes",
 			projects: []v1alpha2.Project{
-				{
-					Attributes: parentOverridesFromMainDevfile,
-					Name:       "project1",
-					ProjectSource: v1alpha2.ProjectSource{
-						Github: &v1alpha2.GithubProjectSource{
-							GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
-								Remotes:      map[string]string{"test": "testremote"},
-								CheckoutFrom: &v1alpha2.CheckoutFrom{Remote: "origin"},
-							},
-						},
-					},
-				},
+				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"test": "testremote"}, parentOverridesFromMainDevfile),
 			},
 			wantErr: &wrongCheckoutErrWithImportAttributes,
 		},

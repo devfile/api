@@ -31,9 +31,10 @@ func generateDummyExecCommand(name, component string, group *v1alpha2.CommandGro
 }
 
 // generateDummyExecCommand returns a dummy apply command for testing
-func generateDummyApplyCommand(name, component string, group *v1alpha2.CommandGroup) v1alpha2.Command {
+func generateDummyApplyCommand(name, component string, group *v1alpha2.CommandGroup, cmdAttributes attributes.Attributes) v1alpha2.Command {
 	return v1alpha2.Command{
-		Id: name,
+		Attributes: cmdAttributes,
+		Id:         name,
 		CommandUnion: v1alpha2.CommandUnion{
 			Apply: &v1alpha2.ApplyCommand{
 				LabeledCommand: v1alpha2.LabeledCommand{
@@ -136,7 +137,7 @@ func TestValidateCommands(t *testing.T) {
 		{
 			name: "Invalid Apply command with wrong component",
 			commands: []v1alpha2.Command{
-				generateDummyApplyCommand("command", "invalidComponent", nil),
+				generateDummyApplyCommand("command", "invalidComponent", nil, attributes.Attributes{}),
 			},
 			wantErr: &invalidCmdErr,
 		},
@@ -152,20 +153,7 @@ func TestValidateCommands(t *testing.T) {
 		{
 			name: "Invalid command with import source attribute",
 			commands: []v1alpha2.Command{
-				{
-					Attributes: parentOverridesFromMainDevfile,
-					Id:         "command",
-					CommandUnion: v1alpha2.CommandUnion{
-						Apply: &v1alpha2.ApplyCommand{
-							LabeledCommand: v1alpha2.LabeledCommand{
-								BaseCommand: v1alpha2.BaseCommand{
-									Group: nil,
-								},
-							},
-							Component: "invalidComponent",
-						},
-					},
-				},
+				generateDummyApplyCommand("command", "invalidComponent", nil, parentOverridesFromMainDevfile),
 			},
 			wantErr: &invalidCmdErrWithImportAttributes,
 		},
@@ -218,11 +206,11 @@ func TestValidateCommandComponent(t *testing.T) {
 		},
 		{
 			name:    "Valid Apply Command",
-			command: generateDummyApplyCommand("command", component, nil),
+			command: generateDummyApplyCommand("command", component, nil, attributes.Attributes{}),
 		},
 		{
 			name:    "Invalid Apply Command with wrong component",
-			command: generateDummyApplyCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			command: generateDummyApplyCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
 			wantErr: &invalidCmdErr,
 		},
 	}
@@ -332,7 +320,13 @@ func TestValidateGroup(t *testing.T) {
 	component := "alias1"
 
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
-	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
+	multipleDefaultError := ".*there should be exactly one default command, currently there is more than one default command"
+	multipleDefaultCmdErr := multipleDefaultError + "; command: run command; command: customcommand"
+
+	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
+	multipleDefaultCmdErrWithImportAttributes := multipleDefaultError +
+		"; command: run command; command: customcommand, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 
 	tests := []struct {
 		name     string
@@ -346,6 +340,14 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 			},
 			wantErr: &multipleDefaultCmdErr,
+		},
+		{
+			name: "Two default run commands with import source attribute",
+			commands: []v1alpha2.Command{
+				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
+				generateDummyApplyCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}, parentOverridesFromMainDevfile),
+			},
+			wantErr: &multipleDefaultCmdErrWithImportAttributes,
 		},
 		{
 			name: "No default for more than one build commands",

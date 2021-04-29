@@ -80,10 +80,11 @@ func generateDummyKubernetesComponent(name string, endpoints []v1alpha2.Endpoint
 }
 
 // generateDummyPluginComponent returns a dummy Plugin component for testing
-func generateDummyPluginComponent(name, url string) v1alpha2.Component {
+func generateDummyPluginComponent(name, url string, compAttribute attributes.Attributes) v1alpha2.Component {
 
 	return v1alpha2.Component{
-		Name: name,
+		Attributes: compAttribute,
+		Name:       name,
 		ComponentUnion: v1alpha2.ComponentUnion{
 			Plugin: &v1alpha2.PluginComponent{
 				ImportReference: v1alpha2.ImportReference{
@@ -238,24 +239,14 @@ func TestValidateComponents(t *testing.T) {
 		{
 			name: "Invalid plugin registry url",
 			components: []v1alpha2.Component{
-				generateDummyPluginComponent("abc", "http//invalidregistryurl"),
+				generateDummyPluginComponent("abc", "http//invalidregistryurl", attributes.Attributes{}),
 			},
 			wantErr: &invalidURIErr,
 		},
 		{
 			name: "Invalid component due to bad URI with import source attributes",
 			components: []v1alpha2.Component{
-				{
-					Attributes: pluginOverridesFromMainDevfile,
-					Name:       "name",
-					ComponentUnion: v1alpha2.ComponentUnion{
-						Plugin: &v1alpha2.PluginComponent{
-							ImportReference: v1alpha2.ImportReference{
-								RegistryUrl: "http//invalidregistryurl",
-							},
-						},
-					},
-				},
+				generateDummyPluginComponent("abc", "http//invalidregistryurl", pluginOverridesFromMainDevfile),
 			},
 			wantErr: &invalidURIErrWithImportAttributes,
 		},

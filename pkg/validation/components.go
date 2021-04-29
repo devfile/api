@@ -54,7 +54,7 @@ func ValidateComponents(components []v1alpha2.Component) error {
 
 			err := validateEndpoints(component.Container.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
-				return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+				return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 			}
 		case component.Volume != nil:
 			processedVolumes[component.Name] = true
@@ -64,37 +64,37 @@ func ValidateComponents(components []v1alpha2.Component) error {
 				// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 				if _, err := resource.ParseQuantity(component.Volume.Size); err != nil {
 					invalidVolErr := &InvalidVolumeError{name: component.Name, reason: fmt.Sprintf("size %s for volume component is invalid, %v. Example - 2Gi, 1024Mi", component.Volume.Size, err)}
-					return resolveErrorMessageWithImportArrtibutes(invalidVolErr, component.Attributes)
+					return resolveErrorMessageWithImportAttributes(invalidVolErr, component.Attributes)
 				}
 			}
 		case component.Openshift != nil:
 			if component.Openshift.Uri != "" {
 				err := ValidateURI(component.Openshift.Uri)
 				if err != nil {
-					return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+					return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 				}
 			}
 
 			err := validateEndpoints(component.Openshift.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
-				return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+				return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 			}
 		case component.Kubernetes != nil:
 			if component.Kubernetes.Uri != "" {
 				err := ValidateURI(component.Kubernetes.Uri)
 				if err != nil {
-					return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+					return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 				}
 			}
 			err := validateEndpoints(component.Kubernetes.Endpoints, processedEndPointPort, processedEndPointName)
 			if err != nil {
-				return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+				return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 			}
 		case component.Plugin != nil:
 			if component.Plugin.RegistryUrl != "" {
 				err := ValidateURI(component.Plugin.RegistryUrl)
 				if err != nil {
-					return resolveErrorMessageWithImportArrtibutes(err, component.Attributes)
+					return resolveErrorMessageWithImportAttributes(err, component.Attributes)
 				}
 			}
 		}
@@ -107,7 +107,7 @@ func ValidateComponents(components []v1alpha2.Component) error {
 		for _, volumeMountName := range volumeMountNames {
 			if !processedVolumes[volumeMountName] {
 				missingVolumeMountErr := fmt.Errorf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
-				newErr := resolveErrorMessageWithImportArrtibutes(missingVolumeMountErr, processedComponentWithVolumeMounts[componentName].Attributes)
+				newErr := resolveErrorMessageWithImportAttributes(missingVolumeMountErr, processedComponentWithVolumeMounts[componentName].Attributes)
 				invalidVolumeMountsErr += newErr.Error()
 			}
 		}
