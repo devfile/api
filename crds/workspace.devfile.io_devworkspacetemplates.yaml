@@ -5228,17 +5228,16 @@ spec:
                           - name
                           type: object
                         registryUrl:
-                          description: Registry URL to pull devfile from with the
-                            specified Id in the import reference. It is recommended
-                            to always have the regsitryURL specified if Id is provided
-                            to reference a parent devfile It to provides a well-defined
-                            parent and ensures it gets resolved consistently in different
-                            envrionments.
+                          description: Registry URL to pull the parent devfile from
+                            when using id in the parent reference. To ensure the parent
+                            devfile gets resolved consistently in different environments,
+                            it is recommended to always specify the `regsitryURL`
+                            when `Id` is used.
                           type: string
                         uri:
-                          description: URI Reference of a Devfile yaml file, can be
-                            a full URL or a relative URI with the current devfile
-                            as the base URI
+                          description: URI Reference of a parent devfile YAML file.
+                            It can be a full URL or a relative URI with the current
+                            devfile as the base URI.
                           type: string
                       type: object
                     volume:
@@ -6574,17 +6573,16 @@ spec:
                                   type: string
                               type: object
                             registryUrl:
-                              description: Registry URL to pull devfile from with
-                                the specified Id in the import reference. It is recommended
-                                to always have the regsitryURL specified if Id is
-                                provided to reference a parent devfile It to provides
-                                a well-defined parent and ensures it gets resolved
-                                consistently in different envrionments.
+                              description: Registry URL to pull the parent devfile
+                                from when using id in the parent reference. To ensure
+                                the parent devfile gets resolved consistently in different
+                                environments, it is recommended to always specify
+                                the `regsitryURL` when `Id` is used.
                               type: string
                             uri:
-                              description: URI Reference of a Devfile yaml file, can
-                                be a full URL or a relative URI with the current devfile
-                                as the base URI
+                              description: URI Reference of a parent devfile YAML
+                                file. It can be a full URL or a relative URI with
+                                the current devfile as the base URI.
                               type: string
                           type: object
                         volume:
@@ -6736,11 +6734,11 @@ spec:
                       type: object
                     type: array
                   registryUrl:
-                    description: Registry URL to pull devfile from with the specified
-                      Id in the import reference. It is recommended to always have
-                      the regsitryURL specified if Id is provided to reference a parent
-                      devfile It to provides a well-defined parent and ensures it
-                      gets resolved consistently in different envrionments.
+                    description: Registry URL to pull the parent devfile from when
+                      using id in the parent reference. To ensure the parent devfile
+                      gets resolved consistently in different environments, it is
+                      recommended to always specify the `regsitryURL` when `Id` is
+                      used.
                     type: string
                   starterProjects:
                     description: Overrides of starterProjects encapsulated in a parent
@@ -6847,8 +6845,9 @@ spec:
                       type: object
                     type: array
                   uri:
-                    description: URI Reference of a Devfile yaml file, can be a full
-                      URL or a relative URI with the current devfile as the base URI
+                    description: URI Reference of a parent devfile YAML file. It can
+                      be a full URL or a relative URI with the current devfile as
+                      the base URI.
                     type: string
                   variables:
                     additionalProperties:
