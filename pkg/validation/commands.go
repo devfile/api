@@ -34,15 +34,16 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 		}
 	}
 
-	groupErrors := ""
+	var groupErrorsList []string
 	for groupKind, commands := range groupKindCommandMap {
 		if err = validateGroup(commands); err != nil {
-			groupErrors += fmt.Sprintf("\ncommand group %s error - %s", groupKind, err.Error())
+			groupErrorsList = append(groupErrorsList, fmt.Sprintf("command group %s error - %s", groupKind, err.Error()))
 		}
 	}
 
-	if len(groupErrors) > 0 {
-		err = fmt.Errorf("%s", groupErrors)
+	if len(groupErrorsList) > 0 {
+		groupErrors := strings.Join(groupErrorsList, "\n")
+		err = fmt.Errorf("\n%s", groupErrors)
 	}
 
 	return err
@@ -83,13 +84,15 @@ func validateGroup(commands []v1alpha2.Command) error {
 	if defaultCommandCount == 0 {
 		return fmt.Errorf("there should be exactly one default command, currently there is no default command")
 	} else if defaultCommandCount > 1 {
-		var commandsReference string
+		var commandsReferenceList []string
 		for _, command := range defaultCommands {
-			commandsReference += resolveErrorMessageWithImportAttributes(fmt.Errorf("; command: %s", command.Id), command.Attributes).Error()
+			commandsReferenceList = append(commandsReferenceList,
+				resolveErrorMessageWithImportAttributes(fmt.Errorf("command: %s", command.Id), command.Attributes).Error())
 		}
+		commandsReference := strings.Join(commandsReferenceList, "; ")
 		// example: there should be exactly one default command, currently there is more than one default command;
 		// command: <id1>; command: <id2>, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
-		return fmt.Errorf("there should be exactly one default command, currently there is more than one default command%s", commandsReference)
+		return fmt.Errorf("there should be exactly one default command, currently there is more than one default command; %s", commandsReference)
 	}
 
 	return nil

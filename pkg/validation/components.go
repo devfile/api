@@ -2,6 +2,7 @@ package validation
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -102,18 +103,19 @@ func ValidateComponents(components []v1alpha2.Component) error {
 	}
 
 	// Check if the volume mounts mentioned in the containers are referenced by a volume component
-	var invalidVolumeMountsErr string
+	var invalidVolumeMountsErrList []string
 	for componentName, volumeMountNames := range processedVolumeMounts {
 		for _, volumeMountName := range volumeMountNames {
 			if !processedVolumes[volumeMountName] {
-				missingVolumeMountErr := fmt.Errorf("\nvolume mount %s belonging to the container component %s", volumeMountName, componentName)
+				missingVolumeMountErr := fmt.Errorf("volume mount %s belonging to the container component %s", volumeMountName, componentName)
 				newErr := resolveErrorMessageWithImportAttributes(missingVolumeMountErr, processedComponentWithVolumeMounts[componentName].Attributes)
-				invalidVolumeMountsErr += newErr.Error()
+				invalidVolumeMountsErrList = append(invalidVolumeMountsErrList, newErr.Error())
 			}
 		}
 	}
 
-	if len(invalidVolumeMountsErr) > 0 {
+	if len(invalidVolumeMountsErrList) > 0 {
+		invalidVolumeMountsErr := fmt.Sprintf("\n%s", strings.Join(invalidVolumeMountsErrList, "\n"))
 		return &MissingVolumeMountError{errMsg: invalidVolumeMountsErr}
 	}
 

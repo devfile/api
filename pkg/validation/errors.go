@@ -31,7 +31,7 @@ type InvalidCommandTypeError struct {
 }
 
 func (e *InvalidCommandTypeError) Error() string {
-	return fmt.Sprintf("command %s type is invalid", e.commandId)
+	return fmt.Sprintf("command %s has invalid type", e.commandId)
 }
 
 // ReservedEnvError returns an error if the user attempts to customize a reserved ENV in a container
