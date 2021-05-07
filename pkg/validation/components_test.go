@@ -1,6 +1,7 @@
 package validation
 
 import (
+	"github.com/devfile/api/v2/pkg/attributes"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -79,10 +80,11 @@ func generateDummyKubernetesComponent(name string, endpoints []v1alpha2.Endpoint
 }
 
 // generateDummyPluginComponent returns a dummy Plugin component for testing
-func generateDummyPluginComponent(name, url string) v1alpha2.Component {
+func generateDummyPluginComponent(name, url string, compAttribute attributes.Attributes) v1alpha2.Component {
 
 	return v1alpha2.Component{
-		Name: name,
+		Attributes: compAttribute,
+		Name:       name,
 		ComponentUnion: v1alpha2.ComponentUnion{
 			Plugin: &v1alpha2.PluginComponent{
 				ImportReference: v1alpha2.ImportReference{
@@ -136,6 +138,10 @@ func TestValidateComponents(t *testing.T) {
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
 	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
 	invalidURIErr := ".*invalid URI for request"
+
+	pluginOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
+		"uri: http://127.0.0.1:8080").PutString(PluginOverrideAttribute, "main devfile")
+	invalidURIErrWithImportAttributes := ".*invalid URI for request, imported from uri: http://127.0.0.1:8080, in plugin overrides from main devfile"
 
 	tests := []struct {
 		name       string
@@ -233,9 +239,16 @@ func TestValidateComponents(t *testing.T) {
 		{
 			name: "Invalid plugin registry url",
 			components: []v1alpha2.Component{
-				generateDummyPluginComponent("abc", "http//invalidregistryurl"),
+				generateDummyPluginComponent("abc", "http//invalidregistryurl", attributes.Attributes{}),
 			},
 			wantErr: &invalidURIErr,
+		},
+		{
+			name: "Invalid component due to bad URI with import source attributes",
+			components: []v1alpha2.Component{
+				generateDummyPluginComponent("abc", "http//invalidregistryurl", pluginOverridesFromMainDevfile),
+			},
+			wantErr: &invalidURIErrWithImportAttributes,
 		},
 	}
 	for _, tt := range tests {

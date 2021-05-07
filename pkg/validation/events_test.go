@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/devfile/api/v2/pkg/attributes"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,8 +13,8 @@ func TestValidateEvents(t *testing.T) {
 	containers := []string{"container1", "container2"}
 
 	commands := []v1alpha2.Command{
-		generateDummyApplyCommand("apply1", containers[0], nil),
-		generateDummyApplyCommand("apply2", containers[0], nil),
+		generateDummyApplyCommand("apply1", containers[0], nil, attributes.Attributes{}),
+		generateDummyApplyCommand("apply2", containers[0], nil, attributes.Attributes{}),
 		generateDummyExecCommand("exec1", containers[1], nil),
 		generateDummyExecCommand("exec2", containers[1], nil),
 		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, nil),
@@ -112,8 +113,8 @@ func TestIsEventValid(t *testing.T) {
 	containers := []string{"container1", "container2"}
 
 	commands := []v1alpha2.Command{
-		generateDummyApplyCommand("apply1", containers[0], nil),
-		generateDummyApplyCommand("apply2", containers[0], nil),
+		generateDummyApplyCommand("apply1", containers[0], nil, attributes.Attributes{}),
+		generateDummyApplyCommand("apply2", containers[0], nil, attributes.Attributes{}),
 		generateDummyExecCommand("exec1", containers[1], nil),
 		generateDummyExecCommand("exec2", containers[1], nil),
 		generateDummyCompositeCommand("compositeOnlyApply", []string{"apply1", "apply2"}, nil),
