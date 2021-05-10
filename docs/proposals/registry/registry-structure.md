@@ -36,6 +36,36 @@ The following requirements are imposed on the devfile registry repository:
 2) Each devfile stack folder must contain a `devfile.yaml`. Other files such as vsx plugins, stack logos, etc. can be included as needed. 
 3) Any build tools for the registry (such as scripts or Dockerfiles) should not be located at the top-level of the stack, and should reside in their own folder.
 
+Optional file to support stacks/samples from other repositories:
+
+A file called `extraDevfileEntries.yaml` can be added under the root of the devfile registry source repository to add samples and stacks from other repositories to the registry. This file contains the location information on where the extra samples and stacks can be found.
+
+Sample `extraDevfileEntries.yaml`:
+```
+schemaVersion: 1.0.0
+samples:
+  - name: nodejs-basic
+    displayName: Basic NodeJS
+    description: A simple Hello World application
+    icon: nodejsIcon.svg
+    tags: ["NodeJS", "Express"]
+    projectType: nodejs
+    language: nodejs
+    git:
+      remotes:
+        origin: https://github.com/redhat-developer/devfile-sample
+  - name: vertx-secured-http
+    displayName: Vert.x with secured HTTP
+    description: A Vert.x application using secured HTTP
+    icon: vertxIcon.svg
+    tags: ["Java", "Vert.x"]
+    projectType: vertx
+    language: java
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example-redhat
+```
+
 ### Layer Media types
 Currently, when we push devfile stacks to an OCI registry, it's pushed as a single layer, using the `application/vnd.devfileio.devfile.layer.v2+yaml` media type. We should instead be pushing the stack as a multi-layer artifact, adding the additional layers:
 
