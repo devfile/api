@@ -4,9 +4,25 @@ import (
 	"encoding/json"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/devfile/api/v2/pkg/attributes"
+)
+
+const (
+	GitHubConversionFromAttributeValue = "GitHub"
 )
 
 func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
+	// Convert Github type projects in v1alpha1 to Git-type projects in v1alpha2, since Github was dropped
+	if src.Github != nil {
+		src.Git = &GitProjectSource{
+			GitLikeProjectSource: src.Github.GitLikeProjectSource,
+		}
+		if dest.Attributes == nil {
+			dest.Attributes = attributes.Attributes{}
+		}
+		dest.Attributes.PutString(ConvertedFromAttribute, GitHubConversionFromAttributeValue)
+	}
+
 	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
@@ -15,6 +31,7 @@ func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
 	if err != nil {
 		return err
 	}
+
 	var sparseCheckoutDir string
 	switch {
 	case src.Git != nil:
@@ -25,6 +42,12 @@ func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
 	if sparseCheckoutDir != "" {
 		dest.SparseCheckoutDirs = []string{sparseCheckoutDir}
 	}
+
+	// Make sure we didn't modify underlying src struct
+	if src.Github != nil {
+		src.Git = nil
+	}
+
 	return nil
 }
 
@@ -51,10 +74,33 @@ func convertProjectFrom_v1alpha2(src *v1alpha2.Project, dest *Project) error {
 			dest.Zip.SparseCheckoutDir = sparseCheckoutDir
 		}
 	}
+
+	// Check if a Git-type project was originally a Github-type project in v1alpha1
+	if src.Git != nil && src.Attributes != nil {
+		convertedFrom := src.Attributes.GetString(ConvertedFromAttribute, nil)
+		if convertedFrom == GitHubConversionFromAttributeValue {
+			dest.Github = &GithubProjectSource{
+				GitLikeProjectSource: dest.Git.GitLikeProjectSource,
+			}
+			dest.Git = nil
+		}
+	}
+
 	return nil
 }
 
 func convertStarterProjectTo_v1alpha2(src *StarterProject, dest *v1alpha2.StarterProject) error {
+	// Convert Github type projects in v1alpha1 to Git-type projects in v1alpha2, since Github was dropped
+	if src.Github != nil {
+		src.Git = &GitProjectSource{
+			GitLikeProjectSource: src.Github.GitLikeProjectSource,
+		}
+		if dest.Attributes == nil {
+			dest.Attributes = attributes.Attributes{}
+		}
+		dest.Attributes.PutString(ConvertedFromAttribute, GitHubConversionFromAttributeValue)
+	}
+
 	jsonProject, err := json.Marshal(src)
 	if err != nil {
 		return err
@@ -72,6 +118,11 @@ func convertStarterProjectTo_v1alpha2(src *StarterProject, dest *v1alpha2.Starte
 		dest.SubDir = src.Git.SparseCheckoutDir
 	case src.Zip != nil:
 		dest.SubDir = src.Zip.SparseCheckoutDir
+	}
+
+	// Make sure we didn't modify underlying src struct
+	if src.Github != nil {
+		src.Git = nil
 	}
 
 	return nil
@@ -93,6 +144,17 @@ func convertStarterProjectFrom_v1alpha2(src *v1alpha2.StarterProject, dest *Star
 			dest.Git.SparseCheckoutDir = src.SubDir
 		case src.Zip != nil:
 			dest.Zip.SparseCheckoutDir = src.SubDir
+		}
+	}
+
+	// Check if a Git-type project was originally a Github-type project in v1alpha1
+	if src.Git != nil && src.Attributes != nil {
+		convertedFrom := src.Attributes.GetString(ConvertedFromAttribute, nil)
+		if convertedFrom == GitHubConversionFromAttributeValue {
+			dest.Github = &GithubProjectSource{
+				GitLikeProjectSource: dest.Git.GitLikeProjectSource,
+			}
+			dest.Git = nil
 		}
 	}
 
