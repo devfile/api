@@ -4,6 +4,12 @@ import (
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
+const (
+	// ConvertedFromAttribute marks a devfile element as being converted from a different underlying field. For example,
+	// since v1alpha2 does not support
+	ConvertedFromAttribute = "conversion.api.devfile.io/converted-from"
+)
+
 func convertDevWorkspaceTo_v1alpha2(src *DevWorkspace, dest *v1alpha2.DevWorkspace) error {
 	dest.ObjectMeta = src.ObjectMeta
 	dest.Status.DevWorkspaceId = src.Status.WorkspaceId
