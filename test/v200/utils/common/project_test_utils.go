@@ -138,16 +138,6 @@ func (testDevfile *TestDevfile) SetProjectValues(project *schema.Project) {
 		LogInfoMessage(fmt.Sprintf("Set ClonePath : %s", project.ClonePath))
 	}
 
-	if GetBinaryDecision() {
-		var sparseCheckoutDirs []string
-		numDirs := GetRandomNumber(1, 6)
-		for i := 0; i < numDirs; i++ {
-			sparseCheckoutDirs = append(sparseCheckoutDirs, GetRandomString(8, false))
-			LogInfoMessage(fmt.Sprintf("Set sparseCheckoutDir : %s", sparseCheckoutDirs[i]))
-		}
-		project.SparseCheckoutDirs = sparseCheckoutDirs
-	}
-
 	if project.Git != nil {
 		setGitProjectValues(project.Git)
 	} else if project.Zip != nil {

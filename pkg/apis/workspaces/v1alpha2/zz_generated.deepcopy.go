@@ -2497,11 +2497,6 @@ func (in *Project) DeepCopyInto(out *Project) {
 			(*out)[key] = *val.DeepCopy()
 		}
 	}
-	if in.SparseCheckoutDirs != nil {
-		in, out := &in.SparseCheckoutDirs, &out.SparseCheckoutDirs
-		*out = make([]string, len(*in))
-		copy(*out, *in)
-	}
 	in.ProjectSource.DeepCopyInto(&out.ProjectSource)
 }
 
@@ -2524,11 +2519,6 @@ func (in *ProjectParentOverride) DeepCopyInto(out *ProjectParentOverride) {
 		for key, val := range *in {
 			(*out)[key] = *val.DeepCopy()
 		}
-	}
-	if in.SparseCheckoutDirs != nil {
-		in, out := &in.SparseCheckoutDirs, &out.SparseCheckoutDirs
-		*out = make([]string, len(*in))
-		copy(*out, *in)
 	}
 	in.ProjectSourceParentOverride.DeepCopyInto(&out.ProjectSourceParentOverride)
 }

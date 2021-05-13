@@ -84,10 +84,6 @@ type ProjectParentOverride struct {
 	// +optional
 	ClonePath string `json:"clonePath,omitempty"`
 
-	// Populate the project sparsely with selected directories.
-	// +optional
-	SparseCheckoutDirs []string `json:"sparseCheckoutDirs,omitempty"`
-
 	ProjectSourceParentOverride `json:",inline"`
 }
 
