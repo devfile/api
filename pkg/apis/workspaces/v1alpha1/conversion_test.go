@@ -151,10 +151,19 @@ var parentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	switch c.Intn(3) {
 	case 0:
 		c.Fuzz(&project.Git)
+		if project.Git != nil {
+			project.Git.CommonProjectSource = CommonProjectSource{}
+		}
 	case 1:
 		c.Fuzz(&project.Github)
+		if project.Github != nil {
+			project.Github.CommonProjectSource = CommonProjectSource{}
+		}
 	case 2:
 		c.Fuzz(&project.Zip)
+		if project.Zip != nil {
+			project.Zip.CommonProjectSource = CommonProjectSource{}
+		}
 	}
 }
 
@@ -162,10 +171,19 @@ var projectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	switch c.Intn(4) {
 	case 0:
 		c.Fuzz(&project.Git)
+		if project.Git != nil {
+			project.Git.CommonProjectSource = CommonProjectSource{}
+		}
 	case 1:
 		c.Fuzz(&project.Github)
+		if project.Github != nil {
+			project.Github.CommonProjectSource = CommonProjectSource{}
+		}
 	case 2:
 		c.Fuzz(&project.Zip)
+		if project.Zip != nil {
+			project.Zip.CommonProjectSource = CommonProjectSource{}
+		}
 	case 3:
 		c.Fuzz(&project.Custom)
 	}
