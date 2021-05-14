@@ -721,9 +721,9 @@
           "markdownDescription": "Optional devfile global memory limit"
         },
         "icon": {
-          "description": "Optional devfile icon",
+          "description": "Optional devfile icon, can be a URI or a relative path in the project",
           "type": "string",
-          "markdownDescription": "Optional devfile icon"
+          "markdownDescription": "Optional devfile icon, can be a URI or a relative path in the project"
         },
         "language": {
           "description": "Optional devfile language",

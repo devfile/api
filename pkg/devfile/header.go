@@ -43,7 +43,7 @@ type DevfileMetadata struct {
 	// +optional
 	Tags []string `json:"tags,omitempty"`
 
-	// Optional devfile icon
+	// Optional devfile icon, can be a URI or a relative path in the project
 	// +optional
 	Icon string `json:"icon,omitempty"`
 

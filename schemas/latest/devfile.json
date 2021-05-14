@@ -654,7 +654,7 @@
           "type": "string"
         },
         "icon": {
-          "description": "Optional devfile icon",
+          "description": "Optional devfile icon, can be a URI or a relative path in the project",
           "type": "string"
         },
         "language": {
