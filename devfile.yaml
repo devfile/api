@@ -37,6 +37,7 @@ components:
     alias: tools
   - id: eamodio/vscode-gitlens/latest
     type: chePlugin
+    registryUrl: 'https://che-plugin-registry-main.surge.sh/v3'
   - id: eclipse/che-theia/latest
     memoryLimit: 1024Mi
     type: cheEditor
