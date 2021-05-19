@@ -1,3 +1,2 @@
   - git: git-repo
     clonePath: /Users/test/projects
-    sparseCheckoutDirs: [thisDir, thatDir]

@@ -5,9 +5,7 @@
       remotes: 
         origin: test-origin
     clonePath: /Users/test/projects
-    sparseCheckoutDirs: [thisDir, thatDir]
   - name: testproject3
     zip: 
       location: git-repo.zip
     clonePath: /Users/test/projects
-    sparseCheckoutDirs: [thisDir, thatDir]    

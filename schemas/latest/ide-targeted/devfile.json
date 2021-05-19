@@ -1504,14 +1504,6 @@
                 "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
                 "markdownDescription": "Project name"
               },
-              "sparseCheckoutDirs": {
-                "description": "Populate the project sparsely with selected directories.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "markdownDescription": "Populate the project sparsely with selected directories."
-              },
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
@@ -1723,14 +1715,6 @@
             "maxLength": 63,
             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
             "markdownDescription": "Project name"
-          },
-          "sparseCheckoutDirs": {
-            "description": "Populate the project sparsely with selected directories.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "markdownDescription": "Populate the project sparsely with selected directories."
           },
           "zip": {
             "description": "Project's Zip source",

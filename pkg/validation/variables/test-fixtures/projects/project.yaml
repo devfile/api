@@ -1,9 +1,6 @@
 # Variables are defined in test-fixtures/variables/variables-referenced.yaml
 name: project1
 clonePath: "/{{foo}}"
-sparseCheckoutDirs:
-  - /FOO
-  - "/{{bar}}"
 git:
   checkoutFrom:
     revision: "{{foo}}"

@@ -3,9 +3,6 @@ variables:
 projects:
 - name: project1
   clonePath: "{{path}}"
-  sparseCheckoutDirs:
-    - xyz
-    - "{{dir}}"
   git:
     checkoutFrom:
       revision: "{{tag}}"

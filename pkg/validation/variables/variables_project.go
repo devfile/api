@@ -20,13 +20,6 @@ func ValidateAndReplaceForProjects(variables map[string]string, projects []v1alp
 			checkForInvalidError(invalidKeys, err)
 		}
 
-		// Validate project sparse checkout dir
-		for j := range projects[i].SparseCheckoutDirs {
-			if projects[i].SparseCheckoutDirs[j], err = validateAndReplaceDataWithVariable(projects[i].SparseCheckoutDirs[j], variables); err != nil {
-				checkForInvalidError(invalidKeys, err)
-			}
-		}
-
 		// Validate project source
 		if err = validateandReplaceForProjectSource(variables, &projects[i].ProjectSource); err != nil {
 			checkForInvalidError(invalidKeys, err)

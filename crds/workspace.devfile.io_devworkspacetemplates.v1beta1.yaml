@@ -6679,12 +6679,6 @@ spec:
                           - Git
                           - Zip
                           type: string
-                        sparseCheckoutDirs:
-                          description: Populate the project sparsely with selected
-                            directories.
-                          items:
-                            type: string
-                          type: array
                         zip:
                           description: Project's Zip source
                           properties:
@@ -6865,11 +6859,6 @@ spec:
                       - Zip
                       - Custom
                       type: string
-                    sparseCheckoutDirs:
-                      description: Populate the project sparsely with selected directories.
-                      items:
-                        type: string
-                      type: array
                     zip:
                       description: Project's Zip source
                       properties:

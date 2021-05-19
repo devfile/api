@@ -32,17 +32,6 @@ func convertProjectTo_v1alpha2(src *Project, dest *v1alpha2.Project) error {
 		return err
 	}
 
-	var sparseCheckoutDir string
-	switch {
-	case src.Git != nil:
-		sparseCheckoutDir = src.Git.SparseCheckoutDir
-	case src.Zip != nil:
-		sparseCheckoutDir = src.Zip.SparseCheckoutDir
-	}
-	if sparseCheckoutDir != "" {
-		dest.SparseCheckoutDirs = []string{sparseCheckoutDir}
-	}
-
 	// Make sure we didn't modify underlying src struct
 	if src.Github != nil {
 		src.Git = nil
@@ -59,20 +48,6 @@ func convertProjectFrom_v1alpha2(src *v1alpha2.Project, dest *Project) error {
 	err = json.Unmarshal(jsonProject, dest)
 	if err != nil {
 		return err
-	}
-	// **Note**: These aren't technically compatible:
-	// - v1alpha2 allows us to specify multiple sparse checkout dirs; v1alpha1 only supports one
-	//   -> we ignore all but the first sparseCheckoutDir
-	// - v1alpha2 doesn't forbid sparse checkout dir for a custom project source
-	//   -> we ignore all sparseCheckoutDirs when project source is Custom
-	if len(src.SparseCheckoutDirs) > 0 {
-		sparseCheckoutDir := src.SparseCheckoutDirs[0]
-		switch {
-		case src.Git != nil:
-			dest.Git.SparseCheckoutDir = sparseCheckoutDir
-		case src.Zip != nil:
-			dest.Zip.SparseCheckoutDir = sparseCheckoutDir
-		}
 	}
 
 	// Check if a Git-type project was originally a Github-type project in v1alpha1

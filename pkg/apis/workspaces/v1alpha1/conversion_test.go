@@ -151,10 +151,19 @@ var parentProjectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	switch c.Intn(3) {
 	case 0:
 		c.Fuzz(&project.Git)
+		if project.Git != nil {
+			project.Git.SparseCheckoutDir = ""
+		}
 	case 1:
 		c.Fuzz(&project.Github)
+		if project.Github != nil {
+			project.Github.SparseCheckoutDir = ""
+		}
 	case 2:
 		c.Fuzz(&project.Zip)
+		if project.Zip != nil {
+			project.Zip.SparseCheckoutDir = ""
+		}
 	}
 }
 
@@ -162,10 +171,19 @@ var projectFuzzFunc = func(project *Project, c fuzz.Continue) {
 	switch c.Intn(4) {
 	case 0:
 		c.Fuzz(&project.Git)
+		if project.Git != nil {
+			project.Git.SparseCheckoutDir = ""
+		}
 	case 1:
 		c.Fuzz(&project.Github)
+		if project.Github != nil {
+			project.Github.SparseCheckoutDir = ""
+		}
 	case 2:
 		c.Fuzz(&project.Zip)
+		if project.Zip != nil {
+			project.Zip.SparseCheckoutDir = ""
+		}
 	case 3:
 		c.Fuzz(&project.Custom)
 	}
