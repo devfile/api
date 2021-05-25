@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "PluginOverrides schema - Version 2.1.0-alpha",
+  "title": "PluginOverrides schema - Version 2.1.0",
   "properties": {
     "commands": {
       "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
