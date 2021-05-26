@@ -1,7 +1,7 @@
 {
   "description": "DevWorkspaceTemplate is the Schema for the devworkspacetemplates API\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers. \n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.",
   "type": "object",
-  "title": "DevWorkspaceTemplate schema - Version 2.1.0-alpha - IDE-targeted variant",
+  "title": "DevWorkspaceTemplate schema - Version 2.1.0 - IDE-targeted variant",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
