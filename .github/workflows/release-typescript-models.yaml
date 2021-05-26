@@ -64,6 +64,7 @@ jobs:
           sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' /tmp/typescript-models/package.json
           sed -i 's/\"license\": \".*\"/"license": "EPL-2.0"/g' /tmp/typescript-models/package.json
+          sed -i 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' /tmp/typescript-models/package.json
           echo "" > /tmp/typescript-models/.npmignore
 
       - name: Setup node
