@@ -1,7 +1,7 @@
 {
   "description": "Devfile describes the structure of a cloud-native devworkspace and development environment.",
   "type": "object",
-  "title": "Devfile schema - Version 2.1.0-alpha",
+  "title": "Devfile schema - Version 2.2.0-alpha",
   "required": [
     "schemaVersion"
   ],
