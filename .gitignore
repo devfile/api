@@ -3,6 +3,7 @@ build/_output
 build/_test
 test/**/tmp
 test/go/pkg
+test/v200/api-test-coverage.*
 # Created by https://www.gitignore.io/api/go,vim,emacs,visualstudiocode
 ### Emacs ###
 # -*- mode: gitignore; -*-

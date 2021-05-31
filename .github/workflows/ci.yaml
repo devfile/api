@@ -32,7 +32,15 @@ jobs:
       run: ./docker-run.sh ./validate-samples.sh
 
     - name: Run GO tests
-      run: go test -v ./...
+      run: go test -coverprofile test/v200/api-test-coverage.out -v ./...
+      run: go tool cover -html=test/v200/api-test-coverage.out -o test/v200/api-test-coverage.html
+      
+    - name: Upload Test Coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: api-test-coverage-html
+        path: tests/v200/api-test-coverage.html
+
 
     - name: Check GO mod state      
       run: |
