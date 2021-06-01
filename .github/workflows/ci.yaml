@@ -31,8 +31,10 @@ jobs:
     - name: Validate samples against schemas
       run: ./docker-run.sh ./validate-samples.sh
 
-    - name: Run GO tests
+    - name: Run GO tests and enable test coverage
       run: go test -coverprofile test/v200/api-test-coverage.out -v ./...
+
+    - name: Generate test coverage report
       run: go tool cover -html=test/v200/api-test-coverage.out -o test/v200/api-test-coverage.html
       
     - name: Upload Test Coverage results
