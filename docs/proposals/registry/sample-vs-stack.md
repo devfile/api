@@ -2,7 +2,7 @@
 
 ## Overview
 
-The existing devfile registry focuses on the stack support to provide generic language/framework/runtime, e.g. Node, Java maven, Quarkus, etc.,  support to build and run user applications. These devfiles are called ___*stack devfiles*___.  There is another kind of devfile in a devfile registry that is tailored for a building and running a specific application. These devfiles are referred to as ___*sample devfiles*___ (example: https://github.com/redhat-developer/devfile-sample).
+The existing devfile registry focuses on the stack support to provide generic language/framework/runtime, e.g. Node, Java maven, Quarkus, etc.,  support to build and run user applications. These devfiles are called ***stack devfiles***.  There is another kind of devfile in a devfile registry that is tailored for a building and running a specific application. These devfiles are referred to as ___*sample devfiles*___ (example: https://github.com/redhat-developer/devfile-sample).
 
 This proposal covers the design to support sample devfiles as a first-class citizen and differentiates between stack vs samples so that the tools can consume them properly. Also, it allows the source of a given stack and samples to be stored under a different repository other than the main source registry repo.
 
@@ -46,29 +46,44 @@ Alternatively, if we assume the devfile contained in the sample folder may refer
     samples:
       - name: nodejs-basic
         displayName: Basic NodeJS
-        description: A simple Hello world application using Node.js
-        icon: nodejsIcon.svg
-        tags: ["NodeJS", “Express”]
+        description: A simple Hello World Node.js application
+        icon: https://raw.githubusercontent.com/maysunfaisal/node-bulletin-board-2/main/nodejs-icon.png
+        tags: ["NodeJS", "Express"]
         projectType: nodejs
         language: nodejs
         git:
           remotes:
             origin: https://github.com/redhat-developer/devfile-sample.git
+      - name: code-with-quarkus
+        displayName: Basic Quarkus
+        description: A simple Hello World Java application using Quarkus
+        icon: https://raw.githubusercontent.com/elsony/devfile-sample-code-with-quarkus/main/.devfile/icon/quarkus.png
+        tags: ["Java", "Quarkus"]
+        projectType: quarkus
+        language: java
+        git:
+          remotes:
+            origin: https://github.com/elsony/devfile-sample-code-with-quarkus.git
+      - name: java-springboot-basic
+        displayName: Basic Spring Boot
+        description: A simple Hello World Java Spring Boot application using Maven
+        icon: https://raw.githubusercontent.com/elsony/devfile-sample-java-springboot-basic/main/.devfile/icon/spring-logo.png
+        tags: ["Java", "Spring"]
+        projectType: springboot
+        language: java
+        git:
+          remotes:
+            origin: https://github.com/elsony/devfile-sample-java-springboot-basic.git
       - name: python-basic
         displayName: Basic Python
-        description: A simple Hello world application using Python
-        icon: icon/python.png
-        tags: ["python"]
-        projectType: "python"
-        language: "python"
+        description: A simple Hello World application using Python
+        icon: https://raw.githubusercontent.com/elsony/devfile-sample-python-basic/main/.devfile/icon/python.png
+        tags: ["Python"]
+        projectType: python
+        language: python
         git:
           remotes:
-            origin: https://github.com/elsony/devfile-python-basic.git
-    stacks:
-      - name: my-maven
-        git:
-          remotes:
-            origin: https://github.com/eystacks/my-maven
+            origin: https://github.com/elsony/devfile-sample-python-basic.git
 
 #### Proposal 3: Include the source of the samples as part of the registry source repository (deferred: will only implement later when needed)
 The existing devfile registry source for the stacks have the following structure:
@@ -185,11 +200,9 @@ The information on the registry index (index.json) is different between a stack 
         }
     ]
 
-The bold entries highlighted the differences between a stack entry vs a sample entry in the devfile index registry. 
+The differences between a stack entry vs a sample entry in the devfile index registry are:
+1. The `type` field
+2. A stack has the `resources` and `starterProjects` while the sample has the resource location information, e.g. `git` or `zip` location information
 
 ## Registry library change
 The registry library and the registry REST API will provide a filtering mechanism to specify which type (sample or stack) is needed in the query.
-
-
-
-

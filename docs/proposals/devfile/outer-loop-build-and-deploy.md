@@ -40,10 +40,10 @@ __Alternative approach:__ we can consider reusing the `exec` type except that th
     variables:
       myimage: myimagename
     components:
-    - name: mydockerfileimage
+      - name: mydockerfileimage
         image:
-        imageName: {{myimage}}
-        dockerfile:
+          imageName: {{myimage}}
+          dockerfile:
             buildContext: ${PROJECTS_ROOT}/build
             location: Dockerfile
             args: [ "arg1", "arg2", "arg3" ]
@@ -61,16 +61,15 @@ __Alternative approach:__ we can consider reusing the `exec` type except that th
 
 __Note:__
 1. A common pattern will be using a global variable to define the image name (`myimage` in the example above) so that it can be easily referred to in the deploy step later.
-2. The `apply` command with the `image` component is optional. If the `apply` command that references an image component does not exist, then the image build will be done at the startup automatically (similar to the behaviour of the existing `kubernetes` components).  If there is an `apply` command that references the `image` component, then the user will need to create a composite command to chain the image build apply command with the deploy command (see the deployment command section) to complete the build and deploy.
 
-### Example using a file Dockerfile with registry and secret for the image push:
+### Example using a Dockerfile with registry and secret for the image push:
     variables:
-    myimage: myimagename
+      myimage: myimagename
     components:
-    - name: mydockerfileimage
+      - name: mydockerfileimage
         image:
-        imageName: {{myimage}}
-        dockerfile:
+          imageName: {{myimage}}
+          dockerfile:
             buildContext: ${PROJECTS_ROOT}/build
             location: https://github.com/redhat-developer/devfile-sample/blob/master/src/Dockerfile
             args: [ "arg1", "arg2", "arg3" ]
@@ -85,42 +84,45 @@ For the secrets, it should support the same mechanisms as specified in https://g
 
 ### Example using `apply` command on an image component:
     commands:
-    - id: deploybuild
+      - id: deploybuild
         apply:
-        component: mydockerfileimage
+          component: mydockerfileimage
 
 ### Example using a Dockerfile stored within the devfile registry as a resource with `apply` command:
     variables:
-    myimage: myimagename
+      myimage: myimagename
     components:
-    - name: mydockerfileimage
+      - name: mydockerfileimage
         image:
-        imageName: {{myimage}}
-        dockerfile:
+          imageName: {{myimage}}
+          dockerfile:
             id: mycompany/my-node-stack-dockerfile/v2.2.2
             args: [ ]
     commands:
-    - id: deploybuild
+      - id: deploybuild
         apply:
-        component: mydockerfileimage
+          component: mydockerfileimage
+
+__Note:__
+1. The `apply` command with the `image` component is optional. If the `apply` command that references an image component does not exist, then the image build will be done at the startup automatically (similar to the behaviour of the existing `kubernetes` components).  If there is an `apply` command that references the `image` component, then the user will need to create a composite command to chain the image build apply command with the deploy command (see the deployment command section) to complete the build and deploy.
  
 ### Example using a Dockerfile stored in a git repo with push registry without apply command:
     variables:
-    myimage: myimagename
+      myimage: myimagename
     components:
-    - name: mydockerfileimage
+      - name: mydockerfileimage
         image:
-        imageName: {{myimage}}
-        dockerfile:
+          imageName: {{myimage}}
+          dockerfile:
             git:
-            remotes:
+              remotes:
                 origin: "https://github.com/odo-devfiles/nodejs-ex.git"
             location: Dockerfile
             args: [ ]
 
 The git definition will be the same as the one in `starterProjects` definition that supports `checkoutFrom`
 
-`location`: the location of the dockerfile within the repo. If `checkoutFrom` is being used, the location will be relative to the `checkoutFrom`.
+`location`: the location of the dockerfile within the repo. If `checkoutFrom` is being used, the location will be relative to the root of the resources after cloning the resources using the `checkoutFrom` setting.
 
 Notes:
 1. The build tool/mechanism, e.g. buildah/kaniko, used for building the dockerfile is up to the tools so it is not part of the spec
@@ -129,20 +131,20 @@ Notes:
 
 ### Example using SourceToImage (S2I):
     variables:
-    myimage: myimagename
+      myimage: myimagename
     components:
-    - name: mys2iimage
+      - name: mys2iimage
         image:
-        imageName: {{myimage}}
-        s2i:
+          imageName: {{myimage}}
+          s2i:
             builderImageNamespace: mynamespace
             builderImageStreamTag: mytag
             scriptLocation:
-            remotes:
+              remotes:
                 origin: "https://github.com/odo-devfiles/nodejs-ex.git"
     commands:
-    - id: deploybuild
-        apply:
+      - id: deploybuild
+      apply:
         component: mys2iimage
 
 `builderImageNamespace`: Namespace where builder image is present
@@ -169,19 +171,19 @@ The current design is to try to reuse the existing `kubernetes` component as muc
 #### Examples of using `deploy` group command:
 ##### Kubernetes deployment manifest:
     components:
-    - name: myk8sdeploy
+      - name: myk8sdeploy
         kubernetes:
-        uri: deploy/deployment-manifest.yaml
+          uri: deploy/deployment-manifest.yaml
 
     commands:
-    - id: deployk8s
+      - id: deployk8s
         apply:
-        component: myk8sdeploy
-        group:
+          component: myk8sdeploy
+          group:
             kind: deploy
             isDefault: true
         attributes: 
-        - name: CONTAINER_IMAGE
+          - name: CONTAINER_IMAGE
             value: {{myimage}}
 
 `uri`: Kubernetes manifest location (can use `kubectl` to deploy) which can be an URL or a path relative to the devfile. [Example of Kubernetes deployment](#markdown-header-example-of-kubernetes-deployment-manifest) manifest and [example of Operator deployment manifest](#markdown-header-example-of-operator-deployment-manifest).
@@ -190,47 +192,47 @@ Variables that need to be replaced during the deployment can be specified using 
  
 ##### Kubernetes deployment manifest (inlined):
     components:
-    - name: myk8deploy
+      - name: myk8deploy
         kubernetes:
-        inlined: |
+          inlined: |
             apiVersion: batch/v1
             kind: Job
             metadata:
-            name: pi
+              name: pi
             spec:
-            template:
+              template:
                 spec:
-                containers:
-                - name: job
+                  containers:
+                  - name: job
                     image: {{myimage}}
                     command: ["some",  "command", "with", "parameters"]
-                restartPolicy: Never
-            backoffLimit: 4
+                  restartPolicy: Never
+              backoffLimit: 4
     commands:
-    - id: deployk8s
+      - id: deployk8s
         apply:
-        component: myk8sdeploy
-        group:
+          component: myk8sdeploy
+          group:
             kind: deploy
             isDefault: true
 
 ##### Helm:
     components:
-    - name: myhelmdeploy
+      - name: myhelmdeploy
         helm:
-        chart: http://helm-chart-url
-        values: 
+          chart: http://helm-chart-url
+          values: 
             image: quay.io/sample/hello-world # A chart may expose a well-known values.yaml parameter called "image".
             replicas: 3
     commands:
-    - id: deployHelm
+      - id: deployHelm
         apply:
-        component: myhelmdeploy
-        group:
+          component: myhelmdeploy
+          group:
             kind: deploy
             isDefault: true
         variables: 
-        - name: CONTAINER_IMAGE
+          - name: CONTAINER_IMAGE
             value: {{myimage}}
 
 
@@ -240,54 +242,54 @@ Variables that need to be replaced during the deployment can be specified using 
     kind: Deployment
     apiVersion: apps/v1
     metadata:
-    name: {{.COMPONENT_NAME}}
+      name: {{.COMPONENT_NAME}}
     spec:
-    replicas: 1
-    selector:
+      replicas: 1
+      selector:
         matchLabels:
-        app: {{.COMPONENT_NAME}}
+          app: {{.COMPONENT_NAME}}
     template:
-        metadata:
+      metadata:
         creationTimestamp: null
         labels:
-            app: {{.COMPONENT_NAME}}
-        spec:
+          app: {{.COMPONENT_NAME}}
+      spec:
         containers:
-            - name: {{.COMPONENT_NAME}}
+          - name: {{.COMPONENT_NAME}}
             image: {{.CONTAINER_IMAGE}}
             ports:
-                - name: http
+              - name: http
                 containerPort: {{.PORT}}
                 protocol: TCP
     ---
     kind: Service
     apiVersion: v1
     metadata:
-    name: {{.COMPONENT_NAME}}
+      name: {{.COMPONENT_NAME}}
     spec:
-    ports:
+      ports:
         - protocol: TCP
-        port: {{.PORT}}
-        targetPort: {{.PORT}}
-    selector:
+          port: {{.PORT}}
+          targetPort: {{.PORT}}
+      selector:
         app: {{.COMPONENT_NAME}}
-    type: ClusterIP
-    sessionAffinity: None
+      type: ClusterIP
+      sessionAffinity: None
     ---
     kind: Route
     apiVersion: route.openshift.io/v1
     metadata:
-    name: {{.COMPONENT_NAME}}
-    annotations:
+      name: {{.COMPONENT_NAME}}
+      annotations:
         openshift.io/host.generated: 'true'
     spec:
-    to:
+      to:
         kind: Service
         name: {{.COMPONENT_NAME}}
         weight: 100
-    port:
+      port:
         targetPort: {{.PORT}}
-    wildcardPolicy: None
+      wildcardPolicy: None
 
 This example is using variables for tools to replace some of the info during deployment.
 
@@ -296,143 +298,13 @@ This example is using variables for tools to replace some of the info during dep
     apiVersion: app.stacks/v1beta1
     kind: RuntimeComponent
     metadata:
-    name: {{.COMPONENT_NAME}}
+      name: {{.COMPONENT_NAME}}
     spec:
-    applicationImage: {{.CONTAINER_IMAGE}}
-    service:
+      applicationImage: {{.CONTAINER_IMAGE}}
+      service:
         type: ClusterIP
         port: {{.PORT}}
-    expose: true
-    storage:
+      expose: true
+      storage:
         size: 2Gi
         mountPath: "/logs"
-
-## Backup: 
-
-### Old deploy proposal
-
-To specify the deploy step, we introduce a new group kind of command called `deploy` under the existing `commands`. The deploy group type of command can use different deploy mechanisms, e.g. `kubernetes`, `operator`, or `helm`.
-
-#### Examples of using `deploy` group command:
-
-##### Kubernetes deployment manifest:
-    commands:
-    - id: deployk8s
-        kubernetes: 
-        location: deployment-manifest.yaml
-        group:
-        kind: deploy
-
-`location`: Kubernetes manifest location (can use `kubectl` to deploy) which can be an URL or a path relative to the devfile. [Example of deployment manifest](#markdown-header-example-of-kubernetes-deployment-manifest).
-
-Note: do we need a context directory?
-
-##### Kubernetes deployment manifest:
-    commands:
-    - id: deployk8s
-        deploy:
-        kubernetes:
-            location: deployment-manifest.yaml
-        group:
-        kind: deploy
-
-`location`: Kubernetes manifest location (can use `kubectl` to deploy) which can be an URL or a path relative to the devfile. [Example of deployment manifest](#markdown-header-example-of-kubernetes-deployment-manifest).
-
-Note: 
-1. The deploy under command is redundant to the deploy group but can group different deploy mechanisms without cluttering the commands. We can consider removing that
-1. Do we need a context directory?
-
-## Inner Loop Scenario ([gh issue](https://github.com/devfile/api/issues/346))
-__Note:__ This inner-loop scenario is currently targeted for devfile 2.3 (not devfile 2.2)
-
-### The problem
-More and more repositories of open source projects include one or more Dockerfiles (compose files as well). Those are intended to be used as an alternative way to locally build and run the application without the need to install any dependency.
-
-As a developer that starts a Che workspace for a project that includes Dockerfiles I would expect that I could reuse the container defined in those Dockerfile for building and running my application rather than referencing an image published in a registry.
-
-### How other inner loop tools are using Dockerfiles
-
-The inner loop scenario is also used by docker compose. For example in a compose file we can reference the dockerfile that need to be built to [run a service](https://docs.docker.com/compose/compose-file/compose-file-v3/#dockerfile):
-
-    build:
-      context: .
-      dockerfile: Dockerfile-alternate
-
-This project https://github.com/dnephin/dobi uses Dockerfiles for the inner loop too. 
-
-#### Example scenarios
-
-The following scenarios use this [github repository](https://github.com/l0rd/spring-petclinic/tree/inner-loop) (a clone of the spring petclinic sample).
-
-__Scenario n.1: Build a dockerfile and build my application__
-
-    docker build -t petclinic-build -f Dockerfile.build . && \
-    docker run -v $(PWD):/src petclinic-build mvn package
-
-A devfile could support this scenario like this:
-
-    components:
-    - name: "build"
-        container:
-        dockerfile:
-            location: Dockerfile.build
-        mountSources: true
-        command: "tail -f /dev/null"
-    commands:
-    - id: build-image     # <--- the build command could be implicit
-        build:              #      for containers that reference a
-        component: build  #      dockerfile
-    - id: build-app
-        exec:
-        component: build
-        commandLine: mvn package
-        workingDir: /projects/spring-petclinic
-
-__Scenario n.2: Build a dockerfile and run my application__
-
-    docker build -t petclinic-run -f Dockerfile.run . && \
-    docker run -d -P -v $(PWD)/target:/bin petclinic-run
-
-A devfile could support this scenario like this:
-
-    components:
-    - name: "run"
-        container:
-        dockerfile:
-            location: Dockerfile.run
-        mountSources: true
-        command: "tail -f /dev/null"
-    commands:
-    - id: build-image    # <--- the build command could be implicit
-        build:             #      for containers that reference a
-        component: run   #      dockerfile
-    - id: run
-        exec:
-        component: run
-        commandLine: java -jar *.jar --spring.profiles.active=mysql
-        workingDir: /projects/spring-petclinic/target
-
-__Scenario n.3: Using a multi-stage build Dockerfile to build__
-
-    docker build -t petclinic-run2 -f Dockerfile . && \
-    docker run -d petclinic-run2
-
-A devfile could support this scenario like this:
-
-    components:
-    - name: "run2"
-        container:
-        dockerfile:
-            location: Dockerfile
-        mountSources: true
-        command: "tail -f /dev/null"
-    commands:
-    - id: build-image    # <--- the build command could be implicit
-        build:             #      for containers that reference a
-        component: run   #      dockerfile
-    - id: run
-        exec:
-        component: run
-        commandLine: java -jar *.jar --spring.profiles.active=mysql
-        workingDir: /projects/spring-petclinic/target
-
