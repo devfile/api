@@ -43,6 +43,12 @@ func (devfile *TestDevfile) AddComponent(componentType schema.ComponentType) sch
 	if componentType == schema.ContainerComponentType {
 		component = devfile.createContainerComponent()
 		devfile.SetContainerComponentValues(&component)
+	} else if componentType == schema.KubernetesComponentType {
+		component = devfile.createKubernetesComponent()
+		devfile.SetK8sComponentValues(&component)
+	} else if componentType == schema.OpenshiftComponentType {
+		component = devfile.createOpenshiftComponent()
+		devfile.SetK8sComponentValues(&component)
 	} else if componentType == schema.VolumeComponentType {
 		component = devfile.createVolumeComponent()
 		devfile.SetVolumeComponentValues(&component)
@@ -58,6 +64,32 @@ func (devfile *TestDevfile) createContainerComponent() schema.Component {
 	component.Name = GetRandomUniqueString(8, true)
 	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
 	component.Container = &schema.ContainerComponent{}
+	devfile.componentAdded(component)
+	return component
+
+}
+
+// createKubernetesComponent creates a kubernetes component, ready for attribute setting
+func (devfile *TestDevfile) createKubernetesComponent() schema.Component {
+
+	LogInfoMessage("Create a kubernetes component :")
+	component := schema.Component{}
+	component.Name = GetRandomUniqueString(8, true)
+	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
+	component.Kubernetes = &schema.KubernetesComponent{}
+	devfile.componentAdded(component)
+	return component
+
+}
+
+// createOpenshiftComponent creates an openshift component, ready for attribute setting
+func (devfile *TestDevfile) createOpenshiftComponent() schema.Component {
+
+	LogInfoMessage("Create an openshift component :")
+	component := schema.Component{}
+	component.Name = GetRandomUniqueString(8, true)
+	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
+	component.Openshift = &schema.OpenshiftComponent{}
 	devfile.componentAdded(component)
 	return component
 
@@ -160,6 +192,39 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 
 	devfile.componentUpdated(*component)
 
+}
+
+func (devfile *TestDevfile) SetK8sComponentValues(component *schema.Component) {
+	var k8type *schema.K8sLikeComponent = &schema.K8sLikeComponent{}
+
+	if component.Kubernetes != nil {
+		k8type = &component.Kubernetes.K8sLikeComponent
+	} else if component.Openshift != nil {
+		k8type = &component.Openshift.K8sLikeComponent
+	}
+
+	if k8type.Inlined != "" {
+		k8type.Inlined = GetRandomString(GetRandomNumber(8, 18), false)
+		LogInfoMessage(fmt.Sprintf("....... updated k8type.Inlined: %s", k8type.Inlined))
+	} else if k8type.Uri != "" {
+		k8type.Uri = GetRandomString(GetRandomNumber(8, 18), false)
+		LogInfoMessage(fmt.Sprintf("....... updated k8type.Uri: %s", k8type.Uri))
+	} else {
+		//This is the component creation scenario when no inlined or uri property is set
+		if GetBinaryDecision() {
+			k8type.Inlined = GetRandomString(GetRandomNumber(8, 18), false)
+			LogInfoMessage(fmt.Sprintf("....... created Inlined: %s", k8type.Inlined))
+		} else {
+			k8type.Uri = GetRandomString(GetRandomNumber(8, 18), false)
+			LogInfoMessage(fmt.Sprintf("....... created Uri: %s", k8type.Uri))
+		}
+	}
+
+	if GetBinaryDecision() {
+		k8type.Endpoints = devfile.CreateEndpoints()
+	}
+
+	devfile.componentUpdated(*component)
 }
 
 // SetVolumeComponentValues randomly sets/updates volume component attributes to random values
