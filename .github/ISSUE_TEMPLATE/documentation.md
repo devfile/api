@@ -13,9 +13,9 @@ assignees: ''
 **Which area this documentation change is related to?**
 
 > Uncomment appropriate `/area` lines, and delete the rest.
-> For example, `> /area devfile` would simply become: `/area devfile`
+> For example, `> /area api` would simply become: `/area api`
 
-> /area devfile
+> /area api
 > /area library
 > /area registry
 > /area devworkspace

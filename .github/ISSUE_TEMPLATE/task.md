@@ -11,10 +11,10 @@ assignees: ''
 **Which area/kind this issue is related to?**
 
 > Uncomment appropriate lines, and delete the rest.
-> For example, `> /area devfile` would simply become: `/area devfile`
+> For example, `> /area api` would simply become: `/area api`
 
 > /area ci
-> /area devfile
+> /area api
 > /area library
 > /area registry
 > /area devworkspace
