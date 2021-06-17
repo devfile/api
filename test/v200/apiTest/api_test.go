@@ -50,6 +50,22 @@ func Test_ContainerComponent(t *testing.T) {
 	apiUtils.RunTest(testContent, t)
 }
 
+func Test_KubernetesComponent(t *testing.T) {
+	testContent := commonUtils.TestContent{}
+	testContent.ComponentTypes = []schema.ComponentType{schema.KubernetesComponentType}
+	testContent.EditContent = false
+	testContent.FileName = commonUtils.GetDevFileName()
+	apiUtils.RunTest(testContent, t)
+}
+
+func Test_OpenshiftComponent(t *testing.T) {
+	testContent := commonUtils.TestContent{}
+	testContent.ComponentTypes = []schema.ComponentType{schema.OpenshiftComponentType}
+	testContent.EditContent = false
+	testContent.FileName = commonUtils.GetDevFileName()
+	apiUtils.RunTest(testContent, t)
+}
+
 func Test_VolumeComponent(t *testing.T) {
 	testContent := commonUtils.TestContent{}
 	testContent.ComponentTypes = []schema.ComponentType{schema.VolumeComponentType}
@@ -61,6 +77,8 @@ func Test_MultiComponent(t *testing.T) {
 	testContent := commonUtils.TestContent{}
 	testContent.ComponentTypes = []schema.ComponentType{
 		schema.ContainerComponentType,
+		schema.KubernetesComponentType,
+		schema.OpenshiftComponentType,
 		schema.VolumeComponentType}
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
@@ -99,6 +117,8 @@ func Test_Everything(t *testing.T) {
 		schema.ApplyCommandType}
 	testContent.ComponentTypes = []schema.ComponentType{
 		schema.ContainerComponentType,
+		schema.KubernetesComponentType,
+		schema.OpenshiftComponentType,
 		schema.VolumeComponentType}
 	testContent.ProjectTypes = []schema.ProjectSourceType{
 		schema.GitProjectSourceType,
