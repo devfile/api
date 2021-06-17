@@ -2,13 +2,13 @@
 
 ## Overview
 
-The existing devfile registry focuses on the stack support to provide generic language/framework/runtime, e.g. Node, Java maven, Quarkus, etc.,  support to build and run user applications. These devfiles are called ***stack devfiles***.  There is another kind of devfile in a devfile registry that is tailored for a building and running a specific application. These devfiles are referred to as ___*sample devfiles*___ (example: https://github.com/redhat-developer/devfile-sample).
+The existing devfile registry focuses on the stack support to provide generic language/framework/runtime, e.g. Node, Java maven, Quarkus, etc.,  support to build and run user applications. These devfiles are called ***stack devfiles***.  There is another kind of devfile in a devfile registry that is tailored for a building and running a specific application. These devfiles are referred to as ***sample devfiles*** (example: https://github.com/redhat-developer/devfile-sample).
 
 This proposal covers the design to support sample devfiles as a first-class citizen and differentiates between stack vs samples so that the tools can consume them properly. Also, it allows the source of a given stack and samples to be stored under a different repository other than the main source registry repo.
 
 ## Adding samples or stacks to the devfile registry
 
-A file called ___*extraDevfileEntries.yaml*___ is added under the root of the devfile registry source repository to add samples and stacks from other repositories to the registry. This file contains the location information on where the extra samples and stacks can be found during a registry build.
+A file called ***extraDevfileEntries.yaml*** is added under the root of the devfile registry source repository to add samples and stacks from other repositories to the registry. This file contains the location information on where the extra samples and stacks can be found during a registry build.
 
 ### Sample extraDevfileEntires.yaml:
 
@@ -16,7 +16,7 @@ __Note:___ Proposal #2 will be used
 
 #### Proposal 1 (deferred: will only implement later when needed):
 If we assume the devfile in a given sample contains the information on the sample, we can future simplify it by just referring the sample to the location. All the metadata information is extracted directly from the devfile contained in the sample/stack repository.
-
+```yaml
     schemaVersion: 1.0.0
     samples:
     - name: nodejs-basic
@@ -35,13 +35,14 @@ If we assume the devfile in a given sample contains the information on the sampl
       git:
         remotes:
           origin: https://github.com/eystacks/my-maven
+```
 
 __Note:__ the location of the sample supports the same configuration as the `starterProjects` definition, i.e. `git` and `zip`. Refer to the definitions of the existing `git` and `zip` elements for supported settings.
 
 #### Proposal 2:
 
 Alternatively, if we assume the devfile contained in the sample folder may refer to the original stack instead of the specific example, we may need to include a way for the user to specify the metadata associated with the sample as part of the sample definition.
-
+```yaml
     schemaVersion: 1.0.0
     samples:
       - name: nodejs-basic
@@ -84,6 +85,7 @@ Alternatively, if we assume the devfile contained in the sample folder may refer
         git:
           remotes:
             origin: https://github.com/elsony/devfile-sample-python-basic.git
+```
 
 #### Proposal 3: Include the source of the samples as part of the registry source repository (deferred: will only implement later when needed)
 The existing devfile registry source for the stacks have the following structure:
@@ -156,7 +158,7 @@ With the introduction of the samples in the registry, the samples will be stored
 
 ## Registry query results
 The information on the registry index (index.json) is different between a stack and a sample. The differences are based on how the two will be used.
-
+```json
     [
         {
             "name": "java-maven",
@@ -199,6 +201,7 @@ The information on the registry index (index.json) is different between a stack 
             }
         }
     ]
+```
 
 The differences between a stack entry vs a sample entry in the devfile index registry are:
 1. The `type` field
