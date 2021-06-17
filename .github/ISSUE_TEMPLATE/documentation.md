@@ -15,15 +15,10 @@ assignees: ''
 > Uncomment appropriate `/area` lines, and delete the rest.
 > For example, `> /area devfile` would simply become: `/area devfile`
 
-> /area ci
 > /area devfile
 > /area library
 > /area registry
 > /area devworkspace
-> /area integration-tests
-> /area test-automation
-> /area releng
-
 
 ## Issue details
 <!--

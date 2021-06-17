@@ -1,6 +1,6 @@
 ---
 name: 🔧 Task
-about: Issue for small enhancement/ci/tests/technical debt
+about: Issue for project support and quality assurance
 title: ''
 labels: ''
 assignees: ''
@@ -21,7 +21,6 @@ assignees: ''
 > /area integration-tests
 > /area test-automation
 > /area releng
-> /kind enhancement
 
 
 ## Issue Description
