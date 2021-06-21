@@ -69,6 +69,7 @@ type TestContent struct {
 	ComponentTypes      []schema.ComponentType
 	ProjectTypes        []schema.ProjectSourceType
 	StarterProjectTypes []schema.ProjectSourceType
+	AddMetaData         bool
 	AddEvents           bool
 	FileName            string
 	EditContent         bool
@@ -299,6 +300,10 @@ func (testDevfile *TestDevfile) RunTest(testContent TestContent, t *testing.T) {
 
 	if testContent.AddEvents {
 		testDevfile.AddEvents()
+	}
+
+	if testContent.AddMetaData {
+		testDevfile.AddMetaData()
 	}
 
 	err := testDevfile.Validator.WriteAndValidate(testDevfile)
