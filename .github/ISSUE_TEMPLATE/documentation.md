@@ -3,7 +3,7 @@ name: "📖 Documentation"
 about: Suggest enhancement for devfile documentation
 title: ''
 labels: ''
-assignees: ''
+assignees: jc-berger
 
 ---
 

@@ -7,10 +7,20 @@ assignees: ''
 
 ---
 
+<!--
+
+The Task issue template is for project support and quality assurance items.
+For example, tests or ci related issues, readme update, technical debt, etc. can be created with this template.
+
+For a new feature or an enhancement, please submit a feature request or user story issue.
+
+Thanks for understanding, and for contributing to the project!
+
+-->
 
 **Which area/kind this issue is related to?**
 
-> Uncomment appropriate lines, and delete the rest.
+> Uncomment appropriate areas, and delete the rest.
 > For example, `> /area api` would simply become: `/area api`
 
 > /area ci

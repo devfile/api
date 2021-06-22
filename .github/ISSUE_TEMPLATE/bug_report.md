@@ -59,7 +59,20 @@ Thanks for understanding, and for contributing to the project!
     A clear and concise description of what you expected to happen.
 -->
 
-## Any logs, error output, screenshots etc?
+## Any logs, error output, screenshots etc? Provide the devfile that sees this bug, if applicable.
+<!--
+To get logs:
+    ci: please copy the github workflow output
+    api: please copy the terminal output
+    library: please copy the terminal output
+    registry: follow instruction under "Collecting Logs" to find log: https://github.com/devfile/registry-support/blob/main/TROUBLESHOOTING.md
+    devworkspace: copy the logs from the controller (kubectl logs deploy/devworkspace-controller -n $NAMESPACE)
+    test-automation: 
+        api: follow instruction under "Running tests locally" to find test log: https://github.com/devfile/api/tree/main/test
+        library: follow instruction under "Running the tests locally" to find test log: https://github.com/devfile/library/tree/main/tests
+        devworkspace: copy the logs from the controller (kubectl logs deploy/devworkspace-controller -n $NAMESPACE)
+    integration-tests: please copy the build log under prow ci result for QE ingetration tests
+-->
 
 
 ## Additional context
