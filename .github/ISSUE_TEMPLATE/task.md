@@ -14,7 +14,7 @@ For example, tests or ci related issues, readme update, technical debt, etc. can
 
 For a new feature or an enhancement, please submit a feature request or user story issue.
 
-Thanks for understanding, and for contributing to the project!
+Thanks for understanding and for contributing to the project!
 
 -->
 

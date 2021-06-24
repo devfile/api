@@ -13,9 +13,9 @@ Welcome! - We kindly ask you to:
 
   1. Fill out the issue template below 
   2. Use Gitter if you have a question rather than a bug or feature request.
-    Gitter community channel is at: https://gitter.im/devfile/community
+    See the Gitter community channel at: https://gitter.im/devfile/community
 
-Thanks for understanding, and for contributing to the project!
+Thanks for understanding and for contributing to the project!
 
 -->
 
