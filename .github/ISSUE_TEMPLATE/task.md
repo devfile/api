@@ -20,8 +20,10 @@ Thanks for understanding, and for contributing to the project!
 
 **Which area/kind this issue is related to?**
 
-> Uncomment appropriate areas, and delete the rest.
-> For example, `> /area api` would simply become: `/area api`
+<!--
+    Uncomment appropriate `/area` lines, and delete the rest.
+    For example, `> /area api` would simply become: `/area api`
+-->
 
 > /area ci
 > /area api
@@ -38,9 +40,9 @@ Thanks for understanding, and for contributing to the project!
     A clear and concise description of what the task is.
 -->
 
-> Please uncommnet and provide the target Odo version if this task is for QE integration test. 
+> Please uncomment and provide the target Odo version if this task is for QE integration test. 
 > Leave if blank if it's a future QE issue.
-> Delete this comment if it's not related QE intergation test.
+> Delete this comment if it's not related QE integration test.
  
 > Target Odo version: 
 

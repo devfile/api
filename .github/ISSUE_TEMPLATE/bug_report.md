@@ -21,10 +21,11 @@ Thanks for understanding, and for contributing to the project!
 
 -->
 
-**Which area this bug is related to?**
-
-> Uncomment appropriate `/area` lines, and delete the rest.
-> For example, `> /area api` would simply become: `/area api`
+### Which area this bug is related to?
+<!--
+    Uncomment appropriate `/area` lines, and delete the rest.
+    For example, `> /area api` would simply become: `/area api`
+-->
 
 > /area ci
 > /area api

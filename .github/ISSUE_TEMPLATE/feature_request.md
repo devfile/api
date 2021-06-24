@@ -21,8 +21,10 @@ Thanks for understanding, and for contributing to the project!
 
 **Which area this feature is related to?**
 
-> Uncomment appropriate `/area` lines, and delete the rest.
-> For example, `> /area api` would simply become: `/area api`
+<!--
+    Uncomment appropriate `/area` lines, and delete the rest.
+    For example, `> /area api` would simply become: `/area api`
+-->
 
 > /area api
 > /area library
@@ -34,7 +36,7 @@ Thanks for understanding, and for contributing to the project!
 <!--
     A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 -->
-**Why is this needed?Is your feature request related to a problem?**
+**Why is this needed? Is your feature request related to a problem?**
 
 **Detailed description:**
 

@@ -11,8 +11,10 @@ assignees: ''
 
 **Which area this user story is related to?**
 
-> Uncomment appropriate `/area` lines, and delete the rest.
-> For example, `> /area api` would simply become: `/area api`
+<!--
+    Uncomment appropriate `/area` lines, and delete the rest.
+    For example, `> /area api` would simply become: `/area api`
+-->
 
 > /area api
 > /area library
