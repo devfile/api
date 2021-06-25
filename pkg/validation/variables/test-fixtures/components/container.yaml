@@ -8,8 +8,8 @@ command:
   - -f
   - "{{devnull}}"
 args:
-  - "{{devnull}}"
-memoryLimit: "{{foo}}"
+  - "{{ devnull }}"
+memoryLimit: "{{ foo }}"
 memoryRequest: "{{foo}}"
 sourceMapping: "{{foo}}"
 volumeMounts:

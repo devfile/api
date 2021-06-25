@@ -2,7 +2,7 @@
 component: component
 commandLine: tail -f {{devnull}}
 workingDir: "{{foo}}"
-label: "{{version}}"
+label: "{{ version }}"
 env:
-  - name: "{{foo}}"
+  - name: "{{ foo }}"
     value: "{{bar}}"
