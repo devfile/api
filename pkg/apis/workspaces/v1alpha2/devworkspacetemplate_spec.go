@@ -18,8 +18,11 @@ type DevWorkspaceTemplateSpecContent struct {
 	// to replace the corresponding value in string fields in the devfile. Replacement cannot be used for
 	//
 	//  - schemaVersion, metadata, parent source
+	//
 	//  - element identifiers, e.g. command id, component name, endpoint name, project name
+	//
 	//  - references to identifiers, e.g. in events, a command's component, container's volume mount name
+	//
 	//  - string enums, e.g. command group kind, endpoint exposure
 	// +optional
 	// +patchStrategy=merge

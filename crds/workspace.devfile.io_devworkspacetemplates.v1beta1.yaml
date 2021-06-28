@@ -6965,10 +6965,10 @@ spec:
                   in the devfile. Values can can be referenced via {{variable-key}}
                   to replace the corresponding value in string fields in the devfile.
                   Replacement cannot be used for \n  - schemaVersion, metadata, parent
-                  source  - element identifiers, e.g. command id, component name,
-                  endpoint name, project name  - references to identifiers, e.g. in
-                  events, a command's component, container's volume mount name  -
-                  string enums, e.g. command group kind, endpoint exposure"
+                  source \n  - element identifiers, e.g. command id, component name,
+                  endpoint name, project name \n  - references to identifiers, e.g.
+                  in events, a command's component, container's volume mount name
+                  \n  - string enums, e.g. command group kind, endpoint exposure"
                 type: object
             type: object
         type: object

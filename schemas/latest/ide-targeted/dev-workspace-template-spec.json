@@ -3258,12 +3258,12 @@
       "markdownDescription": "StarterProjects is a project that can be used as a starting point when bootstrapping new projects"
     },
     "variables": {
-      "description": "Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source  - element identifiers, e.g. command id, component name, endpoint name, project name  - references to identifiers, e.g. in events, a command's component, container's volume mount name  - string enums, e.g. command group kind, endpoint exposure",
+      "description": "Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure",
       "type": "object",
       "additionalProperties": {
         "type": "string"
       },
-      "markdownDescription": "Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source  - element identifiers, e.g. command id, component name, endpoint name, project name  - references to identifiers, e.g. in events, a command's component, container's volume mount name  - string enums, e.g. command group kind, endpoint exposure"
+      "markdownDescription": "Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure"
     }
   },
   "additionalProperties": false,
