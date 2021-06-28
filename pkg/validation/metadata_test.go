@@ -29,7 +29,7 @@ func TestValidateMetadata(t *testing.T) {
 			wantErr: &invalidArchErr,
 		},
 		{
-			name: "Architecture Absent",
+			name:     "Architecture Absent",
 			metadata: devfile.DevfileMetadata{},
 		},
 	}

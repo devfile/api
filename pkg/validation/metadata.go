@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-var validArchitectures = map[string]bool {
-	"amd64": true,
-	"arm64": true,
+var validArchitectures = map[string]bool{
+	"amd64":   true,
+	"arm64":   true,
 	"ppc64le": true,
-	"s390x": true,
+	"s390x":   true,
 }
 
 // ValidateMetadata validates the devfile metadata
