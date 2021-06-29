@@ -9,7 +9,7 @@ Testing and documentation do not need to be complete in order for this PR to be 
 
 > - Open new test/doc issues under the [devfile/api](https://github.com/devfile/api/issues) repo
 > - Check each criteria if:
-> > - There is a separate tracking issue.  Add the issue link under the criteria
+> > - There is a separate tracking issue. Add the issue link under the criteria
 > > **or**
 > > - test/doc updates are made as part of this PR
 > -  If unchecked, explain why it's not needed
