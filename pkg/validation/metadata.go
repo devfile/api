@@ -36,8 +36,16 @@ func validateArchitectures(architectures []string) error {
 	}
 
 	if len(invalidArchitectures) > 0 {
-		err = fmt.Errorf("architecture: %s not valid. Please ensure that the architecture list conforms to specification", strings.Join(invalidArchitectures, ","))
+		err = fmt.Errorf("architecture: %s not valid. Please ensure that the architecture list conforms to %s", strings.Join(invalidArchitectures, ","), strings.Join(mapKeyList(validArchitectures), ","))
 	}
 
 	return err
+}
+
+func mapKeyList(m map[string]bool) []string {
+	var keys []string
+	for k := range m {
+		keys = append(keys, k)
+	}
+	return keys
 }

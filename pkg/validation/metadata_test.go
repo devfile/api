@@ -8,7 +8,7 @@ import (
 
 func TestValidateMetadata(t *testing.T) {
 
-	invalidArchErr := "architecture:.* not valid. Please ensure that the architecture list conforms to specification"
+	invalidArchErr := "architecture:.* not valid. Please ensure that the architecture list conforms.*"
 
 	tests := []struct {
 		name     string
