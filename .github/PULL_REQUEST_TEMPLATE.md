@@ -5,7 +5,7 @@ _Summarize the changes_
 _Link to github issue(s)_
 
 ### PR acceptance criteria:
-Testing and documentation do not need to be complete in order for this PR to be approved.  We just need to ensure tracking issues are opened.  
+Testing and documentation do not need to be complete in order for this PR to be approved. We just need to ensure tracking issues are opened.
 
 > - Open new test/doc issues under the [devfile/api](https://github.com/devfile/api/issues) repo
 > - Check each criteria if:
