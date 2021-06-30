@@ -18,9 +18,9 @@ starterProjects:
 - name: starterproject1
   git:
     checkoutFrom:
-      revision: "{{tag}}"
+      revision: "{{  tag  }}"
     remotes:
-      "{{tag}}": "{{devnull}}"
+      "{{tag}}": "{{  devnull }}"
       "{{version}}": "test"
 components:
 - name: component1
@@ -37,7 +37,7 @@ components:
       - "{{devnull}}"
 - name: component2
   kubernetes:
-    inlined: "{{foo}}"
+    inlined: "{{ foo }}"
     endpoints:
     - name: endpoint1
       exposure: "public"
