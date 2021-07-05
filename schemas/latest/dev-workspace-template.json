@@ -81,7 +81,8 @@
               },
               "fieldsV1": {
                 "description": "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type.",
-                "type": "Any"
+                "type": "object",
+                "additionalProperties": false
               },
               "manager": {
                 "description": "Manager is an identifier of the workflow managing these fields.",

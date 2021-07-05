@@ -18,6 +18,9 @@ type ParentOverrides struct {
 	// Overriding is done according to K8S strategic merge patch standard rules.
 	// +optional
 	// +patchStrategy=merge
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty" patchStrategy:"merge"`
 
 	// Overrides of components encapsulated in a parent devfile or a plugin.
@@ -65,6 +68,9 @@ type ComponentParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes                   attributes.Attributes `json:"attributes,omitempty"`
 	ComponentUnionParentOverride `json:",inline"`
 }
@@ -78,6 +84,9 @@ type ProjectParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
 
 	// Path relative to the root of the projects to which this project should be cloned into. This is a unix-style relative path (i.e. uses forward slashes). The path is invalid if it is absolute or tries to escape the project root through the usage of '..'. If not specified, defaults to the project name.
@@ -96,6 +105,9 @@ type StarterProjectParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
 
 	// Description of a starter project
@@ -120,6 +132,9 @@ type CommandParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes                 attributes.Attributes `json:"attributes,omitempty"`
 	CommandUnionParentOverride `json:",inline"`
 }
@@ -470,6 +485,9 @@ type EndpointParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
 
@@ -638,6 +656,9 @@ type ComponentPluginOverrideParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes                                 attributes.Attributes `json:"attributes,omitempty"`
 	ComponentUnionPluginOverrideParentOverride `json:",inline"`
 }
@@ -653,6 +674,9 @@ type CommandPluginOverrideParentOverride struct {
 
 	// Map of implementation-dependant free-form YAML attributes.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes                               attributes.Attributes `json:"attributes,omitempty"`
 	CommandUnionPluginOverrideParentOverride `json:",inline"`
 }
@@ -1003,6 +1027,9 @@ type EndpointPluginOverrideParentOverride struct {
 	//
 	// - type: "terminal" / "ide" / "ide-dev",
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
 }
 
