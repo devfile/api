@@ -18,15 +18,15 @@ func (FieldOverridesInclude) Help() *markers.DefinitionHelp {
 			Details: "",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{
-			"Omit": markers.DetailedHelp{
+			"Omit": {
 				Summary: "indicates that this field cannot be overridden at all.",
 				Details: "",
 			},
-			"OmitInPlugin": markers.DetailedHelp{
+			"OmitInPlugin": {
 				Summary: "OmmitInPlugin indicates that this field cannot be overridden in a devfile plugin.",
 				Details: "",
 			},
-			"Description": markers.DetailedHelp{
+			"Description": {
 				Summary: "indicates the description that should be added as Go documentation on the generated structs.",
 				Details: "",
 			},
@@ -42,15 +42,15 @@ func (Generator) Help() *markers.DefinitionHelp {
 			Details: "",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{
-			"IsForPluginOverrides": markers.DetailedHelp{
+			"IsForPluginOverrides": {
 				Summary: "indicates that the generated code should be done for plugin overrides. When false, the parent overrides are generated",
 				Details: "",
 			},
-			"suffix": markers.DetailedHelp{
+			"suffix": {
 				Summary: "",
 				Details: "",
 			},
-			"rootTypeToProcess": markers.DetailedHelp{
+			"rootTypeToProcess": {
 				Summary: "",
 				Details: "",
 			},

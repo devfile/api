@@ -64,14 +64,18 @@ func (Generator) RegisterMarkers(into *markers.Registry) error {
 	return genutils.RegisterUnionMarkers(into)
 }
 
+func (Generator) CheckFilter() loader.NodeFilter {
+	return func(node ast.Node) bool {
+		// ignore interfaces
+		_, isIface := node.(*ast.InterfaceType)
+		return !isIface
+	}
+}
+
 // Generate generates the artifacts
 func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	for _, root := range ctx.Roots {
-		ctx.Checker.Check(root, func(node ast.Node) bool {
-			// ignore interfaces
-			_, isIface := node.(*ast.InterfaceType)
-			return !isIface
-		})
+		ctx.Checker.Check(root)
 
 		root.NeedTypesInfo()
 
