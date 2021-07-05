@@ -43,6 +43,11 @@ type DevfileMetadata struct {
 	// +optional
 	Tags []string `json:"tags,omitempty"`
 
+	// Optional list of processor architectures that the devfile supports, empty list suggests that the devfile can be used on any architecture.
+	// Architecture values are `amd64`, `arm64`, `ppc64le`, `s390x`
+	// +optional
+	Architectures []string `json:"architectures,omitempty"`
+
 	// Optional devfile icon, can be a URI or a relative path in the project
 	// +optional
 	Icon string `json:"icon,omitempty"`
