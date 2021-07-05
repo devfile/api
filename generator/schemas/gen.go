@@ -3,13 +3,12 @@ package schemas
 import (
 	"errors"
 	"fmt"
+	"go/ast"
 	"os"
 	"regexp"
 	"strings"
 
 	"path/filepath"
-
-	"go/ast"
 
 	"encoding/json"
 
@@ -80,6 +79,14 @@ type toGenerate struct {
 	jsonschemaRequested  []*markers.TypeInfo
 }
 
+func (Generator) CheckFilter() loader.NodeFilter {
+	return func(node ast.Node) bool {
+		// ignore interfaces
+		_, isIface := node.(*ast.InterfaceType)
+		return !isIface
+	}
+}
+
 // Generate generates the artifacts
 func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	parser := &crd.Parser{
@@ -106,11 +113,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			version: root.Name,
 		}
 
-		ctx.Checker.Check(root, func(node ast.Node) bool {
-			// ignore interfaces
-			_, isIface := node.(*ast.InterfaceType)
-			return !isIface
-		})
+		ctx.Checker.Check(root)
 
 		root.NeedTypesInfo()
 
@@ -296,7 +299,10 @@ to provide markdown-rendered documentation hovers.
 				return err
 			}
 			ideTargetedJsonSchemaMap := orderedmap.New()
-			json.Unmarshal(ideTargetedJsonSchema, ideTargetedJsonSchemaMap)
+			err = json.Unmarshal(ideTargetedJsonSchema, ideTargetedJsonSchemaMap)
+			if err != nil {
+				return err
+			}
 			addMarkdownDescription(ideTargetedJsonSchemaMap)
 			ideTargetedJsonSchema, err = json.MarshalIndent(ideTargetedJsonSchemaMap, "", "  ")
 
