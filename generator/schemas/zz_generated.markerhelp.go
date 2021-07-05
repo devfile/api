@@ -18,15 +18,15 @@ func (GenerateJSONSchema) Help() *markers.DefinitionHelp {
 			Details: "",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{
-			"OmitCustomUnionMembers": markers.DetailedHelp{
+			"OmitCustomUnionMembers": {
 				Summary: "indicates that the Json schema generated from this type should omit Custom union members.",
 				Details: "",
 			},
-			"OmitPluginUnionMembers": markers.DetailedHelp{
+			"OmitPluginUnionMembers": {
 				Summary: "indicates that the Json schema generated from this type should omit Plugin component union members.",
 				Details: "",
 			},
-			"Title": markers.DetailedHelp{
+			"Title": {
 				Summary: "indicates the content ot the Json Schema `title` attribute",
 				Details: "",
 			},

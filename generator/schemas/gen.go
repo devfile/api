@@ -3,13 +3,12 @@ package schemas
 import (
 	"errors"
 	"fmt"
+	"go/ast"
 	"os"
 	"regexp"
 	"strings"
 
 	"path/filepath"
-
-	"go/ast"
 
 	"encoding/json"
 
@@ -80,6 +79,14 @@ type toGenerate struct {
 	jsonschemaRequested  []*markers.TypeInfo
 }
 
+func (Generator) CheckFilter() loader.NodeFilter {
+	return func(node ast.Node) bool {
+		// ignore interfaces
+		_, isIface := node.(*ast.InterfaceType)
+		return !isIface
+	}
+}
+
 // Generate generates the artifacts
 func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	parser := &crd.Parser{
@@ -106,11 +113,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			version: root.Name,
 		}
 
-		ctx.Checker.Check(root, func(node ast.Node) bool {
-			// ignore interfaces
-			_, isIface := node.(*ast.InterfaceType)
-			return !isIface
-		})
+		ctx.Checker.Check(root)
 
 		root.NeedTypesInfo()
 
@@ -238,16 +241,41 @@ This is not the case in the "%s' API group:
 				return
 			})
 
-			// Add the additionalProperies required to reflect the expected behavior from the K8S API,
+			// Add the additionalProperties required to reflect the expected behavior from the K8S API,
 			// (preserve-unknown-fields false by default unless on the Devfile metadata)
 			genutils.EditJSONSchema(&currentJSONSchema, func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
 				if schema == nil ||
-					schema.Type != "object" ||
-					schema.AdditionalProperties != nil {
+					schema.Type != "object" {
 					return
 				}
+
+				// set the default additionalProperties false if neither of Additional properties nor PreserveUnkownField is specified
+				if schema.AdditionalProperties == nil && schema.XPreserveUnknownFields == nil {
+					schema.AdditionalProperties = &apiext.JSONSchemaPropsOrBool{
+						Allows: false,
+					}
+					return
+				}
+
+				if schema.AdditionalProperties != nil {
+					if schema.AdditionalProperties.Schema == nil || schema.AdditionalProperties.Schema.Type == "" {
+						// if additional properties does not have type, ignore schema
+						// since there is only XPreserveUnknownFields that is ignored in JSON Schema below
+						schema.AdditionalProperties = &apiext.JSONSchemaPropsOrBool{
+							Allows: schema.AdditionalProperties.Allows,
+						}
+					} else {
+						// use schema since it has details, like type
+						schema.AdditionalProperties = &apiext.JSONSchemaPropsOrBool{
+							Schema: schema.AdditionalProperties.Schema,
+						}
+					}
+					return
+				}
+
+				// schema.XPreserveUnknownFields != nil
 				schema.AdditionalProperties = &apiext.JSONSchemaPropsOrBool{
-					Allows: schema.XPreserveUnknownFields != nil && *schema.XPreserveUnknownFields,
+					Allows: *schema.XPreserveUnknownFields,
 				}
 				return
 			})
@@ -296,7 +324,10 @@ to provide markdown-rendered documentation hovers.
 				return err
 			}
 			ideTargetedJsonSchemaMap := orderedmap.New()
-			json.Unmarshal(ideTargetedJsonSchema, ideTargetedJsonSchemaMap)
+			err = json.Unmarshal(ideTargetedJsonSchema, ideTargetedJsonSchemaMap)
+			if err != nil {
+				return err
+			}
 			addMarkdownDescription(ideTargetedJsonSchemaMap)
 			ideTargetedJsonSchema, err = json.MarshalIndent(ideTargetedJsonSchemaMap, "", "  ")
 
@@ -364,7 +395,13 @@ func addMarkdownDescription(orderedMap *orderedmap.OrderedMap) {
 	}
 	description, descriptionExists := orderedMap.Get("description")
 	if descriptionExists {
-		orderedMap.Set("markdownDescription", description)
+		s := fmt.Sprintf("%v", description)
+		if strings.HasPrefix(s, "Map of implementation-dependant") {
+			orderedMap.Set("markdownDescription", description)
+		} else {
+			orderedMap.Set("markdownDescription", description)
+		}
+
 	}
 
 	theType, typeExists := orderedMap.Get("type")

@@ -2,6 +2,7 @@ package crds
 
 import (
 	"fmt"
+	"go/ast"
 
 	"github.com/devfile/api/generator/genutils"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -22,6 +23,10 @@ import (
 //
 // Currently this generates v1 and v1beta1 CRDs for the `DevWorkspace` and `DevWorkspaceTemplate` resources.
 type Generator struct{}
+
+func (Generator) CheckFilter() loader.NodeFilter {
+	return filterTypesForCRDs
+}
 
 // RegisterMarkers registers the markers of the Generator
 func (Generator) RegisterMarkers(into *markers.Registry) error {
@@ -73,7 +78,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				Version: root.Name,
 			}
 		default:
-			root.AddError(fmt.Errorf("The package should have a valid 'groupName' annotation"))
+			root.AddError(fmt.Errorf("the package should have a valid 'groupName' annotation"))
 			return nil
 		}
 
@@ -135,6 +140,8 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 		for i, ver := range crdVersions {
 			copiedCrd := crdRaw.DeepCopy()
+
+			// drop defaults in v1beta1 since they are not supported there
 			if crdVersions[i] == "v1beta1" {
 				for _, apiVersion := range copiedCrd.Spec.Versions {
 					genutils.EditJSONSchema(
@@ -147,7 +154,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 						})
 				}
 			}
-			crd, err := crd.AsVersion(*copiedCrd, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
+			extCrd, err := crd.AsVersion(*copiedCrd, schema.GroupVersion{Group: apiext.SchemeGroupVersion.Group, Version: ver})
 			if err != nil {
 				return err
 			}
@@ -158,11 +165,30 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			} else {
 				fileName = fmt.Sprintf("%s_%s.%s.yaml", crdRaw.Spec.Group, crdRaw.Spec.Names.Plural, crdVersions[i])
 			}
-			if err := ctx.WriteYAML(fileName, crd); err != nil {
+			if err := ctx.WriteYAML(fileName, extCrd); err != nil {
 				return err
 			}
 		}
 	}
 
 	return nil
+}
+
+// filterTypesForCRDs filters out all nodes that aren't used in CRD generation,
+// like interfaces and struct fields without JSON tag.
+func filterTypesForCRDs(node ast.Node) bool {
+	switch node := node.(type) {
+	case *ast.InterfaceType:
+		// skip interfaces, we never care about references in them
+		return false
+	case *ast.StructType:
+		return true
+	case *ast.Field:
+		_, hasTag := loader.ParseAstTag(node.Tag).Lookup("json")
+		// fields without JSON tags mean we have custom serialization,
+		// so only visit fields with tags.
+		return hasTag
+	default:
+		return true
+	}
 }
