@@ -17,9 +17,6 @@ WORKDIR="/projects/src/${GO_MODULE}"
 # Container image
 IMAGE_NAME="quay.io/devfile/kubernetes-api-build-prerequisites:latest"
 
-# Operator SDK
-OPERATOR_SDK_VERSION=v0.17.0
-
 init() {
   BLUE='\033[1;34m'
   GREEN='\033[0;32m'
@@ -43,7 +40,7 @@ check() {
 # Build image
 build() {
   printf "%bBuilding image %b${IMAGE_NAME}${NC}..." "${BOLD}" "${BLUE}"
-  if docker build --build-arg OPERATOR_SDK_VERSION=${OPERATOR_SDK_VERSION} -t ${IMAGE_NAME} .devfile/ > docker-build-log 2>&1
+  if docker build -t ${IMAGE_NAME} .devfile/ > docker-build-log 2>&1
   then
     printf "%b[OK]%b\n" "${GREEN}" "${NC}"
     rm docker-build-log
