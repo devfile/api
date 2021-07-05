@@ -33,6 +33,7 @@ spec:
       description: Url endpoint for accessing workspace
       name: URL
       type: string
+    deprecated: true
     name: v1alpha1
     schema:
       openAPIV3Schema:
