@@ -29,6 +29,7 @@ spec:
       jsonPath: .status.ideUrl
       name: URL
       type: string
+    deprecated: true
     name: v1alpha1
     schema:
       openAPIV3Schema:
