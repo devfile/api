@@ -18,7 +18,8 @@ spec:
   scope: Namespaced
   version: v1alpha1
   versions:
-  - name: v1alpha1
+  - deprecated: true
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: DevWorkspaceTemplate is the Schema for the devworkspacetemplates
