@@ -637,10 +637,18 @@
       "type": "object",
       "properties": {
         "architectures": {
-          "description": "Optional list of processor architectures that the devfile supports, empty list suggests that the devfile can be used on any architecture. Architecture values are `amd64`, `arm64`, `ppc64le`, `s390x`",
+          "description": "Optional list of processor architectures that the devfile supports, empty list suggests that the devfile can be used on any architecture",
           "type": "array",
+          "uniqueItems": true,
           "items": {
-            "type": "string"
+            "description": "Architecture describes the architecture type",
+            "type": "string",
+            "enum": [
+              "amd64",
+              "arm64",
+              "ppc64le",
+              "s390x"
+            ]
           }
         },
         "attributes": {
