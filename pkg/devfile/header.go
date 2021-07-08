@@ -17,6 +17,17 @@ type DevfileHeader struct {
 	Metadata DevfileMetadata `json:"metadata,omitempty"`
 }
 
+// Architecture describes the architecture type
+// +kubebuilder:validation:Enum=amd64;arm64;ppc64le;s390x
+type Architecture string
+
+const (
+	AMD64   Architecture = "amd64"
+	ARM64   Architecture = "arm64"
+	PPC64LE Architecture = "ppc64le"
+	S390X   Architecture = "s390x"
+)
+
 type DevfileMetadata struct {
 	// Optional devfile name
 	// +optional
@@ -43,10 +54,10 @@ type DevfileMetadata struct {
 	// +optional
 	Tags []string `json:"tags,omitempty"`
 
-	// Optional list of processor architectures that the devfile supports, empty list suggests that the devfile can be used on any architecture.
-	// Architecture values are `amd64`, `arm64`, `ppc64le`, `s390x`
+	// Optional list of processor architectures that the devfile supports, empty list suggests that the devfile can be used on any architecture
 	// +optional
-	Architectures []string `json:"architectures,omitempty"`
+	// +kubebuilder:validation:UniqueItems=true
+	Architectures []Architecture `json:"architectures,omitempty"`
 
 	// Optional devfile icon, can be a URI or a relative path in the project
 	// +optional
