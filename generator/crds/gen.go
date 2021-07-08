@@ -5,13 +5,13 @@ import (
 	"go/ast"
 
 	"github.com/devfile/api/generator/genutils"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"sigs.k8s.io/controller-tools/pkg/crd"
-	"sigs.k8s.io/controller-tools/pkg/loader"
 
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/controller-tools/pkg/crd"
 	crdmarkers "sigs.k8s.io/controller-tools/pkg/crd/markers"
 	"sigs.k8s.io/controller-tools/pkg/genall"
+	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
@@ -25,7 +25,9 @@ import (
 type Generator struct{}
 
 func (Generator) CheckFilter() loader.NodeFilter {
-	return filterTypesForCRDs
+	return func (node ast.Node) bool {
+		return true
+	}
 }
 
 // RegisterMarkers registers the markers of the Generator
@@ -172,23 +174,4 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 	}
 
 	return nil
-}
-
-// filterTypesForCRDs filters out all nodes that aren't used in CRD generation,
-// like interfaces and struct fields without JSON tag.
-func filterTypesForCRDs(node ast.Node) bool {
-	switch node := node.(type) {
-	case *ast.InterfaceType:
-		// skip interfaces, we never care about references in them
-		return false
-	case *ast.StructType:
-		return true
-	case *ast.Field:
-		_, hasTag := loader.ParseAstTag(node.Tag).Lookup("json")
-		// fields without JSON tags mean we have custom serialization,
-		// so only visit fields with tags.
-		return hasTag
-	default:
-		return true
-	}
 }

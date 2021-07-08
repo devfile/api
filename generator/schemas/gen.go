@@ -395,13 +395,7 @@ func addMarkdownDescription(orderedMap *orderedmap.OrderedMap) {
 	}
 	description, descriptionExists := orderedMap.Get("description")
 	if descriptionExists {
-		s := fmt.Sprintf("%v", description)
-		if strings.HasPrefix(s, "Map of implementation-dependant") {
-			orderedMap.Set("markdownDescription", description)
-		} else {
-			orderedMap.Set("markdownDescription", description)
-		}
-
+		orderedMap.Set("markdownDescription", description)
 	}
 
 	theType, typeExists := orderedMap.Get("type")
