@@ -95,7 +95,7 @@
               "fieldsV1": {
                 "description": "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type.",
                 "type": "object",
-                "additionalProperties": false,
+                "additionalProperties": true,
                 "markdownDescription": "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type."
               },
               "manager": {
