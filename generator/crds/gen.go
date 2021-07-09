@@ -25,7 +25,7 @@ import (
 type Generator struct{}
 
 func (Generator) CheckFilter() loader.NodeFilter {
-	return func (node ast.Node) bool {
+	return func(node ast.Node) bool {
 		return true
 	}
 }
