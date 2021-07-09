@@ -241,8 +241,8 @@ This is not the case in the "%s' API group:
 				return
 			})
 
-			// Add the additionalProperies required to reflect the expected behavior from the K8S API,
-			// (preserve-unknown-fields false by default unless on the Devfile metadata)
+			// Add the additionalProperties required to reflect the expected behavior from the K8S API,
+			// (preserve-unknown-fields false by default)
 			genutils.EditJSONSchema(&currentJSONSchema, func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
 				if schema == nil ||
 					schema.Type != "object" ||
@@ -250,7 +250,9 @@ This is not the case in the "%s' API group:
 					return
 				}
 				schema.AdditionalProperties = &apiext.JSONSchemaPropsOrBool{
-					Allows: schema.XPreserveUnknownFields != nil && *schema.XPreserveUnknownFields,
+					// Allows when schema does not describe any property or has preserveUnknownFields
+					Allows: len(schema.Properties) == 0 ||
+						schema.XPreserveUnknownFields != nil && *schema.XPreserveUnknownFields,
 				}
 				return
 			})
