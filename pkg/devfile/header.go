@@ -40,6 +40,9 @@ type DevfileMetadata struct {
 
 	// Map of implementation-dependant free-form YAML attributes. Deprecated, use the top-level attributes field instead.
 	// +optional
+	// +kubebuilder:validation:Type=object
+	// +kubebuilder:pruning:PreserveUnknownFields
+	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
 
 	// Optional devfile display name
