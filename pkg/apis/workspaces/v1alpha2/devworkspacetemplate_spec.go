@@ -14,7 +14,7 @@ type DevWorkspaceTemplateSpec struct {
 
 // +devfile:overrides:generate
 type DevWorkspaceTemplateSpecContent struct {
-	// Map of key-value variables used for string replacement in the devfile. Values can can be referenced via {{variable-key}}
+	// Map of key-value variables used for string replacement in the devfile. Values can be referenced via {{variable-key}}
 	// to replace the corresponding value in string fields in the devfile. Replacement cannot be used for
 	//
 	//  - schemaVersion, metadata, parent source
