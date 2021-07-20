@@ -13,8 +13,6 @@
 import os
 import json
 import yaml
-import requests
-from collections import OrderedDict
 
 def write_json(filename: str, object: dict) -> None:
     """
@@ -29,6 +27,17 @@ def create_ref(path):
     """
     return '#/definitions/' + path
 
+def retrieve_metadata() -> object:
+    """
+    Retrieve the metadata json field from the latest devworkspace json schema 
+    """
+
+    devworkspace_json_schema_path = os.path.join('schemas', 'latest', 'dev-workspace.json')
+    with open(devworkspace_json_schema_path, 'r') as f:
+        devworkspace_json_schema = json.load(f)
+        metadata = devworkspace_json_schema['properties']['metadata']
+        return metadata
+
 def consolidate_crds() -> object:
     """
     Consolidate all crds in /crds into one json object
@@ -38,6 +47,7 @@ def consolidate_crds() -> object:
     consolidated_crds_json = {
         'definitions': {},
     }
+    additional_metadata = retrieve_metadata()
     for file in crds:
         crd_file_path = os.path.join(crds_dir, file) 
         with open(crd_file_path) as file:
@@ -47,6 +57,7 @@ def consolidate_crds() -> object:
             # Add all the available schema versions 
             for version in yamlData['spec']['versions']:
                 new_json_name = version['name'] + '.' + crd_name
+                version['schema']['openAPIV3Schema']['properties']['metadata'] = additional_metadata
                 new_schema = version['schema']['openAPIV3Schema']
                 consolidated_crds_json['definitions'][new_json_name] = new_schema
 
@@ -250,6 +261,63 @@ def flatten(consolidated_crds_object: dict) -> None:
 
     write_json('swagger.json', flattened_swagger_object)
 
+def devfile_schema_to_crd() -> object:
+    """
+    Convert the devfile schema to a crd so that we can generate the types 
+    """
+
+    devfile_json_schema_path = os.path.join('schemas', 'latest', 'devfile.json')
+    with open(devfile_json_schema_path, 'r') as devfileFile:
+        devfile_json_schema = json.load(devfileFile)
+        devfile_crd = {
+            'apiVersion': 'apiextensions.k8s.io/v1',
+            'kind': 'CustomResourceDefinition',
+            'metadata': {
+                'creationTimestamp': None,
+                'name': 'devfile.workspace.devfile.io'
+            },
+            'spec': {
+                'group': 'devfile.devfile.io',
+                'names': {
+                    'kind': 'Devfile',
+                    'listKind': 'DevfileList',
+                    'plural': 'Devfiles',
+                    'shortNames': [],
+                    'singular': 'devfile'
+                },
+                'scope': 'Namespaced',
+                'versions': [
+                    {
+                        'name': 'test',
+                        'schema': {
+                            'openAPIV3Schema': devfile_json_schema
+                        },
+                        'served': True,
+                        'storage': True,
+                        'subresources': {
+                            'status': {
+
+                            }
+                        }
+                    }
+                ]
+            },
+            'status': {
+                'acceptedNames': {
+                    'kind': '',
+                    'plural': ''
+                },
+                'conditions': [],
+                'storedVersions': []
+            }
+        }
+        with open(os.path.join('crds', 'workspace.devfile.io_devfile.yaml'), 'w') as crdFile:
+            yaml.dump(devfile_crd, crdFile)
+
 if __name__ == "__main__":
+    # Create a devfile crd that will be used to generate types
+    devfile_schema_to_crd()
+
+    # Get the crds and flatten them
     swagger_crds_json = consolidate_crds()
     flatten(swagger_crds_json)
