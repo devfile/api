@@ -79,7 +79,8 @@ jobs:
 
       - name: Release typescript models 
         run: |
-          yarn --new-version version "0.0.1-$(date +%s)"
+          VERSION=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
+          yarn --new-version version "$VERSION-$(date +%s)"
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
