@@ -12,9 +12,6 @@
 
 import os
 import json
-import yaml
-import requests
-from collections import OrderedDict
 
 def write_json(filename: str, object: dict) -> None:
     """
@@ -29,28 +26,41 @@ def create_ref(path):
     """
     return '#/definitions/' + path
 
-def consolidate_crds() -> object:
+def consolidate_schemas() -> object:
     """
-    Consolidate all crds in /crds into one json object
+    Consolidate all schemas into one json object
     """
-    crds_dir = os.path.join('crds')
-    crds = os.listdir(crds_dir)
-    consolidated_crds_json = {
+    schemas_dir = os.path.join('schemas/latest')
+    consolidated_schemas_json = {
         'definitions': {},
     }
-    for file in crds:
-        crd_file_path = os.path.join(crds_dir, file) 
-        with open(crd_file_path) as file:
-            yamlData = yaml.load(file, Loader=yaml.FullLoader)
-            crd_name = yamlData['spec']['names']['kind']
-            
-            # Add all the available schema versions 
-            for version in yamlData['spec']['versions']:
-                new_json_name = version['name'] + '.' + crd_name
-                new_schema = version['schema']['openAPIV3Schema']
-                consolidated_crds_json['definitions'][new_json_name] = new_schema
 
-    return consolidated_crds_json
+    with open(os.path.join(schemas_dir, 'k8sApiVersion.txt')) as f:
+        k8sApiVersion = f.readline()
+
+    with open(os.path.join(schemas_dir, 'jsonSchemaVersion.txt')) as f:
+        devfileVersion = f.readline()
+        devfileVersion = devfileVersion.replace('-alpha', '')
+
+    definitionName = devfileVersion + '.Devfile'
+    devfile_json_schema_path = os.path.join(schemas_dir, 'devfile.json')
+    with open(devfile_json_schema_path, 'r') as devfileFile:
+        jsonData = json.load(devfileFile)
+        consolidated_schemas_json['definitions'][definitionName] = jsonData
+
+    definitionName = k8sApiVersion + '.DevWorkspace'
+    dw_json_schema_path = os.path.join(schemas_dir, 'dev-workspace.json')
+    with open(dw_json_schema_path, 'r') as devfileFile:
+        jsonData = json.load(devfileFile)    
+        consolidated_schemas_json['definitions'][definitionName] = jsonData
+
+    definitionName = k8sApiVersion + '.DevWorkspaceTemplate'        
+    dwt_json_schema_path = os.path.join(schemas_dir, 'dev-workspace-template.json')
+    with open(dwt_json_schema_path, 'r') as devfileFile:
+        jsonData = json.load(devfileFile)
+        consolidated_schemas_json['definitions'][definitionName] = jsonData
+
+    return consolidated_schemas_json
 
 def add_property_definition(root_definitions_object: dict, current_path: str, curr_object: dict, queue: list) -> None:
     """
@@ -251,5 +261,6 @@ def flatten(consolidated_crds_object: dict) -> None:
     write_json('swagger.json', flattened_swagger_object)
 
 if __name__ == "__main__":
-    swagger_crds_json = consolidate_crds()
+    # Get the schema and flatten them
+    swagger_crds_json = consolidate_schemas()
     flatten(swagger_crds_json)
