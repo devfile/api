@@ -59,6 +59,6 @@ generator/build/generator "deepcopy" "paths=./pkg/apis/workspaces/v1alpha2;./pkg
 
 echo "Generating JsonSchemas"
 
-generator/build/generator "schemas" "output:schemas:artifacts:config=schemas" "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1"
+generator/build/generator "schemas" "output:schemas:artifacts:config=schemas" "paths=./pkg/apis/workspaces/v1alpha2"
 
 echo "Finished generation of required GO sources, K8S CRDs, and Json Schemas"
