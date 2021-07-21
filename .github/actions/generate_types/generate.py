@@ -40,7 +40,7 @@ def consolidate_schemas() -> object:
 
     with open(os.path.join(schemas_dir, 'jsonSchemaVersion.txt')) as f:
         devfileVersion = f.readline()
-        devfileVersion = devfileVersion.replace('-alpha', '')
+        devfileVersion = 'v' + devfileVersion.replace('-alpha', '')
 
     definitionName = devfileVersion + '.Devfile'
     devfile_json_schema_path = os.path.join(schemas_dir, 'devfile.json')
