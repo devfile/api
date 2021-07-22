@@ -26,6 +26,8 @@ For more information about this, please look into the [Devfile support Readme](d
 
 The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: https://devfile.github.io
 
+Typescript model is build on each commit of main branch and available as NPM package at https://www.npmjs.com/package/@devfile/api
+
 ## How to build
 
 In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
@@ -33,7 +35,15 @@ In the root directory, just run the following command:
 
 ```
 ./docker-run.sh ./build.sh
-``` 
+```
+
+### Typescript model
+
+Typescript model is generated based on JSON Schema with help of https://github.com/kubernetes-client/gen.
+To generate them locally run:
+```bash
+./build/typescript-model/generate.sh
+```
 
 ## Specification status
 

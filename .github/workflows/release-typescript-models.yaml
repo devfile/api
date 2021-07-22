@@ -1,4 +1,4 @@
- 
+
 # Release a typescript package to npm containing the typescript types generated from the latest merged crds
 name: types
 
@@ -15,52 +15,10 @@ jobs:
         with:
           path: api
 
-      - name: Checkout kubernetes-client/gen
-        uses: actions/checkout@v2
-        with:
-          repository: kubernetes-client/gen
-          path: gen
-          ref: 5c6d90b260fd94af32157f304f971778c899b5e2
-
       - name: Setup python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9.2'
-
-      - name: Generate openapi-generator compatible swagger.json 
-        run: |
-          python .github/actions/generate_types/generate.py
-          mkdir -p /tmp/typescript-models
-          mv swagger.json /tmp/typescript-models/swagger.json.unprocessed
-        working-directory: api
-
-      - name: Create empty client-gen configuration
-        run: |
-            {
-              echo 'export KUBERNETES_BRANCH=""' 
-              echo 'export CLIENT_VERSION=""' 
-              echo 'export PACKAGE_NAME=""'
-              echo 'export USERNAME=""'
-              echo 'export REPOSITORY=""'
-            } >> config.sh
-        working-directory: /tmp
-
-      - name: Generate the typescript models
-        run: |
-          # Remove the contents of custom objects spec so that we aren't bundling any extra objects
-          echo "{}" > custom_objects_spec.json
-          export OPENAPI_SKIP_FETCH_SPEC=true
-          ./typescript.sh /tmp/typescript-models /tmp/config.sh
-        working-directory: gen/openapi
-
-      - name: Modify package.json
-        run: |
-          sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' /tmp/typescript-models/package.json
-          sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' /tmp/typescript-models/package.json
-          sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' /tmp/typescript-models/package.json
-          sed -i 's/\"license\": \".*\"/"license": "EPL-2.0"/g' /tmp/typescript-models/package.json
-          sed -i 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' /tmp/typescript-models/package.json
-          echo "" > /tmp/typescript-models/.npmignore
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -69,14 +27,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@devfile'
 
-      - name: Install dependencies
-        run: yarn
-        working-directory: /tmp/typescript-models
+      - name: Generate typescript model
+        run: ./build/typescript-model/generate.sh
       
-      - name: Run build
-        run: yarn build
-        working-directory: /tmp/typescript-models
-
+      - name: Build typescript model
+        run: yarn && yarn build
+        working-directory: ./build/typescript-model/workdir/typescript-models
+      
       - name: Release typescript models 
         run: |
           VERSION=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
@@ -84,4 +41,4 @@ jobs:
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        working-directory: /tmp/typescript-models
+        working-directory: ./build/typescript-model/workdir/typescript-models
