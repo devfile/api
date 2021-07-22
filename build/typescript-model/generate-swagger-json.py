@@ -239,6 +239,9 @@ def flatten(consolidated_crds_object: dict) -> None:
         # Add in all the initial properties to the queue
         for prop in original_definitions[root]['properties']:
             new_path = root + '.' + prop
+            if 'items' in original_definitions[root]['properties'][prop]:
+                new_path += '.items'
+
             queue.append({
                 new_path: original_definitions[root]['properties'][prop]
             })
