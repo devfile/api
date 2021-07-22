@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout devfile/api
         uses: actions/checkout@v2
-        with:
-          path: api
 
       - name: Setup python
         uses: actions/setup-python@v2
