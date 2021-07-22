@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout devfile/api
         uses: actions/checkout@v2
+        with:
+          path: api
 
       - name: Setup python
         uses: actions/setup-python@v2
@@ -26,17 +28,16 @@ jobs:
           scope: '@devfile'
 
       - name: Generate typescript model
-        run: ./build/typescript-model/generate.sh
-      
-      - name: Build typescript model
-        run: yarn && yarn build
-        working-directory: ./build/typescript-model/workdir/typescript-models
+        run: |
+          ./build/typescript-model/generate.sh
+          cp -r ./build/typescript-model/workdir/typescript-models ../
+        working-directory: api
       
       - name: Release typescript models 
         run: |
           VERSION=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
-          yarn --new-version version "$VERSION-$(date +%s)"
+          yarn --new-version version "$VERSION-$(date +%s)" --no-git-tag-version
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        working-directory: ./build/typescript-model/workdir/typescript-models
+        working-directory: ./typescript-models
