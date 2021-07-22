@@ -83,3 +83,5 @@ tags
 generator/build/generator
 #Mac file
 .DS_Store
+
+build/typescript-model/workdir
