@@ -49,7 +49,7 @@ func addAttributes(numAtrributes int) map[string]string {
 func (testDevFile *TestDevfile) addGroup() *schema.CommandGroup {
 
 	commandGroup := schema.CommandGroup{}
-	commandGroup.Kind = GetRandomGroupKind()
+	commandGroup.Kind = schema.CommandGroupKind(GetRandomValue(GroupKinds).String())
 	LogInfoMessage(fmt.Sprintf("group Kind: %s, default already set %t", commandGroup.Kind, testDevFile.GroupDefaults[commandGroup.Kind]))
 	// Ensure only one and at least one of each type are labelled as default
 	if !testDevFile.GroupDefaults[commandGroup.Kind] {
