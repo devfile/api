@@ -38,21 +38,26 @@ func (devfile *TestDevfile) addVolume(numVols int) []schema.VolumeMount {
 
 // AddComponent adds a component of the specified type, with random attributes, to the devfile schema
 func (devfile *TestDevfile) AddComponent(componentType schema.ComponentType) schema.Component {
-
-	var component schema.Component
-	if componentType == schema.ContainerComponentType {
-		component = devfile.createContainerComponent()
+	LogInfoMessage(fmt.Sprintf("Create a %v component :", componentType))
+	component := schema.Component{}
+	component.Name = GetRandomUniqueString(8, true)
+	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
+	switch componentType {
+	case schema.ContainerComponentType:
+		component.Container = &schema.ContainerComponent{}
 		devfile.SetContainerComponentValues(&component)
-	} else if componentType == schema.KubernetesComponentType {
-		component = devfile.createKubernetesComponent()
+	case schema.KubernetesComponentType:
+		component.Kubernetes = &schema.KubernetesComponent{}
 		devfile.SetK8sComponentValues(&component)
-	} else if componentType == schema.OpenshiftComponentType {
-		component = devfile.createOpenshiftComponent()
+	case schema.OpenshiftComponentType:
+		component.Openshift = &schema.OpenshiftComponent{}
 		devfile.SetK8sComponentValues(&component)
-	} else if componentType == schema.VolumeComponentType {
-		component = devfile.createVolumeComponent()
+	case schema.VolumeComponentType:
+		component.Volume = &schema.VolumeComponent{}
 		devfile.SetVolumeComponentValues(&component)
 	}
+
+	devfile.componentAdded(component)
 	return component
 }
 
@@ -64,45 +69,6 @@ func (devfile *TestDevfile) createContainerComponent() schema.Component {
 	component.Name = GetRandomUniqueString(8, true)
 	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
 	component.Container = &schema.ContainerComponent{}
-	devfile.componentAdded(component)
-	return component
-
-}
-
-// createKubernetesComponent creates a kubernetes component, ready for attribute setting
-func (devfile *TestDevfile) createKubernetesComponent() schema.Component {
-
-	LogInfoMessage("Create a kubernetes component :")
-	component := schema.Component{}
-	component.Name = GetRandomUniqueString(8, true)
-	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
-	component.Kubernetes = &schema.KubernetesComponent{}
-	devfile.componentAdded(component)
-	return component
-
-}
-
-// createOpenshiftComponent creates an openshift component, ready for attribute setting
-func (devfile *TestDevfile) createOpenshiftComponent() schema.Component {
-
-	LogInfoMessage("Create an openshift component :")
-	component := schema.Component{}
-	component.Name = GetRandomUniqueString(8, true)
-	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
-	component.Openshift = &schema.OpenshiftComponent{}
-	devfile.componentAdded(component)
-	return component
-
-}
-
-// createVolumeComponent creates a volume component , ready for attribute setting
-func (devfile *TestDevfile) createVolumeComponent() schema.Component {
-
-	LogInfoMessage("Create a volume component :")
-	component := schema.Component{}
-	component.Name = GetRandomUniqueString(8, true)
-	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
-	component.Volume = &schema.VolumeComponent{}
 	devfile.componentAdded(component)
 	return component
 
@@ -194,6 +160,7 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 
 }
 
+//SetK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
 func (devfile *TestDevfile) SetK8sComponentValues(component *schema.Component) {
 	var k8type *schema.K8sLikeComponent = &schema.K8sLikeComponent{}
 

@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"strings"
 	"testing"
@@ -69,6 +70,7 @@ type TestContent struct {
 	ComponentTypes      []schema.ComponentType
 	ProjectTypes        []schema.ProjectSourceType
 	StarterProjectTypes []schema.ProjectSourceType
+	AddParent           bool
 	AddMetaData         bool
 	AddEvents           bool
 	FileName            string
@@ -161,6 +163,7 @@ func LogMessage(message string) string {
 }
 
 var errorPrefix = "..... ERROR :"
+var warningPrefix = "..... WARNING :"
 var infoPrefix = "INFO :"
 
 // LogErrorMessage logs the specified message as an error message and returns the message logged
@@ -168,6 +171,13 @@ func LogErrorMessage(message string) string {
 	var errMessage []string
 	errMessage = append(errMessage, errorPrefix, message)
 	return LogMessage(fmt.Sprint(errMessage))
+}
+
+// LogWarningMessage logs the specified message as a warning message and returns the message logged
+func LogWarningMessage(message string) string {
+	var warningMessage []string
+	warningMessage = append(warningMessage, warningPrefix, message)
+	return LogMessage(fmt.Sprint(warningMessage))
 }
 
 // LogInfoMessage logs the specified message as an info message and returns the message logged
@@ -218,9 +228,39 @@ func GetRandomString(n int, lower bool) string {
 
 var GroupKinds = [...]schema.CommandGroupKind{schema.BuildCommandGroupKind, schema.RunCommandGroupKind, schema.TestCommandGroupKind, schema.DebugCommandGroupKind}
 
+var ComponentTypes = []schema.ComponentType{schema.ContainerComponentType, schema.KubernetesComponentType, schema.OpenshiftComponentType, schema.VolumeComponentType}
+
+var ProjectSourceTypes = []schema.ProjectSourceType{schema.GitProjectSourceType, schema.ZipProjectSourceType}
+
+var CommandTypes = []schema.CommandType{schema.ExecCommandType, schema.CompositeCommandType, schema.ApplyCommandType}
+
+var ImportReferenceTypes = []schema.ImportReferenceType{schema.IdImportReferenceType, schema.KubernetesImportReferenceType, schema.UriImportReferenceType}
+
 // GetRandomGroupKind return random group kind. One of "build", "run", "test" or "debug"
 func GetRandomGroupKind() schema.CommandGroupKind {
-	return GroupKinds[GetRandomNumber(1, len(GroupKinds))-1]
+	return GroupKinds[GetRandomNumber(0, len(GroupKinds))-1]
+}
+
+// GetRandomValue returns a value selected at random from an array or slice of typed constants such as the ones declared
+// in api/test/v200/utils/common/test_utils.go e.g GroupKinds, ComponentType, ProjectTypes, etc
+// If the input is not a reflect.Array or reflect.Slice kind, then the value itself is returned and an error will be logged
+
+func GetRandomValue(typedConstants interface{}) reflect.Value {
+	constType := reflect.TypeOf(typedConstants)
+	values := reflect.ValueOf(typedConstants)
+
+	if constType.Kind() != reflect.Array && constType.Kind() != reflect.Slice {
+		LogErrorMessage(fmt.Sprintf("GetRandomValue: Unexpected input \"%v\" kind, want reflect.Array or reflect.Slice kind", constType.Kind()))
+		return values
+	}
+
+	length := values.Len()
+	if length > 0 {
+		return values.Index(rand.Intn(length))
+	} else {
+		LogErrorMessage(fmt.Sprintf("No values found %v", values))
+		return values
+	}
 }
 
 // GetBinaryDecision randomly returns true or false
@@ -296,6 +336,10 @@ func (testDevfile *TestDevfile) RunTest(testContent TestContent, t *testing.T) {
 			starterProjectIndex := GetRandomNumber(1, len(testContent.StarterProjectTypes))
 			testDevfile.AddStarterProject(testContent.StarterProjectTypes[starterProjectIndex-1])
 		}
+	}
+
+	if testContent.AddParent {
+		testDevfile.AddParent()
 	}
 
 	if testContent.AddEvents {
