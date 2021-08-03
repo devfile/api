@@ -41,7 +41,7 @@ func (testDevFile *TestDevfile) addParentGroup() *schema.CommandGroupParentOverr
 	return &commandGroup
 }
 
-// AddParentCommand creates a command of a specified type in a schema structure and pupulates it with random attributes
+// AddParentCommand creates a command of a specified type in a schema structure and populates it with random values
 func (testDevFile *TestDevfile) AddParentCommand(commandType schema.CommandType) schema.CommandParentOverride {
 
 	var command *schema.CommandParentOverride
@@ -158,19 +158,6 @@ func (testDevFile *TestDevfile) SetParentCompositeCommandValues(command *schema.
 		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", compositeCommand.Parallel))
 	}
 
-	LogInfoMessage(fmt.Sprintf("parent command updated Id: %s", command.Id))
-}
-
-// SetParentCompositeCommandCommands set the commands in a composite command to a specific type
-func (testDevFile *TestDevfile) SetParentCompositeCommandCommands(command *schema.CommandParentOverride, commandType schema.CommandType) {
-	compositeCommand := command.Composite
-	compositeCommand.Commands = nil
-	numCommands := GetRandomNumber(1, 3)
-	for i := 0; i < numCommands; i++ {
-		command := testDevFile.AddParentCommand(commandType)
-		compositeCommand.Commands = append(compositeCommand.Commands, command.Id)
-		LogInfoMessage(fmt.Sprintf("....... command %d of %d : %s", i, numCommands, command.Id))
-	}
 	LogInfoMessage(fmt.Sprintf("parent command updated Id: %s", command.Id))
 }
 

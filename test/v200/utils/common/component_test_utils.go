@@ -61,19 +61,6 @@ func (devfile *TestDevfile) AddComponent(componentType schema.ComponentType) sch
 	return component
 }
 
-// createContainerComponent creates a container component, ready for attribute setting
-func (devfile *TestDevfile) createContainerComponent() schema.Component {
-
-	LogInfoMessage("Create a container component :")
-	component := schema.Component{}
-	component.Name = GetRandomUniqueString(8, true)
-	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
-	component.Container = &schema.ContainerComponent{}
-	devfile.componentAdded(component)
-	return component
-
-}
-
 // GetContainer returns the name of an existing, or newly created, container.
 func (devfile *TestDevfile) GetContainerName() string {
 
@@ -87,7 +74,7 @@ func (devfile *TestDevfile) GetContainerName() string {
 	}
 
 	if componentName == "" {
-		component := devfile.createContainerComponent()
+		component := devfile.AddComponent(schema.ContainerComponentType)
 		component.Container.Image = GetRandomUniqueString(GetRandomNumber(8, 18), false)
 		componentName = component.Name
 		LogInfoMessage(fmt.Sprintf("retrun new container from GetContainerName : %s", componentName))

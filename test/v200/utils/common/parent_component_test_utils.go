@@ -50,19 +50,6 @@ func (devfile *TestDevfile) AddParentComponent(componentType schema.ComponentTyp
 	return component
 }
 
-// createParentContainerComponent creates a container component, ready for attribute setting
-func (devfile *TestDevfile) createParentContainerComponent() schema.ComponentParentOverride {
-
-	LogInfoMessage("Create a parent container component :")
-	component := schema.ComponentParentOverride{}
-	component.Name = GetRandomUniqueString(8, true)
-	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
-	component.Container = &schema.ContainerComponentParentOverride{}
-	devfile.parentComponentAdded(component)
-	return component
-
-}
-
 // GetParentContainerName returns the name of an existing, or newly created, container.
 func (devfile *TestDevfile) GetParentContainerName() string {
 
@@ -76,7 +63,7 @@ func (devfile *TestDevfile) GetParentContainerName() string {
 	}
 
 	if componentName == "" {
-		component := devfile.createParentContainerComponent()
+		component := devfile.AddParentComponent(schema.ContainerComponentType)
 		component.Container.Image = GetRandomUniqueString(GetRandomNumber(8, 18), false)
 		componentName = component.Name
 		LogInfoMessage(fmt.Sprintf("return new container from GetParentContainerName : %s", componentName))
