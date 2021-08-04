@@ -7,28 +7,17 @@ import (
 	schema "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
-// componentAdded adds a new component to the test schema data and to the parser data
-func (devfile *TestDevfile) componentAdded(component schema.Component) {
-	LogInfoMessage(fmt.Sprintf("component added Name: %s", component.Name))
-	devfile.SchemaDevFile.Components = append(devfile.SchemaDevFile.Components, component)
-	if devfile.Follower != nil {
-		devfile.Follower.AddComponent(component)
-	}
+// parentComponentAdded adds a new component to the test schema data and to the parser data
+func (devfile *TestDevfile) parentComponentAdded(component schema.ComponentParentOverride) {
+	LogInfoMessage(fmt.Sprintf("parent component added Name: %s", component.Name))
+	devfile.SchemaDevFile.Parent.Components = append(devfile.SchemaDevFile.Parent.Components, component)
 }
 
-// componetUpdated updates a component in the parser data
-func (devfile *TestDevfile) componentUpdated(component schema.Component) {
-	LogInfoMessage(fmt.Sprintf("component updated Name: %s", component.Name))
-	if devfile.Follower != nil {
-		devfile.Follower.UpdateComponent(component)
-	}
-}
-
-// addVolume returns volumeMounts in a schema structure based on a specified number of volumes
-func (devfile *TestDevfile) addVolume(numVols int) []schema.VolumeMount {
-	commandVols := make([]schema.VolumeMount, numVols)
+// addParentVolume returns volumeMounts in a schema structure based on a specified number of volumes
+func (devfile *TestDevfile) addParentVolume(numVols int) []schema.VolumeMountParentOverride {
+	commandVols := make([]schema.VolumeMountParentOverride, numVols)
 	for i := 0; i < numVols; i++ {
-		volumeComponent := devfile.AddComponent(schema.VolumeComponentType)
+		volumeComponent := devfile.AddParentComponent(schema.VolumeComponentType)
 		commandVols[i].Name = volumeComponent.Name
 		commandVols[i].Path = "/Path_" + GetRandomString(5, false)
 		LogInfoMessage(fmt.Sprintf("....... Add Volume: %s", commandVols[i]))
@@ -36,57 +25,57 @@ func (devfile *TestDevfile) addVolume(numVols int) []schema.VolumeMount {
 	return commandVols
 }
 
-// AddComponent adds a component of the specified type, with random attributes, to the devfile schema
-func (devfile *TestDevfile) AddComponent(componentType schema.ComponentType) schema.Component {
-	LogInfoMessage(fmt.Sprintf("Create a %v component :", componentType))
-	component := schema.Component{}
+// AddParentComponent adds a component of the specified type, with random attributes, to the devfile schema
+func (devfile *TestDevfile) AddParentComponent(componentType schema.ComponentType) schema.ComponentParentOverride {
+	LogInfoMessage(fmt.Sprintf("Create a %v parent component :", componentType))
+	component := schema.ComponentParentOverride{}
 	component.Name = GetRandomUniqueString(8, true)
 	LogInfoMessage(fmt.Sprintf("....... Name: %s", component.Name))
 	switch componentType {
 	case schema.ContainerComponentType:
-		component.Container = &schema.ContainerComponent{}
-		devfile.SetContainerComponentValues(&component)
+		component.Container = &schema.ContainerComponentParentOverride{}
+		devfile.SetParentContainerComponentValues(&component)
 	case schema.KubernetesComponentType:
-		component.Kubernetes = &schema.KubernetesComponent{}
-		devfile.SetK8sComponentValues(&component)
+		component.Kubernetes = &schema.KubernetesComponentParentOverride{}
+		devfile.SetParentK8sComponentValues(&component)
 	case schema.OpenshiftComponentType:
-		component.Openshift = &schema.OpenshiftComponent{}
-		devfile.SetK8sComponentValues(&component)
+		component.Openshift = &schema.OpenshiftComponentParentOverride{}
+		devfile.SetParentK8sComponentValues(&component)
 	case schema.VolumeComponentType:
-		component.Volume = &schema.VolumeComponent{}
-		devfile.SetVolumeComponentValues(&component)
+		component.Volume = &schema.VolumeComponentParentOverride{}
+		devfile.SetParentVolumeComponentValues(&component)
 	}
 
-	devfile.componentAdded(component)
+	devfile.parentComponentAdded(component)
 	return component
 }
 
-// GetContainer returns the name of an existing, or newly created, container.
-func (devfile *TestDevfile) GetContainerName() string {
+// GetParentContainerName returns the name of an existing, or newly created, container.
+func (devfile *TestDevfile) GetParentContainerName() string {
 
 	componentName := ""
-	for _, currentComponent := range devfile.SchemaDevFile.Components {
+	for _, currentComponent := range devfile.SchemaDevFile.Parent.Components {
 		if currentComponent.Container != nil {
 			componentName = currentComponent.Name
-			LogInfoMessage(fmt.Sprintf("return existing container from GetContainerName  : %s", componentName))
+			LogInfoMessage(fmt.Sprintf("return existing container from GetParentContainerName  : %s", componentName))
 			break
 		}
 	}
 
 	if componentName == "" {
-		component := devfile.AddComponent(schema.ContainerComponentType)
+		component := devfile.AddParentComponent(schema.ContainerComponentType)
 		component.Container.Image = GetRandomUniqueString(GetRandomNumber(8, 18), false)
 		componentName = component.Name
-		LogInfoMessage(fmt.Sprintf("retrun new container from GetContainerName : %s", componentName))
+		LogInfoMessage(fmt.Sprintf("return new container from GetParentContainerName : %s", componentName))
 	}
 
 	return componentName
 }
 
-// SetContainerComponentValues randomly sets/updates container component attributes to random values
-func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Component) {
+// SetParentContainerComponentValues randomly sets/updates container component attributes to random values
+func (devfile *TestDevfile) SetParentContainerComponentValues(component *schema.ComponentParentOverride) {
 
-	containerComponent := component.Container
+	containerComponent := component.Container.ContainerParentOverride
 
 	containerComponent.Image = GetRandomUniqueString(GetRandomNumber(8, 18), false)
 
@@ -128,33 +117,33 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 	}
 
 	if GetBinaryDecision() {
-		containerComponent.Env = addEnv(GetRandomNumber(1, 4))
+		containerComponent.Env = addParentEnv(GetRandomNumber(1, 4))
 	} else {
 		containerComponent.Env = nil
 	}
 
 	if len(containerComponent.VolumeMounts) == 0 {
 		if GetBinaryDecision() {
-			containerComponent.VolumeMounts = devfile.addVolume(GetRandomNumber(1, 4))
+			containerComponent.VolumeMounts = devfile.addParentVolume(GetRandomNumber(1, 4))
 		}
 	}
 
 	if GetBinaryDecision() {
-		containerComponent.Endpoints = devfile.CreateEndpoints()
+		component.Container.Endpoints = devfile.CreateParentEndpoints()
 	}
 
-	devfile.componentUpdated(*component)
+	LogInfoMessage(fmt.Sprintf("component updated Name: %s", component.Name))
 
 }
 
-//SetK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
-func (devfile *TestDevfile) SetK8sComponentValues(component *schema.Component) {
-	var k8type *schema.K8sLikeComponent = &schema.K8sLikeComponent{}
+//SetParentK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
+func (devfile *TestDevfile) SetParentK8sComponentValues(component *schema.ComponentParentOverride) {
+	var k8type *schema.K8sLikeComponentParentOverride = &schema.K8sLikeComponentParentOverride{}
 
 	if component.Kubernetes != nil {
-		k8type = &component.Kubernetes.K8sLikeComponent
+		k8type = &component.Kubernetes.K8sLikeComponentParentOverride
 	} else if component.Openshift != nil {
-		k8type = &component.Openshift.K8sLikeComponent
+		k8type = &component.Openshift.K8sLikeComponentParentOverride
 	}
 
 	if k8type.Inlined != "" {
@@ -175,17 +164,17 @@ func (devfile *TestDevfile) SetK8sComponentValues(component *schema.Component) {
 	}
 
 	if GetBinaryDecision() {
-		k8type.Endpoints = devfile.CreateEndpoints()
+		k8type.Endpoints = devfile.CreateParentEndpoints()
 	}
 
-	devfile.componentUpdated(*component)
+	LogInfoMessage(fmt.Sprintf("component updated Name: %s", component.Name))
 }
 
-// SetVolumeComponentValues randomly sets/updates volume component attributes to random values
-func (devfile *TestDevfile) SetVolumeComponentValues(component *schema.Component) {
+// SetParentVolumeComponentValues randomly sets/updates volume component attributes to random values
+func (devfile *TestDevfile) SetParentVolumeComponentValues(component *schema.ComponentParentOverride) {
 
 	component.Volume.Size = strconv.Itoa(4+GetRandomNumber(64, 256)) + "G"
 	LogInfoMessage(fmt.Sprintf("....... volumeComponent.Size: %s", component.Volume.Size))
-	devfile.componentUpdated(*component)
+	LogInfoMessage(fmt.Sprintf("component updated Name: %s", component.Name))
 
 }

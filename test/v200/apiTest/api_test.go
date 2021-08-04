@@ -75,29 +75,21 @@ func Test_VolumeComponent(t *testing.T) {
 
 func Test_MultiComponent(t *testing.T) {
 	testContent := commonUtils.TestContent{}
-	testContent.ComponentTypes = []schema.ComponentType{
-		schema.ContainerComponentType,
-		schema.KubernetesComponentType,
-		schema.OpenshiftComponentType,
-		schema.VolumeComponentType}
+	testContent.ComponentTypes = commonUtils.ComponentTypes
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
 }
 
 func Test_Projects(t *testing.T) {
 	testContent := commonUtils.TestContent{}
-	testContent.ProjectTypes = []schema.ProjectSourceType{
-		schema.GitProjectSourceType,
-		schema.ZipProjectSourceType}
+	testContent.ProjectTypes = commonUtils.ProjectSourceTypes
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
 }
 
 func Test_StarterProjects(t *testing.T) {
 	testContent := commonUtils.TestContent{}
-	testContent.StarterProjectTypes = []schema.ProjectSourceType{
-		schema.GitProjectSourceType,
-		schema.ZipProjectSourceType}
+	testContent.StarterProjectTypes = commonUtils.ProjectSourceTypes
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
 }
@@ -116,25 +108,22 @@ func Test_MetaData(t *testing.T) {
 	apiUtils.RunTest(testContent, t)
 }
 
+func Test_Parent(t *testing.T) {
+	testContent := commonUtils.TestContent{}
+	testContent.AddParent = true
+	testContent.FileName = commonUtils.GetDevFileName()
+	apiUtils.RunTest(testContent, t)
+}
+
 func Test_Everything(t *testing.T) {
 	testContent := commonUtils.TestContent{}
-	testContent.CommandTypes = []schema.CommandType{
-		schema.ExecCommandType,
-		schema.CompositeCommandType,
-		schema.ApplyCommandType}
-	testContent.ComponentTypes = []schema.ComponentType{
-		schema.ContainerComponentType,
-		schema.KubernetesComponentType,
-		schema.OpenshiftComponentType,
-		schema.VolumeComponentType}
-	testContent.ProjectTypes = []schema.ProjectSourceType{
-		schema.GitProjectSourceType,
-		schema.ZipProjectSourceType}
-	testContent.StarterProjectTypes = []schema.ProjectSourceType{
-		schema.GitProjectSourceType,
-		schema.ZipProjectSourceType}
+	testContent.CommandTypes = commonUtils.CommandTypes
+	testContent.ComponentTypes = commonUtils.ComponentTypes
+	testContent.ProjectTypes = commonUtils.ProjectSourceTypes
+	testContent.StarterProjectTypes = commonUtils.ProjectSourceTypes
 	testContent.AddMetaData = true
 	testContent.AddEvents = true
+	testContent.AddParent = true
 	testContent.FileName = commonUtils.GetDevFileName()
 	apiUtils.RunTest(testContent, t)
 }
