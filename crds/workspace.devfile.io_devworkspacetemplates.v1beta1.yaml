@@ -3960,6 +3960,7 @@ spec:
                               - run
                               - test
                               - debug
+                              - deploy
                               type: string
                           required:
                           - kind
@@ -4007,6 +4008,7 @@ spec:
                               - run
                               - test
                               - debug
+                              - deploy
                               type: string
                           required:
                           - kind
@@ -4051,6 +4053,7 @@ spec:
                               - run
                               - test
                               - debug
+                              - deploy
                               type: string
                           required:
                           - kind
@@ -4106,6 +4109,7 @@ spec:
                               - run
                               - test
                               - debug
+                              - deploy
                               type: string
                           required:
                           - kind
@@ -4157,6 +4161,8 @@ spec:
                   - required:
                     - volume
                   - required:
+                    - image
+                  - required:
                     - plugin
                   - required:
                     - custom
@@ -4173,6 +4179,7 @@ spec:
                       - Kubernetes
                       - Openshift
                       - Volume
+                      - Image
                       - Plugin
                       - Custom
                       type: string
@@ -4360,6 +4367,106 @@ spec:
                       required:
                       - componentClass
                       - embeddedResource
+                      type: object
+                    image:
+                      description: Allows specifying the definition of an image for
+                        outer loop builds
+                      oneOf:
+                      - required:
+                        - dockerfile
+                      properties:
+                        dockerfile:
+                          description: Allows specifying dockerfile type build
+                          oneOf:
+                          - required:
+                            - uri
+                          - required:
+                            - id
+                          - required:
+                            - git
+                          properties:
+                            args:
+                              description: The arguments to supply to the dockerfile
+                                build.
+                              items:
+                                type: string
+                              type: array
+                            buildContext:
+                              description: Path of source directory to establish build
+                                context. Defaults to ${PROJECT_ROOT} in the container
+                              type: string
+                            git:
+                              description: Project's Git source
+                              properties:
+                                checkoutFrom:
+                                  description: Defines from what the project should
+                                    be checked out. Required if there are more than
+                                    one remote configured
+                                  properties:
+                                    remote:
+                                      description: The remote name should be used
+                                        as init. Required if there are more than one
+                                        remote configured
+                                      type: string
+                                    revision:
+                                      description: The revision to checkout from.
+                                        Should be branch name, tag or commit id. Default
+                                        branch is used if missing or specified revision
+                                        is not found.
+                                      type: string
+                                  type: object
+                                remotes:
+                                  additionalProperties:
+                                    type: string
+                                  description: The remotes map which should be initialized
+                                    in the git project. Must have at least one remote
+                                    configured
+                                  type: object
+                              required:
+                              - remotes
+                              type: object
+                            gitLocation:
+                              description: Location of the Dockerfile in the Git repository
+                                when using git as Dockerfile src.
+                              type: string
+                            id:
+                              description: Id in a registry that contains a Dockerfile
+                              type: string
+                            locationType:
+                              description: Type of Dockerfile location
+                              enum:
+                              - Uri
+                              - Id
+                              - Git
+                              type: string
+                            registryUrl:
+                              description: Registry URL to pull the Dockerfile from
+                                when using id as Dockerfile src. To ensure the dockerfile
+                                gets resolved consistently in different environments,
+                                it is recommended to always specify the `regsitryURL`
+                                when `Id` is used.
+                              type: string
+                            rootRequired:
+                              description: "Specify if a privileged builder pod is
+                                required. \n Default value is `false`"
+                              type: boolean
+                            uri:
+                              description: URI Reference of a Dockerfile. It can be
+                                a full URL or a relative URI from the current devfile
+                                as the base URI.
+                              type: string
+                          type: object
+                        imageName:
+                          description: Name of the image for the resulting outerloop
+                            build
+                          type: string
+                        imageType:
+                          description: Type of image
+                          enum:
+                          - Dockerfile
+                          type: string
+                      required:
+                      - imageName
                       type: object
                     kubernetes:
                       description: Allows importing into the devworkspace the Kubernetes
@@ -4622,6 +4729,7 @@ spec:
                                         - run
                                         - test
                                         - debug
+                                        - deploy
                                         type: string
                                     type: object
                                   label:
@@ -4668,6 +4776,7 @@ spec:
                                         - run
                                         - test
                                         - debug
+                                        - deploy
                                         type: string
                                     type: object
                                   label:
@@ -4727,6 +4836,7 @@ spec:
                                         - run
                                         - test
                                         - debug
+                                        - deploy
                                         type: string
                                     type: object
                                   hotReloadCapable:
@@ -4778,6 +4888,8 @@ spec:
                               - openshift
                             - required:
                               - volume
+                            - required:
+                              - image
                             properties:
                               attributes:
                                 description: Map of implementation-dependant free-form
@@ -4791,6 +4903,7 @@ spec:
                                 - Kubernetes
                                 - Openshift
                                 - Volume
+                                - Image
                                 type: string
                               container:
                                 description: Allows adding and configuring devworkspace-related
@@ -4966,6 +5079,108 @@ spec:
                                       - name
                                       type: object
                                     type: array
+                                type: object
+                              image:
+                                description: Allows specifying the definition of an
+                                  image for outer loop builds
+                                oneOf:
+                                - required:
+                                  - dockerfile
+                                properties:
+                                  dockerfile:
+                                    description: Allows specifying dockerfile type
+                                      build
+                                    oneOf:
+                                    - required:
+                                      - uri
+                                    - required:
+                                      - id
+                                    - required:
+                                      - git
+                                    properties:
+                                      args:
+                                        description: The arguments to supply to the
+                                          dockerfile build.
+                                        items:
+                                          type: string
+                                        type: array
+                                      buildContext:
+                                        description: Path of source directory to establish
+                                          build context. Defaults to ${PROJECT_ROOT}
+                                          in the container
+                                        type: string
+                                      git:
+                                        description: Project's Git source
+                                        properties:
+                                          checkoutFrom:
+                                            description: Defines from what the project
+                                              should be checked out. Required if there
+                                              are more than one remote configured
+                                            properties:
+                                              remote:
+                                                description: The remote name should
+                                                  be used as init. Required if there
+                                                  are more than one remote configured
+                                                type: string
+                                              revision:
+                                                description: The revision to checkout
+                                                  from. Should be branch name, tag
+                                                  or commit id. Default branch is
+                                                  used if missing or specified revision
+                                                  is not found.
+                                                type: string
+                                            type: object
+                                          remotes:
+                                            additionalProperties:
+                                              type: string
+                                            description: The remotes map which should
+                                              be initialized in the git project. Must
+                                              have at least one remote configured
+                                            type: object
+                                        type: object
+                                      gitLocation:
+                                        description: Location of the Dockerfile in
+                                          the Git repository when using git as Dockerfile
+                                          src.
+                                        type: string
+                                      id:
+                                        description: Id in a registry that contains
+                                          a Dockerfile
+                                        type: string
+                                      locationType:
+                                        description: Type of Dockerfile location
+                                        enum:
+                                        - Uri
+                                        - Id
+                                        - Git
+                                        type: string
+                                      registryUrl:
+                                        description: Registry URL to pull the Dockerfile
+                                          from when using id as Dockerfile src. To
+                                          ensure the dockerfile gets resolved consistently
+                                          in different environments, it is recommended
+                                          to always specify the `regsitryURL` when
+                                          `Id` is used.
+                                        type: string
+                                      rootRequired:
+                                        description: "Specify if a privileged builder
+                                          pod is required. \n Default value is `false`"
+                                        type: boolean
+                                      uri:
+                                        description: URI Reference of a Dockerfile.
+                                          It can be a full URL or a relative URI from
+                                          the current devfile as the base URI.
+                                        type: string
+                                    type: object
+                                  imageName:
+                                    description: Name of the image for the resulting
+                                      outerloop build
+                                    type: string
+                                  imageType:
+                                    description: Type of image
+                                    enum:
+                                    - Dockerfile
+                                    type: string
                                 type: object
                               kubernetes:
                                 description: Allows importing into the devworkspace
@@ -5344,6 +5559,7 @@ spec:
                                   - run
                                   - test
                                   - debug
+                                  - deploy
                                   type: string
                               type: object
                             label:
@@ -5388,6 +5604,7 @@ spec:
                                   - run
                                   - test
                                   - debug
+                                  - deploy
                                   type: string
                               type: object
                             label:
@@ -5444,6 +5661,7 @@ spec:
                                   - run
                                   - test
                                   - debug
+                                  - deploy
                                   type: string
                               type: object
                             hotReloadCapable:
@@ -5494,6 +5712,8 @@ spec:
                       - required:
                         - volume
                       - required:
+                        - image
+                      - required:
                         - plugin
                       properties:
                         attributes:
@@ -5508,6 +5728,7 @@ spec:
                           - Kubernetes
                           - Openshift
                           - Volume
+                          - Image
                           - Plugin
                           type: string
                         container:
@@ -5676,6 +5897,103 @@ spec:
                                 - name
                                 type: object
                               type: array
+                          type: object
+                        image:
+                          description: Allows specifying the definition of an image
+                            for outer loop builds
+                          oneOf:
+                          - required:
+                            - dockerfile
+                          properties:
+                            dockerfile:
+                              description: Allows specifying dockerfile type build
+                              oneOf:
+                              - required:
+                                - uri
+                              - required:
+                                - id
+                              - required:
+                                - git
+                              properties:
+                                args:
+                                  description: The arguments to supply to the dockerfile
+                                    build.
+                                  items:
+                                    type: string
+                                  type: array
+                                buildContext:
+                                  description: Path of source directory to establish
+                                    build context. Defaults to ${PROJECT_ROOT} in
+                                    the container
+                                  type: string
+                                git:
+                                  description: Project's Git source
+                                  properties:
+                                    checkoutFrom:
+                                      description: Defines from what the project should
+                                        be checked out. Required if there are more
+                                        than one remote configured
+                                      properties:
+                                        remote:
+                                          description: The remote name should be used
+                                            as init. Required if there are more than
+                                            one remote configured
+                                          type: string
+                                        revision:
+                                          description: The revision to checkout from.
+                                            Should be branch name, tag or commit id.
+                                            Default branch is used if missing or specified
+                                            revision is not found.
+                                          type: string
+                                      type: object
+                                    remotes:
+                                      additionalProperties:
+                                        type: string
+                                      description: The remotes map which should be
+                                        initialized in the git project. Must have
+                                        at least one remote configured
+                                      type: object
+                                  type: object
+                                gitLocation:
+                                  description: Location of the Dockerfile in the Git
+                                    repository when using git as Dockerfile src.
+                                  type: string
+                                id:
+                                  description: Id in a registry that contains a Dockerfile
+                                  type: string
+                                locationType:
+                                  description: Type of Dockerfile location
+                                  enum:
+                                  - Uri
+                                  - Id
+                                  - Git
+                                  type: string
+                                registryUrl:
+                                  description: Registry URL to pull the Dockerfile
+                                    from when using id as Dockerfile src. To ensure
+                                    the dockerfile gets resolved consistently in different
+                                    environments, it is recommended to always specify
+                                    the `regsitryURL` when `Id` is used.
+                                  type: string
+                                rootRequired:
+                                  description: "Specify if a privileged builder pod
+                                    is required. \n Default value is `false`"
+                                  type: boolean
+                                uri:
+                                  description: URI Reference of a Dockerfile. It can
+                                    be a full URL or a relative URI from the current
+                                    devfile as the base URI.
+                                  type: string
+                              type: object
+                            imageName:
+                              description: Name of the image for the resulting outerloop
+                                build
+                              type: string
+                            imageType:
+                              description: Type of image
+                              enum:
+                              - Dockerfile
+                              type: string
                           type: object
                         kubernetes:
                           description: Allows importing into the devworkspace the
@@ -5945,6 +6263,7 @@ spec:
                                             - run
                                             - test
                                             - debug
+                                            - deploy
                                             type: string
                                         type: object
                                       label:
@@ -5992,6 +6311,7 @@ spec:
                                             - run
                                             - test
                                             - debug
+                                            - deploy
                                             type: string
                                         type: object
                                       label:
@@ -6052,6 +6372,7 @@ spec:
                                             - run
                                             - test
                                             - debug
+                                            - deploy
                                             type: string
                                         type: object
                                       hotReloadCapable:
@@ -6103,6 +6424,8 @@ spec:
                                   - openshift
                                 - required:
                                   - volume
+                                - required:
+                                  - image
                                 properties:
                                   attributes:
                                     description: Map of implementation-dependant free-form
@@ -6116,6 +6439,7 @@ spec:
                                     - Kubernetes
                                     - Openshift
                                     - Volume
+                                    - Image
                                     type: string
                                   container:
                                     description: Allows adding and configuring devworkspace-related
@@ -6298,6 +6622,113 @@ spec:
                                           - name
                                           type: object
                                         type: array
+                                    type: object
+                                  image:
+                                    description: Allows specifying the definition
+                                      of an image for outer loop builds
+                                    oneOf:
+                                    - required:
+                                      - dockerfile
+                                    properties:
+                                      dockerfile:
+                                        description: Allows specifying dockerfile
+                                          type build
+                                        oneOf:
+                                        - required:
+                                          - uri
+                                        - required:
+                                          - id
+                                        - required:
+                                          - git
+                                        properties:
+                                          args:
+                                            description: The arguments to supply to
+                                              the dockerfile build.
+                                            items:
+                                              type: string
+                                            type: array
+                                          buildContext:
+                                            description: Path of source directory
+                                              to establish build context. Defaults
+                                              to ${PROJECT_ROOT} in the container
+                                            type: string
+                                          git:
+                                            description: Project's Git source
+                                            properties:
+                                              checkoutFrom:
+                                                description: Defines from what the
+                                                  project should be checked out. Required
+                                                  if there are more than one remote
+                                                  configured
+                                                properties:
+                                                  remote:
+                                                    description: The remote name should
+                                                      be used as init. Required if
+                                                      there are more than one remote
+                                                      configured
+                                                    type: string
+                                                  revision:
+                                                    description: The revision to checkout
+                                                      from. Should be branch name,
+                                                      tag or commit id. Default branch
+                                                      is used if missing or specified
+                                                      revision is not found.
+                                                    type: string
+                                                type: object
+                                              remotes:
+                                                additionalProperties:
+                                                  type: string
+                                                description: The remotes map which
+                                                  should be initialized in the git
+                                                  project. Must have at least one
+                                                  remote configured
+                                                type: object
+                                            type: object
+                                          gitLocation:
+                                            description: Location of the Dockerfile
+                                              in the Git repository when using git
+                                              as Dockerfile src.
+                                            type: string
+                                          id:
+                                            description: Id in a registry that contains
+                                              a Dockerfile
+                                            type: string
+                                          locationType:
+                                            description: Type of Dockerfile location
+                                            enum:
+                                            - Uri
+                                            - Id
+                                            - Git
+                                            type: string
+                                          registryUrl:
+                                            description: Registry URL to pull the
+                                              Dockerfile from when using id as Dockerfile
+                                              src. To ensure the dockerfile gets resolved
+                                              consistently in different environments,
+                                              it is recommended to always specify
+                                              the `regsitryURL` when `Id` is used.
+                                            type: string
+                                          rootRequired:
+                                            description: "Specify if a privileged
+                                              builder pod is required. \n Default
+                                              value is `false`"
+                                            type: boolean
+                                          uri:
+                                            description: URI Reference of a Dockerfile.
+                                              It can be a full URL or a relative URI
+                                              from the current devfile as the base
+                                              URI.
+                                            type: string
+                                        type: object
+                                      imageName:
+                                        description: Name of the image for the resulting
+                                          outerloop build
+                                        type: string
+                                      imageType:
+                                        description: Type of image
+                                        enum:
+                                        - Dockerfile
+                                        type: string
                                     type: object
                                   kubernetes:
                                     description: Allows importing into the devworkspace

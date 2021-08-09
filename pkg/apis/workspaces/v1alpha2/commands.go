@@ -18,14 +18,15 @@ const (
 )
 
 // CommandGroupKind describes the kind of command group.
-// +kubebuilder:validation:Enum=build;run;test;debug
+// +kubebuilder:validation:Enum=build;run;test;debug;deploy
 type CommandGroupKind string
 
 const (
-	BuildCommandGroupKind CommandGroupKind = "build"
-	RunCommandGroupKind   CommandGroupKind = "run"
-	TestCommandGroupKind  CommandGroupKind = "test"
-	DebugCommandGroupKind CommandGroupKind = "debug"
+	BuildCommandGroupKind  CommandGroupKind = "build"
+	RunCommandGroupKind    CommandGroupKind = "run"
+	TestCommandGroupKind   CommandGroupKind = "test"
+	DebugCommandGroupKind  CommandGroupKind = "debug"
+	DeployCommandGroupKind CommandGroupKind = "deploy"
 )
 
 type CommandGroup struct {

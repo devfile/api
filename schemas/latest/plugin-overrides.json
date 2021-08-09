@@ -51,7 +51,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ]
                   }
                 },
@@ -95,7 +96,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ]
                   }
                 },
@@ -158,7 +160,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ]
                   }
                 },
@@ -216,6 +219,11 @@
           {
             "required": [
               "volume"
+            ]
+          },
+          {
+            "required": [
+              "image"
             ]
           }
         ],
@@ -366,6 +374,108 @@
                   },
                   "additionalProperties": false
                 }
+              }
+            },
+            "additionalProperties": false
+          },
+          "image": {
+            "description": "Allows specifying the definition of an image for outer loop builds",
+            "type": "object",
+            "oneOf": [
+              {
+                "required": [
+                  "dockerfile"
+                ]
+              }
+            ],
+            "properties": {
+              "dockerfile": {
+                "description": "Allows specifying dockerfile type build",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "id"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "git"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "args": {
+                    "description": "The arguments to supply to the dockerfile build.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "buildContext": {
+                    "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                    "type": "string"
+                  },
+                  "git": {
+                    "description": "Project's Git source",
+                    "type": "object",
+                    "properties": {
+                      "checkoutFrom": {
+                        "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                        "type": "object",
+                        "properties": {
+                          "remote": {
+                            "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                            "type": "string"
+                          },
+                          "revision": {
+                            "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "remotes": {
+                        "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "gitLocation": {
+                    "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Id in a registry that contains a Dockerfile",
+                    "type": "string"
+                  },
+                  "registryUrl": {
+                    "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
+                    "type": "string"
+                  },
+                  "rootRequired": {
+                    "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
+                    "type": "boolean"
+                  },
+                  "uri": {
+                    "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "imageName": {
+                "description": "Name of the image for the resulting outerloop build",
+                "type": "string"
               }
             },
             "additionalProperties": false

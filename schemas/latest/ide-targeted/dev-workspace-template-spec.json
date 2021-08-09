@@ -71,7 +71,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ],
                     "markdownDescription": "Kind of group the command is part of"
                   }
@@ -125,7 +126,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ],
                     "markdownDescription": "Kind of group the command is part of"
                   }
@@ -185,7 +187,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ],
                     "markdownDescription": "Kind of group the command is part of"
                   }
@@ -260,7 +263,8 @@
                       "build",
                       "run",
                       "test",
-                      "debug"
+                      "debug",
+                      "deploy"
                     ],
                     "markdownDescription": "Kind of group the command is part of"
                   }
@@ -326,6 +330,11 @@
           {
             "required": [
               "volume"
+            ]
+          },
+          {
+            "required": [
+              "image"
             ]
           },
           {
@@ -534,6 +543,129 @@
             },
             "additionalProperties": false,
             "markdownDescription": "Custom component whose logic is implementation-dependant and should be provided by the user possibly through some dedicated controller"
+          },
+          "image": {
+            "description": "Allows specifying the definition of an image for outer loop builds",
+            "type": "object",
+            "required": [
+              "imageName"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "dockerfile"
+                ]
+              }
+            ],
+            "properties": {
+              "dockerfile": {
+                "description": "Allows specifying dockerfile type build",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "id"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "git"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "args": {
+                    "description": "The arguments to supply to the dockerfile build.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "markdownDescription": "The arguments to supply to the dockerfile build."
+                  },
+                  "buildContext": {
+                    "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                    "type": "string",
+                    "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
+                  },
+                  "git": {
+                    "description": "Project's Git source",
+                    "type": "object",
+                    "required": [
+                      "remotes"
+                    ],
+                    "properties": {
+                      "checkoutFrom": {
+                        "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                        "type": "object",
+                        "properties": {
+                          "remote": {
+                            "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                            "type": "string",
+                            "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                          },
+                          "revision": {
+                            "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                            "type": "string",
+                            "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                          }
+                        },
+                        "additionalProperties": false,
+                        "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
+                      },
+                      "remotes": {
+                        "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "markdownDescription": "Project's Git source"
+                  },
+                  "gitLocation": {
+                    "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                    "type": "string",
+                    "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                  },
+                  "id": {
+                    "description": "Id in a registry that contains a Dockerfile",
+                    "type": "string",
+                    "markdownDescription": "Id in a registry that contains a Dockerfile"
+                  },
+                  "registryUrl": {
+                    "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
+                    "type": "string",
+                    "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                  },
+                  "rootRequired": {
+                    "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
+                    "type": "boolean",
+                    "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
+                  },
+                  "uri": {
+                    "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                    "type": "string",
+                    "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                  }
+                },
+                "additionalProperties": false,
+                "markdownDescription": "Allows specifying dockerfile type build"
+              },
+              "imageName": {
+                "description": "Name of the image for the resulting outerloop build",
+                "type": "string",
+                "markdownDescription": "Name of the image for the resulting outerloop build"
+              }
+            },
+            "additionalProperties": false,
+            "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
           },
           "kubernetes": {
             "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -794,7 +926,8 @@
                                 "build",
                                 "run",
                                 "test",
-                                "debug"
+                                "debug",
+                                "deploy"
                               ],
                               "markdownDescription": "Kind of group the command is part of"
                             }
@@ -845,7 +978,8 @@
                                 "build",
                                 "run",
                                 "test",
-                                "debug"
+                                "debug",
+                                "deploy"
                               ],
                               "markdownDescription": "Kind of group the command is part of"
                             }
@@ -917,7 +1051,8 @@
                                 "build",
                                 "run",
                                 "test",
-                                "debug"
+                                "debug",
+                                "deploy"
                               ],
                               "markdownDescription": "Kind of group the command is part of"
                             }
@@ -983,6 +1118,11 @@
                     {
                       "required": [
                         "volume"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "image"
                       ]
                     }
                   ],
@@ -1153,6 +1293,123 @@
                       },
                       "additionalProperties": false,
                       "markdownDescription": "Allows adding and configuring devworkspace-related containers"
+                    },
+                    "image": {
+                      "description": "Allows specifying the definition of an image for outer loop builds",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "required": [
+                            "dockerfile"
+                          ]
+                        }
+                      ],
+                      "properties": {
+                        "dockerfile": {
+                          "description": "Allows specifying dockerfile type build",
+                          "type": "object",
+                          "oneOf": [
+                            {
+                              "required": [
+                                "uri"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "id"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "git"
+                              ]
+                            }
+                          ],
+                          "properties": {
+                            "args": {
+                              "description": "The arguments to supply to the dockerfile build.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "markdownDescription": "The arguments to supply to the dockerfile build."
+                            },
+                            "buildContext": {
+                              "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                              "type": "string",
+                              "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
+                            },
+                            "git": {
+                              "description": "Project's Git source",
+                              "type": "object",
+                              "properties": {
+                                "checkoutFrom": {
+                                  "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                                  "type": "object",
+                                  "properties": {
+                                    "remote": {
+                                      "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                                      "type": "string",
+                                      "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                                    },
+                                    "revision": {
+                                      "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                                      "type": "string",
+                                      "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                                    }
+                                  },
+                                  "additionalProperties": false,
+                                  "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
+                                },
+                                "remotes": {
+                                  "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+                                }
+                              },
+                              "additionalProperties": false,
+                              "markdownDescription": "Project's Git source"
+                            },
+                            "gitLocation": {
+                              "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                              "type": "string",
+                              "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                            },
+                            "id": {
+                              "description": "Id in a registry that contains a Dockerfile",
+                              "type": "string",
+                              "markdownDescription": "Id in a registry that contains a Dockerfile"
+                            },
+                            "registryUrl": {
+                              "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
+                              "type": "string",
+                              "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                            },
+                            "rootRequired": {
+                              "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
+                              "type": "boolean",
+                              "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
+                            },
+                            "uri": {
+                              "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                              "type": "string",
+                              "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                            }
+                          },
+                          "additionalProperties": false,
+                          "markdownDescription": "Allows specifying dockerfile type build"
+                        },
+                        "imageName": {
+                          "description": "Name of the image for the resulting outerloop build",
+                          "type": "string",
+                          "markdownDescription": "Name of the image for the resulting outerloop build"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
                     },
                     "kubernetes": {
                       "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -1539,7 +1796,8 @@
                           "build",
                           "run",
                           "test",
-                          "debug"
+                          "debug",
+                          "deploy"
                         ],
                         "markdownDescription": "Kind of group the command is part of"
                       }
@@ -1590,7 +1848,8 @@
                           "build",
                           "run",
                           "test",
-                          "debug"
+                          "debug",
+                          "deploy"
                         ],
                         "markdownDescription": "Kind of group the command is part of"
                       }
@@ -1662,7 +1921,8 @@
                           "build",
                           "run",
                           "test",
-                          "debug"
+                          "debug",
+                          "deploy"
                         ],
                         "markdownDescription": "Kind of group the command is part of"
                       }
@@ -1728,6 +1988,11 @@
               {
                 "required": [
                   "volume"
+                ]
+              },
+              {
+                "required": [
+                  "image"
                 ]
               },
               {
@@ -1903,6 +2168,123 @@
                 },
                 "additionalProperties": false,
                 "markdownDescription": "Allows adding and configuring devworkspace-related containers"
+              },
+              "image": {
+                "description": "Allows specifying the definition of an image for outer loop builds",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "required": [
+                      "dockerfile"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "dockerfile": {
+                    "description": "Allows specifying dockerfile type build",
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "required": [
+                          "uri"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "id"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "git"
+                        ]
+                      }
+                    ],
+                    "properties": {
+                      "args": {
+                        "description": "The arguments to supply to the dockerfile build.",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "markdownDescription": "The arguments to supply to the dockerfile build."
+                      },
+                      "buildContext": {
+                        "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                        "type": "string",
+                        "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
+                      },
+                      "git": {
+                        "description": "Project's Git source",
+                        "type": "object",
+                        "properties": {
+                          "checkoutFrom": {
+                            "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                            "type": "object",
+                            "properties": {
+                              "remote": {
+                                "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                                "type": "string",
+                                "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                              },
+                              "revision": {
+                                "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                                "type": "string",
+                                "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                              }
+                            },
+                            "additionalProperties": false,
+                            "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
+                          },
+                          "remotes": {
+                            "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "markdownDescription": "Project's Git source"
+                      },
+                      "gitLocation": {
+                        "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                        "type": "string",
+                        "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                      },
+                      "id": {
+                        "description": "Id in a registry that contains a Dockerfile",
+                        "type": "string",
+                        "markdownDescription": "Id in a registry that contains a Dockerfile"
+                      },
+                      "registryUrl": {
+                        "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
+                        "type": "string",
+                        "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                      },
+                      "rootRequired": {
+                        "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
+                        "type": "boolean",
+                        "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
+                      },
+                      "uri": {
+                        "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                        "type": "string",
+                        "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                      }
+                    },
+                    "additionalProperties": false,
+                    "markdownDescription": "Allows specifying dockerfile type build"
+                  },
+                  "imageName": {
+                    "description": "Name of the image for the resulting outerloop build",
+                    "type": "string",
+                    "markdownDescription": "Name of the image for the resulting outerloop build"
+                  }
+                },
+                "additionalProperties": false,
+                "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
               },
               "kubernetes": {
                 "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
@@ -2161,7 +2543,8 @@
                                     "build",
                                     "run",
                                     "test",
-                                    "debug"
+                                    "debug",
+                                    "deploy"
                                   ],
                                   "markdownDescription": "Kind of group the command is part of"
                                 }
@@ -2212,7 +2595,8 @@
                                     "build",
                                     "run",
                                     "test",
-                                    "debug"
+                                    "debug",
+                                    "deploy"
                                   ],
                                   "markdownDescription": "Kind of group the command is part of"
                                 }
@@ -2284,7 +2668,8 @@
                                     "build",
                                     "run",
                                     "test",
-                                    "debug"
+                                    "debug",
+                                    "deploy"
                                   ],
                                   "markdownDescription": "Kind of group the command is part of"
                                 }
@@ -2350,6 +2735,11 @@
                         {
                           "required": [
                             "volume"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "image"
                           ]
                         }
                       ],
@@ -2520,6 +2910,123 @@
                           },
                           "additionalProperties": false,
                           "markdownDescription": "Allows adding and configuring devworkspace-related containers"
+                        },
+                        "image": {
+                          "description": "Allows specifying the definition of an image for outer loop builds",
+                          "type": "object",
+                          "oneOf": [
+                            {
+                              "required": [
+                                "dockerfile"
+                              ]
+                            }
+                          ],
+                          "properties": {
+                            "dockerfile": {
+                              "description": "Allows specifying dockerfile type build",
+                              "type": "object",
+                              "oneOf": [
+                                {
+                                  "required": [
+                                    "uri"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "id"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "git"
+                                  ]
+                                }
+                              ],
+                              "properties": {
+                                "args": {
+                                  "description": "The arguments to supply to the dockerfile build.",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "markdownDescription": "The arguments to supply to the dockerfile build."
+                                },
+                                "buildContext": {
+                                  "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                                  "type": "string",
+                                  "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
+                                },
+                                "git": {
+                                  "description": "Project's Git source",
+                                  "type": "object",
+                                  "properties": {
+                                    "checkoutFrom": {
+                                      "description": "Defines from what the project should be checked out. Required if there are more than one remote configured",
+                                      "type": "object",
+                                      "properties": {
+                                        "remote": {
+                                          "description": "The remote name should be used as init. Required if there are more than one remote configured",
+                                          "type": "string",
+                                          "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
+                                        },
+                                        "revision": {
+                                          "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                                          "type": "string",
+                                          "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                                        }
+                                      },
+                                      "additionalProperties": false,
+                                      "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
+                                    },
+                                    "remotes": {
+                                      "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                      "type": "object",
+                                      "additionalProperties": {
+                                        "type": "string"
+                                      },
+                                      "markdownDescription": "The remotes map which should be initialized in the git project. Must have at least one remote configured"
+                                    }
+                                  },
+                                  "additionalProperties": false,
+                                  "markdownDescription": "Project's Git source"
+                                },
+                                "gitLocation": {
+                                  "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                                  "type": "string",
+                                  "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                                },
+                                "id": {
+                                  "description": "Id in a registry that contains a Dockerfile",
+                                  "type": "string",
+                                  "markdownDescription": "Id in a registry that contains a Dockerfile"
+                                },
+                                "registryUrl": {
+                                  "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
+                                  "type": "string",
+                                  "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                                },
+                                "rootRequired": {
+                                  "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
+                                  "type": "boolean",
+                                  "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
+                                },
+                                "uri": {
+                                  "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                                  "type": "string",
+                                  "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                                }
+                              },
+                              "additionalProperties": false,
+                              "markdownDescription": "Allows specifying dockerfile type build"
+                            },
+                            "imageName": {
+                              "description": "Name of the image for the resulting outerloop build",
+                              "type": "string",
+                              "markdownDescription": "Name of the image for the resulting outerloop build"
+                            }
+                          },
+                          "additionalProperties": false,
+                          "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
                         },
                         "kubernetes": {
                           "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
