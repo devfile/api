@@ -23,10 +23,6 @@ type DockerfileImage struct {
 	// it is recommended to always specify the `regsitryURL` when `Id` is used.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
-
-	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
-	// +optional
-	GitLocation string `json:"gitLocation,omitempty"`
 }
 
 // +union
@@ -48,7 +44,7 @@ type DockerfileLocation struct {
 
 	// Project's Git source
 	// +optional
-	Git *GitProjectSource `json:"git,omitempty"`
+	Git *DockerfileGitProjectSource `json:"git,omitempty"`
 }
 
 type Dockerfile struct {
@@ -65,4 +61,12 @@ type Dockerfile struct {
 	// Default value is `false`
 	// +optional
 	RootRequired bool `json:"rootRequired,omitempty"`
+}
+
+type DockerfileGitProjectSource struct {
+	GitProjectSource `json:",inline"`
+
+	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
+	// +optional
+	GitLocation string `json:"gitLocation,omitempty"`
 }
