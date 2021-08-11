@@ -37,7 +37,7 @@ func (e *InvalidCommandTypeError) Error() string {
 
 // MultipleDefaultCmdError returns an error if there are multiple default commands for a single group kind
 type MultipleDefaultCmdError struct {
-	groupKind v1alpha2.CommandGroupKind
+	groupKind         v1alpha2.CommandGroupKind
 	commandsReference string
 }
 

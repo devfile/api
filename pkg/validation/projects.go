@@ -42,7 +42,7 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) (errList
 
 // ValidateProjects checks if the project has more than one remote configured then a checkout
 // remote is mandatory and if the checkout remote matches the renote configured
-func ValidateProjects(projects []v1alpha2.Project) (errList []error)  {
+func ValidateProjects(projects []v1alpha2.Project) (errList []error) {
 
 	for _, project := range projects {
 		var gitSource v1alpha2.GitLikeProjectSource

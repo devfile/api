@@ -87,7 +87,7 @@ func validateGroup(commands []v1alpha2.Command, groupKind v1alpha2.CommandGroupK
 		// example: there should be exactly one default command, currently there is more than one default command;
 		// command: <id1>; command: <id2>, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 		return &MultipleDefaultCmdError{
-			groupKind: groupKind,
+			groupKind:         groupKind,
 			commandsReference: commandsReference,
 		}
 	}

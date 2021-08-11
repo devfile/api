@@ -164,7 +164,7 @@ func TestValidateCommands(t *testing.T) {
 			err := ValidateCommands(tt.commands, components)
 			if tt.wantErr != nil {
 				assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match")
-				for i:= 0; i < len(err); i++ {
+				for i := 0; i < len(err); i++ {
 					assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
 				}
 			} else {
@@ -335,7 +335,7 @@ func TestValidateGroup(t *testing.T) {
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
-		group v1alpha2.CommandGroupKind
+		group    v1alpha2.CommandGroupKind
 		wantErr  *string
 	}{
 		{
@@ -344,7 +344,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 			},
-			group: runGroup,
+			group:   runGroup,
 			wantErr: &multipleDefaultCmdErr,
 		},
 		{
@@ -353,7 +353,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 				generateDummyApplyCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}, parentOverridesFromMainDevfile),
 			},
-			group: runGroup,
+			group:   runGroup,
 			wantErr: &multipleDefaultCmdErrWithImportAttributes,
 		},
 		{
@@ -362,7 +362,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("build command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			group: buildGroup,
+			group:   buildGroup,
 			wantErr: &noDefaultCmdErr,
 		},
 		{

@@ -74,7 +74,7 @@ func TestValidateEndpoints(t *testing.T) {
 				8080: true,
 				8081: true,
 			},
-			wantErr:               []string{duplicateNameErr, duplicatePortErr,duplicatePortErr},
+			wantErr: []string{duplicateNameErr, duplicatePortErr, duplicatePortErr},
 		},
 	}
 	for _, tt := range tests {
@@ -83,7 +83,7 @@ func TestValidateEndpoints(t *testing.T) {
 
 			if tt.wantErr != nil {
 				assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match")
-				for i:= 0; i < len(err); i++ {
+				for i := 0; i < len(err); i++ {
 					assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
 				}
 			} else {
