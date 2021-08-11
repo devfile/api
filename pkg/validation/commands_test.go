@@ -75,7 +75,7 @@ func TestValidateCommands(t *testing.T) {
 
 	duplicateKeyErr := "duplicate key: somecommand1"
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
-	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there are more than one default commands"
+	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there are multiple default commands"
 	invalidCmdErr := ".*command does not map to a container component"
 	nonExistCmdInComposite := "the command .* mentioned in the composite command does not exist in the devfile"
 
@@ -324,7 +324,7 @@ func TestValidateGroup(t *testing.T) {
 	component := "alias1"
 
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
-	multipleDefaultError := ".*there should be exactly one default command, currently there are more than one default commands"
+	multipleDefaultError := ".*there should be exactly one default command, currently there are multiple default commands"
 	multipleDefaultCmdErr := multipleDefaultError + "; command: run command; command: customcommand"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,

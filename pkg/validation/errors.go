@@ -42,16 +42,16 @@ type MultipleDefaultCmdError struct {
 }
 
 func (e *MultipleDefaultCmdError) Error() string {
-	return fmt.Sprintf("command group %s error - there should be exactly one default command, currently there are more than one default commands; %s",
+	return fmt.Sprintf("command group %s error - there should be exactly one default command, currently there are multiple default commands; %s",
 		e.groupKind, e.commandsReference)
 }
 
-// MisingDefaultCmdWarning returns an error if there is no default command for a single group kind
-type MisingDefaultCmdWarning struct {
+// MissingDefaultCmdWarning returns an error if there is no default command for a single group kind
+type MissingDefaultCmdWarning struct {
 	groupKind v1alpha2.CommandGroupKind
 }
 
-func (e *MisingDefaultCmdWarning) Error() string {
+func (e *MissingDefaultCmdWarning) Error() string {
 	return fmt.Sprintf("command group %s warning - there should be exactly one default command, currently there is no default command", e.groupKind)
 }
 

@@ -76,7 +76,7 @@ func validateGroup(commands []v1alpha2.Command, groupKind v1alpha2.CommandGroupK
 	}
 
 	if defaultCommandCount == 0 {
-		return &MisingDefaultCmdWarning{groupKind: groupKind}
+		return &MissingDefaultCmdWarning{groupKind: groupKind}
 	} else if defaultCommandCount > 1 {
 		var commandsReferenceList []string
 		for _, command := range defaultCommands {
@@ -84,7 +84,7 @@ func validateGroup(commands []v1alpha2.Command, groupKind v1alpha2.CommandGroupK
 				resolveErrorMessageWithImportAttributes(fmt.Errorf("command: %s", command.Id), command.Attributes).Error())
 		}
 		commandsReference := strings.Join(commandsReferenceList, "; ")
-		// example: there should be exactly one default command, currently there is more than one default command;
+		// example: there should be exactly one default command, currently there are multiple commands;
 		// command: <id1>; command: <id2>, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 		return &MultipleDefaultCmdError{
 			groupKind:         groupKind,
