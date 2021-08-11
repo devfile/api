@@ -2,6 +2,7 @@ package validation
 
 import (
 	"fmt"
+	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	attributesAPI "github.com/devfile/api/v2/pkg/attributes"
 )
 
@@ -32,6 +33,26 @@ type InvalidCommandTypeError struct {
 
 func (e *InvalidCommandTypeError) Error() string {
 	return fmt.Sprintf("command %s has invalid type", e.commandId)
+}
+
+// MultipleDefaultCmdError returns an error if there are multiple default commands for a single group kind
+type MultipleDefaultCmdError struct {
+	groupKind v1alpha2.CommandGroupKind
+	commandsReference string
+}
+
+func (e *MultipleDefaultCmdError) Error() string {
+	return fmt.Sprintf("command group %s error - there should be exactly one default command, currently there are more than one default commands; %s",
+		e.groupKind, e.commandsReference)
+}
+
+// MisingDefaultCmdWarning returns an error if there is no default command for a single group kind
+type MisingDefaultCmdWarning struct {
+	groupKind v1alpha2.CommandGroupKind
+}
+
+func (e *MisingDefaultCmdWarning) Error() string {
+	return fmt.Sprintf("command group %s warning - there should be exactly one default command, currently there is no default command", e.groupKind)
 }
 
 // ReservedEnvError returns an error if the user attempts to customize a reserved ENV in a container
