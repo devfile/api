@@ -5,19 +5,20 @@ import (
 	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/hashicorp/go-multierror"
 )
 
 // ValidateCommands validates the devfile commands and checks:
 // 1. there are no duplicate command ids
 // 2. the command type is not invalid
 // 3. if a command is part of a command group, there is a single default command
-func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (errList []error) {
+func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Component) (returnedErr error) {
 	groupKindCommandMap := make(map[v1alpha2.CommandGroupKind][]v1alpha2.Command)
 	commandMap := getCommandsMap(commands)
 
 	err := v1alpha2.CheckDuplicateKeys(commands)
 	if err != nil {
-		errList = append(errList, err)
+		multierror.Append(returnedErr, err)
 	}
 
 	for _, command := range commands {
@@ -25,7 +26,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 		parentCommands := make(map[string]string)
 		err := validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
-			errList = append(errList, resolveErrorMessageWithImportAttributes(err, command.Attributes))
+			multierror.Append(returnedErr, resolveErrorMessageWithImportAttributes(err, command.Attributes))
 		}
 
 		commandGroup := getGroup(command)
@@ -36,11 +37,11 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 	for groupKind, commands := range groupKindCommandMap {
 		if err := validateGroup(commands, groupKind); err != nil {
-			errList = append(errList, err)
+			multierror.Append(returnedErr, err)
 		}
 	}
 
-	return errList
+	return returnedErr
 }
 
 // validateCommand validates a given devfile command where parentCommands is a map to track all the parent commands when validating

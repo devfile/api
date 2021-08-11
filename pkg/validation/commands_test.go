@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/hashicorp/go-multierror"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -162,13 +163,14 @@ func TestValidateCommands(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateCommands(tt.commands, components)
-			if tt.wantErr != nil {
-				assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match")
-				for i := 0; i < len(err); i++ {
-					assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
+
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
 				}
 			} else {
-				assert.Equal(t, 0, len(err), "Error list should be empty")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}
