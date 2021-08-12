@@ -6,6 +6,7 @@ import (
 	"github.com/devfile/api/v2/pkg/attributes"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/hashicorp/go-multierror"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -52,7 +53,7 @@ func TestValidateStarterProjects(t *testing.T) {
 	tests := []struct {
 		name            string
 		starterProjects []v1alpha2.StarterProject
-		wantErr         *string
+		wantErr         []string
 	}{
 		{
 			name: "Valid Starter Project",
@@ -66,14 +67,14 @@ func TestValidateStarterProjects(t *testing.T) {
 			starterProjects: []v1alpha2.StarterProject{
 				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &oneRemoteErr,
+			wantErr: []string{oneRemoteErr},
 		},
 		{
 			name: "Invalid Starter Project with wrong checkout",
 			starterProjects: []v1alpha2.StarterProject{
 				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &wrongCheckoutErr,
+			wantErr: []string{wrongCheckoutErr},
 		},
 		{
 			name: "Valid Starter Project with empty checkout remote",
@@ -88,29 +89,32 @@ func TestValidateStarterProjects(t *testing.T) {
 			},
 		},
 		{
-			name: "Invalid Starter Project with empty remotes",
+			name: "Multiple errors: Starter Project with empty remotes, Starter Project with multiple remotes",
 			starterProjects: []v1alpha2.StarterProject{
 				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{}, attributes.Attributes{}),
 				generateDummyGitStarterProject("project3", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &atleastOneRemoteErr,
+			wantErr: []string{atleastOneRemoteErr, oneRemoteErr},
 		},
 		{
 			name: "Invalid Starter Project due to wrong checkout with import source attributes",
 			starterProjects: []v1alpha2.StarterProject{
 				generateDummyGitStarterProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"test": "testremote"}, parentOverridesFromMainDevfile),
 			},
-			wantErr: &wrongCheckoutErrWithImportAttributes,
+			wantErr: []string{wrongCheckoutErrWithImportAttributes},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateStarterProjects(tt.starterProjects)
 
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}
@@ -129,7 +133,7 @@ func TestValidateProjects(t *testing.T) {
 	tests := []struct {
 		name     string
 		projects []v1alpha2.Project
-		wantErr  *string
+		wantErr  []string
 	}{
 		{
 			name: "Valid Project",
@@ -143,7 +147,7 @@ func TestValidateProjects(t *testing.T) {
 			projects: []v1alpha2.Project{
 				generateDummyGitProject("project2", nil, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &missingCheckOutFromRemoteErr,
+			wantErr: []string{missingCheckOutFromRemoteErr},
 		},
 		{
 			name: "Invalid Project with multiple remote and empty checkout remote",
@@ -151,15 +155,14 @@ func TestValidateProjects(t *testing.T) {
 				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"origin": "originremote"}, attributes.Attributes{}),
 				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: ""}, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &missingCheckOutFromRemoteErr,
+			wantErr: []string{missingCheckOutFromRemoteErr},
 		},
 		{
 			name: "Invalid Project with wrong checkout",
 			projects: []v1alpha2.Project{
 				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin1"}, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
-				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origin1"}, map[string]string{"origin2": "originremote2"}, attributes.Attributes{}),
 			},
-			wantErr: &wrongCheckoutErr,
+			wantErr: []string{wrongCheckoutErr},
 		},
 		{
 			name: "Valid Project with empty checkout remote",
@@ -168,29 +171,32 @@ func TestValidateProjects(t *testing.T) {
 			},
 		},
 		{
-			name: "Invalid Project with empty remotes",
+			name: "Multiple errors: invalid Project with empty remotes, invalid Project with wrong checkout",
 			projects: []v1alpha2.Project{
 				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{}, attributes.Attributes{}),
 				generateDummyGitProject("project2", &v1alpha2.CheckoutFrom{Remote: "origins"}, map[string]string{"origin": "originremote", "test": "testremote"}, attributes.Attributes{}),
 			},
-			wantErr: &atleastOneRemoteErr,
+			wantErr: []string{atleastOneRemoteErr, wrongCheckoutErr},
 		},
 		{
 			name: "Invalid Project due to wrong checkout with import source attributes",
 			projects: []v1alpha2.Project{
 				generateDummyGitProject("project1", &v1alpha2.CheckoutFrom{Remote: "origin"}, map[string]string{"test": "testremote"}, parentOverridesFromMainDevfile),
 			},
-			wantErr: &wrongCheckoutErrWithImportAttributes,
+			wantErr: []string{wrongCheckoutErrWithImportAttributes},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateProjects(tt.projects)
 
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}

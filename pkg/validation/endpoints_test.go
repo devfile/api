@@ -17,7 +17,7 @@ func TestValidateEndpoints(t *testing.T) {
 		endpoints             []v1alpha2.Endpoint
 		processedEndpointName map[string]bool
 		processedEndpointPort map[int]bool
-		wantErr               *string
+		wantErr               []string
 	}{
 		{
 			name: "Duplicate endpoint name",
@@ -27,7 +27,7 @@ func TestValidateEndpoints(t *testing.T) {
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               &duplicateNameErr,
+			wantErr:               []string{duplicateNameErr},
 		},
 		{
 			name: "Duplicate endpoint name across components",
@@ -38,7 +38,7 @@ func TestValidateEndpoints(t *testing.T) {
 				"url1": true,
 			},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               &duplicateNameErr,
+			wantErr:               []string{duplicateNameErr},
 		},
 		{
 			name: "Duplicate endpoint port within same component",
@@ -59,17 +59,35 @@ func TestValidateEndpoints(t *testing.T) {
 			processedEndpointPort: map[int]bool{
 				8080: true,
 			},
-			wantErr: &duplicatePortErr,
+			wantErr: []string{duplicatePortErr},
+		},
+		{
+			name: "Multiple errors: Duplicate endpoint name, duplicate endpoint port",
+			endpoints: []v1alpha2.Endpoint{
+				generateDummyEndpoint("url1", 8080),
+				generateDummyEndpoint("url2", 8081),
+			},
+			processedEndpointName: map[string]bool{
+				"url1": true,
+			},
+			processedEndpointPort: map[int]bool{
+				8080: true,
+				8081: true,
+			},
+			wantErr: []string{duplicateNameErr, duplicatePortErr, duplicatePortErr},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validateEndpoints(tt.endpoints, tt.processedEndpointPort, tt.processedEndpointName)
 
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			if tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match")
+				for i := 0; i < len(err); i++ {
+					assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, 0, len(err), "Error list should be empty")
 			}
 		})
 	}

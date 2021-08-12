@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/hashicorp/go-multierror"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -75,8 +76,9 @@ func TestValidateCommands(t *testing.T) {
 
 	duplicateKeyErr := "duplicate key: somecommand1"
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
-	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there is more than one default command"
+	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there are multiple default commands"
 	invalidCmdErr := ".*command does not map to a container component"
+	nonExistCmdInComposite := "the command .* mentioned in the composite command does not exist in the devfile"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
@@ -85,7 +87,7 @@ func TestValidateCommands(t *testing.T) {
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
-		wantErr  *string
+		wantErr  []string
 	}{
 		{
 			name: "Valid Exec Command",
@@ -107,15 +109,15 @@ func TestValidateCommands(t *testing.T) {
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyExecCommand("somecommand1", component, nil),
 			},
-			wantErr: &duplicateKeyErr,
+			wantErr: []string{duplicateKeyErr},
 		},
 		{
-			name: "Duplicate commands, different types",
+			name: "Multiple errors: Duplicate commands, non-exist command in composite command",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyCompositeCommand("somecommand1", []string{"fakecommand"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: &duplicateKeyErr,
+			wantErr: []string{duplicateKeyErr, nonExistCmdInComposite},
 		},
 		{
 			name: "Different command types belonging to the same group but no default",
@@ -123,7 +125,7 @@ func TestValidateCommands(t *testing.T) {
 				generateDummyExecCommand("somecommand1", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
-			wantErr: &noDefaultCmdErr,
+			wantErr: []string{noDefaultCmdErr},
 		},
 		{
 			name: "Different command types belonging to the same group with more than one default",
@@ -132,14 +134,14 @@ func TestValidateCommands(t *testing.T) {
 				generateDummyExecCommand("somecommand3", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
-			wantErr: &multipleDefaultCmdErr,
+			wantErr: []string{multipleDefaultCmdErr},
 		},
 		{
 			name: "Invalid Apply command with wrong component",
 			commands: []v1alpha2.Command{
 				generateDummyApplyCommand("command", "invalidComponent", nil, attributes.Attributes{}),
 			},
-			wantErr: &invalidCmdErr,
+			wantErr: []string{invalidCmdErr},
 		},
 		{
 			name: "Valid Composite command with one subcommand referencing the other",
@@ -155,16 +157,20 @@ func TestValidateCommands(t *testing.T) {
 			commands: []v1alpha2.Command{
 				generateDummyApplyCommand("command", "invalidComponent", nil, parentOverridesFromMainDevfile),
 			},
-			wantErr: &invalidCmdErrWithImportAttributes,
+			wantErr: []string{invalidCmdErrWithImportAttributes},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateCommands(tt.commands, components)
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}
@@ -320,7 +326,7 @@ func TestValidateGroup(t *testing.T) {
 	component := "alias1"
 
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
-	multipleDefaultError := ".*there should be exactly one default command, currently there is more than one default command"
+	multipleDefaultError := ".*there should be exactly one default command, currently there are multiple default commands"
 	multipleDefaultCmdErr := multipleDefaultError + "; command: run command; command: customcommand"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
@@ -331,6 +337,7 @@ func TestValidateGroup(t *testing.T) {
 	tests := []struct {
 		name     string
 		commands []v1alpha2.Command
+		group    v1alpha2.CommandGroupKind
 		wantErr  *string
 	}{
 		{
@@ -339,6 +346,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 			},
+			group:   runGroup,
 			wantErr: &multipleDefaultCmdErr,
 		},
 		{
@@ -347,6 +355,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
 				generateDummyApplyCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}, parentOverridesFromMainDevfile),
 			},
+			group:   runGroup,
 			wantErr: &multipleDefaultCmdErrWithImportAttributes,
 		},
 		{
@@ -355,6 +364,7 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("build command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
+			group:   buildGroup,
 			wantErr: &noDefaultCmdErr,
 		},
 		{
@@ -362,12 +372,14 @@ func TestValidateGroup(t *testing.T) {
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 			},
+			group: buildGroup,
 		},
 		{
 			name: "One command can have default",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
+			group: buildGroup,
 		},
 		{
 			name: "Composite commands in group",
@@ -376,11 +388,12 @@ func TestValidateGroup(t *testing.T) {
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyCompositeCommand("composite1", []string{"build command", "build command 2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
 			},
+			group: buildGroup,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := validateGroup(tt.commands)
+			err := validateGroup(tt.commands, tt.group)
 			if tt.wantErr != nil && assert.Error(t, err) {
 				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
 			} else {

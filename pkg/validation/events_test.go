@@ -5,6 +5,7 @@ import (
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/devfile/api/v2/pkg/attributes"
+	"github.com/hashicorp/go-multierror"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -28,7 +29,7 @@ func TestValidateEvents(t *testing.T) {
 	tests := []struct {
 		name    string
 		events  v1alpha2.Events
-		wantErr *string
+		wantErr []string
 	}{
 		{
 			name: "Valid preStart events - Apply and Composite Apply Commands",
@@ -53,7 +54,7 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: &preStartPostStopErr,
+			wantErr: []string{preStartPostStopErr},
 		},
 		{
 			name: "Invalid exec commands in postStop",
@@ -66,7 +67,7 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: &preStartPostStopErr,
+			wantErr: []string{preStartPostStopErr},
 		},
 		{
 			name: "Invalid apply commands in postStart",
@@ -79,7 +80,7 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: &postStartPreStopErr,
+			wantErr: []string{postStartPreStopErr},
 		},
 		{
 			name: "Invalid apply commands in preStop",
@@ -92,17 +93,38 @@ func TestValidateEvents(t *testing.T) {
 					},
 				},
 			},
-			wantErr: &postStartPreStopErr,
+			wantErr: []string{postStartPreStopErr},
+		},
+		{
+			name: "Multiple errors: Invalid exec commands in postStop, Invalid apply commands in preStop",
+			events: v1alpha2.Events{
+				DevWorkspaceEvents: v1alpha2.DevWorkspaceEvents{
+					PreStop: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
+					PostStop: []string{
+						"apply12",
+						"exec2",
+						"compositeExecApply",
+					},
+				},
+			},
+			wantErr: []string{postStartPreStopErr, preStartPostStopErr},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateEvents(tt.events, commands)
 
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}

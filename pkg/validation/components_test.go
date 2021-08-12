@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
+	"github.com/hashicorp/go-multierror"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -146,15 +147,15 @@ func TestValidateComponents(t *testing.T) {
 	tests := []struct {
 		name       string
 		components []v1alpha2.Component
-		wantErr    *string
+		wantErr    []string
 	}{
 		{
 			name: "Duplicate components present",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("component1", "1Gi"),
-				generateDummyContainerComponent("component1", volMounts, nil, nil),
+				generateDummyContainerComponent("component1", nil, nil, nil),
 			},
-			wantErr: &duplicateComponentErr,
+			wantErr: []string{duplicateComponentErr},
 		},
 		{
 			name: "Valid container and volume component",
@@ -169,14 +170,14 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("container1", nil, nil, projectSourceEnv),
 			},
-			wantErr: &reservedEnvErr,
+			wantErr: []string{reservedEnvErr},
 		},
 		{
 			name: "Invalid container using reserved env PROJECTS_ROOT",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("container", nil, nil, projectsRootEnv),
 			},
-			wantErr: &reservedEnvErr,
+			wantErr: []string{reservedEnvErr},
 		},
 		{
 			name: "Invalid volume component size",
@@ -184,7 +185,7 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyVolumeComponent("myvol", "invalid"),
 				generateDummyContainerComponent("container", nil, nil, nil),
 			},
-			wantErr: &invalidSizeErr,
+			wantErr: []string{invalidSizeErr},
 		},
 		{
 			name: "Invalid volume mount referencing a wrong volume component",
@@ -192,7 +193,7 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyVolumeComponent("myvol", "1Gi"),
 				generateDummyContainerComponent("container1", invalidVolMounts, nil, nil),
 			},
-			wantErr: &invalidVolMountErr,
+			wantErr: []string{invalidVolMountErr},
 		},
 		{
 			name: "Invalid containers with the same endpoint names",
@@ -200,7 +201,7 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
 				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl18081}, nil),
 			},
-			wantErr: &sameEndpointNameErr,
+			wantErr: []string{sameEndpointNameErr},
 		},
 		{
 			name: "Invalid containers with the same endpoint target ports",
@@ -208,7 +209,7 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
 				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl28080}, nil),
 			},
-			wantErr: &sameTargetPortErr,
+			wantErr: []string{sameTargetPortErr},
 		},
 		{
 			name: "Valid container with same target ports but different endpoint name",
@@ -221,7 +222,7 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, "http//wronguri"),
 			},
-			wantErr: &invalidURIErr,
+			wantErr: []string{invalidURIErr},
 		},
 		{
 			name: "Valid Kubernetes Component",
@@ -234,31 +235,29 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl18081}, "http://uri"),
 			},
-			wantErr: &sameEndpointNameErr,
+			wantErr: []string{sameEndpointNameErr},
 		},
 		{
-			name: "Invalid plugin registry url",
+			name: "Multiple errors: Duplicate component name, invalid plugin registry url, bad URI with import source attributes",
 			components: []v1alpha2.Component{
-				generateDummyPluginComponent("abc", "http//invalidregistryurl", attributes.Attributes{}),
-			},
-			wantErr: &invalidURIErr,
-		},
-		{
-			name: "Invalid component due to bad URI with import source attributes",
-			components: []v1alpha2.Component{
+				generateDummyVolumeComponent("component1", "1Gi"),
+				generateDummyPluginComponent("component1", "http//invalidregistryurl", attributes.Attributes{}),
 				generateDummyPluginComponent("abc", "http//invalidregistryurl", pluginOverridesFromMainDevfile),
 			},
-			wantErr: &invalidURIErrWithImportAttributes,
+			wantErr: []string{duplicateComponentErr, invalidURIErr, invalidURIErrWithImportAttributes},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateComponents(tt.components)
 
-			if tt.wantErr != nil && assert.Error(t, err) {
-				assert.Regexp(t, *tt.wantErr, err.Error(), "Error message should match")
+			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
+				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
+				for i := 0; i < len(merr.Errors); i++ {
+					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				}
 			} else {
-				assert.NoError(t, err, "Expected error to be nil")
+				assert.Equal(t, nil, err, "Error should be nil")
 			}
 		})
 	}
