@@ -99,7 +99,7 @@ func (devfile *TestDevfile) SetParentContainerComponentValues(component *schema.
 
 	value := GetBinaryDecision()
 	containerComponent.DedicatedPod = &value
-	LogInfoMessage(fmt.Sprintf("....... DedicatedPod: %t", containerComponent.DedicatedPod))
+	LogInfoMessage(fmt.Sprintf("....... DedicatedPod: %t", *(containerComponent.DedicatedPod)))
 
 	if GetBinaryDecision() {
 		containerComponent.MemoryLimit = strconv.Itoa(GetRandomNumber(4, 124)) + "M"
@@ -177,5 +177,9 @@ func (devfile *TestDevfile) SetParentVolumeComponentValues(component *schema.Com
 	component.Volume.Size = strconv.Itoa(4+GetRandomNumber(64, 256)) + "G"
 	LogInfoMessage(fmt.Sprintf("....... volumeComponent.Size: %s", component.Volume.Size))
 	LogInfoMessage(fmt.Sprintf("component updated Name: %s", component.Name))
+
+	value := GetBinaryDecision()
+	component.Volume.Ephemeral = &value
+	LogInfoMessage(fmt.Sprintf("....... volumeComponent.Ephemeral: %t", *component.Volume.Ephemeral))
 
 }

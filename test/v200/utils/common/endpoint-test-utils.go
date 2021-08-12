@@ -70,7 +70,7 @@ func (devfile *TestDevfile) CreateEndpoints() []schema.Endpoint {
 
 		value := GetBinaryDecision()
 		endpoint.Secure = &value
-		LogInfoMessage(fmt.Sprintf("   ....... add endpoint %d secure: %t", i, endpoint.Secure))
+		LogInfoMessage(fmt.Sprintf("   ....... add endpoint %d secure: %t", i, *endpoint.Secure))
 
 		if GetBinaryDecision() {
 			endpoint.Path = "/Path_" + GetRandomString(GetRandomNumber(3, 15), false)

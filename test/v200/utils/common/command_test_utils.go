@@ -61,7 +61,7 @@ func (testDevFile *TestDevfile) addGroup() *schema.CommandGroup {
 	} else {
 		commandGroup.IsDefault = &isFalse
 	}
-	LogInfoMessage(fmt.Sprintf("group isDefault: %t", commandGroup.IsDefault))
+	LogInfoMessage(fmt.Sprintf("group isDefault: %t", *commandGroup.IsDefault))
 	return &commandGroup
 }
 
@@ -130,7 +130,7 @@ func (testDevFile *TestDevfile) SetExecCommandValues(command *schema.Command) {
 
 	value := GetBinaryDecision()
 	execCommand.HotReloadCapable = &value
-	LogInfoMessage(fmt.Sprintf("....... HotReloadCapable: %t", execCommand.HotReloadCapable))
+	LogInfoMessage(fmt.Sprintf("....... HotReloadCapable: %t", *execCommand.HotReloadCapable))
 
 	if GetBinaryDecision() {
 		execCommand.Env = addEnv(GetRandomNumber(1, 4))
@@ -180,7 +180,7 @@ func (testDevFile *TestDevfile) SetCompositeCommandValues(command *schema.Comman
 
 	if GetBinaryDecision() {
 		compositeCommand.Parallel = &isTrue
-		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", compositeCommand.Parallel))
+		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", *compositeCommand.Parallel))
 	}
 
 	testDevFile.commandUpdated(*command)

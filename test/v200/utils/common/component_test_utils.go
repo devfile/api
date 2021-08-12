@@ -110,7 +110,7 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 
 	value := GetBinaryDecision()
 	containerComponent.DedicatedPod = &value
-	LogInfoMessage(fmt.Sprintf("....... DedicatedPod: %t", containerComponent.DedicatedPod))
+	LogInfoMessage(fmt.Sprintf("....... DedicatedPod: %t", *containerComponent.DedicatedPod))
 
 	if GetBinaryDecision() {
 		containerComponent.MemoryLimit = strconv.Itoa(GetRandomNumber(4, 124)) + "M"
