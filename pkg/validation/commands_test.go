@@ -11,6 +11,7 @@ import (
 
 var buildGroup = v1alpha2.BuildCommandGroupKind
 var runGroup = v1alpha2.RunCommandGroupKind
+var isTrue bool = true
 
 // generateDummyExecCommand returns a dummy exec command for testing
 func generateDummyExecCommand(name, component string, group *v1alpha2.CommandGroup) v1alpha2.Command {
@@ -100,7 +101,7 @@ func TestValidateCommands(t *testing.T) {
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
 				generateDummyExecCommand("somecommand2", component, nil),
-				generateDummyCompositeCommand("composite1", []string{"somecommand1", "somecommand2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyCompositeCommand("composite1", []string{"somecommand1", "somecommand2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 			},
 		},
 		{
@@ -115,7 +116,7 @@ func TestValidateCommands(t *testing.T) {
 			name: "Multiple errors: Duplicate commands, non-exist command in composite command",
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("somecommand1", component, nil),
-				generateDummyCompositeCommand("somecommand1", []string{"fakecommand"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyCompositeCommand("somecommand1", []string{"fakecommand"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 			},
 			wantErr: []string{duplicateKeyErr, nonExistCmdInComposite},
 		},
@@ -130,9 +131,9 @@ func TestValidateCommands(t *testing.T) {
 		{
 			name: "Different command types belonging to the same group with more than one default",
 			commands: []v1alpha2.Command{
-				generateDummyExecCommand("somecommand1", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyExecCommand("somecommand1", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 				generateDummyExecCommand("somecommand3", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
-				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyCompositeCommand("somecommand2", []string{"somecommand1"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 			},
 			wantErr: []string{multipleDefaultCmdErr},
 		},
@@ -343,8 +344,8 @@ func TestValidateGroup(t *testing.T) {
 		{
 			name: "Two default run commands",
 			commands: []v1alpha2.Command{
-				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
-				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
+				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: &isTrue}),
+				generateDummyExecCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: &isTrue}),
 			},
 			group:   runGroup,
 			wantErr: &multipleDefaultCmdErr,
@@ -352,8 +353,8 @@ func TestValidateGroup(t *testing.T) {
 		{
 			name: "Two default run commands with import source attribute",
 			commands: []v1alpha2.Command{
-				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}),
-				generateDummyApplyCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: true}, parentOverridesFromMainDevfile),
+				generateDummyExecCommand("run command", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: &isTrue}),
+				generateDummyApplyCommand("customcommand", component, &v1alpha2.CommandGroup{Kind: runGroup, IsDefault: &isTrue}, parentOverridesFromMainDevfile),
 			},
 			group:   runGroup,
 			wantErr: &multipleDefaultCmdErrWithImportAttributes,
@@ -377,7 +378,7 @@ func TestValidateGroup(t *testing.T) {
 		{
 			name: "One command can have default",
 			commands: []v1alpha2.Command{
-				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyExecCommand("test command", component, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 			},
 			group: buildGroup,
 		},
@@ -386,7 +387,7 @@ func TestValidateGroup(t *testing.T) {
 			commands: []v1alpha2.Command{
 				generateDummyExecCommand("build command", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
 				generateDummyExecCommand("build command 2", component, &v1alpha2.CommandGroup{Kind: buildGroup}),
-				generateDummyCompositeCommand("composite1", []string{"build command", "build command 2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: true}),
+				generateDummyCompositeCommand("composite1", []string{"build command", "build command 2"}, &v1alpha2.CommandGroup{Kind: buildGroup, IsDefault: &isTrue}),
 			},
 			group: buildGroup,
 		},

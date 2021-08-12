@@ -330,7 +330,7 @@ type ExecCommandParentOverride struct {
 	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
-	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
+	HotReloadCapable *bool `json:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommandParentOverride struct {
@@ -350,7 +350,7 @@ type CompositeCommandParentOverride struct {
 
 	// Indicates if the sub-commands should be executed concurrently
 	// +optional
-	Parallel bool `json:"parallel,omitempty"`
+	Parallel *bool `json:"parallel,omitempty"`
 }
 
 // DevWorkspace component: Anything that will bring additional features / tooling / behaviour / context
@@ -420,7 +420,7 @@ type ContainerParentOverride struct {
 	//
 	// Default value is `false`
 	// +optional
-	DedicatedPod bool `json:"dedicatedPod,omitempty"`
+	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
 }
 
 type EndpointParentOverride struct {
@@ -471,7 +471,7 @@ type EndpointParentOverride struct {
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process. This requires a protocol of `https` or `wss`.
 	// +optional
-	Secure bool `json:"secure,omitempty"`
+	Secure *bool `json:"secure,omitempty"`
 
 	// Path of the endpoint URL
 	// +optional
@@ -507,7 +507,7 @@ type VolumeParentOverride struct {
 	// +optional
 	// Ephemeral volumes are not stored persistently across restarts. Defaults
 	// to false
-	Ephemeral bool `json:"ephemeral,omitempty"`
+	Ephemeral *bool `json:"ephemeral,omitempty"`
 }
 
 type ImportReferenceParentOverride struct {
@@ -793,7 +793,7 @@ type CommandGroupParentOverride struct {
 
 	// +optional
 	// Identifies the default command for a given group kind
-	IsDefault bool `json:"isDefault,omitempty"`
+	IsDefault *bool `json:"isDefault,omitempty"`
 }
 
 // ComponentType describes the type of component.
@@ -867,7 +867,7 @@ type ExecCommandPluginOverrideParentOverride struct {
 	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
-	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
+	HotReloadCapable *bool `json:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommandPluginOverrideParentOverride struct {
@@ -887,7 +887,7 @@ type CompositeCommandPluginOverrideParentOverride struct {
 
 	// Indicates if the sub-commands should be executed concurrently
 	// +optional
-	Parallel bool `json:"parallel,omitempty"`
+	Parallel *bool `json:"parallel,omitempty"`
 }
 
 // CommandGroupKind describes the kind of command group.
@@ -962,7 +962,7 @@ type ContainerPluginOverrideParentOverride struct {
 	//
 	// Default value is `false`
 	// +optional
-	DedicatedPod bool `json:"dedicatedPod,omitempty"`
+	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
 }
 
 type EndpointPluginOverrideParentOverride struct {
@@ -1013,7 +1013,7 @@ type EndpointPluginOverrideParentOverride struct {
 	// Describes whether the endpoint should be secured and protected by some
 	// authentication process. This requires a protocol of `https` or `wss`.
 	// +optional
-	Secure bool `json:"secure,omitempty"`
+	Secure *bool `json:"secure,omitempty"`
 
 	// Path of the endpoint URL
 	// +optional
@@ -1049,7 +1049,7 @@ type VolumePluginOverrideParentOverride struct {
 	// +optional
 	// Ephemeral volumes are not stored persistently across restarts. Defaults
 	// to false
-	Ephemeral bool `json:"ephemeral,omitempty"`
+	Ephemeral *bool `json:"ephemeral,omitempty"`
 }
 
 type LabeledCommandPluginOverrideParentOverride struct {
@@ -1133,7 +1133,7 @@ type CommandGroupPluginOverrideParentOverride struct {
 
 	// +optional
 	// Identifies the default command for a given group kind
-	IsDefault bool `json:"isDefault,omitempty"`
+	IsDefault *bool `json:"isDefault,omitempty"`
 }
 
 // CommandGroupKind describes the kind of command group.

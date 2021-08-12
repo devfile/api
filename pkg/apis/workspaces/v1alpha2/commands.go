@@ -34,7 +34,7 @@ type CommandGroup struct {
 
 	// +optional
 	// Identifies the default command for a given group kind
-	IsDefault bool `json:"isDefault,omitempty"`
+	IsDefault *bool `json:"isDefault,omitempty"`
 }
 
 type BaseCommand struct {
@@ -144,7 +144,7 @@ type ExecCommand struct {
 	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
 	//
 	// Default value is `false`
-	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
+	HotReloadCapable *bool `json:"hotReloadCapable,omitempty"`
 }
 
 type ApplyCommand struct {
@@ -163,7 +163,7 @@ type CompositeCommand struct {
 
 	// Indicates if the sub-commands should be executed concurrently
 	// +optional
-	Parallel bool `json:"parallel,omitempty"`
+	Parallel *bool `json:"parallel,omitempty"`
 }
 
 type CustomCommand struct {

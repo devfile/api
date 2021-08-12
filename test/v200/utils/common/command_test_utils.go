@@ -6,6 +6,9 @@ import (
 	schema "github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 )
 
+var isTrue bool = true
+var isFalse bool = false
+
 // commandAdded adds a new command to the test schema data and notifies the follower
 func (testDevFile *TestDevfile) commandAdded(command schema.Command) {
 	LogInfoMessage(fmt.Sprintf("command added Id: %s", command.Id))
@@ -54,9 +57,9 @@ func (testDevFile *TestDevfile) addGroup() *schema.CommandGroup {
 	// Ensure only one and at least one of each type are labelled as default
 	if !testDevFile.GroupDefaults[commandGroup.Kind] {
 		testDevFile.GroupDefaults[commandGroup.Kind] = true
-		commandGroup.IsDefault = true
+		commandGroup.IsDefault = &isTrue
 	} else {
-		commandGroup.IsDefault = false
+		commandGroup.IsDefault = &isFalse
 	}
 	LogInfoMessage(fmt.Sprintf("group isDefault: %t", commandGroup.IsDefault))
 	return &commandGroup
@@ -125,7 +128,8 @@ func (testDevFile *TestDevfile) SetExecCommandValues(command *schema.Command) {
 		execCommand.WorkingDir = ""
 	}
 
-	execCommand.HotReloadCapable = GetBinaryDecision()
+	value := GetBinaryDecision()
+	execCommand.HotReloadCapable = &value
 	LogInfoMessage(fmt.Sprintf("....... HotReloadCapable: %t", execCommand.HotReloadCapable))
 
 	if GetBinaryDecision() {
@@ -175,7 +179,7 @@ func (testDevFile *TestDevfile) SetCompositeCommandValues(command *schema.Comman
 	}
 
 	if GetBinaryDecision() {
-		compositeCommand.Parallel = true
+		compositeCommand.Parallel = &isTrue
 		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", compositeCommand.Parallel))
 	}
 

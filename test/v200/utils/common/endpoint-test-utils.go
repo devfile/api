@@ -68,7 +68,8 @@ func (devfile *TestDevfile) CreateEndpoints() []schema.Endpoint {
 			LogInfoMessage(fmt.Sprintf("   ....... add endpoint %d protocol: %s", i, endpoint.Protocol))
 		}
 
-		endpoint.Secure = GetBinaryDecision()
+		value := GetBinaryDecision()
+		endpoint.Secure = &value
 		LogInfoMessage(fmt.Sprintf("   ....... add endpoint %d secure: %t", i, endpoint.Secure))
 
 		if GetBinaryDecision() {

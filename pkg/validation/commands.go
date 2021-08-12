@@ -67,7 +67,8 @@ func validateGroup(commands []v1alpha2.Command, groupKind v1alpha2.CommandGroupK
 	var defaultCommands []v1alpha2.Command
 	if len(commands) > 1 {
 		for _, command := range commands {
-			if getGroup(command).IsDefault {
+			defaultVal := getGroup(command).IsDefault
+			if defaultVal != nil && *defaultVal {
 				defaultCommandCount++
 				defaultCommands = append(defaultCommands, command)
 			}

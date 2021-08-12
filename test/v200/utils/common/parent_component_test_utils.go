@@ -97,7 +97,8 @@ func (devfile *TestDevfile) SetParentContainerComponentValues(component *schema.
 		}
 	}
 
-	containerComponent.DedicatedPod = GetBinaryDecision()
+	value := GetBinaryDecision()
+	containerComponent.DedicatedPod = &value
 	LogInfoMessage(fmt.Sprintf("....... DedicatedPod: %t", containerComponent.DedicatedPod))
 
 	if GetBinaryDecision() {
