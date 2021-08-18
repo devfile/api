@@ -4382,7 +4382,7 @@ spec:
                           - required:
                             - uri
                           - required:
-                            - id
+                            - registry
                           - required:
                             - git
                           properties:
@@ -4397,7 +4397,7 @@ spec:
                                 context. Defaults to ${PROJECT_ROOT} in the container
                               type: string
                             git:
-                              description: Project's Git source
+                              description: Dockerfile's Git source
                               properties:
                                 checkoutFrom:
                                   description: Defines from what the project should
@@ -4416,6 +4416,10 @@ spec:
                                         is not found.
                                       type: string
                                   type: object
+                                gitLocation:
+                                  description: Location of the Dockerfile in the Git
+                                    repository when using git as Dockerfile src.
+                                  type: string
                                 remotes:
                                   additionalProperties:
                                     type: string
@@ -4426,27 +4430,31 @@ spec:
                               required:
                               - remotes
                               type: object
-                            gitLocation:
-                              description: Location of the Dockerfile in the Git repository
-                                when using git as Dockerfile src.
-                              type: string
-                            id:
-                              description: Id in a registry that contains a Dockerfile
-                              type: string
                             locationType:
                               description: Type of Dockerfile location
                               enum:
                               - Uri
-                              - Id
+                              - Registry
                               - Git
                               type: string
-                            registryUrl:
-                              description: Registry URL to pull the Dockerfile from
-                                when using id as Dockerfile src. To ensure the dockerfile
-                                gets resolved consistently in different environments,
-                                it is recommended to always specify the `regsitryURL`
-                                when `Id` is used.
-                              type: string
+                            registry:
+                              description: Dockerfile's Devfile Registry source
+                              properties:
+                                devfileRegistryUrl:
+                                  description: Devfile Registry URL to pull the Dockerfile
+                                    from when using the Devfile Registry as Dockerfile
+                                    src. To ensure the Dockerfile gets resolved consistently
+                                    in different environments, it is recommended to
+                                    always specify the `devfileRegistryUrl` when `Id`
+                                    is used.
+                                  type: string
+                                id:
+                                  description: Id in a devfile registry that contains
+                                    a Dockerfile
+                                  type: string
+                              required:
+                              - id
+                              type: object
                             rootRequired:
                               description: "Specify if a privileged builder pod is
                                 required. \n Default value is `false`"
@@ -5099,7 +5107,7 @@ spec:
                                     - required:
                                       - uri
                                     - required:
-                                      - id
+                                      - registry
                                     - required:
                                       - git
                                     properties:
@@ -5115,7 +5123,7 @@ spec:
                                           in the container
                                         type: string
                                       git:
-                                        description: Project's Git source
+                                        description: Dockerfile's Git source
                                         properties:
                                           checkoutFrom:
                                             description: Defines from what the project
@@ -5135,6 +5143,11 @@ spec:
                                                   is not found.
                                                 type: string
                                             type: object
+                                          gitLocation:
+                                            description: Location of the Dockerfile
+                                              in the Git repository when using git
+                                              as Dockerfile src.
+                                            type: string
                                           remotes:
                                             additionalProperties:
                                               type: string
@@ -5143,30 +5156,31 @@ spec:
                                               have at least one remote configured
                                             type: object
                                         type: object
-                                      gitLocation:
-                                        description: Location of the Dockerfile in
-                                          the Git repository when using git as Dockerfile
-                                          src.
-                                        type: string
-                                      id:
-                                        description: Id in a registry that contains
-                                          a Dockerfile
-                                        type: string
                                       locationType:
                                         description: Type of Dockerfile location
                                         enum:
                                         - Uri
-                                        - Id
+                                        - Registry
                                         - Git
                                         type: string
-                                      registryUrl:
-                                        description: Registry URL to pull the Dockerfile
-                                          from when using id as Dockerfile src. To
-                                          ensure the dockerfile gets resolved consistently
-                                          in different environments, it is recommended
-                                          to always specify the `regsitryURL` when
-                                          `Id` is used.
-                                        type: string
+                                      registry:
+                                        description: Dockerfile's Devfile Registry
+                                          source
+                                        properties:
+                                          devfileRegistryUrl:
+                                            description: Devfile Registry URL to pull
+                                              the Dockerfile from when using the Devfile
+                                              Registry as Dockerfile src. To ensure
+                                              the Dockerfile gets resolved consistently
+                                              in different environments, it is recommended
+                                              to always specify the `devfileRegistryUrl`
+                                              when `Id` is used.
+                                            type: string
+                                          id:
+                                            description: Id in a devfile registry
+                                              that contains a Dockerfile
+                                            type: string
+                                        type: object
                                       rootRequired:
                                         description: "Specify if a privileged builder
                                           pod is required. \n Default value is `false`"
@@ -5916,7 +5930,7 @@ spec:
                               - required:
                                 - uri
                               - required:
-                                - id
+                                - registry
                               - required:
                                 - git
                               properties:
@@ -5932,7 +5946,7 @@ spec:
                                     the container
                                   type: string
                                 git:
-                                  description: Project's Git source
+                                  description: Dockerfile's Git source
                                   properties:
                                     checkoutFrom:
                                       description: Defines from what the project should
@@ -5951,6 +5965,11 @@ spec:
                                             revision is not found.
                                           type: string
                                       type: object
+                                    gitLocation:
+                                      description: Location of the Dockerfile in the
+                                        Git repository when using git as Dockerfile
+                                        src.
+                                      type: string
                                     remotes:
                                       additionalProperties:
                                         type: string
@@ -5959,27 +5978,29 @@ spec:
                                         at least one remote configured
                                       type: object
                                   type: object
-                                gitLocation:
-                                  description: Location of the Dockerfile in the Git
-                                    repository when using git as Dockerfile src.
-                                  type: string
-                                id:
-                                  description: Id in a registry that contains a Dockerfile
-                                  type: string
                                 locationType:
                                   description: Type of Dockerfile location
                                   enum:
                                   - Uri
-                                  - Id
+                                  - Registry
                                   - Git
                                   type: string
-                                registryUrl:
-                                  description: Registry URL to pull the Dockerfile
-                                    from when using id as Dockerfile src. To ensure
-                                    the dockerfile gets resolved consistently in different
-                                    environments, it is recommended to always specify
-                                    the `regsitryURL` when `Id` is used.
-                                  type: string
+                                registry:
+                                  description: Dockerfile's Devfile Registry source
+                                  properties:
+                                    devfileRegistryUrl:
+                                      description: Devfile Registry URL to pull the
+                                        Dockerfile from when using the Devfile Registry
+                                        as Dockerfile src. To ensure the Dockerfile
+                                        gets resolved consistently in different environments,
+                                        it is recommended to always specify the `devfileRegistryUrl`
+                                        when `Id` is used.
+                                      type: string
+                                    id:
+                                      description: Id in a devfile registry that contains
+                                        a Dockerfile
+                                      type: string
+                                  type: object
                                 rootRequired:
                                   description: "Specify if a privileged builder pod
                                     is required. \n Default value is `false`"
@@ -6642,7 +6663,7 @@ spec:
                                         - required:
                                           - uri
                                         - required:
-                                          - id
+                                          - registry
                                         - required:
                                           - git
                                         properties:
@@ -6658,7 +6679,7 @@ spec:
                                               to ${PROJECT_ROOT} in the container
                                             type: string
                                           git:
-                                            description: Project's Git source
+                                            description: Dockerfile's Git source
                                             properties:
                                               checkoutFrom:
                                                 description: Defines from what the
@@ -6680,6 +6701,11 @@ spec:
                                                       revision is not found.
                                                     type: string
                                                 type: object
+                                              gitLocation:
+                                                description: Location of the Dockerfile
+                                                  in the Git repository when using
+                                                  git as Dockerfile src.
+                                                type: string
                                               remotes:
                                                 additionalProperties:
                                                   type: string
@@ -6689,30 +6715,32 @@ spec:
                                                   remote configured
                                                 type: object
                                             type: object
-                                          gitLocation:
-                                            description: Location of the Dockerfile
-                                              in the Git repository when using git
-                                              as Dockerfile src.
-                                            type: string
-                                          id:
-                                            description: Id in a registry that contains
-                                              a Dockerfile
-                                            type: string
                                           locationType:
                                             description: Type of Dockerfile location
                                             enum:
                                             - Uri
-                                            - Id
+                                            - Registry
                                             - Git
                                             type: string
-                                          registryUrl:
-                                            description: Registry URL to pull the
-                                              Dockerfile from when using id as Dockerfile
-                                              src. To ensure the dockerfile gets resolved
-                                              consistently in different environments,
-                                              it is recommended to always specify
-                                              the `regsitryURL` when `Id` is used.
-                                            type: string
+                                          registry:
+                                            description: Dockerfile's Devfile Registry
+                                              source
+                                            properties:
+                                              devfileRegistryUrl:
+                                                description: Devfile Registry URL
+                                                  to pull the Dockerfile from when
+                                                  using the Devfile Registry as Dockerfile
+                                                  src. To ensure the Dockerfile gets
+                                                  resolved consistently in different
+                                                  environments, it is recommended
+                                                  to always specify the `devfileRegistryUrl`
+                                                  when `Id` is used.
+                                                type: string
+                                              id:
+                                                description: Id in a devfile registry
+                                                  that contains a Dockerfile
+                                                type: string
+                                            type: object
                                           rootRequired:
                                             description: "Specify if a privileged
                                               builder pod is required. \n Default

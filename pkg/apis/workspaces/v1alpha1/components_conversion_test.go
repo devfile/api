@@ -36,3 +36,25 @@ func TestComponentConversion_v1alpha1(t *testing.T) {
 		}
 	}
 }
+
+func TestComponentConversionFrom_v1alpha2(t *testing.T) {
+
+	src := &v1alpha2.Component{
+		Name: "test1",
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Image: &v1alpha2.ImageComponent{
+				Image: v1alpha2.Image{
+					ImageName: "image:latest",
+				},
+			},
+		},
+	}
+	output := &Component{}
+
+	err := convertComponentFrom_v1alpha2(src, output)
+	if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
+		return
+	}
+
+	assert.Equal(t, &Component{}, output, "Conversion from v1alpha2 should be skipped for Image Component")
+}

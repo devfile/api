@@ -478,7 +478,7 @@
                   },
                   {
                     "required": [
-                      "id"
+                      "registry"
                     ]
                   },
                   {
@@ -502,7 +502,7 @@
                     "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
                   },
                   "git": {
-                    "description": "Project's Git source",
+                    "description": "Dockerfile's Git source",
                     "type": "object",
                     "required": [
                       "remotes"
@@ -526,6 +526,11 @@
                         "additionalProperties": false,
                         "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                       },
+                      "gitLocation": {
+                        "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                        "type": "string",
+                        "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                      },
                       "remotes": {
                         "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
                         "type": "object",
@@ -536,22 +541,28 @@
                       }
                     },
                     "additionalProperties": false,
-                    "markdownDescription": "Project's Git source"
+                    "markdownDescription": "Dockerfile's Git source"
                   },
-                  "gitLocation": {
-                    "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
-                    "type": "string",
-                    "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
-                  },
-                  "id": {
-                    "description": "Id in a registry that contains a Dockerfile",
-                    "type": "string",
-                    "markdownDescription": "Id in a registry that contains a Dockerfile"
-                  },
-                  "registryUrl": {
-                    "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
-                    "type": "string",
-                    "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                  "registry": {
+                    "description": "Dockerfile's Devfile Registry source",
+                    "type": "object",
+                    "required": [
+                      "id"
+                    ],
+                    "properties": {
+                      "devfileRegistryUrl": {
+                        "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                        "type": "string",
+                        "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
+                      },
+                      "id": {
+                        "description": "Id in a devfile registry that contains a Dockerfile",
+                        "type": "string",
+                        "markdownDescription": "Id in a devfile registry that contains a Dockerfile"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "markdownDescription": "Dockerfile's Devfile Registry source"
                   },
                   "rootRequired": {
                     "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",
@@ -1389,7 +1400,7 @@
                       },
                       {
                         "required": [
-                          "id"
+                          "registry"
                         ]
                       },
                       {
@@ -1413,7 +1424,7 @@
                         "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container"
                       },
                       "git": {
-                        "description": "Project's Git source",
+                        "description": "Dockerfile's Git source",
                         "type": "object",
                         "properties": {
                           "checkoutFrom": {
@@ -1434,6 +1445,11 @@
                             "additionalProperties": false,
                             "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                           },
+                          "gitLocation": {
+                            "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                            "type": "string",
+                            "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
+                          },
                           "remotes": {
                             "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
                             "type": "object",
@@ -1444,22 +1460,25 @@
                           }
                         },
                         "additionalProperties": false,
-                        "markdownDescription": "Project's Git source"
+                        "markdownDescription": "Dockerfile's Git source"
                       },
-                      "gitLocation": {
-                        "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
-                        "type": "string",
-                        "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src."
-                      },
-                      "id": {
-                        "description": "Id in a registry that contains a Dockerfile",
-                        "type": "string",
-                        "markdownDescription": "Id in a registry that contains a Dockerfile"
-                      },
-                      "registryUrl": {
-                        "description": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used.",
-                        "type": "string",
-                        "markdownDescription": "Registry URL to pull the Dockerfile from when using id as Dockerfile src. To ensure the dockerfile gets resolved consistently in different environments, it is recommended to always specify the `regsitryURL` when `Id` is used."
+                      "registry": {
+                        "description": "Dockerfile's Devfile Registry source",
+                        "type": "object",
+                        "properties": {
+                          "devfileRegistryUrl": {
+                            "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                            "type": "string",
+                            "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
+                          },
+                          "id": {
+                            "description": "Id in a devfile registry that contains a Dockerfile",
+                            "type": "string",
+                            "markdownDescription": "Id in a devfile registry that contains a Dockerfile"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "markdownDescription": "Dockerfile's Devfile Registry source"
                       },
                       "rootRequired": {
                         "description": "Specify if a privileged builder pod is required.\n\nDefault value is `false`",

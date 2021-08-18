@@ -105,15 +105,12 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 		}
 	}
 	for _, srcComponent := range src.Components {
-		// Image Component is not present in v1alpha1
-		if srcComponent.Image == nil {
-			destComponent := Component{}
-			err := convertComponentFrom_v1alpha2(&srcComponent, &destComponent)
-			if err != nil {
-				return err
-			}
-			dest.Components = append(dest.Components, destComponent)
+		destComponent := Component{}
+		err := convertComponentFrom_v1alpha2(&srcComponent, &destComponent)
+		if err != nil {
+			return err
 		}
+		dest.Components = append(dest.Components, destComponent)
 	}
 	for _, srcProject := range src.Projects {
 		destProject := Project{}

@@ -494,16 +494,6 @@ type DockerfileImagePluginOverride struct {
 	BaseImagePluginOverride          `json:",inline"`
 	DockerfileLocationPluginOverride `json:",inline"`
 	DockerfilePluginOverride         `json:",inline"`
-
-	// Registry URL to pull the Dockerfile from when using id as Dockerfile src.
-	// To ensure the dockerfile gets resolved consistently in different environments,
-	// it is recommended to always specify the `regsitryURL` when `Id` is used.
-	// +optional
-	RegistryUrl string `json:"registryUrl,omitempty"`
-
-	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
-	// +optional
-	GitLocation string `json:"gitLocation,omitempty"`
 }
 
 type CommandGroupPluginOverride struct {
@@ -523,7 +513,7 @@ type BaseImagePluginOverride struct {
 // +union
 type DockerfileLocationPluginOverride struct {
 
-	// +kubebuilder:validation:Enum=Uri;Id;Git
+	// +kubebuilder:validation:Enum=Uri;Registry;Git
 	// Type of Dockerfile location
 	// +
 	// +unionDiscriminator
@@ -535,13 +525,13 @@ type DockerfileLocationPluginOverride struct {
 	// +optional
 	Uri string `json:"uri,omitempty"`
 
-	// Id in a registry that contains a Dockerfile
+	// Dockerfile's Devfile Registry source
 	// +optional
-	Id string `json:"id,omitempty"`
+	Registry *DockerfileDevfileRegistrySourcePluginOverride `json:"registry,omitempty"`
 
-	// Project's Git source
+	// Dockerfile's Git source
 	// +optional
-	Git *GitProjectSourcePluginOverride `json:"git,omitempty"`
+	Git *DockerfileGitProjectSourcePluginOverride `json:"git,omitempty"`
 }
 
 type DockerfilePluginOverride struct {
@@ -558,7 +548,7 @@ type DockerfilePluginOverride struct {
 	//
 	// Default value is `false`
 	// +optional
-	RootRequired bool `json:"rootRequired,omitempty"`
+	RootRequired *bool `json:"rootRequired,omitempty"`
 }
 
 // CommandGroupKind describes the kind of command group.
@@ -569,6 +559,27 @@ type CommandGroupKindPluginOverride string
 // the location for the Dockerfile outerloop build.
 // Only one of the following location type may be specified.
 type DockerfileLocationTypePluginOverride string
+
+type DockerfileDevfileRegistrySourcePluginOverride struct {
+
+	//  +optional
+	// Id in a devfile registry that contains a Dockerfile
+	Id string `json:"id,omitempty"`
+
+	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
+	// To ensure the Dockerfile gets resolved consistently in different environments,
+	// it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.
+	// +optional
+	DevfileRegistryUrl string `json:"devfileRegistryUrl,omitempty"`
+}
+
+type DockerfileGitProjectSourcePluginOverride struct {
+	GitProjectSourcePluginOverride `json:",inline"`
+
+	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
+	// +optional
+	GitLocation string `json:"gitLocation,omitempty"`
+}
 
 type GitProjectSourcePluginOverride struct {
 	GitLikeProjectSourcePluginOverride `json:",inline"`

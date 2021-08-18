@@ -3,13 +3,13 @@ package v1alpha2
 // DockerfileLocationType describes the type of
 // the location for the Dockerfile outerloop build.
 // Only one of the following location type may be specified.
-// +kubebuilder:validation:Enum=Uri;Id;Git
+// +kubebuilder:validation:Enum=Uri;Registry;Git
 type DockerfileLocationType string
 
 const (
-	UriLikeDockerfileLocationType DockerfileLocationType = "Uri"
-	IdLikeDockerfileLocationType  DockerfileLocationType = "Id"
-	GitLikeDockerfileLocationType DockerfileLocationType = "Git"
+	UriLikeDockerfileLocationType      DockerfileLocationType = "Uri"
+	RegistryLikeDockerfileLocationType DockerfileLocationType = "Registry"
+	GitLikeDockerfileLocationType      DockerfileLocationType = "Git"
 )
 
 // Dockerfile Image type to specify the outerloop build using a Dockerfile
@@ -17,12 +17,6 @@ type DockerfileImage struct {
 	BaseImage          `json:",inline"`
 	DockerfileLocation `json:",inline"`
 	Dockerfile         `json:",inline"`
-
-	// Registry URL to pull the Dockerfile from when using id as Dockerfile src.
-	// To ensure the dockerfile gets resolved consistently in different environments,
-	// it is recommended to always specify the `regsitryURL` when `Id` is used.
-	// +optional
-	RegistryUrl string `json:"registryUrl,omitempty"`
 }
 
 // +union
@@ -38,11 +32,11 @@ type DockerfileLocation struct {
 	// +optional
 	Uri string `json:"uri,omitempty"`
 
-	// Id in a registry that contains a Dockerfile
+	// Dockerfile's Devfile Registry source
 	// +optional
-	Id string `json:"id,omitempty"`
+	Registry *DockerfileDevfileRegistrySource `json:"registry,omitempty"`
 
-	// Project's Git source
+	// Dockerfile's Git source
 	// +optional
 	Git *DockerfileGitProjectSource `json:"git,omitempty"`
 }
@@ -60,7 +54,18 @@ type Dockerfile struct {
 	//
 	// Default value is `false`
 	// +optional
-	RootRequired bool `json:"rootRequired,omitempty"`
+	RootRequired *bool `json:"rootRequired,omitempty"`
+}
+
+type DockerfileDevfileRegistrySource struct {
+	// Id in a devfile registry that contains a Dockerfile
+	Id string `json:"id"`
+
+	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
+	// To ensure the Dockerfile gets resolved consistently in different environments,
+	// it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.
+	// +optional
+	DevfileRegistryUrl string `json:"devfileRegistryUrl,omitempty"`
 }
 
 type DockerfileGitProjectSource struct {

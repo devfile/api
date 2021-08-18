@@ -64,9 +64,9 @@ func (union *DockerfileLocation) Simplify() {
 
 // +k8s:deepcopy-gen=false
 type DockerfileLocationVisitor struct {
-	Uri func(string) error
-	Id  func(string) error
-	Git func(*GitProjectSource) error
+	Uri      func(string) error
+	Registry func(*DockerfileDevfileRegistrySource) error
+	Git      func(*DockerfileGitProjectSource) error
 }
 
 var k8sLikeComponentLocation reflect.Type = reflect.TypeOf(K8sLikeComponentLocationVisitor{})
@@ -354,9 +354,9 @@ func (union *DockerfileLocationParentOverride) Simplify() {
 
 // +k8s:deepcopy-gen=false
 type DockerfileLocationParentOverrideVisitor struct {
-	Uri func(string) error
-	Id  func(string) error
-	Git func(*GitProjectSourceParentOverride) error
+	Uri      func(string) error
+	Registry func(*DockerfileDevfileRegistrySourceParentOverride) error
+	Git      func(*DockerfileGitProjectSourceParentOverride) error
 }
 
 var k8sLikeComponentLocationPluginOverrideParentOverride reflect.Type = reflect.TypeOf(K8sLikeComponentLocationPluginOverrideParentOverrideVisitor{})
@@ -417,9 +417,9 @@ func (union *DockerfileLocationPluginOverrideParentOverride) Simplify() {
 
 // +k8s:deepcopy-gen=false
 type DockerfileLocationPluginOverrideParentOverrideVisitor struct {
-	Uri func(string) error
-	Id  func(string) error
-	Git func(*GitProjectSourcePluginOverrideParentOverride) error
+	Uri      func(string) error
+	Registry func(*DockerfileDevfileRegistrySourcePluginOverrideParentOverride) error
+	Git      func(*DockerfileGitProjectSourcePluginOverrideParentOverride) error
 }
 
 var componentUnionPluginOverride reflect.Type = reflect.TypeOf(ComponentUnionPluginOverrideVisitor{})
@@ -526,7 +526,7 @@ func (union *DockerfileLocationPluginOverride) Simplify() {
 
 // +k8s:deepcopy-gen=false
 type DockerfileLocationPluginOverrideVisitor struct {
-	Uri func(string) error
-	Id  func(string) error
-	Git func(*GitProjectSourcePluginOverride) error
+	Uri      func(string) error
+	Registry func(*DockerfileDevfileRegistrySourcePluginOverride) error
+	Git      func(*DockerfileGitProjectSourcePluginOverride) error
 }
