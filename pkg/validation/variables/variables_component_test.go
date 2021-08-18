@@ -115,6 +115,81 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 	}
 }
 
+func TestValidateAndReplaceImageComponent(t *testing.T) {
+
+	tests := []struct {
+		name         string
+		testFile     string
+		outputFile   string
+		variableFile string
+		wantErr      bool
+	}{
+		{
+			name:         "Good Substitution - dockerfile uri src",
+			testFile:     "test-fixtures/components/image-dockerfile-uri.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-uri-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Good Substitution - dockerfile git src",
+			testFile:     "test-fixtures/components/image-dockerfile-git.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-git-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Good Substitution - dockerfile registry src",
+			testFile:     "test-fixtures/components/image-dockerfile-registry.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-registry-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Invalid Reference - dockerfile uri src",
+			testFile:     "test-fixtures/components/image-dockerfile-uri.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-uri.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+		{
+			name:         "Invalid Reference - dockerfile git src",
+			testFile:     "test-fixtures/components/image-dockerfile-git.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-git.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+		{
+			name:         "Invalid Reference - dockerfile registry src",
+			testFile:     "test-fixtures/components/image-dockerfile-registry.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-registry.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			testImageComponent := v1alpha2.ImageComponent{}
+			readFileToStruct(t, tt.testFile, &testImageComponent)
+
+			testVariable := make(map[string]string)
+			readFileToStruct(t, tt.variableFile, &testVariable)
+
+			err := validateAndReplaceForImageComponent(testVariable, &testImageComponent)
+			_, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
+			} else {
+				expectedImageComponent := v1alpha2.ImageComponent{}
+				readFileToStruct(t, tt.outputFile, &expectedImageComponent)
+				assert.Equal(t, expectedImageComponent, testImageComponent, "The two values should be the same.")
+			}
+		})
+	}
+}
+
 func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 
 	tests := []struct {

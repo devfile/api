@@ -33,6 +33,12 @@ func ValidateAndReplaceForComponents(variables map[string]string, components []v
 					componentsWarningMap[components[i].Name] = verr.Keys
 				}
 			}
+		case components[i].Image != nil:
+			if err = validateAndReplaceForImageComponent(variables, components[i].Image); err != nil {
+				if verr, ok := err.(*InvalidKeysError); ok {
+					componentsWarningMap[components[i].Name] = verr.Keys
+				}
+			}
 		case components[i].Volume != nil:
 			if err = validateAndReplaceForVolumeComponent(variables, components[i].Volume); err != nil {
 				if verr, ok := err.(*InvalidKeysError); ok {
@@ -184,6 +190,81 @@ func validateAndReplaceForOpenShiftComponent(variables map[string]string, opensh
 				checkForInvalidError(invalidKeys, err)
 			}
 		}
+	}
+
+	return newInvalidKeysError(invalidKeys)
+}
+
+// validateAndReplaceForImageComponent validates the image component data for global variable references and replaces them with the variable value
+func validateAndReplaceForImageComponent(variables map[string]string, image *v1alpha2.ImageComponent) error {
+	var err error
+
+	invalidKeys := make(map[string]bool)
+
+	if image != nil {
+		// Validate image's image name
+		if image.ImageName, err = validateAndReplaceDataWithVariable(image.ImageName, variables); err != nil {
+			checkForInvalidError(invalidKeys, err)
+		}
+
+		switch {
+		case image.Dockerfile != nil:
+			if err = validateAndReplaceForDockerfileImageComponent(variables, image.Dockerfile); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+		}
+
+	}
+
+	return newInvalidKeysError(invalidKeys)
+}
+
+// validateAndReplaceForDockerfileImageComponent validates the dockerfile image component data for global variable references and replaces them with the variable value
+func validateAndReplaceForDockerfileImageComponent(variables map[string]string, dockerfileImage *v1alpha2.DockerfileImage) error {
+	var err error
+
+	invalidKeys := make(map[string]bool)
+
+	if dockerfileImage != nil {
+
+		switch {
+		case dockerfileImage.Uri != "":
+			// Validate dockerfile image URI
+			if dockerfileImage.Uri, err = validateAndReplaceDataWithVariable(dockerfileImage.Uri, variables); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+		case dockerfileImage.Git != nil:
+			// Validate dockerfile Git location
+			if dockerfileImage.Git.GitLocation, err = validateAndReplaceDataWithVariable(dockerfileImage.Git.GitLocation, variables); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+
+			gitProject := &dockerfileImage.Git.GitLikeProjectSource
+			if err = validateAndReplaceForGitProjectSource(variables, gitProject); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+		case dockerfileImage.Registry != nil:
+			// Validate dockerfile devfile registry src
+			if dockerfileImage.Registry.Id, err = validateAndReplaceDataWithVariable(dockerfileImage.Registry.Id, variables); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+			if dockerfileImage.Registry.DevfileRegistryUrl, err = validateAndReplaceDataWithVariable(dockerfileImage.Registry.DevfileRegistryUrl, variables); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+		}
+
+		// Validate dockerfile image's build context
+		if dockerfileImage.BuildContext, err = validateAndReplaceDataWithVariable(dockerfileImage.BuildContext, variables); err != nil {
+			checkForInvalidError(invalidKeys, err)
+		}
+
+		// Validate dockerfile image's args
+		for i := range dockerfileImage.Args {
+			if dockerfileImage.Args[i], err = validateAndReplaceDataWithVariable(dockerfileImage.Args[i], variables); err != nil {
+				checkForInvalidError(invalidKeys, err)
+			}
+		}
+
 	}
 
 	return newInvalidKeysError(invalidKeys)
