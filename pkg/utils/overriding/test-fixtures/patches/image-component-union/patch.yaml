@@ -1,0 +1,18 @@
+components:
+  - name: component-to-update
+    image:
+      imageName: "newimage:xyz"
+      dockerfile:
+        git:
+          gitLocation: "uri/Dockerfile"
+          checkoutFrom:
+            revision: "FOO"
+            remote: "BAR"
+          remotes:
+            "foo": "BAR"
+            "FOOBAR": "BARFOO"
+        buildContext: /BAR/FOO
+        args:
+          - "sleep"
+          - "400"
+        rootRequired: true

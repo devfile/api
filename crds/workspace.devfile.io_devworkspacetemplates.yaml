@@ -4450,7 +4450,9 @@ spec:
                                   type: string
                                 id:
                                   description: Id in a devfile registry that contains
-                                    a Dockerfile
+                                    a Dockerfile. The src in the OCI registry required
+                                    for the Dockerfile build will be downloaded for
+                                    building the image.
                                   type: string
                               required:
                               - id
@@ -5178,7 +5180,10 @@ spec:
                                             type: string
                                           id:
                                             description: Id in a devfile registry
-                                              that contains a Dockerfile
+                                              that contains a Dockerfile. The src
+                                              in the OCI registry required for the
+                                              Dockerfile build will be downloaded
+                                              for building the image.
                                             type: string
                                         type: object
                                       rootRequired:
@@ -5998,7 +6003,9 @@ spec:
                                       type: string
                                     id:
                                       description: Id in a devfile registry that contains
-                                        a Dockerfile
+                                        a Dockerfile. The src in the OCI registry
+                                        required for the Dockerfile build will be
+                                        downloaded for building the image.
                                       type: string
                                   type: object
                                 rootRequired:
@@ -6738,7 +6745,10 @@ spec:
                                                 type: string
                                               id:
                                                 description: Id in a devfile registry
-                                                  that contains a Dockerfile
+                                                  that contains a Dockerfile. The
+                                                  src in the OCI registry required
+                                                  for the Dockerfile build will be
+                                                  downloaded for building the image.
                                                 type: string
                                             type: object
                                           rootRequired:

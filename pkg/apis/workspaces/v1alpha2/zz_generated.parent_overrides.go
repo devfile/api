@@ -1001,7 +1001,8 @@ type DockerfileLocationTypeParentOverride string
 type DockerfileDevfileRegistrySourceParentOverride struct {
 
 	//  +optional
-	// Id in a devfile registry that contains a Dockerfile
+	// Id in a devfile registry that contains a Dockerfile. The src in the OCI registry
+	// required for the Dockerfile build will be downloaded for building the image.
 	Id string `json:"id,omitempty"`
 
 	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
@@ -1012,6 +1013,9 @@ type DockerfileDevfileRegistrySourceParentOverride struct {
 }
 
 type DockerfileGitProjectSourceParentOverride struct {
+
+	// Git src for the Dockerfile build. The src required for the Dockerfile build will need to be
+	// cloned for building the image.
 	GitProjectSourceParentOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
@@ -1351,7 +1355,8 @@ type DockerfileLocationTypePluginOverrideParentOverride string
 type DockerfileDevfileRegistrySourcePluginOverrideParentOverride struct {
 
 	//  +optional
-	// Id in a devfile registry that contains a Dockerfile
+	// Id in a devfile registry that contains a Dockerfile. The src in the OCI registry
+	// required for the Dockerfile build will be downloaded for building the image.
 	Id string `json:"id,omitempty"`
 
 	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
@@ -1362,6 +1367,9 @@ type DockerfileDevfileRegistrySourcePluginOverrideParentOverride struct {
 }
 
 type DockerfileGitProjectSourcePluginOverrideParentOverride struct {
+
+	// Git src for the Dockerfile build. The src required for the Dockerfile build will need to be
+	// cloned for building the image.
 	GitProjectSourcePluginOverrideParentOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.

@@ -563,7 +563,8 @@ type DockerfileLocationTypePluginOverride string
 type DockerfileDevfileRegistrySourcePluginOverride struct {
 
 	//  +optional
-	// Id in a devfile registry that contains a Dockerfile
+	// Id in a devfile registry that contains a Dockerfile. The src in the OCI registry
+	// required for the Dockerfile build will be downloaded for building the image.
 	Id string `json:"id,omitempty"`
 
 	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
@@ -574,6 +575,9 @@ type DockerfileDevfileRegistrySourcePluginOverride struct {
 }
 
 type DockerfileGitProjectSourcePluginOverride struct {
+
+	// Git src for the Dockerfile build. The src required for the Dockerfile build will need to be
+	// cloned for building the image.
 	GitProjectSourcePluginOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.

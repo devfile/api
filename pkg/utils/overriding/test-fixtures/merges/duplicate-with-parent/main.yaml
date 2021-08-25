@@ -8,3 +8,8 @@ components:
   - container:
       image: "aDifferentValue"
     name: "existing-in-parent"
+  - image:
+      imageName: "myimage:main"
+      dockerfile:
+        uri: "uri/Dockerfile"
+    name: "existing-in-parent-2"

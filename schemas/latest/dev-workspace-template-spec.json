@@ -587,7 +587,7 @@
                         "type": "string"
                       },
                       "id": {
-                        "description": "Id in a devfile registry that contains a Dockerfile",
+                        "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
                         "type": "string"
                       }
                     },
@@ -1267,7 +1267,7 @@
                                   "type": "string"
                                 },
                                 "id": {
-                                  "description": "Id in a devfile registry that contains a Dockerfile",
+                                  "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
                                   "type": "string"
                                 }
                               },
@@ -2055,7 +2055,7 @@
                             "type": "string"
                           },
                           "id": {
-                            "description": "Id in a devfile registry that contains a Dockerfile",
+                            "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
                             "type": "string"
                           }
                         },
@@ -2729,7 +2729,7 @@
                                       "type": "string"
                                     },
                                     "id": {
-                                      "description": "Id in a devfile registry that contains a Dockerfile",
+                                      "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
                                       "type": "string"
                                     }
                                   },

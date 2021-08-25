@@ -58,7 +58,8 @@ type Dockerfile struct {
 }
 
 type DockerfileDevfileRegistrySource struct {
-	// Id in a devfile registry that contains a Dockerfile
+	// Id in a devfile registry that contains a Dockerfile. The src in the OCI registry
+	// required for the Dockerfile build will be downloaded for building the image.
 	Id string `json:"id"`
 
 	// Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.
@@ -69,6 +70,8 @@ type DockerfileDevfileRegistrySource struct {
 }
 
 type DockerfileGitProjectSource struct {
+	// Git src for the Dockerfile build. The src required for the Dockerfile build will need to be
+	// cloned for building the image.
 	GitProjectSource `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
