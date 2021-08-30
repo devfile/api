@@ -515,7 +515,7 @@ type ImportReferenceParentOverride struct {
 
 	// Registry URL to pull the parent devfile from when using id in the parent reference.
 	// To ensure the parent devfile gets resolved consistently in different environments,
-	// it is recommended to always specify the `regsitryURL` when `Id` is used.
+	// it is recommended to always specify the `registryUrl` when `Id` is used.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }
@@ -548,7 +548,8 @@ type GitLikeProjectSourceParentOverride struct {
 	CheckoutFrom *CheckoutFromParentOverride `json:"checkoutFrom,omitempty"`
 
 	//  +optional
-	// The remotes map which should be initialized in the git project. Must have at least one remote configured
+	// The remotes map which should be initialized in the git project.
+	// Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.
 	Remotes map[string]string `json:"remotes,omitempty"`
 }
 

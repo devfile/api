@@ -1634,6 +1634,11 @@ spec:
                             infered from the location (uri or registryEntry)
                           type: string
                         registryUrl:
+                          description: Registry URL to pull the parent devfile from
+                            when using id in the parent reference. To ensure the parent
+                            devfile gets resolved consistently in different environments,
+                            it is recommended to always specify the `registryUrl`
+                            when `Id` is used.
                           type: string
                         uri:
                           description: Uri of a Devfile yaml file
@@ -3348,6 +3353,11 @@ spec:
                                 it will be infered from the location (uri or registryEntry)
                               type: string
                             registryUrl:
+                              description: Registry URL to pull the parent devfile
+                                from when using id in the parent reference. To ensure
+                                the parent devfile gets resolved consistently in different
+                                environments, it is recommended to always specify
+                                the `registryUrl` when `Id` is used.
                               type: string
                             uri:
                               description: Uri of a Devfile yaml file
@@ -3453,8 +3463,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                             sparseCheckoutDir:
                               description: Part of project to populate in the working
@@ -3484,8 +3495,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                             sparseCheckoutDir:
                               description: Part of project to populate in the working
@@ -3520,6 +3532,11 @@ spec:
                       type: object
                     type: array
                   registryUrl:
+                    description: Registry URL to pull the parent devfile from when
+                      using id in the parent reference. To ensure the parent devfile
+                      gets resolved consistently in different environments, it is
+                      recommended to always specify the `registryUrl` when `Id` is
+                      used.
                     type: string
                   starterProjects:
                     description: Overrides of starter projects encapsulated in a parent
@@ -3582,8 +3599,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                             sparseCheckoutDir:
                               description: Part of project to populate in the working
@@ -3613,8 +3631,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                             sparseCheckoutDir:
                               description: Part of project to populate in the working
@@ -3707,7 +3726,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                         sparseCheckoutDir:
                           description: Part of project to populate in the working
@@ -3735,7 +3756,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                         sparseCheckoutDir:
                           description: Part of project to populate in the working
@@ -3827,7 +3850,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                         sparseCheckoutDir:
                           description: Part of project to populate in the working
@@ -3855,7 +3880,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                         sparseCheckoutDir:
                           description: Part of project to populate in the working
@@ -5227,7 +5254,7 @@ spec:
                           description: Registry URL to pull the parent devfile from
                             when using id in the parent reference. To ensure the parent
                             devfile gets resolved consistently in different environments,
-                            it is recommended to always specify the `regsitryURL`
+                            it is recommended to always specify the `registryUrl`
                             when `Id` is used.
                           type: string
                         uri:
@@ -6573,7 +6600,7 @@ spec:
                                 from when using id in the parent reference. To ensure
                                 the parent devfile gets resolved consistently in different
                                 environments, it is recommended to always specify
-                                the `regsitryURL` when `Id` is used.
+                                the `registryUrl` when `Id` is used.
                               type: string
                             uri:
                               description: URI Reference of a parent devfile YAML
@@ -6665,8 +6692,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                           type: object
                         name:
@@ -6696,7 +6724,7 @@ spec:
                     description: Registry URL to pull the parent devfile from when
                       using id in the parent reference. To ensure the parent devfile
                       gets resolved consistently in different environments, it is
-                      recommended to always specify the `regsitryURL` when `Id` is
+                      recommended to always specify the `registryUrl` when `Id` is
                       used.
                     type: string
                   starterProjects:
@@ -6741,8 +6769,9 @@ spec:
                               additionalProperties:
                                 type: string
                               description: The remotes map which should be initialized
-                                in the git project. Must have at least one remote
-                                configured
+                                in the git project. Projects must have at least one
+                                remote configured while StarterProjects can only have
+                                at most one remote configured.
                               type: object
                           type: object
                         name:
@@ -6843,7 +6872,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                       required:
                       - remotes
@@ -6926,7 +6957,9 @@ spec:
                           additionalProperties:
                             type: string
                           description: The remotes map which should be initialized
-                            in the git project. Must have at least one remote configured
+                            in the git project. Projects must have at least one remote
+                            configured while StarterProjects can only have at most
+                            one remote configured.
                           type: object
                       required:
                       - remotes
