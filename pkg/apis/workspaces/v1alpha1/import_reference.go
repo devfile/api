@@ -44,10 +44,6 @@ type KubernetesCustomResourceImportReference struct {
 
 type ImportReference struct {
 	ImportReferenceUnion `json:",inline"`
-
-	// Registry URL to pull the parent devfile from when using id in the parent reference.
-	// To ensure the parent devfile gets resolved consistently in different environments,
-	// it is recommended to always specify the `registryUrl` when `Id` is used.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }
