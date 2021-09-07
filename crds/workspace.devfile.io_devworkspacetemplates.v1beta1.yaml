@@ -5228,7 +5228,7 @@ spec:
                             when using id in the parent reference. To ensure the parent
                             devfile gets resolved consistently in different environments,
                             it is recommended to always specify the `registryUrl`
-                            when `Id` is used.
+                            when `id` is used.
                           type: string
                         uri:
                           description: URI Reference of a parent devfile YAML file.
@@ -6573,7 +6573,7 @@ spec:
                                 from when using id in the parent reference. To ensure
                                 the parent devfile gets resolved consistently in different
                                 environments, it is recommended to always specify
-                                the `registryUrl` when `Id` is used.
+                                the `registryUrl` when `id` is used.
                               type: string
                             uri:
                               description: URI Reference of a parent devfile YAML
@@ -6697,7 +6697,7 @@ spec:
                     description: Registry URL to pull the parent devfile from when
                       using id in the parent reference. To ensure the parent devfile
                       gets resolved consistently in different environments, it is
-                      recommended to always specify the `registryUrl` when `Id` is
+                      recommended to always specify the `registryUrl` when `id` is
                       used.
                     type: string
                   starterProjects:

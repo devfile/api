@@ -88,5 +88,5 @@ type DevfileMetadata struct {
 
 	// Optional link to a page that provides support information
 	// +optional
-	SupportURL string `json:"supportURL,omitempty"`
+	SupportUrl string `json:"supportUrl,omitempty"`
 }

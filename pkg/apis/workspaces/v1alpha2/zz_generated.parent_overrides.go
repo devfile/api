@@ -515,7 +515,7 @@ type ImportReferenceParentOverride struct {
 
 	// Registry URL to pull the parent devfile from when using id in the parent reference.
 	// To ensure the parent devfile gets resolved consistently in different environments,
-	// it is recommended to always specify the `registryUrl` when `Id` is used.
+	// it is recommended to always specify the `registryUrl` when `id` is used.
 	// +optional
 	RegistryUrl string `json:"registryUrl,omitempty"`
 }
