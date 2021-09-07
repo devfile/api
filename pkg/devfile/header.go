@@ -81,4 +81,12 @@ type DevfileMetadata struct {
 	// Optional devfile website
 	// +optional
 	Website string `json:"website,omitempty"`
+
+	// Optional devfile provider information
+	// +optional
+	Provider string `json:"provider,omitempty"`
+
+	// Optional link to a page that provides support information
+	// +optional
+	SupportUrl string `json:"supportUrl,omitempty"`
 }
