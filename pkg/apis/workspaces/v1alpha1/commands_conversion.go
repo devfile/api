@@ -58,47 +58,48 @@ func getGroup(dc v1alpha2.Command) *v1alpha2.CommandGroup {
 }
 
 func convertCommandFrom_v1alpha2(src *v1alpha2.Command, dest *Command) error {
-	if src != nil {
-		id := src.Key()
+	if src == nil {
+		return nil
+	}
 
-		srcCmdGroup := getGroup(*src)
-		if srcCmdGroup != nil && srcCmdGroup.Kind == v1alpha2.DeployCommandGroupKind {
-			// skip converting deploy kind commands as deploy kind commands are not supported in v1alpha1
-			return nil
-		}
+	id := src.Key()
 
-		jsonCommand, err := json.Marshal(src)
-		if err != nil {
-			return err
-		}
-		err = json.Unmarshal(jsonCommand, dest)
-		if err != nil {
-			return err
-		}
-		var destAttributes map[string]string
-		if src.Attributes != nil {
-			destAttributes = make(map[string]string)
-			err = convertAttributesFrom_v1alpha2(&src.Attributes, destAttributes)
-			if err != nil {
-				return err
-			}
-		}
+	srcCmdGroup := getGroup(*src)
+	if srcCmdGroup != nil && srcCmdGroup.Kind == v1alpha2.DeployCommandGroupKind {
+		// skip converting deploy kind commands as deploy kind commands are not supported in v1alpha1
+		return nil
+	}
 
-		switch {
-		case dest.Apply != nil:
-			dest.Apply.Attributes = destAttributes
-			dest.Apply.Id = id
-		case dest.Composite != nil:
-			dest.Composite.Attributes = destAttributes
-			dest.Composite.Id = id
-		case dest.Custom != nil:
-			dest.Custom.Attributes = destAttributes
-			dest.Custom.Id = id
-		case dest.Exec != nil:
-			dest.Exec.Attributes = destAttributes
-			dest.Exec.Id = id
-		}
+	jsonCommand, err := json.Marshal(src)
+	if err != nil {
 		return err
 	}
-	return nil
+	err = json.Unmarshal(jsonCommand, dest)
+	if err != nil {
+		return err
+	}
+	var destAttributes map[string]string
+	if src.Attributes != nil {
+		destAttributes = make(map[string]string)
+		err = convertAttributesFrom_v1alpha2(&src.Attributes, destAttributes)
+		if err != nil {
+			return err
+		}
+	}
+
+	switch {
+	case dest.Apply != nil:
+		dest.Apply.Attributes = destAttributes
+		dest.Apply.Id = id
+	case dest.Composite != nil:
+		dest.Composite.Attributes = destAttributes
+		dest.Composite.Id = id
+	case dest.Custom != nil:
+		dest.Custom.Attributes = destAttributes
+		dest.Custom.Id = id
+	case dest.Exec != nil:
+		dest.Exec.Attributes = destAttributes
+		dest.Exec.Id = id
+	}
+	return err
 }

@@ -491,9 +491,9 @@ type ImageTypePluginOverride string
 
 // Dockerfile Image type to specify the outerloop build using a Dockerfile
 type DockerfileImagePluginOverride struct {
-	BaseImagePluginOverride          `json:",inline"`
-	DockerfileLocationPluginOverride `json:",inline"`
-	DockerfilePluginOverride         `json:",inline"`
+	BaseImagePluginOverride     `json:",inline"`
+	DockerfileSrcPluginOverride `json:",inline"`
+	DockerfilePluginOverride    `json:",inline"`
 }
 
 type CommandGroupPluginOverride struct {
@@ -511,14 +511,14 @@ type BaseImagePluginOverride struct {
 }
 
 // +union
-type DockerfileLocationPluginOverride struct {
+type DockerfileSrcPluginOverride struct {
 
-	// +kubebuilder:validation:Enum=Uri;Registry;Git
-	// Type of Dockerfile location
+	// +kubebuilder:validation:Enum=Uri;DevfileRegistry;Git
+	// Type of Dockerfile src
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType DockerfileLocationTypePluginOverride `json:"locationType,omitempty"`
+	SrcType DockerfileSrcTypePluginOverride `json:"srcType,omitempty"`
 
 	// URI Reference of a Dockerfile.
 	// It can be a full URL or a relative URI from the current devfile as the base URI.
@@ -527,7 +527,7 @@ type DockerfileLocationPluginOverride struct {
 
 	// Dockerfile's Devfile Registry source
 	// +optional
-	Registry *DockerfileDevfileRegistrySourcePluginOverride `json:"registry,omitempty"`
+	DevfileRegistry *DockerfileDevfileRegistrySourcePluginOverride `json:"devfileRegistry,omitempty"`
 
 	// Dockerfile's Git source
 	// +optional
@@ -555,10 +555,10 @@ type DockerfilePluginOverride struct {
 // +kubebuilder:validation:Enum=build;run;test;debug;deploy
 type CommandGroupKindPluginOverride string
 
-// DockerfileLocationType describes the type of
-// the location for the Dockerfile outerloop build.
+// DockerfileSrcType describes the type of
+// the src for the Dockerfile outerloop build.
 // Only one of the following location type may be specified.
-type DockerfileLocationTypePluginOverride string
+type DockerfileSrcTypePluginOverride string
 
 type DockerfileDevfileRegistrySourcePluginOverride struct {
 
@@ -571,7 +571,7 @@ type DockerfileDevfileRegistrySourcePluginOverride struct {
 	// To ensure the Dockerfile gets resolved consistently in different environments,
 	// it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.
 	// +optional
-	DevfileRegistryUrl string `json:"devfileRegistryUrl,omitempty"`
+	RegistryUrl string `json:"registryUrl,omitempty"`
 }
 
 type DockerfileGitProjectSourcePluginOverride struct {
@@ -581,8 +581,9 @@ type DockerfileGitProjectSourcePluginOverride struct {
 	GitProjectSourcePluginOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
+	// Defaults to Dockerfile.
 	// +optional
-	GitLocation string `json:"gitLocation,omitempty"`
+	FileLocation string `json:"fileLocation,omitempty"`
 }
 
 type GitProjectSourcePluginOverride struct {
@@ -597,7 +598,8 @@ type GitLikeProjectSourcePluginOverride struct {
 	CheckoutFrom *CheckoutFromPluginOverride `json:"checkoutFrom,omitempty"`
 
 	//  +optional
-	// The remotes map which should be initialized in the git project. Must have at least one remote configured
+	// The remotes map which should be initialized in the git project.
+	// Projects must have at least one remote configured while StarterProjects & Image Component's Git source can only have at most one remote configured.
 	Remotes map[string]string `json:"remotes,omitempty"`
 }
 

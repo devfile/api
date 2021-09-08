@@ -43,12 +43,12 @@ func generateDummyGitProject(name string, checkoutRemote *v1alpha2.CheckoutFrom,
 func TestValidateStarterProjects(t *testing.T) {
 
 	oneRemoteErr := "starterProject .* should have one remote only"
-	wrongCheckoutErr := "unable to find the checkout remote .* in the remotes for project.*"
+	wrongCheckoutErr := "unable to find the checkout remote .* in the remotes for starterProject.*"
 	atleastOneRemoteErr := "starterProject .* should have at least one remote"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
-	wrongCheckoutErrWithImportAttributes := "unable to find the checkout remote .* in the remotes for project.*, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
+	wrongCheckoutErrWithImportAttributes := "unable to find the checkout remote .* in the remotes for starterProject.*, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 
 	tests := []struct {
 		name            string

@@ -1,8 +1,9 @@
 package validation
 
 import (
-	"github.com/devfile/api/v2/pkg/attributes"
 	"testing"
+
+	"github.com/devfile/api/v2/pkg/attributes"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/hashicorp/go-multierror"
@@ -80,6 +81,29 @@ func generateDummyKubernetesComponent(name string, endpoints []v1alpha2.Endpoint
 	}
 }
 
+// generateDummyImageComponent returns a dummy Image Dockerfile Component for testing
+func generateDummyImageComponent(name string, src v1alpha2.DockerfileSrc) v1alpha2.Component {
+
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Image: &v1alpha2.ImageComponent{
+				Image: v1alpha2.Image{
+					ImageName: "image:latest",
+					ImageUnion: v1alpha2.ImageUnion{
+						Dockerfile: &v1alpha2.DockerfileImage{
+							DockerfileSrc: src,
+							Dockerfile: v1alpha2.Dockerfile{
+								BuildContext: "/path",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
 // generateDummyPluginComponent returns a dummy Plugin component for testing
 func generateDummyPluginComponent(name, url string, compAttribute attributes.Attributes) v1alpha2.Component {
 
@@ -128,6 +152,68 @@ func TestValidateComponents(t *testing.T) {
 		},
 	}
 
+	twoRemotesGitSrc := v1alpha2.DockerfileSrc{
+		Git: &v1alpha2.DockerfileGitProjectSource{
+			GitProjectSource: v1alpha2.GitProjectSource{
+				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+					Remotes: map[string]string{
+						"a": "abc",
+						"x": "xyz",
+					},
+					CheckoutFrom: &v1alpha2.CheckoutFrom{
+						Remote: "a",
+					},
+				},
+			},
+		},
+	}
+
+	zeroRemoteGitSrc := v1alpha2.DockerfileSrc{
+		Git: &v1alpha2.DockerfileGitProjectSource{
+			GitProjectSource: v1alpha2.GitProjectSource{
+				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+					CheckoutFrom: &v1alpha2.CheckoutFrom{
+						Remote: "a",
+					},
+				},
+			},
+		},
+	}
+
+	invalidRemoteGitSrc := v1alpha2.DockerfileSrc{
+		Git: &v1alpha2.DockerfileGitProjectSource{
+			GitProjectSource: v1alpha2.GitProjectSource{
+				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+					Remotes: map[string]string{
+						"a": "abc",
+					},
+					CheckoutFrom: &v1alpha2.CheckoutFrom{
+						Remote: "b",
+					},
+				},
+			},
+		},
+	}
+
+	validRemoteGitSrc := v1alpha2.DockerfileSrc{
+		Git: &v1alpha2.DockerfileGitProjectSource{
+			GitProjectSource: v1alpha2.GitProjectSource{
+				GitLikeProjectSource: v1alpha2.GitLikeProjectSource{
+					Remotes: map[string]string{
+						"a": "abc",
+					},
+					CheckoutFrom: &v1alpha2.CheckoutFrom{
+						Remote: "a",
+					},
+				},
+			},
+		},
+	}
+
+	validUriSrc := v1alpha2.DockerfileSrc{
+		Uri: "uri",
+	}
+
 	endpointUrl18080 := generateDummyEndpoint("url1", 8080)
 	endpointUrl18081 := generateDummyEndpoint("url1", 8081)
 	endpointUrl28080 := generateDummyEndpoint("url2", 8080)
@@ -139,6 +225,9 @@ func TestValidateComponents(t *testing.T) {
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
 	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
 	invalidURIErr := ".*invalid URI for request"
+	imageCompTwoRemoteErr := "component .* should have one remote only"
+	imageCompNoRemoteErr := "component .* should have at least one remote"
+	imageCompInvalidRemoteErr := "unable to find the checkout remote .* in the remotes for component .*"
 
 	pluginOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(PluginOverrideAttribute, "main devfile")
@@ -245,6 +334,39 @@ func TestValidateComponents(t *testing.T) {
 				generateDummyPluginComponent("abc", "http//invalidregistryurl", pluginOverridesFromMainDevfile),
 			},
 			wantErr: []string{duplicateComponentErr, invalidURIErr, invalidURIErrWithImportAttributes},
+		},
+		{
+			name: "Invalid image dockerfile component with more than one remote",
+			components: []v1alpha2.Component{
+				generateDummyImageComponent("name1", twoRemotesGitSrc),
+			},
+			wantErr: []string{imageCompTwoRemoteErr},
+		},
+		{
+			name: "Invalid image dockerfile component with zero remote",
+			components: []v1alpha2.Component{
+				generateDummyImageComponent("name1", zeroRemoteGitSrc),
+			},
+			wantErr: []string{imageCompNoRemoteErr},
+		},
+		{
+			name: "Invalid image dockerfile component with wrong checkout",
+			components: []v1alpha2.Component{
+				generateDummyImageComponent("name1", invalidRemoteGitSrc),
+			},
+			wantErr: []string{imageCompInvalidRemoteErr},
+		},
+		{
+			name: "Valid image dockerfile component with correct remote",
+			components: []v1alpha2.Component{
+				generateDummyImageComponent("name1", validRemoteGitSrc),
+			},
+		},
+		{
+			name: "Valid image dockerfile component with non git src",
+			components: []v1alpha2.Component{
+				generateDummyImageComponent("name1", validUriSrc),
+			},
 		},
 	}
 	for _, tt := range tests {

@@ -1,12 +1,11 @@
 imageName: "myimage:{{ tag }}"
 dockerfile:
   git:
-    gitLocation: "{{ uri }}/Dockerfile"
+    fileLocation: "{{ uri }}/Dockerfile"
     checkoutFrom:
       revision: "{{foo}}"
       remote: "{{bar}}"
     remotes:
-      "foo": "{{bar}}"
-      "{{foo}}{{bar}}": "{{ bar }}{{  foo }}"
+      "{{bar}}": "foo"
   buildContext: /{{foo}}/{{bar}}
   rootRequired: true

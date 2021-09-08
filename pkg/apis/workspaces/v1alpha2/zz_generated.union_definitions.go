@@ -47,26 +47,26 @@ type ImageUnionVisitor struct {
 	Dockerfile func(*DockerfileImage) error
 }
 
-var dockerfileLocation reflect.Type = reflect.TypeOf(DockerfileLocationVisitor{})
+var dockerfileSrc reflect.Type = reflect.TypeOf(DockerfileSrcVisitor{})
 
-func (union DockerfileLocation) Visit(visitor DockerfileLocationVisitor) error {
+func (union DockerfileSrc) Visit(visitor DockerfileSrcVisitor) error {
 	return visitUnion(union, visitor)
 }
-func (union *DockerfileLocation) discriminator() *string {
-	return (*string)(&union.LocationType)
+func (union *DockerfileSrc) discriminator() *string {
+	return (*string)(&union.SrcType)
 }
-func (union *DockerfileLocation) Normalize() error {
-	return normalizeUnion(union, dockerfileLocation)
+func (union *DockerfileSrc) Normalize() error {
+	return normalizeUnion(union, dockerfileSrc)
 }
-func (union *DockerfileLocation) Simplify() {
-	simplifyUnion(union, dockerfileLocation)
+func (union *DockerfileSrc) Simplify() {
+	simplifyUnion(union, dockerfileSrc)
 }
 
 // +k8s:deepcopy-gen=false
-type DockerfileLocationVisitor struct {
-	Uri      func(string) error
-	Registry func(*DockerfileDevfileRegistrySource) error
-	Git      func(*DockerfileGitProjectSource) error
+type DockerfileSrcVisitor struct {
+	Uri             func(string) error
+	DevfileRegistry func(*DockerfileDevfileRegistrySource) error
+	Git             func(*DockerfileGitProjectSource) error
 }
 
 var k8sLikeComponentLocation reflect.Type = reflect.TypeOf(K8sLikeComponentLocationVisitor{})
@@ -337,26 +337,26 @@ type CommandUnionPluginOverrideParentOverrideVisitor struct {
 	Composite func(*CompositeCommandPluginOverrideParentOverride) error
 }
 
-var dockerfileLocationParentOverride reflect.Type = reflect.TypeOf(DockerfileLocationParentOverrideVisitor{})
+var dockerfileSrcParentOverride reflect.Type = reflect.TypeOf(DockerfileSrcParentOverrideVisitor{})
 
-func (union DockerfileLocationParentOverride) Visit(visitor DockerfileLocationParentOverrideVisitor) error {
+func (union DockerfileSrcParentOverride) Visit(visitor DockerfileSrcParentOverrideVisitor) error {
 	return visitUnion(union, visitor)
 }
-func (union *DockerfileLocationParentOverride) discriminator() *string {
-	return (*string)(&union.LocationType)
+func (union *DockerfileSrcParentOverride) discriminator() *string {
+	return (*string)(&union.SrcType)
 }
-func (union *DockerfileLocationParentOverride) Normalize() error {
-	return normalizeUnion(union, dockerfileLocationParentOverride)
+func (union *DockerfileSrcParentOverride) Normalize() error {
+	return normalizeUnion(union, dockerfileSrcParentOverride)
 }
-func (union *DockerfileLocationParentOverride) Simplify() {
-	simplifyUnion(union, dockerfileLocationParentOverride)
+func (union *DockerfileSrcParentOverride) Simplify() {
+	simplifyUnion(union, dockerfileSrcParentOverride)
 }
 
 // +k8s:deepcopy-gen=false
-type DockerfileLocationParentOverrideVisitor struct {
-	Uri      func(string) error
-	Registry func(*DockerfileDevfileRegistrySourceParentOverride) error
-	Git      func(*DockerfileGitProjectSourceParentOverride) error
+type DockerfileSrcParentOverrideVisitor struct {
+	Uri             func(string) error
+	DevfileRegistry func(*DockerfileDevfileRegistrySourceParentOverride) error
+	Git             func(*DockerfileGitProjectSourceParentOverride) error
 }
 
 var k8sLikeComponentLocationPluginOverrideParentOverride reflect.Type = reflect.TypeOf(K8sLikeComponentLocationPluginOverrideParentOverrideVisitor{})
@@ -400,26 +400,26 @@ type ImageUnionPluginOverrideParentOverrideVisitor struct {
 	Dockerfile func(*DockerfileImagePluginOverrideParentOverride) error
 }
 
-var dockerfileLocationPluginOverrideParentOverride reflect.Type = reflect.TypeOf(DockerfileLocationPluginOverrideParentOverrideVisitor{})
+var dockerfileSrcPluginOverrideParentOverride reflect.Type = reflect.TypeOf(DockerfileSrcPluginOverrideParentOverrideVisitor{})
 
-func (union DockerfileLocationPluginOverrideParentOverride) Visit(visitor DockerfileLocationPluginOverrideParentOverrideVisitor) error {
+func (union DockerfileSrcPluginOverrideParentOverride) Visit(visitor DockerfileSrcPluginOverrideParentOverrideVisitor) error {
 	return visitUnion(union, visitor)
 }
-func (union *DockerfileLocationPluginOverrideParentOverride) discriminator() *string {
-	return (*string)(&union.LocationType)
+func (union *DockerfileSrcPluginOverrideParentOverride) discriminator() *string {
+	return (*string)(&union.SrcType)
 }
-func (union *DockerfileLocationPluginOverrideParentOverride) Normalize() error {
-	return normalizeUnion(union, dockerfileLocationPluginOverrideParentOverride)
+func (union *DockerfileSrcPluginOverrideParentOverride) Normalize() error {
+	return normalizeUnion(union, dockerfileSrcPluginOverrideParentOverride)
 }
-func (union *DockerfileLocationPluginOverrideParentOverride) Simplify() {
-	simplifyUnion(union, dockerfileLocationPluginOverrideParentOverride)
+func (union *DockerfileSrcPluginOverrideParentOverride) Simplify() {
+	simplifyUnion(union, dockerfileSrcPluginOverrideParentOverride)
 }
 
 // +k8s:deepcopy-gen=false
-type DockerfileLocationPluginOverrideParentOverrideVisitor struct {
-	Uri      func(string) error
-	Registry func(*DockerfileDevfileRegistrySourcePluginOverrideParentOverride) error
-	Git      func(*DockerfileGitProjectSourcePluginOverrideParentOverride) error
+type DockerfileSrcPluginOverrideParentOverrideVisitor struct {
+	Uri             func(string) error
+	DevfileRegistry func(*DockerfileDevfileRegistrySourcePluginOverrideParentOverride) error
+	Git             func(*DockerfileGitProjectSourcePluginOverrideParentOverride) error
 }
 
 var componentUnionPluginOverride reflect.Type = reflect.TypeOf(ComponentUnionPluginOverrideVisitor{})
@@ -509,24 +509,24 @@ type ImageUnionPluginOverrideVisitor struct {
 	Dockerfile func(*DockerfileImagePluginOverride) error
 }
 
-var dockerfileLocationPluginOverride reflect.Type = reflect.TypeOf(DockerfileLocationPluginOverrideVisitor{})
+var dockerfileSrcPluginOverride reflect.Type = reflect.TypeOf(DockerfileSrcPluginOverrideVisitor{})
 
-func (union DockerfileLocationPluginOverride) Visit(visitor DockerfileLocationPluginOverrideVisitor) error {
+func (union DockerfileSrcPluginOverride) Visit(visitor DockerfileSrcPluginOverrideVisitor) error {
 	return visitUnion(union, visitor)
 }
-func (union *DockerfileLocationPluginOverride) discriminator() *string {
-	return (*string)(&union.LocationType)
+func (union *DockerfileSrcPluginOverride) discriminator() *string {
+	return (*string)(&union.SrcType)
 }
-func (union *DockerfileLocationPluginOverride) Normalize() error {
-	return normalizeUnion(union, dockerfileLocationPluginOverride)
+func (union *DockerfileSrcPluginOverride) Normalize() error {
+	return normalizeUnion(union, dockerfileSrcPluginOverride)
 }
-func (union *DockerfileLocationPluginOverride) Simplify() {
-	simplifyUnion(union, dockerfileLocationPluginOverride)
+func (union *DockerfileSrcPluginOverride) Simplify() {
+	simplifyUnion(union, dockerfileSrcPluginOverride)
 }
 
 // +k8s:deepcopy-gen=false
-type DockerfileLocationPluginOverrideVisitor struct {
-	Uri      func(string) error
-	Registry func(*DockerfileDevfileRegistrySourcePluginOverride) error
-	Git      func(*DockerfileGitProjectSourcePluginOverride) error
+type DockerfileSrcPluginOverrideVisitor struct {
+	Uri             func(string) error
+	DevfileRegistry func(*DockerfileDevfileRegistrySourcePluginOverride) error
+	Git             func(*DockerfileGitProjectSourcePluginOverride) error
 }

@@ -567,7 +567,7 @@ type GitLikeProjectSourceParentOverride struct {
 
 	//  +optional
 	// The remotes map which should be initialized in the git project.
-	// Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.
+	// Projects must have at least one remote configured while StarterProjects & Image Component's Git source can only have at most one remote configured.
 	Remotes map[string]string `json:"remotes,omitempty"`
 }
 
@@ -745,9 +745,9 @@ type ImageTypeParentOverride string
 
 // Dockerfile Image type to specify the outerloop build using a Dockerfile
 type DockerfileImageParentOverride struct {
-	BaseImageParentOverride          `json:",inline"`
-	DockerfileLocationParentOverride `json:",inline"`
-	DockerfileParentOverride         `json:",inline"`
+	BaseImageParentOverride     `json:",inline"`
+	DockerfileSrcParentOverride `json:",inline"`
+	DockerfileParentOverride    `json:",inline"`
 }
 
 // ImportReferenceType describes the type of location
@@ -849,14 +849,14 @@ type BaseImageParentOverride struct {
 }
 
 // +union
-type DockerfileLocationParentOverride struct {
+type DockerfileSrcParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Uri;Registry;Git
-	// Type of Dockerfile location
+	// +kubebuilder:validation:Enum=Uri;DevfileRegistry;Git
+	// Type of Dockerfile src
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType DockerfileLocationTypeParentOverride `json:"locationType,omitempty"`
+	SrcType DockerfileSrcTypeParentOverride `json:"srcType,omitempty"`
 
 	// URI Reference of a Dockerfile.
 	// It can be a full URL or a relative URI from the current devfile as the base URI.
@@ -865,7 +865,7 @@ type DockerfileLocationParentOverride struct {
 
 	// Dockerfile's Devfile Registry source
 	// +optional
-	Registry *DockerfileDevfileRegistrySourceParentOverride `json:"registry,omitempty"`
+	DevfileRegistry *DockerfileDevfileRegistrySourceParentOverride `json:"devfileRegistry,omitempty"`
 
 	// Dockerfile's Git source
 	// +optional
@@ -993,10 +993,10 @@ type CompositeCommandPluginOverrideParentOverride struct {
 // +kubebuilder:validation:Enum=build;run;test;debug;deploy
 type CommandGroupKindParentOverride string
 
-// DockerfileLocationType describes the type of
-// the location for the Dockerfile outerloop build.
+// DockerfileSrcType describes the type of
+// the src for the Dockerfile outerloop build.
 // Only one of the following location type may be specified.
-type DockerfileLocationTypeParentOverride string
+type DockerfileSrcTypeParentOverride string
 
 type DockerfileDevfileRegistrySourceParentOverride struct {
 
@@ -1009,7 +1009,7 @@ type DockerfileDevfileRegistrySourceParentOverride struct {
 	// To ensure the Dockerfile gets resolved consistently in different environments,
 	// it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.
 	// +optional
-	DevfileRegistryUrl string `json:"devfileRegistryUrl,omitempty"`
+	RegistryUrl string `json:"registryUrl,omitempty"`
 }
 
 type DockerfileGitProjectSourceParentOverride struct {
@@ -1019,8 +1019,9 @@ type DockerfileGitProjectSourceParentOverride struct {
 	GitProjectSourceParentOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
+	// Defaults to Dockerfile.
 	// +optional
-	GitLocation string `json:"gitLocation,omitempty"`
+	FileLocation string `json:"fileLocation,omitempty"`
 }
 
 // DevWorkspace component: Anything that will bring additional features / tooling / behaviour / context
@@ -1283,9 +1284,9 @@ type ImageTypePluginOverrideParentOverride string
 
 // Dockerfile Image type to specify the outerloop build using a Dockerfile
 type DockerfileImagePluginOverrideParentOverride struct {
-	BaseImagePluginOverrideParentOverride          `json:",inline"`
-	DockerfileLocationPluginOverrideParentOverride `json:",inline"`
-	DockerfilePluginOverrideParentOverride         `json:",inline"`
+	BaseImagePluginOverrideParentOverride     `json:",inline"`
+	DockerfileSrcPluginOverrideParentOverride `json:",inline"`
+	DockerfilePluginOverrideParentOverride    `json:",inline"`
 }
 
 type CommandGroupPluginOverrideParentOverride struct {
@@ -1303,14 +1304,14 @@ type BaseImagePluginOverrideParentOverride struct {
 }
 
 // +union
-type DockerfileLocationPluginOverrideParentOverride struct {
+type DockerfileSrcPluginOverrideParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Uri;Registry;Git
-	// Type of Dockerfile location
+	// +kubebuilder:validation:Enum=Uri;DevfileRegistry;Git
+	// Type of Dockerfile src
 	// +
 	// +unionDiscriminator
 	// +optional
-	LocationType DockerfileLocationTypePluginOverrideParentOverride `json:"locationType,omitempty"`
+	SrcType DockerfileSrcTypePluginOverrideParentOverride `json:"srcType,omitempty"`
 
 	// URI Reference of a Dockerfile.
 	// It can be a full URL or a relative URI from the current devfile as the base URI.
@@ -1319,7 +1320,7 @@ type DockerfileLocationPluginOverrideParentOverride struct {
 
 	// Dockerfile's Devfile Registry source
 	// +optional
-	Registry *DockerfileDevfileRegistrySourcePluginOverrideParentOverride `json:"registry,omitempty"`
+	DevfileRegistry *DockerfileDevfileRegistrySourcePluginOverrideParentOverride `json:"devfileRegistry,omitempty"`
 
 	// Dockerfile's Git source
 	// +optional
@@ -1347,10 +1348,10 @@ type DockerfilePluginOverrideParentOverride struct {
 // +kubebuilder:validation:Enum=build;run;test;debug;deploy
 type CommandGroupKindPluginOverrideParentOverride string
 
-// DockerfileLocationType describes the type of
-// the location for the Dockerfile outerloop build.
+// DockerfileSrcType describes the type of
+// the src for the Dockerfile outerloop build.
 // Only one of the following location type may be specified.
-type DockerfileLocationTypePluginOverrideParentOverride string
+type DockerfileSrcTypePluginOverrideParentOverride string
 
 type DockerfileDevfileRegistrySourcePluginOverrideParentOverride struct {
 
@@ -1363,7 +1364,7 @@ type DockerfileDevfileRegistrySourcePluginOverrideParentOverride struct {
 	// To ensure the Dockerfile gets resolved consistently in different environments,
 	// it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.
 	// +optional
-	DevfileRegistryUrl string `json:"devfileRegistryUrl,omitempty"`
+	RegistryUrl string `json:"registryUrl,omitempty"`
 }
 
 type DockerfileGitProjectSourcePluginOverrideParentOverride struct {
@@ -1373,8 +1374,9 @@ type DockerfileGitProjectSourcePluginOverrideParentOverride struct {
 	GitProjectSourcePluginOverrideParentOverride `json:",inline"`
 
 	// Location of the Dockerfile in the Git repository when using git as Dockerfile src.
+	// Defaults to Dockerfile.
 	// +optional
-	GitLocation string `json:"gitLocation,omitempty"`
+	FileLocation string `json:"fileLocation,omitempty"`
 }
 
 type GitProjectSourcePluginOverrideParentOverride struct {
@@ -1389,7 +1391,8 @@ type GitLikeProjectSourcePluginOverrideParentOverride struct {
 	CheckoutFrom *CheckoutFromPluginOverrideParentOverride `json:"checkoutFrom,omitempty"`
 
 	//  +optional
-	// The remotes map which should be initialized in the git project. Must have at least one remote configured
+	// The remotes map which should be initialized in the git project.
+	// Projects must have at least one remote configured while StarterProjects & Image Component's Git source can only have at most one remote configured.
 	Remotes map[string]string `json:"remotes,omitempty"`
 }
 

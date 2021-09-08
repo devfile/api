@@ -235,7 +235,7 @@ func validateAndReplaceForDockerfileImageComponent(variables map[string]string, 
 			}
 		case dockerfileImage.Git != nil:
 			// Validate dockerfile Git location
-			if dockerfileImage.Git.GitLocation, err = validateAndReplaceDataWithVariable(dockerfileImage.Git.GitLocation, variables); err != nil {
+			if dockerfileImage.Git.FileLocation, err = validateAndReplaceDataWithVariable(dockerfileImage.Git.FileLocation, variables); err != nil {
 				checkForInvalidError(invalidKeys, err)
 			}
 
@@ -243,12 +243,12 @@ func validateAndReplaceForDockerfileImageComponent(variables map[string]string, 
 			if err = validateAndReplaceForGitProjectSource(variables, gitProject); err != nil {
 				checkForInvalidError(invalidKeys, err)
 			}
-		case dockerfileImage.Registry != nil:
+		case dockerfileImage.DevfileRegistry != nil:
 			// Validate dockerfile devfile registry src
-			if dockerfileImage.Registry.Id, err = validateAndReplaceDataWithVariable(dockerfileImage.Registry.Id, variables); err != nil {
+			if dockerfileImage.DevfileRegistry.Id, err = validateAndReplaceDataWithVariable(dockerfileImage.DevfileRegistry.Id, variables); err != nil {
 				checkForInvalidError(invalidKeys, err)
 			}
-			if dockerfileImage.Registry.DevfileRegistryUrl, err = validateAndReplaceDataWithVariable(dockerfileImage.Registry.DevfileRegistryUrl, variables); err != nil {
+			if dockerfileImage.DevfileRegistry.RegistryUrl, err = validateAndReplaceDataWithVariable(dockerfileImage.DevfileRegistry.RegistryUrl, variables); err != nil {
 				checkForInvalidError(invalidKeys, err)
 			}
 		}

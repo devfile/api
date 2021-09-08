@@ -4,13 +4,12 @@ components:
       imageName: "newimage:xyz"
       dockerfile:
         git:
-          gitLocation: "uri/Dockerfile"
+          fileLocation: "uri/Dockerfile"
           checkoutFrom:
             revision: "FOO"
-            remote: "BAR"
+            remote: "foo"
           remotes:
             "foo": "BAR"
-            "FOOBAR": "BARFOO"
         buildContext: /BAR/FOO
         args:
           - "sleep"

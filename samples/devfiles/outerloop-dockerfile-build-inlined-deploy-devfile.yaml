@@ -90,9 +90,16 @@ commands:
       group:
         kind: test
         isDefault: true
+  - id: build-image
+    apply:
+      component: outerloop-build
   - id: deployk8s
     apply:
       component: outerloop-deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
       group:
         kind: deploy
-        isDefault: true

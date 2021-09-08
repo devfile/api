@@ -697,7 +697,7 @@
                           },
                           {
                             "required": [
-                              "registry"
+                              "devfileRegistry"
                             ]
                           },
                           {
@@ -717,6 +717,24 @@
                           "buildContext": {
                             "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
                             "type": "string"
+                          },
+                          "devfileRegistry": {
+                            "description": "Dockerfile's Devfile Registry source",
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                                "type": "string"
+                              },
+                              "registryUrl": {
+                                "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
                           },
                           "git": {
                             "description": "Dockerfile's Git source",
@@ -740,34 +758,16 @@
                                 },
                                 "additionalProperties": false
                               },
-                              "gitLocation": {
-                                "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                              "fileLocation": {
+                                "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
                                 "type": "string"
                               },
                               "remotes": {
-                                "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                                 "type": "object",
                                 "additionalProperties": {
                                   "type": "string"
                                 }
-                              }
-                            },
-                            "additionalProperties": false
-                          },
-                          "registry": {
-                            "description": "Dockerfile's Devfile Registry source",
-                            "type": "object",
-                            "required": [
-                              "id"
-                            ],
-                            "properties": {
-                              "devfileRegistryUrl": {
-                                "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
-                                "type": "string"
-                              },
-                              "id": {
-                                "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
-                                "type": "string"
                               }
                             },
                             "additionalProperties": false
@@ -1383,7 +1383,7 @@
                                     },
                                     {
                                       "required": [
-                                        "registry"
+                                        "devfileRegistry"
                                       ]
                                     },
                                     {
@@ -1404,6 +1404,21 @@
                                       "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
                                       "type": "string"
                                     },
+                                    "devfileRegistry": {
+                                      "description": "Dockerfile's Devfile Registry source",
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                                          "type": "string"
+                                        },
+                                        "registryUrl": {
+                                          "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
                                     "git": {
                                       "description": "Dockerfile's Git source",
                                       "type": "object",
@@ -1423,31 +1438,16 @@
                                           },
                                           "additionalProperties": false
                                         },
-                                        "gitLocation": {
-                                          "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                                        "fileLocation": {
+                                          "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
                                           "type": "string"
                                         },
                                         "remotes": {
-                                          "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                          "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                                           "type": "object",
                                           "additionalProperties": {
                                             "type": "string"
                                           }
-                                        }
-                                      },
-                                      "additionalProperties": false
-                                    },
-                                    "registry": {
-                                      "description": "Dockerfile's Devfile Registry source",
-                                      "type": "object",
-                                      "properties": {
-                                        "devfileRegistryUrl": {
-                                          "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
-                                          "type": "string"
-                                        },
-                                        "id": {
-                                          "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
-                                          "type": "string"
                                         }
                                       },
                                       "additionalProperties": false
@@ -2171,7 +2171,7 @@
                               },
                               {
                                 "required": [
-                                  "registry"
+                                  "devfileRegistry"
                                 ]
                               },
                               {
@@ -2192,6 +2192,21 @@
                                 "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
                                 "type": "string"
                               },
+                              "devfileRegistry": {
+                                "description": "Dockerfile's Devfile Registry source",
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                                    "type": "string"
+                                  },
+                                  "registryUrl": {
+                                    "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
                               "git": {
                                 "description": "Dockerfile's Git source",
                                 "type": "object",
@@ -2211,31 +2226,16 @@
                                     },
                                     "additionalProperties": false
                                   },
-                                  "gitLocation": {
-                                    "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                                  "fileLocation": {
+                                    "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
                                     "type": "string"
                                   },
                                   "remotes": {
-                                    "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                    "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                                     "type": "object",
                                     "additionalProperties": {
                                       "type": "string"
                                     }
-                                  }
-                                },
-                                "additionalProperties": false
-                              },
-                              "registry": {
-                                "description": "Dockerfile's Devfile Registry source",
-                                "type": "object",
-                                "properties": {
-                                  "devfileRegistryUrl": {
-                                    "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
-                                    "type": "string"
-                                  },
-                                  "id": {
-                                    "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
-                                    "type": "string"
                                   }
                                 },
                                 "additionalProperties": false
@@ -2845,7 +2845,7 @@
                                         },
                                         {
                                           "required": [
-                                            "registry"
+                                            "devfileRegistry"
                                           ]
                                         },
                                         {
@@ -2866,6 +2866,21 @@
                                           "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
                                           "type": "string"
                                         },
+                                        "devfileRegistry": {
+                                          "description": "Dockerfile's Devfile Registry source",
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                                              "type": "string"
+                                            },
+                                            "registryUrl": {
+                                              "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        },
                                         "git": {
                                           "description": "Dockerfile's Git source",
                                           "type": "object",
@@ -2885,31 +2900,16 @@
                                               },
                                               "additionalProperties": false
                                             },
-                                            "gitLocation": {
-                                              "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.",
+                                            "fileLocation": {
+                                              "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
                                               "type": "string"
                                             },
                                             "remotes": {
-                                              "description": "The remotes map which should be initialized in the git project. Must have at least one remote configured",
+                                              "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                                               "type": "object",
                                               "additionalProperties": {
                                                 "type": "string"
                                               }
-                                            }
-                                          },
-                                          "additionalProperties": false
-                                        },
-                                        "registry": {
-                                          "description": "Dockerfile's Devfile Registry source",
-                                          "type": "object",
-                                          "properties": {
-                                            "devfileRegistryUrl": {
-                                              "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
-                                              "type": "string"
-                                            },
-                                            "id": {
-                                              "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
-                                              "type": "string"
                                             }
                                           },
                                           "additionalProperties": false
@@ -3236,7 +3236,7 @@
                             "additionalProperties": false
                           },
                           "remotes": {
-                            "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.",
+                            "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                             "type": "object",
                             "additionalProperties": {
                               "type": "string"
@@ -3320,7 +3320,7 @@
                             "additionalProperties": false
                           },
                           "remotes": {
-                            "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.",
+                            "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                             "type": "object",
                             "additionalProperties": {
                               "type": "string"
@@ -3444,7 +3444,7 @@
                         "additionalProperties": false
                       },
                       "remotes": {
-                        "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.",
+                        "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                         "type": "object",
                         "additionalProperties": {
                           "type": "string"
@@ -3550,7 +3550,7 @@
                         "additionalProperties": false
                       },
                       "remotes": {
-                        "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects can only have at most one remote configured.",
+                        "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                         "type": "object",
                         "additionalProperties": {
                           "type": "string"

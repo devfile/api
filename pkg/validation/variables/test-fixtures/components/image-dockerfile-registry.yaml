@@ -1,7 +1,7 @@
 imageName: "myimage:{{ tag }}"
 dockerfile:
-  registry:
+  devfileRegistry:
     id: "{{foo}}/{{bar}}"
-    devfileRegistryUrl: "http://{{ uri }}"
+    registryUrl: "http://{{ uri }}"
   buildContext: /{{foo}}/{{bar}}
   rootRequired: true

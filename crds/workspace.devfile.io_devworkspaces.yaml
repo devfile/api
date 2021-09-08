@@ -4625,7 +4625,7 @@ spec:
                               - required:
                                 - uri
                               - required:
-                                - registry
+                                - devfileRegistry
                               - required:
                                 - git
                               properties:
@@ -4640,6 +4640,26 @@ spec:
                                     build context. Defaults to ${PROJECT_ROOT} in
                                     the container
                                   type: string
+                                devfileRegistry:
+                                  description: Dockerfile's Devfile Registry source
+                                  properties:
+                                    id:
+                                      description: Id in a devfile registry that contains
+                                        a Dockerfile. The src in the OCI registry
+                                        required for the Dockerfile build will be
+                                        downloaded for building the image.
+                                      type: string
+                                    registryUrl:
+                                      description: Devfile Registry URL to pull the
+                                        Dockerfile from when using the Devfile Registry
+                                        as Dockerfile src. To ensure the Dockerfile
+                                        gets resolved consistently in different environments,
+                                        it is recommended to always specify the `devfileRegistryUrl`
+                                        when `Id` is used.
+                                      type: string
+                                  required:
+                                  - id
+                                  type: object
                                 git:
                                   description: Dockerfile's Git source
                                   properties:
@@ -4660,52 +4680,34 @@ spec:
                                             revision is not found.
                                           type: string
                                       type: object
-                                    gitLocation:
+                                    fileLocation:
                                       description: Location of the Dockerfile in the
                                         Git repository when using git as Dockerfile
-                                        src.
+                                        src. Defaults to Dockerfile.
                                       type: string
                                     remotes:
                                       additionalProperties:
                                         type: string
                                       description: The remotes map which should be
-                                        initialized in the git project. Must have
-                                        at least one remote configured
+                                        initialized in the git project. Projects must
+                                        have at least one remote configured while
+                                        StarterProjects & Image Component's Git source
+                                        can only have at most one remote configured.
                                       type: object
                                   required:
                                   - remotes
-                                  type: object
-                                locationType:
-                                  description: Type of Dockerfile location
-                                  enum:
-                                  - Uri
-                                  - Registry
-                                  - Git
-                                  type: string
-                                registry:
-                                  description: Dockerfile's Devfile Registry source
-                                  properties:
-                                    devfileRegistryUrl:
-                                      description: Devfile Registry URL to pull the
-                                        Dockerfile from when using the Devfile Registry
-                                        as Dockerfile src. To ensure the Dockerfile
-                                        gets resolved consistently in different environments,
-                                        it is recommended to always specify the `devfileRegistryUrl`
-                                        when `Id` is used.
-                                      type: string
-                                    id:
-                                      description: Id in a devfile registry that contains
-                                        a Dockerfile. The src in the OCI registry
-                                        required for the Dockerfile build will be
-                                        downloaded for building the image.
-                                      type: string
-                                  required:
-                                  - id
                                   type: object
                                 rootRequired:
                                   description: "Specify if a privileged builder pod
                                     is required. \n Default value is `false`"
                                   type: boolean
+                                srcType:
+                                  description: Type of Dockerfile src
+                                  enum:
+                                  - Uri
+                                  - DevfileRegistry
+                                  - Git
+                                  type: string
                                 uri:
                                   description: URI Reference of a Dockerfile. It can
                                     be a full URL or a relative URI from the current
@@ -5372,7 +5374,7 @@ spec:
                                         - required:
                                           - uri
                                         - required:
-                                          - registry
+                                          - devfileRegistry
                                         - required:
                                           - git
                                         properties:
@@ -5387,6 +5389,28 @@ spec:
                                               to establish build context. Defaults
                                               to ${PROJECT_ROOT} in the container
                                             type: string
+                                          devfileRegistry:
+                                            description: Dockerfile's Devfile Registry
+                                              source
+                                            properties:
+                                              id:
+                                                description: Id in a devfile registry
+                                                  that contains a Dockerfile. The
+                                                  src in the OCI registry required
+                                                  for the Dockerfile build will be
+                                                  downloaded for building the image.
+                                                type: string
+                                              registryUrl:
+                                                description: Devfile Registry URL
+                                                  to pull the Dockerfile from when
+                                                  using the Devfile Registry as Dockerfile
+                                                  src. To ensure the Dockerfile gets
+                                                  resolved consistently in different
+                                                  environments, it is recommended
+                                                  to always specify the `devfileRegistryUrl`
+                                                  when `Id` is used.
+                                                type: string
+                                            type: object
                                           git:
                                             description: Dockerfile's Git source
                                             properties:
@@ -5410,54 +5434,35 @@ spec:
                                                       revision is not found.
                                                     type: string
                                                 type: object
-                                              gitLocation:
+                                              fileLocation:
                                                 description: Location of the Dockerfile
                                                   in the Git repository when using
-                                                  git as Dockerfile src.
+                                                  git as Dockerfile src. Defaults
+                                                  to Dockerfile.
                                                 type: string
                                               remotes:
                                                 additionalProperties:
                                                   type: string
                                                 description: The remotes map which
                                                   should be initialized in the git
-                                                  project. Must have at least one
-                                                  remote configured
+                                                  project. Projects must have at least
+                                                  one remote configured while StarterProjects
+                                                  & Image Component's Git source can
+                                                  only have at most one remote configured.
                                                 type: object
-                                            type: object
-                                          locationType:
-                                            description: Type of Dockerfile location
-                                            enum:
-                                            - Uri
-                                            - Registry
-                                            - Git
-                                            type: string
-                                          registry:
-                                            description: Dockerfile's Devfile Registry
-                                              source
-                                            properties:
-                                              devfileRegistryUrl:
-                                                description: Devfile Registry URL
-                                                  to pull the Dockerfile from when
-                                                  using the Devfile Registry as Dockerfile
-                                                  src. To ensure the Dockerfile gets
-                                                  resolved consistently in different
-                                                  environments, it is recommended
-                                                  to always specify the `devfileRegistryUrl`
-                                                  when `Id` is used.
-                                                type: string
-                                              id:
-                                                description: Id in a devfile registry
-                                                  that contains a Dockerfile. The
-                                                  src in the OCI registry required
-                                                  for the Dockerfile build will be
-                                                  downloaded for building the image.
-                                                type: string
                                             type: object
                                           rootRequired:
                                             description: "Specify if a privileged
                                               builder pod is required. \n Default
                                               value is `false`"
                                             type: boolean
+                                          srcType:
+                                            description: Type of Dockerfile src
+                                            enum:
+                                            - Uri
+                                            - DevfileRegistry
+                                            - Git
+                                            type: string
                                           uri:
                                             description: URI Reference of a Dockerfile.
                                               It can be a full URL or a relative URI
@@ -6234,7 +6239,7 @@ spec:
                                   - required:
                                     - uri
                                   - required:
-                                    - registry
+                                    - devfileRegistry
                                   - required:
                                     - git
                                   properties:
@@ -6249,6 +6254,26 @@ spec:
                                         build context. Defaults to ${PROJECT_ROOT}
                                         in the container
                                       type: string
+                                    devfileRegistry:
+                                      description: Dockerfile's Devfile Registry source
+                                      properties:
+                                        id:
+                                          description: Id in a devfile registry that
+                                            contains a Dockerfile. The src in the
+                                            OCI registry required for the Dockerfile
+                                            build will be downloaded for building
+                                            the image.
+                                          type: string
+                                        registryUrl:
+                                          description: Devfile Registry URL to pull
+                                            the Dockerfile from when using the Devfile
+                                            Registry as Dockerfile src. To ensure
+                                            the Dockerfile gets resolved consistently
+                                            in different environments, it is recommended
+                                            to always specify the `devfileRegistryUrl`
+                                            when `Id` is used.
+                                          type: string
+                                      type: object
                                     git:
                                       description: Dockerfile's Git source
                                       properties:
@@ -6270,50 +6295,33 @@ spec:
                                                 not found.
                                               type: string
                                           type: object
-                                        gitLocation:
+                                        fileLocation:
                                           description: Location of the Dockerfile
                                             in the Git repository when using git as
-                                            Dockerfile src.
+                                            Dockerfile src. Defaults to Dockerfile.
                                           type: string
                                         remotes:
                                           additionalProperties:
                                             type: string
                                           description: The remotes map which should
-                                            be initialized in the git project. Must
-                                            have at least one remote configured
+                                            be initialized in the git project. Projects
+                                            must have at least one remote configured
+                                            while StarterProjects & Image Component's
+                                            Git source can only have at most one remote
+                                            configured.
                                           type: object
-                                      type: object
-                                    locationType:
-                                      description: Type of Dockerfile location
-                                      enum:
-                                      - Uri
-                                      - Registry
-                                      - Git
-                                      type: string
-                                    registry:
-                                      description: Dockerfile's Devfile Registry source
-                                      properties:
-                                        devfileRegistryUrl:
-                                          description: Devfile Registry URL to pull
-                                            the Dockerfile from when using the Devfile
-                                            Registry as Dockerfile src. To ensure
-                                            the Dockerfile gets resolved consistently
-                                            in different environments, it is recommended
-                                            to always specify the `devfileRegistryUrl`
-                                            when `Id` is used.
-                                          type: string
-                                        id:
-                                          description: Id in a devfile registry that
-                                            contains a Dockerfile. The src in the
-                                            OCI registry required for the Dockerfile
-                                            build will be downloaded for building
-                                            the image.
-                                          type: string
                                       type: object
                                     rootRequired:
                                       description: "Specify if a privileged builder
                                         pod is required. \n Default value is `false`"
                                       type: boolean
+                                    srcType:
+                                      description: Type of Dockerfile src
+                                      enum:
+                                      - Uri
+                                      - DevfileRegistry
+                                      - Git
+                                      type: string
                                     uri:
                                       description: URI Reference of a Dockerfile.
                                         It can be a full URL or a relative URI from
@@ -6997,7 +7005,7 @@ spec:
                                             - required:
                                               - uri
                                             - required:
-                                              - registry
+                                              - devfileRegistry
                                             - required:
                                               - git
                                             properties:
@@ -7012,6 +7020,30 @@ spec:
                                                   to establish build context. Defaults
                                                   to ${PROJECT_ROOT} in the container
                                                 type: string
+                                              devfileRegistry:
+                                                description: Dockerfile's Devfile
+                                                  Registry source
+                                                properties:
+                                                  id:
+                                                    description: Id in a devfile registry
+                                                      that contains a Dockerfile.
+                                                      The src in the OCI registry
+                                                      required for the Dockerfile
+                                                      build will be downloaded for
+                                                      building the image.
+                                                    type: string
+                                                  registryUrl:
+                                                    description: Devfile Registry
+                                                      URL to pull the Dockerfile from
+                                                      when using the Devfile Registry
+                                                      as Dockerfile src. To ensure
+                                                      the Dockerfile gets resolved
+                                                      consistently in different environments,
+                                                      it is recommended to always
+                                                      specify the `devfileRegistryUrl`
+                                                      when `Id` is used.
+                                                    type: string
+                                                type: object
                                               git:
                                                 description: Dockerfile's Git source
                                                 properties:
@@ -7036,56 +7068,36 @@ spec:
                                                           revision is not found.
                                                         type: string
                                                     type: object
-                                                  gitLocation:
+                                                  fileLocation:
                                                     description: Location of the Dockerfile
                                                       in the Git repository when using
-                                                      git as Dockerfile src.
+                                                      git as Dockerfile src. Defaults
+                                                      to Dockerfile.
                                                     type: string
                                                   remotes:
                                                     additionalProperties:
                                                       type: string
                                                     description: The remotes map which
                                                       should be initialized in the
-                                                      git project. Must have at least
-                                                      one remote configured
+                                                      git project. Projects must have
+                                                      at least one remote configured
+                                                      while StarterProjects & Image
+                                                      Component's Git source can only
+                                                      have at most one remote configured.
                                                     type: object
-                                                type: object
-                                              locationType:
-                                                description: Type of Dockerfile location
-                                                enum:
-                                                - Uri
-                                                - Registry
-                                                - Git
-                                                type: string
-                                              registry:
-                                                description: Dockerfile's Devfile
-                                                  Registry source
-                                                properties:
-                                                  devfileRegistryUrl:
-                                                    description: Devfile Registry
-                                                      URL to pull the Dockerfile from
-                                                      when using the Devfile Registry
-                                                      as Dockerfile src. To ensure
-                                                      the Dockerfile gets resolved
-                                                      consistently in different environments,
-                                                      it is recommended to always
-                                                      specify the `devfileRegistryUrl`
-                                                      when `Id` is used.
-                                                    type: string
-                                                  id:
-                                                    description: Id in a devfile registry
-                                                      that contains a Dockerfile.
-                                                      The src in the OCI registry
-                                                      required for the Dockerfile
-                                                      build will be downloaded for
-                                                      building the image.
-                                                    type: string
                                                 type: object
                                               rootRequired:
                                                 description: "Specify if a privileged
                                                   builder pod is required. \n Default
                                                   value is `false`"
                                                 type: boolean
+                                              srcType:
+                                                description: Type of Dockerfile src
+                                                enum:
+                                                - Uri
+                                                - DevfileRegistry
+                                                - Git
+                                                type: string
                                               uri:
                                                 description: URI Reference of a Dockerfile.
                                                   It can be a full URL or a relative
@@ -7487,8 +7499,9 @@ spec:
                                     type: string
                                   description: The remotes map which should be initialized
                                     in the git project. Projects must have at least
-                                    one remote configured while StarterProjects can
-                                    only have at most one remote configured.
+                                    one remote configured while StarterProjects &
+                                    Image Component's Git source can only have at
+                                    most one remote configured.
                                   type: object
                               type: object
                             name:
@@ -7565,8 +7578,9 @@ spec:
                                     type: string
                                   description: The remotes map which should be initialized
                                     in the git project. Projects must have at least
-                                    one remote configured while StarterProjects can
-                                    only have at most one remote configured.
+                                    one remote configured while StarterProjects &
+                                    Image Component's Git source can only have at
+                                    most one remote configured.
                                   type: object
                               type: object
                             name:
@@ -7671,8 +7685,8 @@ spec:
                                 type: string
                               description: The remotes map which should be initialized
                                 in the git project. Projects must have at least one
-                                remote configured while StarterProjects can only have
-                                at most one remote configured.
+                                remote configured while StarterProjects & Image Component's
+                                Git source can only have at most one remote configured.
                               type: object
                           required:
                           - remotes
@@ -7758,8 +7772,8 @@ spec:
                                 type: string
                               description: The remotes map which should be initialized
                                 in the git project. Projects must have at least one
-                                remote configured while StarterProjects can only have
-                                at most one remote configured.
+                                remote configured while StarterProjects & Image Component's
+                                Git source can only have at most one remote configured.
                               type: object
                           required:
                           - remotes
