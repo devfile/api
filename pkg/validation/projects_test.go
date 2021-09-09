@@ -123,7 +123,7 @@ func TestValidateStarterProjects(t *testing.T) {
 func TestValidateProjects(t *testing.T) {
 
 	wrongCheckoutErr := "unable to find the checkout remote .* in the remotes for project.*"
-	atleastOneRemoteErr := "projects .* should have at least one remote"
+	atleastOneRemoteErr := "project .* should have at least one remote"
 	missingCheckOutFromRemoteErr := "project .* has more than one remote defined, but has no checkoutfrom remote defined"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
