@@ -111,6 +111,52 @@ func (e *InvalidComponentError) Error() string {
 	return fmt.Sprintf("the component %q is invalid - %s", e.componentName, e.reason)
 }
 
+//MissingProjectRemoteError returns an error if the git remotes object under a project is empty
+type MissingProjectRemoteError struct {
+	projectName string
+}
+
+func (e *MissingProjectRemoteError) Error() string {
+	return fmt.Sprintf("project %s should have at least one remote", e.projectName)
+}
+
+//MissingStarterProjectRemoteError returns an error if the git remotes object under a starterProject is empty
+type MissingStarterProjectRemoteError struct {
+	projectName string
+}
+
+func (e *MissingStarterProjectRemoteError) Error() string {
+	return fmt.Sprintf("starterProject %s should have at least one remote", e.projectName)
+}
+
+//MultipleStarterProjectRemoteError returns an error if multiple git remotes are specified. There can only be one remote.
+type MultipleStarterProjectRemoteError struct {
+	projectName string
+}
+
+func (e *MultipleStarterProjectRemoteError) Error() string {
+	return fmt.Sprintf("starterProject %s should have one remote only", e.projectName)
+}
+
+//MissingProjectCheckoutFromRemoteError returns an error if there are multiple git remotes but the checkoutFrom remote has not been specified
+type MissingProjectCheckoutFromRemoteError struct {
+	projectName string
+}
+
+func (e *MissingProjectCheckoutFromRemoteError) Error() string {
+	return fmt.Sprintf("project %s has more than one remote defined, but has no checkoutfrom remote defined", e.projectName)
+}
+
+//InvalidProjectCheckoutRemoteError returns an error if there is an unmatched, checkoutFrom remote specified
+type InvalidProjectCheckoutRemoteError struct {
+	projectName    string
+	checkoutRemote string
+}
+
+func (e *InvalidProjectCheckoutRemoteError) Error() string {
+	return fmt.Sprintf("unable to find the checkout remote %s in the remotes for project %s", e.checkoutRemote, e.projectName)
+}
+
 // resolveErrorMessageWithImportAttributes returns an updated error message
 // with detailed information on the imported and overriden resource.
 // example:
