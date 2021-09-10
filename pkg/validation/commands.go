@@ -18,7 +18,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 	err := v1alpha2.CheckDuplicateKeys(commands)
 	if err != nil {
-		multierror.Append(returnedErr, err)
+		returnedErr = multierror.Append(returnedErr, err)
 	}
 
 	for _, command := range commands {
@@ -26,7 +26,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 		parentCommands := make(map[string]string)
 		err := validateCommand(command, parentCommands, commandMap, components)
 		if err != nil {
-			multierror.Append(returnedErr, resolveErrorMessageWithImportAttributes(err, command.Attributes))
+			returnedErr = multierror.Append(returnedErr, resolveErrorMessageWithImportAttributes(err, command.Attributes))
 		}
 
 		commandGroup := getGroup(command)
@@ -37,7 +37,7 @@ func ValidateCommands(commands []v1alpha2.Command, components []v1alpha2.Compone
 
 	for groupKind, commands := range groupKindCommandMap {
 		if err := validateGroup(commands, groupKind); err != nil {
-			multierror.Append(returnedErr, err)
+			returnedErr = multierror.Append(returnedErr, err)
 		}
 	}
 
