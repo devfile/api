@@ -1,13 +1,12 @@
 package validation
 
 import (
-	"fmt"
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
 	"github.com/hashicorp/go-multierror"
 )
 
 // ValidateStarterProjects checks if starter project has only one remote configured
-// and if the checkout remote matches the renote configured
+// and if the checkout remote matches the remote configured
 func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) (returnedErr error) {
 
 	for _, starterProject := range starterProjects {
@@ -20,8 +19,8 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) (returne
 
 		switch len(gitSource.Remotes) {
 		case 0:
-			starterProjectErr := fmt.Errorf("starterProject %s should have at least one remote", starterProject.Name)
-			newErr := resolveErrorMessageWithImportAttributes(starterProjectErr, starterProject.Attributes)
+
+			newErr := resolveErrorMessageWithImportAttributes(&MissingStarterProjectRemoteError{projectName: starterProject.Name}, starterProject.Attributes)
 			returnedErr = multierror.Append(returnedErr, newErr)
 		case 1:
 			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
@@ -32,8 +31,8 @@ func ValidateStarterProjects(starterProjects []v1alpha2.StarterProject) (returne
 				}
 			}
 		default: // len(gitSource.Remotes) >= 2
-			starterProjectErr := fmt.Errorf("starterProject %s should have one remote only", starterProject.Name)
-			newErr := resolveErrorMessageWithImportAttributes(starterProjectErr, starterProject.Attributes)
+
+			newErr := resolveErrorMessageWithImportAttributes(&MultipleStarterProjectRemoteError{projectName: starterProject.Name}, starterProject.Attributes)
 			returnedErr = multierror.Append(returnedErr, newErr)
 		}
 	}
@@ -54,8 +53,8 @@ func ValidateProjects(projects []v1alpha2.Project) (returnedErr error) {
 		}
 		switch len(gitSource.Remotes) {
 		case 0:
-			projectErr := fmt.Errorf("projects %s should have at least one remote", project.Name)
-			newErr := resolveErrorMessageWithImportAttributes(projectErr, project.Attributes)
+
+			newErr := resolveErrorMessageWithImportAttributes(&MissingProjectRemoteError{projectName: project.Name}, project.Attributes)
 			returnedErr = multierror.Append(returnedErr, newErr)
 		case 1:
 			if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
@@ -66,8 +65,8 @@ func ValidateProjects(projects []v1alpha2.Project) (returnedErr error) {
 			}
 		default: // len(gitSource.Remotes) >= 2
 			if gitSource.CheckoutFrom == nil || gitSource.CheckoutFrom.Remote == "" {
-				projectErr := fmt.Errorf("project %s has more than one remote defined, but has no checkoutfrom remote defined", project.Name)
-				newErr := resolveErrorMessageWithImportAttributes(projectErr, project.Attributes)
+
+				newErr := resolveErrorMessageWithImportAttributes(&MissingProjectCheckoutFromRemoteError{projectName: project.Name}, project.Attributes)
 				returnedErr = multierror.Append(returnedErr, newErr)
 				continue
 			}
@@ -85,7 +84,8 @@ func ValidateProjects(projects []v1alpha2.Project) (returnedErr error) {
 func validateRemoteMap(remotes map[string]string, checkoutRemote, projectName string) error {
 
 	if _, ok := remotes[checkoutRemote]; !ok {
-		return fmt.Errorf("unable to find the checkout remote %s in the remotes for project %s", checkoutRemote, projectName)
+
+		return &InvalidProjectCheckoutRemoteError{projectName: projectName, checkoutRemote: checkoutRemote}
 	}
 
 	return nil
