@@ -33,11 +33,11 @@ func (testDevFile *TestDevfile) addParentGroup() *schema.CommandGroupParentOverr
 	// Ensure only one and at least one of each type are labelled as default
 	if !testDevFile.GroupDefaults[schema.CommandGroupKind(kind)] {
 		testDevFile.GroupDefaults[schema.CommandGroupKind(kind)] = true
-		commandGroup.IsDefault = true
+		commandGroup.IsDefault = &isTrue
 	} else {
-		commandGroup.IsDefault = false
+		commandGroup.IsDefault = &isFalse
 	}
-	LogInfoMessage(fmt.Sprintf("parent group isDefault: %t", commandGroup.IsDefault))
+	LogInfoMessage(fmt.Sprintf("parent group isDefault: %t", *commandGroup.IsDefault))
 	return &commandGroup
 }
 
@@ -104,8 +104,9 @@ func (testDevFile *TestDevfile) SetParentExecCommandValues(command *schema.Comma
 		execCommand.WorkingDir = ""
 	}
 
-	execCommand.HotReloadCapable = GetBinaryDecision()
-	LogInfoMessage(fmt.Sprintf("....... HotReloadCapable: %t", execCommand.HotReloadCapable))
+	value := GetBinaryDecision()
+	execCommand.HotReloadCapable = &value
+	LogInfoMessage(fmt.Sprintf("....... HotReloadCapable: %t", *execCommand.HotReloadCapable))
 
 	if GetBinaryDecision() {
 		execCommand.Env = addParentEnv(GetRandomNumber(1, 4))
@@ -154,8 +155,8 @@ func (testDevFile *TestDevfile) SetParentCompositeCommandValues(command *schema.
 	}
 
 	if GetBinaryDecision() {
-		compositeCommand.Parallel = true
-		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", compositeCommand.Parallel))
+		compositeCommand.Parallel = &isTrue
+		LogInfoMessage(fmt.Sprintf("....... Parallel: %t", *compositeCommand.Parallel))
 	}
 
 	LogInfoMessage(fmt.Sprintf("parent command updated Id: %s", command.Id))
