@@ -37,7 +37,7 @@ EOF
     sed -i 's/\"license\": \".*\"/"license": "EPL-2.0"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' $WORK_DIR/typescript-models/package.json
     echo "" > $WORK_DIR/typescript-models/.npmignore
-    echo "[INFO] Generated typescript model which now is availalbe in $WORK_DIR/typescript-models"
+    echo "[INFO] Generated typescript model which now is available in $WORK_DIR/typescript-models"
 }
 
 generate_swagger_json() {
@@ -49,6 +49,13 @@ generate_swagger_json() {
     echo "[INFO] Generating Swagger JSON. It's in $WORK_DIR/typescript-models/swagger.json.unprocessed"
 }
 
+generate_typescript_metadata() {
+    echo "[INFO] Generating typescript constants from crds ..."
+    mkdir -p $WORK_DIR/typescript-models/constants
+    python3 $SCRIPT_DIR/generate-metadata.py -p $WORK_DIR/typescript-models
+    echo "[INFO] Finished generating typescript constant from crds. They are available in $WORK_DIR/typescript-models/constants"
+}
+
 build_typescript_model() {
     echo "[INFO] Verify that generated model is buildable..."
     cd $WORK_DIR/typescript-models
@@ -58,6 +65,7 @@ build_typescript_model() {
 
 generate_swagger_json
 k8s_client_gen
+generate_typescript_metadata
 build_typescript_model
 
 echo "[INFO] Typescript model is successfully generated and verified."
