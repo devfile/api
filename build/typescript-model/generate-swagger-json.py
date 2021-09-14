@@ -13,6 +13,7 @@
 import os
 import json
 
+
 def write_json(filename: str, object: dict) -> None:
     """
     Write the json object to the specified filename
@@ -20,13 +21,14 @@ def write_json(filename: str, object: dict) -> None:
     with open(filename, 'w') as out:
         json.dump(object, out, sort_keys=False, indent=2, separators=(',', ': '), ensure_ascii=True)
 
+
 def create_ref(path):
     """
     Create a json definition reference to a specific path 
     """
     return '#/definitions/' + path
 
-def consolidate_schemas() -> object:
+def consolidate_schemas() -> dict:
     """
     Consolidate all schemas into one json object
     """
