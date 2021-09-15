@@ -28,6 +28,9 @@ The generated documentation of the Devfile 2.0 format, based on its json schema,
 
 Typescript model is build on each commit of main branch and available as NPM package at https://www.npmjs.com/package/@devfile/api
 
+## Release
+Release details and process are found in [Devfile Release](RELEASE.md)
+
 ## How to build
 
 In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
