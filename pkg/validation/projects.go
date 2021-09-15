@@ -67,27 +67,27 @@ func ValidateProjects(projects []v1alpha2.Project) (returnedErr error) {
 }
 
 // validateRemoteMap checks if the checkout remote is present in the project remote map
-func validateRemoteMap(remotes map[string]string, checkoutRemote, object, name string) error {
+func validateRemoteMap(remotes map[string]string, checkoutRemote, objectType, objectName string) error {
 
 	if _, ok := remotes[checkoutRemote]; !ok {
 
-		return &InvalidProjectCheckoutRemoteError{projectName: name, objectName: object, checkoutRemote: checkoutRemote}
+		return &InvalidProjectCheckoutRemoteError{objectName: objectName, objectType: objectType, checkoutRemote: checkoutRemote}
 	}
 
 	return nil
 }
 
 // validateSingleRemoteGitSrc validates a git src for a single remote only
-func validateSingleRemoteGitSrc(object, name string, gitSource v1alpha2.GitLikeProjectSource) (err error) {
+func validateSingleRemoteGitSrc(objectType, objectName string, gitSource v1alpha2.GitLikeProjectSource) (err error) {
 	switch len(gitSource.Remotes) {
 	case 0:
-		err = &MissingStarterProjectRemoteError{objectName: object, projectName: name}
+		err = &MissingRemoteError{objectType: objectType, objectName: objectName}
 	case 1:
 		if gitSource.CheckoutFrom != nil && gitSource.CheckoutFrom.Remote != "" {
-			err = validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, object, name)
+			err = validateRemoteMap(gitSource.Remotes, gitSource.CheckoutFrom.Remote, objectType, objectName)
 		}
 	default: // len(gitSource.Remotes) >= 2
-		err = &MultipleStarterProjectRemoteError{objectName: object, projectName: name}
+		err = &MultipleRemoteError{objectType: objectType, objectName: objectName}
 	}
 
 	return err
