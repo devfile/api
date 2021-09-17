@@ -33,3 +33,30 @@ func TestCommandConversion_v1alpha1(t *testing.T) {
 		}
 	}
 }
+
+func TestCommandConversionFrom_v1alpha2(t *testing.T) {
+
+	src := &v1alpha2.Command{
+		Id: "test1",
+		CommandUnion: v1alpha2.CommandUnion{
+			Exec: &v1alpha2.ExecCommand{
+				LabeledCommand: v1alpha2.LabeledCommand{
+					BaseCommand: v1alpha2.BaseCommand{
+						Group: &v1alpha2.CommandGroup{
+							Kind: v1alpha2.DeployCommandGroupKind,
+						},
+					},
+				},
+			},
+		},
+	}
+
+	output := &Command{}
+
+	err := convertCommandFrom_v1alpha2(src, output)
+	if !assert.NoError(t, err, "Should not return error when converting from v1alpha2") {
+		return
+	}
+
+	assert.Equal(t, &Command{}, output, "Conversion from v1alpha2 should be skipped for deploy kind command")
+}

@@ -57,6 +57,15 @@ components:
 - name: component4
   openshift:
     uri: "{{foo}}"
+- name: component5
+  image:
+    imageName: "myimage:{{ tag }}"
+    dockerfile:
+      uri: "{{foo}}/Dockerfile"
+      buildContext: /{{foo}}/{{foo}}
+      args:
+        - "-f"
+        - "{{ devnull }}"
 commands:
 - id: command1
   exec:

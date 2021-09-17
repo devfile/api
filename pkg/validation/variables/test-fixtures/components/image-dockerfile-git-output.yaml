@@ -1,0 +1,11 @@
+imageName: "myimage:xyz"
+dockerfile:
+  git:
+    fileLocation: "uri/Dockerfile"
+    checkoutFrom:
+      revision: "FOO"
+      remote: "BAR"
+    remotes:
+      "BAR": "foo"
+  buildContext: /FOO/BAR
+  rootRequired: true

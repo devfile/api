@@ -6,3 +6,8 @@ components:
   - container:
       image: "aValue"
     name: "parent-component"
+  - image:
+      imageName: "myimage:xyz"
+      dockerfile:
+        uri: "uri/Dockerfile"
+    name: "parent-component-2"

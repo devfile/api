@@ -1,4 +1,4 @@
 3 errors occurred:
-	* Some Components are already defined in parent: existing-in-parent. If you want to override them, you should do it in the parent scope.
+	* Some Components are already defined in parent: existing-in-parent, existing-in-parent-2. If you want to override them, you should do it in the parent scope.
 	* Some Variables are already defined in parent: objectVariable. If you want to override them, you should do it in the parent scope.
 	* Some Attributes are already defined in parent: mainAttribute. If you want to override them, you should do it in the parent scope.

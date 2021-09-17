@@ -1,0 +1,105 @@
+# Devfile based on the existing Node Sample https://github.com/nodeshift-starters/devfile-sample
+schemaVersion: 2.1.0
+metadata:
+  name: nodejs
+  version: 1.0.1
+  displayName: Node.js Runtime
+  description: Stack with Node.js 14
+  tags: ["NodeJS", "Express", "ubi8"]
+  projectType: "nodejs"
+  language: "nodejs"
+variables:
+  CONTAINER_IMAGE: node-image:latest
+  COMPONENT_NAME: my-node
+  PORT: "3001"
+components:
+  - name: outerloop-build
+    image:
+      imageName: "{{CONTAINER_IMAGE}}"
+      dockerfile:
+        uri: ./Dockerfile
+        buildContext: /project
+        rootRequired: false
+  - name: outerloop-deploy
+    kubernetes:
+      inlined: |
+        kind: Deployment
+        apiVersion: apps/v1
+        metadata:
+          name: {{COMPONENT_NAME}}
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: node-app
+          template:
+            metadata:
+              labels:
+                app: node-app
+            spec:
+              containers:
+                - name: {{COMPONENT_NAME}}
+                  image: {{CONTAINER_IMAGE}}
+                  ports:
+                    - name: http
+                      containerPort: {{PORT}}
+                      protocol: TCP
+                  resources:
+                    limits:
+                      memory: "128Mi"
+                      cpu: "500m"
+  - name: runtime
+    container:
+      image: registry.access.redhat.com/ubi8/nodejs-14:latest
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+      endpoints:
+        - name: http-3000
+          targetPort: 3000
+commands:
+  - id: install
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: /project
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      commandLine: npm start
+      workingDir: /project
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      component: runtime
+      commandLine: npm run debug
+      workingDir: /project
+      group:
+        kind: debug
+        isDefault: true
+  - id: test
+    exec:
+      component: runtime
+      commandLine: npm test
+      workingDir: /project
+      group:
+        kind: test
+        isDefault: true
+  - id: build-image
+    apply:
+      component: outerloop-build
+  - id: deployk8s
+    apply:
+      component: outerloop-deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
+      group:
+        kind: deploy

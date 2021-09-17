@@ -1,0 +1,7 @@
+imageName: "myimage:{{ tag }}"
+dockerfile:
+  uri: "{{uri}}/Dockerfile"
+  buildContext: /{{foo}}/{{bar}}
+  args:
+    - "-f"
+    - "{{ devnull }}"

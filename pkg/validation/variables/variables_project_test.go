@@ -1,6 +1,7 @@
 package variables
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -125,6 +126,13 @@ func TestValidateAndReplaceProjectSrc(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not a project source",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -134,7 +142,12 @@ func TestValidateAndReplaceProjectSrc(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateandReplaceForProjectSource(testVariable, &testProjectSrc)
+			var err error
+			if reflect.DeepEqual(testProjectSrc, v1alpha2.ProjectSource{}) {
+				err = validateandReplaceForProjectSource(testVariable, nil)
+			} else {
+				err = validateandReplaceForProjectSource(testVariable, &testProjectSrc)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
@@ -144,6 +157,58 @@ func TestValidateAndReplaceProjectSrc(t *testing.T) {
 				expectedProjectSrc := v1alpha2.ProjectSource{}
 				readFileToStruct(t, tt.outputFile, &expectedProjectSrc)
 				assert.Equal(t, expectedProjectSrc, testProjectSrc, "The two values should be the same.")
+			}
+		})
+	}
+}
+
+func TestValidateAndReplaceGitProjectSrc(t *testing.T) {
+
+	tests := []struct {
+		name         string
+		testFile     string
+		outputFile   string
+		variableFile string
+		wantErr      bool
+	}{
+		{
+			name:         "Good Git Substitution",
+			testFile:     "test-fixtures/projects/git.yaml",
+			outputFile:   "test-fixtures/projects/git-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Not a git roject source",
+			testFile:     "test-fixtures/projects/zip.yaml",
+			outputFile:   "test-fixtures/projects/zip.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			testProjectGitSrc := v1alpha2.GitLikeProjectSource{}
+			readFileToStruct(t, tt.testFile, &testProjectGitSrc)
+
+			testVariable := make(map[string]string)
+			readFileToStruct(t, tt.variableFile, &testVariable)
+
+			var err error
+			if reflect.DeepEqual(testProjectGitSrc, v1alpha2.GitLikeProjectSource{}) {
+				err = validateAndReplaceForGitProjectSource(testVariable, nil)
+			} else {
+				err = validateAndReplaceForGitProjectSource(testVariable, &testProjectGitSrc)
+			}
+			_, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
+			} else {
+				expectedProjectSrc := v1alpha2.GitLikeProjectSource{}
+				readFileToStruct(t, tt.outputFile, &expectedProjectSrc)
+				assert.Equal(t, expectedProjectSrc, testProjectGitSrc, "The two values should be the same.")
 			}
 		})
 	}
