@@ -41,6 +41,9 @@ Common rules for all components types:
 #### Kubernetes & Openshift component 
 - URI needs to be in valid URI format
 
+#### Image component 
+- A Dockerfile Image component's git source cannot have more than one remote defined. If checkout remote is mentioned, validate it against the remote configured map
+
 
 ### Events:
 1. preStart and postStop events can only be Apply commands
@@ -60,7 +63,3 @@ Common rules for all components types:
 ### projects
 - if more than one remote is configured, a checkout remote is mandatory
 - if checkout remote is mentioned, validate it against the starter project remote configured map
-
-### Architectures
-
-Architectures list support the following values - `amd64`, `arm64`, `ppc64le`, `s390x`. These values are determined by the .manifests[].platform["architecture"] field from an image's manifests and manually selected.

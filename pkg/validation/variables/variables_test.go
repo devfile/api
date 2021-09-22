@@ -39,6 +39,7 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					"component2": {"bar", "foo", "x"},
 					"component3": {"xyz"},
 					"component4": {"foo"},
+					"component5": {"foo", "tag"},
 				},
 				Projects: map[string][]string{
 					"project1": {"dir", "path", "tag", "version", "version1"},

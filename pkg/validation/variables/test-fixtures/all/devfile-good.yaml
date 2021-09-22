@@ -42,6 +42,15 @@ components:
     - name: endpoint1
       exposure: "public"
       targetPort: 9999
+- name: component3
+  image:
+    imageName: "myimage:{{ tag }}"
+    dockerfile:
+      uri: "{{foo}}/Dockerfile"
+      buildContext: /{{foo}}/{{foo}}
+      args:
+        - "-f"
+        - "{{ devnull }}"
 commands:
 - id: command1
   exec:

@@ -1,6 +1,7 @@
 package variables
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -30,6 +31,13 @@ func TestValidateAndReplaceExecCommand(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not an exec command",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -39,7 +47,12 @@ func TestValidateAndReplaceExecCommand(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForExecCommand(testVariable, &testExecCommand)
+			var err error
+			if reflect.DeepEqual(testExecCommand, v1alpha2.ExecCommand{}) {
+				err = validateAndReplaceForExecCommand(testVariable, nil)
+			} else {
+				err = validateAndReplaceForExecCommand(testVariable, &testExecCommand)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
@@ -77,6 +90,13 @@ func TestValidateAndReplaceCompositeCommand(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not a composite command",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -86,7 +106,12 @@ func TestValidateAndReplaceCompositeCommand(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForCompositeCommand(testVariable, &testCompositeCommand)
+			var err error
+			if reflect.DeepEqual(testCompositeCommand, v1alpha2.CompositeCommand{}) {
+				err = validateAndReplaceForCompositeCommand(testVariable, nil)
+			} else {
+				err = validateAndReplaceForCompositeCommand(testVariable, &testCompositeCommand)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
@@ -124,6 +149,13 @@ func TestValidateAndReplaceApplyCommand(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not an apply command",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -133,7 +165,12 @@ func TestValidateAndReplaceApplyCommand(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForApplyCommand(testVariable, &testApplyCommand)
+			var err error
+			if reflect.DeepEqual(testApplyCommand, v1alpha2.ApplyCommand{}) {
+				err = validateAndReplaceForApplyCommand(testVariable, nil)
+			} else {
+				err = validateAndReplaceForApplyCommand(testVariable, &testApplyCommand)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)

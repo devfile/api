@@ -1,6 +1,7 @@
 package variables
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -30,6 +31,13 @@ func TestValidateAndReplaceContainerComponent(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not a container component",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -39,7 +47,13 @@ func TestValidateAndReplaceContainerComponent(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForContainerComponent(testVariable, &testContainerComponent)
+			var err error
+			if reflect.DeepEqual(testContainerComponent, v1alpha2.ContainerComponent{}) {
+				err = validateAndReplaceForContainerComponent(testVariable, nil)
+			} else {
+				err = validateAndReplaceForContainerComponent(testVariable, &testContainerComponent)
+			}
+
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
@@ -77,6 +91,13 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not an openshift or a kubernetes component",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -89,7 +110,12 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForOpenShiftComponent(testVariable, &testOpenshiftComponent)
+			var err error
+			if reflect.DeepEqual(testOpenshiftComponent, v1alpha2.OpenshiftComponent{}) {
+				err = validateAndReplaceForOpenShiftComponent(testVariable, nil)
+			} else {
+				err = validateAndReplaceForOpenShiftComponent(testVariable, &testOpenshiftComponent)
+			}
 			if tt.wantErr && err == nil {
 				t.Errorf("Expected error from test but got nil")
 			} else if !tt.wantErr && err != nil {
@@ -100,7 +126,11 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 				assert.Equal(t, expectedOpenshiftComponent, testOpenshiftComponent, "The two values should be the same.")
 			}
 
-			err = validateAndReplaceForKubernetesComponent(testVariable, &testKubernetesComponent)
+			if reflect.DeepEqual(testKubernetesComponent, v1alpha2.KubernetesComponent{}) {
+				err = validateAndReplaceForKubernetesComponent(testVariable, nil)
+			} else {
+				err = validateAndReplaceForKubernetesComponent(testVariable, &testKubernetesComponent)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
@@ -110,6 +140,100 @@ func TestValidateAndReplaceOpenShiftKubernetesComponent(t *testing.T) {
 				expectedKubernetesComponent := v1alpha2.KubernetesComponent{}
 				readFileToStruct(t, tt.outputFile, &expectedKubernetesComponent)
 				assert.Equal(t, expectedKubernetesComponent, testKubernetesComponent, "The two values should be the same.")
+			}
+		})
+	}
+}
+
+func TestValidateAndReplaceImageComponent(t *testing.T) {
+
+	tests := []struct {
+		name         string
+		testFile     string
+		outputFile   string
+		variableFile string
+		wantErr      bool
+	}{
+		{
+			name:         "Good Substitution - dockerfile uri src",
+			testFile:     "test-fixtures/components/image-dockerfile-uri.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-uri-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Good Substitution - dockerfile git src",
+			testFile:     "test-fixtures/components/image-dockerfile-git.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-git-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Good Substitution - dockerfile registry src",
+			testFile:     "test-fixtures/components/image-dockerfile-registry.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-registry-output.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Invalid Reference - dockerfile uri src",
+			testFile:     "test-fixtures/components/image-dockerfile-uri.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-uri.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+		{
+			name:         "Invalid Reference - dockerfile git src",
+			testFile:     "test-fixtures/components/image-dockerfile-git.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-git.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+		{
+			name:         "Invalid Reference - dockerfile registry src",
+			testFile:     "test-fixtures/components/image-dockerfile-registry.yaml",
+			outputFile:   "test-fixtures/components/image-dockerfile-registry.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      true,
+		},
+		{
+			name:         "Not an image component",
+			testFile:     "test-fixtures/components/volume.yaml",
+			outputFile:   "test-fixtures/components/volume.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
+		{
+			name:         "Not an image dockerfile component",
+			testFile:     "test-fixtures/components/image-empty.yaml",
+			outputFile:   "test-fixtures/components/image-empty.yaml",
+			variableFile: "test-fixtures/variables/variables-referenced.yaml",
+			wantErr:      false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			testImageComponent := v1alpha2.ImageComponent{}
+			readFileToStruct(t, tt.testFile, &testImageComponent)
+
+			testVariable := make(map[string]string)
+			readFileToStruct(t, tt.variableFile, &testVariable)
+
+			var err error
+			if reflect.DeepEqual(testImageComponent, v1alpha2.ImageComponent{}) {
+				err = validateAndReplaceForImageComponent(testVariable, nil)
+			} else {
+				err = validateAndReplaceForImageComponent(testVariable, &testImageComponent)
+			}
+			_, ok := err.(*InvalidKeysError)
+			if tt.wantErr && !ok {
+				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)
+			} else if !tt.wantErr && err != nil {
+				t.Errorf("Got unexpected error: %s", err)
+			} else {
+				expectedImageComponent := v1alpha2.ImageComponent{}
+				readFileToStruct(t, tt.outputFile, &expectedImageComponent)
+				assert.Equal(t, expectedImageComponent, testImageComponent, "The two values should be the same.")
 			}
 		})
 	}
@@ -138,6 +262,13 @@ func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
 			wantErr:      true,
 		},
+		{
+			name:         "Not a volume component",
+			testFile:     "test-fixtures/components/container.yaml",
+			outputFile:   "test-fixtures/components/container.yaml",
+			variableFile: "test-fixtures/variables/variables-notreferenced.yaml",
+			wantErr:      false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -147,7 +278,12 @@ func TestValidateAndReplaceVolumeComponent(t *testing.T) {
 			testVariable := make(map[string]string)
 			readFileToStruct(t, tt.variableFile, &testVariable)
 
-			err := validateAndReplaceForVolumeComponent(testVariable, &testVolumeComponent)
+			var err error
+			if reflect.DeepEqual(testVolumeComponent, v1alpha2.VolumeComponent{}) {
+				err = validateAndReplaceForVolumeComponent(testVariable, nil)
+			} else {
+				err = validateAndReplaceForVolumeComponent(testVariable, &testVolumeComponent)
+			}
 			_, ok := err.(*InvalidKeysError)
 			if tt.wantErr && !ok {
 				t.Errorf("Expected InvalidKeysError error from test but got %+v", err)

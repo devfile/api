@@ -31,6 +31,9 @@ func convertComponentFrom_v1alpha2(src *v1alpha2.Component, dest *Component) err
 	if src.Plugin != nil {
 		// Need to handle plugin components separately.
 		return convertPluginComponentFrom_v1alpha2(src, dest)
+	} else if src.Image != nil {
+		// Skip converting an Image component since v1alpha1 does not have an Image component
+		return nil
 	}
 	name := src.Key()
 	jsonComponent, err := json.Marshal(src)

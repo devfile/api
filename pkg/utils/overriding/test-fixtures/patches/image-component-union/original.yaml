@@ -1,0 +1,17 @@
+components:
+  - name: unchanged-component
+    kubernetes:
+      inlined: "componentToUpdateInline"
+      endpoints:
+        - name: endpoint-name
+          targetPort: 8080
+  - name: component-to-update
+    image:
+      imageName: "myimage:xyz"
+      dockerfile:
+        uri: "uri/Dockerfile"
+        buildContext: /FOO/BAR
+        args:
+          - "-f"
+          - "/dev/null"
+        rootRequired: false
