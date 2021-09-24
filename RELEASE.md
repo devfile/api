@@ -1,7 +1,8 @@
 ## Devfile Release
 
 ### Release Process
-The current process can be found here:<br>
+The current process can be found here:
+
 [Devfile Versioning and Release Process](docs/proposals/versioning-and-release.md). 
 
 ### Levels of Support
