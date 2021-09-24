@@ -1,7 +1,7 @@
 # Devfile Versioning and Release Process
 This document outlines the versioning and release process for the Devfile spec.
 
-##Reference  
+## Reference  
 This process summarizes parts from the Devfile API technical meeting slides presented by @davidfestal back in October, and I recommend having a read through of it: https://docs.google.com/presentation/d/1ohM1HzPB59a3ajvB7rVWJkKONLBAuT0mb5P20_A6vLs/edit#slide=id.g8fc722bef9_1_8
 
 ## Versioning
