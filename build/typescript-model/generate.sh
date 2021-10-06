@@ -6,7 +6,7 @@ WORK_DIR=${SCRIPT_DIR}/workdir
 echo "[INFO] Using the following folder to store all build files ${SCRIPT_DIR}/workdir"
 mkdir -p $WORK_DIR
 
-GEN_REVISION=5c6d90b260fd94af32157f304f971778c899b5e2
+GEN_REVISION=a3aef4de7a1d5dab72021aa282fffd8bc8a022ca
 
 k8s_client_gen() {
     [ ! -d $WORK_DIR/gen ] && git clone https://github.com/kubernetes-client/gen.git $WORK_DIR/gen || echo "kubernetes-client/gen is already cloned into $WORK_DIR/gen"
