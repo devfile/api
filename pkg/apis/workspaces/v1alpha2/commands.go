@@ -160,7 +160,7 @@ type ApplyCommand struct {
 	Component string `json:"component"`
 }
 
-// +devfile:default:generate
+// +devfile:helper:generate
 type CompositeCommand struct {
 	LabeledCommand `json:",inline"`
 

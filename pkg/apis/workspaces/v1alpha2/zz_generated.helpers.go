@@ -16,6 +16,14 @@ func HotReloadCapable(in *ExecCommand) bool {
 	return false
 }
 
+//Parallel returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker
+func Parallel(in *CompositeCommand) bool {
+	if in.Parallel != nil {
+		return *in.Parallel
+	}
+	return false
+}
+
 //MountSources returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker
 func MountSources(in *Container) bool {
 	if in.MountSources != nil {
