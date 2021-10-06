@@ -7,6 +7,7 @@ type ContainerComponent struct {
 	Endpoints     []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+// +devfile:helper:generate
 type Container struct {
 	Image string `json:"image"`
 
@@ -55,6 +56,7 @@ type Container struct {
 	//
 	// Defaults to true for all component types except plugins and components that set `dedicatedPod` to true.
 	// +optional
+	// +devfile:default:value=true
 	MountSources *bool `json:"mountSources,omitempty"`
 
 	// Optional specification of the path in the container where
@@ -69,6 +71,7 @@ type Container struct {
 	//
 	// Default value is `false`
 	// +optional
+	// +devfile:default:value=false
 	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
 }
 

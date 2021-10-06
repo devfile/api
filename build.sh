@@ -61,4 +61,8 @@ echo "Generating JsonSchemas"
 
 generator/build/generator "schemas" "output:schemas:artifacts:config=schemas" "paths=./pkg/apis/workspaces/v1alpha2"
 
+echo "Generating Helper Implementations"
+
+generator/build/generator "helpers" "paths=./pkg/apis/workspaces/v1alpha2"
+
 echo "Finished generation of required GO sources, K8S CRDs, and Json Schemas"
