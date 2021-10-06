@@ -10,6 +10,7 @@ import (
 // +k8s:openapi-gen=true
 // +kubebuilder:resource:path=devworkspacetemplates,scope=Namespaced,shortName=dwt
 // +kubebuilder:deprecatedversion
+// +kubebuilder:unservedversion
 type DevWorkspaceTemplate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
