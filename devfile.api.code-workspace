@@ -65,7 +65,7 @@
                 "mode": "auto",
                 "program": "${workspaceFolder:generator}",
                 "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
-                "args": [ "crds", "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1", "output:crds:artifacts:config=crds" ],
+                "args": [ "crds", "paths=./pkg/apis/workspaces/v1alpha2;", "output:crds:artifacts:config=crds" ],
                 "cwd": "${workspaceFolder:api}"
             },
             {
@@ -75,7 +75,7 @@
                 "mode": "auto",
                 "program": "${workspaceFolder:generator}",
                 "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
-                "args": [ "deepcopy", "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1" ],
+                "args": [ "deepcopy", "paths=./pkg/apis/workspaces/v1alpha2;" ],
                 "cwd": "${workspaceFolder:api}"
             },
             {
@@ -85,7 +85,7 @@
                 "mode": "auto",
                 "program": "${workspaceFolder:generator}",
                 "env": { "GOMOD": "${workspaceFolder:generator}/go.mod"},
-                "args": [ "schemas", "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1", "output:schemas:artifacts:config=schemas" ],
+                "args": [ "schemas", "paths=./pkg/apis/workspaces/v1alpha2;", "output:schemas:artifacts:config=schemas" ],
                 "cwd": "${workspaceFolder:api}"
             },
             {
