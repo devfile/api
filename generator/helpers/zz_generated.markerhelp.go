@@ -15,7 +15,7 @@ func (Generator) Help() *markers.DefinitionHelp {
 		Category: "",
 		DetailedHelp: markers.DetailedHelp{
 			Summary: "generates helper functions that are used to return values for boolean pointer fields. ",
-			Details: "The helper function takes as a parameter, the `devfile:default:generate` annotated type and returns the value of the field if it's been set, otherwise it will return the default value specified by the devfile:default:value annotation.",
+			Details: "The helper function takes as a parameter, the `devfile:helper:generate` annotated type and returns the value of the field if it's been set, otherwise it will return the default value specified by the devfile:default:value annotation.",
 		},
 		FieldHelp: map[string]markers.DetailedHelp{},
 	}

@@ -24,7 +24,7 @@ var (
 
 // Generator generates helper functions that are used to return values for boolean pointer fields.
 //
-// The helper function takes as a parameter, the `devfile:default:generate` annotated type and returns the value of the
+// The helper function takes as a parameter, the `devfile:helper:generate` annotated type and returns the value of the
 // field if it's been set, otherwise it will return the default value specified by the devfile:default:value annotation.
 type Generator struct{}
 
