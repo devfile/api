@@ -1,5 +1,5 @@
 # Devfile based on the existing Node Sample https://github.com/nodeshift-starters/devfile-sample
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: nodejs
   version: 1.0.1
@@ -17,7 +17,7 @@ components:
     image:
       imageName: "{{CONTAINER_IMAGE}}"
       dockerfile:
-        uri: ./Dockerfile
+        uri: ./utils/Dockerfile
         buildContext: /project
         rootRequired: false
   - name: outerloop-deploy
