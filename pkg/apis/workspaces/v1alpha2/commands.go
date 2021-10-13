@@ -29,7 +29,7 @@ const (
 	DeployCommandGroupKind CommandGroupKind = "deploy"
 )
 
-// +devfile:helper:generate
+// +devfile:getter:generate
 type CommandGroup struct {
 	// Kind of group the command is part of
 	Kind CommandGroupKind `json:"kind"`
@@ -109,7 +109,7 @@ type CommandUnion struct {
 	Custom *CustomCommand `json:"custom,omitempty"`
 }
 
-// +devfile:helper:generate
+// +devfile:getter:generate
 type ExecCommand struct {
 	LabeledCommand `json:",inline"`
 
@@ -160,7 +160,7 @@ type ApplyCommand struct {
 	Component string `json:"component"`
 }
 
-// +devfile:helper:generate
+// +devfile:getter:generate
 type CompositeCommand struct {
 	LabeledCommand `json:",inline"`
 

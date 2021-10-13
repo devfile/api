@@ -7,7 +7,7 @@ type VolumeComponent struct {
 }
 
 // Volume that should be mounted to a component container
-// +devfile:helper:generate
+// +devfile:getter:generate
 type Volume struct {
 	// +optional
 	// Size of the volume

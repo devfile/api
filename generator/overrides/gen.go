@@ -230,7 +230,7 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 	overrideGenDecl.Doc = updateComments(
 		overrideGenDecl, overrideGenDecl.Doc,
 		`.*`,
-		` *`+regexp.QuoteMeta("+devfile:helper:generate")+`.*`,
+		` *`+regexp.QuoteMeta("+devfile:getter:generate")+`.*`,
 	)
 
 	overrideGenDecl.Doc = updateComments(

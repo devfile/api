@@ -1,4 +1,4 @@
-package helpers
+package getters
 
 import (
 	"bytes"
@@ -9,32 +9,33 @@ import (
 	"sigs.k8s.io/controller-tools/pkg/genall"
 	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
+	"strconv"
 )
 
-//go:generate go run sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2020 paths=.
+//go:generate go run sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2021 paths=.
 
 var (
-	// HelperTypeMarker is associated with a type that's used as a parameter to the helper function
-	HelperTypeMarker = markers.Must(markers.MakeDefinition("devfile:helper:generate", markers.DescribesType, struct{}{}))
-	// DefaultFieldMarker is associated with a boolean pointer field to indicate what the default value should be
+	// GetterTypeMarker is associated with a type that's used as the pointer receiver of the getter method
+	GetterTypeMarker = markers.Must(markers.MakeDefinition("devfile:getter:generate", markers.DescribesType, struct{}{}))
+	// DefaultFieldMarker is associated with a boolean pointer field to indicate the default boolean value
 	DefaultFieldMarker = markers.Must(markers.MakeDefinition("devfile:default:value", markers.DescribesField, ""))
 )
 
 // +controllertools:marker:generateHelp
 
-// Generator generates helper functions that are used to return values for boolean pointer fields.
+// Generator generates getter methods that are used to return values for the boolean pointer fields.
 //
-// The helper function takes as a parameter, the `devfile:helper:generate` annotated type and returns the value of the
+// The pointer receiver is determined from the `devfile:getter:generate` annotated type.  The method will return the value of the
 // field if it's been set, otherwise it will return the default value specified by the devfile:default:value annotation.
 type Generator struct{}
 
 // RegisterMarkers registers the markers of the Generator
 func (Generator) RegisterMarkers(into *markers.Registry) error {
-	if err := markers.RegisterAll(into, HelperTypeMarker, DefaultFieldMarker); err != nil {
+	if err := markers.RegisterAll(into, GetterTypeMarker, DefaultFieldMarker); err != nil {
 		return err
 	}
-	into.AddHelp(HelperTypeMarker,
-		markers.SimpleHelp("Devfile", "indicates the type that's passed in as a parameter to the generated helper functions"))
+	into.AddHelp(GetterTypeMarker,
+		markers.SimpleHelp("Devfile", "indicates the type that's used as the pointer receiver of the getter method"))
 	into.AddHelp(DefaultFieldMarker,
 		markers.SimpleHelp("Devfile", "indicates the default value of a boolean pointer field"))
 	return genutils.RegisterUnionMarkers(into)
@@ -49,11 +50,10 @@ func (Generator) CheckFilter() loader.NodeFilter {
 	}
 }
 
-// helperInfo stores the info to generate the helper function
-type helperInfo struct {
+// getterInfo stores the info to generate the getter method
+type getterInfo struct {
 	funcName   string
 	defaultVal string
-	returnType string
 }
 
 // Generate generates the artifacts
@@ -64,19 +64,22 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 		typesToProcess := orderedmap.NewOrderedMap()
 		if err := markers.EachType(ctx.Collector, root, func(info *markers.TypeInfo) {
-			if info.Markers.Get(HelperTypeMarker.Name) != nil {
-				var helpers []helperInfo
+			if info.Markers.Get(GetterTypeMarker.Name) != nil {
+				var getters []getterInfo
 				for _, field := range info.Fields {
 					defaultVal := field.Markers.Get(DefaultFieldMarker.Name)
 					if defaultVal != nil {
+						if _, err := strconv.ParseBool(defaultVal.(string)); err != nil {
+							root.AddError(fmt.Errorf("devfile:default:value marker specified on %s/%s does not have a true or false value.  Value is %s", info.Name, field.Name, defaultVal.(string)))
+						}
+
 						//look for boolean pointers
 						if ptr, isPtr := field.RawField.Type.(*ast.StarExpr); isPtr {
 							if ident, ok := ptr.X.(*ast.Ident); ok {
 								if ident.Name == "bool" {
-									helpers = append(helpers, helperInfo{
+									getters = append(getters, getterInfo{
 										field.Name,
 										defaultVal.(string),
-										ident.Name,
 									})
 								} else {
 									root.AddError(fmt.Errorf("devfile:default:value marker is specified on %s/%s which is not a boolean pointer", info.Name, field.Name))
@@ -88,8 +91,8 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 
 					}
 				}
-				if len(helpers) > 0 {
-					typesToProcess.Set(info, helpers)
+				if len(getters) > 0 {
+					typesToProcess.Set(info, getters)
 				} else {
 					root.AddError(fmt.Errorf("type %s does not have the field marker, devfile:default:value specified on a boolean pointer field", info.Name))
 				}
@@ -101,33 +104,29 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			return nil
 		}
 
-		genutils.WriteFormattedSourceFile("helpers", ctx, root, func(buf *bytes.Buffer) {
+		genutils.WriteFormattedSourceFile("getters", ctx, root, func(buf *bytes.Buffer) {
 			for elt := typesToProcess.Front(); elt != nil; elt = elt.Next() {
-				param := elt.Key.(*markers.TypeInfo)
-				fields := elt.Value.([]helperInfo)
-				for _, helper := range fields {
-					fName := helper.funcName
-					returnType := helper.returnType
-
-					helperFunction := `
-//` + fName + ` returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker` + `
-func ` + fName + `(in *` + param.Name + `) ` + returnType + ` { 
-	if in.` + fName + ` !=nil{ 
-		return *in.` + fName + `}`
-
-					defaultVal := helper.defaultVal
-					if fName != "MountSources" {
-						buf.WriteString(helperFunction + `
-							return ` + defaultVal + ` }`)
-					} else {
-						buf.WriteString(helperFunction + `else {
-							if DedicatedPod(in) { return false } 
-								return ` + defaultVal + ` }}`)
-					}
+				cmd := elt.Key.(*markers.TypeInfo)
+				fields := elt.Value.([]getterInfo)
+				for _, getter := range fields {
+					fName := getter.funcName
+					defaultVal := getter.defaultVal
+					getterMethod := `
+// Get` + fName + ` returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker` + `
+func (in *` + cmd.Name + `) Get` + fName + `() bool  {
+	return getBoolOrDefault(in.` + fName + `,` + defaultVal + `)}`
+					buf.WriteString(getterMethod)
 				}
 			}
-		})
 
+			internalHelper := `
+func getBoolOrDefault(input *bool, defaultVal bool) bool {
+	if input != nil {
+		return *input 
+	} 
+	return defaultVal }`
+			buf.WriteString(internalHelper)
+		})
 	}
 
 	return nil

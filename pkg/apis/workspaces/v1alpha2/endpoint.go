@@ -44,7 +44,7 @@ const (
 	NoneEndpointExposure EndpointExposure = "none"
 )
 
-// +devfile:helper:generate
+// +devfile:getter:generate
 type Endpoint struct {
 	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
 	// +kubebuilder:validation:MaxLength=63

@@ -41,7 +41,7 @@ type DockerfileSrc struct {
 	Git *DockerfileGitProjectSource `json:"git,omitempty"`
 }
 
-// +devfile:helper:generate
+// +devfile:getter:generate
 type Dockerfile struct {
 	// Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container
 	// +optional

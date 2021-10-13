@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/devfile/api/generator/helpers"
+	"github.com/devfile/api/generator/getters"
 	"io"
 	"os"
 	"strings"
@@ -35,7 +35,7 @@ var (
 		"deepcopy":   deepcopy.Generator{},
 		"schemas":    schemas.Generator{},
 		"validate":   validate.Generator{},
-		"helpers":    helpers.Generator{},
+		"getters":    getters.Generator{},
 	}
 
 	// allOutputRules defines the list of all known output rules, giving
@@ -124,8 +124,8 @@ generator overrides:isForPluginOverrides=false paths=./pkg/apis/workspaces/v1alp
 # Generate Interface Implementations based on the workspaces/v1alpha2 K8S API
 generator interfaces paths=./pkg/apis/workspaces/v1alpha2
 
-# Generate Default value implementations based on the workspaces/v1alpha2 K8S API
-generator helpers paths=./pkg/apis/workspaces/v1alpha2
+# Generate Boolean Getter implementations based on the workspaces/v1alpha2 K8S API
+generator getters paths=./pkg/apis/workspaces/v1alpha2
 
 # Generate K8S CRDs based on the workspaces/v1alpha2 K8S API
 generator crds output:crds:artifacts:config=crds paths=./pkg/apis/workspaces/v1alpha2
