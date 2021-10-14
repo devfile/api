@@ -230,6 +230,12 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 	overrideGenDecl.Doc = updateComments(
 		overrideGenDecl, overrideGenDecl.Doc,
 		`.*`,
+		` *`+regexp.QuoteMeta("+devfile:getter:generate")+`.*`,
+	)
+
+	overrideGenDecl.Doc = updateComments(
+		overrideGenDecl, overrideGenDecl.Doc,
+		`.*`,
 		` *`+regexp.QuoteMeta("+devfile:jsonschema:generate")+` *`,
 	)
 
@@ -316,6 +322,13 @@ func (g Generator) createOverride(newTypeToProcess typeToProcess, packageTypes m
 					astField, astField.Doc,
 					`.*`,
 					` *`+regexp.QuoteMeta("+kubebuilder:default")+` *=.*`,
+				)
+
+				//remove the +devfile:default:values for overrides
+				astField.Doc = updateComments(
+					astField, astField.Doc,
+					`.*`,
+					` *`+regexp.QuoteMeta("+devfile:default:value")+` *=.*`,
 				)
 
 				processFieldType := func(ident *ast.Ident) *typeToProcess {
