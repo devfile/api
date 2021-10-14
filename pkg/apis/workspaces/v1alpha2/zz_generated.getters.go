@@ -34,6 +34,7 @@ func (in *Volume) GetEphemeral() bool {
 func (in *Endpoint) GetSecure() bool {
 	return getBoolOrDefault(in.Secure, false)
 }
+
 func getBoolOrDefault(input *bool, defaultVal bool) bool {
 	if input != nil {
 		return *input

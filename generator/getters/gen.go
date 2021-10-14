@@ -111,15 +111,16 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 				for _, getter := range fields {
 					fName := getter.funcName
 					defaultVal := getter.defaultVal
-					getterMethod := `
-// Get` + fName + ` returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker` + `
-func (in *` + cmd.Name + `) Get` + fName + `() bool  {
-	return getBoolOrDefault(in.` + fName + `,` + defaultVal + `)}`
+					getterMethod := fmt.Sprintf(`
+// Get%[1]s returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker
+func (in *%[2]s) Get%[1]s() bool {
+return getBoolOrDefault(in.%[1]s, %[3]s)}`, fName, cmd.Name, defaultVal)
 					buf.WriteString(getterMethod)
 				}
 			}
 
 			internalHelper := `
+
 func getBoolOrDefault(input *bool, defaultVal bool) bool {
 	if input != nil {
 		return *input 
