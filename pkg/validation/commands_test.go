@@ -78,12 +78,12 @@ func TestValidateCommands(t *testing.T) {
 	duplicateKeyErr := "duplicate key: somecommand1"
 	noDefaultCmdErr := ".*there should be exactly one default command, currently there is no default command"
 	multipleDefaultCmdErr := ".*there should be exactly one default command, currently there are multiple default commands"
-	invalidCmdErr := ".*command does not map to a container component"
+	invalidCmdErr := ".*command does not map to a valid component"
 	nonExistCmdInComposite := "the command .* mentioned in the composite command does not exist in the devfile"
 
 	parentOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(ParentOverrideAttribute, "main devfile")
-	invalidCmdErrWithImportAttributes := ".*command does not map to a container component, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
+	invalidCmdErrWithImportAttributes := ".*command does not map to a valid component, imported from uri: http://127.0.0.1:8080, in parent overrides from main devfile"
 
 	tests := []struct {
 		name     string
@@ -179,14 +179,22 @@ func TestValidateCommands(t *testing.T) {
 
 func TestValidateCommandComponent(t *testing.T) {
 
-	component := "alias1"
-	invalidComponent := "garbagealias"
+	containerComponent := "alias1"
+	kubeComponent := "alias2"
+	openshiftComponent := "alias3"
+	imageComponent := "alias4"
+	volumeComponent := "alias5"
+	nonexistComponent := "garbagealias"
 
 	components := []v1alpha2.Component{
-		generateDummyContainerComponent(component, nil, nil, nil),
+		generateDummyContainerComponent(containerComponent, nil, nil, nil),
+		generateDummyKubernetesComponent(kubeComponent, nil, ""),
+		generateDummyOpenshiftComponent(openshiftComponent, nil, ""),
+		generateDummyImageComponent(imageComponent, v1alpha2.DockerfileSrc{}),
+		generateDummyVolumeComponent(volumeComponent, ""),
 	}
 
-	invalidCmdErr := ".*command does not map to a container component"
+	invalidCmdErr := ".*command does not map to a valid component"
 
 	tests := []struct {
 		name    string
@@ -195,7 +203,7 @@ func TestValidateCommandComponent(t *testing.T) {
 	}{
 		{
 			name:    "Valid Exec Command",
-			command: generateDummyExecCommand("command", component, &v1alpha2.CommandGroup{Kind: runGroup}),
+			command: generateDummyExecCommand("command", containerComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 		},
 		{
 			name:    "Invalid Exec Command with missing component",
@@ -203,21 +211,58 @@ func TestValidateCommandComponent(t *testing.T) {
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with invalid component",
-			command: generateDummyExecCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			name:    "Exec Command with non-exist component",
+			command: generateDummyExecCommand("command", nonexistComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name:    "Exec Command with image component",
+			command: generateDummyExecCommand("command", imageComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name:    "Exec Command with kubernetes component",
+			command: generateDummyExecCommand("command", kubeComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name:    "Exec Command with openshift component",
+			command: generateDummyExecCommand("command", openshiftComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name:    "Exec Command with volume component",
+			command: generateDummyExecCommand("command", volumeComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
 		{
 			name:    "Valid Exec Command with Group nil",
-			command: generateDummyExecCommand("command", component, nil),
+			command: generateDummyExecCommand("command", containerComponent, nil),
 		},
 		{
-			name:    "Valid Apply Command",
-			command: generateDummyApplyCommand("command", component, nil, attributes.Attributes{}),
+			name:    "Valid Apply Command with container component",
+			command: generateDummyApplyCommand("command", containerComponent, nil, attributes.Attributes{}),
 		},
 		{
-			name:    "Invalid Apply Command with wrong component",
-			command: generateDummyApplyCommand("command", invalidComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
+			name:    "Valid Apply Command with image component",
+			command: generateDummyApplyCommand("command", imageComponent, nil, attributes.Attributes{}),
+		},
+		{
+			name:    "Valid Apply Command with kubernetes component",
+			command: generateDummyApplyCommand("command", kubeComponent, nil, attributes.Attributes{}),
+		},
+		{
+			name:    "Valid Apply Command with openshift component",
+			command: generateDummyApplyCommand("command", openshiftComponent, nil, attributes.Attributes{}),
+		},
+		{
+			name:    "Apply Command with non-exist component",
+			command: generateDummyApplyCommand("command", nonexistComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
+			wantErr: &invalidCmdErr,
+		},
+		{
+			name:    "Apply Command with volume component",
+			command: generateDummyApplyCommand("command", volumeComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
 			wantErr: &invalidCmdErr,
 		},
 	}
@@ -245,7 +290,7 @@ func TestValidateCompositeCommand(t *testing.T) {
 		generateDummyContainerComponent(component, nil, nil, nil),
 	}
 
-	invalidCmdErr := ".*command does not map to a container component"
+	invalidCmdErr := ".*command does not map to a valid component"
 	missingCmdErr := ".*the command .* mentioned in the composite command does not exist in the devfile"
 	selfRefCmdErr := ".*composite command cannot reference itself"
 	indirectRefCmdErr := "composite command cannot indirectly reference itself"
