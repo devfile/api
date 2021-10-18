@@ -24,7 +24,7 @@ Since network is shared in the same pod, endpoint ports should be unique across 
     - Should not indirectly reference itself via a subcommand which is a composite command
     - Should reference a valid devfile command
 3. exec command should: map to a valid container component
-4. apply command should: map to a valid kubernetes/openshift/image component
+4. apply command should: map to a valid container/kubernetes/openshift/image component
 5. `{build, run, test, debug, deploy}`, each kind of group can only have one default command associated with it. If there are multiple commands of the same kind without a default, a warning will be displayed.
 
 ### Components:

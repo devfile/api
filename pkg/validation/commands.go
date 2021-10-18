@@ -128,7 +128,8 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 		commandComponent = command.Apply.Component
 	}
 
-	// must map to a container component
+	// exec command must map to a container component
+	// apply command must map to a container/kubernetes/openshift/image component
 	for _, component := range components {
 		if commandComponent == component.Name {
 			if component.Container != nil {
@@ -137,6 +138,7 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 			if command.Apply != nil && (component.Image != nil || component.Kubernetes != nil || component.Openshift != nil) {
 				return nil
 			}
+			break
 		}
 	}
 	return &InvalidCommandError{commandId: command.Id, reason: "command does not map to a valid component"}

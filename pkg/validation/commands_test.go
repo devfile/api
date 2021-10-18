@@ -211,27 +211,27 @@ func TestValidateCommandComponent(t *testing.T) {
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with non-exist component",
+			name:    "Exec Command with non-exist component",
 			command: generateDummyExecCommand("command", nonexistComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with image component",
+			name:    "Exec Command with image component",
 			command: generateDummyExecCommand("command", imageComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with kubernetes component",
+			name:    "Exec Command with kubernetes component",
 			command: generateDummyExecCommand("command", kubeComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with openshift component",
+			name:    "Exec Command with openshift component",
 			command: generateDummyExecCommand("command", openshiftComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Exec Command with volume component",
+			name:    "Exec Command with volume component",
 			command: generateDummyExecCommand("command", volumeComponent, &v1alpha2.CommandGroup{Kind: runGroup}),
 			wantErr: &invalidCmdErr,
 		},
@@ -256,12 +256,12 @@ func TestValidateCommandComponent(t *testing.T) {
 			command: generateDummyApplyCommand("command", openshiftComponent, nil, attributes.Attributes{}),
 		},
 		{
-			name:    "Valid Apply Command with non-exist component",
+			name:    "Apply Command with non-exist component",
 			command: generateDummyApplyCommand("command", nonexistComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
 			wantErr: &invalidCmdErr,
 		},
 		{
-			name:    "Valid Apply Command with volume component",
+			name:    "Apply Command with volume component",
 			command: generateDummyApplyCommand("command", volumeComponent, &v1alpha2.CommandGroup{Kind: runGroup}, attributes.Attributes{}),
 			wantErr: &invalidCmdErr,
 		},
