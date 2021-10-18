@@ -134,7 +134,7 @@ func validateCommandComponent(command v1alpha2.Command, components []v1alpha2.Co
 			if component.Container != nil {
 				return nil
 			}
-			if command.Apply != nil && ( component.Image != nil || component.Kubernetes != nil || component.Openshift != nil) {
+			if command.Apply != nil && (component.Image != nil || component.Kubernetes != nil || component.Openshift != nil) {
 				return nil
 			}
 		}
