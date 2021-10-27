@@ -10,12 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var trueBool = true
-var falseBool = false
-
 // generateDummyContainerComponent returns a dummy container component for testing
 func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMount, endpoints []v1alpha2.Endpoint, envs []v1alpha2.EnvVar, annotation v1alpha2.Annotation, dedicatedPod bool) v1alpha2.Component {
 	image := "docker.io/maven:latest"
+	mountSources := true
 
 	return v1alpha2.Component{
 		Name: name,
@@ -26,7 +24,7 @@ func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMou
 					Annotation:   annotation,
 					Env:          envs,
 					VolumeMounts: volMounts,
-					MountSources: &trueBool,
+					MountSources: &mountSources,
 					DedicatedPod: &dedicatedPod,
 				},
 				Endpoints: endpoints,
