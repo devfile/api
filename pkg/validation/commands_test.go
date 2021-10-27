@@ -72,7 +72,7 @@ func TestValidateCommands(t *testing.T) {
 	component := "alias1"
 
 	components := []v1alpha2.Component{
-		generateDummyContainerComponent(component, nil, nil, nil),
+		generateDummyContainerComponent(component, nil, nil, nil, v1alpha2.Annotation{}, false),
 	}
 
 	duplicateKeyErr := "duplicate key: somecommand1"
@@ -187,7 +187,7 @@ func TestValidateCommandComponent(t *testing.T) {
 	nonexistComponent := "garbagealias"
 
 	components := []v1alpha2.Component{
-		generateDummyContainerComponent(containerComponent, nil, nil, nil),
+		generateDummyContainerComponent(containerComponent, nil, nil, nil, v1alpha2.Annotation{}, false),
 		generateDummyKubernetesComponent(kubeComponent, nil, ""),
 		generateDummyOpenshiftComponent(openshiftComponent, nil, ""),
 		generateDummyImageComponent(imageComponent, v1alpha2.DockerfileSrc{}),
@@ -287,7 +287,7 @@ func TestValidateCompositeCommand(t *testing.T) {
 		generateDummyExecCommand("command3", component, &v1alpha2.CommandGroup{Kind: runGroup}),
 	}
 	components := []v1alpha2.Component{
-		generateDummyContainerComponent(component, nil, nil, nil),
+		generateDummyContainerComponent(component, nil, nil, nil, v1alpha2.Annotation{}, false),
 	}
 
 	invalidCmdErr := ".*command does not map to a valid component"

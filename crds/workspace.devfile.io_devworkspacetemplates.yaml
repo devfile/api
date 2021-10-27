@@ -310,6 +310,27 @@ spec:
                       description: Allows adding and configuring devworkspace-related
                         containers
                       properties:
+                        annotation:
+                          description: Annotations that should be added to specific
+                            resources for this container
+                          properties:
+                            deployment:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to deployment
+                              type: object
+                            ingress:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to Kubernetes Ingress
+                                or Openshift Route
+                              type: object
+                            service:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to service
+                              type: object
+                          type: object
                         args:
                           description: "The arguments to supply to the command running
                             the dockerimage component. The arguments are supplied
@@ -1052,6 +1073,27 @@ spec:
                                 description: Allows adding and configuring devworkspace-related
                                   containers
                                 properties:
+                                  annotation:
+                                    description: Annotations that should be added
+                                      to specific resources for this container
+                                    properties:
+                                      deployment:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to deployment
+                                        type: object
+                                      ingress:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to Kubernetes
+                                          Ingress or Openshift Route
+                                        type: object
+                                      service:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to service
+                                        type: object
+                                    type: object
                                   args:
                                     description: "The arguments to supply to the command
                                       running the dockerimage component. The arguments
@@ -1890,6 +1932,27 @@ spec:
                           description: Allows adding and configuring devworkspace-related
                             containers
                           properties:
+                            annotation:
+                              description: Annotations that should be added to specific
+                                resources for this container
+                              properties:
+                                deployment:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to deployment
+                                  type: object
+                                ingress:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to Kubernetes
+                                    Ingress or Openshift Route
+                                  type: object
+                                service:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to service
+                                  type: object
+                              type: object
                             args:
                               description: "The arguments to supply to the command
                                 running the dockerimage component. The arguments are
@@ -2611,6 +2674,29 @@ spec:
                                     description: Allows adding and configuring devworkspace-related
                                       containers
                                     properties:
+                                      annotation:
+                                        description: Annotations that should be added
+                                          to specific resources for this container
+                                        properties:
+                                          deployment:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              deployment
+                                            type: object
+                                          ingress:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              Kubernetes Ingress or Openshift Route
+                                            type: object
+                                          service:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              service
+                                            type: object
+                                        type: object
                                       args:
                                         description: "The arguments to supply to the
                                           command running the dockerimage component.

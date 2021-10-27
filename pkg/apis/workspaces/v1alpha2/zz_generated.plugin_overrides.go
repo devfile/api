@@ -255,6 +255,10 @@ type ContainerPluginOverride struct {
 	Env []EnvVarPluginOverride `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
+	// Annotations that should be added to specific resources for this container
+	Annotation AnnotationPluginOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// +optional
 	// List of volumes mounts that should be mounted is this container.
 	VolumeMounts []VolumeMountPluginOverride `json:"volumeMounts,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
@@ -411,6 +415,22 @@ type EnvVarPluginOverride struct {
 	Name string `json:"name" yaml:"name"`
 	//  +optional
 	Value string `json:"value,omitempty" yaml:"value"`
+}
+
+// Annotation specifies the annotations to be added to specific resources
+type AnnotationPluginOverride struct {
+
+	// +optional
+	// Annotations to be added to deployment
+	Deployment map[string]string `json:"deployment,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// +optional
+	// Annotations to be added to service
+	Service map[string]string `json:"service,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// +optional
+	// Annotations to be added to Kubernetes Ingress or Openshift Route
+	Ingress map[string]string `json:"ingress,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Volume that should be mounted to a component container
