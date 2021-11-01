@@ -315,12 +315,6 @@ spec:
                               type: string
                             description: Annotations to be added to deployment
                             type: object
-                          ingress:
-                            additionalProperties:
-                              type: string
-                            description: Annotations to be added to Kubernetes Ingress
-                              or Openshift Route
-                            type: object
                           service:
                             additionalProperties:
                               type: string
@@ -356,6 +350,12 @@ spec:
                       endpoints:
                         items:
                           properties:
+                            annotation:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to Kubernetes Ingress
+                                or Openshift Route
+                              type: object
                             attributes:
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
@@ -633,6 +633,12 @@ spec:
                       endpoints:
                         items:
                           properties:
+                            annotation:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to Kubernetes Ingress
+                                or Openshift Route
+                              type: object
                             attributes:
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
@@ -735,6 +741,12 @@ spec:
                       endpoints:
                         items:
                           properties:
+                            annotation:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to Kubernetes Ingress
+                                or Openshift Route
+                              type: object
                             attributes:
                               description: "Map of implementation-dependant string-based
                                 free-form attributes. \n Examples of Che-specific
@@ -1062,12 +1074,6 @@ spec:
                                         type: string
                                       description: Annotations to be added to deployment
                                       type: object
-                                    ingress:
-                                      additionalProperties:
-                                        type: string
-                                      description: Annotations to be added to Kubernetes
-                                        Ingress or Openshift Route
-                                      type: object
                                     service:
                                       additionalProperties:
                                         type: string
@@ -1105,6 +1111,12 @@ spec:
                                 endpoints:
                                   items:
                                     properties:
+                                      annotation:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to Kubernetes
+                                          Ingress or Openshift Route
+                                        type: object
                                       attributes:
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
@@ -1369,6 +1381,12 @@ spec:
                                 endpoints:
                                   items:
                                     properties:
+                                      annotation:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to Kubernetes
+                                          Ingress or Openshift Route
+                                        type: object
                                       attributes:
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
@@ -1480,6 +1498,12 @@ spec:
                                 endpoints:
                                   items:
                                     properties:
+                                      annotation:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to Kubernetes
+                                          Ingress or Openshift Route
+                                        type: object
                                       attributes:
                                         description: "Map of implementation-dependant
                                           string-based free-form attributes. \n Examples
@@ -1908,12 +1932,6 @@ spec:
                                   type: string
                                 description: Annotations to be added to deployment
                                 type: object
-                              ingress:
-                                additionalProperties:
-                                  type: string
-                                description: Annotations to be added to Kubernetes
-                                  Ingress or Openshift Route
-                                type: object
                               service:
                                 additionalProperties:
                                   type: string
@@ -1950,6 +1968,12 @@ spec:
                           endpoints:
                             items:
                               properties:
+                                annotation:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to Kubernetes
+                                    Ingress or Openshift Route
+                                  type: object
                                 attributes:
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
@@ -2202,6 +2226,12 @@ spec:
                           endpoints:
                             items:
                               properties:
+                                annotation:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to Kubernetes
+                                    Ingress or Openshift Route
+                                  type: object
                                 attributes:
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
@@ -2309,6 +2339,12 @@ spec:
                           endpoints:
                             items:
                               properties:
+                                annotation:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to Kubernetes
+                                    Ingress or Openshift Route
+                                  type: object
                                 attributes:
                                   description: "Map of implementation-dependant string-based
                                     free-form attributes. \n Examples of Che-specific
@@ -2644,12 +2680,6 @@ spec:
                                           description: Annotations to be added to
                                             deployment
                                           type: object
-                                        ingress:
-                                          additionalProperties:
-                                            type: string
-                                          description: Annotations to be added to
-                                            Kubernetes Ingress or Openshift Route
-                                          type: object
                                         service:
                                           additionalProperties:
                                             type: string
@@ -2688,6 +2718,12 @@ spec:
                                     endpoints:
                                       items:
                                         properties:
+                                          annotation:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              Kubernetes Ingress or Openshift Route
+                                            type: object
                                           attributes:
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
@@ -2962,6 +2998,12 @@ spec:
                                     endpoints:
                                       items:
                                         properties:
+                                          annotation:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              Kubernetes Ingress or Openshift Route
+                                            type: object
                                           attributes:
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n
@@ -3080,6 +3122,12 @@ spec:
                                     endpoints:
                                       items:
                                         properties:
+                                          annotation:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              Kubernetes Ingress or Openshift Route
+                                            type: object
                                           attributes:
                                             description: "Map of implementation-dependant
                                               string-based free-form attributes. \n

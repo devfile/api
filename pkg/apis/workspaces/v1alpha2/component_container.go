@@ -16,10 +16,6 @@ type Annotation struct {
 	// +optional
 	// Annotations to be added to service
 	Service map[string]string `json:"service,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
-
-	// +optional
-	// Annotations to be added to Kubernetes Ingress or Openshift Route
-	Ingress map[string]string `json:"ingress,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // +devfile:getter:generate

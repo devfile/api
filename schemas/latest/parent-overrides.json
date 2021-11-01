@@ -258,13 +258,6 @@
                       "type": "string"
                     }
                   },
-                  "ingress": {
-                    "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
                   "service": {
                     "description": "Annotations to be added to service",
                     "type": "object",
@@ -307,6 +300,13 @@
                     "name"
                   ],
                   "properties": {
+                    "annotation": {
+                      "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
@@ -549,6 +549,13 @@
                     "name"
                   ],
                   "properties": {
+                    "annotation": {
+                      "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
@@ -636,6 +643,13 @@
                     "name"
                   ],
                   "properties": {
+                    "annotation": {
+                      "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
                     "attributes": {
                       "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
@@ -960,13 +974,6 @@
                                 "type": "string"
                               }
                             },
-                            "ingress": {
-                              "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
-                              "type": "object",
-                              "additionalProperties": {
-                                "type": "string"
-                              }
-                            },
                             "service": {
                               "description": "Annotations to be added to service",
                               "type": "object",
@@ -1009,6 +1016,13 @@
                               "name"
                             ],
                             "properties": {
+                              "annotation": {
+                                "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "string"
+                                }
+                              },
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
@@ -1251,6 +1265,13 @@
                               "name"
                             ],
                             "properties": {
+                              "annotation": {
+                                "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "string"
+                                }
+                              },
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",
@@ -1338,6 +1359,13 @@
                               "name"
                             ],
                             "properties": {
+                              "annotation": {
+                                "description": "Annotations to be added to Kubernetes Ingress or Openshift Route",
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "string"
+                                }
+                              },
                               "attributes": {
                                 "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                                 "type": "object",

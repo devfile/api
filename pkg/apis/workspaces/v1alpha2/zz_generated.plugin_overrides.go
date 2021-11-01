@@ -373,6 +373,10 @@ type EndpointPluginOverride struct {
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:Schemaless
 	Attributes attributes.Attributes `json:"attributes,omitempty"`
+
+	// +optional
+	// Annotations to be added to Kubernetes Ingress or Openshift Route
+	Annotations map[string]string `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 type K8sLikeComponentPluginOverride struct {
@@ -427,10 +431,6 @@ type AnnotationPluginOverride struct {
 	// +optional
 	// Annotations to be added to service
 	Service map[string]string `json:"service,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
-
-	// +optional
-	// Annotations to be added to Kubernetes Ingress or Openshift Route
-	Ingress map[string]string `json:"ingress,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Volume that should be mounted to a component container

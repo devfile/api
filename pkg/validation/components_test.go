@@ -322,10 +322,6 @@ func TestValidateComponents(t *testing.T) {
 						"svc-key1": "svc-value1",
 						"svc-key2": "svc-value2",
 					},
-					Ingress: map[string]string{
-						"ingress-key1": "ingress-value1",
-						"ingress-key2": "ingress-value2",
-					},
 				}, false),
 			},
 		},
@@ -339,9 +335,6 @@ func TestValidateComponents(t *testing.T) {
 					Service: map[string]string{
 						"svc-key1": "svc-value1",
 					},
-					Ingress: map[string]string{
-						"ingress-key1": "ingress-value1",
-					},
 				}, false),
 				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
 					Deployment: map[string]string{
@@ -349,9 +342,6 @@ func TestValidateComponents(t *testing.T) {
 					},
 					Service: map[string]string{
 						"svc-key2": "svc-value2",
-					},
-					Ingress: map[string]string{
-						"ingress-key2": "ingress-value2",
 					},
 				}, false),
 			},
@@ -366,9 +356,6 @@ func TestValidateComponents(t *testing.T) {
 					Service: map[string]string{
 						"svc-key1": "svc-value1",
 					},
-					Ingress: map[string]string{
-						"ingress-key1": "ingress-value1",
-					},
 				}, false),
 				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
 					Deployment: map[string]string{
@@ -376,9 +363,6 @@ func TestValidateComponents(t *testing.T) {
 					},
 					Service: map[string]string{
 						"svc-key1": "svc-value1",
-					},
-					Ingress: map[string]string{
-						"ingress-key1": "ingress-value1",
 					},
 				}, false),
 			},
