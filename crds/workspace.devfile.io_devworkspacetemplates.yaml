@@ -310,6 +310,21 @@ spec:
                       description: Allows adding and configuring devworkspace-related
                         containers
                       properties:
+                        annotation:
+                          description: Annotations that should be added to specific
+                            resources for this container
+                          properties:
+                            deployment:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to deployment
+                              type: object
+                            service:
+                              additionalProperties:
+                                type: string
+                              description: Annotations to be added to service
+                              type: object
+                          type: object
                         args:
                           description: "The arguments to supply to the command running
                             the dockerimage component. The arguments are supplied
@@ -339,6 +354,12 @@ spec:
                         endpoints:
                           items:
                             properties:
+                              annotation:
+                                additionalProperties:
+                                  type: string
+                                description: Annotations to be added to Kubernetes
+                                  Ingress or Openshift Route
+                                type: object
                               attributes:
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
@@ -621,6 +642,12 @@ spec:
                         endpoints:
                           items:
                             properties:
+                              annotation:
+                                additionalProperties:
+                                  type: string
+                                description: Annotations to be added to Kubernetes
+                                  Ingress or Openshift Route
+                                type: object
                               attributes:
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
@@ -728,6 +755,12 @@ spec:
                         endpoints:
                           items:
                             properties:
+                              annotation:
+                                additionalProperties:
+                                  type: string
+                                description: Annotations to be added to Kubernetes
+                                  Ingress or Openshift Route
+                                type: object
                               attributes:
                                 description: "Map of implementation-dependant string-based
                                   free-form attributes. \n Examples of Che-specific
@@ -1052,6 +1085,21 @@ spec:
                                 description: Allows adding and configuring devworkspace-related
                                   containers
                                 properties:
+                                  annotation:
+                                    description: Annotations that should be added
+                                      to specific resources for this container
+                                    properties:
+                                      deployment:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to deployment
+                                        type: object
+                                      service:
+                                        additionalProperties:
+                                          type: string
+                                        description: Annotations to be added to service
+                                        type: object
+                                    type: object
                                   args:
                                     description: "The arguments to supply to the command
                                       running the dockerimage component. The arguments
@@ -1083,6 +1131,12 @@ spec:
                                   endpoints:
                                     items:
                                       properties:
+                                        annotation:
+                                          additionalProperties:
+                                            type: string
+                                          description: Annotations to be added to
+                                            Kubernetes Ingress or Openshift Route
+                                          type: object
                                         attributes:
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
@@ -1351,6 +1405,12 @@ spec:
                                   endpoints:
                                     items:
                                       properties:
+                                        annotation:
+                                          additionalProperties:
+                                            type: string
+                                          description: Annotations to be added to
+                                            Kubernetes Ingress or Openshift Route
+                                          type: object
                                         attributes:
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
@@ -1464,6 +1524,12 @@ spec:
                                   endpoints:
                                     items:
                                       properties:
+                                        annotation:
+                                          additionalProperties:
+                                            type: string
+                                          description: Annotations to be added to
+                                            Kubernetes Ingress or Openshift Route
+                                          type: object
                                         attributes:
                                           description: "Map of implementation-dependant
                                             string-based free-form attributes. \n
@@ -1890,6 +1956,21 @@ spec:
                           description: Allows adding and configuring devworkspace-related
                             containers
                           properties:
+                            annotation:
+                              description: Annotations that should be added to specific
+                                resources for this container
+                              properties:
+                                deployment:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to deployment
+                                  type: object
+                                service:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to service
+                                  type: object
+                              type: object
                             args:
                               description: "The arguments to supply to the command
                                 running the dockerimage component. The arguments are
@@ -1921,6 +2002,12 @@ spec:
                             endpoints:
                               items:
                                 properties:
+                                  annotation:
+                                    additionalProperties:
+                                      type: string
+                                    description: Annotations to be added to Kubernetes
+                                      Ingress or Openshift Route
+                                    type: object
                                   attributes:
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
@@ -2175,6 +2262,12 @@ spec:
                             endpoints:
                               items:
                                 properties:
+                                  annotation:
+                                    additionalProperties:
+                                      type: string
+                                    description: Annotations to be added to Kubernetes
+                                      Ingress or Openshift Route
+                                    type: object
                                   attributes:
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
@@ -2283,6 +2376,12 @@ spec:
                             endpoints:
                               items:
                                 properties:
+                                  annotation:
+                                    additionalProperties:
+                                      type: string
+                                    description: Annotations to be added to Kubernetes
+                                      Ingress or Openshift Route
+                                    type: object
                                   attributes:
                                     description: "Map of implementation-dependant
                                       string-based free-form attributes. \n Examples
@@ -2611,6 +2710,23 @@ spec:
                                     description: Allows adding and configuring devworkspace-related
                                       containers
                                     properties:
+                                      annotation:
+                                        description: Annotations that should be added
+                                          to specific resources for this container
+                                        properties:
+                                          deployment:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              deployment
+                                            type: object
+                                          service:
+                                            additionalProperties:
+                                              type: string
+                                            description: Annotations to be added to
+                                              service
+                                            type: object
+                                        type: object
                                       args:
                                         description: "The arguments to supply to the
                                           command running the dockerimage component.
@@ -2643,6 +2759,13 @@ spec:
                                       endpoints:
                                         items:
                                           properties:
+                                            annotation:
+                                              additionalProperties:
+                                                type: string
+                                              description: Annotations to be added
+                                                to Kubernetes Ingress or Openshift
+                                                Route
+                                              type: object
                                             attributes:
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.
@@ -2924,6 +3047,13 @@ spec:
                                       endpoints:
                                         items:
                                           properties:
+                                            annotation:
+                                              additionalProperties:
+                                                type: string
+                                              description: Annotations to be added
+                                                to Kubernetes Ingress or Openshift
+                                                Route
+                                              type: object
                                             attributes:
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.
@@ -3044,6 +3174,13 @@ spec:
                                       endpoints:
                                         items:
                                           properties:
+                                            annotation:
+                                              additionalProperties:
+                                                type: string
+                                              description: Annotations to be added
+                                                to Kubernetes Ingress or Openshift
+                                                Route
+                                              type: object
                                             attributes:
                                               description: "Map of implementation-dependant
                                                 string-based free-form attributes.

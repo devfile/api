@@ -34,6 +34,7 @@ Common rules for all components types:
 #### Container component 
 1. the container components must reference a valid volume component if it uses volume mounts, and the volume components are unique
 2. `PROJECT_SOURCE` or `PROJECTS_ROOT` are reserved environment variables defined under env, cannot be defined again in `env`
+3. the annotations should not have conflict values for same key, except deployment annotations and service annotations set for a container with `dedicatedPod=true`
 
 #### Plugin Component
 - Commands in plugins components share the same commands validation rules as listed above. Validation occurs after overriding and merging, in flattened devfile

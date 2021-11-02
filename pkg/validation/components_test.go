@@ -11,7 +11,7 @@ import (
 )
 
 // generateDummyContainerComponent returns a dummy container component for testing
-func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMount, endpoints []v1alpha2.Endpoint, envs []v1alpha2.EnvVar) v1alpha2.Component {
+func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMount, endpoints []v1alpha2.Endpoint, envs []v1alpha2.EnvVar, annotation v1alpha2.Annotation, dedicatedPod bool) v1alpha2.Component {
 	image := "docker.io/maven:latest"
 	mountSources := true
 
@@ -21,9 +21,11 @@ func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMou
 			Container: &v1alpha2.ContainerComponent{
 				Container: v1alpha2.Container{
 					Image:        image,
+					Annotation:   annotation,
 					Env:          envs,
 					VolumeMounts: volMounts,
 					MountSources: &mountSources,
+					DedicatedPod: &dedicatedPod,
 				},
 				Endpoints: endpoints,
 			}}}
@@ -228,6 +230,8 @@ func TestValidateComponents(t *testing.T) {
 	imageCompTwoRemoteErr := "component .* should have one remote only"
 	imageCompNoRemoteErr := "component .* should have at least one remote"
 	imageCompInvalidRemoteErr := "unable to find the checkout remote .* in the remotes for component .*"
+	DeploymentAnnotationConflictErr := "deployment annotation: deploy-key1 has been declared multiple times and with different values"
+	ServiceAnnotationConflictErr := "service annotation: svc-key1 has been declared multiple times and with different values"
 
 	pluginOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(PluginOverrideAttribute, "main devfile")
@@ -242,7 +246,7 @@ func TestValidateComponents(t *testing.T) {
 			name: "Duplicate components present",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("component1", "1Gi"),
-				generateDummyContainerComponent("component1", nil, nil, nil),
+				generateDummyContainerComponent("component1", nil, nil, nil, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{duplicateComponentErr},
 		},
@@ -250,21 +254,21 @@ func TestValidateComponents(t *testing.T) {
 			name: "Valid container and volume component",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "1Gi"),
-				generateDummyContainerComponent("container", volMounts, nil, nil),
-				generateDummyContainerComponent("container2", volMounts, nil, nil),
+				generateDummyContainerComponent("container", volMounts, nil, nil, v1alpha2.Annotation{}, false),
+				generateDummyContainerComponent("container2", volMounts, nil, nil, v1alpha2.Annotation{}, false),
 			},
 		},
 		{
 			name: "Invalid container using reserved env PROJECT_SOURCE",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("container1", nil, nil, projectSourceEnv),
+				generateDummyContainerComponent("container1", nil, nil, projectSourceEnv, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{reservedEnvErr},
 		},
 		{
 			name: "Invalid container using reserved env PROJECTS_ROOT",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("container", nil, nil, projectsRootEnv),
+				generateDummyContainerComponent("container", nil, nil, projectsRootEnv, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{reservedEnvErr},
 		},
@@ -272,7 +276,7 @@ func TestValidateComponents(t *testing.T) {
 			name: "Invalid volume component size",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "invalid"),
-				generateDummyContainerComponent("container", nil, nil, nil),
+				generateDummyContainerComponent("container", nil, nil, nil, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{invalidSizeErr},
 		},
@@ -280,31 +284,139 @@ func TestValidateComponents(t *testing.T) {
 			name: "Invalid volume mount referencing a wrong volume component",
 			components: []v1alpha2.Component{
 				generateDummyVolumeComponent("myvol", "1Gi"),
-				generateDummyContainerComponent("container1", invalidVolMounts, nil, nil),
+				generateDummyContainerComponent("container1", invalidVolMounts, nil, nil, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{invalidVolMountErr},
 		},
 		{
 			name: "Invalid containers with the same endpoint names",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
-				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl18081}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil, v1alpha2.Annotation{}, false),
+				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl18081}, nil, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{sameEndpointNameErr},
 		},
 		{
 			name: "Invalid containers with the same endpoint target ports",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil),
-				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl28080}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil, v1alpha2.Annotation{}, false),
+				generateDummyContainerComponent("name2", nil, []v1alpha2.Endpoint{endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
 			wantErr: []string{sameTargetPortErr},
 		},
 		{
 			name: "Valid container with same target ports but different endpoint name",
 			components: []v1alpha2.Component{
-				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil),
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
+		},
+		{
+			name: "Valid container with deployment, service and ingress annotations",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+						"deploy-key2": "deploy-value2",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+						"svc-key2": "svc-value2",
+					},
+				}, false),
+			},
+		},
+		{
+			name: "Valid containers with different key and value pairs for deployment, service and ingress annotations",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+					},
+				}, false),
+				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key2": "deploy-value2",
+					},
+					Service: map[string]string{
+						"svc-key2": "svc-value2",
+					},
+				}, false),
+			},
+		},
+		{
+			name: "Valid containers with same key and value pairs for deployment, service and ingress annotations",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+					},
+				}, false),
+				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+					},
+				}, false),
+			},
+		},
+		{
+			name: "Valid containers with conflict key and value pairs for deployment and service annotations when dedicatedPod is set to true",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+					},
+				}, false),
+				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value2",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value2",
+					},
+				}, true),
+			},
+		},
+		{
+			name: "Invalid containers with conflict key and value pairs for deployment and service annotations when dedicatedPod is set to false",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value1",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value1",
+					},
+				}, false),
+				generateDummyContainerComponent("name2", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value2",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value2",
+					},
+				}, false),
+				generateDummyContainerComponent("name3", nil, nil, nil, v1alpha2.Annotation{
+					Deployment: map[string]string{
+						"deploy-key1": "deploy-value2",
+					},
+					Service: map[string]string{
+						"svc-key1": "svc-value2",
+					},
+				}, false),
+			},
+			wantErr: []string{DeploymentAnnotationConflictErr, ServiceAnnotationConflictErr},
 		},
 		{
 			name: "Invalid Openshift Component with bad URI",
