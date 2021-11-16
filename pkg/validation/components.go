@@ -2,7 +2,6 @@ package validation
 
 import (
 	"fmt"
-	"reflect"
 	"strings"
 
 	"github.com/devfile/api/v2/pkg/apis/workspaces/v1alpha2"
@@ -63,7 +62,7 @@ func ValidateComponents(components []v1alpha2.Component) (returnedErr error) {
 			}
 
 			// if annotation is not empty and dedicatedPod is false
-			if !reflect.DeepEqual(component.Container.Annotation, v1alpha2.Annotation{}) && component.Container.DedicatedPod != nil && !(*component.Container.DedicatedPod) {
+			if component.Container.Annotation != nil && component.Container.DedicatedPod != nil && !(*component.Container.DedicatedPod) {
 				for key, value := range component.Container.Annotation.Deployment {
 					if processedVal, exist := processedDeploymentAnnotations[key]; exist && processedVal != value {
 						// only append the error for a single key once
