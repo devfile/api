@@ -1185,7 +1185,11 @@ func (in *Container) DeepCopyInto(out *Container) {
 		*out = make([]EnvVar, len(*in))
 		copy(*out, *in)
 	}
-	in.Annotation.DeepCopyInto(&out.Annotation)
+	if in.Annotation != nil {
+		in, out := &in.Annotation, &out.Annotation
+		*out = new(Annotation)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeMounts != nil {
 		in, out := &in.VolumeMounts, &out.VolumeMounts
 		*out = make([]VolumeMount, len(*in))
@@ -1327,7 +1331,11 @@ func (in *ContainerParentOverride) DeepCopyInto(out *ContainerParentOverride) {
 		*out = make([]EnvVarParentOverride, len(*in))
 		copy(*out, *in)
 	}
-	in.Annotation.DeepCopyInto(&out.Annotation)
+	if in.Annotation != nil {
+		in, out := &in.Annotation, &out.Annotation
+		*out = new(AnnotationParentOverride)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeMounts != nil {
 		in, out := &in.VolumeMounts, &out.VolumeMounts
 		*out = make([]VolumeMountParentOverride, len(*in))
@@ -1373,7 +1381,11 @@ func (in *ContainerPluginOverride) DeepCopyInto(out *ContainerPluginOverride) {
 		*out = make([]EnvVarPluginOverride, len(*in))
 		copy(*out, *in)
 	}
-	in.Annotation.DeepCopyInto(&out.Annotation)
+	if in.Annotation != nil {
+		in, out := &in.Annotation, &out.Annotation
+		*out = new(AnnotationPluginOverride)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeMounts != nil {
 		in, out := &in.VolumeMounts, &out.VolumeMounts
 		*out = make([]VolumeMountPluginOverride, len(*in))
@@ -1419,7 +1431,11 @@ func (in *ContainerPluginOverrideParentOverride) DeepCopyInto(out *ContainerPlug
 		*out = make([]EnvVarPluginOverrideParentOverride, len(*in))
 		copy(*out, *in)
 	}
-	in.Annotation.DeepCopyInto(&out.Annotation)
+	if in.Annotation != nil {
+		in, out := &in.Annotation, &out.Annotation
+		*out = new(AnnotationPluginOverrideParentOverride)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeMounts != nil {
 		in, out := &in.VolumeMounts, &out.VolumeMounts
 		*out = make([]VolumeMountPluginOverrideParentOverride, len(*in))

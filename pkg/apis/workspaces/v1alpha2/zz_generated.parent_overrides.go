@@ -386,7 +386,7 @@ type ContainerParentOverride struct {
 
 	// +optional
 	// Annotations that should be added to specific resources for this container
-	Annotation AnnotationParentOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Annotation *AnnotationParentOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.
@@ -1068,7 +1068,7 @@ type ContainerPluginOverrideParentOverride struct {
 
 	// +optional
 	// Annotations that should be added to specific resources for this container
-	Annotation AnnotationPluginOverrideParentOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Annotation *AnnotationPluginOverrideParentOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.

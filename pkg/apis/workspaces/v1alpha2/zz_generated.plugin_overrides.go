@@ -256,7 +256,7 @@ type ContainerPluginOverride struct {
 
 	// +optional
 	// Annotations that should be added to specific resources for this container
-	Annotation AnnotationPluginOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Annotation *AnnotationPluginOverride `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.

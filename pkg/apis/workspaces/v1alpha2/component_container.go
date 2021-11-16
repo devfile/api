@@ -36,7 +36,7 @@ type Container struct {
 
 	// +optional
 	// Annotations that should be added to specific resources for this container
-	Annotation Annotation `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Annotation *Annotation `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
 	// List of volumes mounts that should be mounted is this container.

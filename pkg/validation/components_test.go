@@ -21,7 +21,7 @@ func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMou
 			Container: &v1alpha2.ContainerComponent{
 				Container: v1alpha2.Container{
 					Image:        image,
-					Annotation:   annotation,
+					Annotation:   &annotation,
 					Env:          envs,
 					VolumeMounts: volMounts,
 					MountSources: &mountSources,
