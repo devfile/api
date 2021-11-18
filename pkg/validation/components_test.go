@@ -31,6 +31,24 @@ func generateDummyContainerComponent(name string, volMounts []v1alpha2.VolumeMou
 			}}}
 }
 
+// generateDummyContainerComponentWithResourceRequirement returns a dummy container component with resource requirement for testing
+func generateDummyContainerComponentWithResourceRequirement(name, memoryLimit, memoryRequest, cpuLimit, cpuRequest string) v1alpha2.Component {
+	image := "docker.io/maven:latest"
+
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Container: &v1alpha2.ContainerComponent{
+				Container: v1alpha2.Container{
+					Image:         image,
+					MemoryLimit:   memoryLimit,
+					MemoryRequest: memoryRequest,
+					CpuLimit:      cpuLimit,
+					CpuRequest:    cpuRequest,
+				},
+			}}}
+}
+
 // generateDummyVolumeComponent returns a dummy volume component for testing
 func generateDummyVolumeComponent(name, size string) v1alpha2.Component {
 
@@ -236,6 +254,9 @@ func TestValidateComponents(t *testing.T) {
 	pluginOverridesFromMainDevfile := attributes.Attributes{}.PutString(ImportSourceAttribute,
 		"uri: http://127.0.0.1:8080").PutString(PluginOverrideAttribute, "main devfile")
 	invalidURIErrWithImportAttributes := ".*invalid URI for request, imported from uri: http://127.0.0.1:8080, in plugin overrides from main devfile"
+	invalidCpuRequest := ".*cpuRequest is greater than cpuLimit."
+	invalidMemoryRequest := ".*memoryRequest is greater than memoryLimit."
+	quantityParsingErr := "error parsing .* requirement for component.*"
 
 	tests := []struct {
 		name       string
@@ -309,6 +330,30 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
+		},
+		{
+			name: "Valid containers with valid resource requirement",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponentWithResourceRequirement("name1", "1024Mi", "512Mi", "1024Mi", "512Mi"),
+				generateDummyContainerComponentWithResourceRequirement("name2", "", "512Mi", "", "512Mi"),
+				generateDummyContainerComponentWithResourceRequirement("name3", "1024Mi", "", "1024Mi", ""),
+				generateDummyContainerComponentWithResourceRequirement("name4", "", "", "", ""),
+			},
+		},
+		{
+			name: "Invalid containers with resource limit smaller than resource requested",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponentWithResourceRequirement("name1", "512Mi", "1024Mi", "", ""),
+				generateDummyContainerComponentWithResourceRequirement("name2", "", "", "512Mi", "1024Mi"),
+			},
+			wantErr: []string{invalidMemoryRequest, invalidCpuRequest},
+		},
+		{
+			name: "Invalid container with resource quantity parsing error",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponentWithResourceRequirement("name1", "512invalid", "", "", ""),
+			},
+			wantErr: []string{quantityParsingErr},
 		},
 		{
 			name: "Valid container with deployment, service and ingress annotations",
