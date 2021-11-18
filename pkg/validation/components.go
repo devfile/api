@@ -80,7 +80,7 @@ func ValidateComponents(components []v1alpha2.Component) (returnedErr error) {
 				if err != nil {
 					parseQuantityErr := &ParsingResourceRequirementError{resource: MemoryRequest, cmpName: component.Name, errMsg: err.Error()}
 					returnedErr = multierror.Append(returnedErr, parseQuantityErr)
-				} else if !memoryLimit.Equal(resource.Quantity{}) && memoryRequest.Cmp(memoryLimit) > 0 {
+				} else if !memoryLimit.IsZero() && memoryRequest.Cmp(memoryLimit) > 0 {
 					invalidResourceRequest := &InvalidResourceRequestError{cmpName: component.Name, errMsg: fmt.Sprintf("memoryRequest is greater than memoryLimit.")}
 					returnedErr = multierror.Append(returnedErr, invalidResourceRequest)
 				}
@@ -90,7 +90,7 @@ func ValidateComponents(components []v1alpha2.Component) (returnedErr error) {
 				if err != nil {
 					parseQuantityErr := &ParsingResourceRequirementError{resource: CpuRequest, cmpName: component.Name, errMsg: err.Error()}
 					returnedErr = multierror.Append(returnedErr, parseQuantityErr)
-				} else if !cpuLimit.Equal(resource.Quantity{}) && cpuRequest.Cmp(cpuLimit) > 0 {
+				} else if !cpuLimit.IsZero() && cpuRequest.Cmp(cpuLimit) > 0 {
 					invalidResourceRequest := &InvalidResourceRequestError{cmpName: component.Name, errMsg: fmt.Sprintf("cpuRequest is greater than cpuLimit.")}
 					returnedErr = multierror.Append(returnedErr, invalidResourceRequest)
 				}
