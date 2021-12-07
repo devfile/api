@@ -420,7 +420,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -461,6 +461,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -714,7 +715,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -755,6 +756,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -831,7 +833,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -872,6 +874,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -1221,7 +1224,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -1267,6 +1270,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -1509,7 +1514,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -1555,6 +1560,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -1636,7 +1643,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -1682,6 +1689,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -2127,7 +2136,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -2169,6 +2178,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -2397,7 +2407,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -2439,6 +2449,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -2514,7 +2525,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -2556,6 +2567,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -2916,7 +2928,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
@@ -2966,6 +2978,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name
@@ -3218,7 +3232,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
@@ -3268,6 +3282,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name
@@ -3352,7 +3368,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
@@ -3402,6 +3418,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name

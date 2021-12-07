@@ -571,7 +571,7 @@
                         },
                         "name": {
                           "type": "string",
-                          "maxLength": 63,
+                          "maxLength": 15,
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                         },
                         "path": {
@@ -596,6 +596,7 @@
                           "type": "boolean"
                         },
                         "targetPort": {
+                          "description": "The port number should be unique.",
                           "type": "integer"
                         }
                       },
@@ -854,7 +855,7 @@
                         },
                         "name": {
                           "type": "string",
-                          "maxLength": 63,
+                          "maxLength": 15,
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                         },
                         "path": {
@@ -879,6 +880,7 @@
                           "type": "boolean"
                         },
                         "targetPort": {
+                          "description": "The port number should be unique.",
                           "type": "integer"
                         }
                       },
@@ -951,7 +953,7 @@
                         },
                         "name": {
                           "type": "string",
-                          "maxLength": 63,
+                          "maxLength": 15,
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                         },
                         "path": {
@@ -976,6 +978,7 @@
                           "type": "boolean"
                         },
                         "targetPort": {
+                          "description": "The port number should be unique.",
                           "type": "integer"
                         }
                       },
@@ -1325,7 +1328,7 @@
                                   },
                                   "name": {
                                     "type": "string",
-                                    "maxLength": 63,
+                                    "maxLength": 15,
                                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                   },
                                   "path": {
@@ -1349,6 +1352,7 @@
                                     "type": "boolean"
                                   },
                                   "targetPort": {
+                                    "description": "The port number should be unique.",
                                     "type": "integer"
                                   }
                                 },
@@ -1574,7 +1578,7 @@
                                   },
                                   "name": {
                                     "type": "string",
-                                    "maxLength": 63,
+                                    "maxLength": 15,
                                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                   },
                                   "path": {
@@ -1598,6 +1602,7 @@
                                     "type": "boolean"
                                   },
                                   "targetPort": {
+                                    "description": "The port number should be unique.",
                                     "type": "integer"
                                   }
                                 },
@@ -1668,7 +1673,7 @@
                                   },
                                   "name": {
                                     "type": "string",
-                                    "maxLength": 63,
+                                    "maxLength": 15,
                                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                   },
                                   "path": {
@@ -1692,6 +1697,7 @@
                                     "type": "boolean"
                                   },
                                   "targetPort": {
+                                    "description": "The port number should be unique.",
                                     "type": "integer"
                                   }
                                 },
@@ -2155,7 +2161,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 63,
+                              "maxLength": 15,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -2179,6 +2185,7 @@
                               "type": "boolean"
                             },
                             "targetPort": {
+                              "description": "The port number should be unique.",
                               "type": "integer"
                             }
                           },
@@ -2404,7 +2411,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 63,
+                              "maxLength": 15,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -2428,6 +2435,7 @@
                               "type": "boolean"
                             },
                             "targetPort": {
+                              "description": "The port number should be unique.",
                               "type": "integer"
                             }
                           },
@@ -2498,7 +2506,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 63,
+                              "maxLength": 15,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -2522,6 +2530,7 @@
                               "type": "boolean"
                             },
                             "targetPort": {
+                              "description": "The port number should be unique.",
                               "type": "integer"
                             }
                           },
@@ -2871,7 +2880,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 63,
+                                        "maxLength": 15,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -2895,6 +2904,7 @@
                                         "type": "boolean"
                                       },
                                       "targetPort": {
+                                        "description": "The port number should be unique.",
                                         "type": "integer"
                                       }
                                     },
@@ -3120,7 +3130,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 63,
+                                        "maxLength": 15,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -3144,6 +3154,7 @@
                                         "type": "boolean"
                                       },
                                       "targetPort": {
+                                        "description": "The port number should be unique.",
                                         "type": "integer"
                                       }
                                     },
@@ -3214,7 +3225,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 63,
+                                        "maxLength": 15,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -3238,6 +3249,7 @@
                                         "type": "boolean"
                                       },
                                       "targetPort": {
+                                        "description": "The port number should be unique.",
                                         "type": "integer"
                                       }
                                     },

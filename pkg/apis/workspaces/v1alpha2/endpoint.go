@@ -47,9 +47,10 @@ const (
 // +devfile:getter:generate
 type Endpoint struct {
 	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
-	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:MaxLength=15
 	Name string `json:"name"`
 
+	// The port number should be unique.
 	TargetPort int `json:"targetPort"`
 
 	// Describes how the endpoint should be exposed on the network.

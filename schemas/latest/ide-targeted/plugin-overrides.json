@@ -350,7 +350,7 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
+                      "maxLength": 15,
                       "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
@@ -377,7 +377,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false
@@ -629,7 +631,7 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
+                      "maxLength": 15,
                       "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
@@ -656,7 +658,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false
@@ -733,7 +737,7 @@
                     },
                     "name": {
                       "type": "string",
-                      "maxLength": 63,
+                      "maxLength": 15,
                       "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                     },
                     "path": {
@@ -760,7 +764,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false

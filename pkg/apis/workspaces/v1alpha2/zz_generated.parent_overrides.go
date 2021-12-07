@@ -440,10 +440,11 @@ type ContainerParentOverride struct {
 type EndpointParentOverride struct {
 
 	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
-	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:MaxLength=15
 	Name string `json:"name"`
 
 	//  +optional
+	// The port number should be unique.
 	TargetPort int `json:"targetPort,omitempty"`
 
 	// Describes how the endpoint should be exposed on the network.
@@ -1122,10 +1123,11 @@ type ContainerPluginOverrideParentOverride struct {
 type EndpointPluginOverrideParentOverride struct {
 
 	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
-	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:MaxLength=15
 	Name string `json:"name"`
 
 	//  +optional
+	// The port number should be unique.
 	TargetPort int `json:"targetPort,omitempty"`
 
 	// Describes how the endpoint should be exposed on the network.
