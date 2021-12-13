@@ -414,9 +414,18 @@
                 "required": [
                   "dockerfile"
                 ]
+              },
+              {
+                "required": [
+                  "autoBuild"
+                ]
               }
             ],
             "properties": {
+              "autoBuild": {
+                "description": "Defines if the image should be built during startup Default is false",
+                "type": "boolean"
+              },
               "dockerfile": {
                 "description": "Allows specifying dockerfile type build",
                 "type": "object",
@@ -531,6 +540,10 @@
               }
             ],
             "properties": {
+              "deployByDefault": {
+                "description": "Defines if the component should be deployed during startup Default is false",
+                "type": "boolean"
+              },
               "endpoints": {
                 "type": "array",
                 "items": {
@@ -625,6 +638,10 @@
               }
             ],
             "properties": {
+              "deployByDefault": {
+                "description": "Defines if the component should be deployed during startup Default is false",
+                "type": "boolean"
+              },
               "endpoints": {
                 "type": "array",
                 "items": {

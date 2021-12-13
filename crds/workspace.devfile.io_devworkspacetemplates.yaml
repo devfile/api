@@ -522,6 +522,10 @@ spec:
                       - required:
                         - dockerfile
                       properties:
+                        autoBuild:
+                          description: Defines if the image should be built during
+                            startup Default is false
+                          type: boolean
                         dockerfile:
                           description: Allows specifying dockerfile type build
                           oneOf:
@@ -639,6 +643,10 @@ spec:
                       - required:
                         - inlined
                       properties:
+                        deployByDefault:
+                          description: Defines if the component should be deployed
+                            during startup Default is false
+                          type: boolean
                         endpoints:
                           items:
                             properties:
@@ -752,6 +760,10 @@ spec:
                       - required:
                         - inlined
                       properties:
+                        deployByDefault:
+                          description: Defines if the component should be deployed
+                            during startup Default is false
+                          type: boolean
                         endpoints:
                           items:
                             properties:
@@ -1283,7 +1295,13 @@ spec:
                                 oneOf:
                                 - required:
                                   - dockerfile
+                                - required:
+                                  - autoBuild
                                 properties:
+                                  autoBuild:
+                                    description: Defines if the image should be built
+                                      during startup Default is false
+                                    type: boolean
                                   dockerfile:
                                     description: Allows specifying dockerfile type
                                       build
@@ -1389,6 +1407,7 @@ spec:
                                     description: Type of image
                                     enum:
                                     - Dockerfile
+                                    - AutoBuild
                                     type: string
                                 type: object
                               kubernetes:
@@ -1402,6 +1421,10 @@ spec:
                                 - required:
                                   - inlined
                                 properties:
+                                  deployByDefault:
+                                    description: Defines if the component should be
+                                      deployed during startup Default is false
+                                    type: boolean
                                   endpoints:
                                     items:
                                       properties:
@@ -1521,6 +1544,10 @@ spec:
                                 - required:
                                   - inlined
                                 properties:
+                                  deployByDefault:
+                                    description: Defines if the component should be
+                                      deployed during startup Default is false
+                                    type: boolean
                                   endpoints:
                                     items:
                                       properties:
@@ -2146,7 +2173,13 @@ spec:
                           oneOf:
                           - required:
                             - dockerfile
+                          - required:
+                            - autoBuild
                           properties:
+                            autoBuild:
+                              description: Defines if the image should be built during
+                                startup Default is false
+                              type: boolean
                             dockerfile:
                               description: Allows specifying dockerfile type build
                               oneOf:
@@ -2246,6 +2279,7 @@ spec:
                               description: Type of image
                               enum:
                               - Dockerfile
+                              - AutoBuild
                               type: string
                           type: object
                         kubernetes:
@@ -2259,6 +2293,10 @@ spec:
                           - required:
                             - inlined
                           properties:
+                            deployByDefault:
+                              description: Defines if the component should be deployed
+                                during startup Default is false
+                              type: boolean
                             endpoints:
                               items:
                                 properties:
@@ -2373,6 +2411,10 @@ spec:
                           - required:
                             - inlined
                           properties:
+                            deployByDefault:
+                              description: Defines if the component should be deployed
+                                during startup Default is false
+                              type: boolean
                             endpoints:
                               items:
                                 properties:
@@ -2918,7 +2960,13 @@ spec:
                                     oneOf:
                                     - required:
                                       - dockerfile
+                                    - required:
+                                      - autoBuild
                                     properties:
+                                      autoBuild:
+                                        description: Defines if the image should be
+                                          built during startup Default is false
+                                        type: boolean
                                       dockerfile:
                                         description: Allows specifying dockerfile
                                           type build
@@ -3030,6 +3078,7 @@ spec:
                                         description: Type of image
                                         enum:
                                         - Dockerfile
+                                        - AutoBuild
                                         type: string
                                     type: object
                                   kubernetes:
@@ -3044,6 +3093,10 @@ spec:
                                     - required:
                                       - inlined
                                     properties:
+                                      deployByDefault:
+                                        description: Defines if the component should
+                                          be deployed during startup Default is false
+                                        type: boolean
                                       endpoints:
                                         items:
                                           properties:
@@ -3171,6 +3224,10 @@ spec:
                                     - required:
                                       - inlined
                                     properties:
+                                      deployByDefault:
+                                        description: Defines if the component should
+                                          be deployed during startup Default is false
+                                        type: boolean
                                       endpoints:
                                         items:
                                           properties:

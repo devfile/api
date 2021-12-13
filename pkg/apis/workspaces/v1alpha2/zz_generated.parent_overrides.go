@@ -512,7 +512,13 @@ type EndpointParentOverride struct {
 type K8sLikeComponentParentOverride struct {
 	BaseComponentParentOverride            `json:",inline"`
 	K8sLikeComponentLocationParentOverride `json:",inline"`
-	Endpoints                              []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// Defines if the component should be deployed during startup
+	// Default is false
+	// +optional
+	DeployByDefault *bool `json:"deployByDefault,omitempty"`
+
+	Endpoints []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Volume that should be mounted to a component container
@@ -657,7 +663,7 @@ type K8sLikeComponentLocationParentOverride struct {
 // +union
 type ImageUnionParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Dockerfile
+	// +kubebuilder:validation:Enum=Dockerfile;AutoBuild
 	// Type of image
 	//
 	// +unionDiscriminator
@@ -667,6 +673,11 @@ type ImageUnionParentOverride struct {
 	// Allows specifying dockerfile type build
 	// +optional
 	Dockerfile *DockerfileImageParentOverride `json:"dockerfile,omitempty"`
+
+	// Defines if the image should be built during startup
+	// Default is false
+	// +optional
+	AutoBuild *bool `json:"autoBuild,omitempty"`
 }
 
 // Location from where the an import reference is retrieved
@@ -1194,7 +1205,13 @@ type EndpointPluginOverrideParentOverride struct {
 type K8sLikeComponentPluginOverrideParentOverride struct {
 	BaseComponentPluginOverrideParentOverride            `json:",inline"`
 	K8sLikeComponentLocationPluginOverrideParentOverride `json:",inline"`
-	Endpoints                                            []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+
+	// Defines if the component should be deployed during startup
+	// Default is false
+	// +optional
+	DeployByDefault *bool `json:"deployByDefault,omitempty"`
+
+	Endpoints []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Volume that should be mounted to a component container
@@ -1294,7 +1311,7 @@ type K8sLikeComponentLocationPluginOverrideParentOverride struct {
 // +union
 type ImageUnionPluginOverrideParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Dockerfile
+	// +kubebuilder:validation:Enum=Dockerfile;AutoBuild
 	// Type of image
 	//
 	// +unionDiscriminator
@@ -1304,6 +1321,11 @@ type ImageUnionPluginOverrideParentOverride struct {
 	// Allows specifying dockerfile type build
 	// +optional
 	Dockerfile *DockerfileImagePluginOverrideParentOverride `json:"dockerfile,omitempty"`
+
+	// Defines if the image should be built during startup
+	// Default is false
+	// +optional
+	AutoBuild *bool `json:"autoBuild,omitempty"`
 }
 
 type BaseCommandPluginOverrideParentOverride struct {
