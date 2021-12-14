@@ -37,7 +37,7 @@ type K8sLikeComponent struct {
 	// +optional
 	DeployByDefault *bool `json:"deployByDefault,omitempty"`
 
-	Endpoints                []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Endpoints []Endpoint `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
