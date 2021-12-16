@@ -253,7 +253,7 @@
                 ],
                 "properties": {
                   "apply": {
-                    "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
+                    "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
                     "type": "object",
                     "required": [
                       "component"
@@ -299,7 +299,7 @@
                       }
                     },
                     "additionalProperties": false,
-                    "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default."
+                    "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
                   },
                   "attributes": {
                     "description": "Map of implementation-dependant free-form YAML attributes.",
@@ -1188,7 +1188,7 @@
                           ],
                           "properties": {
                             "apply": {
-                              "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
+                              "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
                               "type": "object",
                               "properties": {
                                 "component": {
@@ -1228,7 +1228,7 @@
                                 }
                               },
                               "additionalProperties": false,
-                              "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default."
+                              "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
                             },
                             "attributes": {
                               "description": "Map of implementation-dependant free-form YAML attributes.",
@@ -2134,7 +2134,7 @@
                     ],
                     "properties": {
                       "apply": {
-                        "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
+                        "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
                         "type": "object",
                         "properties": {
                           "component": {
@@ -2174,7 +2174,7 @@
                           }
                         },
                         "additionalProperties": false,
-                        "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default."
+                        "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
                       },
                       "attributes": {
                         "description": "Map of implementation-dependant free-form YAML attributes.",
@@ -2957,7 +2957,7 @@
                               ],
                               "properties": {
                                 "apply": {
-                                  "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default.",
+                                  "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
                                   "type": "object",
                                   "properties": {
                                     "component": {
@@ -2997,7 +2997,7 @@
                                     }
                                   },
                                   "additionalProperties": false,
-                                  "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default."
+                                  "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
                                 },
                                 "attributes": {
                                   "description": "Map of implementation-dependant free-form YAML attributes.",

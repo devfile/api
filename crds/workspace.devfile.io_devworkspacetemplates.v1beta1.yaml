@@ -62,7 +62,8 @@ spec:
                       as a K8S initContainer in the devworkspace POD, unless the component
                       has its `dedicatedPod` field set to `true`. \n When no `apply`
                       command exist for a given component, it is assumed the component
-                      will be applied at devworkspace start by default."
+                      will be applied at devworkspace start by default, unless `deployByDefault`
+                      for that component is set to false."
                     properties:
                       component:
                         description: Describes component that will be applied
@@ -877,7 +878,8 @@ spec:
                                 its `dedicatedPod` field set to `true`. \n When no
                                 `apply` command exist for a given component, it is
                                 assumed the component will be applied at devworkspace
-                                start by default."
+                                start by default, unless `deployByDefault` for that
+                                component is set to false."
                               properties:
                                 component:
                                   description: Describes component that will be applied
@@ -1758,7 +1760,8 @@ spec:
                           POD, unless the component has its `dedicatedPod` field set
                           to `true`. \n When no `apply` command exist for a given
                           component, it is assumed the component will be applied at
-                          devworkspace start by default."
+                          devworkspace start by default, unless `deployByDefault`
+                          for that component is set to false."
                         properties:
                           component:
                             description: Describes component that will be applied
@@ -2510,7 +2513,8 @@ spec:
                                     its `dedicatedPod` field set to `true`. \n When
                                     no `apply` command exist for a given component,
                                     it is assumed the component will be applied at
-                                    devworkspace start by default."
+                                    devworkspace start by default, unless `deployByDefault`
+                                    for that component is set to false."
                                   properties:
                                     component:
                                       description: Describes component that will be

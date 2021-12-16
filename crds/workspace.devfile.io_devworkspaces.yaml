@@ -83,7 +83,8 @@ spec:
                             the devworkspace POD, unless the component has its `dedicatedPod`
                             field set to `true`. \n When no `apply` command exist
                             for a given component, it is assumed the component will
-                            be applied at devworkspace start by default."
+                            be applied at devworkspace start by default, unless `deployByDefault`
+                            for that component is set to false."
                           properties:
                             component:
                               description: Describes component that will be applied
@@ -941,7 +942,9 @@ spec:
                                       has its `dedicatedPod` field set to `true`.
                                       \n When no `apply` command exist for a given
                                       component, it is assumed the component will
-                                      be applied at devworkspace start by default."
+                                      be applied at devworkspace start by default,
+                                      unless `deployByDefault` for that component
+                                      is set to false."
                                     properties:
                                       component:
                                         description: Describes component that will
@@ -1870,7 +1873,8 @@ spec:
                                 its `dedicatedPod` field set to `true`. \n When no
                                 `apply` command exist for a given component, it is
                                 assumed the component will be applied at devworkspace
-                                start by default."
+                                start by default, unless `deployByDefault` for that
+                                component is set to false."
                               properties:
                                 component:
                                   description: Describes component that will be applied
@@ -2656,7 +2660,9 @@ spec:
                                           has its `dedicatedPod` field set to `true`.
                                           \n When no `apply` command exist for a given
                                           component, it is assumed the component will
-                                          be applied at devworkspace start by default."
+                                          be applied at devworkspace start by default,
+                                          unless `deployByDefault` for that component
+                                          is set to false."
                                         properties:
                                           component:
                                             description: Describes component that
