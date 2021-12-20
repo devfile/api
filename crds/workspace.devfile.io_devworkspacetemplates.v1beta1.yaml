@@ -62,7 +62,8 @@ spec:
                       as a K8S initContainer in the devworkspace POD, unless the component
                       has its `dedicatedPod` field set to `true`. \n When no `apply`
                       command exist for a given component, it is assumed the component
-                      will be applied at devworkspace start by default."
+                      will be applied at devworkspace start by default, unless `deployByDefault`
+                      for that component is set to false."
                     properties:
                       component:
                         description: Describes component that will be applied
@@ -513,6 +514,10 @@ spec:
                     - required:
                       - dockerfile
                     properties:
+                      autoBuild:
+                        description: Defines if the image should be built during startup
+                          Default is false
+                        type: boolean
                       dockerfile:
                         description: Allows specifying dockerfile type build
                         oneOf:
@@ -630,6 +635,10 @@ spec:
                     - required:
                       - inlined
                     properties:
+                      deployByDefault:
+                        description: Defines if the component should be deployed during
+                          startup Default is false
+                        type: boolean
                       endpoints:
                         items:
                           properties:
@@ -738,6 +747,10 @@ spec:
                     - required:
                       - inlined
                     properties:
+                      deployByDefault:
+                        description: Defines if the component should be deployed during
+                          startup Default is false
+                        type: boolean
                       endpoints:
                         items:
                           properties:
@@ -865,7 +878,8 @@ spec:
                                 its `dedicatedPod` field set to `true`. \n When no
                                 `apply` command exist for a given component, it is
                                 assumed the component will be applied at devworkspace
-                                start by default."
+                                start by default, unless `deployByDefault` for that
+                                component is set to false."
                               properties:
                                 component:
                                   description: Describes component that will be applied
@@ -1261,7 +1275,13 @@ spec:
                               oneOf:
                               - required:
                                 - dockerfile
+                              - required:
+                                - autoBuild
                               properties:
+                                autoBuild:
+                                  description: Defines if the image should be built
+                                    during startup Default is false
+                                  type: boolean
                                 dockerfile:
                                   description: Allows specifying dockerfile type build
                                   oneOf:
@@ -1365,6 +1385,7 @@ spec:
                                   description: Type of image
                                   enum:
                                   - Dockerfile
+                                  - AutoBuild
                                   type: string
                               type: object
                             kubernetes:
@@ -1378,6 +1399,10 @@ spec:
                               - required:
                                 - inlined
                               properties:
+                                deployByDefault:
+                                  description: Defines if the component should be
+                                    deployed during startup Default is false
+                                  type: boolean
                                 endpoints:
                                   items:
                                     properties:
@@ -1495,6 +1520,10 @@ spec:
                               - required:
                                 - inlined
                               properties:
+                                deployByDefault:
+                                  description: Defines if the component should be
+                                    deployed during startup Default is false
+                                  type: boolean
                                 endpoints:
                                   items:
                                     properties:
@@ -1731,7 +1760,8 @@ spec:
                           POD, unless the component has its `dedicatedPod` field set
                           to `true`. \n When no `apply` command exist for a given
                           component, it is assumed the component will be applied at
-                          devworkspace start by default."
+                          devworkspace start by default, unless `deployByDefault`
+                          for that component is set to false."
                         properties:
                           component:
                             description: Describes component that will be applied
@@ -2110,7 +2140,13 @@ spec:
                         oneOf:
                         - required:
                           - dockerfile
+                        - required:
+                          - autoBuild
                         properties:
+                          autoBuild:
+                            description: Defines if the image should be built during
+                              startup Default is false
+                            type: boolean
                           dockerfile:
                             description: Allows specifying dockerfile type build
                             oneOf:
@@ -2210,6 +2246,7 @@ spec:
                             description: Type of image
                             enum:
                             - Dockerfile
+                            - AutoBuild
                             type: string
                         type: object
                       kubernetes:
@@ -2223,6 +2260,10 @@ spec:
                         - required:
                           - inlined
                         properties:
+                          deployByDefault:
+                            description: Defines if the component should be deployed
+                              during startup Default is false
+                            type: boolean
                           endpoints:
                             items:
                               properties:
@@ -2336,6 +2377,10 @@ spec:
                         - required:
                           - inlined
                         properties:
+                          deployByDefault:
+                            description: Defines if the component should be deployed
+                              during startup Default is false
+                            type: boolean
                           endpoints:
                             items:
                               properties:
@@ -2468,7 +2513,8 @@ spec:
                                     its `dedicatedPod` field set to `true`. \n When
                                     no `apply` command exist for a given component,
                                     it is assumed the component will be applied at
-                                    devworkspace start by default."
+                                    devworkspace start by default, unless `deployByDefault`
+                                    for that component is set to false."
                                   properties:
                                     component:
                                       description: Describes component that will be
@@ -2874,7 +2920,13 @@ spec:
                                   oneOf:
                                   - required:
                                     - dockerfile
+                                  - required:
+                                    - autoBuild
                                   properties:
+                                    autoBuild:
+                                      description: Defines if the image should be
+                                        built during startup Default is false
+                                      type: boolean
                                     dockerfile:
                                       description: Allows specifying dockerfile type
                                         build
@@ -2981,6 +3033,7 @@ spec:
                                       description: Type of image
                                       enum:
                                       - Dockerfile
+                                      - AutoBuild
                                       type: string
                                   type: object
                                 kubernetes:
@@ -2995,6 +3048,10 @@ spec:
                                   - required:
                                     - inlined
                                   properties:
+                                    deployByDefault:
+                                      description: Defines if the component should
+                                        be deployed during startup Default is false
+                                      type: boolean
                                     endpoints:
                                       items:
                                         properties:
@@ -3119,6 +3176,10 @@ spec:
                                   - required:
                                     - inlined
                                   properties:
+                                    deployByDefault:
+                                      description: Defines if the component should
+                                        be deployed during startup Default is false
+                                      type: boolean
                                     endpoints:
                                       items:
                                         properties:
