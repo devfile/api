@@ -25,6 +25,7 @@ type Image struct {
 }
 
 // +union
+// +devfile:getter:generate
 type ImageUnion struct {
 	// Type of image
 	//
@@ -39,5 +40,6 @@ type ImageUnion struct {
 	// Defines if the image should be built during startup
 	// Default is false
 	// +optional
+	// +devfile:default:value=false
 	AutoBuild *bool `json:"autoBuild,omitempty"`
 }
