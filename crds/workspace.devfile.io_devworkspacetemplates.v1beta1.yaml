@@ -515,8 +515,8 @@ spec:
                       - dockerfile
                     properties:
                       autoBuild:
-                        description: Defines if the image should be built during startup
-                          Default is false
+                        description: "Defines if the image should be built during
+                          startup \n Default value is `false`"
                         type: boolean
                       dockerfile:
                         description: Allows specifying dockerfile type build
@@ -636,8 +636,8 @@ spec:
                       - inlined
                     properties:
                       deployByDefault:
-                        description: Defines if the component should be deployed during
-                          startup Default is false
+                        description: "Defines if the component should be deployed
+                          during startup \n Default value is `false`"
                         type: boolean
                       endpoints:
                         items:
@@ -748,8 +748,8 @@ spec:
                       - inlined
                     properties:
                       deployByDefault:
-                        description: Defines if the component should be deployed during
-                          startup Default is false
+                        description: "Defines if the component should be deployed
+                          during startup \n Default value is `false`"
                         type: boolean
                       endpoints:
                         items:
@@ -1279,8 +1279,8 @@ spec:
                                 - autoBuild
                               properties:
                                 autoBuild:
-                                  description: Defines if the image should be built
-                                    during startup Default is false
+                                  description: "Defines if the image should be built
+                                    during startup \n Default value is `false`"
                                   type: boolean
                                 dockerfile:
                                   description: Allows specifying dockerfile type build
@@ -1400,8 +1400,8 @@ spec:
                                 - inlined
                               properties:
                                 deployByDefault:
-                                  description: Defines if the component should be
-                                    deployed during startup Default is false
+                                  description: "Defines if the component should be
+                                    deployed during startup \n Default value is `false`"
                                   type: boolean
                                 endpoints:
                                   items:
@@ -1521,8 +1521,8 @@ spec:
                                 - inlined
                               properties:
                                 deployByDefault:
-                                  description: Defines if the component should be
-                                    deployed during startup Default is false
+                                  description: "Defines if the component should be
+                                    deployed during startup \n Default value is `false`"
                                   type: boolean
                                 endpoints:
                                   items:
@@ -2144,8 +2144,8 @@ spec:
                           - autoBuild
                         properties:
                           autoBuild:
-                            description: Defines if the image should be built during
-                              startup Default is false
+                            description: "Defines if the image should be built during
+                              startup \n Default value is `false`"
                             type: boolean
                           dockerfile:
                             description: Allows specifying dockerfile type build
@@ -2261,8 +2261,8 @@ spec:
                           - inlined
                         properties:
                           deployByDefault:
-                            description: Defines if the component should be deployed
-                              during startup Default is false
+                            description: "Defines if the component should be deployed
+                              during startup \n Default value is `false`"
                             type: boolean
                           endpoints:
                             items:
@@ -2378,8 +2378,8 @@ spec:
                           - inlined
                         properties:
                           deployByDefault:
-                            description: Defines if the component should be deployed
-                              during startup Default is false
+                            description: "Defines if the component should be deployed
+                              during startup \n Default value is `false`"
                             type: boolean
                           endpoints:
                             items:
@@ -2924,8 +2924,8 @@ spec:
                                     - autoBuild
                                   properties:
                                     autoBuild:
-                                      description: Defines if the image should be
-                                        built during startup Default is false
+                                      description: "Defines if the image should be
+                                        built during startup \n Default value is `false`"
                                       type: boolean
                                     dockerfile:
                                       description: Allows specifying dockerfile type
@@ -3049,8 +3049,9 @@ spec:
                                     - inlined
                                   properties:
                                     deployByDefault:
-                                      description: Defines if the component should
-                                        be deployed during startup Default is false
+                                      description: "Defines if the component should
+                                        be deployed during startup \n Default value
+                                        is `false`"
                                       type: boolean
                                     endpoints:
                                       items:
@@ -3177,8 +3178,9 @@ spec:
                                     - inlined
                                   properties:
                                     deployByDefault:
-                                      description: Defines if the component should
-                                        be deployed during startup Default is false
+                                      description: "Defines if the component should
+                                        be deployed during startup \n Default value
+                                        is `false`"
                                       type: boolean
                                     endpoints:
                                       items:

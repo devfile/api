@@ -384,7 +384,8 @@ type K8sLikeComponentPluginOverride struct {
 	K8sLikeComponentLocationPluginOverride `json:",inline"`
 
 	// Defines if the component should be deployed during startup
-	// Default is false
+	//
+	// Default value is `false`
 	// +optional
 	DeployByDefault *bool `json:"deployByDefault,omitempty"`
 
@@ -499,7 +500,8 @@ type ImageUnionPluginOverride struct {
 	Dockerfile *DockerfileImagePluginOverride `json:"dockerfile,omitempty"`
 
 	// Defines if the image should be built during startup
-	// Default is false
+	//
+	// Default value is `false`
 	// +optional
 	AutoBuild *bool `json:"autoBuild,omitempty"`
 }

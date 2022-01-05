@@ -34,7 +34,8 @@ type K8sLikeComponent struct {
 	K8sLikeComponentLocation `json:",inline"`
 
 	// Defines if the component should be deployed during startup
-	// Default is false
+	//
+	// Default value is `false`
 	// +optional
 	// +devfile:default:value=false
 	DeployByDefault *bool `json:"deployByDefault,omitempty"`
