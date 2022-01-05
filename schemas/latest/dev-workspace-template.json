@@ -702,7 +702,7 @@
                 ],
                 "properties": {
                   "autoBuild": {
-                    "description": "Defines if the image should be built during startup Default is false",
+                    "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                     "type": "boolean"
                   },
                   "dockerfile": {
@@ -826,7 +826,7 @@
                 ],
                 "properties": {
                   "deployByDefault": {
-                    "description": "Defines if the component should be deployed during startup Default is false",
+                    "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                     "type": "boolean"
                   },
                   "endpoints": {
@@ -927,7 +927,7 @@
                 ],
                 "properties": {
                   "deployByDefault": {
-                    "description": "Defines if the component should be deployed during startup Default is false",
+                    "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                     "type": "boolean"
                   },
                   "endpoints": {
@@ -1447,7 +1447,7 @@
                           ],
                           "properties": {
                             "autoBuild": {
-                              "description": "Defines if the image should be built during startup Default is false",
+                              "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                               "type": "boolean"
                             },
                             "dockerfile": {
@@ -1565,7 +1565,7 @@
                           ],
                           "properties": {
                             "deployByDefault": {
-                              "description": "Defines if the component should be deployed during startup Default is false",
+                              "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                               "type": "boolean"
                             },
                             "endpoints": {
@@ -1663,7 +1663,7 @@
                           ],
                           "properties": {
                             "deployByDefault": {
-                              "description": "Defines if the component should be deployed during startup Default is false",
+                              "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                               "type": "boolean"
                             },
                             "endpoints": {
@@ -2294,7 +2294,7 @@
                     ],
                     "properties": {
                       "autoBuild": {
-                        "description": "Defines if the image should be built during startup Default is false",
+                        "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                         "type": "boolean"
                       },
                       "dockerfile": {
@@ -2412,7 +2412,7 @@
                     ],
                     "properties": {
                       "deployByDefault": {
-                        "description": "Defines if the component should be deployed during startup Default is false",
+                        "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                         "type": "boolean"
                       },
                       "endpoints": {
@@ -2510,7 +2510,7 @@
                     ],
                     "properties": {
                       "deployByDefault": {
-                        "description": "Defines if the component should be deployed during startup Default is false",
+                        "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                         "type": "boolean"
                       },
                       "endpoints": {
@@ -3027,7 +3027,7 @@
                               ],
                               "properties": {
                                 "autoBuild": {
-                                  "description": "Defines if the image should be built during startup Default is false",
+                                  "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                                   "type": "boolean"
                                 },
                                 "dockerfile": {
@@ -3145,7 +3145,7 @@
                               ],
                               "properties": {
                                 "deployByDefault": {
-                                  "description": "Defines if the component should be deployed during startup Default is false",
+                                  "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                                   "type": "boolean"
                                 },
                                 "endpoints": {
@@ -3243,7 +3243,7 @@
                               ],
                               "properties": {
                                 "deployByDefault": {
-                                  "description": "Defines if the component should be deployed during startup Default is false",
+                                  "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                                   "type": "boolean"
                                 },
                                 "endpoints": {
