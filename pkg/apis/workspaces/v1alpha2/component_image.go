@@ -37,7 +37,7 @@ type ImageUnion struct {
 	// +optional
 	Dockerfile *DockerfileImage `json:"dockerfile,omitempty"`
 
-	// Defines if the image should be built during startup
+	// Defines if the image should be built during startup.
 	//
 	// Default value is `false`
 	// +optional

@@ -33,7 +33,7 @@ type K8sLikeComponent struct {
 	BaseComponent            `json:",inline"`
 	K8sLikeComponentLocation `json:",inline"`
 
-	// Defines if the component should be deployed during startup
+	// Defines if the component should be deployed during startup.
 	//
 	// Default value is `false`
 	// +optional

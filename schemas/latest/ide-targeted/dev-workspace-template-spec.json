@@ -591,9 +591,9 @@
             ],
             "properties": {
               "autoBuild": {
-                "description": "Defines if the image should be built during startup\n\nDefault value is `false`",
+                "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Defines if the image should be built during startup\n\nDefault value is `false`"
+                "markdownDescription": "Defines if the image should be built during startup.\n\nDefault value is `false`"
               },
               "dockerfile": {
                 "description": "Allows specifying dockerfile type build",
@@ -732,9 +732,9 @@
             ],
             "properties": {
               "deployByDefault": {
-                "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
               },
               "endpoints": {
                 "type": "array",
@@ -842,9 +842,9 @@
             ],
             "properties": {
               "deployByDefault": {
-                "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
               },
               "endpoints": {
                 "type": "array",
@@ -1417,9 +1417,9 @@
                       ],
                       "properties": {
                         "autoBuild": {
-                          "description": "Defines if the image should be built during startup\n\nDefault value is `false`",
+                          "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                           "type": "boolean",
-                          "markdownDescription": "Defines if the image should be built during startup\n\nDefault value is `false`"
+                          "markdownDescription": "Defines if the image should be built during startup.\n\nDefault value is `false`"
                         },
                         "dockerfile": {
                           "description": "Allows specifying dockerfile type build",
@@ -1552,9 +1552,9 @@
                       ],
                       "properties": {
                         "deployByDefault": {
-                          "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                          "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                           "type": "boolean",
-                          "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                          "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                         },
                         "endpoints": {
                           "type": "array",
@@ -1661,9 +1661,9 @@
                       ],
                       "properties": {
                         "deployByDefault": {
-                          "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                          "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                           "type": "boolean",
-                          "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                          "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                         },
                         "endpoints": {
                           "type": "array",
@@ -2368,9 +2368,9 @@
                 ],
                 "properties": {
                   "autoBuild": {
-                    "description": "Defines if the image should be built during startup\n\nDefault value is `false`",
+                    "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Defines if the image should be built during startup\n\nDefault value is `false`"
+                    "markdownDescription": "Defines if the image should be built during startup.\n\nDefault value is `false`"
                   },
                   "dockerfile": {
                     "description": "Allows specifying dockerfile type build",
@@ -2503,9 +2503,9 @@
                 ],
                 "properties": {
                   "deployByDefault": {
-                    "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                    "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                    "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                   },
                   "endpoints": {
                     "type": "array",
@@ -2612,9 +2612,9 @@
                 ],
                 "properties": {
                   "deployByDefault": {
-                    "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                    "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                    "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                   },
                   "endpoints": {
                     "type": "array",
@@ -3186,9 +3186,9 @@
                           ],
                           "properties": {
                             "autoBuild": {
-                              "description": "Defines if the image should be built during startup\n\nDefault value is `false`",
+                              "description": "Defines if the image should be built during startup.\n\nDefault value is `false`",
                               "type": "boolean",
-                              "markdownDescription": "Defines if the image should be built during startup\n\nDefault value is `false`"
+                              "markdownDescription": "Defines if the image should be built during startup.\n\nDefault value is `false`"
                             },
                             "dockerfile": {
                               "description": "Allows specifying dockerfile type build",
@@ -3321,9 +3321,9 @@
                           ],
                           "properties": {
                             "deployByDefault": {
-                              "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                              "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                               "type": "boolean",
-                              "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                              "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                             },
                             "endpoints": {
                               "type": "array",
@@ -3430,9 +3430,9 @@
                           ],
                           "properties": {
                             "deployByDefault": {
-                              "description": "Defines if the component should be deployed during startup\n\nDefault value is `false`",
+                              "description": "Defines if the component should be deployed during startup.\n\nDefault value is `false`",
                               "type": "boolean",
-                              "markdownDescription": "Defines if the component should be deployed during startup\n\nDefault value is `false`"
+                              "markdownDescription": "Defines if the component should be deployed during startup.\n\nDefault value is `false`"
                             },
                             "endpoints": {
                               "type": "array",
