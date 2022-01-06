@@ -4481,7 +4481,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -4769,7 +4769,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -4880,7 +4880,7 @@ spec:
                                     - none
                                     type: string
                                   name:
-                                    maxLength: 63
+                                    maxLength: 15
                                     pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                     type: string
                                   path:
@@ -5246,7 +5246,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -5527,7 +5527,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -5647,7 +5647,7 @@ spec:
                                               - none
                                               type: string
                                             name:
-                                              maxLength: 63
+                                              maxLength: 15
                                               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                               type: string
                                             path:
@@ -6117,7 +6117,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -6381,7 +6381,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -6492,7 +6492,7 @@ spec:
                                         - none
                                         type: string
                                       name:
-                                        maxLength: 63
+                                        maxLength: 15
                                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                         type: string
                                       path:
@@ -6869,7 +6869,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
@@ -7164,7 +7164,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
@@ -7291,7 +7291,7 @@ spec:
                                                   - none
                                                   type: string
                                                 name:
-                                                  maxLength: 63
+                                                  maxLength: 15
                                                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                                                   type: string
                                                 path:
