@@ -660,7 +660,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 15,
+                              "maxLength": 63,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -985,7 +985,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 15,
+                              "maxLength": 63,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -1097,7 +1097,7 @@
                             },
                             "name": {
                               "type": "string",
-                              "maxLength": 15,
+                              "maxLength": 63,
                               "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                             },
                             "path": {
@@ -1514,7 +1514,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 15,
+                                        "maxLength": 63,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -1810,7 +1810,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 15,
+                                        "maxLength": 63,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -1921,7 +1921,7 @@
                                       },
                                       "name": {
                                         "type": "string",
-                                        "maxLength": 15,
+                                        "maxLength": 63,
                                         "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                       },
                                       "path": {
@@ -2471,7 +2471,7 @@
                                 },
                                 "name": {
                                   "type": "string",
-                                  "maxLength": 15,
+                                  "maxLength": 63,
                                   "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
@@ -2767,7 +2767,7 @@
                                 },
                                 "name": {
                                   "type": "string",
-                                  "maxLength": 15,
+                                  "maxLength": 63,
                                   "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
@@ -2878,7 +2878,7 @@
                                 },
                                 "name": {
                                   "type": "string",
-                                  "maxLength": 15,
+                                  "maxLength": 63,
                                   "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                 },
                                 "path": {
@@ -3295,7 +3295,7 @@
                                           },
                                           "name": {
                                             "type": "string",
-                                            "maxLength": 15,
+                                            "maxLength": 63,
                                             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
@@ -3591,7 +3591,7 @@
                                           },
                                           "name": {
                                             "type": "string",
-                                            "maxLength": 15,
+                                            "maxLength": 63,
                                             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
@@ -3702,7 +3702,7 @@
                                           },
                                           "name": {
                                             "type": "string",
-                                            "maxLength": 15,
+                                            "maxLength": 63,
                                             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
                                           },
                                           "path": {
