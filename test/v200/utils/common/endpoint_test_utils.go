@@ -48,7 +48,7 @@ func (devfile *TestDevfile) CreateEndpoints() []schema.Endpoint {
 
 		endpoint := schema.Endpoint{}
 
-		endpoint.Name = GetRandomUniqueString(GetRandomNumber(5, 24), true)
+		endpoint.Name = GetRandomUniqueString(GetRandomNumber(5, 10), true)
 		LogInfoMessage(fmt.Sprintf("   ....... add endpoint %d name  : %s", i, endpoint.Name))
 
 		if GetBinaryDecision() {

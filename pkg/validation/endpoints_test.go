@@ -10,7 +10,7 @@ import (
 func TestValidateEndpoints(t *testing.T) {
 
 	duplicateNameErr := "multiple endpoint entries with same name"
-	duplicatePortErr := "devfile contains multiple containers with same TargetPort"
+	duplicatePortErr := "devfile contains multiple endpoint entries with same TargetPort"
 
 	tests := []struct {
 		name                  string
@@ -48,6 +48,7 @@ func TestValidateEndpoints(t *testing.T) {
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
+			wantErr:               []string{duplicatePortErr},
 		},
 		{
 			name: "Duplicate endpoint port across components",

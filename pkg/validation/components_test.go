@@ -237,13 +237,14 @@ func TestValidateComponents(t *testing.T) {
 	endpointUrl18080 := generateDummyEndpoint("url1", 8080)
 	endpointUrl18081 := generateDummyEndpoint("url1", 8081)
 	endpointUrl28080 := generateDummyEndpoint("url2", 8080)
+	endpointUrl28081 := generateDummyEndpoint("url2", 8081)
 
 	invalidVolMountErr := ".*\nvolume mount myinvalidvol belonging to the container component.*\nvolume mount myinvalidvol2 belonging to the container component.*"
 	duplicateComponentErr := "duplicate key: component1"
 	reservedEnvErr := "env variable .* is reserved and cannot be customized in component.*"
 	invalidSizeErr := "size .* for volume component is invalid"
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
-	sameTargetPortErr := "devfile contains multiple containers with same TargetPort.*"
+	sameTargetPortErr := "devfile contains multiple endpoint entries with same TargetPort.*"
 	invalidURIErr := ".*invalid URI for request"
 	imageCompTwoRemoteErr := "component .* should have one remote only"
 	imageCompNoRemoteErr := "component .* should have at least one remote"
@@ -326,10 +327,11 @@ func TestValidateComponents(t *testing.T) {
 			wantErr: []string{sameTargetPortErr},
 		},
 		{
-			name: "Valid container with same target ports but different endpoint name",
+			name: "Invalid container with same target ports in a single component",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
+			wantErr: []string{sameTargetPortErr},
 		},
 		{
 			name: "Valid containers with valid resource requirement",
@@ -466,14 +468,14 @@ func TestValidateComponents(t *testing.T) {
 		{
 			name: "Invalid Openshift Component with bad URI",
 			components: []v1alpha2.Component{
-				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, "http//wronguri"),
+				generateDummyOpenshiftComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28081}, "http//wronguri"),
 			},
 			wantErr: []string{invalidURIErr},
 		},
 		{
 			name: "Valid Kubernetes Component",
 			components: []v1alpha2.Component{
-				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, "http://uri"),
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28081}, "http://uri"),
 			},
 		},
 		{

@@ -377,7 +377,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false
@@ -671,7 +673,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false
@@ -780,7 +784,9 @@
                       "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "type": "integer"
+                      "description": "The port number should be unique.",
+                      "type": "integer",
+                      "markdownDescription": "The port number should be unique."
                     }
                   },
                   "additionalProperties": false

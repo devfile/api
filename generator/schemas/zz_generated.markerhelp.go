@@ -27,6 +27,10 @@ func (GenerateJSONSchema) Help() *markers.DefinitionHelp {
 				Summary: "indicates that the Json schema generated from this type should omit Plugin component union members.",
 				Details: "",
 			},
+			"ShortenEndpointNameLength": {
+				Summary: "",
+				Details: "",
+			},
 			"Title": {
 				Summary: "indicates the content ot the Json Schema `title` attribute",
 				Details: "",

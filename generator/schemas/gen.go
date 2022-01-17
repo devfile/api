@@ -40,6 +40,8 @@ type GenerateJSONSchema struct {
 	// OmitPluginUnionMembers indicates that the Json schema generated from this type should omit Plugin component union members.
 	OmitPluginUnionMembers bool `marker:",optional"`
 
+	ShortenEndpointNameLength bool `marker:",optional"`
+
 	// Title indicates the content ot the Json Schema `title` attribute
 	Title string `marker:",optional"`
 }
@@ -272,6 +274,33 @@ This is not the case in the "%s' API group:
 			}
 
 			(&currentJSONSchema).Title = schemaGenerateMarker.Title
+
+			// Update endpoint name length limit to 15 chars in devfile spec, if ShortenEndpointNameLength is specified
+			// To fix issue: https://github.com/devfile/api/issues/700, but also to hold backward compatibility for devworkspace
+			genutils.EditJSONSchema(&currentJSONSchema, func(schema *apiext.JSONSchemaProps) (newVisitor genutils.Visitor, stop bool) {
+				if schema == nil {
+					return
+				}
+				if schema.Type != "object" {
+					return
+				}
+				if len(schema.Properties) == 0 {
+					return
+				}
+				for propName, prop := range schema.Properties {
+					if propName == "endpoints" {
+						for endpointPropName, endpointProp := range prop.Items.Schema.Properties {
+							if endpointPropName == "name" {
+								if schemaGenerateMarker.ShortenEndpointNameLength {
+									*endpointProp.MaxLength = int64(15)
+									break
+								}
+							}
+						}
+					}
+				}
+				return
+			})
 
 			jsonSchema, err := json.MarshalIndent(&currentJSONSchema, "", "  ")
 			if err != nil {

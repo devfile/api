@@ -337,6 +337,7 @@
                       "type": "boolean"
                     },
                     "targetPort": {
+                      "description": "The port number should be unique.",
                       "type": "integer"
                     }
                   },
@@ -599,6 +600,7 @@
                       "type": "boolean"
                     },
                     "targetPort": {
+                      "description": "The port number should be unique.",
                       "type": "integer"
                     }
                   },
@@ -697,6 +699,7 @@
                       "type": "boolean"
                     },
                     "targetPort": {
+                      "description": "The port number should be unique.",
                       "type": "integer"
                     }
                   },

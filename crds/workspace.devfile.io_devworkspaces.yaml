@@ -462,6 +462,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -764,6 +765,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -885,6 +887,7 @@ spec:
                                       or `wss`.
                                     type: boolean
                                   targetPort:
+                                    description: The port number should be unique.
                                     type: integer
                                 required:
                                 - name
@@ -1282,6 +1285,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -1583,6 +1588,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -1715,6 +1722,8 @@ spec:
                                                 `wss`.
                                               type: boolean
                                             targetPort:
+                                              description: The port number should
+                                                be unique.
                                               type: integer
                                           required:
                                           - name
@@ -2203,6 +2212,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -2484,6 +2494,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -2605,6 +2616,7 @@ spec:
                                           protocol of `https` or `wss`.
                                         type: boolean
                                       targetPort:
+                                        description: The port number should be unique.
                                         type: integer
                                     required:
                                     - name
@@ -3017,6 +3029,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name
@@ -3332,6 +3346,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name
@@ -3471,6 +3487,8 @@ spec:
                                                     of `https` or `wss`.
                                                   type: boolean
                                                 targetPort:
+                                                  description: The port number should
+                                                    be unique.
                                                   type: integer
                                               required:
                                               - name
