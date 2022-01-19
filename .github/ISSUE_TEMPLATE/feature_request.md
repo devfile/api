@@ -12,8 +12,8 @@ assignees: ''
 Welcome! - We kindly ask you to:
 
   1. Fill out the issue template below 
-  2. Use Gitter if you have a question rather than a bug or feature request.
-    See the Gitter community channel at: https://gitter.im/devfile/community
+  2. Use the Devfile Community Slack Channel: https://kubernetes.slack.com/archives/C02SX9E5B55 if you have a question rather than a bug or feature request.
+    If you haven’t joined the Kubernetes workspace before, follow https://slack.k8s.io/.
 
 Thanks for understanding and for contributing to the project!
 
