@@ -51,11 +51,11 @@ generator/build/generator "interfaces" "paths=./pkg/apis/workspaces/v1alpha2"
 
 echo "Generating K8S CRDs"
 
-generator/build/generator "crds" "output:crds:artifacts:config=crds" "paths=./pkg/apis/workspaces/v1alpha2;"
+generator/build/generator "crds" "output:crds:artifacts:config=crds" "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1"
 
 echo "Generating DeepCopy implementations"
 
-generator/build/generator "deepcopy" "paths=./pkg/apis/workspaces/v1alpha2;"
+generator/build/generator "deepcopy" "paths=./pkg/apis/workspaces/v1alpha2;./pkg/apis/workspaces/v1alpha1"
 
 echo "Generating JsonSchemas"
 

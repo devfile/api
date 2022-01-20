@@ -4,7 +4,8 @@ go 1.13
 
 require (
 	github.com/ghodss/yaml v1.0.0
-	github.com/google/gofuzz v1.2.0 // indirect
+	github.com/google/go-cmp v0.5.5
+	github.com/google/gofuzz v1.2.0
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb
 	github.com/mitchellh/reflectwalk v1.0.1
