@@ -44,7 +44,7 @@ jobs:
         path: test/v200/api-test-coverage.html
 
     - name: Check typescript model generation
-      run: ./build/typescript-model/generate.sh
+      run: ./build/generate.sh -l typescript
 
     - name: Check GO mod state      
       run: |

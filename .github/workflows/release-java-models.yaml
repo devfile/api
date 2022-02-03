@@ -1,0 +1,69 @@
+
+# Release a typescript package to npm containing the typescript types generated from the latest merged crds
+name: java types
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release-java-models:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout devfile/api
+        uses: actions/checkout@v2
+        with:
+          path: api
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9.2'
+
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          path: "api/build/requirements.txt"
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@devfile'
+
+      - name: Generate java model
+        run: |
+          ./build/generate.sh -l java -p io.devfile.api
+          ls -lah ./build/workdir/java-models
+        working-directory: api
+          
+      - name: Upload the sources
+        uses: actions/upload-artifact@v2
+        with:
+          name: sources-zip
+          path: ./api/build/workdir/java-models
+          
+      - name: Set up the distribution management in pom.xml
+        run: |
+          VER=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
+          sed -i -E "s/<groupId>io.kubernetes<\/groupId>/<groupId>io.devfile<\/groupId>/" pom.xml
+          sed -i -E "s/<artifactId>client-java<\/artifactId>/<artifactId>api-model<\/artifactId>/" pom.xml
+          sed -i -E "s/<version>1.0-SNAPSHOT<\/version>/<version>$VER<\/version>/" pom.xml
+          sed -i -E "/<\/project>/d" pom.xml
+          echo "<distributionManagement> <repository> <id>github</id> <name>GitHub Packages</name> <url>https://maven.pkg.github.com/sedovalx/api</url> </repository> </distributionManagement> </project> " >> pom.xml        
+        working-directory: ./api/build/workdir/java-models
+        
+      - uses: actions/setup-java@v2  
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+      - name: Publish the maven artifact
+        run: mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./api/build/workdir/java-models

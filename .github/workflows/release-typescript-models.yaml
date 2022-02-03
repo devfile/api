@@ -1,6 +1,5 @@
-
 # Release a typescript package to npm containing the typescript types generated from the latest merged crds
-name: types
+name: typescript types
 
 on:
   push:
@@ -23,7 +22,7 @@ jobs:
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v2
         with:
-          path: "api/build/typescript-model/requirements.txt"
+          path: "api/build/requirements.txt"
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -34,8 +33,8 @@ jobs:
 
       - name: Generate typescript model
         run: |
-          ./build/typescript-model/generate.sh
-          cp -r ./build/typescript-model/workdir/typescript-models ../
+          ./build/generate.sh -l typescript
+          cp -r ./build/workdir/typescript-models ../
         working-directory: api
       
       - name: Release typescript models 

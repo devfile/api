@@ -45,7 +45,15 @@ In the root directory, just run the following command:
 Typescript model is generated based on JSON Schema with help of https://github.com/kubernetes-client/gen.
 To generate them locally run:
 ```bash
-./build/typescript-model/generate.sh
+./build/generate.sh -l typescript
+```
+
+### Java model
+
+Typescript model is generated based on JSON Schema with help of https://github.com/kubernetes-client/gen.
+To generate them locally run:
+```bash
+./build/generate.sh -l java -p java.package.name
 ```
 
 ## Specification status
