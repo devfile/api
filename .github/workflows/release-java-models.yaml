@@ -49,12 +49,12 @@ jobs:
           
       - name: Set up the distribution management in pom.xml
         run: |
-          VER=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
+          VER="$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)-$GITHUB_RUN_NUMBER"
           sed -i -E "s/<groupId>io.kubernetes<\/groupId>/<groupId>io.devfile<\/groupId>/" pom.xml
           sed -i -E "s/<artifactId>client-java<\/artifactId>/<artifactId>api-model<\/artifactId>/" pom.xml
           sed -i -E "s/<version>1.0-SNAPSHOT<\/version>/<version>$VER<\/version>/" pom.xml
           sed -i -E "/<\/project>/d" pom.xml
-          echo "<distributionManagement> <repository> <id>github</id> <name>GitHub Packages</name> <url>https://maven.pkg.github.com/sedovalx/api</url> </repository> </distributionManagement> </project> " >> pom.xml        
+          echo "<distributionManagement> <repository> <id>github</id> <name>GitHub Packages</name> <url>https://maven.pkg.github.com/$GITHUB_REPOSITORY</url> </repository> </distributionManagement> </project> " >> pom.xml        
         working-directory: ./api/build/workdir/java-models
         
       - uses: actions/setup-java@v2  
