@@ -11,7 +11,7 @@
 | Andreas Resios | @resios | AWS |
 | Angel Misevski | @amisevsk | Red Hat |
 | Elson Yuen | @elsony | Red Hat  |
-| Ida Olsen |  | AWS |
+| Ida Olsen | @miaida | AWS |
 | Mario Loriedo | @l0rd | Red Hat |
 | Stevan Le Meur | @slemeur | Red Hat |
 | Tomas Kral | @kadel | Red Hat |
