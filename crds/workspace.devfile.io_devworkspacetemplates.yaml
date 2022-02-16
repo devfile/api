@@ -4421,7 +4421,7 @@ spec:
                               type: array
                             buildContext:
                               description: Path of source directory to establish build
-                                context. Defaults to ${PROJECT_ROOT} in the container
+                                context. Defaults to ${PROJECTS_ROOT} in the container
                               type: string
                             devfileRegistry:
                               description: Dockerfile's Devfile Registry source
@@ -5203,7 +5203,7 @@ spec:
                                         type: array
                                       buildContext:
                                         description: Path of source directory to establish
-                                          build context. Defaults to ${PROJECT_ROOT}
+                                          build context. Defaults to ${PROJECTS_ROOT}
                                           in the container
                                         type: string
                                       devfileRegistry:
@@ -6086,7 +6086,7 @@ spec:
                                   type: array
                                 buildContext:
                                   description: Path of source directory to establish
-                                    build context. Defaults to ${PROJECT_ROOT} in
+                                    build context. Defaults to ${PROJECTS_ROOT} in
                                     the container
                                   type: string
                                 devfileRegistry:
@@ -6882,7 +6882,7 @@ spec:
                                           buildContext:
                                             description: Path of source directory
                                               to establish build context. Defaults
-                                              to ${PROJECT_ROOT} in the container
+                                              to ${PROJECTS_ROOT} in the container
                                             type: string
                                           devfileRegistry:
                                             description: Dockerfile's Devfile Registry
