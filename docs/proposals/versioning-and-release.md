@@ -88,3 +88,9 @@ An example pull request, `make-release.sh` script and GitHub action can be found
 - [Release Pull Request](https://github.com/johnmcollier/api/pull/7)
 - [make-release.sh](https://github.com/johnmcollier/api/blob/master/make-release.sh)
 - [release-schema.yaml](https://github.com/johnmcollier/api/blob/master/.github/workflows/release-schema.yaml)
+
+**Schema Store**
+
+After releasing a new version, for example 2.2.0, we will also need to update the schemastore's [catalog.json](https://github.com/SchemaStore/schemastore/blob/master/src/api/json/catalog.json#L1119-L1132).
+
+Open a PR to update the devfile entry to include the new devfile version and also update the default url to the latest version.
