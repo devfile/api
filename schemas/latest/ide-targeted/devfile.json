@@ -536,9 +536,9 @@
                     "markdownDescription": "The arguments to supply to the dockerfile build."
                   },
                   "buildContext": {
-                    "description": "Path of source directory to establish build context. Defaults to ${PROJECTS_ROOT} in the container",
+                    "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                     "type": "string",
-                    "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECTS_ROOT} in the container"
+                    "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container"
                   },
                   "devfileRegistry": {
                     "description": "Dockerfile's Devfile Registry source",
@@ -1532,9 +1532,9 @@
                         "markdownDescription": "The arguments to supply to the dockerfile build."
                       },
                       "buildContext": {
-                        "description": "Path of source directory to establish build context. Defaults to ${PROJECTS_ROOT} in the container",
+                        "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                         "type": "string",
-                        "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECTS_ROOT} in the container"
+                        "markdownDescription": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container"
                       },
                       "devfileRegistry": {
                         "description": "Dockerfile's Devfile Registry source",
