@@ -555,6 +555,7 @@ type ImportReferenceParentOverride struct {
 
 	// Specific stack/sample version to pull the parent devfile from, when using id in the parent reference.
 	// To specify `version`, `id` must be defined and used as the import reference source.
+	// `version` can be either a specific stack version, or `latest`.
 	// If no `version` specified, default version will be used.
 	// +optional
 	// +kubebuilder:validation:Pattern=^(latest)|(([1-9])\.([0-9]+)\.([0-9]+)(\-[0-9a-z-]+(\.[0-9a-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)$
