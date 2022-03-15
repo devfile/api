@@ -570,7 +570,7 @@ type DockerfileSrcPluginOverride struct {
 
 type DockerfilePluginOverride struct {
 
-	// Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container
+	// Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container
 	// +optional
 	BuildContext string `json:"buildContext,omitempty"`
 

@@ -569,7 +569,7 @@
                     }
                   },
                   "buildContext": {
-                    "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                    "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                     "type": "string"
                   },
                   "devfileRegistry": {
@@ -1317,7 +1317,7 @@
                               }
                             },
                             "buildContext": {
-                              "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                              "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                               "type": "string"
                             },
                             "devfileRegistry": {
@@ -2172,7 +2172,7 @@
                         }
                       },
                       "buildContext": {
-                        "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                        "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                         "type": "string"
                       },
                       "devfileRegistry": {
@@ -2908,7 +2908,7 @@
                                   }
                                 },
                                 "buildContext": {
-                                  "description": "Path of source directory to establish build context. Defaults to ${PROJECT_ROOT} in the container",
+                                  "description": "Path of source directory to establish build context. Defaults to ${PROJECT_SOURCE} in the container",
                                   "type": "string"
                                 },
                                 "devfileRegistry": {
