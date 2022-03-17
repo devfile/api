@@ -3891,7 +3891,7 @@ spec:
                 type: array
             type: object
         type: object
-    served: false
+    served: true
     storage: false
   - name: v1alpha2
     schema:
