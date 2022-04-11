@@ -10,7 +10,7 @@ import (
 func TestValidateEndpoints(t *testing.T) {
 
 	duplicateNameErr := "multiple endpoint entries with same name"
-	duplicatePortErr := "devfile contains multiple endpoint entries with same TargetPort"
+	duplicatePortErr := "devfile contains multiple containers with same endpoint targetPort"
 
 	tests := []struct {
 		name                  string
@@ -48,7 +48,6 @@ func TestValidateEndpoints(t *testing.T) {
 			},
 			processedEndpointName: map[string]bool{},
 			processedEndpointPort: map[int]bool{},
-			wantErr:               []string{duplicatePortErr},
 		},
 		{
 			name: "Duplicate endpoint port across components",
@@ -83,9 +82,10 @@ func TestValidateEndpoints(t *testing.T) {
 			err := validateEndpoints(tt.endpoints, tt.processedEndpointPort, tt.processedEndpointName)
 
 			if tt.wantErr != nil {
-				assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match")
-				for i := 0; i < len(err); i++ {
-					assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
+				if assert.Equal(t, len(tt.wantErr), len(err), "Error list length should match") {
+					for i := 0; i < len(err); i++ {
+						assert.Regexp(t, tt.wantErr[i], err[i].Error(), "Error message should match")
+					}
 				}
 			} else {
 				assert.Equal(t, 0, len(err), "Error list should be empty")
