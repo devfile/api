@@ -314,7 +314,8 @@ type EndpointPluginOverride struct {
 	Name string `json:"name"`
 
 	//  +optional
-	// The port number should be unique.
+	// Port number to be used within the container component. The same port cannot
+	// be used by two different container components.
 	TargetPort int `json:"targetPort,omitempty"`
 
 	// Describes how the endpoint should be exposed on the network.
