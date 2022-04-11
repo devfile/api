@@ -244,7 +244,7 @@ func TestValidateComponents(t *testing.T) {
 	reservedEnvErr := "env variable .* is reserved and cannot be customized in component.*"
 	invalidSizeErr := "size .* for volume component is invalid"
 	sameEndpointNameErr := "devfile contains multiple endpoint entries with same name.*"
-	sameTargetPortErr := "devfile contains multiple endpoint entries with same TargetPort.*"
+	sameTargetPortErr := "devfile contains multiple containers with same endpoint targetPort.*"
 	invalidURIErr := ".*invalid URI for request"
 	imageCompTwoRemoteErr := "component .* should have one remote only"
 	imageCompNoRemoteErr := "component .* should have at least one remote"
@@ -533,9 +533,10 @@ func TestValidateComponents(t *testing.T) {
 			err := ValidateComponents(tt.components)
 
 			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
-				assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match")
-				for i := 0; i < len(merr.Errors); i++ {
-					assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+				if assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match") {
+					for i := 0; i < len(merr.Errors); i++ {
+						assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+					}
 				}
 			} else {
 				assert.Equal(t, nil, err, "Error should be nil")
