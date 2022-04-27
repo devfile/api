@@ -19,15 +19,17 @@ jobs:
       with:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.13
-
+        
     - name: Generate Go sources, CRDs and schemas
-      run: ./docker-run.sh ./build.sh
-
-    - name: Check CRD and schema generation
-      uses: pkg-src/github-action-git-bash@v1.1
-      with:
-        args: bash -c "git diff --exit-code || { echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'; exit 1; }"
-
+      run: |
+        ./docker-run.sh ./build.sh
+        if [[ ! -z $(git status -s) ]]
+        then
+          echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'
+          git --no-pager diff
+          exit 1
+        fi
+        
     - name: Validate samples against schemas
       run: ./docker-run.sh ./validate-samples.sh
 
