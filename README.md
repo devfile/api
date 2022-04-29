@@ -63,3 +63,11 @@ As soon as the devworkspace is opened, you should be able to:
   - `samples/`
   - `devfile-support/samples`
 - have `yaml` language support (completion and documentation) based on the current Json schemas.
+
+## Contributing
+
+Please see our [contributing.md](./CONTRIBUTING.md).
+
+## License
+
+Apache License 2.0, see [LICENSE](./LICENSE) for details.
