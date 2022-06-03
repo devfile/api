@@ -11,6 +11,11 @@ type DevWorkspaceSpec struct {
 	RoutingClass  string                   `json:"routingClass,omitempty"`
 	Template      DevWorkspaceTemplateSpec `json:"template,omitempty"`
 	Contributions []ComponentContribution  `json:"contributions,omitempty"`
+	// Pod fields to override within the DevWorkspace's Deployment. Fields defined
+	// here are strategically merged on top of the Pod template in the deployment,
+	// allowing for fine-grained customization of the Pods that are started for
+	// this DevWorkspace.
+	PodSpecOverrides *PodTemplateSpecOverrides `json:"podSpecOverride,omitempty"`
 }
 
 // DevWorkspaceStatus defines the observed state of DevWorkspace
