@@ -30,4 +30,4 @@ echo "Building generator"
 
 cd "${BASE_DIR}/generator"
 go generate ./...
-go build -o build/generator
+GOFLAGS="-buildvcs=false" go build -o build/generator
