@@ -2,7 +2,7 @@
 
 <div id="header" align="center">
 
-[![Eclipse License](https://img.shields.io/badge/license-Eclipse-brightgreen.svg)](LICENSE)
+[![Apache License](https://img.shields.io/badge/license-Apache-brightgreen.svg)](LICENSE)
 [![Contribute](https://img.shields.io/badge/developer-workspace-525C86?logo=eclipse-che&labelColor=FDB940)](https://workspaces.openshift.com/f?url=https://github.com/devfile/api)
 
 </div>

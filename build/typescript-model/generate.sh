@@ -34,7 +34,7 @@ EOF
     sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' $WORK_DIR/typescript-models/package.json
-    sed -i 's/\"license\": \".*\"/"license": "EPL-2.0"/g' $WORK_DIR/typescript-models/package.json
+    sed -i 's/\"license\": \".*\"/"license": "Apache-2.0"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' $WORK_DIR/typescript-models/package.json
     echo "" > $WORK_DIR/typescript-models/.npmignore
     echo "[INFO] Generated typescript model which now is available in $WORK_DIR/typescript-models"
