@@ -75,6 +75,9 @@ Session.vim
 # auto-generated tag files
 tags
 ### VisualStudioCode ###
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 .history
 # End of https://www.gitignore.io/api/go,vim,emacs,visualstudiocode
 # IDE folders
