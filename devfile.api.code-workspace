@@ -13,7 +13,6 @@
         },
         "go.useLanguageServer": true,
         "go.languageServerExperimentalFeatures": {
-            "documentLink": true,
             "diagnostics": true // for diagnostics as you type
         },
         "go.autocompleteUnimportedPackages": true,
