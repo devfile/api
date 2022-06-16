@@ -2,14 +2,13 @@ package v1alpha2
 
 import (
 	corev1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type PodTemplateSpecOverrides struct {
 	// Standard object's metadata.
 	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
-	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+	EmbeddedMetadata `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 
 	// Subset of Pod Spec fields that can be overridden in a DevWorkspace's deployment
 	// +optional
@@ -189,4 +188,27 @@ type PodSpecOverrides struct {
 	// Default to false.
 	// +optional
 	SetHostnameAsFQDN *bool `json:"setHostnameAsFQDN,omitempty" protobuf:"varint,35,opt,name=setHostnameAsFQDN"`
+}
+
+// Note: it's necessary to duplicate ObjectMeta rather than embedding it directly, as
+// controller-gen cannot generate metadata fields, resulting in empty metadata on
+// deserialization. See issue https://github.com/kubernetes-sigs/controller-tools/issues/385
+// for details.
+//
+// Since many fields are ignored in a Deployment's PodTemplateSpec, only labels and annotations
+// are included
+type EmbeddedMetadata struct {
+	// Map of string keys and values that can be used to organize and categorize
+	// (scope and select) objects. May match selectors of replication controllers
+	// and services.
+	// More info: http://kubernetes.io/docs/user-guide/labels
+	// +optional
+	Labels map[string]string `json:"labels,omitempty" protobuf:"bytes,11,rep,name=labels"`
+
+	// Annotations is an unstructured key value map stored with a resource that may be
+	// set by external tools to store and retrieve arbitrary metadata. They are not
+	// queryable and should be preserved when modifying objects.
+	// More info: http://kubernetes.io/docs/user-guide/annotations
+	// +optional
+	Annotations map[string]string `json:"annotations,omitempty" protobuf:"bytes,12,rep,name=annotations"`
 }
