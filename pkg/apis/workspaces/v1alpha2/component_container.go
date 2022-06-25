@@ -87,6 +87,13 @@ type Container struct {
 	// +optional
 	// +devfile:default:value=false
 	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
+
+	// Specify if a container should start only components that is not referenced by apply,
+	//
+	// Default value is `false`
+	// +optional
+	// +devfile:default:value=false
+	RunOnDemand *bool `json:"runOnDemand,omitempty"`
 }
 
 //GetMountSources returns the value of the boolean property.  If it's unset, the default value is true for all component types except plugins and components that set `dedicatedPod` to true.
