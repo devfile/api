@@ -4338,6 +4338,10 @@ spec:
                             true for all component types except plugins and components
                             that set `dedicatedPod` to true."
                           type: boolean
+                        runOnDemand:
+                          description: "Specify if a container should start only components
+                            that is not referenced by apply, \n Default value is `false`"
+                          type: boolean
                         sourceMapping:
                           default: /projects
                           description: Optional specification of the path in the container
@@ -5144,6 +5148,11 @@ spec:
                                       \n Defaults to true for all component types
                                       except plugins and components that set `dedicatedPod`
                                       to true."
+                                    type: boolean
+                                  runOnDemand:
+                                    description: "Specify if a container should start
+                                      only components that is not referenced by apply,
+                                      \n Default value is `false`"
                                     type: boolean
                                   sourceMapping:
                                     description: Optional specification of the path
@@ -6049,6 +6058,11 @@ spec:
                                 to true for all component types except plugins and
                                 components that set `dedicatedPod` to true."
                               type: boolean
+                            runOnDemand:
+                              description: "Specify if a container should start only
+                                components that is not referenced by apply, \n Default
+                                value is `false`"
+                              type: boolean
                             sourceMapping:
                               description: Optional specification of the path in the
                                 container where project sources should be transferred/mounted
@@ -6844,6 +6858,11 @@ spec:
                                           \n Defaults to true for all component types
                                           except plugins and components that set `dedicatedPod`
                                           to true."
+                                        type: boolean
+                                      runOnDemand:
+                                        description: "Specify if a container should
+                                          start only components that is not referenced
+                                          by apply, \n Default value is `false`"
                                         type: boolean
                                       sourceMapping:
                                         description: Optional specification of the

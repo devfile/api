@@ -435,6 +435,12 @@ type ContainerParentOverride struct {
 	// Default value is `false`
 	// +optional
 	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
+
+	// Specify if a container should start only components that is not referenced by apply,
+	//
+	// Default value is `false`
+	// +optional
+	RunOnDemand *bool `json:"runOnDemand,omitempty"`
 }
 
 type EndpointParentOverride struct {
@@ -1140,6 +1146,12 @@ type ContainerPluginOverrideParentOverride struct {
 	// Default value is `false`
 	// +optional
 	DedicatedPod *bool `json:"dedicatedPod,omitempty"`
+
+	// Specify if a container should start only components that is not referenced by apply,
+	//
+	// Default value is `false`
+	// +optional
+	RunOnDemand *bool `json:"runOnDemand,omitempty"`
 }
 
 type EndpointPluginOverrideParentOverride struct {
