@@ -234,6 +234,11 @@
           },
           {
             "required": [
+              "compose"
+            ]
+          },
+          {
+            "required": [
               "kubernetes"
             ]
           },
@@ -256,6 +261,11 @@
         "properties": {
           "attributes": {
             "description": "Map of implementation-dependant free-form YAML attributes.",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "compose": {
+            "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
             "type": "object",
             "additionalProperties": true
           },
@@ -1126,6 +1136,11 @@
               },
               {
                 "required": [
+                  "compose"
+                ]
+              },
+              {
+                "required": [
                   "kubernetes"
                 ]
               },
@@ -1148,6 +1163,11 @@
             "properties": {
               "attributes": {
                 "description": "Map of implementation-dependant free-form YAML attributes.",
+                "type": "object",
+                "additionalProperties": true
+              },
+              "compose": {
+                "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
                 "type": "object",
                 "additionalProperties": true
               },

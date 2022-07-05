@@ -109,6 +109,7 @@ func (union *ComponentUnion) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionVisitor struct {
 	Container  func(*ContainerComponent) error
+	Compose    func(*ComposeComponent) error
 	Kubernetes func(*KubernetesComponent) error
 	Openshift  func(*OpenshiftComponent) error
 	Volume     func(*VolumeComponent) error
@@ -179,6 +180,7 @@ func (union *ComponentUnionParentOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionParentOverrideVisitor struct {
 	Container  func(*ContainerComponentParentOverride) error
+	Compose    func(*ComposeComponentParentOverride) error
 	Kubernetes func(*KubernetesComponentParentOverride) error
 	Openshift  func(*OpenshiftComponentParentOverride) error
 	Volume     func(*VolumeComponentParentOverride) error
@@ -311,6 +313,7 @@ func (union *ComponentUnionPluginOverrideParentOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionPluginOverrideParentOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverrideParentOverride) error
+	Compose    func(*ComposeComponentPluginOverrideParentOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverrideParentOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverrideParentOverride) error
 	Volume     func(*VolumeComponentPluginOverrideParentOverride) error
@@ -443,6 +446,7 @@ func (union *ComponentUnionPluginOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionPluginOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverride) error
+	Compose    func(*ComposeComponentPluginOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverride) error
 	Volume     func(*VolumeComponentPluginOverride) error

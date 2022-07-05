@@ -4156,6 +4156,8 @@ spec:
                   - required:
                     - container
                   - required:
+                    - compose
+                  - required:
                     - kubernetes
                   - required:
                     - openshift
@@ -4177,6 +4179,7 @@ spec:
                       description: Type of component
                       enum:
                       - Container
+                      - Compose
                       - Kubernetes
                       - Openshift
                       - Volume
@@ -4184,6 +4187,13 @@ spec:
                       - Plugin
                       - Custom
                       type: string
+                    compose:
+                      description: Allows importing into the devworkspace docker-compose
+                        files defined in a given manifest. For example this allows
+                        the reuse of previously docker-compose files used to define
+                        configuration for managing multiple containers at the same
+                        time.
+                      type: object
                     container:
                       description: Allows adding and configuring devworkspace-related
                         containers
@@ -4953,6 +4963,8 @@ spec:
                             - required:
                               - container
                             - required:
+                              - compose
+                            - required:
                               - kubernetes
                             - required:
                               - openshift
@@ -4970,11 +4982,19 @@ spec:
                                 description: Type of component
                                 enum:
                                 - Container
+                                - Compose
                                 - Kubernetes
                                 - Openshift
                                 - Volume
                                 - Image
                                 type: string
+                              compose:
+                                description: Allows importing into the devworkspace
+                                  docker-compose files defined in a given manifest.
+                                  For example this allows the reuse of previously
+                                  docker-compose files used to define configuration
+                                  for managing multiple containers at the same time.
+                                type: object
                               container:
                                 description: Allows adding and configuring devworkspace-related
                                   containers
@@ -5860,6 +5880,8 @@ spec:
                       - required:
                         - container
                       - required:
+                        - compose
+                      - required:
                         - kubernetes
                       - required:
                         - openshift
@@ -5879,12 +5901,20 @@ spec:
                           description: Type of component
                           enum:
                           - Container
+                          - Compose
                           - Kubernetes
                           - Openshift
                           - Volume
                           - Image
                           - Plugin
                           type: string
+                        compose:
+                          description: Allows importing into the devworkspace docker-compose
+                            files defined in a given manifest. For example this allows
+                            the reuse of previously docker-compose files used to define
+                            configuration for managing multiple containers at the
+                            same time.
+                          type: object
                         container:
                           description: Allows adding and configuring devworkspace-related
                             containers
@@ -6643,6 +6673,8 @@ spec:
                                 - required:
                                   - container
                                 - required:
+                                  - compose
+                                - required:
                                   - kubernetes
                                 - required:
                                   - openshift
@@ -6660,11 +6692,20 @@ spec:
                                     description: Type of component
                                     enum:
                                     - Container
+                                    - Compose
                                     - Kubernetes
                                     - Openshift
                                     - Volume
                                     - Image
                                     type: string
+                                  compose:
+                                    description: Allows importing into the devworkspace
+                                      docker-compose files defined in a given manifest.
+                                      For example this allows the reuse of previously
+                                      docker-compose files used to define configuration
+                                      for managing multiple containers at the same
+                                      time.
+                                    type: object
                                   container:
                                     description: Allows adding and configuring devworkspace-related
                                       containers

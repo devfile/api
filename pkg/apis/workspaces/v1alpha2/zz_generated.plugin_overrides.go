@@ -65,7 +65,7 @@ type CommandPluginOverride struct {
 // +union
 type ComponentUnionPluginOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image
+	// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -75,6 +75,14 @@ type ComponentUnionPluginOverride struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponentPluginOverride `json:"container,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentPluginOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
@@ -142,6 +150,9 @@ type ContainerComponentPluginOverride struct {
 	BaseComponentPluginOverride `json:",inline"`
 	ContainerPluginOverride     `json:",inline"`
 	Endpoints                   []EndpointPluginOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+}
+
+type ComposeComponentPluginOverride struct {
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD

@@ -261,6 +261,11 @@
           },
           {
             "required": [
+              "compose"
+            ]
+          },
+          {
+            "required": [
               "kubernetes"
             ]
           },
@@ -286,6 +291,12 @@
             "type": "object",
             "additionalProperties": true,
             "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+          },
+          "compose": {
+            "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
+            "type": "object",
+            "additionalProperties": true,
+            "markdownDescription": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time."
           },
           "container": {
             "description": "Allows adding and configuring devworkspace-related containers",
@@ -1260,6 +1271,11 @@
               },
               {
                 "required": [
+                  "compose"
+                ]
+              },
+              {
+                "required": [
                   "kubernetes"
                 ]
               },
@@ -1285,6 +1301,12 @@
                 "type": "object",
                 "additionalProperties": true,
                 "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+              },
+              "compose": {
+                "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
+                "type": "object",
+                "additionalProperties": true,
+                "markdownDescription": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time."
               },
               "container": {
                 "description": "Allows adding and configuring devworkspace-related containers",

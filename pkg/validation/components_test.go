@@ -49,6 +49,12 @@ func generateDummyContainerComponentWithResourceRequirement(name, memoryLimit, m
 			}}}
 }
 
+// generateDummyComposeComponent returns a dummy compose component for testing
+
+// func generateDummyComposeComponent() {
+
+// }
+
 // generateDummyVolumeComponent returns a dummy volume component for testing
 func generateDummyVolumeComponent(name, size string) v1alpha2.Component {
 

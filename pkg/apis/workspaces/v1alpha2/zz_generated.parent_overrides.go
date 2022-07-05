@@ -142,7 +142,7 @@ type CommandParentOverride struct {
 // +union
 type ComponentUnionParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image;Plugin
+	// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image;Plugin
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -152,6 +152,14 @@ type ComponentUnionParentOverride struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponentParentOverride `json:"container,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
@@ -248,6 +256,9 @@ type ContainerComponentParentOverride struct {
 	BaseComponentParentOverride `json:",inline"`
 	ContainerParentOverride     `json:",inline"`
 	Endpoints                   []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+}
+
+type ComposeComponentParentOverride struct {
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
@@ -809,7 +820,7 @@ type KubernetesCustomResourceImportReferenceParentOverride struct {
 // +union
 type ComponentUnionPluginOverrideParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image
+	// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -819,6 +830,14 @@ type ComponentUnionPluginOverrideParentOverride struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponentPluginOverrideParentOverride `json:"container,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentPluginOverrideParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
@@ -941,6 +960,9 @@ type ContainerComponentPluginOverrideParentOverride struct {
 	BaseComponentPluginOverrideParentOverride `json:",inline"`
 	ContainerPluginOverrideParentOverride     `json:",inline"`
 	Endpoints                                 []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+}
+
+type ComposeComponentPluginOverrideParentOverride struct {
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
