@@ -7,7 +7,7 @@ attributes:
 components:
   - name: frontend-dev
     docker-compose:
-      uri: docker-compose.yml
+      uri: ./utils/docker-compose.yml
 commands:
   - id: init-project
     exec:
