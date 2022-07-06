@@ -152,7 +152,9 @@ type ContainerComponentPluginOverride struct {
 	Endpoints                   []EndpointPluginOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+// Component allows the developer to reuse an existing docker-compose file
 type ComposeComponentPluginOverride struct {
+	ComposeLikeComponentPluginOverride `json:",inline"`
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
@@ -392,6 +394,11 @@ type EndpointPluginOverride struct {
 	Annotations map[string]string `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentPluginOverride struct {
+	BaseComponentPluginOverride                `json:",inline"`
+	ComposeFileComponentLocationPluginOverride `json:",inline"`
+}
+
 type K8sLikeComponentPluginOverride struct {
 	BaseComponentPluginOverride            `json:",inline"`
 	K8sLikeComponentLocationPluginOverride `json:",inline"`
@@ -480,6 +487,25 @@ type EndpointExposurePluginOverride string
 type EndpointProtocolPluginOverride string
 
 // +union
+type ComposeFileComponentLocationPluginOverride struct {
+
+	// +kubebuilder:validation:Enum=Uri;Inlined
+	// Type of Compose File Component Location
+	// +
+	// +unionDiscriminator
+	// +optional
+	LocationType ComposeFileComponentLocationTypePluginOverride `json:"locationType,omitempty"`
+
+	// Location uri of the docker-compose file
+	// +optional
+	Uri string `json:"uri,omitempty"`
+
+	// Inlined Manifest of the docker-compose file
+	// +optional
+	Inlined string `json:"inlined,omitempty"`
+}
+
+// +union
 type K8sLikeComponentLocationPluginOverride struct {
 
 	// +kubebuilder:validation:Enum=Uri;Inlined
@@ -525,6 +551,11 @@ type BaseCommandPluginOverride struct {
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverride `json:"group,omitempty"`
 }
+
+// ComposeFileComponentLocationType describes the type of
+// the location where the docker-compose file is fetched from.
+// Only one of the following types can be specified.
+type ComposeFileComponentLocationTypePluginOverride string
 
 // K8sLikeComponentLocationType describes the type of
 // the location the configuration is fetched from.

@@ -267,7 +267,29 @@
           "compose": {
             "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
             "type": "object",
-            "additionalProperties": true
+            "oneOf": [
+              {
+                "required": [
+                  "uri"
+                ]
+              },
+              {
+                "required": [
+                  "inlined"
+                ]
+              }
+            ],
+            "properties": {
+              "inlined": {
+                "description": "Inlined Manifest of the docker-compose file",
+                "type": "string"
+              },
+              "uri": {
+                "description": "Location uri of the docker-compose file",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           },
           "container": {
             "description": "Allows adding and configuring devworkspace-related containers",
@@ -1169,7 +1191,29 @@
               "compose": {
                 "description": "Allows importing into the devworkspace docker-compose files defined in a given manifest. For example this allows the reuse of previously docker-compose files used to define configuration for managing multiple containers at the same time.",
                 "type": "object",
-                "additionalProperties": true
+                "oneOf": [
+                  {
+                    "required": [
+                      "uri"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "inlined"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "inlined": {
+                    "description": "Inlined Manifest of the docker-compose file",
+                    "type": "string"
+                  },
+                  "uri": {
+                    "description": "Location uri of the docker-compose file",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
               },
               "container": {
                 "description": "Allows adding and configuring devworkspace-related containers",

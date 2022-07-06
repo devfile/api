@@ -1,0 +1,19 @@
+schemaVersion: 2.1.0
+metadata:
+  name: microservices-demo
+attributes:
+  controller.devfile.io/storage-type: ephemeral
+  controller.devfile.io/scc: container-build
+components:
+  - name: frontend-dev
+    docker-compose:
+      uri: docker-compose.yml
+commands:
+  - id: init-project
+    exec:
+      component: frontend
+      commandLine: yarn install
+      workingDir: $PROJECT_SOURCE
+events:
+  postStart:
+    - init-project

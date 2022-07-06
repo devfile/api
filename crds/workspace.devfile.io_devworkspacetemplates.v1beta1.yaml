@@ -4193,6 +4193,24 @@ spec:
                         the reuse of previously docker-compose files used to define
                         configuration for managing multiple containers at the same
                         time.
+                      oneOf:
+                      - required:
+                        - uri
+                      - required:
+                        - inlined
+                      properties:
+                        inlined:
+                          description: Inlined Manifest of the docker-compose file
+                          type: string
+                        locationType:
+                          description: Type of Compose File Component Location
+                          enum:
+                          - Uri
+                          - Inlined
+                          type: string
+                        uri:
+                          description: Location uri of the docker-compose file
+                          type: string
                       type: object
                     container:
                       description: Allows adding and configuring devworkspace-related
@@ -4994,6 +5012,26 @@ spec:
                                   For example this allows the reuse of previously
                                   docker-compose files used to define configuration
                                   for managing multiple containers at the same time.
+                                oneOf:
+                                - required:
+                                  - uri
+                                - required:
+                                  - inlined
+                                properties:
+                                  inlined:
+                                    description: Inlined Manifest of the docker-compose
+                                      file
+                                    type: string
+                                  locationType:
+                                    description: Type of Compose File Component Location
+                                    enum:
+                                    - Uri
+                                    - Inlined
+                                    type: string
+                                  uri:
+                                    description: Location uri of the docker-compose
+                                      file
+                                    type: string
                                 type: object
                               container:
                                 description: Allows adding and configuring devworkspace-related
@@ -5914,6 +5952,25 @@ spec:
                             the reuse of previously docker-compose files used to define
                             configuration for managing multiple containers at the
                             same time.
+                          oneOf:
+                          - required:
+                            - uri
+                          - required:
+                            - inlined
+                          properties:
+                            inlined:
+                              description: Inlined Manifest of the docker-compose
+                                file
+                              type: string
+                            locationType:
+                              description: Type of Compose File Component Location
+                              enum:
+                              - Uri
+                              - Inlined
+                              type: string
+                            uri:
+                              description: Location uri of the docker-compose file
+                              type: string
                           type: object
                         container:
                           description: Allows adding and configuring devworkspace-related
@@ -6705,6 +6762,27 @@ spec:
                                       docker-compose files used to define configuration
                                       for managing multiple containers at the same
                                       time.
+                                    oneOf:
+                                    - required:
+                                      - uri
+                                    - required:
+                                      - inlined
+                                    properties:
+                                      inlined:
+                                        description: Inlined Manifest of the docker-compose
+                                          file
+                                        type: string
+                                      locationType:
+                                        description: Type of Compose File Component
+                                          Location
+                                        enum:
+                                        - Uri
+                                        - Inlined
+                                        type: string
+                                      uri:
+                                        description: Location uri of the docker-compose
+                                          file
+                                        type: string
                                     type: object
                                   container:
                                     description: Allows adding and configuring devworkspace-related

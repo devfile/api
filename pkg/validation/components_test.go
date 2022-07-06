@@ -51,9 +51,20 @@ func generateDummyContainerComponentWithResourceRequirement(name, memoryLimit, m
 
 // generateDummyComposeComponent returns a dummy compose component for testing
 
-// func generateDummyComposeComponent() {
-
-// }
+func generateDummyComposeComponent(name string, uri string) v1alpha2.Component {
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Compose: &v1alpha2.ComposeComponent{
+				ComposeLikeComponent: v1alpha2.ComposeLikeComponent{
+					ComposeFileComponentLocation: v1alpha2.ComposeFileComponentLocation{
+						Uri: uri,
+					},
+				},
+			},
+		},
+	}
+}
 
 // generateDummyVolumeComponent returns a dummy volume component for testing
 func generateDummyVolumeComponent(name, size string) v1alpha2.Component {
@@ -470,6 +481,13 @@ func TestValidateComponents(t *testing.T) {
 				}, false),
 			},
 			wantErr: []string{DeploymentAnnotationConflictErr, ServiceAnnotationConflictErr},
+		},
+		{
+			name: "Valid Compose Component",
+			components: []v1alpha2.Component{
+				generateDummyComposeComponent("name1", "http://uri"),
+			},
+			wantErr: []string{invalidURIErr},
 		},
 		{
 			name: "Invalid Openshift Component with bad URI",

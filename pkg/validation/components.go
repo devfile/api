@@ -131,6 +131,13 @@ func ValidateComponents(components []v1alpha2.Component) (returnedErr error) {
 					returnedErr = multierror.Append(returnedErr, resolveErrorMessageWithImportAttributes(endpointErr, component.Attributes))
 				}
 			}
+		case component.Compose != nil:
+			if component.Compose.Uri != "" {
+				err := ValidateURI(component.Compose.Uri)
+				if err != nil {
+					returnedErr = multierror.Append(returnedErr, resolveErrorMessageWithImportAttributes(err, component.Attributes))
+				}
+			}
 		case component.Volume != nil:
 			processedVolumes[component.Name] = true
 			if len(component.Volume.Size) > 0 {
