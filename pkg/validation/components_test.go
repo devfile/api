@@ -487,6 +487,12 @@ func TestValidateComponents(t *testing.T) {
 			components: []v1alpha2.Component{
 				generateDummyComposeComponent("name1", "http://uri"),
 			},
+		},
+		{
+			name: "Invalid Compose Component with bad URI",
+			components: []v1alpha2.Component{
+				generateDummyComposeComponent("name1", "http//uri"),
+			},
 			wantErr: []string{invalidURIErr},
 		},
 		{
