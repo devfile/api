@@ -500,7 +500,7 @@ type ComposeFileComponentLocationPluginOverride struct {
 	// +optional
 	Uri string `json:"uri,omitempty"`
 
-	// Inlined Manifest of the docker-compose file
+	// Inlined docker-compose file
 	// +optional
 	Inlined string `json:"inlined,omitempty"`
 }

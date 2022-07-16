@@ -342,7 +342,7 @@
             ],
             "properties": {
               "inlined": {
-                "description": "Inlined Manifest of the docker-compose file",
+                "description": "Inlined docker-compose file",
                 "type": "string"
               },
               "uri": {
@@ -1148,7 +1148,7 @@
                       ],
                       "properties": {
                         "inlined": {
-                          "description": "Inlined Manifest of the docker-compose file",
+                          "description": "Inlined docker-compose file",
                           "type": "string"
                         },
                         "uri": {
@@ -2035,7 +2035,7 @@
                 ],
                 "properties": {
                   "inlined": {
-                    "description": "Inlined Manifest of the docker-compose file",
+                    "description": "Inlined docker-compose file",
                     "type": "string"
                   },
                   "uri": {
@@ -2803,7 +2803,7 @@
                           ],
                           "properties": {
                             "inlined": {
-                              "description": "Inlined Manifest of the docker-compose file",
+                              "description": "Inlined docker-compose file",
                               "type": "string"
                             },
                             "uri": {

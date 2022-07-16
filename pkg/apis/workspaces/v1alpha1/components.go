@@ -10,6 +10,7 @@ type ComponentType string
 const (
 	ContainerComponentType  ComponentType = "Container"
 	KubernetesComponentType ComponentType = "Kubernetes"
+	ComposeComponentType	ComponentType = "Compose"
 	OpenshiftComponentType  ComponentType = "Openshift"
 	PluginComponentType     ComponentType = "Plugin"
 	VolumeComponentType     ComponentType = "Volume"
@@ -54,6 +55,14 @@ type Component struct {
 	//
 	// +optional
 	Kubernetes *KubernetesComponent `json:"kubernetes,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponent `json:"compose,omitempty"`
 
 	// Allows importing into the workspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift

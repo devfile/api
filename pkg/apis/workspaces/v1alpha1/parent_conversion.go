@@ -264,6 +264,8 @@ func convertParentComponentFrom_v1alpha2(src *v1alpha2.ComponentParentOverride, 
 		dest.Plugin.Name = srcName
 	case src.Volume != nil:
 		dest.Volume.Name = srcName
+	case src.Compose != nil:
+		dest.Compose.Name = srcName
 	case src.Openshift != nil:
 		dest.Openshift.Name = srcName
 	case src.Kubernetes != nil:

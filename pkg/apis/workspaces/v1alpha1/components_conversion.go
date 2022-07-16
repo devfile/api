@@ -52,6 +52,8 @@ func convertComponentFrom_v1alpha2(src *v1alpha2.Component, dest *Component) err
 		dest.Openshift.Name = name
 	case dest.Kubernetes != nil:
 		dest.Kubernetes.Name = name
+	case dest.Compose != nil:
+		dest.Compose.Name = name
 	case dest.Custom != nil:
 		dest.Custom.Name = name
 	}

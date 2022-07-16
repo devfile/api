@@ -377,9 +377,9 @@
             ],
             "properties": {
               "inlined": {
-                "description": "Inlined Manifest of the docker-compose file",
+                "description": "Inlined docker-compose file",
                 "type": "string",
-                "markdownDescription": "Inlined Manifest of the docker-compose file"
+                "markdownDescription": "Inlined docker-compose file"
               },
               "uri": {
                 "description": "Location uri of the docker-compose file",
@@ -1270,9 +1270,9 @@
                       ],
                       "properties": {
                         "inlined": {
-                          "description": "Inlined Manifest of the docker-compose file",
+                          "description": "Inlined docker-compose file",
                           "type": "string",
-                          "markdownDescription": "Inlined Manifest of the docker-compose file"
+                          "markdownDescription": "Inlined docker-compose file"
                         },
                         "uri": {
                           "description": "Location uri of the docker-compose file",
@@ -2268,9 +2268,9 @@
                 ],
                 "properties": {
                   "inlined": {
-                    "description": "Inlined Manifest of the docker-compose file",
+                    "description": "Inlined docker-compose file",
                     "type": "string",
-                    "markdownDescription": "Inlined Manifest of the docker-compose file"
+                    "markdownDescription": "Inlined docker-compose file"
                   },
                   "uri": {
                     "description": "Location uri of the docker-compose file",
@@ -3127,9 +3127,9 @@
                           ],
                           "properties": {
                             "inlined": {
-                              "description": "Inlined Manifest of the docker-compose file",
+                              "description": "Inlined docker-compose file",
                               "type": "string",
-                              "markdownDescription": "Inlined Manifest of the docker-compose file"
+                              "markdownDescription": "Inlined docker-compose file"
                             },
                             "uri": {
                               "description": "Location uri of the docker-compose file",
