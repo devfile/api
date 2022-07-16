@@ -418,6 +418,8 @@ spec:
                   - required:
                     - kubernetes
                   - required:
+                    - compose
+                  - required:
                     - openshift
                   - required:
                     - volume
@@ -431,6 +433,7 @@ spec:
                       enum:
                       - Container
                       - Kubernetes
+                      - Compose
                       - Openshift
                       - Volume
                       - Plugin
@@ -2124,6 +2127,8 @@ spec:
                       - required:
                         - kubernetes
                       - required:
+                        - compose
+                      - required:
                         - openshift
                       - required:
                         - volume
@@ -2137,6 +2142,7 @@ spec:
                           enum:
                           - Container
                           - Kubernetes
+                          - Compose
                           - Openshift
                           - Volume
                           - Plugin

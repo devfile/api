@@ -4,7 +4,7 @@ import runtime "k8s.io/apimachinery/pkg/runtime"
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Plugin;Custom
+// +kubebuilder:validation:Enum=Container;Kubernetes;Compose;Openshift;Volume;Plugin;Custom
 type ComponentType string
 
 const (
