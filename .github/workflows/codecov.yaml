@@ -1,0 +1,21 @@
+name: Code Coverage Report
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: Run tests
+        run: go test ./... -coverprofile cover.out
+      - name: Codecov
+        uses: codecov/codecov-action@v2.1.0
