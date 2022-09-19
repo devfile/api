@@ -34,16 +34,10 @@ jobs:
       run: ./docker-run.sh ./validate-samples.sh
 
     - name: Run GO tests
-      run: go test -coverprofile test/v200/api-test-coverage.out -v ./...
-
-    - name: Generate test coverage report
-      run: go tool cover -html=test/v200/api-test-coverage.out -o test/v200/api-test-coverage.html
+      run: go test -coverprofile cover.out -v ./...
       
-    - name: Upload Test Coverage results
-      uses: actions/upload-artifact@v2
-      with:
-        name: api-test-coverage-html
-        path: test/v200/api-test-coverage.html
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2.1.0
 
     - name: Check typescript model generation
       run: ./build/typescript-model/generate.sh
