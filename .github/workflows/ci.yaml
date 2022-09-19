@@ -131,4 +131,4 @@ jobs:
 
           git add .
           git commit -asm "Update devfile schema based on devfile/api@${lastCommit}"
-          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/devfile-web"
+          git push "https://devfile-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/devfile-web"
