@@ -3,73 +3,73 @@ name: CI
 # Triggers the workflow on push or pull request events but only for the main branch
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-validate:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Setup Go environment
-      uses: actions/setup-go@v2.1.3
-      with:
-        # The Go version to download (if necessary) and use. Supports semver spec and ranges.
-        go-version: 1.18
-        
-    - name: Generate Go sources, CRDs and schemas
-      run: |
-        ./docker-run.sh ./build.sh
-        if [[ ! -z $(git status -s) ]]
-        then
-          echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'
-          git --no-pager diff
-          exit 1
-        fi
-        
-    - name: Validate samples against schemas
-      run: ./docker-run.sh ./validate-samples.sh
+      - name: Setup Go environment
+        uses: actions/setup-go@v2.1.3
+        with:
+          # The Go version to download (if necessary) and use. Supports semver spec and ranges.
+          go-version: 1.18
 
-    - name: Run GO tests
-      run: go test -coverprofile cover.out -v ./...
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2.1.0
+      - name: Generate Go sources, CRDs and schemas
+        run: |
+          ./docker-run.sh ./build.sh
+          if [[ ! -z $(git status -s) ]]
+          then
+            echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'
+            git --no-pager diff
+            exit 1
+          fi
 
-    - name: Check typescript model generation
-      run: ./build/typescript-model/generate.sh
+      - name: Validate samples against schemas
+        run: ./docker-run.sh ./validate-samples.sh
 
-    - name: Check GO mod state      
-      run: |
-        go mod tidy
-        go mod vendor
-        git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally and commit changes to fix an issue'; exit 1; }
+      - name: Run GO tests
+        run: go test -coverprofile cover.out -v ./...
 
-    - name: Check GO format
-      run: |
-        go fmt -x ./...
-        git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally and commit changes to fix an issue'; exit 1; }
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
 
-    - name: Check Generator GO mod state      
-      working-directory: generator
-      run: |
-        go mod tidy
-        go mod vendor
-        git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+      - name: Check typescript model generation
+        run: ./build/typescript-model/generate.sh
 
-    - name: Check Generator GO format
-      working-directory: generator
-      run: |
-        go fmt -x ./...
-        git diff --exit-code || { echo 'Go sources need to be formated. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }      
-    - name: Upload Json schemas
-      uses: actions/upload-artifact@v2
-      with:
-        name: devfile-json-schema
-        path: schemas/latest/devfile.json
+      - name: Check GO mod state
+        run: |
+          go mod tidy
+          go mod vendor
+          git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally and commit changes to fix an issue'; exit 1; }
+
+      - name: Check GO format
+        run: |
+          go fmt -x ./...
+          git diff --exit-code || { echo 'Go sources need to be formatted. Execute "go fmt -x ./..." locally and commit changes to fix an issue'; exit 1; }
+
+      - name: Check Generator GO mod state
+        working-directory: generator
+        run: |
+          go mod tidy
+          go mod vendor
+          git diff --exit-code || { echo 'Go mod is not clean. Execute "go mod tidy && go mod vendor" locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+
+      - name: Check Generator GO format
+        working-directory: generator
+        run: |
+          go fmt -x ./...
+          git diff --exit-code || { echo 'Go sources need to be formatted. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+      - name: Upload Json schemas
+        uses: actions/upload-artifact@v2
+        with:
+          name: devfile-json-schema
+          path: schemas/latest/devfile.json
 
   publish-next-json-schema:
     if: success() && github.event_name == 'push'
@@ -79,36 +79,49 @@ jobs:
       - name: Checkout devfile docs
         uses: actions/checkout@v2
         with:
-          repository: devfile/docs
+          repository: devfile/devfile-web
           persist-credentials: false
-          path: docs-repo
+          path: devfile-web-repo
+
       - name: Checkout devfile api
         uses: actions/checkout@v2
         with:
           path: api-repo
-      - name: Download Json Schema
-        uses: actions/download-artifact@v2
-        with:
-          name: devfile-json-schema
-      - name: Overwrite Next Json Schema in Docs
-        run: cp -f devfile.json docs-repo/docs/modules/user-guide/attachments/jsonschemas/next/devfile.json
-      - name: Push to the devfile/docs repo
-        working-directory: docs-repo/
+
+      - name: Get the version being published
+        id: get_version
+        run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
+
+      - name: Publish the new version on devfile-web
         run: |
-          if [ "$(git status -s)" == "" ]
-          then
-            echo "Nothing to commit, Json schema didn't change"
+          py devfile-web-repo/python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
+
+      - name: Push to the devfile/devfile-web repo
+        working-directory: devfile-web-repo/
+        run: |
+          # Install dependencies to format the commit
+          yarn install
+
+          # Format the commit
+          yarn nx format:write
+
+          # Lint the commit
+          yarn nx affected --target=lint
+          yarn nx format:check
+
+          # Don't commit if there are no changes
+          if [ "$(git status -s)" == "" ]; then
+            echo "Nothing to commit"
             exit 0
           fi
-          
+
           lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
           lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
           lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
-          
+
           git config --global user.email "${lastCommitterEmail}"
           git config --global user.name "${lastCommitterName}"
-          
-          git add docs/modules/user-guide/attachments/jsonschemas/next/devfile.json
-          git commit -m "Update devfile schema based on devfile/api@${lastCommit}"
-          git push "https://devfile-ci-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/docs"
-          
+
+          git add .
+          git commit -asm "Update devfile schema based on devfile/api@${lastCommit}"
+          git push "https://devfile-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/devfile-web"
