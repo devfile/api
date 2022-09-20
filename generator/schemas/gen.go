@@ -288,7 +288,7 @@ This is not the case in the "%s' API group:
 					return
 				}
 				for propName, prop := range schema.Properties {
-					if propName == "endpoints" {
+					if propName == "endpoints" && prop.Items != nil && prop.Items.Schema != nil {
 						for endpointPropName, endpointProp := range prop.Items.Schema.Properties {
 							if endpointPropName == "name" {
 								if schemaGenerateMarker.ShortenEndpointNameLength {
