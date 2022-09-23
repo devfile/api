@@ -4,9 +4,6 @@ name: Publish Devfile Schema
 on:
   push:
     branches: [main]
-  # Temp while testing
-  pull_request:
-    branches: [main]
 
 # Only allow one job of this action to be ran at a time
 concurrency:
