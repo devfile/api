@@ -72,7 +72,7 @@ jobs:
           path: schemas/latest/devfile.json
 
   publish-next-json-schema:
-    if: success()
+    # if: success() && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: [build-and-validate]
     steps:
@@ -98,9 +98,9 @@ jobs:
         run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
 
       - name: Publish the new version on devfile-web
+        working-directory: devfile-web-repo/
         run: |
-          cd devfile-web-repo/
-          python ./python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
+          python ./python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema ../api-repo/schemas/latest/devfile.json --release
 
       - name: Push to the devfile/devfile-web repo
         working-directory: devfile-web-repo/
