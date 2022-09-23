@@ -1,10 +1,14 @@
-
 # Release a typescript package to npm containing the typescript types generated from the latest merged crds
-name: types
+name: Release Typescript Models
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+
+# Only allow one job of this action to be ran at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   release-typescript-models:
@@ -23,7 +27,7 @@ jobs:
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v2
         with:
-          path: "api/build/typescript-model/requirements.txt"
+          path: 'api/build/typescript-model/requirements.txt'
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -37,8 +41,8 @@ jobs:
           ./build/typescript-model/generate.sh
           cp -r ./build/typescript-model/workdir/typescript-models ../
         working-directory: api
-      
-      - name: Release typescript models 
+
+      - name: Release typescript models
         run: |
           VERSION=$(cat $GITHUB_WORKSPACE/api/schemas/latest/jsonSchemaVersion.txt)
           yarn --new-version version "$VERSION-$(date +%s)" --no-git-tag-version

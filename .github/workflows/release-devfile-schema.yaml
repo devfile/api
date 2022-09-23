@@ -5,6 +5,11 @@ on:
   release:
     types: [published]
 
+# Only allow one job of this action to be ran at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release-json-schema:
     runs-on: ubuntu-latest
@@ -31,9 +36,9 @@ jobs:
         run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
 
       - name: Release new version on devfile-web
+        working-directory: devfile-web-repo/
         run: |
-          cd devfile-web-repo/
-          python devfile-web-repo/python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
+          python ./python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema ../api-repo/schemas/latest/devfile.json --release
 
       - name: Push to the devfile/devfile-web repo
         working-directory: devfile-web-repo/

@@ -1,10 +1,14 @@
- 
 # Add Che link on PRs
-name: che
+name: Che
 
 on:
-  pull_request: 
+  pull_request:
     types: [opened, synchronize]
+
+# Only allow one job of this action to be ran at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   add-link:
