@@ -98,9 +98,9 @@ jobs:
         run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
 
       - name: Publish the new version on devfile-web
-        working-directory: devfile-web-repo/
         run: |
-          python ./python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
+          cd devfile-web-repo/
+          python devfile-web-repo/python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
 
       - name: Push to the devfile/devfile-web repo
         working-directory: devfile-web-repo/
