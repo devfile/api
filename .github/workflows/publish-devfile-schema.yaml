@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Checkout devfile docs
+      - name: Checkout devfile/devfile-web
         uses: actions/checkout@v2
         with:
           repository: devfile/devfile-web
