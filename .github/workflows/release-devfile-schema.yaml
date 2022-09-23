@@ -5,6 +5,11 @@ on:
   release:
     types: [published]
 
+# Only allow one job of this action to be ran at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release-json-schema:
     runs-on: ubuntu-latest

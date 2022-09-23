@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [main]
 
+# Only allow one job of this action to be ran at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-validate:
     runs-on: ubuntu-latest
@@ -65,69 +70,3 @@ jobs:
         run: |
           go fmt -x ./...
           git diff --exit-code || { echo 'Go sources need to be formatted. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
-      - name: Upload Json schemas
-        uses: actions/upload-artifact@v2
-        with:
-          name: devfile-json-schema
-          path: schemas/latest/devfile.json
-
-  publish-next-json-schema:
-    # if: success() && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    needs: [build-and-validate]
-    steps:
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Checkout devfile docs
-        uses: actions/checkout@v2
-        with:
-          repository: devfile/devfile-web
-          persist-credentials: false
-          path: devfile-web-repo
-
-      - name: Checkout devfile api
-        uses: actions/checkout@v2
-        with:
-          path: api-repo
-
-      - name: Get the version being published
-        id: get_version
-        run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
-
-      - name: Publish the new version on devfile-web
-        working-directory: devfile-web-repo/
-        run: |
-          python ./python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema ../api-repo/schemas/latest/devfile.json --release
-
-      - name: Push to the devfile/devfile-web repo
-        working-directory: devfile-web-repo/
-        run: |
-          # Install dependencies to format the commit
-          yarn install
-
-          # Format the commit
-          yarn nx format:write
-
-          # Lint the commit
-          yarn nx affected --target=lint
-          yarn nx format:check
-
-          # Don't commit if there are no changes
-          if [ "$(git status -s)" == "" ]; then
-            echo "Nothing to commit"
-            exit 0
-          fi
-
-          lastCommit="$(cd ../api-repo; git log -1 --format=%H)"
-          lastCommitterName="$(cd ../api-repo; git log -1 --format=%an)"
-          lastCommitterEmail="$(cd ../api-repo; git log -1 --format=%ae)"
-
-          git config --global user.email "${lastCommitterEmail}"
-          git config --global user.name "${lastCommitterName}"
-
-          git add .
-          git commit -asm "Update devfile schema based on devfile/api@${lastCommit}"
-          git push "https://devfile-robot:${{secrets.DOCS_UPDATE_SECRET}}@github.com/devfile/devfile-web"
