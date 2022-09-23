@@ -98,6 +98,9 @@ jobs:
         run: echo ::set-output name=version::$(cat api-repo/schemas/latest/jsonSchemaVersion.txt)
 
       - name: Publish the new version on devfile-web
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
         run: |
           py devfile-web-repo/python/src/api_workflow/api_workflow.py --version ${{ steps.get_version.outputs.version }} --devfile-schema api-repo/schemas/latest/devfile.json --release
 
