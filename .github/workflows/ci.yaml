@@ -70,3 +70,20 @@ jobs:
         run: |
           go fmt -x ./...
           git diff --exit-code || { echo 'Go sources need to be formatted. Execute "go fmt -x ./..." locally in the 'generator' folder and commit changes to fix an issue'; exit 1; }
+
+      - name: Run Gosec Security Scanner
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          ./run_gosec.sh
+          if [[ $? != 0 ]]
+          then
+            echo "gosec scanner failed to run "
+            exit 1
+          fi   
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: gosec.sarif

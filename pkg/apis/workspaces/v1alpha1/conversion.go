@@ -55,6 +55,7 @@ func convertDevWorkspaceTemplateSpecTo_v1alpha2(src *DevWorkspaceTemplateSpec, d
 		}
 	}
 	for _, srcComponent := range src.Components {
+		srcComponent := srcComponent
 		destComponent := v1alpha2.Component{}
 		err := convertComponentTo_v1alpha2(&srcComponent, &destComponent)
 		if err != nil {
@@ -63,6 +64,7 @@ func convertDevWorkspaceTemplateSpecTo_v1alpha2(src *DevWorkspaceTemplateSpec, d
 		dest.Components = append(dest.Components, destComponent)
 	}
 	for _, srcProject := range src.Projects {
+		srcProject := srcProject
 		destProject := v1alpha2.Project{}
 		err := convertProjectTo_v1alpha2(&srcProject, &destProject)
 		if err != nil {
@@ -71,6 +73,7 @@ func convertDevWorkspaceTemplateSpecTo_v1alpha2(src *DevWorkspaceTemplateSpec, d
 		dest.Projects = append(dest.Projects, destProject)
 	}
 	for _, srcStarterProject := range src.StarterProjects {
+		srcStarterProject := srcStarterProject
 		destStarterProject := v1alpha2.StarterProject{}
 		err := convertStarterProjectTo_v1alpha2(&srcStarterProject, &destStarterProject)
 		if err != nil {
@@ -79,6 +82,7 @@ func convertDevWorkspaceTemplateSpecTo_v1alpha2(src *DevWorkspaceTemplateSpec, d
 		dest.StarterProjects = append(dest.StarterProjects, destStarterProject)
 	}
 	for _, srcCommand := range src.Commands {
+		srcCommand := srcCommand
 		destCommand := v1alpha2.Command{}
 		err := convertCommandTo_v1alpha2(&srcCommand, &destCommand)
 		if err != nil {
@@ -105,6 +109,7 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 		}
 	}
 	for _, srcComponent := range src.Components {
+		srcComponent := srcComponent
 		destComponent := Component{}
 		err := convertComponentFrom_v1alpha2(&srcComponent, &destComponent)
 		if err != nil {
@@ -113,6 +118,7 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 		dest.Components = append(dest.Components, destComponent)
 	}
 	for _, srcProject := range src.Projects {
+		srcProject := srcProject
 		destProject := Project{}
 		err := convertProjectFrom_v1alpha2(&srcProject, &destProject)
 		if err != nil {
@@ -121,6 +127,7 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 		dest.Projects = append(dest.Projects, destProject)
 	}
 	for _, srcStarterProject := range src.StarterProjects {
+		srcStarterProject := srcStarterProject
 		destStarterProject := StarterProject{}
 		err := convertStarterProjectFrom_v1alpha2(&srcStarterProject, &destStarterProject)
 		if err != nil {
@@ -129,6 +136,7 @@ func convertDevWorkspaceTemplateSpecFrom_v1alpha2(src *v1alpha2.DevWorkspaceTemp
 		dest.StarterProjects = append(dest.StarterProjects, destStarterProject)
 	}
 	for _, srcCommand := range src.Commands {
+		srcCommand := srcCommand
 		destCommand := Command{}
 		err := convertCommandFrom_v1alpha2(&srcCommand, &destCommand)
 		if err != nil {
