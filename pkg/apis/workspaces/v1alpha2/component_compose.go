@@ -22,7 +22,7 @@ type ComposeFileComponentLocation struct{
 	// +optional
 	Uri string `json:"uri,omitempty"`
 
-	// Inlined docker-compose file
+	// Inlined Compose file
 	// +optional
 	Inlined string `json:"inlined,omitempty"`
 }
