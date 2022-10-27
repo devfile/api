@@ -19,16 +19,17 @@ From these Go sources, several files are generated:
 
 Generated files are created by a build script (see section [How to build](#how-to-build)).
 
-### Devfile 2.0.0 file format
+## Devfile 2.0.0 file format
 
 A Subset of this `DevWorkspace` API defines a structure (workspace template content), which is also at the core of the **Devfile 2.0** format specification.
-For more information about this, please look into the [Devfile support Readme](devfile-support/README.md)
+For more information about this, please look into the [Devfile support README]([devfile-support/README.md](https://github.com/devfile/registry-support/blob/main/README.md))
 
-The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: https://devfile.github.io
+The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: <https://devfile.github.io>
 
-Typescript model is build on each commit of main branch and available as NPM package at https://www.npmjs.com/package/@devfile/api
+Typescript model is build on each commit of main branch and available as NPM package at <https://www.npmjs.com/package/@devfile/api>
 
 ## Release
+
 Release details and process are found in [Devfile Release](RELEASE.md)
 
 ## How to build
@@ -36,16 +37,17 @@ Release details and process are found in [Devfile Release](RELEASE.md)
 In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
 In the root directory, just run the following command:
 
-```
-./docker-run.sh ./build.sh
+```console
+bash ./docker-run.sh ./build.sh
 ```
 
 ### Typescript model
 
-Typescript model is generated based on JSON Schema with help of https://github.com/kubernetes-client/gen.
+Typescript model is generated based on JSON Schema with help of <https://github.com/kubernetes-client/gen>.
 To generate them locally run:
-```bash
-./build/typescript-model/generate.sh
+
+```console
+bash ./build/typescript-model/generate.sh
 ```
 
 ## Specification status
