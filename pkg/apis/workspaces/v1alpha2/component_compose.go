@@ -32,7 +32,7 @@ type ComposeLikeComponent struct {
 	ComposeFileComponentLocation `json:",inline"`
 }
 
-// Component allows the developer to reuse an existing docker-compose file
+// Component allows the developer to reuse an existing Compose file
 type ComposeComponent struct{
 	ComposeLikeComponent `json:",inline"`
 }
