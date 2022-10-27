@@ -12,7 +12,7 @@ const (
 )
 // +union
 type ComposeFileComponentLocation struct{
-	// Type of Compose File Component Location
+	// Type of Compose file Component Location
 	// + 
 	// +unionDiscriminator
 	// +optional
