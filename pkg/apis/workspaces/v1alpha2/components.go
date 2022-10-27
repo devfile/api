@@ -55,10 +55,9 @@ type ComponentUnion struct {
 	// +optional
 	Container *ContainerComponent `json:"container,omitempty"`
 
-	// Allows importing into the devworkspace docker-compose files
-	// defined in a given manifest. For example this allows the reuse of previously
-	// docker-compose files used to define configuration for managing
-	// multiple containers at the same time.
+	// Allows importing docker-compose files defined in a given manifest. 
+	// This allows the reuse of docker-compose files used to define configuration 
+	// for managing multiple containers at the same time.
 	//
 	// +optional
 	Compose *ComposeComponent `json:"compose,omitempty"`
