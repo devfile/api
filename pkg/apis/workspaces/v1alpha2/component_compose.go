@@ -1,7 +1,7 @@
 package v1alpha2
 
 // ComposeFileComponentLocationType describes the type of
-// the location where the docker-compose file is fetched from.
+// the location where the Compose file is fetched from.
 // Only one of the following types can be specified.
 // +kubebuilder:validation:Enum=Uri;Inlined
 type ComposeFileComponentLocationType string
