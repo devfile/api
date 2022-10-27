@@ -1,3 +1,99 @@
 **/zz_generated.*.go linguist-generated=true
 vendor/** linguist-vendored
 generator/vendor/** linguist-vendored
+
+# source code
+*.php eol=lf
+*.css eol=lf
+*.sass eol=lf
+*.scss eol=lf
+*.less eol=lf
+*.styl eol=lf
+*.js eol=lf
+*.ts eol=lf
+*.jsx eol=lf
+*.tsx eol=lf
+*.coffee eol=lf
+*.json eol=lf
+*.htm eol=lf
+*.html eol=lf
+*.xml eol=lf
+*.svg eol=lf
+*.txt eol=lf
+*.ini eol=lf
+*.inc eol=lf
+*.pl eol=lf
+*.rb eol=lf
+*.py eol=lf
+*.scm eol=lf
+*.sql eol=lf
+*.sh eol=lf
+*.bat eol=lf
+*.go eol=lf
+
+# templates
+*.ejs eol=lf
+*.hbt eol=lf
+*.jade eol=lf
+*.haml eol=lf
+*.hbs eol=lf
+*.dot eol=lf
+*.tmpl eol=lf
+*.phtml eol=lf
+
+# server config
+.htaccess eol=lf
+
+# git config
+.gitattributes eol=lf
+.gitignore eol=lf
+.gitconfig eol=lf
+
+# code analysis config
+.jshintrc eol=lf
+.jscsrc eol=lf
+.jshintignore eol=lf
+.csslintrc eol=lf
+
+# misc config
+*.yaml eol=lf
+*.yml eol=lf
+.editorconfig eol=lf
+
+# build config
+*.npmignore eol=lf
+*.bowerrc eol=lf
+
+# Heroku
+Procfile eol=lf
+.slugignore eol=lf
+
+# Documentation
+*.md eol=lf
+LICENSE eol=lf
+AUTHORS eol=lf
+
+#
+## These files are binary and should be left untouched
+#
+
+# (binary is a macro for -eol=lf -diff)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.pyc binary
+*.pdf binary
