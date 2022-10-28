@@ -69,7 +69,6 @@ Procfile eol=lf
 .slugignore eol=lf
 
 # Documentation
-*.md eol=lf
 LICENSE eol=lf
 AUTHORS eol=lf
 
