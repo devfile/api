@@ -1,12 +1,12 @@
-# What does this PR do?
+## What does this PR do?
 
 <!-- _Summarize the changes_ -->
 
-## Which issue(s) does this PR fix
+### Which issue(s) does this PR fix
 
 <!-- _Link to github issue(s)_ -->
 
-## PR acceptance criteria
+### PR acceptance criteria
 
 Testing and documentation do not need to be complete in order for this PR to be approved. We just need to ensure tracking issues are opened.
 

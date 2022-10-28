@@ -22,11 +22,11 @@ Generated files are created by a build script (see section [How to build](#how-t
 ## Devfile 2.0.0 file format
 
 A Subset of this `DevWorkspace` API defines a structure (workspace template content), which is also at the core of the **Devfile 2.0** format specification.
-For more information about this, please look into the [Devfile support README]([devfile-support/README.md](https://github.com/devfile/registry-support/blob/main/README.md))
+For more information about this, please look into the [Devfile support README](https://github.com/devfile/registry-support/blob/main/README.md)
 
-The generated documentation of the Devfile 2.0 format, based on its json schema, is available here: <https://devfile.github.io>
+The generated documentation of the Devfile 2.0 format, based on its json schema, is available [here](https://devfile.github.io).
 
-Typescript model is build on each commit of main branch and available as NPM package at <https://www.npmjs.com/package/@devfile/api>
+Typescript model is build on each commit of main branch and available as an [NPM package](https://www.npmjs.com/package/@devfile/api).
 
 ## Release
 

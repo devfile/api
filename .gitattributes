@@ -14,7 +14,6 @@ generator/vendor/** linguist-vendored
 *.jsx eol=lf
 *.tsx eol=lf
 *.coffee eol=lf
-*.json eol=lf
 *.htm eol=lf
 *.html eol=lf
 *.xml eol=lf
@@ -69,7 +68,6 @@ Procfile eol=lf
 .slugignore eol=lf
 
 # Documentation
-*.md eol=lf
 LICENSE eol=lf
 AUTHORS eol=lf
 
