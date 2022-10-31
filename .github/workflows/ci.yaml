@@ -80,7 +80,7 @@ jobs:
           then
             echo "gosec scanner failed to run "
             exit 1
-          fi   
+          fi
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2

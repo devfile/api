@@ -319,7 +319,7 @@ This is not the case in the "%s' API group:
 			ideTargetedSchemasExplanation :=
 				`IDE-targeted variants of the schemas provide the following difference compared to the main schemas:
 - They contain additional non-standard ` + "`markdownDescription`" + ` attributes that are used by IDEs such a VSCode
-to provide markdown-rendered documentation hovers. 
+to provide markdown-rendered documentation hovers.
 - They don't contain ` + "`default`" + ` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.`
 
 			(&currentJSONSchema).Title = (&currentJSONSchema).Title + " - IDE-targeted variant"
@@ -349,7 +349,7 @@ to provide markdown-rendered documentation hovers.
 				root.AddError(err)
 				return nil
 			}
-			err = writeFile(ctx, folderForIdeTargetedSchemas, "Readme.md", []byte(ideTargetedSchemasExplanation))
+			err = writeFile(ctx, folderForIdeTargetedSchemas, "README.md", []byte(ideTargetedSchemasExplanation))
 			if err != nil {
 				root.AddError(err)
 				return nil
