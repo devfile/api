@@ -50,3 +50,6 @@ Thanks for understanding and for contributing to the project!
 -->
 
 > Target Odo version:
+
+
+**Target date:** <!-- The expected date the the issue will be done. Should be set by the assignee -->
