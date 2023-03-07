@@ -20,9 +20,9 @@ jobs:
           path: api
 
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9.2'
+          python-version: '3.9.12'
 
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v2
