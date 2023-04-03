@@ -272,10 +272,14 @@ spec:
                           - kind
                           type: object
                         hotReloadCapable:
-                          description: "Whether the command is capable to reload itself
-                            when source code changes. If set to `true` the command
-                            won't be restarted and it is expected to handle file changes
-                            on its own. \n Default value is `false`"
+                          description: "Whether the command is restarted when source
+                            code changes. If set to `true` the command won't be restarted.
+                            A *hotReloadCapable* `run` or `debug` command is expected
+                            to handle file changes on its own and won't be restarted.
+                            A *hotReloadCapable* `build` command is expected to be
+                            executed only once and won't be executed again. This field
+                            is ignored for commands other than `build`, `run` or `debug`.
+                            \n Default value is `false`"
                           type: boolean
                         id:
                           description: Mandatory identifier that allows referencing
@@ -1057,11 +1061,16 @@ spec:
                                     - kind
                                     type: object
                                   hotReloadCapable:
-                                    description: "Whether the command is capable to
-                                      reload itself when source code changes. If set
-                                      to `true` the command won't be restarted and
-                                      it is expected to handle file changes on its
-                                      own. \n Default value is `false`"
+                                    description: "Whether the command is restarted
+                                      when source code changes. If set to `true` the
+                                      command won't be restarted. A *hotReloadCapable*
+                                      `run` or `debug` command is expected to handle
+                                      file changes on its own and won't be restarted.
+                                      A *hotReloadCapable* `build` command is expected
+                                      to be executed only once and won't be executed
+                                      again. This field is ignored for commands other
+                                      than `build`, `run` or `debug`. \n Default value
+                                      is `false`"
                                     type: boolean
                                   id:
                                     description: Mandatory identifier that allows
@@ -1944,11 +1953,15 @@ spec:
                               - kind
                               type: object
                             hotReloadCapable:
-                              description: "Whether the command is capable to reload
-                                itself when source code changes. If set to `true`
-                                the command won't be restarted and it is expected
-                                to handle file changes on its own. \n Default value
-                                is `false`"
+                              description: "Whether the command is restarted when
+                                source code changes. If set to `true` the command
+                                won't be restarted. A *hotReloadCapable* `run` or
+                                `debug` command is expected to handle file changes
+                                on its own and won't be restarted. A *hotReloadCapable*
+                                `build` command is expected to be executed only once
+                                and won't be executed again. This field is ignored
+                                for commands other than `build`, `run` or `debug`.
+                                \n Default value is `false`"
                               type: boolean
                             id:
                               description: Mandatory identifier that allows referencing
@@ -2749,11 +2762,16 @@ spec:
                                         - kind
                                         type: object
                                       hotReloadCapable:
-                                        description: "Whether the command is capable
-                                          to reload itself when source code changes.
-                                          If set to `true` the command won't be restarted
-                                          and it is expected to handle file changes
-                                          on its own. \n Default value is `false`"
+                                        description: "Whether the command is restarted
+                                          when source code changes. If set to `true`
+                                          the command won't be restarted. A *hotReloadCapable*
+                                          `run` or `debug` command is expected to
+                                          handle file changes on its own and won't
+                                          be restarted. A *hotReloadCapable* `build`
+                                          command is expected to be executed only
+                                          once and won't be executed again. This field
+                                          is ignored for commands other than `build`,
+                                          `run` or `debug`. \n Default value is `false`"
                                         type: boolean
                                       id:
                                         description: Mandatory identifier that allows
@@ -4114,10 +4132,14 @@ spec:
                           - kind
                           type: object
                         hotReloadCapable:
-                          description: "Whether the command is capable to reload itself
-                            when source code changes. If set to `true` the command
-                            won't be restarted and it is expected to handle file changes
-                            on its own. \n Default value is `false`"
+                          description: "Whether the command is restarted when source
+                            code changes. If set to `true` the command won't be restarted.
+                            A *hotReloadCapable* `run` or `debug` command is expected
+                            to handle file changes on its own and won't be restarted.
+                            A *hotReloadCapable* `build` command is expected to be
+                            executed only once and won't be executed again. This field
+                            is ignored for commands other than `build`, `run` or `debug`.
+                            \n Default value is `false`"
                           type: boolean
                         label:
                           description: Optional label that provides a label for this
@@ -4915,11 +4937,16 @@ spec:
                                         type: string
                                     type: object
                                   hotReloadCapable:
-                                    description: "Whether the command is capable to
-                                      reload itself when source code changes. If set
-                                      to `true` the command won't be restarted and
-                                      it is expected to handle file changes on its
-                                      own. \n Default value is `false`"
+                                    description: "Whether the command is restarted
+                                      when source code changes. If set to `true` the
+                                      command won't be restarted. A *hotReloadCapable*
+                                      `run` or `debug` command is expected to handle
+                                      file changes on its own and won't be restarted.
+                                      A *hotReloadCapable* `build` command is expected
+                                      to be executed only once and won't be executed
+                                      again. This field is ignored for commands other
+                                      than `build`, `run` or `debug`. \n Default value
+                                      is `false`"
                                     type: boolean
                                   label:
                                     description: Optional label that provides a label
@@ -5824,11 +5851,15 @@ spec:
                                   type: string
                               type: object
                             hotReloadCapable:
-                              description: "Whether the command is capable to reload
-                                itself when source code changes. If set to `true`
-                                the command won't be restarted and it is expected
-                                to handle file changes on its own. \n Default value
-                                is `false`"
+                              description: "Whether the command is restarted when
+                                source code changes. If set to `true` the command
+                                won't be restarted. A *hotReloadCapable* `run` or
+                                `debug` command is expected to handle file changes
+                                on its own and won't be restarted. A *hotReloadCapable*
+                                `build` command is expected to be executed only once
+                                and won't be executed again. This field is ignored
+                                for commands other than `build`, `run` or `debug`.
+                                \n Default value is `false`"
                               type: boolean
                             label:
                               description: Optional label that provides a label for
@@ -6605,11 +6636,16 @@ spec:
                                             type: string
                                         type: object
                                       hotReloadCapable:
-                                        description: "Whether the command is capable
-                                          to reload itself when source code changes.
-                                          If set to `true` the command won't be restarted
-                                          and it is expected to handle file changes
-                                          on its own. \n Default value is `false`"
+                                        description: "Whether the command is restarted
+                                          when source code changes. If set to `true`
+                                          the command won't be restarted. A *hotReloadCapable*
+                                          `run` or `debug` command is expected to
+                                          handle file changes on its own and won't
+                                          be restarted. A *hotReloadCapable* `build`
+                                          command is expected to be executed only
+                                          once and won't be executed again. This field
+                                          is ignored for commands other than `build`,
+                                          `run` or `debug`. \n Default value is `false`"
                                         type: boolean
                                       label:
                                         description: Optional label that provides

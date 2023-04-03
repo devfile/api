@@ -368,7 +368,7 @@
                           "additionalProperties": false
                         },
                         "hotReloadCapable": {
-                          "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                          "description": "Whether the command is restarted when source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is ignored for commands other than `build`, `run` or `debug`.\n\nDefault value is `false`",
                           "type": "boolean"
                         },
                         "label": {
@@ -1231,7 +1231,7 @@
                         "additionalProperties": false
                       },
                       "hotReloadCapable": {
-                        "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                        "description": "Whether the command is restarted when source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is ignored for commands other than `build`, `run` or `debug`.\n\nDefault value is `false`",
                         "type": "boolean"
                       },
                       "label": {
@@ -2015,7 +2015,7 @@
                                   "additionalProperties": false
                                 },
                                 "hotReloadCapable": {
-                                  "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                                  "description": "Whether the command is restarted when source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is ignored for commands other than `build`, `run` or `debug`.\n\nDefault value is `false`",
                                   "type": "boolean"
                                 },
                                 "label": {
@@ -2865,7 +2865,7 @@
                             "additionalProperties": false
                           },
                           "hotReloadCapable": {
-                            "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                            "description": "Whether the command is restarted when source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is ignored for commands other than `build`, `run` or `debug`.\n\nDefault value is `false`",
                             "type": "boolean"
                           },
                           "label": {
@@ -3606,7 +3606,7 @@
                                       "additionalProperties": false
                                     },
                                     "hotReloadCapable": {
-                                      "description": "Whether the command is capable to reload itself when source code changes. If set to `true` the command won't be restarted and it is expected to handle file changes on its own.\n\nDefault value is `false`",
+                                      "description": "Whether the command is restarted when source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is ignored for commands other than `build`, `run` or `debug`.\n\nDefault value is `false`",
                                       "type": "boolean"
                                     },
                                     "label": {

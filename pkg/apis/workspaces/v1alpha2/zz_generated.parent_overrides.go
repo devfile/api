@@ -336,8 +336,11 @@ type ExecCommandParentOverride struct {
 	Env []EnvVarParentOverride `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
-	// Whether the command is capable to reload itself when source code changes.
-	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
+	// Whether the command is restarted when source code changes.
+	// If set to `true` the command won't be restarted.
+	// A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.
+	// A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.
+	// This field is ignored for commands other than `build`, `run` or `debug`.
 	//
 	// Default value is `false`
 	HotReloadCapable *bool `json:"hotReloadCapable,omitempty"`
@@ -1005,8 +1008,11 @@ type ExecCommandPluginOverrideParentOverride struct {
 	Env []EnvVarPluginOverrideParentOverride `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
-	// Whether the command is capable to reload itself when source code changes.
-	// If set to `true` the command won't be restarted and it is expected to handle file changes on its own.
+	// Whether the command is restarted when source code changes.
+	// If set to `true` the command won't be restarted.
+	// A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.
+	// A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.
+	// This field is ignored for commands other than `build`, `run` or `debug`.
 	//
 	// Default value is `false`
 	HotReloadCapable *bool `json:"hotReloadCapable,omitempty"`
