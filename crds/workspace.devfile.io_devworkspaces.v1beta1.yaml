@@ -4329,8 +4329,9 @@ spec:
                                   on its own and won't be restarted. A *hotReloadCapable*
                                   `build` command is expected to be executed only
                                   once and won't be executed again. This field is
-                                  ignored for commands other than `build`, `run` or
-                                  `debug`. \n Default value is `false`"
+                                  taken into account only for commands `build`, `run`
+                                  and `debug` with `isDefault` set to `true`. \n Default
+                                  value is `false`"
                                 type: boolean
                               label:
                                 description: Optional label that provides a label
@@ -5229,9 +5230,10 @@ spec:
                                 `debug` command is expected to handle file changes
                                 on its own and won't be restarted. A *hotReloadCapable*
                                 `build` command is expected to be executed only once
-                                and won't be executed again. This field is ignored
-                                for commands other than `build`, `run` or `debug`.
-                                \n Default value is `false`"
+                                and won't be executed again. This field is taken into
+                                account only for commands `build`, `run` and `debug`
+                                with `isDefault` set to `true`. \n Default value is
+                                `false`"
                               type: boolean
                             label:
                               description: Optional label that provides a label for
@@ -6051,8 +6053,9 @@ spec:
                                           be restarted. A *hotReloadCapable* `build`
                                           command is expected to be executed only
                                           once and won't be executed again. This field
-                                          is ignored for commands other than `build`,
-                                          `run` or `debug`. \n Default value is `false`"
+                                          is taken into account only for commands
+                                          `build`, `run` and `debug` with `isDefault`
+                                          set to `true`. \n Default value is `false`"
                                         type: boolean
                                       label:
                                         description: Optional label that provides
@@ -7006,8 +7009,9 @@ spec:
                                     changes on its own and won't be restarted. A *hotReloadCapable*
                                     `build` command is expected to be executed only
                                     once and won't be executed again. This field is
-                                    ignored for commands other than `build`, `run`
-                                    or `debug`. \n Default value is `false`"
+                                    taken into account only for commands `build`,
+                                    `run` and `debug` with `isDefault` set to `true`.
+                                    \n Default value is `false`"
                                   type: boolean
                                 label:
                                   description: Optional label that provides a label
@@ -7814,9 +7818,9 @@ spec:
                                               *hotReloadCapable* `build` command is
                                               expected to be executed only once and
                                               won't be executed again. This field
-                                              is ignored for commands other than `build`,
-                                              `run` or `debug`. \n Default value is
-                                              `false`"
+                                              is taken into account only for commands
+                                              `build`, `run` and `debug` with `isDefault`
+                                              set to `true`. \n Default value is `false`"
                                             type: boolean
                                           label:
                                             description: Optional label that provides
