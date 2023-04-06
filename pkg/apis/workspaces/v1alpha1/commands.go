@@ -139,11 +139,11 @@ type ExecCommand struct {
 	Env []EnvVar `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 
 	// +optional
-	// Whether the command is restarted when source code changes.
+	// Specify whether the command is restarted or not when the source code changes.
 	// If set to `true` the command won't be restarted.
 	// A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.
 	// A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.
-	// This field is ignored for commands other than `build`, `run` or `debug`.
+	// This field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.
 	//
 	// Default value is `false`
 	HotReloadCapable bool `json:"hotReloadCapable,omitempty"`
