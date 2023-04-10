@@ -334,6 +334,21 @@ func TestValidateComponents(t *testing.T) {
 			wantErr: []string{sameTargetPortErr},
 		},
 		{
+			name: "Invalid Kube components with the same endpoint names",
+			components: []v1alpha2.Component{
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080}, ""),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl18081}, ""),
+			},
+			wantErr: []string{sameEndpointNameErr},
+		},
+		{
+			name: "Valid Kube components with the same endpoint target ports",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil, v1alpha2.Annotation{}, false),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl28080}, ""),
+			},
+		},
+		{
 			name: "Valid containers with valid resource requirement",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponentWithResourceRequirement("name1", "1024Mi", "512Mi", "1024Mi", "512Mi"),
