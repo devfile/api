@@ -327,11 +327,10 @@ func TestValidateComponents(t *testing.T) {
 			wantErr: []string{sameTargetPortErr},
 		},
 		{
-			name: "Invalid container with same target ports in a single component",
+			name: "Valid container with same target ports in a single component",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
-			wantErr: []string{sameTargetPortErr},
 		},
 		{
 			name: "Invalid Kube components with the same endpoint names",
@@ -553,8 +552,10 @@ func TestValidateComponents(t *testing.T) {
 						assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
 					}
 				}
-			} else {
+			} else if tt.wantErr == nil {
 				assert.Equal(t, nil, err, "Error should be nil")
+			} else if tt.wantErr != nil {
+				assert.NotEqual(t, nil, err, "Error should not be nil")
 			}
 		})
 	}
