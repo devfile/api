@@ -341,9 +341,16 @@ func TestValidateComponents(t *testing.T) {
 			wantErr: []string{sameEndpointNameErr},
 		},
 		{
-			name: "Valid Kube components with the same endpoint target ports",
+			name: "Valid Kube component with the same endpoint target ports as the container component's",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil, v1alpha2.Annotation{}, false),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl28080}, ""),
+			},
+		},
+		{
+			name: "Invalid Kube components with the same endpoint names",
+			components: []v1alpha2.Component{
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080}, ""),
 				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl28080}, ""),
 			},
 		},
@@ -555,7 +562,7 @@ func TestValidateComponents(t *testing.T) {
 						}
 					}
 				} else {
-					assert.Equal(t, nil, err, "Error should be nil")
+					t.Errorf("Error should be nil, got %v", err)
 				}
 			} else if tt.wantErr != nil {
 				t.Errorf("Error should not be nil, want %v, got %v", tt.wantErr, err)
