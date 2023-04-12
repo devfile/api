@@ -546,16 +546,19 @@ func TestValidateComponents(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateComponents(tt.components)
 
-			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
-				if assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match") {
-					for i := 0; i < len(merr.Errors); i++ {
-						assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+			merr, ok := err.(*multierror.Error)
+			if ok {
+				if tt.wantErr != nil {
+					if assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match") {
+						for i := 0; i < len(merr.Errors); i++ {
+							assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+						}
 					}
+				} else {
+					assert.Equal(t, nil, err, "Error should be nil")
 				}
-			} else if tt.wantErr == nil {
-				assert.Equal(t, nil, err, "Error should be nil")
 			} else if tt.wantErr != nil {
-				assert.NotEqual(t, nil, err, "Error should not be nil")
+				t.Errorf("Error should not be nil, want %v, got %v", tt.wantErr, err)
 			}
 		})
 	}
