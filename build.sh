@@ -30,7 +30,7 @@ onError() {
 }
 trap 'onError' ERR
 
-"${BASE_DIR}"/build-generator.sh
+bash "${BASE_DIR}"/build-generator.sh
 
 cd "${BASE_DIR}"
 

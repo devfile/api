@@ -81,7 +81,7 @@ setVersionAndBuild() {
   apply_sed "s#jsonschema:version=.*#jsonschema:version=${SCHEMA_VERSION}#g" pkg/apis/workspaces/$K8S_VERSION/doc.go #src/constants.ts
 
   # Generate the schema
-  ./build.sh
+  bash ./build.sh
 }
 
 commitChanges() {

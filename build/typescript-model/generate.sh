@@ -30,7 +30,7 @@ EOF
     echo "[INFO] Lauching gen to generate typescript files based on swagger json"
     export OPENAPI_SKIP_FETCH_SPEC=true
     export OPENAPI_GENERATOR_COMMIT="v6.3.0"
-    $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
+    bash $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
 
     sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json
