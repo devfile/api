@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate typescript model
         run: |
-          ./build/typescript-model/generate.sh
+          bash ./build/typescript-model/generate.sh
           cp -r ./build/typescript-model/workdir/typescript-models ../
         working-directory: api
 

@@ -27,16 +27,16 @@ jobs:
 
       - name: Generate Go sources, CRDs and schemas
         run: |
-          ./docker-run.sh ./build.sh
+          bash ./docker-run.sh ./build.sh
           if [[ ! -z $(git status -s) ]]
           then
-            echo 'Command `./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'
+            echo 'Command `bash ./docker-run.sh ./build.sh` did introduce changes, which should not be the case if it had been run as part of the PR. Please run it locally and check in the results as part of your PR.'
             git --no-pager diff
             exit 1
           fi
 
       - name: Validate samples against schemas
-        run: ./docker-run.sh ./validate-samples.sh
+        run: bash ./docker-run.sh ./validate-samples.sh
 
       - name: Run GO tests
         run: go test -coverprofile cover.out -v ./...
@@ -45,7 +45,7 @@ jobs:
         uses: codecov/codecov-action@v2.1.0
 
       - name: Check typescript model generation
-        run: ./build/typescript-model/generate.sh
+        run: bash ./build/typescript-model/generate.sh
 
       - name: Check GO mod state
         run: |
@@ -75,7 +75,7 @@ jobs:
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
           go install github.com/securego/gosec/v2/cmd/gosec@v2.14.0
-          ./run_gosec.sh
+          bash ./run_gosec.sh
           if [[ $? != 0 ]]
           then
             echo "gosec scanner failed to run "
