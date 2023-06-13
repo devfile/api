@@ -1,3 +1,0 @@
-name: docker-compose
-dockerfile:
-  uri: "{{uri}}/Dockerfile"
