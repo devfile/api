@@ -110,6 +110,7 @@ func (union *ComponentUnion) Simplify() {
 type ComponentUnionVisitor struct {
 	Container  func(*ContainerComponent) error
 	Kubernetes func(*KubernetesComponent) error
+	Compose    func(*ComposeComponent) error
 	Openshift  func(*OpenshiftComponent) error
 	Volume     func(*VolumeComponent) error
 	Image      func(*ImageComponent) error
@@ -180,6 +181,7 @@ func (union *ComponentUnionParentOverride) Simplify() {
 type ComponentUnionParentOverrideVisitor struct {
 	Container  func(*ContainerComponentParentOverride) error
 	Kubernetes func(*KubernetesComponentParentOverride) error
+	Compose    func(*ComposeComponentParentOverride) error
 	Openshift  func(*OpenshiftComponentParentOverride) error
 	Volume     func(*VolumeComponentParentOverride) error
 	Image      func(*ImageComponentParentOverride) error
@@ -312,6 +314,7 @@ func (union *ComponentUnionPluginOverrideParentOverride) Simplify() {
 type ComponentUnionPluginOverrideParentOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverrideParentOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverrideParentOverride) error
+	Compose    func(*ComposeComponentPluginOverrideParentOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverrideParentOverride) error
 	Volume     func(*VolumeComponentPluginOverrideParentOverride) error
 	Image      func(*ImageComponentPluginOverrideParentOverride) error
@@ -444,6 +447,7 @@ func (union *ComponentUnionPluginOverride) Simplify() {
 type ComponentUnionPluginOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverride) error
+	Compose    func(*ComposeComponentPluginOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverride) error
 	Volume     func(*VolumeComponentPluginOverride) error
 	Image      func(*ImageComponentPluginOverride) error

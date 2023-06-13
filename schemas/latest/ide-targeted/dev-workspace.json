@@ -473,6 +473,11 @@
                     },
                     {
                       "required": [
+                        "compose"
+                      ]
+                    },
+                    {
+                      "required": [
                         "openshift"
                       ]
                     },
@@ -493,6 +498,23 @@
                       "type": "object",
                       "additionalProperties": true,
                       "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+                    },
+                    "compose": {
+                      "description": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time.",
+                      "type": "object",
+                      "properties": {
+                        "inlined": {
+                          "type": "string"
+                        },
+                        "locationType": {
+                          "type": "string"
+                        },
+                        "uri": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time."
                     },
                     "container": {
                       "description": "Allows adding and configuring devworkspace-related containers",
@@ -1442,6 +1464,11 @@
                   },
                   {
                     "required": [
+                      "compose"
+                    ]
+                  },
+                  {
+                    "required": [
                       "openshift"
                     ]
                   },
@@ -1472,6 +1499,23 @@
                     "type": "object",
                     "additionalProperties": true,
                     "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+                  },
+                  "compose": {
+                    "description": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time.",
+                    "type": "object",
+                    "properties": {
+                      "inlined": {
+                        "type": "string"
+                      },
+                      "locationType": {
+                        "type": "string"
+                      },
+                      "uri": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "markdownDescription": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time."
                   },
                   "container": {
                     "description": "Allows adding and configuring devworkspace-related containers",
@@ -2310,6 +2354,11 @@
                             },
                             {
                               "required": [
+                                "compose"
+                              ]
+                            },
+                            {
+                              "required": [
                                 "openshift"
                               ]
                             },
@@ -2330,6 +2379,23 @@
                               "type": "object",
                               "additionalProperties": true,
                               "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+                            },
+                            "compose": {
+                              "description": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time.",
+                              "type": "object",
+                              "properties": {
+                                "inlined": {
+                                  "type": "string"
+                                },
+                                "locationType": {
+                                  "type": "string"
+                                },
+                                "uri": {
+                                  "type": "string"
+                                }
+                              },
+                              "additionalProperties": false,
+                              "markdownDescription": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time."
                             },
                             "container": {
                               "description": "Allows adding and configuring devworkspace-related containers",
@@ -3268,6 +3334,11 @@
                       },
                       {
                         "required": [
+                          "compose"
+                        ]
+                      },
+                      {
+                        "required": [
                           "openshift"
                         ]
                       },
@@ -3293,6 +3364,23 @@
                         "type": "object",
                         "additionalProperties": true,
                         "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+                      },
+                      "compose": {
+                        "description": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time.",
+                        "type": "object",
+                        "properties": {
+                          "inlined": {
+                            "type": "string"
+                          },
+                          "locationType": {
+                            "type": "string"
+                          },
+                          "uri": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "markdownDescription": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time."
                       },
                       "container": {
                         "description": "Allows adding and configuring devworkspace-related containers",
@@ -4097,6 +4185,11 @@
                                 },
                                 {
                                   "required": [
+                                    "compose"
+                                  ]
+                                },
+                                {
+                                  "required": [
                                     "openshift"
                                   ]
                                 },
@@ -4117,6 +4210,23 @@
                                   "type": "object",
                                   "additionalProperties": true,
                                   "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
+                                },
+                                "compose": {
+                                  "description": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time.",
+                                  "type": "object",
+                                  "properties": {
+                                    "inlined": {
+                                      "type": "string"
+                                    },
+                                    "locationType": {
+                                      "type": "string"
+                                    },
+                                    "uri": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "additionalProperties": false,
+                                  "markdownDescription": "Allows importing docker-compose files defined in a given manifest. This allows the reuse of docker-compose files used to define configuration for managing multiple containers at the same time."
                                 },
                                 "container": {
                                   "description": "Allows adding and configuring devworkspace-related containers",

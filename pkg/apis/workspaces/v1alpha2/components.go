@@ -7,7 +7,7 @@ import (
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image;Plugin;Custom;Compose
+// +kubebuilder:validation:Enum=Container;Kubernetes;Compose;Openshift;Volume;Image;Plugin;Custom;
 type ComponentType string
 
 const (

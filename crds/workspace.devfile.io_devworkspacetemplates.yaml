@@ -4184,6 +4184,8 @@ spec:
                   - required:
                     - kubernetes
                   - required:
+                    - compose
+                  - required:
                     - openshift
                   - required:
                     - volume
@@ -4204,12 +4206,26 @@ spec:
                       enum:
                       - Container
                       - Kubernetes
+                      - Compose
                       - Openshift
                       - Volume
                       - Image
                       - Plugin
                       - Custom
                       type: string
+                    compose:
+                      description: Allows importing docker-compose files defined in
+                        a given manifest. This allows the reuse of docker-compose
+                        files used to define configuration for managing multiple containers
+                        at the same time.
+                      properties:
+                        inlined:
+                          type: string
+                        locationType:
+                          type: string
+                        uri:
+                          type: string
+                      type: object
                     container:
                       description: Allows adding and configuring devworkspace-related
                         containers
@@ -4994,6 +5010,8 @@ spec:
                             - required:
                               - kubernetes
                             - required:
+                              - compose
+                            - required:
                               - openshift
                             - required:
                               - volume
@@ -5010,10 +5028,24 @@ spec:
                                 enum:
                                 - Container
                                 - Kubernetes
+                                - Compose
                                 - Openshift
                                 - Volume
                                 - Image
                                 type: string
+                              compose:
+                                description: Allows importing docker-compose files
+                                  defined in a given manifest. This allows the reuse
+                                  of docker-compose files used to define configuration
+                                  for managing multiple containers at the same time.
+                                properties:
+                                  inlined:
+                                    type: string
+                                  locationType:
+                                    type: string
+                                  uri:
+                                    type: string
+                                type: object
                               container:
                                 description: Allows adding and configuring devworkspace-related
                                   containers
@@ -5906,6 +5938,8 @@ spec:
                       - required:
                         - kubernetes
                       - required:
+                        - compose
+                      - required:
                         - openshift
                       - required:
                         - volume
@@ -5924,11 +5958,25 @@ spec:
                           enum:
                           - Container
                           - Kubernetes
+                          - Compose
                           - Openshift
                           - Volume
                           - Image
                           - Plugin
                           type: string
+                        compose:
+                          description: Allows importing docker-compose files defined
+                            in a given manifest. This allows the reuse of docker-compose
+                            files used to define configuration for managing multiple
+                            containers at the same time.
+                          properties:
+                            inlined:
+                              type: string
+                            locationType:
+                              type: string
+                            uri:
+                              type: string
+                          type: object
                         container:
                           description: Allows adding and configuring devworkspace-related
                             containers
@@ -6696,6 +6744,8 @@ spec:
                                 - required:
                                   - kubernetes
                                 - required:
+                                  - compose
+                                - required:
                                   - openshift
                                 - required:
                                   - volume
@@ -6712,10 +6762,25 @@ spec:
                                     enum:
                                     - Container
                                     - Kubernetes
+                                    - Compose
                                     - Openshift
                                     - Volume
                                     - Image
                                     type: string
+                                  compose:
+                                    description: Allows importing docker-compose files
+                                      defined in a given manifest. This allows the
+                                      reuse of docker-compose files used to define
+                                      configuration for managing multiple containers
+                                      at the same time.
+                                    properties:
+                                      inlined:
+                                        type: string
+                                      locationType:
+                                        type: string
+                                      uri:
+                                        type: string
+                                    type: object
                                   container:
                                     description: Allows adding and configuring devworkspace-related
                                       containers

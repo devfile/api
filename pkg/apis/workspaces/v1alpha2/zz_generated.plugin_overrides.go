@@ -65,7 +65,7 @@ type CommandPluginOverride struct {
 // +union
 type ComponentUnionPluginOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image
+	// +kubebuilder:validation:Enum=Container;Kubernetes;Compose;Openshift;Volume;Image
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -82,6 +82,13 @@ type ComponentUnionPluginOverride struct {
 	//
 	// +optional
 	Kubernetes *KubernetesComponentPluginOverride `json:"kubernetes,omitempty"`
+
+	// Allows importing docker-compose files defined in a given manifest.
+	// This allows the reuse of docker-compose files used to define configuration
+	// for managing multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentPluginOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift
@@ -147,6 +154,11 @@ type ContainerComponentPluginOverride struct {
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
 type KubernetesComponentPluginOverride struct {
 	K8sLikeComponentPluginOverride `json:",inline"`
+}
+
+// Component allows the developer to reuse an existing Compose file
+type ComposeComponentPluginOverride struct {
+	ComposeLikeComponentPluginOverride `json:",inline"`
 }
 
 // Component that allows partly importing Openshift resources into the devworkspace POD
@@ -397,6 +409,11 @@ type K8sLikeComponentPluginOverride struct {
 	Endpoints []EndpointPluginOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentPluginOverride struct {
+	BaseComponentPluginOverride                `json:",inline"`
+	ComposeFileComponentLocationPluginOverride `json:",inline"`
+}
+
 // Volume that should be mounted to a component container
 type VolumePluginOverride struct {
 
@@ -490,6 +507,14 @@ type K8sLikeComponentLocationPluginOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+type ComposeFileComponentLocationPluginOverride struct {
+	LocationType ComposeFileComponentLocationTypePluginOverride `json:"locationType,omitempty"`
+
+	Uri string `json:"uri,omitempty"`
+
+	Inlined string `json:"inlined,omitempty"`
+}
+
 // +union
 type ImageUnionPluginOverride struct {
 
@@ -522,6 +547,8 @@ type BaseCommandPluginOverride struct {
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypePluginOverride string
+
+type ComposeFileComponentLocationTypePluginOverride string
 
 // ImageType describes the type of image.
 // Only one of the following image type may be specified.

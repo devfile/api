@@ -142,7 +142,7 @@ type CommandParentOverride struct {
 // +union
 type ComponentUnionParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image;Plugin
+	// +kubebuilder:validation:Enum=Container;Kubernetes;Compose;Openshift;Volume;Image;Plugin
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -159,6 +159,13 @@ type ComponentUnionParentOverride struct {
 	//
 	// +optional
 	Kubernetes *KubernetesComponentParentOverride `json:"kubernetes,omitempty"`
+
+	// Allows importing docker-compose files defined in a given manifest.
+	// This allows the reuse of docker-compose files used to define configuration
+	// for managing multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift
@@ -253,6 +260,11 @@ type ContainerComponentParentOverride struct {
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
 type KubernetesComponentParentOverride struct {
 	K8sLikeComponentParentOverride `json:",inline"`
+}
+
+// Component allows the developer to reuse an existing Compose file
+type ComposeComponentParentOverride struct {
+	ComposeLikeComponentParentOverride `json:",inline"`
 }
 
 // Component that allows partly importing Openshift resources into the devworkspace POD
@@ -527,6 +539,11 @@ type K8sLikeComponentParentOverride struct {
 	Endpoints []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentParentOverride struct {
+	BaseComponentParentOverride                `json:",inline"`
+	ComposeFileComponentLocationParentOverride `json:",inline"`
+}
+
 // Volume that should be mounted to a component container
 type VolumeParentOverride struct {
 
@@ -674,6 +691,14 @@ type K8sLikeComponentLocationParentOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+type ComposeFileComponentLocationParentOverride struct {
+	LocationType ComposeFileComponentLocationTypeParentOverride `json:"locationType,omitempty"`
+
+	Uri string `json:"uri,omitempty"`
+
+	Inlined string `json:"inlined,omitempty"`
+}
+
 // +union
 type ImageUnionParentOverride struct {
 
@@ -785,6 +810,8 @@ type BaseCommandParentOverride struct {
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypeParentOverride string
 
+type ComposeFileComponentLocationTypeParentOverride string
+
 // ImageType describes the type of image.
 // Only one of the following image type may be specified.
 type ImageTypeParentOverride string
@@ -812,7 +839,7 @@ type KubernetesCustomResourceImportReferenceParentOverride struct {
 // +union
 type ComponentUnionPluginOverrideParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image
+	// +kubebuilder:validation:Enum=Container;Kubernetes;Compose;Openshift;Volume;Image
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -829,6 +856,13 @@ type ComponentUnionPluginOverrideParentOverride struct {
 	//
 	// +optional
 	Kubernetes *KubernetesComponentPluginOverrideParentOverride `json:"kubernetes,omitempty"`
+
+	// Allows importing docker-compose files defined in a given manifest.
+	// This allows the reuse of docker-compose files used to define configuration
+	// for managing multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentPluginOverrideParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift
@@ -949,6 +983,11 @@ type ContainerComponentPluginOverrideParentOverride struct {
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
 type KubernetesComponentPluginOverrideParentOverride struct {
 	K8sLikeComponentPluginOverrideParentOverride `json:",inline"`
+}
+
+// Component allows the developer to reuse an existing Compose file
+type ComposeComponentPluginOverrideParentOverride struct {
+	ComposeLikeComponentPluginOverrideParentOverride `json:",inline"`
 }
 
 // Component that allows partly importing Openshift resources into the devworkspace POD
@@ -1235,6 +1274,11 @@ type K8sLikeComponentPluginOverrideParentOverride struct {
 	Endpoints []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentPluginOverrideParentOverride struct {
+	BaseComponentPluginOverrideParentOverride                `json:",inline"`
+	ComposeFileComponentLocationPluginOverrideParentOverride `json:",inline"`
+}
+
 // Volume that should be mounted to a component container
 type VolumePluginOverrideParentOverride struct {
 
@@ -1329,6 +1373,14 @@ type K8sLikeComponentLocationPluginOverrideParentOverride struct {
 	Inlined string `json:"inlined,omitempty"`
 }
 
+type ComposeFileComponentLocationPluginOverrideParentOverride struct {
+	LocationType ComposeFileComponentLocationTypePluginOverrideParentOverride `json:"locationType,omitempty"`
+
+	Uri string `json:"uri,omitempty"`
+
+	Inlined string `json:"inlined,omitempty"`
+}
+
 // +union
 type ImageUnionPluginOverrideParentOverride struct {
 
@@ -1361,6 +1413,8 @@ type BaseCommandPluginOverrideParentOverride struct {
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
 type K8sLikeComponentLocationTypePluginOverrideParentOverride string
+
+type ComposeFileComponentLocationTypePluginOverrideParentOverride string
 
 // ImageType describes the type of image.
 // Only one of the following image type may be specified.
