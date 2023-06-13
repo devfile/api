@@ -140,6 +140,24 @@ func generateDummyPluginComponent(name, url string, compAttribute attributes.Att
 	}
 }
 
+// generatDummyComposeComponent returns a dummy Compose component for testing
+func generateDummyComposeComponent(name string, uri string) v1alpha2.Component {
+	return v1alpha2.Component{
+		Name: name,
+		ComponentUnion: v1alpha2.ComponentUnion{
+			Compose: &v1alpha2.ComposeComponent{
+					ComposeFileComponentLocation: v1alpha2.ComposeFileComponentLocation{
+						Uri: uri,
+					},
+				},
+			},
+		},
+	}
+
+
+
+
+
 func TestValidateComponents(t *testing.T) {
 
 	volMounts := []v1alpha2.VolumeMount{
@@ -392,6 +410,19 @@ func TestValidateComponents(t *testing.T) {
 					},
 				}, false),
 			},
+		},
+		{
+			name: "Valid Compose Component",
+			components: []v1alpha2.Component{
+				generateDummyComposeComponent("name1", "http://uri"),
+			},
+		},
+		{
+			name: "Invalid Compose Component with bad URI",
+			components: []v1alpha2.Component{
+				generateDummyComposeComponent("name1", "http//uri"),
+			},
+			wantErr: []string{invalidURIErr},
 		},
 		{
 			name: "Valid containers with different key and value pairs for deployment, service and ingress annotations",
