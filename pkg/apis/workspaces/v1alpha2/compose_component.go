@@ -3,20 +3,23 @@ package v1alpha2
 type ComposeFileComponentLocationType string
 
 const (
-	UriComposeComponentLocationType ComposeFileComponentLocationType = "Uri"
+	UriComposeComponentLocationType     ComposeFileComponentLocationType = "Uri"
+	InlinedComposeComponentLocationType ComposeFileComponentLocationType = "Inlined"
 )
 
-// +union
 type ComposeFileComponentLocation struct {
+
 	// Type of Compose file Component Location
-	// +
-	// +unionDiscriminator
-	// +optional
+
 	LocationType ComposeFileComponentLocationType `json:"locationType,omitempty"`
 
 	// Location uri of the docker-compose file
 
 	Uri string `json:"uri,omitempty"`
+
+	// Inline docker-file
+
+	Inlined string `json:"inlined,omitempty"`
 }
 
 type ComposeLikeComponent struct {

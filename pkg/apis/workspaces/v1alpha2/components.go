@@ -62,6 +62,13 @@ type ComponentUnion struct {
 	// +optional
 	Kubernetes *KubernetesComponent `json:"kubernetes,omitempty"`
 
+	// Allows importing docker-compose files defined in a given manifest.
+	// This allows the reuse of docker-compose files used to define configuration
+	// for managing multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponent `json:"compose,omitempty"`
+
 	// Allows importing into the devworkspace the OpenShift resources
 	// defined in a given manifest. For example this allows reusing the OpenShift
 	// definitions used to deploy some runtime components in production.
