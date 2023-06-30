@@ -19,6 +19,7 @@ assignees: ''
 > /area api
 > /area library
 > /area registry
+> /area alizer
 > /area devworkspace
 > /area integration-tests
 > /area test-automation
