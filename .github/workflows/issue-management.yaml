@@ -1,0 +1,29 @@
+name: Issue Management
+
+on:
+  issues:
+    types:
+    - opened
+    - reopened
+
+env:
+  ORGANIZATION: devfile
+  # See https://github.com/orgs/devfile/projects/10/views/1
+  PROJECT_NUMBER: 10
+
+jobs:
+  manage_issue_labels:
+    name: Label issue
+    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+    runs-on: ubuntu-latest
+    concurrency: issue_labels-${{ github.event.issue.number }}
+    permissions:
+      issues: write
+    steps:
+    - name: Add needs-triage label
+      # Action recommended in https://docs.github.com/en/actions/managing-issues-and-pull-requests/adding-labels-to-issues
+      # Recommended to pin unofficial Actions to a specific commit SHA
+      uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
+      with:
+        add-labels: "needs-triage"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
