@@ -20,14 +20,14 @@ jobs:
           python-version: '3.9'
 
       - name: Checkout devfile/devfile-web
-        uses: actions/checkout@v2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: devfile/devfile-web
           persist-credentials: false
           path: devfile-web-repo
 
       - name: Checkout devfile/api
-        uses: actions/checkout@v2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           path: api-repo
 
