@@ -32,7 +32,7 @@ then
   exit 1
 fi
 
-if ! command -v jsonschema-cli &> /dev/null
+if ! command -v jsonschema &> /dev/null
 then
   echo
   echo "#### ERROR ####"
@@ -58,7 +58,8 @@ do
   echo "Validating $schema files against ${schemaPath}"
   for devfile in $devfiles
   do
-    if ! jsonschema-cli validate "${BASE_DIR}/${schemaPath}" "${BASE_DIR}/${devfile}" >> validate-output.txt
+    python3 validate_yaml.py "${BASE_DIR}/${schemaPath}" "${BASE_DIR}/${devfile}" >> validate-output.txt
+    if [ "$(cat validate-output.txt)" != "" ]
     then
       echo "  - $devfile => INVALID"
     else 
