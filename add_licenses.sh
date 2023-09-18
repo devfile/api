@@ -23,7 +23,7 @@ then
   echo "error addlicense must be installed with this command: go install github.com/google/addlicense@latest" && exit 1
 else
   echo 'addlicense -v -f license_header.txt **/*.go'
-  addlicense -v -f license_header.txt $(find . -not -path '*/\.*' -not -path '*/vendor/*' -name '*.go')
+  addlicense -v -f license_header.txt $(find . -not -path '*/\.*' -not -path '*/vendor/*' -not -name 'zz_generated.*.go' -name '*.go')
 fi
 
 
