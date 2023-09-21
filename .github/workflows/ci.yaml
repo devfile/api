@@ -54,6 +54,12 @@ jobs:
       - name: Validate samples against schemas
         run: bash ./docker-run.sh ./validate-samples.sh
 
+      - name: Check license headers
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          go install github.com/google/addlicense@latest
+          bash ./check_licenses.sh
+      
       - name: Run GO tests
         run: go test -coverprofile cover.out -v ./...
 
