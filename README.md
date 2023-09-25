@@ -73,3 +73,9 @@ Please see our [contributing.md](./CONTRIBUTING.md).
 ## License
 
 Apache License 2.0, see [LICENSE](./LICENSE) for details.
+
+### Adding License Headers
+
+[`license_header`](./license_header.txt) contains the license header to be contained under all source files. For Go sources, this can be included by running `bash add_licenses.sh`.
+
+Ensure `github.com/google/addlicense` is installed by running `go install github.com/google/addlicense@latest`.

@@ -15,11 +15,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script runs the gosec scanner locally
+# This script adds license headers that are missing from go files
 
-if ! command -v gosec 2> /dev/null
+
+if ! command -v addlicense 2> /dev/null
 then
-  echo "error gosec must be installed with this command: go install github.com/securego/gosec/v2/cmd/gosec@v2.14.0" && exit 1
+  echo "error addlicense must be installed with this command: go install github.com/google/addlicense@latest" && exit 1
+else
+  echo 'addlicense -v -f license_header.txt **/*.go'
+  addlicense -v -f license_header.txt $(find . -not -path '*/\.*' -not -path '*/vendor/*' -not -name 'zz_generated.*.go' -name '*.go')
 fi
 
-gosec -no-fail -fmt=sarif -out=gosec.sarif -exclude-dir test  -exclude-dir generator  ./...
+
