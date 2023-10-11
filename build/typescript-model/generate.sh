@@ -1,4 +1,20 @@
 #!/bin/bash
+#
+#
+# Copyright Red Hat
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 set -e
 
 SCRIPT_DIR=`dirname $( readlink -m $( type -p ${0} ))`
@@ -6,7 +22,7 @@ WORK_DIR=${SCRIPT_DIR}/workdir
 echo "[INFO] Using the following folder to store all build files ${SCRIPT_DIR}/workdir"
 mkdir -p $WORK_DIR
 
-GEN_REVISION=a3aef4de7a1d5dab72021aa282fffd8bc8a022ca
+GEN_REVISION=b32dcd6dc9c1c0c4fcf227c9539ae9ff0530b936
 
 k8s_client_gen() {
     [ ! -d $WORK_DIR/gen ] && git clone https://github.com/kubernetes-client/gen.git $WORK_DIR/gen || echo "kubernetes-client/gen is already cloned into $WORK_DIR/gen"
@@ -29,7 +45,8 @@ export REPOSITORY=''
 EOF
     echo "[INFO] Lauching gen to generate typescript files based on swagger json"
     export OPENAPI_SKIP_FETCH_SPEC=true
-    $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
+    export OPENAPI_GENERATOR_COMMIT="v6.3.0"
+    bash $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
 
     sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
     sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json

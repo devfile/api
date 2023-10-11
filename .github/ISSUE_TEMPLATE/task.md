@@ -18,7 +18,7 @@ Thanks for understanding and for contributing to the project!
 
 -->
 
-**Which area/kind this issue is related to?**
+## Which area/kind this issue is related to?
 
 <!--
     Uncomment appropriate `/area` lines, and delete the rest.
@@ -29,21 +29,25 @@ Thanks for understanding and for contributing to the project!
 > /area api
 > /area library
 > /area registry
+> /area alizer
 > /area devworkspace
 > /area integration-tests
 > /area test-automation
 > /area releng
-
+> /area landing-page
 
 ## Issue Description
+
 <!--
     A clear and concise description of what the task is.
 -->
 
-> Please uncomment and provide the target Odo version if this task is for QE integration test. 
-> Leave if blank if it's a future QE issue.
-> Delete this comment if it's not related QE integration test.
- 
-> Target Odo version: 
+## Target Odo version
 
+<!--
+    Please uncomment and provide the target Odo version if this task is for QE integration test.
+    Leave if blank if it's a future QE issue.
+    Delete this comment if it's not related QE integration test.
+-->
 
+> Target Odo version:

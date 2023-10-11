@@ -87,3 +87,5 @@ generator/build/generator
 .DS_Store
 
 build/typescript-model/workdir
+
+docker-build-log

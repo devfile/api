@@ -1,18 +1,19 @@
 #!/bin/bash
 #
-#   Copyright 2020-2022 Red Hat, Inc.
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
+# Copyright Red Hat
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 BLUE='\033[1;34m'
 GREEN='\033[0;32m'
@@ -32,7 +33,7 @@ then
   exit 1
 fi
 
-if ! command -v jsonschema-cli &> /dev/null
+if ! command -v jsonschema &> /dev/null
 then
   echo
   echo "#### ERROR ####"
@@ -58,7 +59,8 @@ do
   echo "Validating $schema files against ${schemaPath}"
   for devfile in $devfiles
   do
-    if ! jsonschema-cli validate "${BASE_DIR}/${schemaPath}" "${BASE_DIR}/${devfile}" >> validate-output.txt
+    python3 validate_yaml.py "${BASE_DIR}/${schemaPath}" "${BASE_DIR}/${devfile}" >> validate-output.txt
+    if [ "$(cat validate-output.txt)" != "" ]
     then
       echo "  - $devfile => INVALID"
     else 

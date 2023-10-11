@@ -2,16 +2,17 @@
 
 This document defines governance policies for the the projects under the Devfile organization.
 
-- [Maintainers](#maintainers)
-- [Becoming a Maintainer](#becoming-a-maintainer)
-- [Meetings](#meetings)
-- [CNCF Resources](#cncf-resources)
-- [Code of Conduct Enforcement](#code-of-conduct)
-- [Voting](#voting)
+- [Project Governance](#project-governance)
+  - [Maintainers](#maintainers)
+  - [Becoming a Maintainer](#becoming-a-maintainer)
+  - [Meetings](#meetings)
+  - [CNCF Resources](#cncf-resources)
+  - [Code of Conduct](#code-of-conduct)
+  - [Voting](#voting)
 
 ## Maintainers
 
-Devfile Maintainers have write access to the [Devile GitHub organization repositories](https://github.com/devfile).
+Devfile Maintainers have write access to the [Devfile GitHub organization repositories](https://github.com/devfile).
 They can merge their own patches or patches from others. The current maintainers
 can be found in [MAINTAINERS](./MAINTAINERS).  Maintainers collectively manage the project's
 resources and contributors.
@@ -30,15 +31,15 @@ the project succeed.
 
 To become a Maintainer you need to demonstrate the following:
 
-  * commitment to the project:
-    * participate in discussions, contributions, code and documentation reviews
+- commitment to the project:
+  - participate in discussions, contributions, code and documentation reviews
       for 3 months or more,
-    * perform reviews for 5 non-trivial pull requests,
-    * contribute 5 non-trivial pull requests and have them merged,
-  * ability to write quality code and/or documentation,
-  * ability to collaborate with the team,
-  * understanding of how the team works (policies, processes for testing and code review, etc),
-  * understanding of the project's code base and coding and documentation style.
+  - perform reviews for 5 non-trivial pull requests,
+  - contribute 5 non-trivial pull requests and have them merged,
+- ability to write quality code and/or documentation,
+- ability to collaborate with the team,
+- understanding of how the team works (policies, processes for testing and code review, etc),
+- understanding of the project's code base and coding and documentation style.
 
 A new Maintainer must be proposed by an existing maintainer by submitting a new post to the
 [Devfile API discussion board](https://github.com/devfile/api/discussions). A simple majority vote of existing Maintainers
@@ -81,7 +82,7 @@ with CNCF staff in resolving the report.
 While most business in Devfile is conducted by "lazy consensus", periodically
 the Maintainers may need to vote on specific actions or changes.
 A vote can be taken on [Devfile API discussion board](https://github.com/devfile/api/discussions) or
-[the private Maintainer mailing list](https://lists.cncf.io/g/cncf-devfile-maintainers) for security or conduct matters.  
+[the private Maintainer mailing list](https://lists.cncf.io/g/cncf-devfile-maintainers) for security or conduct matters.
 Votes may also be taken on [Devfile API discussion board](https://github.com/devfile/api/discussions).  Any Maintainer may
 demand a vote be taken.
 
