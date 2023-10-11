@@ -85,12 +85,21 @@ The following steps outline the steps done to release a new version of the Devfi
    7) Make a release announcement on the devfile mailing list and slack channel
 
 An example pull request, `make-release.sh` script and GitHub action can be found here:
-- [Release Pull Request](https://github.com/johnmcollier/api/pull/7)
-- [make-release.sh](https://github.com/johnmcollier/api/blob/master/make-release.sh)
-- [release-schema.yaml](https://github.com/johnmcollier/api/blob/master/.github/workflows/release-schema.yaml)
+- [Release Pull Request](https://github.com/devfile/api/pull/958)
+- [make-release.sh](./make-release.sh)
+- [release-schema.yaml](./.github/workflows/release-devfile-schema.yaml)
 
 **Schema Store**
 
 After releasing a new version, for example 2.2.0, we will also need to update the schemastore's [catalog.json](https://github.com/SchemaStore/schemastore/blob/master/src/api/json/catalog.json#L1119-L1132).
 
 Open a PR to update the devfile entry to include the new devfile version and also update the default url to the latest version.
+
+## Post Release
+
+Create a pre-release tag pointing to the first commit hash following a published release.  In addition to preparing for the next release, this will also allow devfile clients to update their dependencies without the unintended side effects of version downgrading.  See [api issue 559](https://github.com/devfile/api/issues/599) for the background discussion.
+
+1)  Create a new release tag following the [Github instructions](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+2)  Sync the pre-release tag name to the version found in the [latest schemas](https://github.com/devfile/api/blob/main/schemas/latest/devfile.json#L4) e.g. `{major}.{minor}.{bugfix}-alpha`
+3)  Select the option `Set as a pre-release` before publishing
+

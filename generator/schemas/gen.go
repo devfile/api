@@ -1,3 +1,19 @@
+//
+//
+// Copyright Red Hat
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package schemas
 
 import (
@@ -319,7 +335,7 @@ This is not the case in the "%s' API group:
 			ideTargetedSchemasExplanation :=
 				`IDE-targeted variants of the schemas provide the following difference compared to the main schemas:
 - They contain additional non-standard ` + "`markdownDescription`" + ` attributes that are used by IDEs such a VSCode
-to provide markdown-rendered documentation hovers. 
+to provide markdown-rendered documentation hovers.
 - They don't contain ` + "`default`" + ` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.`
 
 			(&currentJSONSchema).Title = (&currentJSONSchema).Title + " - IDE-targeted variant"
@@ -349,7 +365,7 @@ to provide markdown-rendered documentation hovers.
 				root.AddError(err)
 				return nil
 			}
-			err = writeFile(ctx, folderForIdeTargetedSchemas, "Readme.md", []byte(ideTargetedSchemasExplanation))
+			err = writeFile(ctx, folderForIdeTargetedSchemas, "README.md", []byte(ideTargetedSchemasExplanation))
 			if err != nil {
 				root.AddError(err)
 				return nil

@@ -1,3 +1,19 @@
+//
+//
+// Copyright Red Hat
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package validation
 
 import (
@@ -327,11 +343,32 @@ func TestValidateComponents(t *testing.T) {
 			wantErr: []string{sameTargetPortErr},
 		},
 		{
-			name: "Invalid container with same target ports in a single component",
+			name: "Valid container with same target ports in a single component",
 			components: []v1alpha2.Component{
 				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080, endpointUrl28080}, nil, v1alpha2.Annotation{}, false),
 			},
-			wantErr: []string{sameTargetPortErr},
+		},
+		{
+			name: "Invalid Kube components with the same endpoint names",
+			components: []v1alpha2.Component{
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080}, ""),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl18081}, ""),
+			},
+			wantErr: []string{sameEndpointNameErr},
+		},
+		{
+			name: "Valid Kube component with the same endpoint target ports as the container component's",
+			components: []v1alpha2.Component{
+				generateDummyContainerComponent("name1", nil, []v1alpha2.Endpoint{endpointUrl18080}, nil, v1alpha2.Annotation{}, false),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl28080}, ""),
+			},
+		},
+		{
+			name: "Invalid Kube components with the same endpoint names",
+			components: []v1alpha2.Component{
+				generateDummyKubernetesComponent("name1", []v1alpha2.Endpoint{endpointUrl18080}, ""),
+				generateDummyKubernetesComponent("name2", []v1alpha2.Endpoint{endpointUrl28080}, ""),
+			},
 		},
 		{
 			name: "Valid containers with valid resource requirement",
@@ -532,14 +569,19 @@ func TestValidateComponents(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := ValidateComponents(tt.components)
 
-			if merr, ok := err.(*multierror.Error); ok && tt.wantErr != nil {
-				if assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match") {
-					for i := 0; i < len(merr.Errors); i++ {
-						assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+			merr, ok := err.(*multierror.Error)
+			if ok {
+				if tt.wantErr != nil {
+					if assert.Equal(t, len(tt.wantErr), len(merr.Errors), "Error list length should match") {
+						for i := 0; i < len(merr.Errors); i++ {
+							assert.Regexp(t, tt.wantErr[i], merr.Errors[i].Error(), "Error message should match")
+						}
 					}
+				} else {
+					t.Errorf("Error should be nil, got %v", err)
 				}
-			} else {
-				assert.Equal(t, nil, err, "Error should be nil")
+			} else if tt.wantErr != nil {
+				t.Errorf("Error should not be nil, want %v, got %v", tt.wantErr, err)
 			}
 		})
 	}

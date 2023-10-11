@@ -19,21 +19,21 @@ Before contributing to this repository for the first time, please review our pro
 To build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
 In the root directory, just run the following command:
 
-```
-./docker-run.sh ./build.sh
+```console
+bash ./docker-run.sh ./build.sh
 ```
 
 ### Testing
 
 Find more information about tests in the [testing document](test/README.md).
 
-```
+```console
 # schemaTest approach
 cd test/v200/schemaTest
 go test -v
 ```
 
-```
+```console
 # apiTest approach
 cd test/v200/apiTest
 go test -v
@@ -43,8 +43,8 @@ go test -v
 
 All commits must be signed off with the footer:
 
-```
-Signed-off-by: First Lastname <email@email.com>
+```git
+Signed-off-by: Firstname Lastname <email@email.com>
 ```
 
 Once you set your user.name and user.email in your git config, you can sign your commit automatically with git commit -s. When you think the code is ready for review, create a pull request and link the issue associated with it.

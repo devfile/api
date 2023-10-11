@@ -1,3 +1,19 @@
+//
+//
+// Copyright Red Hat
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package v1alpha1
 
 import (
@@ -17,6 +33,7 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 	}
 
 	for _, srcCommand := range src.Commands {
+		srcCommand := srcCommand
 		if srcCommand.Custom != nil {
 			// v1alpha2 does not support Parent Custom commands, so we have to drop them here
 			continue
@@ -30,6 +47,7 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 	}
 
 	for _, srcComponent := range src.Components {
+		srcComponent := srcComponent
 		if srcComponent.Custom != nil {
 			// v1alpha2 does not support Parent Custom Components, so we have to drop them here
 			continue
@@ -43,6 +61,7 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 	}
 
 	for _, srcProject := range src.Projects {
+		srcProject := srcProject
 		destProject := v1alpha2.Project{}
 		err := convertProjectTo_v1alpha2(&srcProject, &destProject)
 		if err != nil {
@@ -61,6 +80,7 @@ func convertParentTo_v1alpha2(src *Parent, dest *v1alpha2.Parent) error {
 	}
 
 	for _, srcProject := range src.StarterProjects {
+		srcProject := srcProject
 		destProject := v1alpha2.StarterProject{}
 		err := convertStarterProjectTo_v1alpha2(&srcProject, &destProject)
 		if err != nil {
@@ -146,6 +166,7 @@ func convertParentFrom_v1alpha2(src *v1alpha2.Parent, dest *Parent) error {
 		dest.Kubernetes = &kube
 	}
 	for _, srcCommand := range src.Commands {
+		srcCommand := srcCommand
 		destCommand := Command{}
 		err := convertParentCommandFrom_v1alpha2(&srcCommand, &destCommand)
 		if err != nil {
@@ -155,6 +176,7 @@ func convertParentFrom_v1alpha2(src *v1alpha2.Parent, dest *Parent) error {
 	}
 
 	for _, srcComponent := range src.Components {
+		srcComponent := srcComponent
 		destComponent := Component{}
 		err := convertParentComponentFrom_v1alpha2(&srcComponent, &destComponent)
 		if err != nil {

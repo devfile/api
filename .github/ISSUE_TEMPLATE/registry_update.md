@@ -3,9 +3,11 @@ name: ⚠️ Emergency registry update
 about: Request for an emergency registry update
 title: ''
 labels: ''
-assignees: johnmcollier, GeekArthur
+assignees: johnmcollier
 
 ---
+
+## Which area this feature is related to?
 
 /area registry
 
