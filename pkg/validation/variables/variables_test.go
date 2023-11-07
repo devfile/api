@@ -65,6 +65,10 @@ func TestValidateGlobalVariableBasic(t *testing.T) {
 					"starterproject1": {"desc", "dir", "tag"},
 					"starterproject2": {"tag"},
 				},
+				DependentProjects: map[string][]string{
+					"project1": {"dir", "path", "tag", "version", "version1"},
+					"project2": {"tag"},
+				},
 			},
 		},
 	}
