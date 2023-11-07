@@ -25,6 +25,18 @@ starterProjects:
 - name: starterproject2
   zip:
     location: "{{tag}}"
+dependentProjects:
+- name: dependentproject1
+  clonePath: "{{path}}"
+  git:
+    checkoutFrom:
+      revision: "{{tag}}"
+    remotes:
+      "{{dir}}": "{{version1}}/dev/null-/dev/null"
+      "{{version}}": "test"
+- name: dependentproject2
+  zip:
+    location: "{{tag}}"
 components:
 - name: component1
   container:
