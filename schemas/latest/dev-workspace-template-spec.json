@@ -1,7 +1,7 @@
 {
   "description": "Structure of the devworkspace. This is also the specification of a devworkspace template.",
   "type": "object",
-  "title": "DevWorkspaceTemplateSpec schema - Version 2.2.1-alpha",
+  "title": "DevWorkspaceTemplateSpec schema - Version 2.2.2",
   "properties": {
     "attributes": {
       "description": "Map of implementation-dependant free-form YAML attributes.",

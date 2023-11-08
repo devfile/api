@@ -1,7 +1,7 @@
 {
   "description": "Devfile describes the structure of a cloud-native devworkspace and development environment.\n\nIDE-targeted variants of the schemas provide the following difference compared to the main schemas:\n- They contain additional non-standard `markdownDescription` attributes that are used by IDEs such a VSCode\nto provide markdown-rendered documentation hovers.\n- They don't contain `default` attributes, since this triggers unwanted addition of defaulted fields during completion in IDEs.",
   "type": "object",
-  "title": "Devfile schema - Version 2.2.1-alpha - IDE-targeted variant",
+  "title": "Devfile schema - Version 2.2.2 - IDE-targeted variant",
   "required": [
     "schemaVersion"
   ],
