@@ -36,7 +36,7 @@ jobs:
       - name: Set up Go 1.x
         uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4.1.0
         with:
-          go-version: 1.17
+          go-version-file: go.mod
       - name: Run tests
         run: go test ./... -coverprofile cover.out
       - name: Codecov

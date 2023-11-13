@@ -36,19 +36,19 @@ jobs:
           path: api
 
       - name: Setup python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
         with:
           python-version: '3.9.12'
 
       - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v2
+        uses: py-actions/py-dependency-install@9c419aa98bfb42280bdae2b0a736befd9b01e3b1 # v4.0.0
         with:
           path: 'api/build/typescript-model/requirements.txt'
 
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
-          node-version: 12
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
           scope: '@devfile'
 
