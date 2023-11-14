@@ -49,7 +49,7 @@ func (devfile *TestDevfile) MetaDataUpdated(metadata *header.DevfileMetadata) {
 	}
 }
 
-//setProperty randomly sets the string properties of the metadata object.
+// setProperty randomly sets the string properties of the metadata object.
 func setProperty(propertyName string, property *string) {
 	if GetRandomDecision(2, 1) {
 		*property = GetRandomString(8, false)
@@ -57,8 +57,8 @@ func setProperty(propertyName string, property *string) {
 	}
 }
 
-//setMetadataValues randomly adds/modifies metadata object properties.  Since these are optional properties, the test is
-//set up so they are twice as likely to appear in the generated files to ensure sufficient coverage.
+// setMetadataValues randomly adds/modifies metadata object properties.  Since these are optional properties, the test is
+// set up so they are twice as likely to appear in the generated files to ensure sufficient coverage.
 func (devfile *TestDevfile) setMetaDataValues(metadata *header.DevfileMetadata) {
 	setProperty("Description", &metadata.Description)
 	setProperty("DisplayName", &metadata.DisplayName)

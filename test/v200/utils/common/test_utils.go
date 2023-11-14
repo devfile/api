@@ -94,8 +94,8 @@ type TestContent struct {
 }
 
 // init creates:
-//    - the temporary directory used by the test to store logs and generated devfiles.
-//    - the log file
+//   - the temporary directory used by the test to store logs and generated devfiles.
+//   - the log file
 func init() {
 	tmpDir = defaultTempDir
 	if _, err := os.Stat(tmpDir); !os.IsNotExist(err) {
