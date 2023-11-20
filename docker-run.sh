@@ -15,6 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Allow setting of podman environment var in the script runtime
+shopt -s expand_aliases
+set -eux
 
 # git ROOT directory used to mount filesystem
 GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
@@ -22,6 +25,9 @@ GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //
 WORKDIR="/projects/src/${GO_MODULE}"
 # Container image
 IMAGE_NAME="quay.io/devfile/kubernetes-api-build-prerequisites:latest"
+
+# Run script to set env var for podman if necessary
+. ./setenv.sh
 
 init() {
   BLUE='\033[1;34m'
