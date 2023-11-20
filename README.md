@@ -34,8 +34,8 @@ Release details and process are found in [Devfile Release](RELEASE.md)
 
 ## How to build
 
-In order to build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker`.
-In the root directory, just run the following command:
+To build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker` or `podman`.
+In the root directory, if you are using `podman` first run `export USE_PODMAN=true`. Then for either `docker` or `podman` run the following command:
 
 ```console
 bash ./docker-run.sh ./build.sh
