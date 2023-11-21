@@ -29,7 +29,7 @@ import (
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
-//go:generate go run -mod=mod sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2020 paths=.
+//go:generate helpgen generate:headerFile=../header.go.txt,year=2020 paths=.
 
 // +controllertools:marker:generateHelp
 

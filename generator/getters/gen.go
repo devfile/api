@@ -29,7 +29,7 @@ import (
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
-//go:generate go run -mod=mod sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2021 paths=.
+//go:generate helpgen generate:headerFile=../header.go.txt,year=2021 paths=.
 
 var (
 	// GetterTypeMarker is associated with a type that's used as the pointer receiver of the getter method
