@@ -23,6 +23,15 @@ In the root directory, if you are using `podman` first run `export USE_PODMAN=tr
 bash ./docker-run.sh ./build.sh
 ```
 
+### Typescript model
+
+Typescript model is generated based on JSON Schema with help of <https://github.com/kubernetes-client/gen>.
+To generate them locally run:
+
+```console
+bash ./build/typescript-model/generate.sh
+```
+
 ### Testing
 
 Find more information about tests in the [testing document](test/README.md).

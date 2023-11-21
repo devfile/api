@@ -11,6 +11,7 @@ Sources for this API are defined in Go code, starting from the
 [devworkspace_types.go source file](pkg/apis/workspaces/v1alpha2/devworkspace_types.go)
 
 From these Go sources, several files are generated:
+
 - A Kubernetes Custom Resource Definition(CRD) with an embedded OpenApi schema,
 - json schemas (in the [schemas](schemas) folder) generated from the above CRD, to specify the syntax of:
   - the DevWorkspace CRD itself;
@@ -34,21 +35,7 @@ Release details and process are found in [Devfile Release](RELEASE.md)
 
 ## How to build
 
-To build the CRD and the various schemas, you don't need to install any pre-requisite apart from `docker` or `podman`.
-In the root directory, if you are using `podman` first run `export USE_PODMAN=true`. Then for either `docker` or `podman` run the following command:
-
-```console
-bash ./docker-run.sh ./build.sh
-```
-
-### Typescript model
-
-Typescript model is generated based on JSON Schema with help of <https://github.com/kubernetes-client/gen>.
-To generate them locally run:
-
-```console
-bash ./build/typescript-model/generate.sh
-```
+For information about building this project visit [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Specification status
 
@@ -61,6 +48,7 @@ In order to test existing or new Devfile 2.0 or DevWorkspace sample files in a s
 [![Contribute](https://img.shields.io/badge/developer-workspace-525C86?logo=eclipse-che&labelColor=FDB940)](https://workspaces.openshift.com/f?url=https://github.com/devfile/api)
 
 As soon as the devworkspace is opened, you should be able to:
+
 - open the `yaml` files in the following folders:
   - `samples/`
   - `devfile-support/samples`
