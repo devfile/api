@@ -27,6 +27,7 @@ WORKDIR="/projects/src/${GO_MODULE}"
 IMAGE_NAME="quay.io/devfile/kubernetes-api-build-prerequisites:latest"
 
 # For users who want to use podman this enables the alias to work throughout the scripts runtime
+USE_PODMAN=${USE_PODMAN:-false}
 if [[ ${USE_PODMAN} == true ]]; then
   alias docker=podman
   echo "using podman as container engine"
