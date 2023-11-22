@@ -36,7 +36,7 @@ func (devfile *TestDevfile) ParentAdded(parent *schema.Parent) {
 	devfile.SchemaDevFile.Parent = parent
 }
 
-//setParentValues randomly adds/modifies object properties.
+// setParentValues randomly adds/modifies object properties.
 func (devfile *TestDevfile) setParentValues(parent *schema.Parent) {
 
 	//we can use generated random values for api tests but for library parser tests,  values are dependent on what's in the
