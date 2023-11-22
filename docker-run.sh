@@ -15,6 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Allow setting of podman environment var in the script runtime
+shopt -s expand_aliases
+set -eux
 
 # git ROOT directory used to mount filesystem
 GIT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
@@ -22,6 +25,13 @@ GO_MODULE=$(grep -e 'module ' ${GIT_ROOT_DIRECTORY}/go.mod | sed -e 's/module //
 WORKDIR="/projects/src/${GO_MODULE}"
 # Container image
 IMAGE_NAME="quay.io/devfile/kubernetes-api-build-prerequisites:latest"
+
+# For users who want to use podman this enables the alias to work throughout the scripts runtime
+USE_PODMAN=${USE_PODMAN:-false}
+if [[ ${USE_PODMAN} == true ]]; then
+  alias docker=podman
+  echo "using podman as container engine"
+fi
 
 init() {
   BLUE='\033[1;34m'
