@@ -19,16 +19,17 @@ package getters
 import (
 	"bytes"
 	"fmt"
+	"go/ast"
+	"strconv"
+
 	"github.com/devfile/api/generator/genutils"
 	"github.com/elliotchance/orderedmap"
-	"go/ast"
 	"sigs.k8s.io/controller-tools/pkg/genall"
 	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
-	"strconv"
 )
 
-//go:generate go run sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2021 paths=.
+//go:generate go run -mod=mod sigs.k8s.io/controller-tools/cmd/helpgen@v0.6.2 generate:headerFile=../header.go.txt,year=2021 paths=.
 
 var (
 	// GetterTypeMarker is associated with a type that's used as the pointer receiver of the getter method

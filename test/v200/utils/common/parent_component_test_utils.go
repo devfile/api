@@ -153,7 +153,7 @@ func (devfile *TestDevfile) SetParentContainerComponentValues(component *schema.
 
 }
 
-//SetParentK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
+// SetParentK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
 func (devfile *TestDevfile) SetParentK8sComponentValues(component *schema.ComponentParentOverride) {
 	var k8type *schema.K8sLikeComponentParentOverride = &schema.K8sLikeComponentParentOverride{}
 

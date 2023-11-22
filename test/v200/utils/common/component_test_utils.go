@@ -164,7 +164,7 @@ func (devfile *TestDevfile) SetContainerComponentValues(component *schema.Compon
 
 }
 
-//SetK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
+// SetK8sComponentValues randomly sets the required properties of a Kubernetes or Openshift component
 func (devfile *TestDevfile) SetK8sComponentValues(component *schema.Component) {
 	var k8type *schema.K8sLikeComponent = &schema.K8sLikeComponent{}
 

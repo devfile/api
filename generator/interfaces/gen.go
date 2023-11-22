@@ -20,8 +20,9 @@ import (
 	"bytes"
 	"go/ast"
 	"go/printer"
-	"sigs.k8s.io/controller-tools/pkg/loader"
 	"strings"
+
+	"sigs.k8s.io/controller-tools/pkg/loader"
 
 	"github.com/devfile/api/generator/genutils"
 	"sigs.k8s.io/controller-tools/pkg/genall"
@@ -30,7 +31,7 @@ import (
 	"github.com/elliotchance/orderedmap"
 )
 
-//go:generate go run sigs.k8s.io/controller-tools/cmd/helpgen generate:headerFile=../header.go.txt,year=2020 paths=.
+//go:generate go run -mod=mod sigs.k8s.io/controller-tools/cmd/helpgen@v0.6.2 generate:headerFile=../header.go.txt,year=2020 paths=.
 
 var (
 	toplevelListMarker = markers.Must(markers.MakeDefinition("devfile:toplevellist", markers.DescribesField, struct{}{}))
