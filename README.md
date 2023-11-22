@@ -35,7 +35,7 @@ Release details and process are found in [Devfile Release](RELEASE.md)
 
 ## How to build
 
-For information about building this project visit [CONTRIBUTING.md](./CONTRIBUTING.md).
+For information about building this project visit [CONTRIBUTING.md](./CONTRIBUTING.md#building).
 
 ## Specification status
 
