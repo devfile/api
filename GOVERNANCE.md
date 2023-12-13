@@ -53,7 +53,7 @@ and invited to the [private maintainer mailing list](https://lists.cncf.io/g/cnc
 Time zones permitting, Maintainers are expected to participate in the public
 developer meeting, which occurs
 
-Every two weeks, on Monday, at 9am EST ([video call link](https://meet.google.com/trx-vqbw-ekb)).
+Every two weeks, on Monday, at 9am EST. Please join the [Google group](https://groups.google.com/g/devfiles-community) to get an invite.
 
 Maintainers will also have closed meetings in order to discuss security reports
 or Code of Conduct violations.  Such meetings should be scheduled by any
