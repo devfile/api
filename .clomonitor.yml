@@ -1,0 +1,9 @@
+# CLOMonitor metadata file
+# This file must be located at the root of the repository
+
+# Checks exemptions
+exemptions:
+  - check: license_scanning # Check identifier (see https://github.com/cncf/clomonitor/blob/main/docs/checks.md#exemptions)
+    reason: "There are currently no plans moving forward to implement FOSSA or Snyk for scanning purposes." # Justification of this exemption (mandatory, it will be displayed on the UI)
+  - check: artifacthub_badge
+    reason: "This repository has no items that should be added to Artifact Hub."
