@@ -4,6 +4,7 @@
 
 [![Apache License](https://img.shields.io/badge/license-Apache-brightgreen.svg)](LICENSE)
 [![Contribute](https://img.shields.io/badge/developer-workspace-525C86?logo=eclipse-che&labelColor=FDB940)](https://workspaces.openshift.com/f?url=https://github.com/devfile/api)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8179/badge)](https://www.bestpractices.dev/projects/8179)
 
 </div>
 
