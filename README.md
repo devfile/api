@@ -5,7 +5,7 @@
 [![Apache License](https://img.shields.io/badge/license-Apache-brightgreen.svg)](LICENSE)
 [![Contribute](https://img.shields.io/badge/developer-workspace-525C86?logo=eclipse-che&labelColor=FDB940)](https://workspaces.openshift.com/f?url=https://github.com/devfile/api)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8179/badge)](https://www.bestpractices.dev/projects/8179)
-
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/devfile/api/badge)](https://securityscorecards.dev/viewer/?uri=github.com/devfile/api)
 </div>
 
 Sources for this API are defined in Go code, starting from the
