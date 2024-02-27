@@ -21,7 +21,7 @@ SHORT_NAME="$(uname -s)"
 if [ "$(uname)" == "Darwin" ]; then
     SCRIPT_DIR=`dirname $( realpath $( type -p ${0} ))`
 else
-    SCRIPT_DIR=`dirname $( readLink -m $( type -p ${0} ))`
+    SCRIPT_DIR=`dirname $( readlink -m $( type -p ${0} ))`
 fi
 WORK_DIR=${SCRIPT_DIR}/workdir
 echo "[INFO] Using the following folder to store all build files ${SCRIPT_DIR}/workdir"
