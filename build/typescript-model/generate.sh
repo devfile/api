@@ -17,7 +17,12 @@
 
 set -e
 
-SCRIPT_DIR=`dirname $( readlink -m $( type -p ${0} ))`
+SHORT_NAME="$(uname -s)"
+if [ "$(uname)" == "Darwin" ]; then
+    SCRIPT_DIR=`dirname $( realpath $( type -p ${0} ))`
+else
+    SCRIPT_DIR=`dirname $( readlink -m $( type -p ${0} ))`
+fi
 WORK_DIR=${SCRIPT_DIR}/workdir
 echo "[INFO] Using the following folder to store all build files ${SCRIPT_DIR}/workdir"
 mkdir -p $WORK_DIR
@@ -48,11 +53,12 @@ EOF
     export OPENAPI_GENERATOR_COMMIT="v6.3.0"
     bash $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
 
-    sed -i 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
-    sed -i 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json
-    sed -i 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' $WORK_DIR/typescript-models/package.json
-    sed -i 's/\"license\": \".*\"/"license": "Apache-2.0"/g' $WORK_DIR/typescript-models/package.json
-    sed -i 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' $WORK_DIR/typescript-models/package.json
+    apply_sed 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
+    apply_sed 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json
+    apply_sed 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' $WORK_DIR/typescript-models/package.json
+    apply_sed 's/\"license\": \".*\"/"license": "Apache-2.0"/g' $WORK_DIR/typescript-models/package.json
+    apply_sed 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' $WORK_DIR/typescript-models/package.json
+    
     echo "" > $WORK_DIR/typescript-models/.npmignore
     echo "[INFO] Generated typescript model which now is available in $WORK_DIR/typescript-models"
 }
@@ -78,6 +84,14 @@ build_typescript_model() {
     cd $WORK_DIR/typescript-models
     yarn && yarn build || "[ERROR] Generated typescript model failed to build. Check it at $WORK_DIR/typescript-models."
     echo "[INFO] Done."
+}
+
+apply_sed(){
+    if [ "$(uname)" == "Darwin" ]; then
+        sed -i '' "$@"
+    else
+        sed -i "$@"
+    fi
 }
 
 generate_swagger_json
