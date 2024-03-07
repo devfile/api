@@ -23,11 +23,12 @@ import (
 
 // ComponentType describes the type of component.
 // Only one of the following component type may be specified.
-// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image;Plugin;Custom
+// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image;Plugin;Custom
 type ComponentType string
 
 const (
 	ContainerComponentType  ComponentType = "Container"
+	ComposeComponentType	ComponentType = "Compose"
 	KubernetesComponentType ComponentType = "Kubernetes"
 	OpenshiftComponentType  ComponentType = "Openshift"
 	PluginComponentType     ComponentType = "Plugin"
@@ -69,6 +70,13 @@ type ComponentUnion struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponent `json:"container,omitempty"`
+
+	// Allows importing docker-compose files defined in a given manifest. 
+	// This allows the reuse of docker-compose files used to define configuration 
+	// for managing multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponent `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes

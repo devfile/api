@@ -27,6 +27,27 @@ type CommandUnionVisitor struct {
 	Custom    func(*CustomCommand) error
 }
 
+var composeFileComponentLocation reflect.Type = reflect.TypeOf(ComposeFileComponentLocationVisitor{})
+
+func (union ComposeFileComponentLocation) Visit(visitor ComposeFileComponentLocationVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *ComposeFileComponentLocation) discriminator() *string {
+	return (*string)(&union.LocationType)
+}
+func (union *ComposeFileComponentLocation) Normalize() error {
+	return normalizeUnion(union, composeFileComponentLocation)
+}
+func (union *ComposeFileComponentLocation) Simplify() {
+	simplifyUnion(union, composeFileComponentLocation)
+}
+
+// +k8s:deepcopy-gen=false
+type ComposeFileComponentLocationVisitor struct {
+	Uri     func(string) error
+	Inlined func(string) error
+}
+
 var imageUnion reflect.Type = reflect.TypeOf(ImageUnionVisitor{})
 
 func (union ImageUnion) Visit(visitor ImageUnionVisitor) error {
@@ -109,6 +130,7 @@ func (union *ComponentUnion) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionVisitor struct {
 	Container  func(*ContainerComponent) error
+	Compose    func(*ComposeComponent) error
 	Kubernetes func(*KubernetesComponent) error
 	Openshift  func(*OpenshiftComponent) error
 	Volume     func(*VolumeComponent) error
@@ -179,6 +201,7 @@ func (union *ComponentUnionParentOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionParentOverrideVisitor struct {
 	Container  func(*ContainerComponentParentOverride) error
+	Compose    func(*ComposeComponentParentOverride) error
 	Kubernetes func(*KubernetesComponentParentOverride) error
 	Openshift  func(*OpenshiftComponentParentOverride) error
 	Volume     func(*VolumeComponentParentOverride) error
@@ -227,6 +250,27 @@ type CommandUnionParentOverrideVisitor struct {
 	Exec      func(*ExecCommandParentOverride) error
 	Apply     func(*ApplyCommandParentOverride) error
 	Composite func(*CompositeCommandParentOverride) error
+}
+
+var composeFileComponentLocationParentOverride reflect.Type = reflect.TypeOf(ComposeFileComponentLocationParentOverrideVisitor{})
+
+func (union ComposeFileComponentLocationParentOverride) Visit(visitor ComposeFileComponentLocationParentOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *ComposeFileComponentLocationParentOverride) discriminator() *string {
+	return (*string)(&union.LocationType)
+}
+func (union *ComposeFileComponentLocationParentOverride) Normalize() error {
+	return normalizeUnion(union, composeFileComponentLocationParentOverride)
+}
+func (union *ComposeFileComponentLocationParentOverride) Simplify() {
+	simplifyUnion(union, composeFileComponentLocationParentOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type ComposeFileComponentLocationParentOverrideVisitor struct {
+	Uri     func(string) error
+	Inlined func(string) error
 }
 
 var k8sLikeComponentLocationParentOverride reflect.Type = reflect.TypeOf(K8sLikeComponentLocationParentOverrideVisitor{})
@@ -311,6 +355,7 @@ func (union *ComponentUnionPluginOverrideParentOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionPluginOverrideParentOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverrideParentOverride) error
+	Compose    func(*ComposeComponentPluginOverrideParentOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverrideParentOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverrideParentOverride) error
 	Volume     func(*VolumeComponentPluginOverrideParentOverride) error
@@ -359,6 +404,27 @@ type DockerfileSrcParentOverrideVisitor struct {
 	Uri             func(string) error
 	DevfileRegistry func(*DockerfileDevfileRegistrySourceParentOverride) error
 	Git             func(*DockerfileGitProjectSourceParentOverride) error
+}
+
+var composeFileComponentLocationPluginOverrideParentOverride reflect.Type = reflect.TypeOf(ComposeFileComponentLocationPluginOverrideParentOverrideVisitor{})
+
+func (union ComposeFileComponentLocationPluginOverrideParentOverride) Visit(visitor ComposeFileComponentLocationPluginOverrideParentOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *ComposeFileComponentLocationPluginOverrideParentOverride) discriminator() *string {
+	return (*string)(&union.LocationType)
+}
+func (union *ComposeFileComponentLocationPluginOverrideParentOverride) Normalize() error {
+	return normalizeUnion(union, composeFileComponentLocationPluginOverrideParentOverride)
+}
+func (union *ComposeFileComponentLocationPluginOverrideParentOverride) Simplify() {
+	simplifyUnion(union, composeFileComponentLocationPluginOverrideParentOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type ComposeFileComponentLocationPluginOverrideParentOverrideVisitor struct {
+	Uri     func(string) error
+	Inlined func(string) error
 }
 
 var k8sLikeComponentLocationPluginOverrideParentOverride reflect.Type = reflect.TypeOf(K8sLikeComponentLocationPluginOverrideParentOverrideVisitor{})
@@ -443,6 +509,7 @@ func (union *ComponentUnionPluginOverride) Simplify() {
 // +k8s:deepcopy-gen=false
 type ComponentUnionPluginOverrideVisitor struct {
 	Container  func(*ContainerComponentPluginOverride) error
+	Compose    func(*ComposeComponentPluginOverride) error
 	Kubernetes func(*KubernetesComponentPluginOverride) error
 	Openshift  func(*OpenshiftComponentPluginOverride) error
 	Volume     func(*VolumeComponentPluginOverride) error
@@ -469,6 +536,27 @@ type CommandUnionPluginOverrideVisitor struct {
 	Exec      func(*ExecCommandPluginOverride) error
 	Apply     func(*ApplyCommandPluginOverride) error
 	Composite func(*CompositeCommandPluginOverride) error
+}
+
+var composeFileComponentLocationPluginOverride reflect.Type = reflect.TypeOf(ComposeFileComponentLocationPluginOverrideVisitor{})
+
+func (union ComposeFileComponentLocationPluginOverride) Visit(visitor ComposeFileComponentLocationPluginOverrideVisitor) error {
+	return visitUnion(union, visitor)
+}
+func (union *ComposeFileComponentLocationPluginOverride) discriminator() *string {
+	return (*string)(&union.LocationType)
+}
+func (union *ComposeFileComponentLocationPluginOverride) Normalize() error {
+	return normalizeUnion(union, composeFileComponentLocationPluginOverride)
+}
+func (union *ComposeFileComponentLocationPluginOverride) Simplify() {
+	simplifyUnion(union, composeFileComponentLocationPluginOverride)
+}
+
+// +k8s:deepcopy-gen=false
+type ComposeFileComponentLocationPluginOverrideVisitor struct {
+	Uri     func(string) error
+	Inlined func(string) error
 }
 
 var k8sLikeComponentLocationPluginOverride reflect.Type = reflect.TypeOf(K8sLikeComponentLocationPluginOverrideVisitor{})

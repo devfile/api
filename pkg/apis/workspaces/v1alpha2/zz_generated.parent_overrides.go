@@ -150,7 +150,7 @@ type CommandParentOverride struct {
 // +union
 type ComponentUnionParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image;Plugin
+	// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image;Plugin
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -160,6 +160,14 @@ type ComponentUnionParentOverride struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponentParentOverride `json:"container,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
@@ -256,6 +264,11 @@ type ContainerComponentParentOverride struct {
 	BaseComponentParentOverride `json:",inline"`
 	ContainerParentOverride     `json:",inline"`
 	Endpoints                   []EndpointParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+}
+
+// Component allows the developer to reuse an existing docker-compose file
+type ComposeComponentParentOverride struct {
+	ComposeLikeComponentParentOverride `json:",inline"`
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
@@ -522,6 +535,11 @@ type EndpointParentOverride struct {
 	Annotations map[string]string `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentParentOverride struct {
+	BaseComponentParentOverride                `json:",inline"`
+	ComposeFileComponentLocationParentOverride `json:",inline"`
+}
+
 type K8sLikeComponentParentOverride struct {
 	BaseComponentParentOverride            `json:",inline"`
 	K8sLikeComponentLocationParentOverride `json:",inline"`
@@ -664,6 +682,25 @@ type EndpointExposureParentOverride string
 type EndpointProtocolParentOverride string
 
 // +union
+type ComposeFileComponentLocationParentOverride struct {
+
+	// +kubebuilder:validation:Enum=Uri;Inlined
+	// Type of Compose File Component Location
+	// +
+	// +unionDiscriminator
+	// +optional
+	LocationType ComposeFileComponentLocationTypeParentOverride `json:"locationType,omitempty"`
+
+	// Location uri of the docker-compose file
+	// +optional
+	Uri string `json:"uri,omitempty"`
+
+	// Inlined docker-compose file
+	// +optional
+	Inlined string `json:"inlined,omitempty"`
+}
+
+// +union
 type K8sLikeComponentLocationParentOverride struct {
 
 	// +kubebuilder:validation:Enum=Uri;Inlined
@@ -788,6 +825,11 @@ type BaseCommandParentOverride struct {
 	Group *CommandGroupParentOverride `json:"group,omitempty"`
 }
 
+// ComposeFileComponentLocationType describes the type of
+// the location where the docker-compose file is fetched from.
+// Only one of the following types can be specified.
+type ComposeFileComponentLocationTypeParentOverride string
+
 // K8sLikeComponentLocationType describes the type of
 // the location the configuration is fetched from.
 // Only one of the following component type may be specified.
@@ -820,7 +862,7 @@ type KubernetesCustomResourceImportReferenceParentOverride struct {
 // +union
 type ComponentUnionPluginOverrideParentOverride struct {
 
-	// +kubebuilder:validation:Enum=Container;Kubernetes;Openshift;Volume;Image
+	// +kubebuilder:validation:Enum=Container;Compose;Kubernetes;Openshift;Volume;Image
 	// Type of component
 	//
 	// +unionDiscriminator
@@ -830,6 +872,14 @@ type ComponentUnionPluginOverrideParentOverride struct {
 	// Allows adding and configuring devworkspace-related containers
 	// +optional
 	Container *ContainerComponentPluginOverrideParentOverride `json:"container,omitempty"`
+
+	// Allows importing into the devworkspace docker-compose files
+	// defined in a given manifest. For example this allows the reuse of previously
+	// docker-compose files used to define configuration for managing
+	// multiple containers at the same time.
+	//
+	// +optional
+	Compose *ComposeComponentPluginOverrideParentOverride `json:"compose,omitempty"`
 
 	// Allows importing into the devworkspace the Kubernetes resources
 	// defined in a given manifest. For example this allows reusing the Kubernetes
@@ -952,6 +1002,11 @@ type ContainerComponentPluginOverrideParentOverride struct {
 	BaseComponentPluginOverrideParentOverride `json:",inline"`
 	ContainerPluginOverrideParentOverride     `json:",inline"`
 	Endpoints                                 []EndpointPluginOverrideParentOverride `json:"endpoints,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+}
+
+// Component allows the developer to reuse an existing docker-compose file
+type ComposeComponentPluginOverrideParentOverride struct {
+	ComposeLikeComponentPluginOverrideParentOverride `json:",inline"`
 }
 
 // Component that allows partly importing Kubernetes resources into the devworkspace POD
@@ -1230,6 +1285,11 @@ type EndpointPluginOverrideParentOverride struct {
 	Annotations map[string]string `json:"annotation,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
 }
 
+type ComposeLikeComponentPluginOverrideParentOverride struct {
+	BaseComponentPluginOverrideParentOverride                `json:",inline"`
+	ComposeFileComponentLocationPluginOverrideParentOverride `json:",inline"`
+}
+
 type K8sLikeComponentPluginOverrideParentOverride struct {
 	BaseComponentPluginOverrideParentOverride            `json:",inline"`
 	K8sLikeComponentLocationPluginOverrideParentOverride `json:",inline"`
@@ -1319,6 +1379,25 @@ type EndpointExposurePluginOverrideParentOverride string
 type EndpointProtocolPluginOverrideParentOverride string
 
 // +union
+type ComposeFileComponentLocationPluginOverrideParentOverride struct {
+
+	// +kubebuilder:validation:Enum=Uri;Inlined
+	// Type of Compose File Component Location
+	// +
+	// +unionDiscriminator
+	// +optional
+	LocationType ComposeFileComponentLocationTypePluginOverrideParentOverride `json:"locationType,omitempty"`
+
+	// Location uri of the docker-compose file
+	// +optional
+	Uri string `json:"uri,omitempty"`
+
+	// Inlined docker-compose file
+	// +optional
+	Inlined string `json:"inlined,omitempty"`
+}
+
+// +union
 type K8sLikeComponentLocationPluginOverrideParentOverride struct {
 
 	// +kubebuilder:validation:Enum=Uri;Inlined
@@ -1364,6 +1443,11 @@ type BaseCommandPluginOverrideParentOverride struct {
 	// Defines the group this command is part of
 	Group *CommandGroupPluginOverrideParentOverride `json:"group,omitempty"`
 }
+
+// ComposeFileComponentLocationType describes the type of
+// the location where the docker-compose file is fetched from.
+// Only one of the following types can be specified.
+type ComposeFileComponentLocationTypePluginOverrideParentOverride string
 
 // K8sLikeComponentLocationType describes the type of
 // the location the configuration is fetched from.

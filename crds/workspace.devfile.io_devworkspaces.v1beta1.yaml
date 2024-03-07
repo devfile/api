@@ -457,6 +457,8 @@ spec:
                       - required:
                         - kubernetes
                       - required:
+                        - compose
+                      - required:
                         - openshift
                       - required:
                         - volume
@@ -470,11 +472,43 @@ spec:
                           enum:
                           - Container
                           - Kubernetes
+                          - Compose
                           - Openshift
                           - Volume
                           - Plugin
                           - Custom
                           type: string
+                        compose:
+                          description: Allows importing into the devworkspace docker-compose
+                            files defined in a given manifest. For example this allows
+                            the reuse of previously docker-compose files used to define
+                            configuration for managing multiple containers at the
+                            same time.
+                          oneOf:
+                          - required:
+                            - uri
+                          - required:
+                            - inlined
+                          properties:
+                            inlined:
+                              description: Inlined docker-compose file
+                              type: string
+                            locationType:
+                              description: Type of Compose File Component Location
+                              enum:
+                              - Uri
+                              - Inlined
+                              type: string
+                            name:
+                              description: Mandatory name that allows referencing
+                                the component in commands, or inside a parent
+                              type: string
+                            uri:
+                              description: Location uri of the docker-compose file
+                              type: string
+                          required:
+                          - name
+                          type: object
                         container:
                           description: Allows adding and configuring workspace-related
                             containers
@@ -2199,6 +2233,8 @@ spec:
                           - required:
                             - kubernetes
                           - required:
+                            - compose
+                          - required:
                             - openshift
                           - required:
                             - volume
@@ -2212,11 +2248,44 @@ spec:
                               enum:
                               - Container
                               - Kubernetes
+                              - Compose
                               - Openshift
                               - Volume
                               - Plugin
                               - Custom
                               type: string
+                            compose:
+                              description: Allows importing into the devworkspace
+                                docker-compose files defined in a given manifest.
+                                For example this allows the reuse of previously docker-compose
+                                files used to define configuration for managing multiple
+                                containers at the same time.
+                              oneOf:
+                              - required:
+                                - uri
+                              - required:
+                                - inlined
+                              properties:
+                                inlined:
+                                  description: Inlined docker-compose file
+                                  type: string
+                                locationType:
+                                  description: Type of Compose File Component Location
+                                  enum:
+                                  - Uri
+                                  - Inlined
+                                  type: string
+                                name:
+                                  description: Mandatory name that allows referencing
+                                    the component in commands, or inside a parent
+                                  type: string
+                                uri:
+                                  description: Location uri of the docker-compose
+                                    file
+                                  type: string
+                              required:
+                              - name
+                              type: object
                             container:
                               description: Allows adding and configuring workspace-related
                                 containers
@@ -5277,6 +5346,8 @@ spec:
                       - required:
                         - container
                       - required:
+                        - compose
+                      - required:
                         - kubernetes
                       - required:
                         - openshift
@@ -5298,6 +5369,7 @@ spec:
                           description: Type of component
                           enum:
                           - Container
+                          - Compose
                           - Kubernetes
                           - Openshift
                           - Volume
@@ -5305,6 +5377,31 @@ spec:
                           - Plugin
                           - Custom
                           type: string
+                        compose:
+                          description: Allows importing into the devworkspace docker-compose
+                            files defined in a given manifest. For example this allows
+                            the reuse of previously docker-compose files used to define
+                            configuration for managing multiple containers at the
+                            same time.
+                          oneOf:
+                          - required:
+                            - uri
+                          - required:
+                            - inlined
+                          properties:
+                            inlined:
+                              description: Inlined docker-compose file
+                              type: string
+                            locationType:
+                              description: Type of Compose File Component Location
+                              enum:
+                              - Uri
+                              - Inlined
+                              type: string
+                            uri:
+                              description: Location uri of the docker-compose file
+                              type: string
+                          type: object
                         container:
                           description: Allows adding and configuring devworkspace-related
                             containers
@@ -6100,6 +6197,8 @@ spec:
                                 - required:
                                   - container
                                 - required:
+                                  - compose
+                                - required:
                                   - kubernetes
                                 - required:
                                   - openshift
@@ -6117,11 +6216,40 @@ spec:
                                     description: Type of component
                                     enum:
                                     - Container
+                                    - Compose
                                     - Kubernetes
                                     - Openshift
                                     - Volume
                                     - Image
                                     type: string
+                                  compose:
+                                    description: Allows importing into the devworkspace
+                                      docker-compose files defined in a given manifest.
+                                      For example this allows the reuse of previously
+                                      docker-compose files used to define configuration
+                                      for managing multiple containers at the same
+                                      time.
+                                    oneOf:
+                                    - required:
+                                      - uri
+                                    - required:
+                                      - inlined
+                                    properties:
+                                      inlined:
+                                        description: Inlined docker-compose file
+                                        type: string
+                                      locationType:
+                                        description: Type of Compose File Component
+                                          Location
+                                        enum:
+                                        - Uri
+                                        - Inlined
+                                        type: string
+                                      uri:
+                                        description: Location uri of the docker-compose
+                                          file
+                                        type: string
+                                    type: object
                                   container:
                                     description: Allows adding and configuring devworkspace-related
                                       containers
@@ -7147,6 +7275,8 @@ spec:
                           - required:
                             - container
                           - required:
+                            - compose
+                          - required:
                             - kubernetes
                           - required:
                             - openshift
@@ -7166,12 +7296,39 @@ spec:
                               description: Type of component
                               enum:
                               - Container
+                              - Compose
                               - Kubernetes
                               - Openshift
                               - Volume
                               - Image
                               - Plugin
                               type: string
+                            compose:
+                              description: Allows importing into the devworkspace
+                                docker-compose files defined in a given manifest.
+                                For example this allows the reuse of previously docker-compose
+                                files used to define configuration for managing multiple
+                                containers at the same time.
+                              oneOf:
+                              - required:
+                                - uri
+                              - required:
+                                - inlined
+                              properties:
+                                inlined:
+                                  description: Inlined docker-compose file
+                                  type: string
+                                locationType:
+                                  description: Type of Compose File Component Location
+                                  enum:
+                                  - Uri
+                                  - Inlined
+                                  type: string
+                                uri:
+                                  description: Location uri of the docker-compose
+                                    file
+                                  type: string
+                              type: object
                             container:
                               description: Allows adding and configuring devworkspace-related
                                 containers
@@ -7960,6 +8117,8 @@ spec:
                                     - required:
                                       - container
                                     - required:
+                                      - compose
+                                    - required:
                                       - kubernetes
                                     - required:
                                       - openshift
@@ -7977,11 +8136,40 @@ spec:
                                         description: Type of component
                                         enum:
                                         - Container
+                                        - Compose
                                         - Kubernetes
                                         - Openshift
                                         - Volume
                                         - Image
                                         type: string
+                                      compose:
+                                        description: Allows importing into the devworkspace
+                                          docker-compose files defined in a given
+                                          manifest. For example this allows the reuse
+                                          of previously docker-compose files used
+                                          to define configuration for managing multiple
+                                          containers at the same time.
+                                        oneOf:
+                                        - required:
+                                          - uri
+                                        - required:
+                                          - inlined
+                                        properties:
+                                          inlined:
+                                            description: Inlined docker-compose file
+                                            type: string
+                                          locationType:
+                                            description: Type of Compose File Component
+                                              Location
+                                            enum:
+                                            - Uri
+                                            - Inlined
+                                            type: string
+                                          uri:
+                                            description: Location uri of the docker-compose
+                                              file
+                                            type: string
+                                        type: object
                                       container:
                                         description: Allows adding and configuring
                                           devworkspace-related containers
