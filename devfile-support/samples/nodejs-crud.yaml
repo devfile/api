@@ -1,0 +1,135 @@
+schemaVersion: 2.0.0
+metadata:
+  name: nodejs-db-stack
+projects:
+  - name: project-with-db
+    git:
+      location: "https://github.com/sbose78/nodejs-rest-http-crud"
+      branch: "for-devfile"
+components:
+  - plugin:
+      id: eclipse/che-theia/7.1.0
+  - plugin:
+      id: eclipse/che-machine-exec-plugin/7.1.0
+  - plugin:
+      name: "typescript-plugin"
+      id: che-incubator/typescript/1.30.2
+      components:
+        - container:
+            name: "??"
+            memoryLimit: 512Mi
+
+  # Build and deployment of the nodejs app ( outer-loop )
+  - container:
+      name: build-nodejs-image
+      image: gcr.io/kaniko-project/executor:latest
+      memoryLimit: 512Mi
+      mountSources: true
+
+  - kubernetes:
+      name: nodejs-database-binding
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/binding-secret.yaml'
+
+  - openshift:
+      name: nodejs-app-deployment
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/deploymentconfig.yaml'
+    
+  # Deployment of DB dependency
+  - kubernetes:
+      name: database
+      uri: 'https://raw.githubusercontent.com/sbose78/nodejs-rest-http-crud/for-devfile/manifests/postgres.yaml'
+
+
+  - container:
+      name: nodejs
+      image: quay.io/eclipse/che-nodejs10-ubi:nightly
+      memoryLimit: 512Mi
+      endpoints:
+        - name: nodejs
+          configuration:
+              protocol: tcp
+              scheme: http
+          targetPort: 3000
+      mountSources: true
+  
+commands:
+  # Outer-loop begins here
+  - exec:
+      id: build-image
+      component: build-nodejs-image
+      commandLine: >-
+        /kaniko/executor --skip-tls-verify=true --dockerfile=${PROJECTS_ROOT}/project/app/Dockerfile --destination=image-registry.openshift-image-registry.svc:5000/default/nodejsapp --context=${PROJECTS_ROOT}/project/app
+      group: 
+        kind: build
+
+  - exec: 
+      id: deploy-image
+      component: nodejs-app-deployment
+      group: 
+        kind: deploy
+
+  - exec: 
+      id: create-binding
+      component: nodejs-database-binding
+      group: 
+        kind: deploy
+
+
+  - composite:
+      id: build-and-deploy
+      label: Build image and deploy nodejs app
+      commands:
+      - build-image
+      - deploy-image
+      - create-binding
+      parallel: false
+      group: 
+          kind: deploy
+
+  # Inner-loop begins here - might have to fix
+  - exec:
+      id: download dependencies
+      component: nodejs
+      commandLine: npm install
+      workingDir: ${PROJECTS_ROOT}/project/app
+      group:
+        kind: build
+  - exec:
+      id: run the app
+      component: nodejs
+      commandLine: nodemon app.js
+      workingDir: ${PROJECTS_ROOT}/project/app
+      group:
+        kind: run
+        isDefault: true
+  - exec:
+      id: run the app (debugging enabled)
+      component: nodejs
+      commandLine: nodemon --inspect app.js
+      workingDir: ${PROJECTS_ROOT}/project/app
+      group:
+        kind: run
+  - exec:
+      id: stop the app
+      component: nodejs
+      commandLine: >-
+          node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+          echo "Stopping node server with PIDs: ${node_server_pids}" && 
+          kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
+  - vscodeLaunch:
+      id: Attach remote debugger
+      inlined: |
+        {
+          "version": "0.2.0",
+          "configurations": [
+            {
+              "type": "node",
+              "request": "attach",
+              "name": "Attach to Remote",
+              "address": "localhost",
+              "port": 9229,
+              "localRoot": "${workspaceFolder}",
+              "remoteRoot": "${workspaceFolder}"
+            }
+          ]
+        }
