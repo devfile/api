@@ -1,0 +1,85 @@
+schemaVersion: 2.2.0
+
+metadata:
+  name: python
+  version: 1.0.0
+  displayName: Python
+  description: Python Sample Project
+  icon: https://www.python.org/static/favicon.ico
+  website: https://www.python.org/
+  projectType: 'python'
+  language: 'python'
+  tags: ['python', 'unittest', 'doctest', 'debug']
+
+attributes:
+  space:
+    instanceType: regular
+    editor:
+      type: PyCharm
+      version: '2022.1'
+      updateChannel: Release
+
+projects:
+  - name: training-course
+    git:
+      remotes:
+        origin: https://github.com/myusername/myrepository.git
+      checkoutFrom:
+        revision: main
+
+components:
+  - name: python
+    container:
+      image: python:3.10
+      mountSources: true
+      sourceMapping: /src
+
+commands:
+  - id: install-requirements
+    exec:
+      component: python
+      commandLine: pip install -r /src/requirements.txt
+      group:
+        kind: build
+  - id: run
+    exec:
+      component: python
+      commandLine: python3 /src/__main__.py
+      group:
+        kind: run
+  - id: test-doctest
+    exec:
+      component: python
+      commandLine: python3 -m /src/doctest *.py
+      group:
+        kind: test
+  - id: test-unittest
+    exec:
+      component: python
+      commandLine: python3 -m /src/unittest *.py
+      group:
+        kind: test
+  - id: test-all
+    composite:
+      parallel: true
+      commands:
+        - test-doctest
+        - test-unittest
+  - id: debug
+    exec:
+      component: python
+      workingDir: ${PROJECTS_ROOT}
+      commandLine: python3 -m debugpy --listen 0.0.0.0:5678 /src/__main__.py
+      group:
+        kind: debug
+      env:
+        - name: PYTHONMALLOC
+          value: debug
+        - name: PYTHONTRACEMALLOC
+          value: '1'
+        - name: PYTHONASYNCIODEBUG
+          value: '1'
+
+events:
+  preStart:
+    - install-requirements
