@@ -20,6 +20,11 @@ func (in *Container) GetDedicatedPod() bool {
 	return getBoolOrDefault(in.DedicatedPod, false)
 }
 
+// GetRunOnDemand returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker
+func (in *Container) GetRunOnDemand() bool {
+	return getBoolOrDefault(in.RunOnDemand, false)
+}
+
 // GetAutoBuild returns the value of the boolean property.  If unset, it's the default value specified in the devfile:default:value marker
 func (in *ImageUnion) GetAutoBuild() bool {
 	return getBoolOrDefault(in.AutoBuild, false)
