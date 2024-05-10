@@ -7,8 +7,6 @@ assignees: johnmcollier
 
 ---
 
-## Which area this feature is related to?
-
 /area registry
 
 <!--

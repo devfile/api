@@ -19,7 +19,7 @@ Thanks for understanding and for contributing to the project!
 
 -->
 
-## Which area this feature is related to?
+## Which area is this feature related to?
 
 <!--
     Uncomment appropriate `/area` lines, and delete the rest.
