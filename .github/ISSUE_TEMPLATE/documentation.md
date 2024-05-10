@@ -7,11 +7,9 @@ assignees: ''
 
 ---
 
-## Which area this feature is related to?
-
 /area documentation
 
-## Which area is this documentation change is related to?
+## Which area is this documentation change related to?
 
 <!--
     Uncomment appropriate `/area` lines, and delete the rest.

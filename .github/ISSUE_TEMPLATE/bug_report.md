@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-## Which area this feature is related to?
-
 /kind bug
 
 <!--
@@ -23,7 +21,7 @@ Thanks for understanding and for contributing to the project!
 
 -->
 
-### Which area this bug is related to?
+### Which area is this bug related to?
 
 <!--
     Uncomment appropriate `/area` lines, and delete the rest.

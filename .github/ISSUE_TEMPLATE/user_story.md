@@ -8,7 +8,7 @@ assignees: ''
 
 /kind user-story
 
-## Which area this user story is related to?
+## Which area is this user story related to?
 
 <!--
     Uncomment appropriate `/area` lines, and delete the rest.
