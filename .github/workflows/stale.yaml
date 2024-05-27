@@ -46,6 +46,4 @@ jobs:
         exempt-pr-labels: 'lifecycle/frozen'
         close-issue-label: 'lifecycle/rotten'
         close-pr-label: 'lifecycle/rotten'
-
-        start-date: '2023-03-16T00:00:00Z'
-
+        ascending: true
