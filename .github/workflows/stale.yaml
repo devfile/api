@@ -47,5 +47,3 @@ jobs:
         close-issue-label: 'lifecycle/rotten'
         close-pr-label: 'lifecycle/rotten'
         ascending: true
-
-
