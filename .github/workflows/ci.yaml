@@ -39,7 +39,7 @@ jobs:
         uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4.1.0
         with:
           # The Go version to download (if necessary) and use. Supports semver spec and ranges.
-          go-version: 1.19
+          go-version: 1.21
 
       - name: Generate Go sources, CRDs and schemas
         run: |
@@ -59,7 +59,7 @@ jobs:
           export PATH=$PATH:$(go env GOPATH)/bin
           go install github.com/google/addlicense@latest
           bash ./check_licenses.sh
-      
+
       - name: Run GO tests
         run: go test -coverprofile cover.out -v ./...
 
