@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "ParentOverrides schema - Version 2.2.2",
+  "title": "ParentOverrides schema - Version 2.3.0",
   "properties": {
     "attributes": {
       "description": "Overrides of attributes encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
