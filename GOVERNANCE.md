@@ -51,7 +51,7 @@ and invited to the [private maintainer mailing list](https://lists.cncf.io/g/cnc
 ## Meetings
 
 Time zones permitting, Maintainers are expected to participate in the public
-developer meetings, for more information about these meetings see the [Meetings section of Devfile community page](https://devfile.io/docs/2.3.0/community#meetings).
+developer meetings. For more information about these meetings see the [Meetings section of the Devfile community page](https://devfile.io/docs/2.3.0/community#meetings).
 
 Maintainers will also have closed meetings in order to discuss security reports
 or Code of Conduct violations.  Such meetings should be scheduled by any
