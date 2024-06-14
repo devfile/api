@@ -34,7 +34,7 @@ Once you set your user.name and user.email in your git config, you can sign your
 
 When you think the code is ready for review, create a pull request and link the issue associated with it.
 
-Owners of the repository will watch out for new PRs and provide reviews to them.
+[Owners](.github/CODEOWNERS) of the repository will watch out for new PRs and provide reviews to them.
 
 If comments have been given in a review, they have to be addressed before merging.
 
