@@ -85,4 +85,4 @@ go test -v
 
 # Contact us
 
-If you have any questions, please visit us the `#devfile` channel under the [Kubernetes Slack](https://slack.k8s.io) workspace.
+If you have any questions, please visit us the [`#devfile` channel](https://kubernetes.slack.com/archives/C02SX9E5B55) under the [Kubernetes Slack](https://slack.k8s.io) workspace.
