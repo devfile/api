@@ -83,12 +83,12 @@ export const {singular + "LatestVersion"} = '{latest_version}';
 
 def export_typescript_api(output_path: str) -> None:
     """
-    Export constants into api.ts
+    Export constants into index.ts
     """
     export_contents = """
 export * from './constants/constants';
     """
-    write_contents(os.path.join(output_path, "api.ts"), "a", export_contents)
+    write_contents(os.path.join(output_path, "index.ts"), "a", export_contents)
 
 
 if __name__ == "__main__":
