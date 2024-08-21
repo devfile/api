@@ -1,21 +1,20 @@
-## What does this PR do?
+# Description of Changes
+_Summarize the changes you made as part of this pull request._
 
-<!-- _Summarize the changes_ -->
+# Related Issue(s)
+_Link the GitHub/GitLab/JIRA issues that are related to this PR._
 
-### Which issue(s) does this PR fix
+# Acceptance Criteria
+<!-- _Check the relevant boxes below_ -->
+_Testing and documentation do not need to be complete in order for this PR to be approved. However, tracking issues must be opened for missing testing/documentation._
 
-<!-- _Link to github issue(s)_ -->
+New testing and documentation issues can be opened under [`devfile/api/issues`](https://github.com/devfile/api/issues).
 
-### PR acceptance criteria
+You can check the respective criteria below if either of the following is true:
+- There is a separate tracking issue opened and that issue is linked in this PR.
+- Testing/documentation updates are contained within this PR.
 
-Testing and documentation do not need to be complete in order for this PR to be approved. We just need to ensure tracking issues are opened.
-
-> - Open new test/doc issues under the [devfile/api](https://github.com/devfile/api/issues) repo
-> - Check each criteria if:
-> - There is a separate tracking issue. Add the issue link under the criteria
->  **or**
-> - test/doc updates are made as part of this PR
-> - If unchecked, explain why it's not needed
+If criteria is left unchecked please provide an explanation why.
 
 - [ ] Unit/Functional tests
 
@@ -33,4 +32,11 @@ Testing and documentation do not need to be complete in order for this PR to be 
 
   <!-- _Do we have anything that can break our clients?  If so, open a notifying issue_ -->
 
-### How to test changes / Special notes to the reviewer
+# Tests Performed
+_Explain what tests you personally ran to ensure the changes are functioning as expected._
+
+# How To Test
+_Instructions for the reviewer on how to test your changes._
+
+# Notes To Reviewer
+_Any notes you would like to include for the reviewer._
