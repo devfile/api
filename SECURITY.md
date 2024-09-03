@@ -12,6 +12,6 @@ When a security vulnerability is found is important to not accidentally broadcas
 
 An email to <a href="mailto:team-devfile-security@redhat.com">team-devfile-security@redhat.com</a> is the preferred mechanism for outside users to report security issues. A member of the devfile team will open the required issues and keep you up-to-date about the status of the issue.
 
-### What to avoid
+## What To Avoid
 
 Do not open a public issue, send a pull request, or disclose any information about the suspected vulnerability publicly, **including in your own publicly visible git repository**.
