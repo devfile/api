@@ -8,7 +8,7 @@ Note, that normally we try to fix issues found for the latest releases of our pr
 
 When a security vulnerability is found is important to not accidentally broadcast to the world that the issue exists, as this makes it easier for people to exploit it. The preferred way of reporting security issues in Devfiles is listed below.
 
-### Email team devfile
+## Contact Us
 
 An email to <a href="mailto:team-devfile-security@redhat.com">team-devfile-security@redhat.com</a> is the preferred mechanism for outside users to report security issues. A member of the devfile team will open the required issues and keep you up-to-date about the status of the issue.
 
