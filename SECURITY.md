@@ -10,7 +10,7 @@ When a security vulnerability is found is important to not accidentally broadcas
 
 ### Email team devfile
 
-An email to <a href="mailto:team-devfile@redhat.com">team-devfile@redhat.com</a> is the preferred mechanism for outside users to report security issues. A member of the devfile team will open the required issues and keep you up-to-date about the status of the issue.
+An email to <a href="mailto:team-devfile-security@redhat.com">team-devfile-security@redhat.com</a> is the preferred mechanism for outside users to report security issues. A member of the devfile team will open the required issues and keep you up-to-date about the status of the issue.
 
 ### What to avoid
 
