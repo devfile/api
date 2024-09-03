@@ -4,7 +4,7 @@ The devfiles team takes immediate action to address security-related issues invo
 
 Note, that normally we try to fix issues found for the latest releases of our projects. Backport fixes will be made only for exceptional cases, if the team has identified the need to do so.
 
-## Reporting process
+## Reporting Process
 
 When a security vulnerability is found is important to not accidentally broadcast to the world that the issue exists, as this makes it easier for people to exploit it. The preferred way of reporting security issues in Devfiles is listed below.
 
