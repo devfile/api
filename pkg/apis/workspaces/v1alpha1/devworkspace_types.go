@@ -1,4 +1,4 @@
-package v1alpha1
+pkg/apis/workspaces/v1alpha1/devworkspace_types.gopackage v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
