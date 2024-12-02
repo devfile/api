@@ -39,7 +39,7 @@ jobs:
         stale-pr-message: "This PR is stale because it has been open for 90 days with no activity. Remove stale label or comment or this will be closed in 90 days."
 
         days-before-stale: 90
-        days-before-close: 90
+        days-before-close: 120
         stale-issue-label: 'lifecycle/stale'
         stale-pr-label: 'lifecycle/stale'
         exempt-issue-labels: 'lifecycle/frozen'
