@@ -53,12 +53,49 @@ EOF
     export OPENAPI_GENERATOR_COMMIT="v6.3.0"
     bash $WORK_DIR/gen/openapi/typescript.sh $WORK_DIR/typescript-models $WORK_DIR/config.sh
 
-    apply_sed 's/\"name\": \".*\"/"name": "@devfile\/api"/g' $WORK_DIR/typescript-models/package.json
-    apply_sed 's/\"description\": \".*\"/"description": "Typescript types for devfile api"/g' $WORK_DIR/typescript-models/package.json
-    apply_sed 's/\"repository\": \".*\"/"repository": "devfile\/api"/g' $WORK_DIR/typescript-models/package.json
-    apply_sed 's/\"license\": \".*\"/"license": "Apache-2.0"/g' $WORK_DIR/typescript-models/package.json
-    apply_sed 's/\"@types\/bluebird\": \".*\"/"@types\/bluebird": "3.5.21"/g' $WORK_DIR/typescript-models/package.json
-    
+    local workdir=$(pwd)
+    cd "$WORK_DIR/typescript-models"
+
+    ######################################################################################################
+    echo "[INFO] preparing package.json"
+    ######################################################################################################
+
+    echo "$(jq '. += {"name": "@devfile/api"}' package.json)" > package.json
+    echo "$(jq '. += {"description": "Typescript types for devfile api"}' package.json)" > package.json
+    echo "$(jq '.repository += {"url": "https://github.com/devfile/api"}' package.json)" > package.json
+    echo "$(jq '. += {"homepage": "https://github.com/devfile/api/blob/main/README.md"}' package.json)" > package.json
+    echo "$(jq '. += {"license": "Apache-2.0"}' package.json)" > package.json
+
+    echo "$(jq 'del(.main)' package.json)" > package.json
+    echo "$(jq 'del(.type)' package.json)" > package.json
+    echo "$(jq 'del(.module)' package.json)" > package.json
+    echo "$(jq 'del(.exports)' package.json)" > package.json
+    echo "$(jq 'del(.typings)' package.json)" > package.json
+
+    echo "$(jq '. += {"main": "dist/index.js"}' package.json)" > package.json
+    echo "$(jq '. += {"types": "dist/index.d.ts"}' package.json)" > package.json
+
+    ######################################################################################################
+    echo "[INFO] preparing tsconfig.json"
+    ######################################################################################################
+
+    # remove comments
+    cp -f tsconfig.json tsconfig.json.copy
+    node -p 'JSON.stringify(eval(`(${require("fs").readFileSync("tsconfig.json.copy", "utf-8").toString()})`))' | jq > tsconfig.json
+
+    # remove unwanted properties
+    echo "$(jq 'del(.compilerOptions.noUnusedLocals)' tsconfig.json)" > tsconfig.json
+    echo "$(jq 'del(.compilerOptions.noUnusedParameters)' tsconfig.json)" > tsconfig.json
+    echo "$(jq 'del(.compilerOptions.noImplicitReturns)' tsconfig.json)" > tsconfig.json
+    echo "$(jq 'del(.compilerOptions.noFallthroughCasesInSwitch)' tsconfig.json)" > tsconfig.json
+
+    # add module type
+    echo "$(jq '.compilerOptions += {"module": "commonjs"}' tsconfig.json)" > tsconfig.json
+    # add skipLibCheck
+    echo "$(jq '.compilerOptions += {"skipLibCheck": true}' tsconfig.json)" > tsconfig.json
+
+    cd $workdir
+
     echo "" > $WORK_DIR/typescript-models/.npmignore
     echo "[INFO] Generated typescript model which now is available in $WORK_DIR/typescript-models"
 }
@@ -84,14 +121,6 @@ build_typescript_model() {
     cd $WORK_DIR/typescript-models
     yarn && yarn build || "[ERROR] Generated typescript model failed to build. Check it at $WORK_DIR/typescript-models."
     echo "[INFO] Done."
-}
-
-apply_sed(){
-    if [ "$(uname)" == "Darwin" ]; then
-        sed -i '' "$@"
-    else
-        sed -i "$@"
-    fi
 }
 
 generate_swagger_json

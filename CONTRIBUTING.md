@@ -46,6 +46,8 @@ The following are required to build the CRDs and TypeScript models containing yo
 
 - Docker or Podman
 - Git
+- Command-line JSON processor (jq)
+- Node 18 or later
 
 Testing requires Go 1.21+ to be installed.
 
