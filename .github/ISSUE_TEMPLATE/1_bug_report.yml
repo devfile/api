@@ -1,0 +1,93 @@
+name: Bug report
+description: 🐞 Report a bug
+labels:
+  - kind/bug
+body:
+  - type: dropdown
+    attributes:
+      label: Which area is this bug related to?
+      description: Choose the area(s) this bug is related to.
+      multiple: true
+      options:
+        - /area ci
+        - /area api
+        - /area library
+        - /area registry
+        - /area registry-viewer
+        - /area alizer
+        - /area devworkspace
+        - /area integration-tests
+        - /area test-automation
+        - /area releng
+        - /area landing-page
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What versions of software are you using?
+      description: Choose and fill in the applicable
+      value: |
+            #### Go project
+
+            **Operating System and version:**
+
+            **Go Pkg Version:**
+
+            #### Node.js project
+
+            **Operating System and version:**
+
+            **Node.js version:**
+
+            **Yarn version:**
+
+            **Project.json:**
+
+            #### Web browser
+
+            **Operating System and version:**
+
+            **Browser name and version:**
+  - type: textarea
+    attributes:
+      label: Bug Summary
+      description: A clear and concise description of what the bug is and steps to reproduce the behavior.
+      value: |
+        **Describe the bug:**
+
+        **To Reproduce:**
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Any logs, error output, screenshots etc? Provide the devfile that sees this bug, if applicable
+      description: |
+        To get logs:
+            ci: please copy the github workflow output
+            api: please copy the terminal output
+            library: please copy the terminal output
+            registry: follow instruction under "Collecting Logs" to find log: https://github.com/devfile/registry-support/blob/main/TROUBLESHOOTING.md
+            devworkspace: copy the logs from the controller (kubectl logs deploy/devworkspace-controller -n $NAMESPACE)
+            test-automation:
+                api: follow instruction under "Running tests locally" to find test log: https://github.com/devfile/api/tree/main/test
+                library: follow instruction under "Running the tests locally" to find test log: https://github.com/devfile/library/tree/main/tests
+                devworkspace: copy the logs from the controller (kubectl logs deploy/devworkspace-controller -n $NAMESPACE)
+            integration-tests: please copy the build log under prow ci result for QE ingetration tests
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+  - type: textarea
+    attributes:
+      label: Any workaround?
+      description: Describe the workaround if applicable.
+  - type: textarea
+    attributes:
+      label: Suggestion on how to fix the bug
+      description: Provide suggestion on how to fix the bug upon your investigation, if applicable.
