@@ -1,0 +1,39 @@
+name: Epic
+description: 📑 Issue for a large goal
+labels:
+  - kind/epic
+body:
+  - type: dropdown
+    attributes:
+      label: Which area is this epic related to?
+      description: Choose the area(s) this epic is related to.
+      multiple: true
+      options:
+        - /area ci
+        - /area api
+        - /area library
+        - /area registry
+        - /area registry-viewer
+        - /area alizer
+        - /area devworkspace
+        - /area integration-tests
+        - /area test-automation
+        - /area releng
+        - /area landing-page
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Epic Story
+      description: A clear and concise description of what needs to be done to achieve this goal.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Acceptance Criteria
+      description: Decide which specific steps need to be completed, outline subtasks/child issues.
+      value: |
+        - [ ] ....
+        - [ ] ....
+    validations:
+      required: true
