@@ -19,6 +19,7 @@ body:
         > /area test-automation
         > /area releng
         > /area landing-page
+        > /area documentation
       placeholder: |
         > /area ci
         > /area api
@@ -31,6 +32,7 @@ body:
         > /area test-automation
         > /area releng
         > /area landing-page
+        > /area documentation
     validations:
       required: true
   - type: textarea
