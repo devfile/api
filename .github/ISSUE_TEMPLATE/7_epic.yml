@@ -3,23 +3,34 @@ description: 📑 Issue for a large goal
 labels:
   - kind/epic
 body:
-  - type: dropdown
+  - type: textarea
     attributes:
       label: Which area is this epic related to?
       description: Choose the area(s) this epic is related to.
-      multiple: true
-      options:
-        - /area ci
-        - /area api
-        - /area library
-        - /area registry
-        - /area registry-viewer
-        - /area alizer
-        - /area devworkspace
-        - /area integration-tests
-        - /area test-automation
-        - /area releng
-        - /area landing-page
+      value: |
+        > /area ci
+        > /area api
+        > /area library
+        > /area registry
+        > /area registry-viewer
+        > /area alizer
+        > /area devworkspace
+        > /area integration-tests
+        > /area test-automation
+        > /area releng
+        > /area landing-page
+      placeholder: |
+        > /area ci
+        > /area api
+        > /area library
+        > /area registry
+        > /area registry-viewer
+        > /area alizer
+        > /area devworkspace
+        > /area integration-tests
+        > /area test-automation
+        > /area releng
+        > /area landing-page
     validations:
       required: true
   - type: textarea

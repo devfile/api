@@ -3,23 +3,34 @@ description: 📖 Suggest an update for devfile documentation
 labels:
   - area/documentation
 body:
-  - type: dropdown
+  - type: textarea
     attributes:
       label: Which area is this documentation change related to?
       description: Choose the area(s) this documentation change refer to.
-      multiple: true
-      options:
-        - /area ci
-        - /area api
-        - /area library
-        - /area registry
-        - /area registry-viewer
-        - /area alizer
-        - /area devworkspace
-        - /area integration-tests
-        - /area test-automation
-        - /area releng
-        - /area landing-page
+      value: |
+        > /area ci
+        > /area api
+        > /area library
+        > /area registry
+        > /area registry-viewer
+        > /area alizer
+        > /area devworkspace
+        > /area integration-tests
+        > /area test-automation
+        > /area releng
+        > /area landing-page
+      placeholder: |
+        > /area ci
+        > /area api
+        > /area library
+        > /area registry
+        > /area registry-viewer
+        > /area alizer
+        > /area devworkspace
+        > /area integration-tests
+        > /area test-automation
+        > /area releng
+        > /area landing-page
     validations:
       required: true
   - type: textarea
