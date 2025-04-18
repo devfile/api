@@ -8,7 +8,7 @@ assignees:
 body:
   - type: textarea
     attributes:
-      label: Request details
+      label: Request Details
       description: |
         The staging devfile registry, https://registry.stage.devfile.io is refreshed upon each commit to main in this repository.
         Production, https://registry.devfile.io, is promoted manually each Wednesday, as needed.
