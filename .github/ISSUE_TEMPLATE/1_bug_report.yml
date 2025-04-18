@@ -92,7 +92,7 @@ body:
             integration-tests: please copy the build log under prow ci result for QE ingetration tests
   - type: textarea
     attributes:
-      label: Additional context
+      label: Additional Context
       description: Add any other context about the problem here.
   - type: textarea
     attributes:
