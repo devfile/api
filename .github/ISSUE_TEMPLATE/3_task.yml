@@ -48,6 +48,6 @@ body:
         - [ ] ....
   - type: input
     attributes:
-      label: Target Odo version
+      label: Target Odo Version
       description: Provide the target Odo version if this task is for QE integration test.
       value: 'Target Odo version: <odo-version>'
