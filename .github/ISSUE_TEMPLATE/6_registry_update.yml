@@ -1,4 +1,4 @@
-name: Emergency registry update
+name: Emergency Registry Update
 description: ⚠️ Request for an emergency registry update
 title: "[Maintenance]: Promote stack <name> changes to production"
 labels:
