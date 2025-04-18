@@ -35,7 +35,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Issue details
+      label: Issue Details
       description: Provide a clear and concise description of the changes you are suggesting
       value: |
         **What mistake did you find / what is missing in the documentation?**
