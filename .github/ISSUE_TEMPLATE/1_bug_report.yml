@@ -38,7 +38,7 @@ body:
       label: What versions of software are you using?
       description: Choose and fill in the applicable sections.
       value: |
-            #### Go project
+            #### Go Project
 
             **Operating System and version:**
 
