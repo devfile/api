@@ -1,0 +1,9 @@
+parent:
+  uri: "anyParent"
+components:
+  - plugin:
+      uri: "aCustomLocation"
+    name: "the-only-plugin"
+events:
+  postStart:
+    - "init-che-code-command"

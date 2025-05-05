@@ -108,19 +108,19 @@ func MergeDevWorkspaceTemplateSpec(
 		}
 	}
 
-	preStartCommands := sets.String{}
-	postStartCommands := sets.String{}
-	preStopCommands := sets.String{}
-	postStopCommands := sets.String{}
+	var preStartCommands []string
+	var postStartCommands []string
+	var preStopCommands []string
+	var postStopCommands []string
 	for _, content := range allContents {
 		if content.Events != nil {
 			if result.Events == nil {
 				result.Events = &dw.Events{}
 			}
-			preStartCommands = preStartCommands.Union(sets.NewString(content.Events.PreStart...))
-			postStartCommands = postStartCommands.Union(sets.NewString(content.Events.PostStart...))
-			preStopCommands = preStopCommands.Union(sets.NewString(content.Events.PreStop...))
-			postStopCommands = postStopCommands.Union(sets.NewString(content.Events.PostStop...))
+			preStartCommands = UnionStrings(preStartCommands, content.Events.PreStart)
+			postStartCommands = UnionStrings(postStartCommands, content.Events.PostStart)
+			preStopCommands = UnionStrings(preStopCommands, content.Events.PreStop)
+			postStopCommands = UnionStrings(postStopCommands, content.Events.PostStop)
 		}
 
 		if len(content.Variables) > 0 {
@@ -147,10 +147,10 @@ func MergeDevWorkspaceTemplateSpec(
 	}
 
 	if result.Events != nil {
-		result.Events.PreStart = preStartCommands.List()
-		result.Events.PostStart = postStartCommands.List()
-		result.Events.PreStop = preStopCommands.List()
-		result.Events.PostStop = postStopCommands.List()
+		result.Events.PreStart = preStartCommands
+		result.Events.PostStart = postStartCommands
+		result.Events.PreStop = preStopCommands
+		result.Events.PostStop = postStopCommands
 	}
 
 	return &result, nil
