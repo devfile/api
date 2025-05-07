@@ -134,3 +134,24 @@ func TestMergingOnlyParent(t *testing.T) {
 		assert.Equal(t, &expectedDWT, gotDWT)
 	}
 }
+
+func TestMergePostStartInOrder(t *testing.T) {
+	// Given
+	baseFile := "test-fixtures/merges/multiple-post-start/main.yaml"
+	parentFile := "test-fixtures/merges/multiple-post-start/plugin.yaml"
+	resultFile := "test-fixtures/merges/multiple-post-start/result.yaml"
+
+	baseDWT := dw.DevWorkspaceTemplateSpecContent{}
+	parentDWT := dw.DevWorkspaceTemplateSpecContent{}
+	expectedDWT := dw.DevWorkspaceTemplateSpecContent{}
+
+	readFileToStruct(t, baseFile, &baseDWT)
+	readFileToStruct(t, parentFile, &parentDWT)
+	readFileToStruct(t, resultFile, &expectedDWT)
+
+	// When + Then
+	gotDWT, err := MergeDevWorkspaceTemplateSpec(&baseDWT, &parentDWT)
+	if assert.NoError(t, err) {
+		assert.Equal(t, &expectedDWT, gotDWT)
+	}
+}

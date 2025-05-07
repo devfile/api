@@ -1,0 +1,9 @@
+events:
+  preStart: []
+  preStop: []
+  postStop: []
+  postStart:
+    - "event-one"
+    - "event-two"
+    - "event-three"
+    - "init-che-code-command"

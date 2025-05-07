@@ -32,3 +32,34 @@ func handleUnmarshal(j []byte) (map[string]interface{}, error) {
 	}
 	return m, nil
 }
+
+// UnionStrings returns the union of two string slices, preserving the order
+// of first occurrence and removing duplicates.
+//
+// Elements from the first slice `a` are added in order. Elements from the second
+// slice `b` are appended only if they do not already exist in `a`.
+//
+// The returned slice is guaranteed to be non-nil, even if both input slices are nil.
+//
+// Example:
+//
+//	UnionStrings([]string{"a", "b"}, []string{"b", "c"})
+//	// Returns: []string{"a", "b", "c"}
+func UnionStrings(a, b []string) []string {
+	alreadyExistsInList := make(map[string]bool)
+	result := make([]string, 0)
+
+	for _, s := range a {
+		if !alreadyExistsInList[s] {
+			alreadyExistsInList[s] = true
+			result = append(result, s)
+		}
+	}
+	for _, s := range b {
+		if !alreadyExistsInList[s] {
+			alreadyExistsInList[s] = true
+			result = append(result, s)
+		}
+	}
+	return result
+}
