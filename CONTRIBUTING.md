@@ -49,7 +49,7 @@ The following are required to build the CRDs and TypeScript models containing yo
 - Command-line JSON processor (jq)
 - Node 18 or later
 
-Testing requires Go 1.21+ to be installed.
+Testing requires Go 1.22+ to be installed.
 
 ### Building
 
