@@ -3,9 +3,17 @@ description: ⚠️ Request for an emergency registry update
 title: "[Maintenance]: Promote stack <name> changes to production"
 labels:
   - area/registry
-assignees:
-  - michael-valdron
 body:
+  - type: input
+    attributes:
+      label: Task Assignee
+      description: |
+        The assignee for the task of updating the stack in question. Usually should be devfile/devfile-registry-maintainers
+        unless otherwise specified.
+      placeholder: '@devfile/devfile-registry-maintainers'
+      value: '@devfile/devfile-registry-maintainers'
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Request Details
