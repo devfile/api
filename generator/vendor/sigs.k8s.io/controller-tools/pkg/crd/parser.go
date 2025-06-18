@@ -21,7 +21,6 @@ import (
 
 	apiext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-
 	"sigs.k8s.io/controller-tools/pkg/loader"
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
@@ -86,6 +85,9 @@ type Parser struct {
 	//       because the implementation is too difficult/clunky to promote them to category 3.
 	// TODO: Should we have a more formal mechanism for putting "type patterns" in each of the above categories?
 	AllowDangerousTypes bool
+
+	// IgnoreUnexportedFields specifies if unexported fields on the struct should be skipped
+	IgnoreUnexportedFields bool
 
 	// GenerateEmbeddedObjectMeta specifies if any embedded ObjectMeta should be generated
 	GenerateEmbeddedObjectMeta bool
@@ -178,7 +180,7 @@ func (p *Parser) NeedSchemaFor(typ TypeIdent) {
 	// avoid tripping recursive schemata, like ManagedFields, by adding an empty WIP schema
 	p.Schemata[typ] = apiext.JSONSchemaProps{}
 
-	schemaCtx := newSchemaContext(typ.Package, p, p.AllowDangerousTypes)
+	schemaCtx := newSchemaContext(typ.Package, p, p.AllowDangerousTypes, p.IgnoreUnexportedFields)
 	ctxForInfo := schemaCtx.ForInfo(info)
 
 	pkgMarkers, err := markers.PackageMarkers(p.Collector, typ.Package)
