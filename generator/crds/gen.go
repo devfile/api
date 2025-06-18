@@ -19,6 +19,8 @@ package crds
 import (
 	"fmt"
 	"go/ast"
+	"os"
+	"strings"
 
 	"github.com/devfile/api/generator/genutils"
 
@@ -61,6 +63,7 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		Checker:             ctx.Checker,
 		AllowDangerousTypes: false,
 	}
+	headerText := extractLicenseHeaderContent()
 
 	crd.AddKnownTypes(parser)
 	for _, root := range ctx.Roots {
@@ -118,9 +121,9 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 		unionDiscriminatorsByGV[groupVersion] = unionDiscriminators
 	}
 
-	crdVersions := []string{"v1", "v1beta1"}
+	crdVersions := []string{"v1"}
 
-	for groupKind := range kubeKinds {
+	for _, groupKind := range kubeKinds {
 		parser.NeedCRDFor(groupKind, nil)
 		crdRaw := parser.CustomResourceDefinitions[groupKind]
 		apiVersions := []string{}
@@ -183,11 +186,27 @@ func (g Generator) Generate(ctx *genall.GenerationContext) error {
 			} else {
 				fileName = fmt.Sprintf("%s_%s.%s.yaml", crdRaw.Spec.Group, crdRaw.Spec.Names.Plural, crdVersions[i])
 			}
-			if err := ctx.WriteYAML(fileName, extCrd); err != nil {
+			if err := ctx.WriteYAML(fileName, headerText, []interface{}{extCrd}); err != nil {
 				return err
 			}
 		}
 	}
 
 	return nil
+}
+
+func extractLicenseHeaderContent() string {
+	content, err := os.ReadFile("license_header.txt")
+	if err != nil {
+		fmt.Println("Error reading file:", err)
+	}
+
+	headerText := string(content)
+	lines := strings.Split(headerText, "\n")
+	for i, line := range lines {
+		lines[i] = "# " + line
+	}
+	headerText = strings.Join(lines, "\n")
+	headerText = headerText + "\n"
+	return headerText
 }
