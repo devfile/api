@@ -1,0 +1,33 @@
+name: Emergency Registry Update
+description: ⚠️ Request for an emergency registry update
+title: "[Maintenance]: Promote stack <name> changes to production"
+labels:
+  - area/registry
+body:
+  - type: input
+    attributes:
+      label: Task Assignee
+      description: |
+        The assignee for the task of updating the stack in question. Usually should be devfile/devfile-registry-maintainers
+        unless otherwise specified.
+      placeholder: '@devfile/devfile-registry-maintainers'
+      value: '@devfile/devfile-registry-maintainers'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Request Details
+      description: |
+        The staging devfile registry, https://registry.stage.devfile.io is refreshed upon each commit to main in this repository.
+        Production, https://registry.devfile.io, is promoted manually each Wednesday, as needed.
+
+        If you are a stack or sample owner and need to request an urgent refresh of https://registry.devfile.io before Wednesday (for example if a stack is broken),
+        please fill out the issue template below.
+      value: |
+        **Stack name:**
+
+        **Why is the refresh needed:**
+
+        **Why the refresh cannot wait until the next regularly scheduled refresh:**
+    validations:
+      required: true

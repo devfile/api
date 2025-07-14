@@ -1,0 +1,53 @@
+name: User Story
+description: 📝 User story for new enhancement
+labels:
+  - kind/user-story
+body:
+  - type: textarea
+    attributes:
+      label: Which area is this user story related to?
+      description: Choose the area(s) this story is related to.
+      value: |
+        <!--- Uncomment the area(s) this feature is related to --->
+        <!--- /area ci -->
+        <!--- /area api -->
+        <!--- /area library -->
+        <!--- /area registry -->
+        <!--- /area registry-viewer -->
+        <!--- /area alizer -->
+        <!--- /area devworkspace -->
+        <!--- /area integration-tests -->
+        <!--- /area test-automation -->
+        <!--- /area releng -->
+        <!--- /area landing-page -->
+      placeholder: |
+        /area ci
+        /area api
+        /area library
+        /area registry
+        /area registry-viewer
+        /area alizer
+        /area devworkspace
+        /area integration-tests
+        /area test-automation
+        /area releng
+        /area landing-page
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: User Story
+      description: Describe the user, action, and intention of the story then a clear and concise description of what needs to be done to achieve this story.
+      placeholder: As a ... I want to ..., so that ...
+      value: As a ... I want to ..., so that ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Acceptance Criteria
+      description: Decide which specific steps need to be completed, outline subtasks.
+      value: |
+        - [ ] ....
+        - [ ] ....
+    validations:
+      required: true

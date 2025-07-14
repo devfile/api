@@ -1,0 +1,62 @@
+name: Feature Request
+description: 💡 Suggest an idea for this project
+labels:
+  - kind/enhancement 
+body:
+  - type: textarea
+    attributes:
+      label: Which area is this feature related to?
+      description: Choose the area(s) this feature is related to.
+      value: |
+        <!--- Uncomment the area(s) this feature is related to --->
+        <!--- /area ci -->
+        <!--- /area api -->
+        <!--- /area library -->
+        <!--- /area registry -->
+        <!--- /area registry-viewer -->
+        <!--- /area alizer -->
+        <!--- /area devworkspace -->
+        <!--- /area integration-tests -->
+        <!--- /area test-automation -->
+        <!--- /area releng -->
+        <!--- /area landing-page -->
+      placeholder: |
+        /area ci
+        /area api
+        /area library
+        /area registry
+        /area registry-viewer
+        /area alizer
+        /area devworkspace
+        /area integration-tests
+        /area test-automation
+        /area releng
+        /area landing-page
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Which functionality do you think we should add?
+      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+      value: |
+        **Why is this needed? Is your feature request related to a problem?**
+
+        **Detailed description:**
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other context or screenshots about the feature request here.
