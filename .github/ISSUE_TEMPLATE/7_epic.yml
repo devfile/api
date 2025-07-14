@@ -8,31 +8,32 @@ body:
       label: Which area is this epic related to?
       description: Choose the area(s) this epic is related to.
       value: |
-        > /area ci
-        > /area api
-        > /area library
-        > /area registry
-        > /area registry-viewer
-        > /area alizer
-        > /area devworkspace
-        > /area integration-tests
-        > /area test-automation
-        > /area releng
-        > /area landing-page
-        > /area documentation
+        <!--- Uncomment the area(s) this feature is related to --->
+        <!--- /area ci -->
+        <!--- /area api -->
+        <!--- /area library -->
+        <!--- /area registry -->
+        <!--- /area registry-viewer -->
+        <!--- /area alizer -->
+        <!--- /area devworkspace -->
+        <!--- /area integration-tests -->
+        <!--- /area test-automation -->
+        <!--- /area releng -->
+        <!--- /area landing-page -->
+        <!--- /area documentation -->
       placeholder: |
-        > /area ci
-        > /area api
-        > /area library
-        > /area registry
-        > /area registry-viewer
-        > /area alizer
-        > /area devworkspace
-        > /area integration-tests
-        > /area test-automation
-        > /area releng
-        > /area landing-page
-        > /area documentation
+        /area ci
+        /area api
+        /area library
+        /area registry
+        /area registry-viewer
+        /area alizer
+        /area devworkspace
+        /area integration-tests
+        /area test-automation
+        /area releng
+        /area landing-page
+        /area documentation
     validations:
       required: true
   - type: textarea

@@ -8,29 +8,30 @@ body:
       label: Which area is this user story related to?
       description: Choose the area(s) this story is related to.
       value: |
-        > /area ci
-        > /area api
-        > /area library
-        > /area registry
-        > /area registry-viewer
-        > /area alizer
-        > /area devworkspace
-        > /area integration-tests
-        > /area test-automation
-        > /area releng
-        > /area landing-page
+        <!--- Uncomment the area(s) this feature is related to --->
+        <!--- /area ci -->
+        <!--- /area api -->
+        <!--- /area library -->
+        <!--- /area registry -->
+        <!--- /area registry-viewer -->
+        <!--- /area alizer -->
+        <!--- /area devworkspace -->
+        <!--- /area integration-tests -->
+        <!--- /area test-automation -->
+        <!--- /area releng -->
+        <!--- /area landing-page -->
       placeholder: |
-        > /area ci
-        > /area api
-        > /area library
-        > /area registry
-        > /area registry-viewer
-        > /area alizer
-        > /area devworkspace
-        > /area integration-tests
-        > /area test-automation
-        > /area releng
-        > /area landing-page
+        /area ci
+        /area api
+        /area library
+        /area registry
+        /area registry-viewer
+        /area alizer
+        /area devworkspace
+        /area integration-tests
+        /area test-automation
+        /area releng
+        /area landing-page
     validations:
       required: true
   - type: textarea
