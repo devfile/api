@@ -183,7 +183,8 @@ func RunTest(testContent commonUtils.TestContent, t *testing.T) {
 
 		testDevfile, err := commonUtils.GetDevfile(testContent.FileName, nil, validator)
 		if err != nil {
-			t.Fatalf(commonUtils.LogMessage(fmt.Sprintf("Error creating devfile : %v", err)))
+			logMsg := commonUtils.LogMessage(fmt.Sprintf("Error creating devfile: %v", err))
+			t.Fatalf("%s", logMsg)
 		}
 
 		testDevfile.RunTest(testContent, t)

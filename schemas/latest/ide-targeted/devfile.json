@@ -39,7 +39,7 @@
         ],
         "properties": {
           "apply": {
-            "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
+            "description": "Command that consists in applying a given component definition,\ntypically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event,\nand references a `container` component, it will start the container as a\nK8S initContainer in the devworkspace POD, unless the component has its\n`dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component,\nit is assumed the component will be applied at devworkspace start\nby default, unless `deployByDefault` for that component is set to false.",
             "type": "object",
             "required": [
               "component"
@@ -79,13 +79,13 @@
                 "markdownDescription": "Defines the group this command is part of"
               },
               "label": {
-                "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                 "type": "string",
-                "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
               }
             },
             "additionalProperties": false,
-            "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
+            "markdownDescription": "Command that consists in applying a given component definition,\ntypically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event,\nand references a `container` component, it will start the container as a\nK8S initContainer in the devworkspace POD, unless the component has its\n`dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component,\nit is assumed the component will be applied at devworkspace start\nby default, unless `deployByDefault` for that component is set to false."
           },
           "attributes": {
             "description": "Map of implementation-dependant free-form YAML attributes.",
@@ -94,7 +94,7 @@
             "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
           },
           "composite": {
-            "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
+            "description": "Composite command that allows executing several sub-commands\neither sequentially or concurrently",
             "type": "object",
             "properties": {
               "commands": {
@@ -134,9 +134,9 @@
                 "markdownDescription": "Defines the group this command is part of"
               },
               "label": {
-                "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                 "type": "string",
-                "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
               },
               "parallel": {
                 "description": "Indicates if the sub-commands should be executed concurrently",
@@ -145,7 +145,7 @@
               }
             },
             "additionalProperties": false,
-            "markdownDescription": "Composite command that allows executing several sub-commands either sequentially or concurrently"
+            "markdownDescription": "Composite command that allows executing several sub-commands\neither sequentially or concurrently"
           },
           "exec": {
             "description": "CLI Command executed in an existing component container",
@@ -166,7 +166,7 @@
                 "markdownDescription": "Describes component to which given action relates"
               },
               "env": {
-                "description": "Optional list of environment variables that have to be set before running the command",
+                "description": "Optional list of environment variables that have to be set\nbefore running the command",
                 "type": "array",
                 "items": {
                   "type": "object",
@@ -184,7 +184,7 @@
                   },
                   "additionalProperties": false
                 },
-                "markdownDescription": "Optional list of environment variables that have to be set before running the command"
+                "markdownDescription": "Optional list of environment variables that have to be set\nbefore running the command"
               },
               "group": {
                 "description": "Defines the group this command is part of",
@@ -215,14 +215,14 @@
                 "markdownDescription": "Defines the group this command is part of"
               },
               "hotReloadCapable": {
-                "description": "Specify whether the command is restarted or not when the source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`",
+                "description": "Specify whether the command is restarted or not when the source code changes.\nIf set to `true` the command won't be restarted.\nA *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.\nA *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.\nThis field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Specify whether the command is restarted or not when the source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`"
+                "markdownDescription": "Specify whether the command is restarted or not when the source code changes.\nIf set to `true` the command won't be restarted.\nA *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.\nA *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.\nThis field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`"
               },
               "label": {
-                "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                 "type": "string",
-                "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
               },
               "workingDir": {
                 "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
@@ -234,11 +234,11 @@
             "markdownDescription": "CLI Command executed in an existing component container"
           },
           "id": {
-            "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
+            "description": "Mandatory identifier that allows referencing\nthis command in composite commands, from\na parent, or in events.",
             "type": "string",
             "maxLength": 63,
             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-            "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
+            "markdownDescription": "Mandatory identifier that allows referencing\nthis command in composite commands, from\na parent, or in events."
           }
         },
         "additionalProperties": false
@@ -246,7 +246,7 @@
       "markdownDescription": "Predefined, ready-to-use, devworkspace-related commands"
     },
     "components": {
-      "description": "List of the devworkspace components, such as editor and plugins, user-provided containers, or other types of components",
+      "description": "List of the devworkspace components, such as editor and plugins,\nuser-provided containers, or other types of components",
       "type": "array",
       "items": {
         "type": "object",
@@ -341,9 +341,9 @@
                 "type": "string"
               },
               "dedicatedPod": {
-                "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
+                "description": "Specify if a container should run in its own separated pod,\ninstead of running as part of the main development environment pod.\n\nDefault value is `false`",
                 "type": "boolean",
-                "markdownDescription": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`"
+                "markdownDescription": "Specify if a container should run in its own separated pod,\ninstead of running as part of the main development environment pod.\n\nDefault value is `false`"
               },
               "endpoints": {
                 "type": "array",
@@ -363,20 +363,20 @@
                       "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                     },
                     "attributes": {
-                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
                       "additionalProperties": true,
-                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
-                      "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                      "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
                       "enum": [
                         "public",
                         "internal",
                         "none"
                       ],
-                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                     },
                     "name": {
                       "type": "string",
@@ -389,7 +389,7 @@
                       "markdownDescription": "Path of the endpoint URL"
                     },
                     "protocol": {
-                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
                       "enum": [
                         "http",
@@ -399,17 +399,17 @@
                         "tcp",
                         "udp"
                       ],
-                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
-                      "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                      "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                       "type": "boolean",
-                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                      "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                       "type": "integer",
-                      "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                      "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                     }
                   },
                   "additionalProperties": false
@@ -446,14 +446,14 @@
                 "type": "string"
               },
               "mountSources": {
-                "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                "description": "Toggles whether or not the project source code should\nbe mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                 "type": "boolean",
-                "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
+                "markdownDescription": "Toggles whether or not the project source code should\nbe mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
               },
               "sourceMapping": {
-                "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
+                "description": "Optional specification of the path in the container where\nproject sources should be transferred/mounted when `mountSources` is `true`.\nWhen omitted, the default value of /projects is used.",
                 "type": "string",
-                "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
+                "markdownDescription": "Optional specification of the path in the container where\nproject sources should be transferred/mounted when `mountSources` is `true`.\nWhen omitted, the default value of /projects is used."
               },
               "volumeMounts": {
                 "description": "List of volumes mounts that should be mounted is this container.",
@@ -466,16 +466,16 @@
                   ],
                   "properties": {
                     "name": {
-                      "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
+                      "description": "The volume mount name is the name of an existing `Volume` component.\nIf several containers mount the same volume name\nthen they will reuse the same volume and will be able to access to the same files.",
                       "type": "string",
                       "maxLength": 63,
                       "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-                      "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
+                      "markdownDescription": "The volume mount name is the name of an existing `Volume` component.\nIf several containers mount the same volume name\nthen they will reuse the same volume and will be able to access to the same files."
                     },
                     "path": {
-                      "description": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/\u003cname\u003e`.",
+                      "description": "The path in the component container where the volume should be mounted.\nIf not path is mentioned, default path is the is `/\u003cname\u003e`.",
                       "type": "string",
-                      "markdownDescription": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/\u003cname\u003e`."
+                      "markdownDescription": "The path in the component container where the volume should be mounted.\nIf not path is mentioned, default path is the is `/\u003cname\u003e`."
                     }
                   },
                   "additionalProperties": false,
@@ -548,14 +548,14 @@
                     ],
                     "properties": {
                       "id": {
-                        "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                        "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry\nrequired for the Dockerfile build will be downloaded for building the image.",
                         "type": "string",
-                        "markdownDescription": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image."
+                        "markdownDescription": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry\nrequired for the Dockerfile build will be downloaded for building the image."
                       },
                       "registryUrl": {
-                        "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                        "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.\nTo ensure the Dockerfile gets resolved consistently in different environments,\nit is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
                         "type": "string",
-                        "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
+                        "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.\nTo ensure the Dockerfile gets resolved consistently in different environments,\nit is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
                       }
                     },
                     "additionalProperties": false,
@@ -578,26 +578,26 @@
                             "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                           },
                           "revision": {
-                            "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                            "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                             "type": "string",
-                            "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                            "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                           }
                         },
                         "additionalProperties": false,
                         "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                       },
                       "fileLocation": {
-                        "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
+                        "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.\nDefaults to Dockerfile.",
                         "type": "string",
-                        "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile."
+                        "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.\nDefaults to Dockerfile."
                       },
                       "remotes": {
-                        "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                        "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                         "type": "object",
                         "additionalProperties": {
                           "type": "string"
                         },
-                        "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                        "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
                       }
                     },
                     "additionalProperties": false,
@@ -609,9 +609,9 @@
                     "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
                   },
                   "uri": {
-                    "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                    "description": "URI Reference of a Dockerfile.\nIt can be a full URL or a relative URI from the current devfile as the base URI.",
                     "type": "string",
-                    "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                    "markdownDescription": "URI Reference of a Dockerfile.\nIt can be a full URL or a relative URI from the current devfile as the base URI."
                   }
                 },
                 "additionalProperties": false,
@@ -627,7 +627,7 @@
             "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
           },
           "kubernetes": {
-            "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+            "description": "Allows importing into the devworkspace the Kubernetes resources\ndefined in a given manifest. For example this allows reusing the Kubernetes\ndefinitions used to deploy some runtime components in production.",
             "type": "object",
             "oneOf": [
               {
@@ -665,20 +665,20 @@
                       "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                     },
                     "attributes": {
-                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
                       "additionalProperties": true,
-                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
-                      "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                      "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
                       "enum": [
                         "public",
                         "internal",
                         "none"
                       ],
-                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                     },
                     "name": {
                       "type": "string",
@@ -691,7 +691,7 @@
                       "markdownDescription": "Path of the endpoint URL"
                     },
                     "protocol": {
-                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
                       "enum": [
                         "http",
@@ -701,17 +701,17 @@
                         "tcp",
                         "udp"
                       ],
-                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
-                      "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                      "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                       "type": "boolean",
-                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                      "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                       "type": "integer",
-                      "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                      "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                     }
                   },
                   "additionalProperties": false
@@ -729,17 +729,17 @@
               }
             },
             "additionalProperties": false,
-            "markdownDescription": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production."
+            "markdownDescription": "Allows importing into the devworkspace the Kubernetes resources\ndefined in a given manifest. For example this allows reusing the Kubernetes\ndefinitions used to deploy some runtime components in production."
           },
           "name": {
-            "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
+            "description": "Mandatory name that allows referencing the component\nfrom other elements (such as commands) or from an external\ndevfile that may reference this component through a parent or a plugin.",
             "type": "string",
             "maxLength": 63,
             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-            "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
+            "markdownDescription": "Mandatory name that allows referencing the component\nfrom other elements (such as commands) or from an external\ndevfile that may reference this component through a parent or a plugin."
           },
           "openshift": {
-            "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+            "description": "Allows importing into the devworkspace the OpenShift resources\ndefined in a given manifest. For example this allows reusing the OpenShift\ndefinitions used to deploy some runtime components in production.",
             "type": "object",
             "oneOf": [
               {
@@ -777,20 +777,20 @@
                       "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                     },
                     "attributes": {
-                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                      "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                       "type": "object",
                       "additionalProperties": true,
-                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                      "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                     },
                     "exposure": {
-                      "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                      "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                       "type": "string",
                       "enum": [
                         "public",
                         "internal",
                         "none"
                       ],
-                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                      "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                     },
                     "name": {
                       "type": "string",
@@ -803,7 +803,7 @@
                       "markdownDescription": "Path of the endpoint URL"
                     },
                     "protocol": {
-                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                      "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                       "type": "string",
                       "enum": [
                         "http",
@@ -813,17 +813,17 @@
                         "tcp",
                         "udp"
                       ],
-                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                      "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                     },
                     "secure": {
-                      "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                      "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                       "type": "boolean",
-                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                      "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                     },
                     "targetPort": {
-                      "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                      "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                       "type": "integer",
-                      "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                      "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                     }
                   },
                   "additionalProperties": false
@@ -841,16 +841,16 @@
               }
             },
             "additionalProperties": false,
-            "markdownDescription": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production."
+            "markdownDescription": "Allows importing into the devworkspace the OpenShift resources\ndefined in a given manifest. For example this allows reusing the OpenShift\ndefinitions used to deploy some runtime components in production."
           },
           "volume": {
-            "description": "Allows specifying the definition of a volume shared by several other components",
+            "description": "Allows specifying the definition of a volume\nshared by several other components",
             "type": "object",
             "properties": {
               "ephemeral": {
-                "description": "Ephemeral volumes are not stored persistently across restarts. Defaults to false",
+                "description": "Ephemeral volumes are not stored persistently across restarts. Defaults\nto false",
                 "type": "boolean",
-                "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults to false"
+                "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults\nto false"
               },
               "size": {
                 "description": "Size of the volume",
@@ -859,12 +859,12 @@
               }
             },
             "additionalProperties": false,
-            "markdownDescription": "Allows specifying the definition of a volume shared by several other components"
+            "markdownDescription": "Allows specifying the definition of a volume\nshared by several other components"
           }
         },
         "additionalProperties": false
       },
-      "markdownDescription": "List of the devworkspace components, such as editor and plugins, user-provided containers, or other types of components"
+      "markdownDescription": "List of the devworkspace components, such as editor and plugins,\nuser-provided containers, or other types of components"
     },
     "dependentProjects": {
       "description": "Additional projects related to the main project in the devfile, contianing names and sources locations",
@@ -915,21 +915,21 @@
                     "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                   },
                   "revision": {
-                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                     "type": "string",
-                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                   }
                 },
                 "additionalProperties": false,
                 "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
               },
               "remotes": {
-                "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
                 },
-                "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
               }
             },
             "additionalProperties": false,
@@ -945,6 +945,9 @@
           "zip": {
             "description": "Project's Zip source",
             "type": "object",
+            "required": [
+              "location"
+            ],
             "properties": {
               "location": {
                 "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -961,16 +964,16 @@
       "markdownDescription": "Additional projects related to the main project in the devfile, contianing names and sources locations"
     },
     "events": {
-      "description": "Bindings of commands to events. Each command is referred-to by its name.",
+      "description": "Bindings of commands to events.\nEach command is referred-to by its name.",
       "type": "object",
       "properties": {
         "postStart": {
-          "description": "IDs of commands that should be executed after the devworkspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser.",
+          "description": "IDs of commands that should be executed after the devworkspace is completely started.\nIn the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning.\nThis means that those commands are not triggered until the user opens the IDE in his browser.",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "markdownDescription": "IDs of commands that should be executed after the devworkspace is completely started. In the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning. This means that those commands are not triggered until the user opens the IDE in his browser."
+          "markdownDescription": "IDs of commands that should be executed after the devworkspace is completely started.\nIn the case of Che-Theia, these commands should be executed after all plugins and extensions have started, including project cloning.\nThis means that those commands are not triggered until the user opens the IDE in his browser."
         },
         "postStop": {
           "description": "IDs of commands that should be executed after stopping the devworkspace.",
@@ -981,12 +984,12 @@
           "markdownDescription": "IDs of commands that should be executed after stopping the devworkspace."
         },
         "preStart": {
-          "description": "IDs of commands that should be executed before the devworkspace start. Kubernetes-wise, these commands would typically be executed in init containers of the devworkspace POD.",
+          "description": "IDs of commands that should be executed before the devworkspace start.\nKubernetes-wise, these commands would typically be executed in init containers of the devworkspace POD.",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "markdownDescription": "IDs of commands that should be executed before the devworkspace start. Kubernetes-wise, these commands would typically be executed in init containers of the devworkspace POD."
+          "markdownDescription": "IDs of commands that should be executed before the devworkspace start.\nKubernetes-wise, these commands would typically be executed in init containers of the devworkspace POD."
         },
         "preStop": {
           "description": "IDs of commands that should be executed before stopping the devworkspace.",
@@ -998,7 +1001,7 @@
         }
       },
       "additionalProperties": false,
-      "markdownDescription": "Bindings of commands to events. Each command is referred-to by its name."
+      "markdownDescription": "Bindings of commands to events.\nEach command is referred-to by its name."
     },
     "metadata": {
       "description": "Optional metadata",
@@ -1117,13 +1120,13 @@
       ],
       "properties": {
         "attributes": {
-          "description": "Overrides of attributes encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of attributes encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "object",
           "additionalProperties": true,
-          "markdownDescription": "Overrides of attributes encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of attributes encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "commands": {
-          "description": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of commands encapsulated in a parent devfile or a plugin.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
           "items": {
             "type": "object",
@@ -1149,7 +1152,7 @@
             ],
             "properties": {
               "apply": {
-                "description": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false.",
+                "description": "Command that consists in applying a given component definition,\ntypically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event,\nand references a `container` component, it will start the container as a\nK8S initContainer in the devworkspace POD, unless the component has its\n`dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component,\nit is assumed the component will be applied at devworkspace start\nby default, unless `deployByDefault` for that component is set to false.",
                 "type": "object",
                 "properties": {
                   "component": {
@@ -1183,13 +1186,13 @@
                     "markdownDescription": "Defines the group this command is part of"
                   },
                   "label": {
-                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                     "type": "string",
-                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                    "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
                   }
                 },
                 "additionalProperties": false,
-                "markdownDescription": "Command that consists in applying a given component definition, typically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event, and references a `container` component, it will start the container as a K8S initContainer in the devworkspace POD, unless the component has its `dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component, it is assumed the component will be applied at devworkspace start by default, unless `deployByDefault` for that component is set to false."
+                "markdownDescription": "Command that consists in applying a given component definition,\ntypically bound to a devworkspace event.\n\nFor example, when an `apply` command is bound to a `preStart` event,\nand references a `container` component, it will start the container as a\nK8S initContainer in the devworkspace POD, unless the component has its\n`dedicatedPod` field set to `true`.\n\nWhen no `apply` command exist for a given component,\nit is assumed the component will be applied at devworkspace start\nby default, unless `deployByDefault` for that component is set to false."
               },
               "attributes": {
                 "description": "Map of implementation-dependant free-form YAML attributes.",
@@ -1198,7 +1201,7 @@
                 "markdownDescription": "Map of implementation-dependant free-form YAML attributes."
               },
               "composite": {
-                "description": "Composite command that allows executing several sub-commands either sequentially or concurrently",
+                "description": "Composite command that allows executing several sub-commands\neither sequentially or concurrently",
                 "type": "object",
                 "properties": {
                   "commands": {
@@ -1235,9 +1238,9 @@
                     "markdownDescription": "Defines the group this command is part of"
                   },
                   "label": {
-                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                     "type": "string",
-                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                    "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
                   },
                   "parallel": {
                     "description": "Indicates if the sub-commands should be executed concurrently",
@@ -1246,7 +1249,7 @@
                   }
                 },
                 "additionalProperties": false,
-                "markdownDescription": "Composite command that allows executing several sub-commands either sequentially or concurrently"
+                "markdownDescription": "Composite command that allows executing several sub-commands\neither sequentially or concurrently"
               },
               "exec": {
                 "description": "CLI Command executed in an existing component container",
@@ -1263,7 +1266,7 @@
                     "markdownDescription": "Describes component to which given action relates"
                   },
                   "env": {
-                    "description": "Optional list of environment variables that have to be set before running the command",
+                    "description": "Optional list of environment variables that have to be set\nbefore running the command",
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -1280,7 +1283,7 @@
                       },
                       "additionalProperties": false
                     },
-                    "markdownDescription": "Optional list of environment variables that have to be set before running the command"
+                    "markdownDescription": "Optional list of environment variables that have to be set\nbefore running the command"
                   },
                   "group": {
                     "description": "Defines the group this command is part of",
@@ -1308,14 +1311,14 @@
                     "markdownDescription": "Defines the group this command is part of"
                   },
                   "hotReloadCapable": {
-                    "description": "Specify whether the command is restarted or not when the source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`",
+                    "description": "Specify whether the command is restarted or not when the source code changes.\nIf set to `true` the command won't be restarted.\nA *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.\nA *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.\nThis field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Specify whether the command is restarted or not when the source code changes. If set to `true` the command won't be restarted. A *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted. A *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again. This field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`"
+                    "markdownDescription": "Specify whether the command is restarted or not when the source code changes.\nIf set to `true` the command won't be restarted.\nA *hotReloadCapable* `run` or `debug` command is expected to handle file changes on its own and won't be restarted.\nA *hotReloadCapable* `build` command is expected to be executed only once and won't be executed again.\nThis field is taken into account only for commands `build`, `run` and `debug` with `isDefault` set to `true`.\n\nDefault value is `false`"
                   },
                   "label": {
-                    "description": "Optional label that provides a label for this command to be used in Editor UI menus for example",
+                    "description": "Optional label that provides a label for this command\nto be used in Editor UI menus for example",
                     "type": "string",
-                    "markdownDescription": "Optional label that provides a label for this command to be used in Editor UI menus for example"
+                    "markdownDescription": "Optional label that provides a label for this command\nto be used in Editor UI menus for example"
                   },
                   "workingDir": {
                     "description": "Working directory where the command should be executed\n\nSpecial variables that can be used:\n\n - `$PROJECTS_ROOT`: A path where projects sources are mounted as defined by container component's sourceMapping.\n\n - `$PROJECT_SOURCE`: A path to a project source ($PROJECTS_ROOT/\u003cproject-name\u003e). If there are multiple projects, this will point to the directory of the first one.",
@@ -1327,19 +1330,19 @@
                 "markdownDescription": "CLI Command executed in an existing component container"
               },
               "id": {
-                "description": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events.",
+                "description": "Mandatory identifier that allows referencing\nthis command in composite commands, from\na parent, or in events.",
                 "type": "string",
                 "maxLength": 63,
                 "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-                "markdownDescription": "Mandatory identifier that allows referencing this command in composite commands, from a parent, or in events."
+                "markdownDescription": "Mandatory identifier that allows referencing\nthis command in composite commands, from\na parent, or in events."
               }
             },
             "additionalProperties": false
           },
-          "markdownDescription": "Overrides of commands encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of commands encapsulated in a parent devfile or a plugin.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "components": {
-          "description": "Overrides of components encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of components encapsulated in a parent devfile or a plugin.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
           "items": {
             "type": "object",
@@ -1431,9 +1434,9 @@
                     "type": "string"
                   },
                   "dedicatedPod": {
-                    "description": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`",
+                    "description": "Specify if a container should run in its own separated pod,\ninstead of running as part of the main development environment pod.\n\nDefault value is `false`",
                     "type": "boolean",
-                    "markdownDescription": "Specify if a container should run in its own separated pod, instead of running as part of the main development environment pod.\n\nDefault value is `false`"
+                    "markdownDescription": "Specify if a container should run in its own separated pod,\ninstead of running as part of the main development environment pod.\n\nDefault value is `false`"
                   },
                   "endpoints": {
                     "type": "array",
@@ -1452,20 +1455,20 @@
                           "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                         },
                         "attributes": {
-                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
                           "additionalProperties": true,
-                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "enum": [
                             "public",
                             "internal",
                             "none"
                           ],
-                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                         },
                         "name": {
                           "type": "string",
@@ -1478,7 +1481,7 @@
                           "markdownDescription": "Path of the endpoint URL"
                         },
                         "protocol": {
-                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
                           "enum": [
                             "http",
@@ -1488,17 +1491,17 @@
                             "tcp",
                             "udp"
                           ],
-                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
-                          "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                          "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                           "type": "boolean",
-                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                         },
                         "targetPort": {
-                          "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                          "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                           "type": "integer",
-                          "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                          "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                         }
                       },
                       "additionalProperties": false
@@ -1534,14 +1537,14 @@
                     "type": "string"
                   },
                   "mountSources": {
-                    "description": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
+                    "description": "Toggles whether or not the project source code should\nbe mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true.",
                     "type": "boolean",
-                    "markdownDescription": "Toggles whether or not the project source code should be mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
+                    "markdownDescription": "Toggles whether or not the project source code should\nbe mounted in the component.\n\nDefaults to true for all component types except plugins and components that set `dedicatedPod` to true."
                   },
                   "sourceMapping": {
-                    "description": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used.",
+                    "description": "Optional specification of the path in the container where\nproject sources should be transferred/mounted when `mountSources` is `true`.\nWhen omitted, the default value of /projects is used.",
                     "type": "string",
-                    "markdownDescription": "Optional specification of the path in the container where project sources should be transferred/mounted when `mountSources` is `true`. When omitted, the default value of /projects is used."
+                    "markdownDescription": "Optional specification of the path in the container where\nproject sources should be transferred/mounted when `mountSources` is `true`.\nWhen omitted, the default value of /projects is used."
                   },
                   "volumeMounts": {
                     "description": "List of volumes mounts that should be mounted is this container.",
@@ -1554,16 +1557,16 @@
                       ],
                       "properties": {
                         "name": {
-                          "description": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files.",
+                          "description": "The volume mount name is the name of an existing `Volume` component.\nIf several containers mount the same volume name\nthen they will reuse the same volume and will be able to access to the same files.",
                           "type": "string",
                           "maxLength": 63,
                           "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-                          "markdownDescription": "The volume mount name is the name of an existing `Volume` component. If several containers mount the same volume name then they will reuse the same volume and will be able to access to the same files."
+                          "markdownDescription": "The volume mount name is the name of an existing `Volume` component.\nIf several containers mount the same volume name\nthen they will reuse the same volume and will be able to access to the same files."
                         },
                         "path": {
-                          "description": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/\u003cname\u003e`.",
+                          "description": "The path in the component container where the volume should be mounted.\nIf not path is mentioned, default path is the is `/\u003cname\u003e`.",
                           "type": "string",
-                          "markdownDescription": "The path in the component container where the volume should be mounted. If not path is mentioned, default path is the is `/\u003cname\u003e`."
+                          "markdownDescription": "The path in the component container where the volume should be mounted.\nIf not path is mentioned, default path is the is `/\u003cname\u003e`."
                         }
                       },
                       "additionalProperties": false,
@@ -1635,14 +1638,14 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image.",
+                            "description": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry\nrequired for the Dockerfile build will be downloaded for building the image.",
                             "type": "string",
-                            "markdownDescription": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry required for the Dockerfile build will be downloaded for building the image."
+                            "markdownDescription": "Id in a devfile registry that contains a Dockerfile. The src in the OCI registry\nrequired for the Dockerfile build will be downloaded for building the image."
                           },
                           "registryUrl": {
-                            "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
+                            "description": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.\nTo ensure the Dockerfile gets resolved consistently in different environments,\nit is recommended to always specify the `devfileRegistryUrl` when `Id` is used.",
                             "type": "string",
-                            "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src. To ensure the Dockerfile gets resolved consistently in different environments, it is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
+                            "markdownDescription": "Devfile Registry URL to pull the Dockerfile from when using the Devfile Registry as Dockerfile src.\nTo ensure the Dockerfile gets resolved consistently in different environments,\nit is recommended to always specify the `devfileRegistryUrl` when `Id` is used."
                           }
                         },
                         "additionalProperties": false,
@@ -1662,26 +1665,26 @@
                                 "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                               },
                               "revision": {
-                                "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                                "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                                 "type": "string",
-                                "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                                "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                               }
                             },
                             "additionalProperties": false,
                             "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                           },
                           "fileLocation": {
-                            "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile.",
+                            "description": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.\nDefaults to Dockerfile.",
                             "type": "string",
-                            "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src. Defaults to Dockerfile."
+                            "markdownDescription": "Location of the Dockerfile in the Git repository when using git as Dockerfile src.\nDefaults to Dockerfile."
                           },
                           "remotes": {
-                            "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                            "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                             "type": "object",
                             "additionalProperties": {
                               "type": "string"
                             },
-                            "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                            "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
                           }
                         },
                         "additionalProperties": false,
@@ -1693,9 +1696,9 @@
                         "markdownDescription": "Specify if a privileged builder pod is required.\n\nDefault value is `false`"
                       },
                       "uri": {
-                        "description": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI.",
+                        "description": "URI Reference of a Dockerfile.\nIt can be a full URL or a relative URI from the current devfile as the base URI.",
                         "type": "string",
-                        "markdownDescription": "URI Reference of a Dockerfile. It can be a full URL or a relative URI from the current devfile as the base URI."
+                        "markdownDescription": "URI Reference of a Dockerfile.\nIt can be a full URL or a relative URI from the current devfile as the base URI."
                       }
                     },
                     "additionalProperties": false,
@@ -1711,7 +1714,7 @@
                 "markdownDescription": "Allows specifying the definition of an image for outer loop builds"
               },
               "kubernetes": {
-                "description": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production.",
+                "description": "Allows importing into the devworkspace the Kubernetes resources\ndefined in a given manifest. For example this allows reusing the Kubernetes\ndefinitions used to deploy some runtime components in production.",
                 "type": "object",
                 "oneOf": [
                   {
@@ -1748,20 +1751,20 @@
                           "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                         },
                         "attributes": {
-                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
                           "additionalProperties": true,
-                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "enum": [
                             "public",
                             "internal",
                             "none"
                           ],
-                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                         },
                         "name": {
                           "type": "string",
@@ -1774,7 +1777,7 @@
                           "markdownDescription": "Path of the endpoint URL"
                         },
                         "protocol": {
-                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
                           "enum": [
                             "http",
@@ -1784,17 +1787,17 @@
                             "tcp",
                             "udp"
                           ],
-                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
-                          "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                          "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                           "type": "boolean",
-                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                         },
                         "targetPort": {
-                          "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                          "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                           "type": "integer",
-                          "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                          "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                         }
                       },
                       "additionalProperties": false
@@ -1812,17 +1815,17 @@
                   }
                 },
                 "additionalProperties": false,
-                "markdownDescription": "Allows importing into the devworkspace the Kubernetes resources defined in a given manifest. For example this allows reusing the Kubernetes definitions used to deploy some runtime components in production."
+                "markdownDescription": "Allows importing into the devworkspace the Kubernetes resources\ndefined in a given manifest. For example this allows reusing the Kubernetes\ndefinitions used to deploy some runtime components in production."
               },
               "name": {
-                "description": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin.",
+                "description": "Mandatory name that allows referencing the component\nfrom other elements (such as commands) or from an external\ndevfile that may reference this component through a parent or a plugin.",
                 "type": "string",
                 "maxLength": 63,
                 "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-                "markdownDescription": "Mandatory name that allows referencing the component from other elements (such as commands) or from an external devfile that may reference this component through a parent or a plugin."
+                "markdownDescription": "Mandatory name that allows referencing the component\nfrom other elements (such as commands) or from an external\ndevfile that may reference this component through a parent or a plugin."
               },
               "openshift": {
-                "description": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production.",
+                "description": "Allows importing into the devworkspace the OpenShift resources\ndefined in a given manifest. For example this allows reusing the OpenShift\ndefinitions used to deploy some runtime components in production.",
                 "type": "object",
                 "oneOf": [
                   {
@@ -1859,20 +1862,20 @@
                           "markdownDescription": "Annotations to be added to Kubernetes Ingress or Openshift Route"
                         },
                         "attributes": {
-                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
+                          "description": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\",",
                           "type": "object",
                           "additionalProperties": true,
-                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n- cookiesAuthEnabled: \"true\" / \"false\",\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
+                          "markdownDescription": "Map of implementation-dependant string-based free-form attributes.\n\nExamples of Che-specific attributes:\n\n- cookiesAuthEnabled: \"true\" / \"false\",\n\n- type: \"terminal\" / \"ide\" / \"ide-dev\","
                         },
                         "exposure": {
-                          "description": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
+                          "description": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`",
                           "type": "string",
                           "enum": [
                             "public",
                             "internal",
                             "none"
                           ],
-                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n- `public` means that the endpoint will be exposed on the public network, typically through a K8S ingress or an OpenShift route.\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD, typically by K8S services, to be consumed by other elements running on the same cloud internal network.\n- `none` means that the endpoint will not be exposed and will only be accessible inside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
+                          "markdownDescription": "Describes how the endpoint should be exposed on the network.\n\n- `public` means that the endpoint will be exposed on the public network, typically through\na K8S ingress or an OpenShift route.\n\n- `internal` means that the endpoint will be exposed internally outside of the main devworkspace POD,\ntypically by K8S services, to be consumed by other elements running\non the same cloud internal network.\n\n- `none` means that the endpoint will not be exposed and will only be accessible\ninside the main devworkspace POD, on a local address.\n\nDefault value is `public`"
                         },
                         "name": {
                           "type": "string",
@@ -1885,7 +1888,7 @@
                           "markdownDescription": "Path of the endpoint URL"
                         },
                         "protocol": {
-                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
+                          "description": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`",
                           "type": "string",
                           "enum": [
                             "http",
@@ -1895,17 +1898,17 @@
                             "tcp",
                             "udp"
                           ],
-                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection. It will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection. It will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
+                          "markdownDescription": "Describes the application and transport protocols of the traffic that will go through this endpoint.\n\n- `http`: Endpoint will have `http` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `https` when the `secure` field is set to `true`.\n\n- `https`: Endpoint will have `https` traffic, typically on a TCP connection.\n\n- `ws`: Endpoint will have `ws` traffic, typically on a TCP connection.\nIt will be automaticaly promoted to `wss` when the `secure` field is set to `true`.\n\n- `wss`: Endpoint will have `wss` traffic, typically on a TCP connection.\n\n- `tcp`: Endpoint will have traffic on a TCP connection, without specifying an application protocol.\n\n- `udp`: Endpoint will have traffic on an UDP connection, without specifying an application protocol.\n\nDefault value is `http`"
                         },
                         "secure": {
-                          "description": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`.",
+                          "description": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`.",
                           "type": "boolean",
-                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some authentication process. This requires a protocol of `https` or `wss`."
+                          "markdownDescription": "Describes whether the endpoint should be secured and protected by some\nauthentication process. This requires a protocol of `https` or `wss`."
                         },
                         "targetPort": {
-                          "description": "Port number to be used within the container component. The same port cannot be used by two different container components.",
+                          "description": "Port number to be used within the container component. The same port cannot\nbe used by two different container components.",
                           "type": "integer",
-                          "markdownDescription": "Port number to be used within the container component. The same port cannot be used by two different container components."
+                          "markdownDescription": "Port number to be used within the container component. The same port cannot\nbe used by two different container components."
                         }
                       },
                       "additionalProperties": false
@@ -1923,16 +1926,16 @@
                   }
                 },
                 "additionalProperties": false,
-                "markdownDescription": "Allows importing into the devworkspace the OpenShift resources defined in a given manifest. For example this allows reusing the OpenShift definitions used to deploy some runtime components in production."
+                "markdownDescription": "Allows importing into the devworkspace the OpenShift resources\ndefined in a given manifest. For example this allows reusing the OpenShift\ndefinitions used to deploy some runtime components in production."
               },
               "volume": {
-                "description": "Allows specifying the definition of a volume shared by several other components",
+                "description": "Allows specifying the definition of a volume\nshared by several other components",
                 "type": "object",
                 "properties": {
                   "ephemeral": {
-                    "description": "Ephemeral volumes are not stored persistently across restarts. Defaults to false",
+                    "description": "Ephemeral volumes are not stored persistently across restarts. Defaults\nto false",
                     "type": "boolean",
-                    "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults to false"
+                    "markdownDescription": "Ephemeral volumes are not stored persistently across restarts. Defaults\nto false"
                   },
                   "size": {
                     "description": "Size of the volume",
@@ -1941,15 +1944,15 @@
                   }
                 },
                 "additionalProperties": false,
-                "markdownDescription": "Allows specifying the definition of a volume shared by several other components"
+                "markdownDescription": "Allows specifying the definition of a volume\nshared by several other components"
               }
             },
             "additionalProperties": false
           },
-          "markdownDescription": "Overrides of components encapsulated in a parent devfile or a plugin. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of components encapsulated in a parent devfile or a plugin.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "dependentProjects": {
-          "description": "Overrides of dependentProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of dependentProjects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
           "items": {
             "type": "object",
@@ -1994,21 +1997,21 @@
                         "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                       },
                       "revision": {
-                        "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                        "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                         "type": "string",
-                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                       }
                     },
                     "additionalProperties": false,
                     "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                   },
                   "remotes": {
-                    "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                    "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                     "type": "object",
                     "additionalProperties": {
                       "type": "string"
                     },
-                    "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                    "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
                   }
                 },
                 "additionalProperties": false,
@@ -2024,6 +2027,9 @@
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
+                "required": [
+                  "location"
+                ],
                 "properties": {
                   "location": {
                     "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -2037,7 +2043,7 @@
             },
             "additionalProperties": false
           },
-          "markdownDescription": "Overrides of dependentProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of dependentProjects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "id": {
           "description": "Id in a registry that contains a Devfile yaml file",
@@ -2062,7 +2068,7 @@
           "markdownDescription": "Reference to a Kubernetes CRD of type DevWorkspaceTemplate"
         },
         "projects": {
-          "description": "Overrides of projects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of projects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
           "items": {
             "type": "object",
@@ -2107,21 +2113,21 @@
                         "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                       },
                       "revision": {
-                        "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                        "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                         "type": "string",
-                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                       }
                     },
                     "additionalProperties": false,
                     "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                   },
                   "remotes": {
-                    "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                    "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                     "type": "object",
                     "additionalProperties": {
                       "type": "string"
                     },
-                    "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                    "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
                   }
                 },
                 "additionalProperties": false,
@@ -2137,6 +2143,9 @@
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
+                "required": [
+                  "location"
+                ],
                 "properties": {
                   "location": {
                     "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -2150,15 +2159,15 @@
             },
             "additionalProperties": false
           },
-          "markdownDescription": "Overrides of projects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of projects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "registryUrl": {
-          "description": "Registry URL to pull the parent devfile from when using id in the parent reference. To ensure the parent devfile gets resolved consistently in different environments, it is recommended to always specify the `registryUrl` when `id` is used.",
+          "description": "Registry URL to pull the parent devfile from when using id in the parent reference.\nTo ensure the parent devfile gets resolved consistently in different environments,\nit is recommended to always specify the `registryUrl` when `id` is used.",
           "type": "string",
-          "markdownDescription": "Registry URL to pull the parent devfile from when using id in the parent reference. To ensure the parent devfile gets resolved consistently in different environments, it is recommended to always specify the `registryUrl` when `id` is used."
+          "markdownDescription": "Registry URL to pull the parent devfile from when using id in the parent reference.\nTo ensure the parent devfile gets resolved consistently in different environments,\nit is recommended to always specify the `registryUrl` when `id` is used."
         },
         "starterProjects": {
-          "description": "Overrides of starterProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of starterProjects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "array",
           "items": {
             "type": "object",
@@ -2203,21 +2212,21 @@
                         "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                       },
                       "revision": {
-                        "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                        "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                         "type": "string",
-                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                        "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                       }
                     },
                     "additionalProperties": false,
                     "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
                   },
                   "remotes": {
-                    "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                    "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                     "type": "object",
                     "additionalProperties": {
                       "type": "string"
                     },
-                    "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                    "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
                   }
                 },
                 "additionalProperties": false,
@@ -2238,6 +2247,9 @@
               "zip": {
                 "description": "Project's Zip source",
                 "type": "object",
+                "required": [
+                  "location"
+                ],
                 "properties": {
                   "location": {
                     "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -2251,26 +2263,26 @@
             },
             "additionalProperties": false
           },
-          "markdownDescription": "Overrides of starterProjects encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of starterProjects encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "uri": {
-          "description": "URI Reference of a parent devfile YAML file. It can be a full URL or a relative URI with the current devfile as the base URI.",
+          "description": "URI Reference of a parent devfile YAML file.\nIt can be a full URL or a relative URI with the current devfile as the base URI.",
           "type": "string",
-          "markdownDescription": "URI Reference of a parent devfile YAML file. It can be a full URL or a relative URI with the current devfile as the base URI."
+          "markdownDescription": "URI Reference of a parent devfile YAML file.\nIt can be a full URL or a relative URI with the current devfile as the base URI."
         },
         "variables": {
-          "description": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules.",
+          "description": "Overrides of variables encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules.",
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "markdownDescription": "Overrides of variables encapsulated in a parent devfile. Overriding is done according to K8S strategic merge patch standard rules."
+          "markdownDescription": "Overrides of variables encapsulated in a parent devfile.\nOverriding is done according to K8S strategic merge patch standard rules."
         },
         "version": {
-          "description": "Specific stack/sample version to pull the parent devfile from, when using id in the parent reference. To specify `version`, `id` must be defined and used as the import reference source. `version` can be either a specific stack version, or `latest`. If no `version` specified, default version will be used.",
+          "description": "Specific stack/sample version to pull the parent devfile from, when using id in the parent reference.\nTo specify `version`, `id` must be defined and used as the import reference source.\n`version` can be either a specific stack version, or `latest`.\nIf no `version` specified, default version will be used.",
           "type": "string",
           "pattern": "^(latest)|(([1-9])\\.([0-9]+)\\.([0-9]+)(\\-[0-9a-z-]+(\\.[0-9a-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?)$",
-          "markdownDescription": "Specific stack/sample version to pull the parent devfile from, when using id in the parent reference. To specify `version`, `id` must be defined and used as the import reference source. `version` can be either a specific stack version, or `latest`. If no `version` specified, default version will be used."
+          "markdownDescription": "Specific stack/sample version to pull the parent devfile from, when using id in the parent reference.\nTo specify `version`, `id` must be defined and used as the import reference source.\n`version` can be either a specific stack version, or `latest`.\nIf no `version` specified, default version will be used."
         }
       },
       "additionalProperties": false,
@@ -2325,21 +2337,21 @@
                     "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                   },
                   "revision": {
-                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                     "type": "string",
-                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                   }
                 },
                 "additionalProperties": false,
                 "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
               },
               "remotes": {
-                "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
                 },
-                "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
               }
             },
             "additionalProperties": false,
@@ -2355,6 +2367,9 @@
           "zip": {
             "description": "Project's Zip source",
             "type": "object",
+            "required": [
+              "location"
+            ],
             "properties": {
               "location": {
                 "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -2425,21 +2440,21 @@
                     "markdownDescription": "The remote name should be used as init. Required if there are more than one remote configured"
                   },
                   "revision": {
-                    "description": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found.",
+                    "description": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found.",
                     "type": "string",
-                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id. Default branch is used if missing or specified revision is not found."
+                    "markdownDescription": "The revision to checkout from. Should be branch name, tag or commit id.\nDefault branch is used if missing or specified revision is not found."
                   }
                 },
                 "additionalProperties": false,
                 "markdownDescription": "Defines from what the project should be checked out. Required if there are more than one remote configured"
               },
               "remotes": {
-                "description": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
+                "description": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured.",
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
                 },
-                "markdownDescription": "The remotes map which should be initialized in the git project. Projects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
+                "markdownDescription": "The remotes map which should be initialized in the git project.\nProjects must have at least one remote configured while StarterProjects \u0026 Image Component's Git source can only have at most one remote configured."
               }
             },
             "additionalProperties": false,
@@ -2460,6 +2475,9 @@
           "zip": {
             "description": "Project's Zip source",
             "type": "object",
+            "required": [
+              "location"
+            ],
             "properties": {
               "location": {
                 "description": "Zip project's source location address. Should be file path of the archive, e.g. file://$FILE_PATH",
@@ -2476,12 +2494,12 @@
       "markdownDescription": "StarterProjects is a project that can be used as a starting point when bootstrapping new projects"
     },
     "variables": {
-      "description": "Map of key-value variables used for string replacement in the devfile. Values can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure",
+      "description": "Map of key-value variables used for string replacement in the devfile. Values can be referenced via {{variable-key}}\nto replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure",
       "type": "object",
       "additionalProperties": {
         "type": "string"
       },
-      "markdownDescription": "Map of key-value variables used for string replacement in the devfile. Values can be referenced via {{variable-key}} to replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure"
+      "markdownDescription": "Map of key-value variables used for string replacement in the devfile. Values can be referenced via {{variable-key}}\nto replace the corresponding value in string fields in the devfile. Replacement cannot be used for\n\n - schemaVersion, metadata, parent source\n\n - element identifiers, e.g. command id, component name, endpoint name, project name\n\n - references to identifiers, e.g. in events, a command's component, container's volume mount name\n\n - string enums, e.g. command group kind, endpoint exposure"
     }
   },
   "additionalProperties": false,
