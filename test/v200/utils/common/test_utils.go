@@ -368,7 +368,7 @@ func (testDevfile *TestDevfile) RunTest(testContent TestContent, t *testing.T) {
 
 	err := testDevfile.Validator.WriteAndValidate(testDevfile)
 	if err != nil {
-		t.Fatalf(LogErrorMessage(fmt.Sprintf("ERROR verifying devfile :  %s : %v", testContent.FileName, err)))
+		t.Fatal(LogErrorMessage(fmt.Sprintf("ERROR verifying devfile :  %s : %v", testContent.FileName, err)))
 	}
 
 }
