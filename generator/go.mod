@@ -1,6 +1,6 @@
 module github.com/devfile/api/generator
 
-go 1.22
+go 1.24
 
 require (
 	github.com/coreos/go-semver v0.3.1
