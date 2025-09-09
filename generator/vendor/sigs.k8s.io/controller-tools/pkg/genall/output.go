@@ -19,7 +19,6 @@ package genall
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -92,7 +91,7 @@ var OutputToNothing = outputToNothing{}
 type outputToNothing struct{}
 
 func (o outputToNothing) Open(_ *loader.Package, _ string) (io.WriteCloser, error) {
-	return nopCloser{ioutil.Discard}, nil
+	return nopCloser{io.Discard}, nil
 }
 
 // +controllertools:marker:generateHelp:category=""
@@ -103,7 +102,7 @@ type OutputToDirectory string
 
 func (o OutputToDirectory) Open(_ *loader.Package, itemPath string) (io.WriteCloser, error) {
 	// ensure the directory exists
-	if err := os.MkdirAll(string(o), os.ModePerm); err != nil {
+	if err := os.MkdirAll(filepath.Dir(filepath.Join(string(o), itemPath)), os.ModePerm); err != nil {
 		return nil, err
 	}
 	path := filepath.Join(string(o), itemPath)
@@ -122,7 +121,7 @@ var OutputToStdout = outputToStdout{}
 // Generally useful for single-artifact outputs.
 type outputToStdout struct{}
 
-func (o outputToStdout) Open(_ *loader.Package, itemPath string) (io.WriteCloser, error) {
+func (o outputToStdout) Open(_ *loader.Package, _ string) (io.WriteCloser, error) {
 	return nopCloser{os.Stdout}, nil
 }
 
@@ -155,6 +154,12 @@ func (o OutputArtifacts) Open(pkg *loader.Package, itemPath string) (io.WriteClo
 		return nil, fmt.Errorf("cannot output to a package with no path on disk")
 	}
 	outDir := filepath.Dir(pkg.CompiledGoFiles[0])
+	if _, err := os.Stat(outDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(outDir, os.ModePerm); err != nil {
+			return nil, err
+		}
+	}
+
 	outPath := filepath.Join(outDir, itemPath)
 	return os.Create(outPath)
 }
