@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy",
+    "gomodVendor"
+  ],
+  "packageRules": [
+    {
+      "description": "Group Kubernetes dependencies together",
+      "matchPackagePatterns": [
+        "^k8s\\.io/",
+        "^sigs\\.k8s\\.io/"
+      ],
+      "groupName": "kubernetes packages"
+    },
+    {
+      "description": "Group GitHub Actions updates",
+      "matchMatchers": ["github-actions"],
+      "groupName": "github actions"
+    }
+  ]
+}
