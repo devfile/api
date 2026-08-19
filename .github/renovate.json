@@ -18,7 +18,7 @@
     },
     {
       "description": "Group GitHub Actions updates",
-      "matchMatchers": ["github-actions"],
+      "matchManagers": ["github-actions"],
       "groupName": "github actions"
     }
   ]
