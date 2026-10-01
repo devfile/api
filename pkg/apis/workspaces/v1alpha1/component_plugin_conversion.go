@@ -168,6 +168,10 @@ func convertPluginComponentSubComponentFrom_v1alpha2(src *v1alpha2.ComponentPlug
 	if err != nil {
 		return err
 	}
+	jsonComponent, err = stringifyComponentEndpointAttributes(jsonComponent)
+	if err != nil {
+		return err
+	}
 	err = json.Unmarshal(jsonComponent, &dest)
 	if err != nil {
 		return err

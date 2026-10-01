@@ -56,7 +56,14 @@ func convertComponentFrom_v1alpha2(src *v1alpha2.Component, dest *Component) err
 	if err != nil {
 		return err
 	}
+	jsonComponent, err = stringifyComponentEndpointAttributes(jsonComponent)
+	if err != nil {
+		return err
+	}
 	err = json.Unmarshal(jsonComponent, dest)
+	if err != nil {
+		return err
+	}
 	switch {
 	case dest.Container != nil:
 		dest.Container.Name = name
