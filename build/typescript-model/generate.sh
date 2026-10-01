@@ -40,6 +40,9 @@ k8s_client_gen() {
     echo "[INFO] preparing config files for gen"
     # Remove the contents of custom objects spec so that we aren't bundling any extra objects
     echo "{}" > $WORK_DIR/gen/openapi/custom_objects_spec.json
+    # Remove the apidiscovery definitions: they reference io.k8s.apimachinery meta/v1 types that
+    # aren't part of the devfile spec, which makes the generated model fail to compile
+    echo "{}" > $WORK_DIR/gen/openapi/apidiscovery_definitions.json
 
     cat <<EOF > ${WORK_DIR}/config.sh
 export KUBERNETES_BRANCH=''
@@ -74,6 +77,8 @@ EOF
 
     echo "$(jq '. += {"main": "dist/index.js"}' package.json)" > package.json
     echo "$(jq '. += {"types": "dist/index.d.ts"}' package.json)" > package.json
+
+    echo "$(jq '. += {"devDependencies": {"typescript": "^5.0"}}' package.json)" > package.json
 
     ######################################################################################################
     echo "[INFO] preparing tsconfig.json"
