@@ -79,7 +79,7 @@ EOF
     echo "$(jq '. += {"main": "dist/index.js"}' package.json)" > package.json
     echo "$(jq '. += {"types": "dist/index.d.ts"}' package.json)" > package.json
 
-    echo "$(jq '. += {"devDependencies": {"typescript": "^5.0"}}' package.json)" > package.json
+    echo "$(jq '.devDependencies *= {"typescript": "^5.0"}' <(cat package.json))" > package.json
 
     ######################################################################################################
     echo "[INFO] preparing tsconfig.json"
