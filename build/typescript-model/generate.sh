@@ -41,7 +41,7 @@ k8s_client_gen() {
     echo "[INFO] preparing config files for gen"
     # Remove the contents of custom objects spec so that we aren't bundling any extra objects
     echo "{}" > $WORK_DIR/gen/openapi/custom_objects_spec.json
-    # Remove the apidiscovery definitions: they reference io.k8s.apimachinery meta/v1 types thatAdd a comment on  line R43Add diff commentMarkdown input:  edit mode selected.WritePreviewAdd a suggestionHeadingBold(control b) control⌃ bBItalic(control i) control⌃ iIQuote(control shift right angle bracket) control⌃ shift⇧ right angle bracket>Code(control e) control⌃ eELink(control k) control⌃ kKUnordered list(control 8) control⌃ 88Numbered list(control shift ampersand) control⌃ shift⇧ ampersand&Task list(control shift l) control⌃ shift⇧ lLMentionReferenceSlash commandsMore itemsSaved repliesAdd FilesPaste, drop, or click to add filesCancelCommentStart a review
+    # Remove the api discovery definitions: they reference io.k8s.apimachinery meta/v1 types that
     # aren't part of the devfile spec, which makes the generated model fail to compile
     echo "{}" > $WORK_DIR/gen/openapi/apidiscovery_definitions.json
 
