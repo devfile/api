@@ -27,7 +27,8 @@ WORK_DIR=${SCRIPT_DIR}/workdir
 echo "[INFO] Using the following folder to store all build files ${SCRIPT_DIR}/workdir"
 mkdir -p $WORK_DIR
 
-GEN_REVISION=b32dcd6dc9c1c0c4fcf227c9539ae9ff0530b936
+# https://github.com/kubernetes-client/gen/commit/d01fc8a15955e08c5102b7f9916a99b094ebd0e1
+GEN_REVISION=d01fc8a15955e08c5102b7f9916a99b094ebd0e1
 
 k8s_client_gen() {
     [ ! -d $WORK_DIR/gen ] && git clone https://github.com/kubernetes-client/gen.git $WORK_DIR/gen || echo "kubernetes-client/gen is already cloned into $WORK_DIR/gen"
@@ -40,6 +41,9 @@ k8s_client_gen() {
     echo "[INFO] preparing config files for gen"
     # Remove the contents of custom objects spec so that we aren't bundling any extra objects
     echo "{}" > $WORK_DIR/gen/openapi/custom_objects_spec.json
+    # Remove the apidiscovery definitions: they reference io.k8s.apimachinery meta/v1 types thatAdd a comment on  line R43Add diff commentMarkdown input:  edit mode selected.WritePreviewAdd a suggestionHeadingBold(control b) control⌃ bBItalic(control i) control⌃ iIQuote(control shift right angle bracket) control⌃ shift⇧ right angle bracket>Code(control e) control⌃ eELink(control k) control⌃ kKUnordered list(control 8) control⌃ 88Numbered list(control shift ampersand) control⌃ shift⇧ ampersand&Task list(control shift l) control⌃ shift⇧ lLMentionReferenceSlash commandsMore itemsSaved repliesAdd FilesPaste, drop, or click to add filesCancelCommentStart a review
+    # aren't part of the devfile spec, which makes the generated model fail to compile
+    echo "{}" > $WORK_DIR/gen/openapi/apidiscovery_definitions.json
 
     cat <<EOF > ${WORK_DIR}/config.sh
 export KUBERNETES_BRANCH=''
@@ -74,6 +78,8 @@ EOF
 
     echo "$(jq '. += {"main": "dist/index.js"}' package.json)" > package.json
     echo "$(jq '. += {"types": "dist/index.d.ts"}' package.json)" > package.json
+
+    echo "$(jq '. += {"devDependencies": {"typescript": "^5.0"}}' package.json)" > package.json
 
     ######################################################################################################
     echo "[INFO] preparing tsconfig.json"
