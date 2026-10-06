@@ -273,6 +273,10 @@ func convertParentComponentFrom_v1alpha2(src *v1alpha2.ComponentParentOverride, 
 		if err != nil {
 			return err
 		}
+		jsonComponent, err = stringifyComponentEndpointAttributes(jsonComponent)
+		if err != nil {
+			return err
+		}
 		err = json.Unmarshal(jsonComponent, &dest)
 		if err != nil {
 			return err
