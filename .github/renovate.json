@@ -21,7 +21,9 @@
     {
       "description": "Group GitHub Actions updates",
       "matchManagers": ["github-actions"],
-      "groupName": "github actions"
+      "groupName": "github actions",
+      "groupSlug": "github-actions-deps",
+      "commitMessageTopic": "GitHub Action {{depName}}"
     }
   ]
 }
