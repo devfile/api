@@ -11,14 +11,6 @@
   ],
   "packageRules": [
     {
-      "description": "Group Kubernetes dependencies together",
-      "matchPackagePatterns": [
-        "^k8s\\.io/",
-        "^sigs\\.k8s\\.io/"
-      ],
-      "groupName": "kubernetes packages"
-    },
-    {
       "description": "Group GitHub Actions updates",
       "matchManagers": ["github-actions"],
       "groupName": "github actions",
