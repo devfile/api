@@ -5,6 +5,13 @@
     "helpers:pinGitHubActionDigests",
     ":gitSignOff"
   ],
+  "timezone": "America/Toronto",
+  "schedule": [
+    "* 19-23,0-2 */2,4 * 4"
+  ],
+  "enabledManagers": [
+    "github-actions"
+  ],
   "packageRules": [
     {
       "description": "Group GitHub Actions updates",
@@ -13,5 +20,11 @@
       "groupSlug": "github-actions-deps",
       "commitMessageTopic": "GitHub Action {{depName}}"
     }
-  ]
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "prHourlyLimit": 20,
+  "prConcurrentLimit": 1,
+  "labels": ["renovatebot"]
 }
