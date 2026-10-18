@@ -32,6 +32,6 @@ jobs:
     steps:
       - name: Eclipse Che Pull Request Check
         id: che-pr-check-gh-action
-        uses: benoitf/che-pr-check-gh-action@master
+        uses: benoitf/che-pr-check-gh-action@13210306af00a9db1c2c14e4425e03cf861e49d1 # master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
