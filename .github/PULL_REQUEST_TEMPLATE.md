@@ -32,6 +32,10 @@ If criteria is left unchecked please provide an explanation why.
 
   <!-- _Do we have anything that can break our clients?  If so, open a notifying issue_ -->
 
+- [ ] [AI Governance](../GOVERNANCE.md#ai-governance) (if applicable)
+
+  <!-- _AI-assisted contributions must comply with the project's review, licensing, and attribution requirements._ -->
+
 # Tests Performed
 _Explain what tests you personally ran to ensure the changes are functioning as expected._
 
