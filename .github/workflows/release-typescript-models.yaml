@@ -38,7 +38,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4.9.1
         with:
-          python-version: '3.15.0'
+          python-version: '3.15.2'
 
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@30aa0023464ed4b5b116bd9fbdab87acf01a484e # v4.1.0
