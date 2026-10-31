@@ -1,0 +1,15 @@
+attributes:
+  app.kubernetes.io/part-of:
+    name: original-name
+    version: 1.0.0
+  list-attribute:
+    - originalElement
+components:
+  - name: runtime
+    container:
+      image: python:3.11
+    attributes:
+      pod-overrides:
+        spec:
+          imagePullSecrets:
+            - name: regcred
