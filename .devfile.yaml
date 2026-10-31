@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-schemaVersion: 2.1.0
+schemaVersion: 2.3.0
 metadata:
   name: devfile-api
 attributes:
@@ -21,7 +21,7 @@ attributes:
 components:
   - name: devtools
     container:
-      image: "quay.io/devfile/universal-developer-image:ubi8-latest"
+      image: "quay.io/devfile/universal-developer-image:ubi9-latest"
       memoryLimit: 2Gi
       memoryRequest: 256Mi
 commands:
