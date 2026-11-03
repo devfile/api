@@ -8,6 +8,7 @@ This document defines governance policies for the the projects under the Devfile
   - [Meetings](#meetings)
   - [CNCF Resources](#cncf-resources)
   - [Code of Conduct](#code-of-conduct)
+  - [AI Governance](#ai-governance)
   - [Voting](#voting)
 
 ## Maintainers
@@ -74,6 +75,26 @@ violations by community members will be discussed and resolved
 on the [private Maintainer mailing list](https://lists.cncf.io/g/cncf-devfile-maintainers).  If the reported CoC violator
 is a Maintainer, the Maintainers will instead designate two Maintainers to work
 with CNCF staff in resolving the report.
+
+## AI Governance
+
+Content created in whole or in part with generative AI tools may be contributed
+to Devfile projects. AI-assisted contributions are held to the same standards
+of quality, security, testing, and peer review as other contributions. The
+contributor remains responsible for understanding and validating the content.
+
+Before submitting AI-assisted content, contributors must:
+
+- Ensure the AI tool's terms are compatible with the project's license and
+  intellectual property policies
+- Confirm they have permission to use and modify any included third-party
+  material
+- Provide all required notices, attribution, and license information
+
+Content with uncertain ownership or licensing must not be contributed. Devfile
+projects may adopt additional project-specific requirements for AI-assisted
+contributions. This guidance is based on the Linux Foundation's
+[Generative AI Policy](https://www.linuxfoundation.org/legal/generative-ai).
 
 ## Voting
 

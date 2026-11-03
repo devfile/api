@@ -22,6 +22,12 @@ Signed-off-by: Firstname Lastname <email@email.com>
 
 Once you set your user.name and user.email in your git config, you can sign your commit automatically with `git commit -s`.
 
+## AI-Assisted Contributions
+
+Contributions created in whole or in part with generative AI tools must comply
+with the project's [AI Governance](GOVERNANCE.md#ai-governance), including its
+review, licensing, and attribution requirements.
+
 ## How to Contribute:
 
 ### Issues
