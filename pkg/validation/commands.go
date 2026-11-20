@@ -197,7 +197,7 @@ func validateCompositeCommand(command *v1alpha2.Command, parentCommands map[stri
 		if err != nil {
 			return err
 		}
-		delete(parentCommands, cmd)
+		delete(parentCommands, strings.ToLower(cmd))
 	}
 	return nil
 }

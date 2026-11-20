@@ -365,6 +365,16 @@ func TestValidateCompositeCommand(t *testing.T) {
 			},
 			testCompositeCommand: "composite-1",
 		},
+		{
+			name: "Valid Composite command with mixed-case subcommand references",
+			commands: []v1alpha2.Command{
+				generateDummyExecCommand("basic-exec", component, nil),
+				generateDummyCompositeCommand("composite-a", []string{"basic-exec"}, nil),
+				generateDummyCompositeCommand("composite-b", []string{"composite-a"}, nil),
+				generateDummyCompositeCommand("composite-1", []string{"Composite-A", "composite-b"}, nil),
+			},
+			testCompositeCommand: "composite-1",
+		},
 	}
 	for _, tt := range tests {
 		commandMap := getCommandsMap(tt.commands)
