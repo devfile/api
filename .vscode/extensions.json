@@ -7,5 +7,7 @@
       "golang.go",
       "redhat.vscode-xml",
       "redhat.vscode-yaml",
+      "openai.chatgpt",
+      "Anthropic.claude-code"
     ]
 }
