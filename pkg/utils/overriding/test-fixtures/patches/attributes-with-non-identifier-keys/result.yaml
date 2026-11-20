@@ -1,0 +1,14 @@
+attributes:
+  app.kubernetes.io/part-of:
+    name: patched-name
+  list-attribute:
+    - patchedElement
+components:
+  - name: runtime
+    container:
+      image: python:3.11
+    attributes:
+      pod-overrides:
+        spec:
+          imagePullSecrets:
+            - name: abcd

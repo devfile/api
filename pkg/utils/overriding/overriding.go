@@ -155,7 +155,18 @@ type mapEnabledPatchMetaFromStruct struct {
 
 var _ strategicpatch.LookupPatchMeta = (*mapEnabledPatchMetaFromStruct)(nil)
 
-func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string, elementIsSlice bool) {
+// mapValueFieldKey is the JSON name of the single field of the struct that
+// replaces a map type during patch metadata lookup.
+// A fixed key is used, instead of the map key itself, since map keys
+// (such as attribute names like `pod-overrides`) are not necessarily valid
+// Go struct field names or JSON tag names.
+const mapValueFieldKey = "value"
+
+// replaceMapWithSingleKeyStruct replaces a map type with a struct type
+// containing a single field that describes the map values.
+// It returns the key that should be used to look up the patch metadata:
+// mapValueFieldKey if the type was a map, or the given key otherwise.
+func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string, elementIsSlice bool) string {
 	t := s.delegate.T
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
@@ -163,7 +174,7 @@ func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string
 
 	if t.Kind() == reflect.Map {
 		typeName := t.Name()
-		tag := `json:"` + key + `"`
+		tag := `json:"` + mapValueFieldKey + `"`
 		elemType := t.Elem()
 		if typeName == "Attributes" {
 			if elementIsSlice {
@@ -174,12 +185,14 @@ func (s *mapEnabledPatchMetaFromStruct) replaceMapWithSingleKeyStruct(key string
 			}
 		}
 
-		s.delegate.T = reflect.StructOf([]reflect.StructField{{Name: strings.Title(key), Type: elemType, Tag: reflect.StructTag(tag)}})
+		s.delegate.T = reflect.StructOf([]reflect.StructField{{Name: "Value", Type: elemType, Tag: reflect.StructTag(tag)}})
+		return mapValueFieldKey
 	}
+	return key
 }
 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
-	s.replaceMapWithSingleKeyStruct(key, false)
+	key = s.replaceMapWithSingleKeyStruct(key, false)
 
 	schema, patchMeta, err := s.delegate.LookupPatchMetadataForStruct(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
@@ -190,7 +203,7 @@ func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForStruct(key string) 
 }
 
 func (s mapEnabledPatchMetaFromStruct) LookupPatchMetadataForSlice(key string) (strategicpatch.LookupPatchMeta, strategicpatch.PatchMeta, error) {
-	s.replaceMapWithSingleKeyStruct(key, true)
+	key = s.replaceMapWithSingleKeyStruct(key, true)
 
 	schema, patchMeta, err := s.delegate.LookupPatchMetadataForSlice(key)
 	var lookupPatchMeta strategicpatch.LookupPatchMeta = nil
