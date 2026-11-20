@@ -305,7 +305,7 @@ func (attributes Attributes) Into(into interface{}) error {
 // of interfaces.
 //
 // An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attributes
+// to receive any error that might have occurred during the attributes
 // decoding
 func (attributes Attributes) AsInterface(errorHolder *error) interface{} {
 	rawJSON, err := json.Marshal(attributes)
@@ -412,7 +412,7 @@ func (attributes Attributes) FromBooleanMap(strings map[string]bool) Attributes 
 // that supports Json Marshaling.
 //
 // An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attributes
+// to receive any error that might have occurred during the attributes
 // decoding
 func (attributes Attributes) Put(key string, value interface{}, errorHolder *error) Attributes {
 	rawJSON, err := json.Marshal(value)
@@ -432,7 +432,7 @@ func (attributes Attributes) Put(key string, value interface{}, errorHolder *err
 // that supports Json Marshaling.
 //
 // An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attributes
+// to receive any error that might have occurred during the attributes
 // decoding
 func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder *error) Attributes {
 	for key, value := range strings {
@@ -452,7 +452,7 @@ func (attributes Attributes) FromMap(strings map[string]interface{}, errorHolder
 // implementation- dependent Go structures.
 //
 // An optional error holder can be passed as an argument
-// to receive any error that might have occured during the attributes
+// to receive any error that might have occurred during the attributes
 // decoding
 func (attributes Attributes) FromInterface(structure interface{}, errorHolder *error) Attributes {
 	newAttributes := Attributes{}

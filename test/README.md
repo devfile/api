@@ -41,20 +41,20 @@ The test will read each of the test-xxxxxx.json files and run the tests defined 
 
 1. Copy and rename the `test/v200` directory for the new version, for example `test\v201`
 1. Update the copied `test/v201/json/test-<schema name>.json` files to point to the new schema.
-1. Modify the copied tests as needed for the new version as decsribed above.
+1. Modify the copied tests as needed for the new version as described above.
 1. Add `test/v201/schemaTest/tmp` to the .gitignore file.
 1. Run the test
 
 
 # apiTest
 
-A new test approach, shared with the library repository for testing valid devfiles. Basically the test creates lots of valid devfiles whith different content. The attributes which are set and the values to which they are set are randomized. These tests are a work in progress and the intent is to eventually replace schemaTest.  
+A new test approach, shared with the library repository for testing valid devfiles. Basically the test creates lots of valid devfiles with different content. The attributes which are set and the values to which they are set are randomized. These tests are a work in progress and the intent is to eventually replace schemaTest.  
 
 ## Test structure
 
 - `test/v200/apiTest/api-test.go`: The go unit test program
-- `test/v200/utils/api/test-utils.go` : utilites, used by the test, which contain functions uniqiue to the api tests.
-- `test/v200/utils/common/*-utils.go` : utilites, used by the test, which are also used by the library tests. Mostly contain the code to generate valid devfile content.
+- `test/v200/utils/api/test-utils.go` : utilities, used by the test, which contain functions uniqiue to the api tests.
+- `test/v200/utils/common/*-utils.go` : utilities, used by the test, which are also used by the library tests. Mostly contain the code to generate valid devfile content.
 
 
 ## Running tests locally
