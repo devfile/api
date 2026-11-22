@@ -80,7 +80,7 @@ func AddUnionOneOfConstraints(jsonSchema *apiext.JSONSchemaProps, unionDiscrimin
 				unionMemberProperty := strcase.ToLowerCamel(fieldName)
 				if _, foundUnionMember := schema.Properties[unionMemberProperty]; !foundUnionMember {
 					// The discriminator enum contains values that do not correspond to any enum field.
-					// So so just skip the oneOf creation here since this union definition seems invalid.
+					// So just skip the oneOf creation here since this union definition seems invalid.
 					continue discriminatorLoop
 				}
 				for _, toSkip := range fieldsToSkip {

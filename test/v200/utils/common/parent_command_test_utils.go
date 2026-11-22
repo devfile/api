@@ -28,7 +28,7 @@ func (testDevFile *TestDevfile) parentCommandAdded(command schema.CommandParentO
 	testDevFile.SchemaDevFile.Parent.Commands = append(testDevFile.SchemaDevFile.Parent.Commands, command)
 }
 
-// addParentEnv creates and returns a specifed number of env attributes in a schema structure
+// addParentEnv creates and returns a specified number of env attributes in a schema structure
 func addParentEnv(numEnv int) []schema.EnvVarParentOverride {
 	commandEnvs := make([]schema.EnvVarParentOverride, numEnv)
 	for i := 0; i < numEnv; i++ {

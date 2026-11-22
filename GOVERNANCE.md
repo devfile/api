@@ -1,6 +1,6 @@
 # Project Governance
 
-This document defines governance policies for the the projects under the Devfile organization.
+This document defines governance policies for the projects under the Devfile organization.
 
 - [Project Governance](#project-governance)
   - [Maintainers](#maintainers)
@@ -70,7 +70,7 @@ members.
 
 ## Code of Conduct
 
-[Code of Conduct](./code-of-conduct.md)
+[Code of Conduct](./CODE_OF_CONDUCT.md)
 violations by community members will be discussed and resolved
 on the [private Maintainer mailing list](https://lists.cncf.io/g/cncf-devfile-maintainers).  If the reported CoC violator
 is a Maintainer, the Maintainers will instead designate two Maintainers to work
