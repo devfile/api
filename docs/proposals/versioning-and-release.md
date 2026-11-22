@@ -87,7 +87,7 @@ The following steps outline the steps done to release a new version of the Devfi
 An example pull request, `make-release.sh` script and GitHub action can be found here:
 - [Release Pull Request](https://github.com/devfile/api/pull/958)
 - [make-release.sh](../../make-release.sh)
-- [release-schema.yaml](./.github/workflows/release-devfile-schema.yaml)
+- [release-schema.yaml](../../.github/workflows/release-devfile-schema.yaml)
 
 **Schema Store**
 
