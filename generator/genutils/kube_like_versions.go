@@ -40,7 +40,7 @@ func SortKubeLikeVersion(versions []string) {
 	sort.Sort(sortByKubeLikeVersion(versions))
 }
 
-// LatestKubeLikeVersion retrieves the latest version from the the provided versions, according to "kube-like" versioning order.
+// LatestKubeLikeVersion retrieves the latest version from the provided versions, according to "kube-like" versioning order.
 // "Kube-like" versions start with a "v", then are followed by a number (the major version),
 // then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first
 // by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing
