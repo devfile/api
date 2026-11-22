@@ -1,6 +1,6 @@
 # Project Governance
 
-This document defines governance policies for the the projects under the Devfile organization.
+This document defines governance policies for the projects under the Devfile organization.
 
 - [Project Governance](#project-governance)
   - [Maintainers](#maintainers)
